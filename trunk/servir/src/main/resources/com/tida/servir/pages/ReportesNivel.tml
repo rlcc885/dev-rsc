@@ -1,0 +1,108 @@
+<html t:type="layout" title="Servir - Reportes de nivel"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:Menu/>
+
+    <h2>Reportes de Nivel / Sector / Pliego</h2>
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${eue.denominacion}
+        </div>
+
+            <t:zone t:id="nivelSectorPliegoZone">
+                <form t:type="form" t:id="formNivSecPli" t:zone="nivelSectorPliegoZone">
+                    <t:errors/>
+                    <div class="f-left">
+                        <t:label for="nivel_gobierno">Nivel de Gobierno</t:label>
+                        <input t:type="Select" t:id="nivel_gobierno" t:value="nivel_gobierno"
+                        model="beanNivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                         t:zone="nivelSectorPliegoZone" disabled ="false" t:blankOption="ALWAYS"/>
+                    </div>
+                        <div class="f-left">
+                            <t:if test= "nivel_gobierno">
+
+                                <t:if test ="esLocal" negate = "true">
+                                    <t:label for="sector">Sector de Gobierno</t:label>
+                                      <p:else>
+                                        <label>Departamento</label>
+                                      </p:else>
+                                </t:if>
+
+                                 <input t:type="Select" t:id="sector" t:value="sector" model="beanDatoAuxSector"
+                                 onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                 t:zone="nivelSectorPliegoZone" disabled ="false" t:blankOption="ALWAYS"/>
+                            </t:if>
+                        </div>
+
+                        <div class="f-left">
+                            <t:if test= "nivel_gobierno">
+                                   <t:if test ="esLocal" negate = "true">
+                                        <t:label for="pliego">Pliego Presupuestal</t:label>
+                                          <p:else>
+                                            <label>Provincia</label>
+                                          </p:else>
+                                    </t:if>
+
+                                 <input t:type="Select" t:id="pliego" t:value="pliego" model="beanDatoAuxPliego"
+                                 onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                 t:zone="nivelSectorPliegoZone"  disabled ="false" t:blankOption="ALWAYS"/>
+                                
+                            </t:if>
+                       </div>
+
+                </form>
+            </t:zone>
+            <br/>
+
+
+
+            <div class = "f-wrap clear">
+                <t:if test="eue.pliego_rep" negate = "true">
+                    <t:if test="eue.sector_rep" negate = "true">
+                        Su entidad no puede visualizar estos reportes.
+                    </t:if>
+                </t:if>
+              <t:zone t:id="MuestroReportesZone">
+                <t:if test= "mostrarReportes">
+                    <t:if test="eue.pliego_rep">
+                       <a t:type="eventLink" t:event="reportePliegoPentaho" t:context="literal:D6" href="#">Resumen por Pliego (pdf)</a> , <a t:type="eventLink" t:event="reportePliego" t:context="literal:D66" href="#">Resumen por Pliego (xls)</a>
+                        <br/>
+                    </t:if>
+                    <t:if test="eue.pliego_rep">
+                        <a t:type="eventLink" t:event="reportePliegoPentaho" t:context="literal:D8" href="#">Reporte por Pliego (pdf)</a> , <a t:type="eventLink" t:event="reportePliego" t:context="literal:D88" href="#">Reporte por Pliego (xls)</a>
+                        
+                        <br/>
+                    </t:if>
+                    <t:if test="eue.sector_rep">
+                       <a t:type="eventLink" t:event="reportePliegoPentaho" t:context="literal:D7" href="#">Reporte de  Sector (pdf)</a> , <a t:type="eventLink" t:event="reportePliego" t:context="literal:D77" href="#">Reporte de  Sector (xls)</a>
+                        <br/>
+			 <a t:type="eventLink" t:event="reportePliego" t:context="literal:L1" href="#">Reporte de Servidores Públicos por Nivel de Gobierno (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L2" href="#">Reporte de Servidores Públicos por Grupo Ocupacional (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L3" href="#">Reporte de Servidores Públicos por Grupo Ocupacional / Tipo de Entidad (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L4" href="#">Reporte de Servidores Públicos por Nivel de Gobierno / Grupo Ocupacional  (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L5" href="#">Reporte de Servidores Públicos por Nivel Remunerativo / Entidad  (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L6" href="#">Reporte de Servidores Públicos por Grupo Ocupacional / Entidad (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L7" href="#">Reporte de Servidores Públicos por Nivel de Instrucción / Régimen Laboral (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L9" href="#">Reporte de Servidores Públicos por Nivel de Instrucción / Entidad (xls)</a>
+			<br/>
+			<a t:type="eventLink" t:event="reportePliego" t:context="literal:L11" href="#">Reporte de Servidores Públicos por Año de ingreso a la Institución (xls)</a>
+			<br/>
+
+                    </t:if>
+		    
+                    <p:else>
+                        Debe seleccionar un valor en los campos anteriores.
+                    </p:else>
+                </t:if>
+              </t:zone>
+
+            </div>
+
+</html>

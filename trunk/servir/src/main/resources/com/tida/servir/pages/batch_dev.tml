@@ -1,0 +1,110 @@
+<html t:type="layout" title="Servir - Batch_dev"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+         <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${entidadUE.denominacion}
+        </div>
+        <h2>
+        Usando archivo Batch
+        </h2>
+        <t:if test = "respuestaOk">
+            <div id='ok_msg'> 
+                Archivo procesado correctamente
+                <a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar archivo de resultados</a>
+                Recuerde que este link esta disponible por unos instantes unicamente.
+            </div>
+       </t:if>
+
+        <t:if test = "etapaInicio">
+                <t:form t:id="formularioprocesobatch">
+                <t:errors/>
+                <div class="f-wrap">
+                    <div class="f-left input_grande">                
+                        <label>Origen de los archivos </label>
+                         <select t:type="select" t:id="select_origen"
+                            model="origenesArchivos"
+                             value="origenArchivos" t:validate="required"/>
+                    </div>
+
+
+                    <div class="f-left">
+                        <label>Subir archivo </label>
+
+                            <input t:type="upload" t:id="file" validate="required"/>
+                    </div>
+                </div>
+                    <input type="submit" value="Upload" onclick="extraStep();" class="button f-left"/>
+                    <div id= "cargo" style = "color:red"> 
+                        Subida en curso...
+                    </div>
+                
+                <SCRIPT LANGUAGE="JavaScript">
+                var nava = (document.layers);
+                var dom = (document.getElementById);
+                var iex = (document.all);
+                if (nava) { cach = document.cargo }
+                else if (dom) { cach = document.getElementById("cargo").style }
+                else if (iex) { cach = cargo.style }
+                cach.visibility = "hidden";
+                </SCRIPT>
+
+                </t:form>
+
+         </t:if>
+
+       <t:if test = "etapaConfirmacion">
+
+                <div id = "tamanosArchivos" class = "informacion">
+                    <ul>
+                        <li t:type="loop" source="lla" value="la">
+                            Nombre de archivo: ${la.archivo} - Nro. Líneas: ${la.lineas}
+                        </li>
+                    </ul>
+                </div>
+
+                <t:form t:id="formularioconfirmacion">
+                <t:errors/>
+                
+                <div id= "cargo" style = "color:red"> 
+                    Carga en curso... 
+                </div>
+
+                <div class="f-wrap">
+                    <div class="f-left">                
+                    Tipo de Proceso
+                     <select t:type="select" t:id="select_tipo_proceso"
+                        model="tiposProceso"
+                         value="tipoProceso" t:validate="required"/>
+                    </div>
+                    <div class="clear f-wrap">
+                        <input t:id="continuar" t:type="submit" value="Continuar" class="button f-right" onclick="extraStep();"/>
+                    </div>
+                    <div class="clear f-wrap">
+                        <input t:id="cancelar" t:type="submit" value="Cancelar" class="button f-right"/>
+                    </div>
+                </div>
+                
+                <SCRIPT LANGUAGE="JavaScript">
+                var nava = (document.layers);
+                var dom = (document.getElementById);
+                var iex = (document.all);
+                if (nava) { cach = document.cargo }
+                else if (dom) { cach = document.getElementById("cargo").style }
+                else if (iex) { cach = cargo.style }
+                cach.visibility = "hidden";
+                </SCRIPT>
+
+                </t:form>
+       </t:if>
+
+        <SCRIPT LANGUAGE="JavaScript"> 
+        function extraStep() { 
+
+            cach.visibility = "visible";
+
+        } 
+        </SCRIPT>
+</html>

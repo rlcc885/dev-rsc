@@ -1,0 +1,59 @@
+<html t:type="layout" title="Editar Constancias Documentales"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div class = "box f-wrap">
+        <h3>${titulo}</h3>
+        <form t:type="form" t:id="constanciasDocumentalesForm" t:zone="prop:zone">
+            <t:errors/>
+            <t:envelope t:id="envelope"/>
+            <table class="t-data-grid">
+                <thead>
+                    <tr>
+                        <th>* Tipo de Constancia</th>
+                        <th>* Fecha</th>
+                        <th>Nº de Resolución</th>
+                        <th>* Texto descriptivo</th>
+                        <th class="Acciones t-last">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t:type="AjaxFormLoop" t:id = "constancias"
+                    t:source="constanciasdocumentales"
+                    t:value="constancia" t:encoder = "encoder">
+                    <t:submitnotifier>
+                        <td><input t:type="Select" t:id="tipoconstancia" t:value="constancia.tip_constancia" model = "tiposConstancia" t:validate="required"/></td>
+                        <td><input t:type="DateInput" t:id="fecha" t:date="constancia.fecha"
+                        t:label="Fecha" t:validate="required" size="10" disabled ="noeditable"/></td>
+                        <td><input t:type="TextField" t:id="nroresolucion" class="input_corto" t:value="constancia.num_resolucion" maxlength="30" size="15" disabled ="noeditable"/></td>
+                        <td><input t:type="TextArea" t:id="txt_descriptivo" value="constancia.txt_descriptivo" t:validate="required" disabled ="noeditable"/></td>
+
+                        <!-- If optimistic locking is needed then uncomment this next line.
+                        <t:hidden value="constancia.version"/>
+                        -->
+                        <td>
+                            <t:if test = "editable">
+                                <t:removerowlink>Eliminar</t:removerowlink>
+                            </t:if>
+                        </td>
+                    </t:submitnotifier>
+                        <p:addRow>
+                            <td colspan="5" style="text-align: right">
+                                <t:if test = "editable">
+                                    <t:addrowlink>Agregar Nueva</t:addrowlink>
+                                </t:if>
+                            </td>
+                        </p:addRow>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="actions f-right">
+                <t:if test = "editable">
+                    <input type="submit" value="Guardar" class="button"/>
+                </t:if>
+            </div>
+        </form>
+        </div>
+    </t:content>
+</html>

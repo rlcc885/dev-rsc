@@ -1,0 +1,64 @@
+<html t:type="layout" title="Editar certificaciones"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+<t:content>
+
+        <h3>Certificaciones</h3>
+
+    	<form t:type="form" t:id="certificacionesEdit" t:zone="prop:zone">
+            <t:errors/>
+            <t:envelope t:id="envelope"/>
+            <table class="t-data-grid">
+                    <thead>
+                        <tr>
+                            <th>* Denominación</th>
+                            <th>* Especialidad</th>
+                            <th>* Entidad Certificante</th>
+                            <th>* Lugar de Emisión</th>
+                            <th>* Fecha de Emisión</th>
+                            <th>Cargado trabajador</th>
+                            <th>Validado</th>
+                            <th class="Acciones t-last">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t:type="AjaxFormLoop" t:id = "certificaciones" t:source="actual.certificaciones"
+                            t:value="certificacion" t:encoder = "encoder">
+                                        <t:submitnotifier>
+                                            <td><input t:type="TextField" t:id="denominacion" t:value="certificacion.denominacion" t:validate="required, maxlength=50" size="10" disabled ="noeditable"/></td>
+                                            <td><input t:type="TextField" t:id="especialidad" t:value="certificacion.especialidad" t:validate="required, maxlength=50" size="10" disabled ="noeditable"/></td>
+                                            <td><input t:type="TextField" t:id="entidad_certificante" t:value="certificacion.entidad_certificante" t:validate="required, maxlength=50" size="10" disabled ="noeditable"/></td>
+                                            <td><input t:type="TextField" t:id="lugar_emision" t:value="certificacion.lugar_emision" t:validate="required, maxlength=60" size="10" disabled ="noeditable"/></td>
+                                            <td><input t:type="DateInput" t:id="fec_emision"
+                                                t:label="Fecha de emisión" t:date="certificacion.fec_emision" t:validate="required" size="10" disabled ="noeditable"/></td>
+                                            <td><input t:type="Checkbox" t:id="agregadoTrabajador" value="certificacion.agregadoTrabajador" t:validate="required" disabled ="true"/></td>
+                                            <td><input t:type="Checkbox" t:id="validado" value="certificacion.validado" t:validate="required" disabled ="esTrabajadorEditable"/></td>
+                                            <!-- If optimistic locking is needed then uncomment this next line.
+                                                    <t:hidden value="certificacions.version"/>
+                                             -->
+                                            <td>
+                                                <t:if test = "editable">
+                                                    <t:removerowlink>Eliminar</t:removerowlink>
+                                                </t:if>
+                                            </td>
+                                        </t:submitnotifier>
+                                <p:addRow>
+                                    <td colspan="8" style="text-align: right">
+                                        <t:if test = "editable">
+                                                <t:addrowlink>Agregar Nuevo</t:addrowlink>
+                                        </t:if>
+                                    </td>
+                                </p:addRow>
+                        </tr>
+                    </tbody>
+            </table>
+        <div class="actions f-right">
+            <t:if test = "editable">
+                <input type="submit" value="Guardar" class="button f-right"/>
+            </t:if>
+        </div>
+    </form>
+
+</t:content>
+</html>

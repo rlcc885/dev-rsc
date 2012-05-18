@@ -1,0 +1,137 @@
+<html t:type="layout" title="Trabajador Editar"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+        <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+        </div>
+
+        <t:if test = "haymensajes">
+            <div id="Mensajes">
+                ${mensajes}
+            </div>
+        </t:if>
+
+      <div id = "Datos_Generales">
+           <h2> Modificar trabajador </h2>
+           <div id= "basicosTrabajador">
+               <h3>${actual.tipoDocumento}: ${actual.nroDocumento}
+               ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
+           </div>
+      </div>
+
+    <div class="wrap">
+
+
+    <!-- the tabs -->
+
+    <div>
+        <ul id="tabs-Personales" class="tabs">
+            <li><a href="#"> Familia</a></li>
+            <li><a href="#"> Curso</a></li>
+            <li><a href="#"> Ant. Lab.</a></li>
+            <li><a href="#"> Prod. Intelectual</a></li>
+            <li><a href="#"> Méritos y Deméritos</a></li>
+            <t:if test= "hayCargosAsignados">
+                <li><a href="#"> Remuneraciones</a></li>
+                <li><a href="#"> Evaluaciones</a></li>
+                <li><a href="#"> Ausencias y Licencias</a></li>
+            </t:if>
+        </ul>
+
+
+
+                <!-- INICIO / Zona de familiares, correspondientes al TAB -->
+
+        <div class= "pane" id='familiares' name='familiares'>
+                    <t:FamiliaresEditor t:id="FamiliaresEditor" actual="actual"/>
+	</div>
+
+		<!-- FIN / Zona de familiares, correspondientes al TAB -->
+
+
+		<!-- INICIO / Zona de cursos, correspondientes al TAB -->
+		
+        <div class= "pane" id='cursos' name='cursos'>
+            <t:zone t:id="cursosZone">            
+                    <t:CursosEditor t:id="CursosEditor" actual="actual" zone="cursosZone"/>
+            </t:zone>
+
+	</div>
+
+		<!-- FIN / Zona de Cursos, correspondientes al TAB -->
+
+        <div class= "pane" id='antecedentes' name='antecedentes'>
+            <t:zone t:id="antecedentesZone">
+                <t:AntecedentesEditor t:id="antecedentesEditor" actual= "actual" zone="antecedentesZone"/>
+            </t:zone>
+        </div>
+
+
+        <div class= "pane" id='produccionintelectual' name='produccionintelectual'>
+          <t:zone t:id="publicacionesZone">
+                <t:PublicacionesEditor t:id="publicacionesEditor" actual= "actual"
+                    clase = "clasePublicacion" zone="publicacionesZone"/>
+            </t:zone>
+
+          <t:zone t:id="trabajosZone">
+                <t:PublicacionesEditor t:id="trabajosEditor" actual= "actual"
+                    clase = "ClaseTrabajo" zone="trabajosZone"/>
+            </t:zone>
+
+        </div>
+
+        <div class= "pane" id='meritosdemeritos' name='meritosdemeritos'>
+            <t:zone t:id="meritosZone">
+                <t:MeritosDemeritosEditor t:id="meritosEditor" actual= "actual"
+                clase = "ClaseMeritos" zone="meritosZone" readOnly = "true"/>
+            </t:zone>
+            <t:zone t:id="demeritosZone">
+                <t:MeritosDemeritosEditor t:id="demeritosEditor" actual= "actual"
+                clase = "ClaseDeMeritos" zone="demeritosZone" readOnly = "true"/>
+            </t:zone>
+        </div>
+
+
+         <t:if test= "hayCargosAsignados">
+
+            <!-- TAB - Remuneraciones del Cargo -->
+            <div class="pane"  id='remuneraciones' name='remuneraciones'>
+              <t:zone t:id="remuneracionesPersonalesZone">
+                    <t:RemuneracionesPersonalesEditor  t:id="remuneracionesPersonalesEditor"  actual_asignado="ca"
+                        zone="remuneracionesPersonalesZone" readOnly = "true"/>
+              </t:zone>
+            </div>
+
+
+            <div class="pane"  id='evaluaciones' name='evaluaciones'>
+                   <!-- TAB - Evaluaciones del Cargo -->
+                  <t:zone t:id="evaluacionesPersonalesZone">
+                        <t:EvaluacionesPersonalesEditor  t:id="evaluacionesPersonalesEditor"  actual_asignado="ca"
+                        zone="evaluacionesPersonalesZone" readOnly = "true"/>
+                  </t:zone>
+            </div>
+
+            <div class="pane"  id='auslics' name='auslics'>
+                   <!-- TAB - Ausencias y Licencias del Cargo -->
+                  <t:zone t:id="ausLicPersonalesZone">
+                        <t:AusLicPersonalesEditor  t:id="ausLicPersonalesEditor"  actual_asignado="ca"
+                            zone="ausLicPersonalesZone" readOnly = "true"/>
+                  </t:zone>
+            </div>
+         </t:if> <!-- Hay cargos asignados -->
+        </div>  <!-- pane persona-->
+    </div> <!-- wrapper -->
+     <script>
+        <!--
+
+// perform JavaScript after the document is scriptable.
+        jQuery(function() {
+            jQuery("ul.tabs").tabs("> .pane");
+        });
+     -->
+     </script>
+
+</html>

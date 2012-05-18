@@ -1,0 +1,61 @@
+<html t:type="layout" title="Editar remuneraciones del cargo asignado"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+
+        <h3>Evaluaciones</h3>
+
+        <form t:type="form" t:id="formularioevaluacionespersonales" t:zone="prop:zone">
+            <t:errors/>
+            <t:envelope t:id="envelope"/>
+            <table class="t-data-grid">
+                <thead>
+                    <tr>
+                        <th>* Tipo</th>
+                        <th>* Fecha Desde</th>
+                        <th>* Fecha Hasta</th>
+                        <th>* Porcentaje de Calificación</th>
+                        <th class="Acciones t-last">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t:type="AjaxFormLoop" t:id = "evaluaciones"
+                    t:source="actual_asignado.evaluacionesPersonales"
+                    t:value="evaluacion" t:encoder = "encoder">
+                        <t:submitnotifier>
+                            <td><input t:type="Select" t:id="tiporevaluacion" t:value="evaluacion.tipo" model = "tiposEvaluacion" t:validate="required" disabled ="noeditable"/></td>
+                            <td><input t:type="DateInput" t:id="fec_inicio" t:date="evaluacion.fec_desde"
+                            t:label="Fecha Desde" t:validate="required" size="10" disabled ="noeditable"/></td>
+                            <td><input t:type="DateInput" t:id="fec_fin" t:date="evaluacion.fec_hasta"
+                            t:label="Fecha Hasta" t:validate="required" size="10" disabled ="noeditable"/></td>
+                            <td><input t:type="TextField" t:id="calificacion" t:value="evaluacion.calificacion" t:validate="required,maxlength=2,max=99" size="2" disabled ="noeditable"/></td>
+
+                            <!-- If optimistic locking is needed then uncomment this next line.
+                            <t:hidden value="evaluacion.version"/>
+                            -->
+                            <td>
+                                <t:if test = "editable">
+                                    <t:removerowlink>Eliminar</t:removerowlink>
+                                </t:if>
+                            </td>
+                        </t:submitnotifier>
+                        <p:addRow>
+                            <td colspan="5" style="text-align: right">
+                                <t:if test = "editable">
+                                    <t:addrowlink>Agregar Nueva</t:addrowlink>
+                                </t:if>
+                            </td>
+                        </p:addRow>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="actions f-right">
+                <t:if test = "editable">
+                    <input type="submit" value="Guardar" class="button"/>
+                </t:if>
+            </div>
+        </form>
+
+    </t:content>
+</html>

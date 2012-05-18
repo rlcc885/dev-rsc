@@ -1,0 +1,93 @@
+<html t:type="layout" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+        <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${entidadUE.denominacion}
+        </div>
+
+        <div id= "datosOrigen" class="box">
+            <h3> Seleccione fuente de origen </h3>
+            <div class="f-wrap">
+                <div class="f-left">
+                    <t:zone t:id="UOOrigenNivelZone">
+                        <form t:type="form" t:id="formNivelUOOrigen" t:zone="UOOrigenZone">
+                                * Nivel Organizacional
+                                <input t:type="Select" t:id="unidadorganica_nivel_origen"
+                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                t:value="nivelOrigen" model="beanNivelOrigen" t:zone="UOOrigenZone"/>
+
+                        </form>
+                    </t:zone>
+                </div>
+                <div class="f-left">
+                    <t:zone t:id="UOOrigenZone">
+                        <form t:type="form" t:id="formUOOrigen" t:zone="UOChangeZone">
+                                <t:if test = "hayNivelOrigen">
+                                    * Unidad Orgánica
+                                    <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                                    model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                                    onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                </t:if>
+                        </form>
+                    </t:zone>
+                </div>
+          </div> <!-- f-wrap -->
+        </div> <!-- DatosOrigen -->
+ 
+        <div id= "datosDestino" class="box">
+            <h3> Seleccione destino</h3>
+            <div class="f-wrap datosDestinos">
+                <t:EntidadSelect  t:id="entidades" t:entidad="entidadDestino"
+                    t:zone = "NivelDestinoZone" t:zoneName = "NivelDestinoZone"
+                    t:vistaCorta = "true"/>
+            </div>
+            <div class="f-wrap">
+                    <div class="f-left">
+                        <t:zone t:id="NivelDestinoZone">
+                            <t:if test= "hayentidadDestino">
+                                <form t:type="form" t:id="formNivelUODestino" t:zone="UODestinoZone">
+                                        * Nivel Organizacional
+                                        <input t:type="Select" t:id="unidadorganica_nivel_destino"
+                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:value="nivelDestino" model="beanNivelDestino" t:zone="UODestinoZone"/>
+                                </form>
+                            </t:if>
+                        </t:zone>
+                    </div>
+                    <div class="f-left">
+                        <t:zone t:id="UODestinoZone">
+                            <t:if test= "hayentidadDestino">
+
+                                <form t:type="form" t:id="formUODestino" t:zone ="UOChangeZone">
+                                        <t:if test = "hayNivelDestino">
+                                            * Unidad Orgánica Padre destino
+                                            <select t:type="select" t:id="select_unidadOrganicaDestino"
+                                            model="beanUOrganicasDestino" encoder="beanUOrganicasDestino" value="uoDestino"
+                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                        </t:if>
+                                </form>
+                             </t:if>
+                        </t:zone>
+                    </div>
+                    <div class="f-left">
+                        <t:zone t:id="UOChangeZone">
+                            <t:if test = "ActivoSubmit">
+                                <t:envelope t:id="envelope"/>
+                                <form t:type="form" t:id="formUOChange" t:zone ="UOChangeZone">
+                                    <input id="submit" type="submit" value="Cambiar UO a esta Entidad" class="button"/>
+                                </form>
+                                <form t:type="form" t:id="formUOFusionar" t:zone ="UOChangeZone">
+                                    <t:errors/>
+                                    <input id="submit" type="submit" value="Fusionar UO a esta Entidad" class="button"/>
+                                </form>
+                             </t:if>
+                        </t:zone>
+                    </div>
+            </div> <!-- f-wrap -->
+        </div> <!-- Datos Destino -->
+</html>

@@ -1,0 +1,50 @@
+<html t:type="layout" title="Servir - Seleccionar/Cambiar Entidad"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:if test="cambioForzado" negate="true">
+        <t:Menu/>
+
+       <t:if test="noEsAdmSystema">
+            <div class="organismo_titulo">
+                Entidad /U. Ejecutora: ${entidadUE.denominacion}
+            </div>
+        </t:if >
+
+    </t:if>
+        <h2>Modificación de clave</h2>
+
+    <div class="change-pass box">
+        <h3>Modificación de clave</h3>
+
+        <div id="form_cambio_clave" class="abmform">
+            <t:zone t:id="zone">
+                <t:form t:id="formulariocambioclave" t:zone = "zone">
+
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                    <t:if test= "FormDisplay">
+                        <div class="f-wrap" id="div_cambiarclave">
+                            <t:label for="clave_vieja"/>
+                            <input t:type="PasswordField" t:id="clave_vieja"
+                            t:value="oldPass" size="20" t:validate="required" />
+                        </div>
+                        <div class="f-wrap" id="cambiarclave">
+                            <div class="f-left">
+                                <t:label for="clave_nueva_1"/>
+                                <input t:type="PasswordField" t:id="clave_nueva_1"
+                                t:value="newPass1" size="20" t:validate="required" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="clave_nueva_2"/>
+                                <input t:type="PasswordField" t:id="clave_nueva_2"
+                                t:value="newPass2" size="20" t:validate="required" />
+                            </div>
+                        </div>
+                        <input id="submit" type="submit" value="Enviar" class="button f-right"/>
+                    </t:if>
+                </t:form>
+            </t:zone>
+        </div>
+    </div>
+</html>

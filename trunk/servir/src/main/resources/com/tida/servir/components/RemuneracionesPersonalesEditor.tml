@@ -1,0 +1,60 @@
+<html t:type="layout" title="Editar remuneraciones del cargo asignado"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+
+        <h3>Remuneraciones</h3>
+
+        <form t:type="form" t:id="formularioremuneracionespersonales" t:zone="prop:zone">
+            <t:errors/>
+            <t:envelope t:id="envelope"/>
+            <table class="t-data-grid">
+                <thead>
+                    <tr>
+                        <th>* Concepto Remunerativo</th>
+                        <th>* Importe</th>
+                        <th class="Acciones t-last">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t:type    = "AjaxFormLoop" 
+                        t:id      = "remuneraciones"
+                        t:source  = "actual_asignado.remuneracionesPersonales"
+                        t:value   = "remuneracion"
+                        t:encoder = "encoder">
+
+                        <t:submitnotifier>
+                            <td><select t:type="select" t:id="conceptoRemunerativo" model="conceptosRemunerativos" encoder="conceptosRemunerativos" value="remuneracion.conceptoRemunerativo" t:validate="required" disabled ="noeditable" /></td>
+                            <td><input t:type="TextField" t:id="importe" t:value="remuneracion.importe" t:validate="required, max=99999999" disabled ="noeditable" size="11" /></td>
+
+                            <!-- If optimistic locking is needed then uncomment this next line.
+                                <t:hidden value="remuneracion.version"/>
+                            -->
+                            <td>
+                                <t:if test = "editable">
+                                    <t:removerowlink>Eliminar</t:removerowlink>
+                                </t:if>
+                            </td>
+                        </t:submitnotifier>
+                        <p:addRow>
+                            <td colspan="3" style="text-align: right">
+                                <t:if test = "editable">
+                                    <!--<t:if test = "agregable"> -->
+                                        <t:addrowlink>Agregar Nueva</t:addrowlink>
+                                    <!-- </t:if> -->
+                                </t:if>
+                            </td>
+                        </p:addRow>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="actions f-right">
+                <t:if test = "editable">
+                    <input type="submit" value="Guardar" class="button"/>
+                </t:if>
+            </div>
+        </form>
+
+    </t:content>
+</html>

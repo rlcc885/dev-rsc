@@ -1,0 +1,64 @@
+<html t:type="layout" title="Servir - Cargos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+        <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+        </div>
+        <h1>Desasignar Cargo</h1>
+
+        <div id="datostrabajador">
+            <h2>Trabajador </h2>
+
+            <div class="dato">
+                <h3>${t.TipoDocumento}: ${t.NroDocumento}
+                ${t.apellidoPaterno} ${t.apellidoMaterno} ${t.nombres}</h3>
+            </div> <!-- dato -->
+        </div>
+
+        <div class="box f-wrap box_desasignarcargo">
+            <div id="datos_cargo">
+                <h3> Datos del cargo asignado</h3>
+                
+                    <div class="f-left marginright">
+                        <label>Cargo: ${ca.cargo.den_cargo}  </label>
+                        <label>Estado: ${ca.estado}  </label>
+                        <label>Fecha de inicio: ${ca.fec_inicio}  </label>
+                        <label>Cantidad de personal supervisado: ${ca.ctd_per_superv}  </label> 
+                    
+                </div>
+            </div>
+            <div t:id="motivoZone" t:type="zone" >
+            <t:if test="nodesasignar">
+
+                <t:form t:id="formulariodesasignar" t:zone="confirmarZone">
+ 
+                        <div class="f-wrap clear">
+
+                            <t:errors/>
+                           <label>* Motivo</label>
+                            <input t:type="TextArea" t:id="motivo" t:value="motivo_cese"/>
+                            <t:label for="fecha_fin"/>
+                            <input t:type="DateInput" t:id="fecha_fin" t:date="fec_fin" t:validate="required" t:label="* Fecha de fin"/>
+                            <div class="f-right actions">
+                                <input t:id="desasignarMotivo" t:type="submit" value="Desasignar con motivo" class="button f-right"/>
+                                <input t:id="desasignarEquivoco" t:type="submit" value="Desasignar por mala asignación" class="button f-right"/>
+                                <input t:id="cancelar" t:type="submit" value="Cancelar" class="button f-right"/>
+                            </div>
+                        </div>
+		</t:form>
+          </t:if>
+        </div>
+    </div>
+    <div t:id="confirmarZone" t:type="zone" >
+    <t:if test="desasignar">
+        <label>Está seguro que desea desasignar este cargo ?</label>
+            <t:form t:id="formularioconfirmaciondesasignacion"  >
+                <input t:id="confirmarDesasignar" t:type="submit" value="Si" class="button f-right"/>
+                <input t:id="cancelarDesasignar" t:type="submit" value="No" class="button f-right"/>
+            </t:form>
+      </t:if>
+    </div>
+</html>

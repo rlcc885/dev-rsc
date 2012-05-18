@@ -1,0 +1,149 @@
+<html t:type="layout" title="Editar Usuarios"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+    <t:Menu/>
+    <t:if test= "usuarioDeOrganismo">
+        <div class="organismo_titulo">
+            Entidad U. Ejecutora: ${loggedUser.entidadUE?.denominacion}
+        </div>
+    </t:if>
+    <h1>Usuarios</h1>
+        <div class="box f-wrap">
+            <h3>Busqueda</h3>
+            <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">
+                <div style="display:block;">
+                    <t:errors/>
+                    <div id="filtrosnombres" class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="identificacionBusqueda"/>
+                            <input t:type="TextField" t:id="identificacionBusqueda" size="30"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="apellidosBusqueda"/>
+                            <input t:type="TextField" t:id="apellidosBusqueda" size="30"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="nombresBusqueda"/>
+                            <input t:type="TextField" t:id="nombresBusqueda" size="30"/>
+                        </div>
+                    </div> <!-- filtrosnombres -->
+                </div> <!-- busquedas -->
+                <div class="actions f-right">
+                    <input id = "buscarsubmit" type="submit" value="Actualizar" class="buttonGrey"/>
+                    <!-- <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/> -->
+                </div>
+            </t:form>
+        </div> <!-- Zona filtros -->
+<br/>
+    <t:zone t:id="tabla_usuario">    
+        <div id = "tabla_usuario_grid" >
+            <t:grid source="usuarios" rowsPerPage="15" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave">
+                <t:parameter name="empty">
+                    <div class="no-info">No hay usuarios generados</div>
+                </t:parameter>
+                <p:organismoCell>
+                    <t:if test="u.entidadUE">
+                        ${u.entidadUE.denominacion}
+                    </t:if>
+                </p:organismoCell>
+                <p:accionesCell>
+                    <a t:type="pagelink" t:page="ABMUsuario" t:context="u.id" href="#">Editar</a>
+                    | <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
+                </p:accionesCell>
+            </t:grid>
+        </div> 
+    </t:zone>        
+
+    <div class="box f-wrap" id="box_u">
+        <t:envelope t:id="envelope"/>
+        <h3>Crear/Editar Usuarios</h3>
+        <div class= "wrap" id = "form_tipo_usuario">
+            <form t:type="form"  t:id="formTipoUsuario" t:zone="entidadZone" >
+                <t:label for="tipousuario" />
+                <t:select t:id="tipousuario" t:value="tipoUsuario"
+                model = "tiposUsuarios" t:validate="required"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:zone="entidadZone" />
+            </form>
+        </div>
+
+        <div id= "form_organismos" class="abmform">
+            <t:zone t:id="entidadZone">
+                <t:if test="muestroOrganismos">
+                    <t:form  t:id="formOrganismo" t:zone="editarUsuarioZone" >
+                        <label>Entidad /U. Ejecutora</label>
+                        <input t:type="select" t:id="organismos" t:value="entidadUE"
+                            model="beanOrganismos" encoder="beanOrganismos" t:validate="required"
+                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:zone="editarUsuarioZone" t:blankOption="ALWAYS"/>
+                    </t:form>
+                </t:if>
+            </t:zone>
+        </div>
+
+        <t:zone t:id="editarUsuarioZone">
+            <div id="form_usuario" class="abmform">
+                <t:form  t:id="formulariousuario" t:zone="editarUsuarioZone">
+                    <t:errors/>
+                    <t:if test="esTrabajador">
+                        <div class="f-left">
+                            <t:label for="tipoDocumento"/>
+                            <t:select t:id="tipoDocumento" model="tiposDoc" t:validate="required"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="nroDocumento" />
+                            <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="required, regexp" size="10"/>
+                        </div>
+                        <t:parameter name="else">
+                            <div class="f-left">
+                                <t:label for="apellidos" />
+                                <input t:type="TextField" t:id="apellidos" t:value="usuario.apellidos" t:validate="required" size="10"/>
+                            </div>
+                            <div class="f-left">
+                                <t:label for="nombres" />
+                                <input t:type="TextField" t:id="nombres" t:value="usuario.nombres" t:validate="required" size="10"/>
+                            </div>
+                        </t:parameter>
+                    </t:if>
+                    <div class="f-left">
+                        <t:label for="identificacion_usuario" />
+                        <input t:type="TextField" t:id="identificacion_usuario" t:value="usuario.login" t:validate="required" size="10"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="email" />
+                        <input t:type="TextField" t:id="email" t:value="usuario.email" 
+                        t:validate="required, regexp" size="10"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="intentos_fallidos" />
+                        <input t:type="TextField" t:id="intentos_fallidos" t:value="usuario.intentos_fallidos" readonly="readonly" size="10"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Blanquear los intentos fallidos</label>
+                        <input t:type="Checkbox" t:value="blanquearIntentosFallidos" />
+                    </div>
+                    <div class="f-left">
+                        <label>Ultimo cambio de clave: <strong>${usuario.ultimo_cambio_clave}</strong></label>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="estadousuario" />
+                        <input t:type="Select" t:id="estadousuario" t:value="usuario.estado" model = "estadosUsuarios" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Reiniciar contraseña</label>
+                        <input t:type="Checkbox" t:value="reinitialisarpassword" />
+                    </div>
+                    <div class="actions f-right clear" id="buttons_u">
+                        <input type="submit" value="Guardar" class="button f-right"/>
+                        <t:actionlink t:id="reset">
+                          Cancelar
+                        </t:actionlink>
+                        <!-- <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink> -->
+                    </div>    
+                </t:form>
+            </div>
+        </t:zone>
+    </div>
+</html>

@@ -1,0 +1,49 @@
+<html t:type="layout" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+        
+        <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${entidadUE.denominacion}
+        </div>
+
+        <div class = "mensajes">
+             ${mensajes}
+        </div>
+       <t:form t:id="formulariobusquedasfiltros"  zone="cargosGrillaZone">
+           <h2>Baja de trabajador</h2>
+            <div id="filtrosdoc">
+                <div class="f-left">
+                    <t:label for="tipoDocumento"/>
+                    <t:select t:id="tipoDocumento" model="tiposDoc" t:validate="required"/>
+                </div>
+
+                <div class="f-left">
+                    <t:label for="nroDocumento"/>
+                    <input t:type="TextField" t:id="nroDocumento" t:validate="regexp, required" size="30"/>
+                </div>
+          </div> <!-- filtrosdoc -->
+          <div class="actions f-right button_bajaTrabajador">
+            <input id = "buscarsubmit" type="submit" value="Buscar" class="buttonGrey"/>
+              </div>
+
+           </t:form>
+
+<br/>
+        <t:zone t:id="cargosGrillaZone">
+          <t:if test="actual">
+                <h2>Cargos Asignados</h2>
+                <t:CargosGrilla t:id="cargosGrilla" actual="actual" zone="cargosGrillaZone" busqueda="false"/>
+            <p:else>
+                No se encontró trabajador con cargos asignados para ese tipo y nro. de documento.
+            </p:else>
+
+          </t:if>
+
+        </t:zone>
+
+
+</html>

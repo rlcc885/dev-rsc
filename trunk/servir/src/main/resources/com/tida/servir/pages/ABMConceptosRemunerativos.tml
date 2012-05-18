@@ -1,0 +1,88 @@
+<html t:type="layout" title="Editar Conceptos Remunerativos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+        <t:Menu/>
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+        </div>
+
+    <div t:type="zone" t:id="listaConceptosRemunerativosZone"  class="selectform t-zone">
+
+        <h2>Conceptos Remunerativos</h2>
+
+        <div id = "tabla_conceptoremunerativo" >
+            <div class="t-data-grid">
+                <t:grid source="conceptosRemunerativos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                     row="cr" exclude= "id, organismoInformante">
+                    <t:parameter name="empty">
+                        <div class="no-info">
+                            No hay conceptos remunerativos generados
+                        </div>
+                    </t:parameter>
+                        <p:accionesCell>
+                            <t:if test="PuedeEditar">
+                                <a t:type="pagelink" t:page="ABMConceptosRemunerativos" t:context="cr.id" href="#">Editar</a>
+                                 <t:if test="esBorrable">
+                                    | <a t:type="eventLink" t:event="borrarDato" t:context="cr"
+                                        t:zone="listaConceptosRemunerativosZone" href="#"> Borrar</a>
+                                 </t:if>
+                            </t:if>
+                        </p:accionesCell>
+                </t:grid>
+            </div>
+        </div>
+    </div> <!-- Lista Conceptos -->
+
+    <!-- <t:if test="organismoInformante"> -->
+        <t:if test="PuedeEditar">
+            <div class="box" id="box_conceptos">
+            <h3>Crear/Editar Conceptos Remunerativos</h3>
+
+                <div id="form_conceptoremunerativo" class="abmform">
+                    <t:form  t:id="formularioconceptoremunerativo" >
+                        <t:errors/>
+
+                        <div class="f-wrap">
+                            <div class="f-left">
+                               <t:label for="cod_concepto" />
+                               <input t:type="TextField" t:id="cod_concepto" t:value="conceptoRemunerativo.codigo" 
+                               t:validate="required" maxlength= "8" size="10"/>
+                            </div>
+                            <div class="f-left">
+                               <t:label for="des_concepto" />
+                               <input t:type="TextField" t:id="des_concepto" t:value="conceptoRemunerativo.descripcion" 
+                               t:validate="required" maxlength="40" size="40"/>
+                            </div>
+                            <div class="f-left">
+                               <t:label for="clasificacion" />
+                               <input t:type="Select" t:id="clasificacion" model="clasificaciones" t:value="conceptoRemunerativo.clasificacion"/>
+                            </div>
+                            <div class="f-left">
+                               <t:label for="conceptoStd" />
+                               <input t:type="Select" t:id="conceptoStd" model="conceptosStd" t:value="conceptoRemunerativo.conceptoStd"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="des_sustento_legal" />
+                                <input t:type="TextField" t:id="des_sustento_legal" 
+                                t:value="conceptoRemunerativo.sustento_legal" maxlength="50" size="10"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Periodicidad</label>
+                                <input t:type="Select" t:id="periodicidad" t:value="conceptoRemunerativo.periodicidad" model="periodicidades" t:validate="required"/>
+                            </div>
+                        </div>
+                        <div class="actions f-right">
+                            <input type="submit" value="Guardar" class="button f-right"/>
+                            <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>
+                        </div>
+
+                    </t:form>
+                </div>
+             </div>
+         </t:if> <!-- Puede editar -->
+       <!-- </t:if> Hay Org. Informante -->
+</html>

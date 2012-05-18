@@ -1,0 +1,130 @@
+<html t:type="layout" title="Sistema SERVIR"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"    
+      xmlns:p="tapestry:parameter">
+
+      <t:Menu/>
+      <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+      </div>
+
+      <h2> Alta de trabajador </h2>
+         <t:if test="primerPaso">
+
+         <div class="box">
+            <h3> Crear nuevo trabajador </h3>
+            <t:envelope t:id="envelope"/>
+
+            <t:form t:id="formulariotrabajadornuevo">
+            <t:errors/>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="nuevo_nombres"/>
+                        <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="nuevo_apellidoPaterno" />
+                        <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="nuevo_apellidoMaterno" />
+                        <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="nuevo_tipoDocumento" /> 
+                        <t:select t:id="nuevo_tipoDocumento" t:value="nuevo.tipoDocumento"
+                        model="tiposDoc" value="nuevo.tipoDocumento" t:validate="required" />
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="nuevo_nroDocumento"/>
+                        <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento"
+                            size="8" t:validate="required, regexp"/>
+                    </div>
+                </div>    
+
+                <t:if test="noeditable" negate="true">
+                    <div class="f-wrap">
+                        <div class="actions f-right clear">
+                            <input type="submit" value="Agregar" class="button f-right"/>
+                            <t:actionlink t:id="CancelarNuevo">
+                            Cancelar
+                            </t:actionlink>
+                        </div>
+                    </div>
+                </t:if>
+            </t:form>
+          </div>
+        </t:if>
+
+        <t:if test="segundoPaso">
+            <div class = "f-wrap">
+                <t:zone t:id="unidadOrganicaZone">
+                    <t:form t:id="formulariounidadorganica" t:zone="cargosZone">
+                        <div class ="f-left">
+                            <label>* Unidad Organica</label>
+                            <input t:type="Select" t:id="unidadorganica" t:value="unidadorganica" 
+                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:blankOption="ALWAYS"
+                            model="beansUO" encoder="beansUO" t:validate="required" t:zone="cargosZone"/>
+                        </div>
+                    </t:form>
+                </t:zone>
+            </div>
+
+        <t:zone t:id="cargosZone">
+            <t:if test="unidadSeleccionada">
+                <div class="box f-wrap">
+                <t:if test="trabajadorExiste">
+                    <h3> Ingresando Cargo del trabajador </h3>
+                    <t:parameter name="else">
+                        <h3> Ingresando Legajo del trabajador </h3>
+                    </t:parameter>
+                </t:if>
+
+                <t:form t:id="formulariotrabajadornuevolegajocargo">
+                    <t:errors/>
+                    <t:if test="trabajadorExiste">
+                        <div class="f-left">
+                            <label>Código de Legajo:</label>
+                            <label><b>${legajoExistente?.cod_legajo}</b></label>
+                        </div>
+                        <t:parameter name="else">
+                            <div class="f-left">
+                                <t:label for="nuevolegajo_cod_legajo"/>
+                                <input t:type="TextField" t:id="nuevolegajo_cod_legajo" t:value="nuevolegajo.cod_legajo" size="10" 
+                                t:validate="required"/>
+                            </div>
+                        </t:parameter>
+                    </t:if>
+
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="cargo"/>
+                            <input t:type="Select" t:id="cargo" t:value="cargo" model="beans" encoder="beans" t:validate="required"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="fecha_inicio"/>
+                            <input t:type="DateInput" t:id="fecha_inicio" t:date="fec_inicio"
+                             t:validate="required" />
+                        </div>
+                        <div class="f-left input_corto">
+                            <t:label for="ctd_per_superv"/>
+                            <input t:type="TextField" t:id="ctd_per_superv"
+                            t:value="ctd_per_superv" validate="maxlength=6" size="6"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="actions f-right clear">
+                            <input type="submit" value="Agregar" class="button f-right"/>
+                            <t:actionlink t:id="Cancelar">
+                            Cancelar
+                            </t:actionlink>
+                        </div>
+                    </div>
+                </t:form>
+            </div>
+        </t:if>
+    </t:zone>
+        
+     </t:if>
+</html>
