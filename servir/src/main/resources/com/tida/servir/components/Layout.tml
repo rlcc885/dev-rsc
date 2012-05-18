@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+        <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    <head>
+        <title>${title}</title>
+    </head>
+    <body>
+
+        <div id = "mainsection" >
+            <!-- start header -->
+            <div id="header">
+                <div id="logo">
+                    <h1>
+                        <t:pagelink page="index">Sistema SERVIR</t:pagelink>
+                    </h1>
+                </div>
+                    
+                <!-- <div id="logo-left">
+                    <h1>
+                        <t:pagelink page="index">Sistema SERVIR</t:pagelink>
+                    </h1>
+                </div>
+                <div id="logo-right">
+                    <h1>
+                        <t:pagelink page="index">Sistema SERVIR</t:pagelink>
+                    </h1>
+                </div> -->
+                
+            </div>
+            <!-- end header -->
+            <!-- start page -->
+            <div id="page">
+
+                <!-- start content -->
+                <div id="content">
+
+                    <div class="post">
+                        <!-- <div class="title">
+                            <h2>${title}</h2>
+                        </div> -->
+                        <div class="entry">
+                            <t:body/>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end content -->
+                <br style="clear: both;"/>
+            </div>
+            <!-- end page -->
+        </div>
+     <script>
+        <!--
+
+// perform JavaScript after the document is scriptable. Fix ie comboboxes
+        jQuery(function() {
+            jQuery("select").jALDropdown();
+        });
+     -->
+     </script>
+        <!-- start footer -->
+        <div id="footer">
+            <p class="legal">
+                &copy;2010 Sistema SERVIR. Todos los derechos reservados.<br/>
+                SERVIR V.${appVersion}
+            </p>
+            
+        </div>
+        <!-- end footer -->
+    </body>
+</html>

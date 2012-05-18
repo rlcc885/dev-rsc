@@ -1,0 +1,66 @@
+<html t:type="layout" title="Editar Cursos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+<t:content>
+
+     <h3>Cursos</h3>
+
+    	<form t:type="form" t:id="cursosEdit" t:zone="prop:zone">
+		<t:errors/>
+                <t:envelope t:id="envelope"/>
+		<table class="t-data-grid">
+                    <thead>
+                            <tr>
+                                <th>* Denominación</th>
+                                <th>* Centro de estudios</th>
+                                <th>Horas</th>
+                                <th>* Financiado</th>
+                                <th>* Lugar de dictado</th>
+                                <th>* Fecha de dictado</th>
+                                <th>Cargado trabajador</th>
+                                <th>Validado</th>
+                                <th class="Acciones t-last">Acciones</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                    <tr t:type="AjaxFormLoop" t:id = "cursos" t:source="actual.cursos"
+                        t:value="curso" t:encoder = "encoder">
+                            <t:submitnotifier>
+                                <td><input t:type="TextField" t:id="denominacion" t:value="curso.denominacion" t:validate="required, maxlength=50" size="10" disabled ="noeditable"/></td>
+                                <td><input t:type="TextField" t:id="centro_estudios" t:value="curso.centro_estudios" t:validate="required, maxlength=50" size="10" disabled ="noeditable"/></td>
+                                <td><input t:type="TextField" t:id="horas" value="curso.horas" size = "5" disabled ="noeditable"/></td>
+                                <td><input t:type="Checkbox" t:id="financiadoEntidad" value="curso.financiadoEntidad" t:validate="required" disabled ="noeditable"/></td>
+                                <td><input t:type="TextField" t:id="lugar_dictado" t:value="curso.lugar_dictado" t:validate="required, maxlength=60" size="10" disabled ="noeditable"/></td>
+                                <td><input t:type="DateInput" t:id="fec_emision" t:date="curso.fec_emision"
+                                    t:label="Fecha de dictado" t:validate="required" size="8" disabled ="noeditable"/></td>
+                                <td><input t:type="Checkbox" t:id="agregadoTrabajador" value="curso.agregadoTrabajador" disabled ="true"/></td>
+                                <td><input t:type="Checkbox" t:id="validado" value="curso.validado" disabled ="esTrabajadorEditable"/></td>
+                                <!-- If optimistic locking is needed then uncomment this next line.
+                                        <t:hidden value="curso.version"/>
+                                 -->
+                                <td>
+                                    <t:if test = "editable">
+                                        <t:removerowlink>Eliminar</t:removerowlink>
+                                    </t:if>
+                                </td>
+                            </t:submitnotifier>
+                            <p:addRow>
+                                <td colspan="9" style="text-align: right">
+                                    <t:if test = "editable">
+                                            <t:addrowlink>Agregar Nuevo</t:addrowlink>
+                                    </t:if>
+                                </td>
+                            </p:addRow>
+                        </tr>
+                    </tbody>
+	 	</table>
+        <div class="actions f-right">
+            <t:if test = "editable">
+                <input type="submit" value="Guardar" class="button f-right"/>
+            </t:if>
+        </div>
+	</form>
+
+    </t:content>
+</html>

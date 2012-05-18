@@ -1,0 +1,75 @@
+<html t:type="layout" title="Editar Antecedentes Laborales"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div name="antecedentes" id="antecedentes" class="pane" style="display:block;">
+            <div class="t-zone" id="antecedentesZone">
+                <h3>Antecedentes Laborales</h3>
+
+                <form t:type="form" t:id="antLaboralesEdit" t:zone="prop:zone">
+                    <t:errors/>
+                    <t:envelope t:id="envelope"/>
+                    <table class="t-data-grid">
+                        <thead>
+                            <tr>
+                                <th>* Cargo</th>
+                                <th>* Empresa</th>
+                                <th>* Función</th>
+                                <th>* Area</th>
+                                <th>* Reg. Laboral</th>
+                                <th>* Ent. Pub.</th>
+                                <th>* Fecha de ingreso</th>
+                                <th>* Fecha de egreso</th>
+                                <th>Cargado trabajador</th>
+                                <th>Validado</th>
+                                <th class="Acciones t-last">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr t:type="AjaxFormLoop" t:id = "antecedentes" t:source="actual.ant_Laborales"
+                            t:value="ant_Laborales" t:encoder = "encoder">
+
+                                <t:submitnotifier>
+                                    <td><input t:type="TextField" t:id="cargo" t:value="ant_Laborales.cargo" t:validate="required, maxlength=10" size="10" disabled ="noeditable"/></td>
+                                    <td><input t:type="TextField" t:id="empresa" t:value="ant_Laborales.empresa" t:validate="required, maxlength=10" size="10" disabled ="noeditable"/></td>
+                                    <td><input t:type="TextField" t:id="funcion" value="ant_Laborales.funcion" t:validate="required" disabled ="noeditable"/></td>
+                                    <td><input t:type="TextField" t:id="area" value="ant_Laborales.area" t:validate="required" disabled ="noeditable"/></td>
+                                    <td><input t:type="TextField" t:id="regLaboral" value="ant_Laborales.regLaboral" t:validate="required" disabled ="noeditable"/></td>
+                                    <td><input t:type="Checkbox" t:id="entidadPublica" value="ant_Laborales.entidadPublica" t:validate="required" disabled ="noeditable"/></td>
+                                    <td><input t:type="DateInput" t:id="fec_ingreso" t:date="ant_Laborales.fec_ingreso"
+                                    t:label="Fecha de ingreso" t:validate="required" size="10" disabled ="noeditable"/></td>
+                                    <td><input t:type="DateInput" t:id="fec_egreso" t:date="ant_Laborales.fec_egreso"
+                                    t:label="Fecha de egreso" t:validate="required" size="10" disabled ="noeditable"/></td>
+                                    <td><input t:type="Checkbox" t:id="agregadoTrabajador" value="ant_Laborales.agregadoTrabajador" t:validate="required" disabled ="true"/></td>
+                                    <td><input t:type="Checkbox" t:id="validado" value="ant_Laborales.validado" t:validate="required" disabled ="esTrabajadorEditable"/></td>
+                                    <!-- If optimistic locking is needed then uncomment this next line.
+                                    <t:hidden value="ant_Laborales.version"/>
+                                    -->
+                                    <td>
+                                        <t:if test = "editable">
+                                            <t:removerowlink>Eliminar</t:removerowlink>
+                                        </t:if>
+                                    </td>
+                                </t:submitnotifier>
+                                <p:addRow>
+                                    <td colspan="11" style="text-align: right">
+                                        <t:if test = "editable">
+                                            <t:addrowlink>Agregar Nuevo</t:addrowlink>
+                                        </t:if>
+                                    </td>
+                                </p:addRow>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="actions f-right">
+                        <t:if test = "editable">
+                            <input type="submit" value="Guardar" class="button"/>
+                        </t:if>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </t:content>
+</html>

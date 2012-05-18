@@ -1,0 +1,69 @@
+<html t:type="layout" title="Editar Publicaciones"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div name="produccionintelectual" id="produccionintelectual" class="pane" style="display:block;">
+            <div class="t-zone" id="publicacionesZone">
+
+                <H3>${clase}</H3>
+                <form t:type="form" t:id="publicacionesEdit" t:zone="prop:zone">
+                    <t:errors/>
+                    <t:envelope t:id="envelope"/>
+                    <table class="t-data-grid">
+                        <thead>
+                            <tr>
+                                <th>* Tipo</th>
+                                <th>* Titulo</th>
+                                <th>* Fecha</th>
+                                <th>Descripcion</th>
+                                <th>En entidad</th>
+                                <th>Cargado trabajador</th>
+                                <th>Validado</th>
+                                <th class="Acciones t-last">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t:type="AjaxFormLoop" t:id = "publicaciones" t:source="publicaciones"
+                            t:value="publicacion" t:encoder = "encoder">
+                                <t:submitnotifier>
+                                    <td><input t:type="Select" t:id="tipo" t:value="publicacion.tipo" model = "tipospublicacion" t:validate="required" disabled ="noeditable"/></td>
+                                    <td><input t:type="TextArea" t:id="titulo" value="publicacion.titulo" t:validate="required, maxlength=80" disabled ="noeditable"/></td>
+                                    <td> 
+                                        <div id="dateInput">
+                                            <input t:type="DateInput" t:id="fecha" t:date="publicacion.fecha" t:validate="required" size="10" disabled ="noeditable"/>
+                                        </div>
+                                    </td>
+                                    <td><input t:type="TextArea" t:id="descripcion" t:value="publicacion.descripcion" disabled ="noeditable"/></td>
+                                    <td><input t:type="Checkbox" t:id="entidad" t:value="publicacion.entidad" disabled ="noeditable"/></td>
+                                    <td><input t:type="Checkbox" t:id="agregadoTrabajador" value="publicacion.agregadoTrabajador" t:validate="required" disabled ="true"/></td>
+                                    <td><input t:type="Checkbox" t:id="validado" value="publicacion.validado" t:validate="required" disabled ="esTrabajadorEditable"/></td>
+                                    <!-- If optimistic locking is needed then uncomment this next line.
+                                    <t:hidden value="publicacion.version"/>
+                                    -->
+                                    <td id="tdEliminar">
+                                        <t:if test = "editable">
+                                            <t:removerowlink>Eliminar</t:removerowlink>
+                                        </t:if>
+                                    </td>
+                                </t:submitnotifier>
+                                <p:addRow>
+                                    <td colspan="8" style="text-align: right">
+                                        <t:if test = "editable">
+                                            <t:addrowlink>Agregar Nuevo</t:addrowlink>
+                                        </t:if>
+                                    </td>
+                                </p:addRow>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="actions f-right">
+                        <t:if test = "editable">
+                            <input type="submit" value="Guardar" class="button"/>
+                        </t:if>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </t:content>
+</html>

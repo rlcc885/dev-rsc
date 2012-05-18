@@ -1,0 +1,61 @@
+<html t:type="layout" title="Editar méritos y deméritos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div name="meritosdemeritos" id="meritosdemeritos" class="pane" style="display:block;">
+            <div class="t-zone" id="meritosZone">
+                <h3>${clase}</h3>
+
+                <form t:type="form" t:id="meritosdemeritosEdit" t:zone="prop:zone">
+                    <t:errors/>
+                    <t:envelope t:id="envelope"/>
+                    <table class="t-data-grid">
+                        <thead>
+                            <tr>
+                                <th>* Tipo</th>
+                                <th>* Detalle</th>
+                                <th>* Fecha</th>
+                                <th>* Motivo</th>
+                                <th class="Acciones t-last">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t:type="AjaxFormLoop" t:id = "meritosdemeritos" t:source="meritosdemeritos"
+                            t:value="meritodemerito" t:encoder = "encoder">
+                                <t:submitnotifier>
+                                    <td><input t:type="Select" t:id="tipo" t:value="meritodemerito.tipo" model = "tipos" t:validate="required" disabled ="esTrabajador"/></td>
+                                    <td><input t:type="TextField" t:id="detalle" value="meritodemerito.detalle" t:validate="required" disabled ="esTrabajador"/></td>                                    
+                                    <td><input t:type="DateInput" t:id="fecha" t:date="meritodemerito.fecha"
+                                    t:label="Fecha" t:validate="required" size="10" disabled ="esTrabajador"/></td>
+                                    <td><input t:type="TextArea" t:id="motivo" t:value="meritodemerito.motivo" t:validate="required, maxlength=80" disabled ="esTrabajador"/></td>
+
+                                    <!-- If optimistic locking is needed then uncomment this next line.
+                                    <t:hidden value="meritodemerito.version"/>
+                                    -->
+                                    <td>
+                                        <t:if test = "editable">
+                                            <t:removerowlink>Eliminar</t:removerowlink>
+                                        </t:if>
+                                    </td>
+                                </t:submitnotifier>
+                                <p:addRow>
+                                    <td colspan="6" style="text-align: right">
+                                        <t:if test = "editable">
+                                            <t:addrowlink>Agregar Nuevo</t:addrowlink>
+                                        </t:if>
+                                    </td>
+                                </p:addRow>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="actions f-right">
+                        <t:if test = "editable">
+                          <input type="submit" value="Guardar" class="button"/>
+                        </t:if>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </t:content>
+</html>

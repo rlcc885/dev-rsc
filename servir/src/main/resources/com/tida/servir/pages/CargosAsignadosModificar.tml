@@ -1,0 +1,77 @@
+<html t:type="layout" title="Servir Servir Cargos Asignados"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+        <t:Menu/>
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+        </div>
+
+      <div id = "Datos_Generales">
+           <h2> Cargo - Cargo Asignado </h2>
+           <div id= "basicosTrabajador">
+               <h3>${trabajador.tipoDocumento}: ${trabajador.nroDocumento}
+               ${trabajador.apellidoPaterno}  ${trabajador.apellidoMaterno} ${trabajador.nombres}</h3>
+           </div>
+      </div>
+
+    <div class="wrap">
+
+    <!-- the tabs -->
+        <ul id="tabs-top" class="tabs">
+       <li><a href="#"> Cargo</a></li>
+     
+        </ul>
+
+        <div class="pane">
+            <ul id="tabs-cargo" class="tabs">
+                <li><a href="#"> Datos de cargo</a></li>
+                <li><a href="#"> Remuneraciones</a></li>
+                <li><a href="#"> Evaluaciones</a></li>
+                <li><a href="#"> Ausencias y Licencias</a></li>
+            </ul>
+            
+            
+            <!-- TAB - Datos General del Cargo -->
+            <div class="pane"  id='datosdecargo' name='datosdecargo'>
+                <t:DatosDeCargoEditor  t:id="datosDeCargoEditor" actual="_ca.cargo" actual_asignado="_ca"/>
+            </div>			
+
+            <!-- TAB - Remuneraciones del Cargo -->
+            <div class="pane"  id='remuneraciones' name='remuneraciones'>
+              <t:zone t:id="remuneracionesPersonalesZone">
+                    <t:RemuneracionesPersonalesEditor  t:id="remuneracionesPersonalesEditor"  actual_asignado="_ca" zone="remuneracionesPersonalesZone"/>
+              </t:zone>
+            </div>
+
+
+        <div class="pane"  id='evaluaciones' name='evaluaciones'>
+               <!-- TAB - Evaluaciones del Cargo -->
+              <t:zone t:id="evaluacionesPersonalesZone">
+                    <t:EvaluacionesPersonalesEditor  t:id="evaluacionesPersonalesEditor"  actual_asignado="_ca" zone="evaluacionesPersonalesZone"/>
+              </t:zone>
+        </div>
+
+        <div class="pane"  id='auslics' name='auslics'>
+               <!-- TAB - Ausencias y Licencias del Cargo -->
+              <t:zone t:id="ausLicPersonalesZone">
+                    <t:AusLicPersonalesEditor  t:id="ausLicPersonalesEditor"  actual_asignado="_ca" zone="ausLicPersonalesZone"/>
+              </t:zone>
+        </div>
+
+
+        </div> <!-- pane Cargo -->
+
+    </div> <!-- wrapper -->
+
+     <script>
+        <!--
+
+// perform JavaScript after the document is scriptable.
+        jQuery(function() {
+            jQuery("ul.tabs").tabs("> .pane");
+        });
+     -->
+     </script>
+</html>

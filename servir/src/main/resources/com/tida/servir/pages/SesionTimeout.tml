@@ -1,0 +1,14 @@
+<html t:type="layout" title="Sistema SERVIR - Timeout"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+      <div id = "timeout" class="box">
+        <div class = "header_error">
+            <h3>Tiempo de espera Agotado.</h3>
+        </div>
+      Deberá volver a ingresar al sistema.<br/>
+        <a t:type="pagelink" t:page="Index" href="#">Haga click aquí para ingresar</a>
+      </div>
+
+</html>

@@ -1,0 +1,197 @@
+<html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+     <t:Menu/>
+     <h1> Entidades /U. Ejecutoras </h1>
+    
+    <div id = "tabla_oi">
+        <t:envelope t:id="envelope"/>   
+        <t:zone t:id="entidadZone">
+            <t:grid source="EntidadesUEjecutoras" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom"
+                 row="oi" exclude= "sector_rep, pliego_rep, proc_batch, def_servir, cue_entidad, cue_elemento, def_servir, TEMovilJefeRRHH, TEJefeRRHH, correoElectronicoJefeRRHH,
+                    jefeRRHHEntidad, correoElectronicoTitular, titularEntidad, direcion, ruc, cod_mef_ue, correoElectronicoInstitucional, localidad, estado, clas_funcional, trabajadorAgregaDatos"
+                     reorder="denominacion, codigoEntidadUE, nivel_gobierno, pliego, sector_gobierno" >
+                <t:parameter name="empty">
+                    <div class="no-info">No hay Entidades /U. Ejecutoras generadas</div><br/>
+                </t:parameter>
+                <p:accionesCell>
+                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="oi.id" href="#">Editar</a>
+                    <!-- <t:actionlink t:id="editar" zone="entidadZone" t:context="oi.id">Editar</t:actionlink> -->
+                     <t:if test="esBorrable">
+                        | <a t:type="eventLink" t:event="borrarDato" t:context="oi"
+                            href="#"> Borrar </a>
+                    </t:if>
+                </p:accionesCell>
+            </t:grid>
+        </t:zone>
+    </div>
+
+    <div class="box f-wrap" id="box_oi">
+        <h3>Crear/Editar Entidades /U. Ejecutoras</h3>
+        
+
+        <div id="form_organismo_informante" class="abmform">
+            <t:zone t:id="nivelSectorPliegoZone">
+                <form t:type="form" t:id="formNivSecPli" t:zone="nivelSectorPliegoZone">
+                    <t:errors/>
+                    <div class="f-left">
+                        <t:label for="nivel_gobierno"/>
+                        <input t:type="Select" t:id="nivel_gobierno" t:value="nivel_gobierno" 
+                        model="beanDatoAuxNivel" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                        t:validate="required" t:zone="nivelSectorPliegoZone" disabled ="noeditable" t:blankOption="ALWAYS"/>
+                    </div>
+                    <t:if test ="esLocal" negate = "true">
+                        <div class="f-left"> 
+                            <t:label for="sector"/>
+                             <input t:type="Select" t:id="sector" t:value="sector" model="beanDatoAuxSector" 
+                             onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                             t:zone="nivelSectorPliegoZone"  disabled ="noeditable" t:blankOption="ALWAYS"/>
+                        </div>
+                        <div class="f-left"> 
+                            <t:label for="pliego"/>
+                             <input t:type="Select" t:id="pliego" t:value="pliego" model="beanDatoAuxPliego" 
+                             onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                             t:zone="nivelSectorPliegoZone"  disabled ="noeditable" t:blankOption="ALWAYS"/>
+                        </div>
+                    </t:if>
+                </form>
+            </t:zone>
+
+            <t:form t:id="formularioaltaentidaduejecutoras">
+                <t:errors/>
+                <div class="f-wrap" id="entidadCodDen">
+                    <!-- <div class="f-left">
+                        <label>Unidad Ejecutora</label>
+                        <input t:type="select" t:id="select_unidad_ejecutora"
+                        model="beans" encoder="beans" value="organismoInformante.unidadEjecutora" />
+                    </div> -->
+                    <div class="f-left">
+                        <t:label for ="denominacionEUE"/>
+                        <input t:type="TextField" t:id="denominacionEUE"
+                        t:value="entidadUE.denominacion" t:validate="required, maxlength=60" size="85"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="codigoEUE"/>
+                        <input t:type="TextField" t:id="codigoEUE"
+                        t:value="entidadUE.codigoEntidadUE" t:validate="required, maxlength=12" size="12" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="clasificador_funcional"/>
+                        <input t:type="Select" t:id="clasificador_funcional" model="ClasFuncOrg"
+                        t:value="entidadUE.clas_funcional" t:validate="required" t:blankOption="AUTO"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="codigo_MEF"/>
+                        <input t:type="TextField" t:id="codigo_MEF"
+                        t:value="entidadUE.cod_mef_ue"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="RUC"/>
+                        <input t:type="TextField" t:id="RUC"
+                        t:value="entidadUE.ruc" t:validate="regexp"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for ="CUE_entidad"/>
+                        <input t:type="TextField" t:id="CUE_entidad"
+                        t:value="entidadUE.cue_entidad"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for ="CUE_elemento"/>
+                        <input t:type="TextField" t:id="CUE_elemento"
+                        t:value="entidadUE.cue_elemento"/>
+                    </div>
+                    <div class="f-left mar-top24">
+                        <t:label for ="batch"/>
+                        <input t:type="Checkbox" t:id="batch"
+                        t:value="entidadUE.proc_batch" />
+                    </div>
+                    <div class="f-left">
+                       <t:label for="SERVIR"/>
+                        <input t:type="checkbox" t:id="SERVIR"
+                        t:value="entidadUE.def_servir" />
+                    </div>
+                   <div class="f-left">
+                       <t:label for="pliego_rep"/>
+                        <input t:type="checkbox" t:id="pliego_rep"
+                        t:value="entidadUE.pliego_rep" />
+                    </div>
+                    <div class="f-left">
+                       <t:label for="sector_rep"/>
+                        <input t:type="checkbox" t:id="sector_rep"
+                        t:value="entidadUE.sector_rep" />
+                    </div>
+                </div>
+
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="localidad"/>
+                        <input t:type="TextField" t:id="localidad"
+                        t:value="entidadUE.localidad"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="direcion"/>
+                        <input t:type="TextField" t:id="direcion"
+                        t:value="entidadUE.direcion"/>
+                    </div>
+                </div>
+                <t:zone t:id="ubigeoEntidadZone">
+                    <div class="f-wrap">
+                         <div class="f-left" id="ubigeo_entidadUE"> 
+                             <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE"
+                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" disabled ="noeditable"/>         
+                        </div>
+                    </div>
+                </t:zone>
+                <div class="f-wrap">
+                    <!-- <div class="f-left">
+                        <label>Tipo de Email</label>
+                        <select t:type="Select" t:id="entidadUE_tipoEmail" t:value="entidadUE.tipo_email"
+                        model="beanDatoAuxEmail" encoder="beanDatoAuxEmail"
+                        t:validate="required"/>
+                    </div> -->
+                    <div class="f-left">
+                        <t:label for="titular_entidad"/>
+                        <input t:type="TextField" t:id="titular_entidad"
+                        t:value="entidadUE.titularEntidad"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="mail_titular"/>
+                        <input t:type="TextField" t:id="mail_titular"
+                        t:value="entidadUE.correoElectronicoTitular"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="jefeRRHH_entidad"/>
+                        <input t:type="TextField" t:id="jefeRRHH_entidad"
+                        t:value="entidadUE.jefeRRHHEntidad"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="jefeRRHH_mail"/>
+                        <input t:type="TextField" t:id="jefeRRHH_mail"
+                        t:value="entidadUE.correoElectronicoJefeRRHH"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="TEjefeRRHH"/>
+                        <input t:type="TextField" t:id="TEjefeRRHH"
+                        t:value="entidadUE.TEJefeRRHH"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="TEmovilRRHH"/>
+                        <input t:type="TextField" t:id="TEmovilRRHH"
+                        t:value="entidadUE.TEMovilJefeRRHH"/>
+                    </div>
+                </div>
+                <div class="f-right actions clear" id="bouttons_oi">
+                    <input id="submit" type="submit" value="Enviar" class="button f-right"/>
+                    <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>
+                </div>
+            </t:form>
+        </div>
+    </div>
+</html>

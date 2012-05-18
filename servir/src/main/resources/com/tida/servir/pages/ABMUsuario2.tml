@@ -1,0 +1,74 @@
+<html t:type="layout" title="Editar Usuarios"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+
+        <H2>Usuarios. Sólo usar para crear usuarios administradores cuando no hay nada</H2>
+        <br/>
+
+    <div id = "tabla_usuario" >
+        <t:grid source="usuarios" rowsPerPage="10" t:add="Organismo,Acciones" pagerPosition="bottom"
+             row="u" exclude= "id, entidadUE, md5Clave">
+            <t:parameter name="empty">
+                No hay usuarios generados
+            </t:parameter>
+		<p:organismoCell>
+                    <t:if test="u.entidadUE">
+                        ${u.entidadUE.denominacion}
+                    </t:if>
+		</p:organismoCell>
+		<p:accionesCell>
+                    <a t:type="pagelink" t:page="ABMUsuario2" t:context="u.id" href="#">Editar</a>
+
+            <!--        <t:actionlink t:id="borrar" context = "u">Borrar</t:actionlink> -->
+		</p:accionesCell>
+        </t:grid>
+    </div>
+
+    <h1>Crear/Editar Usuarios</h1>
+
+    <div id="form_usuario" class="abmform">
+    	<t:form  t:id="formulariousuario" >
+            <t:errors/>
+            <!-- <t:label for="codigo_usuario" />
+            <input t:type="TextField" t:id="codigo_usuario" t:value="usuario.codigo_usuario" t:validate="required" size="10"/>
+            <br/> -->
+
+            <div class="f-left">
+                <t:label for="apellidos" />
+                <input t:type="TextField" t:id="apellidos" t:value="usuario.apellidos" t:validate="required" size="10"/>
+            </div>
+            <div class="f-left">
+                <t:label for="nombres" />
+                <input t:type="TextField" t:id="nombres" t:value="usuario.nombres" t:validate="required" size="10"/>
+            </div>
+
+            <t:label for="tipousuario" />
+            <input t:type="Select" t:id="tipousuario" t:value="usuario.tipo_usuario" model = "tiposUsuarios" t:validate="required"/>
+            <br/>
+
+            <t:label for="identificacion_usuario" />
+            <input t:type="TextField" t:id="identificacion_usuario" t:value="usuario.login" t:validate="required" size="10"/>
+            <br/>
+
+            <t:label for="email" />
+            <input t:type="TextField" t:id="email" t:value="usuario.email" t:validate="required" size="10"/>
+            <br/>
+
+            <t:label for="clave" />
+            <input t:type="PasswordField" t:id="clave" t:value="usuario.md5Clave" t:validate="required" size="10"/>
+            <br/>
+
+            <t:label for="estadousuario" />
+            <input t:type="Select" t:id="estadousuario" t:value="usuario.estado" model = "estadosUsuarios" t:validate="required"/>
+            <br/>
+
+            <input type="submit" value="Guardar"/>
+            <br/>
+            <!-- <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink> -->
+
+        </t:form>
+    </div>
+
+</html>
