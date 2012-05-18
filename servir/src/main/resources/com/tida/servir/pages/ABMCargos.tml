@@ -2,11 +2,10 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-
     <t:Menu/>
 
         <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${entidadUE.denominacion}
+         R   Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
 
     <h2>Cargos</h2>
