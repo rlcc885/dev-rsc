@@ -1,0 +1,23 @@
+div.wrap {
+    clear:both;
+ }
+
+ .wrap .pane {
+ background-color:#fff ;
+ display:none;
+ padding:20px;
+ padding-top:30px;
+ border:1px solid #999;
+ color:#456;
+ width:800px;
+ _background-image:none;
+ }
+
+ .wrap .pane .pane {
+     width:700px;
+}
+
+ .wrap .pane p {
+ font-size:20px;
+ color:#578;
+ } 
