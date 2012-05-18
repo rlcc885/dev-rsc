@@ -5,7 +5,7 @@
     <t:Menu/>
 
         <div class="organismo_titulo">
-         R   Entidad /U. Ejecutora: ${entidadUE.denominacion}
+            Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
 
     <h2>Cargos</h2>
