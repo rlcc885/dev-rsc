@@ -69,7 +69,7 @@
                     <t:if test="vistaCorta" negate = "true">
 
                         <div class="f-left clear">
-                            <input id="submit" type="submit" value="Enviar" class="button"/>
+                            <input id="submit" type="submit" value="Seleccionar" class="button"/>
                         </div>
                     </t:if>
                 </form>

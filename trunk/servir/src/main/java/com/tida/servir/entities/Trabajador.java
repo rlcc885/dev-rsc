@@ -102,7 +102,13 @@ public class Trabajador // extends Persona
     private String nroRUC;
     @NonVisual
     private String codigoOSCE;
-
+    @NonVisual
+    private String idnivelinstruccion;
+    @NonVisual
+    private String idsexo;
+    @NonVisual
+    private String idtipodocumento;
+    
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
@@ -323,7 +329,30 @@ public class Trabajador // extends Persona
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
+    public String getIdnivelinstruccion() {
+        return idnivelinstruccion;
+    }
 
+    public void setIdnivelinstruccion(String idnivelinstruccion) {
+        this.idnivelinstruccion = idnivelinstruccion;
+    }
+
+    public String getIdsexo() {
+        return idsexo;
+    }
+
+    public void setIdsexo(String idsexo) {
+        this.idsexo = idsexo;
+    }
+
+    public String getIdtipodocumento() {
+        return idtipodocumento;
+    }
+
+    public void setIdtipodocumento(String idtipodocumento) {
+        this.idtipodocumento = idtipodocumento;
+    }
+   
     public String getFormacionInfAdicional() {
         return formacionInfAdicional;
     }
@@ -423,7 +452,7 @@ public class Trabajador // extends Persona
             String emergenciaTelefonoAlternativo2) {
         this.emergenciaTelefonoAlternativo2 = emergenciaTelefonoAlternativo2;
     }
-
+    
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Ant_Laborales> getAnt_Laborales() {
         return ant_Laborales;
