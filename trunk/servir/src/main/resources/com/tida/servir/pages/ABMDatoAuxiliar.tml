@@ -5,7 +5,7 @@
 
         <t:Menu/>
 
-        <H2>Tablas Auxiliares</H2>
+        <H2>Tablas Auxiliares JZM</H2>
          <div t:type="zone" t:id="selectZone" class="selectform" >
                 <t:form t:id="formularioselecttabla" >
                 <t:errors/>
