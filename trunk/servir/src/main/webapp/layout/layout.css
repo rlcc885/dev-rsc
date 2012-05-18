@@ -1,0 +1,2026 @@
+/* Tapestry styles all start with "t-" */
+DIV.t-error {
+    border: 1px solid red;
+    padding: 0px;
+    margin: 4px 0px;
+}
+
+DIV.t-error DIV {
+    padding: 2px;
+    display: block;
+    margin: 0px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+DIV.t-error UL {
+    margin: 2px 0px;
+    background-color: white;
+    color: red;
+}
+
+DIV.t-error LI {
+    margin-left: 20px;
+}
+
+DIV.t-error-single {
+    padding: 2px;
+    display: block;
+    margin: 0px;
+    background-color: red;
+    color: white;
+}
+
+HTML>BODY DIV.t-error LI {
+    margin-left: -20px;
+}
+
+.t-invisible {
+    display: none;
+}
+
+LABEL.t-error {
+    color: red;
+}
+
+INPUT.t-error, TEXTAREA.t-error, SELECT.t-error {
+    border-color: red;
+    font-style: italic;
+    color: red;
+}
+
+IMG.t-error-icon {
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    background: url(field-error-marker.gif);
+}
+
+IMG.t-autoloader-icon {
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    background: url(ajax-loader.gif);
+}
+
+IMG.t-sort-icon {
+    margin-left: 4px;
+}
+
+DIV.t-exception-message {
+    font-style: italic;
+    font-size: 12pt;
+    border: thin dotted silver;
+    margin: 5px 0px;
+    padding: 3px;
+}
+
+DIV.t-exception-report, DIV.t-env-data {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+DIV.t-exception-report LI {
+    margin-left: -40px;
+}
+
+DIV.t-exception-report DT, DIV.t-env-data DT {
+    color: green;
+    padding-left: 2px;
+    background-color: #FFFFCF;
+}
+
+DIV.t-exception-report LI {
+    list-style: none;
+}
+
+SPAN.t-exception-class-name {
+    display: block;
+    margin-top: 15px;
+    font-size: 12pt;
+    background-color: #E1E1E1;
+    color: blue;
+    padding: 2px 3px;
+    font-weight: bold;
+}
+
+SPAN.t-exception-stack-controls {
+    display: block;
+    float: right;
+}
+
+UL.t-stack-trace LI {
+    font-family: Monaco, Times, monospace;
+    font-size: 10pt;
+    margin-left: -25px;
+    list-style: square;
+}
+
+LI.t-usercode-frame {
+    font-weight: bold;
+    color: blue;
+}
+
+LI.t-omitted-frame {
+    display: none;
+    color: gray;
+    list-style: square;
+}
+
+H1.t-exception-report {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: red;
+}
+
+DIV.t-exception-report DT:after {
+    content: ":";
+}
+
+DIV.t-exception-report DD, DIV.t-env-data DD {
+    margin-left: 10px;
+}
+
+TABLE.t-data-table {
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 2px;
+}
+
+TABLE.t-data-table TH {
+    background-color: black;
+    color: white;
+}
+
+TABLE.t-data-table TD {
+    border: 1px solid silver;
+    margin: 0px;
+}
+
+DIV.t-beaneditor {
+    display: block;
+    background: #ffc;
+    border: 2px outset brown;
+    padding: 2px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+DIV.t-beaneditor-row {
+    padding: 4px 0px 2px 0px;
+}
+
+DIV.t-beaneditor-row LABEL:after {
+    content: ":";
+}
+
+DL.t-beandisplay {
+    display: block;
+    padding: 2px;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: #CCBE99;
+    border: 2px outset black;
+    width: auto;
+}
+
+DL.t-beandisplay DT {
+    width: 250px;
+    display: inline;
+    float: left;
+    text-align: right;
+    clear: left;
+    padding-right: 3px;
+    vertical-align: middle;
+}
+
+DL.t-beandisplay DT:after {
+    content: ":";
+}
+
+DIV.t-beaneditor-row LABEL {
+    width: 250px;
+    display: block;
+    float: left;
+    text-align: right;
+    clear: left;
+    padding-right: 3px;
+    vertical-align: middle;
+}
+
+INPUT.t-number {
+    text-align: right;
+}
+
+DIV.t-beandisplay DIV.t-beandisplay-label {
+    padding-right: 5px;
+}
+
+TABLE.t-data-grid THEAD TR {
+    color: white;
+    background-color: #809FFF;
+}
+
+TABLE.t-data-grid THEAD TR TH {
+    text-align: left;
+    padding: 3px;
+    white-space: nowrap;
+    border-right: 1px solid silver;
+    border-bottom: 1px solid silver;
+}
+
+TABLE.t-data-grid {
+    border-collapse: collapse;
+    border-left: 1px solid silver;
+}
+
+TABLE.t-data-grid TBODY TR TD {
+    border-right: 1px solid silver;
+    border-bottom: 1px solid silver;
+    padding: 2px;
+}
+
+/*.t-data-grid .fragment_0 #entidadPublica{
+    width:10px;
+}*/
+
+table.t-data-grid tbody tr #entidadPublica{
+    border: 1px solid;
+}
+
+DIV.t-data-grid {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+DIV.t-data-grid-pager {
+    margin: 8px 0px;
+}
+
+DIV.t-data-grid-pager A, DIV.t-data-grid-pager SPAN.current {
+    text-decoration: none;
+    color: black;
+    padding: 2px 5px;
+    font-size: medium;
+    border: 1px solid silver;
+    margin-right: 5px;
+}
+
+DIV.t-data-grid-pager A:hover {
+    border: 1px solid black;
+}
+
+DIV.t-data-grid-pager SPAN.current {
+    color: white;
+    background-color: #809FFF;
+}
+
+TABLE.t-data-grid TR TH A {
+    color: white;
+}
+
+IMG {
+    border: none;
+}
+
+DIV.t-env-data-section {
+    padding-left: 5px;
+}
+
+DIV.t-env-data DD, DIV.t-exception-report DD {
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+
+DIV.t-env-data LI {
+    margin-left: -25px;
+}
+
+DIV.t-env-data-section {
+    font-size: 12pt;
+    background-color: #E1E1E1;
+    color: blue;
+    padding: 2px 3px;
+    font-weight: bold;
+}
+
+TABLE.t-location-outer {
+    padding: 5px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+}
+
+TD.t-location-line {
+    width: 40px;
+    text-align: right;
+    padding: 0px;
+    background-color: #E1E1E1;
+    padding-right: 3px;
+    border-right: 1px solid black;
+}
+
+TD.t-location-content {
+    border-top: 1px solid silver;
+    border-right: 1px solid black;
+    white-space: pre;
+}
+
+TD.t-location-current {
+    background-color: #FFFFCF;
+}
+
+TD.t-location-content-first {
+    border-top: 1px solid black;
+}
+
+DIV.t-palette {
+    display: inline;
+}
+
+DIV.t-palette SELECT {
+    margin-bottom: 2px;
+    width: 200px;
+}
+
+DIV.t-palette-title {
+    color: white;
+    background-color: #809FFF;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+}
+
+DIV.t-palette-available {
+    float: left;
+}
+
+DIV.t-palette-controls {
+    margin: 5px 5px;
+    float: left;
+    text-align: center;
+}
+
+DIV.t-palette-controls BUTTON {
+    display: block;
+    margin-bottom: 3px;
+}
+
+DIV.t-palette-controls BUTTON[disabled] IMG {
+    filter: alpha"opacity = 25";
+    -moz-opacity: .25;
+}
+
+DIV.t-palette-selected {
+    float: left;
+    clear: right;
+}
+
+DIV.t-palette-spacer {
+    clear: left;
+}
+
+IMG.t-calendar-trigger {
+    padding-left: 3px;
+    cursor: pointer;
+}
+
+DIV.t-autocomplete-menu {
+    z-index: 9999;
+}
+
+DIV.t-autocomplete-menu UL {
+    border: 2px outset #cc9933;
+    background-color: #cc9933;
+    padding: 4px 6px;
+    overflow: auto;
+}
+
+DIV.t-autocomplete-menu LI {
+    color: white;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+
+DIV.t-autocomplete-menu LI.selected {
+    color: black;
+    font-weight: bold;
+}
+
+DIV.t-error-popup SPAN {
+    background: transparent url('error-bevel-left.gif') no-repeat;
+    display: block;
+    line-height: 28px;
+    margin-left: 0px;
+    padding: 0px 5px 10px 22px;
+}
+
+
+
+
+
+
+
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #d9d9d9;
+    text-align: justify;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #626262;
+}
+
+#page {
+    min-height: 500px;
+    overflow:auto;
+}
+
+#footer {
+    width:900px;
+    margin-left: 50px;
+}
+
+#mainsection {
+    background-color: #ffffff;
+    width: 900px;
+    margin-left: 50px;
+    border: #f2f2f2 3px solid ;
+    padding-bottom: 30px;
+    border-bottom:none;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    border: 1px solid #a60e0b;
+    font: normal 1em Arial, Helvetica, sans-serif;
+}
+
+h1, h1 a, h2, h2 a, h3, h3 a {
+    margin: 0;
+    text-decoration: none;
+    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+    font-weight: normal;
+    color: #444444;
+}
+
+th {
+    background-color: #444444;
+}
+
+h1 {
+    letter-spacing: -1px;
+    font-size: 2.2em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin-bottom:10px;
+}
+
+h2 {
+    letter-spacing: -1px;
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+p, ol, ul {
+    margin-bottom: 2em;
+    line-height: 200%;
+}
+
+blockquote {
+    margin: 0 0 0 1.5em;
+    padding-left: 1em;
+    border-left: 5px solid #DDDDDD;
+}
+
+a {
+    color: #1692B8;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Header */
+
+#header {
+    height: 75px;
+    text-indent:-9999px;
+}
+
+#header #logo{
+    background: url(images/header.jpg) no-repeat top left;
+    height: 75px;
+    background-size: 95%;
+    background-position: 0;
+}
+#logo h1 a{
+    width: 100%;
+    height: 75px;
+    display: block;
+}
+
+#logo-left h1, #logo-left p {
+    float: left;
+    text-transform: lowercase;
+}
+
+#logo-left h1 {
+    padding: 0px 0 0 40px;
+}
+
+#logo-left p {
+    margin: 0;
+    padding: 14px 0 0 4px;
+    line-height: normal;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+#logo-left a {
+    text-decoration: none;
+    color: #D0C7A6;
+}
+
+#logo-right {
+    background: url(images/logo_der.png) top right no-repeat;
+    height:75px;
+}
+
+#logo-right ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#logo-right li {
+    display: block;
+    float: left;
+    height: 42px;
+}
+
+#logo-right a {
+    display: block;
+    padding: 8px 20px 0px 20px;
+    text-decoration: none;
+    text-align: center;
+    text-transform: lowercase;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    color: #CEC5A4;
+}
+
+#logo-right .last {
+    margin-right: 20px;
+}
+
+#logo-right a:hover {
+    color: #FFFFFF;
+}
+
+#logo-right .current_page_item A {
+    text-decoration: underline;
+}
+
+#logo-right .current_page_item a {
+}
+
+/* Page */
+
+#page {
+    border-top: 25px solid #F2F2F2;
+    border-color: #F2F2F2;
+}
+
+/* Content */
+
+#content {
+
+}
+
+.post {
+    margin-bottom: 10px;
+}
+
+.post .title {
+    border-bottom: 1px #999999 dashed;
+    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+}
+
+.post .title h2 {
+    padding: 30px 30px 0 0px;
+    text-transform: lowercase;
+    font-weight: normal;
+    font-size: 2.2em;
+}
+
+.post .title p {
+    margin: 0;
+    padding: 0 0 10px 0px;
+    line-height: normal;
+    color: #BABABA;
+}
+
+.post .title p a {
+    color: #BABABA;
+}
+
+
+.post .links {
+    margin: 0;
+    padding: 0 30px 30px 0px;
+}
+
+.post .links a {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.post .links a:hover {
+}
+
+.post .links .more {
+    width: 128px;
+    height: 30px;
+    background: url( images/img03.jpg ) no-repeat left center;
+}
+
+.post .links .comments {
+    width: 152px;
+    height: 30px;
+    background: url( images/img04.jpg ) no-repeat left center;
+}
+
+/* Sidebar */
+
+#sidebar {
+    float: right;
+    width: 300px;
+    margin-top: 30px;
+    display:none;
+}
+
+#sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#sidebar li {
+    margin-bottom: 10px;
+    background: url( images/img10.gif ) no-repeat left bottom;
+}
+
+#sidebar li ul {
+    padding: 0 30px 40px 30px;
+}
+
+#sidebar li li {
+    margin: 0;
+    padding-left: 20px;
+}
+
+#sidebar h2 {
+    padding: 30px 30px 5px 10px;
+    background: url( images/img09.gif ) no-repeat;
+    text-transform: lowercase;
+    font-weight: normal;
+    font-size: 1.6em;
+    color: #302D26;
+}
+
+#sidebar DIV.sidebar-content {
+    width: 265px;
+    margin-left: 10px;
+    padding-bottom: 1px;
+}
+
+/* Search */
+
+#search {
+    padding: 20px 30px 40px 30px;
+}
+
+#search input {
+    padding: 0;
+    width: 70px;
+    height: 29px;
+    background: #DFDFDF url( images/img14.gif ) repeat-x;
+    font-weight: bold;
+}
+
+#search #s {
+    padding: 5px;
+    width: 150px;
+    height: auto;
+    background: #FEFEFE url( images/img13.gif ) repeat-x;
+    border: 1px solid #626262;
+    font: normal 1em Arial, Helvetica, sans-serif;
+}
+
+#search br {
+    display: none;
+}
+
+/* Categories */
+
+#sidebar #categories li {
+    background: url( images/img12.gif ) no-repeat left center;
+}
+
+/* Calendar */
+
+#calendar_wrap {
+    padding: 0 30px 40px 30px;
+}
+
+#calendar table {
+    width: 100%;
+    text-align: center;
+}
+
+#calendar thead {
+    background: #F1F1F1;
+}
+
+#calendar tbody td {
+    border: 1px solid #F1F1F1;
+}
+
+#calendar #prev {
+    text-align: left;
+}
+
+#calendar #next {
+    text-align: right;
+}
+
+#calendar tfoot a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#calendar #today {
+    background: #FFF3A7;
+    border: 1px solid #EB1400;
+    font-weight: bold;
+    color: #EB1400
+}
+
+/* Footer */
+
+#footer {
+    background: #757575 url( images/img08.gif ) repeat-x;
+    padding: 70px 0 50px;
+    border: 3px solid #F2F2F2;
+    border-top:none;
+}
+
+#footer p {
+    margin-bottom: 1em;
+    text-align: center;
+    line-height: normal;
+    font-size: .9em;
+    color: #BABABA;
+}
+
+#footer a {
+    padding: 0 20px;
+    text-decoration: none;
+    color: #DDDDDD;
+}
+
+#footer a:hover {
+    color: #FFFFFF;
+}
+
+#footer .rss {
+    background: url( images/img18.gif ) no-repeat left center;
+}
+
+#footer .xhtml {
+    background: url( images/img19.gif ) no-repeat left center;
+}
+
+#footer .css {
+    background: url( images/img20.gif ) no-repeat left center;
+}
+
+#footer .legal a {
+    padding: 0;
+}
+
+#toggle_filtros {
+    background: url("images/lupa.png") no-repeat scroll left bottom transparent;
+    display: block;
+    height: 22px;
+    z-index: 9;
+    margin-bottom: 20px;
+    padding-left:35px;
+    vertical-align: middle;
+    text-decoration:none;
+    color: #626262;
+    font-size: 12px;
+}
+
+#selectors {
+    border: 1px solid #a60e0b;
+    padding:10px;
+    height: 285px;
+    width: 820px;
+    margin-bottom: 10px;
+}
+
+
+.seccionfiltros {
+    width:240px;
+}
+#busquedas, #mainfiltros {
+    height: 180px;
+    border:  1px solid #E40132;
+    width: 780px;
+    margin-bottom: 10px;
+}
+
+#busquedasUsuario{
+    height: 70px;
+    border:  1px solid #E40132;
+    width: 780px;
+    margin-bottom: 10px;
+}
+
+#busquedas h2, #mainfiltros h2 {
+    margin-bottom: 10px;
+}
+
+#filtrosnombres {
+    float:left;
+}
+
+#filtrosdoc {
+    height: 60px;
+}
+
+#busquedas #buscarsubmit {
+    float: none;
+}
+
+#busquedas label, #mainfiltros label {
+    text-align: left;
+    margin-right: 10px;
+    display: block;
+}
+
+#tablaCargo {
+    float:left;
+    padding-left: 10px;
+}
+
+/*
+#grillas-busquedas {
+    margin-bottom: 20px;
+}
+*/
+#mainfiltros input, #busquedas input{
+    margin-bottom: 5px;
+}
+
+#busquedas select, #mainfiltros select {
+    margin-bottom: 5px;
+    font-size:10px;
+}
+
+
+#mainfiltros .checklabel {
+    width: 120px;
+    float:left;
+}
+
+
+#mainfiltros .seccionfiltros {
+    float:left;
+    margin-left: 10px;
+}
+
+#mainfiltros input[type="checkbox"] {
+    float:left;
+    margin-left: 5px;
+}
+
+#form_unidad_ejecutora {
+    width: 400px;
+}
+
+form th {
+    color:#fff;
+
+}
+
+/* Para modificar el trabajador */
+#basicosTrabajador {
+    padding: 50px;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size: larger;
+    text-transform: capitalize;
+    line-height: 20px;
+}
+
+.pane {
+    border: 1px solid #E40132;
+}
+
+
+#tablaTrabajador{
+    float:none;
+}
+
+#cargoCell {
+    float:none;
+}
+
+/* Login */
+
+.login {
+    padding:20px;
+    border:thin solid;
+    border-color:#e30031;
+    margin-top: 100px;
+    margin-left: 200px;
+    width:400px;
+}
+
+.login label {
+    font: normal 1em Arial, Helvetica, sans-serif;
+    width: 150px;
+    text-align: left;
+    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.login input {
+    margin-bottom: 5px;
+}
+
+
+.login select {
+    margin-bottom: 5px;
+    font-size:10px;
+}
+
+/* Menu */
+
+.menu {
+    width:100%;
+    color:#fff;
+    background-color:#A60E0B;
+
+}
+
+.menu ul {
+    height: 30px;
+    list-style: none outside none;
+    margin: 0 !important;
+    padding: 0;
+}
+
+.menu ul li {
+    float: left;
+    list-style-image: none !important;
+    margin: 0 !important;
+    padding: 0;
+    text-indent: 0;
+}
+
+.menu ul a {
+    text-decoration: none;
+    color:#fff;
+    display: block;
+
+    color: #FFFFFF;
+    display: block;
+    font-size: 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 110px;
+
+}
+
+.menu ul a:hover {
+    background-color:#e30031	;
+    color:#fff;
+}
+
+.organismo_titulo {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+/* Editar Trabajador */
+#Datos_Generales {
+    border: thin solid #A60E0B;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.pane {
+    overflow: auto;
+}
+
+/* amb usuarios */
+#tabla_usuario {
+    margin-bottom: 40px;
+}
+
+
+#form_usuario label {
+    font: normal 1em Arial, Helvetica, sans-serif;
+    width: 150px;
+    text-align: left;
+    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+#form_usuario input {
+    margin-bottom: 5px;
+}
+
+
+#form_usuario select {
+    margin-bottom: 5px;
+    font-size:10px;
+}
+
+#formularioselectorgano select {
+    display:block;
+}
+
+#selectUOZone select {
+    display:block;
+}
+
+#abmZone select, #abmZone input {
+    display:block;
+}
+
+#abmZone{
+    height:500px;
+}
+
+#formulariotrabajadornuevolegajocargo input,
+#formulariotrabajadornuevolegajocargo select {
+    display:block;
+}
+
+#mainsection .desasignar {
+    margin-left:10px;
+}
+
+#Mensajes {
+    margin: 30px;
+    background-color: red;
+    color: white;
+    padding:10px;
+}
+
+/* Datos de personales */
+#ubigeosData {
+    position: relative;
+    top: -450px;
+    width: 290px;
+}
+
+/* Datos de familiares */
+#tabla_familiares {
+    overflow:auto;
+}
+
+#ubigeosDataFam {
+    position:relative;
+    top:-200px;
+    width:290px;
+}
+
+.datos_familia td{
+    vertical-align:  top;
+}
+/*Cambiar clave */
+#ok_msg {
+    background-color: #76EE00;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 20px;
+    margin: 20px;
+    width: 200px;
+    text-align: center;
+
+}
+
+#form_cambio_clave {
+    top: 100px;
+}
+
+#div_cambiarclave{
+    margin-left: 5px !important;
+}
+
+/* Titulos editor */
+.scrolleable {
+    overflow: auto;
+}
+
+#unidad_organica_ubi_geo {
+    position:relative;
+    float:left;
+    margin-left:-10px;
+    margin-top: 14px;
+}
+
+#form_unidad_organica {
+    float:left;
+    width:450px;
+}
+
+#timeout {
+    left:200px;
+    top: 100px;
+    background-color: #76EE00;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+}
+
+/* Para tablas auxiliares */
+.error {
+    padding: 20px;
+    margin:20px;
+    border: thin solid red;
+    color: red;
+    font-weight: bold;
+}
+
+
+
+#form_conceptoremunerativo label {
+    font: normal 1em Arial, Helvetica, sans-serif;
+    width: 150px;
+    text-align: left;
+    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+#form_conceptoremunerativo input {
+    margin-bottom: 5px;
+}
+
+
+#form_conceptoremunerativo select {
+    margin-bottom: 5px;
+    font-size:10px;
+}
+
+/*organismos informantes */
+#tabla_oi {
+    overflow:auto;
+}
+
+#organismosZone{
+    top: 200px;
+    margin-left: 12px;
+}
+
+/* Cargos */
+.cargosAM {
+    float: left;
+    padding: 5px;
+}
+
+#submitFrm {
+    float:left;
+    width: 500px;
+}
+
+#ocupacionalescargo {
+    height:130px;
+    width:212px;
+    position: relative;
+    left: 2px;
+    top: -212px;
+    float: left;
+    filter:alpha(opacity=100);
+    -moz-opacity: 1;
+    opacity: 1;
+
+
+}
+#OcupacionalesZone {
+
+    /*height:130px;
+        width:350px;
+        position: relative;
+        left: 0px;
+        top: 30px;
+        float: left;
+        filter:alpha(opacity=100);
+        -moz-opacity: 1;
+        opacity: 1;*/
+}
+#formOcupacional {
+}
+#OcupacionalesZone form {
+    height:130px;
+    width: 250px;
+    position: absolute;
+}
+
+#formacionZone {
+    position: relative;
+    top: -200px;
+}
+
+#submitFamiliar {
+    position:relative;
+}
+
+/* Datos personles */
+#datosPersonales {
+    padding-left:5px;
+    padding-right:5px;
+}
+
+#DatosPersonalesOtrosDatos {
+    float: left;
+    margin-left: 30px;
+    width: 400px;
+}
+
+#DatosPersonalesMain {
+    float:left;
+}
+
+#datosPersonalesZone {
+    height: 600px;
+}
+
+#cargos_izq {
+    width: 275px;
+}
+
+#cargos_der{
+    width: 300px;
+    height: 340px;
+}
+
+
+
+
+
+
+/*
+
+HTML>BODY DIV.t-error-popup SPAN {
+    background: transparent url('error-bevel-left.png') no-repeat;
+}
+
+DIV.t-error-popup {
+    background: transparent url('error-bevel-right.gif') no-repeat scroll top right;
+    cursor: pointer;
+    color: #FFF;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 39px;
+    margin-right: 6px;
+    padding-right: 29px;
+    text-decoration: none;
+}
+
+HTML>BODY DIV.t-error-popup {
+    background: transparent url('error-bevel-right.png') no-repeat scroll top right;
+}
+*/
+UL.t-data-list LI {
+    list-style-type: square;
+}
+
+DIV.t-loading {
+    display: inline;
+    width: auto;
+    font-weight: bold;
+    padding-right: 20px;
+    background: transparent url(ajax-loader.gif) no-repeat right top;
+}
+
+DIV.t-dialog-overlay {
+    position: fixed;
+    margin: auto;
+    top: 0px;
+    left: 0px;
+    z-index: 9990;
+    width: 100%;
+    height: 100%;
+    background: transparent url("dialog-background.gif");
+}
+
+DIV.t-page-loading-banner {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: auto;
+    font-weight: bold;
+    padding: 2px 4px 2px 24px;
+    color: black;
+    background: white url(ajax-loader.gif) no-repeat 4px center;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+SPAN.t-render-object-error
+{
+    font-weight: bold;
+    font: italic;
+    color: red;
+}
+
+DIV.t-available-values UL LI
+{
+    list-style-type : disc;
+    margin-left: 0px;
+}
+
+
+
+
+
+/*css reset*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;margin:0;padding:0;}:focus{outline:0;}body{line-height:1;color:#000;background:#FFF;}ol,ul{list-style:none;}table{border-collapse:separate;border-spacing:0;}caption,th,td{text-align:left;font-weight:400;}blockquote:before,blockquote:after,q:before,q:after{content:"";}blockquote,q{quotes:"" "";}
+/*en css reset*/
+
+body {
+    font:12px/1.2em Tahoma, Geneva, sans-serif normal;
+    color:#333;
+    text-align:left;
+    background-color:#666565;
+}
+a, a:visited, a:link { font-size:11px; color:#e10827; text-decoration:none;}
+a:hover { text-decoration:underline;}
+input, select, textarea {
+    font:12px/1.2em Tahoma, Geneva, sans-serif normal;
+    background-color:#fff;
+    border:1px solid #989898;
+    padding:4px;
+    color:#555454;
+    width:185px;
+    margin-bottom:15px !important;
+    clear:both;
+}
+select { width:195px;  padding: 3px 4px;}
+label { display:block; margin-bottom:5px; font:11px/1.2em Tahoma, Geneva, sans-serif normal !important; width:auto;}
+.check { float:left;}
+.check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
+
+.button, .buttonGrey {
+    color:#fff;
+    font-weight:bold;
+    font-size:12px;
+    cursor:pointer;
+    background:url(images/bg-button.gif) repeat-x 0 0;
+    border:1px solid #be0a16;
+    padding:4px 8px;
+    width:auto !important;
+    overflow:visible;
+    margin:5px !important;
+}
+.buttonGrey { background-image:url(images/bg-buttongrey.gif); border-color:#676767;}
+.button:hover {background:url(images/bg-buttonO.gif) repeat-x 0 0;}
+.buttonGrey:hover {background:url(images/bg-buttongreyO.gif) repeat-x 0 0;}
+
+h1, h2, h3, h4, h5, h6 { letter-spacing:normal;}
+h2 { font-size:18px; border-bottom:1px dashed; padding-bottom:10px; margin-bottom:20px !Important;}
+h3 { margin-bottom:15px; font-size:12px;}
+h4 { font-size:12px; font-weight:bold;}
+
+.box { border:1px solid #707070; background-color:#fff; padding:0; clear:both;}
+.box h3, h3 { background-color:#d72522; color:#fff; font-weight:bold; padding:4px 10px; display:block;}
+.box form { padding:20px 18px; }
+.box form label { margin:0 0 5px 0;}
+.box form .f-left.bigger { width:210px;}
+form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; width:197px; font-size:11px;}
+#formulariousuario { padding:0 25px }
+#formTipoUsuario { padding:0 30px;}
+
+.f-wrap { overflow:auto; zoom:1;}
+.f-left{ float:left;}
+.f-right { float:right;}
+.clear { clear:both;}
+.light-grey { background-color:#535152 !important;}
+.dark-grey { background-color:#2f2f30 !important;}
+.mar-top24 { /*margin-top:24px !important;*/}
+.inline { 	display:-moz-inline-stack;	display:inline-block;zoom:1;display:inline;margin-left:5px;}
+
+.sp, #toggle_filtros { background:url(images/sprite.gif) no-repeat 0 0;}
+.sp.t-error-icon { background-position:0 -50px;}
+.sp.show {background-position:0 0; height:18px;}
+.sp.hide { background-position:0 -17px !important;height:18px;}
+
+#toggle_filtros {height:18px; padding-left:20px; display:-moz-inline-stack; display:inline-block;zoom:1;display:inline; }
+
+#mainsection { margin:0 auto 20px; padding:0; width:900px; background-color:#fff; border:3px solid #b1242d;}
+#page { border: medium none; height: auto !important; min-height: 300px; padding: 10px;}
+#content h1, .organismo_titulo { font-size:14px; font-weight:bold; color:#fff; background:url(images/bg-title.gif) no-repeat 0 0;padding: 11px 10px 11px 30px; margin:0 0 20px -10px; text-align:left;}
+
+/*HEADER*/
+#header { height:83px; width:900px;background-color:#fff; overflow:auto; zoom:1; margin-bottom:10px;}
+#mainsection.home #header {border:3px solid #d72522; }
+#logo-left h1, #logo-right h1 { padding:0; margin:0;}
+#header #logo-left a { background:url(images/header.gif) no-repeat top left; height:83px; width:660px; float:left;}
+#header #logo-right a { background:url(images/servir-logo.gif) no-repeat top left; float:right; width:177px; height:65px; padding:0; margin:7px 30px 0;}
+
+/*LOGIN - HOME*/
+#mainsection.home { background-color:#666565; border:none; }
+.login, .change-pass { margin:100px auto 0; width:467px; width:480px; }
+.login .button { margin-right:5px;}
+.change-pass { 
+    margin-top:50px;
+    padding-bottom: 20px;
+}
+html > body div.t-error li { margin:0 0 0 10px;}
+
+
+/*MENU*/
+.menu { background:none;}
+.menu ul a { font-size:11px;  padding:0 14px; width: auto; margin-right: 1px;display:-moz-inline-stack;
+             display:inline-block; zoom:1;}
+.menu ul a:hover, .menu ul a.active { background-color:#860907;}
+
+/*TABS*/
+ul.tabs a { background-color:#bbb; color:#fff; margin-right:1px; padding: 5px 14px; width: auto; font-weight:bold; font-size:11px; border-color:#999; border-bottom-color:#E40132; display:-moz-inline-stack;
+            display:inline-block;
+            zoom:1;display:inline;}
+ul.tabs a.active, ul.tabs a.active:hover {  background:none; color:#D72522;  cursor:default;}
+ul.tabs a:hover { background-color:#D72522;  border-color:#E40132; }
+ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
+
+
+/*BUSQUEDA*/
+.wrap .pane { padding:20px;}
+#selectors { border:none; height:auto; padding:0; width:100%;}
+.actions { overflow:auto;zoom:1;}
+.actions a { 
+    display:-moz-inline-stack;
+    display:inline-block;
+    zoom:1;
+    /*display:inline;*/
+    margin: 10px;
+}
+#busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos , #{ width:95% !important; height:auto; border-color:#D72522; padding:20px 18px;}
+#busquedas select, #mainfiltros select, #form_conceptoremunerativo select, #form_usuario select {font-size:11px;}
+#filtrosnombres, #filtrosdoc, #mainfiltros .seccionfiltros { float:none; margin:0;}
+#busquedas label, #mainfiltros label {margin-right:0;}
+.seccionfiltros { width:auto;}
+#tablaTrabajador {clear:both;}
+
+#Datos_Generales { border:none; padding:0;}
+#basicosTrabajador { padding:4px 10px; font-size:12px; line-height:1.2em;}
+#DatosPersonalesOtrosDatos { margin:0; float:none; width:100%; top:247px;}
+#datosPersonalesZone { height:auto;}
+#ubigeosData, #ubigeosDataFam { width:auto; top: -394px; clear:both;}
+#ubigeoDomZone { clear:both; overflow:auto; zoom:1; }
+
+/*#ubigeosData {top:-152px;}
+*/.t-zone.f-left { width:195px; margin:0 5px;}
+#formacionZone, #ubigeosDataFam { top:5px; clear:both}
+#submitFamiliar { top:440px;}
+#formacionZone { margin-bottom:30px}
+
+
+#form_unidad_organica {float:none; width:auto;}
+#bouttons_uo { top:44px;}
+
+#formacion .t-data-grid input { width:140px;}
+#formacion .t-data-grid select { width:150px;}
+.t-data-grid textarea { width:180px;}
+#fragment_1 input, #fragment_0 input {width:110px !important;}
+#formacion #denominacion { width:170px;}
+#formacion #interno { margin-left:11px !important;}
+
+
+.day, #formacion #horas { width:50px !important;}
+.month, .year, #mainfiltros #select { width:62px !important;}
+
+table textarea, table select, table input { vertical-align:top;}
+
+
+/*CARGOS*/
+#cargos_izq, #cargos_der, #OcupacionalesZone form, #OcupacionalesZone { 
+    /*width:100%; float:none;*/
+}
+.cargosAM { padding:0;}
+
+/*ERROR*/
+div.t-error, #timeout { border:1px dashed #525252; padding:3px; font-size:11px; margin-bottom:10px;}
+div.t-error div, #timeout h3 { background-color:#525252}
+div.t-error ul li { color:#D72522;}
+
+img.t-error-icon {/* margin:0 0 2px 4px; vertical-align:middle; background-repeat:no-repeat;*/ display:none;}
+label.t-error { color:#E10827;}
+input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#555454; font-style:normal;}
+
+
+.no-info { margin:10px; font-weight:bold;  color: #D72522;}
+/*OK MSG*/
+#ok_msg { background-color:#91d722; border:none; margin: 0 auto; width: 90%;}
+
+
+/**/
+#formulariocambioclave div { margin: 0 5px;}
+#formulariocambioclave div.f-wrap { margin:0;}
+
+
+/*TABLES*/
+table { margin-bottom:20px; font:11px/1.2em Tahoma, Geneva, sans-serif normal;}
+table.t-data-grid { width:100%; clear:both;}
+th.login { border-top:none;}
+th { background-color:#525252;}
+table.t-data-grid tbody tr td {padding:3px;}
+table.t-data-grid tr th a { vertical-align:middle; display:-moz-inline-stack; display:inline-block; zoom:1; display:inline; }
+
+#form_unidad_ejecutora { width:auto;}
+
+/*PAGINATION*/
+div.t-data-grid-pager { margin:15px 0 30px;}
+div.t-data-grid-pager a, div.t-data-grid-pager span.current { padding:0 6px;}
+div.t-data-grid-pager span.current { background-color:#DF0130;}
+
+/*BATCH*/
+#formularioprocesobatch .button, #formularioseleccion .button { margin-top:14px !important;}
+.informacion ul { margin:15px 20px;}
+.informacion ul li { list-style:square inside;}
+
+#tamanosArchivos ul { float:left;}
+#formularioconfirmacion { float:right; margin-top:15px;}
+
+
+/*TIME OUT*/
+#timeout { background-color:#fff; margin:60px auto;}
+
+
+/*FOOTER*/
+#footer { width:900px; margin:0 auto; background:url(images/border-foot.gif) repeat-x 0 0; border:none; padding:30px;}
+
+
+
+/* The console is used to show debugging messages. */
+DIV.t-console {
+    position: fixed;
+    z-index: 1;
+    top: 2px;
+    left: 2px;
+}
+
+DIV.t-console DIV {
+    font-weight: bold;
+    padding: 0px 2px;
+}
+
+DIV.t-console DIV.t-err {
+    background-color: red;
+    color: white;
+}
+
+DIV.t-console DIV.t-warn {
+    background-color: yellow;
+    color: black;
+}
+
+DIV.t-console DIV.t-debug {
+    background-color: silver;
+    color: black;
+}
+
+#box_uo {
+    height: 360px;
+}
+
+#ubigeoDomZoneFam {
+    margin-top: 13px;
+}
+
+/*#unidadOrganica_cue{
+    width:80px;
+}
+
+#cue_uo {
+    width:100px;
+}*/
+
+#bouttons_uo {
+    top: 88px;
+    position: relative;
+}
+
+#bouttons_oi {
+    top: -31px;
+    position: relative;
+}
+
+#bouttons_ue {
+    top: -31px;
+    position: relative;
+}
+
+#bouttons_u {
+    top: -31px;
+    position: relative;
+}
+
+#box_organo {
+    height: 175px;
+}
+
+#box_oi {
+    height: 550px;
+}
+
+#box_ue {
+    height: 220px;
+}
+
+#box_u {
+    height: 440px;
+}
+
+#box_asignarcargo {
+    height: 500px;
+}
+
+#ubigeosdata_dpe {
+
+}
+
+#ubigeo_dpe {
+    clear:both;
+    width: 99%;
+    margin:0;
+}
+
+#ubigeo_lugar{
+    clear:both;
+    width: 99%;
+    margin:0;
+}
+
+#ubigeo_fe {
+    clear:both;
+    width: 99%;
+}
+
+#datospersonales_fe{
+    height: 0px;
+}
+
+#ubigeo_dpe_deptprovdom {
+    margin-top: 60px;
+}
+
+
+#box_conceptos{
+    padding-bottom: 20px;
+}
+/*
+#ubigeoNacZoneFam {
+
+
+    margin-top:-143px;
+    padding-left: 16px;
+}
+
+#domicilio_dpe{
+    margin-top: 688px;
+}
+
+#ubigeoDomZone {
+    margin-top:-143px;
+    padding-left: 16px;
+}
+
+#ubigeoNacZone {
+   margin-top:-143px; 
+}
+*/
+#actualizar_dpe{
+    position: relative;
+    top:230px;
+}
+
+#certificacionesZone {
+    padding-bottom: 40px;
+}
+
+#box_nuevotrabajador{
+    height: 165px;
+}
+
+.dateInput select{
+    width: 100px !important;
+}
+
+#meritosdemeritosEdit .dateInput{
+    width: 100px;
+}
+
+#cargosSelects {
+    width: 100%;
+    height:50px;
+}
+
+#box-cargos{
+    height: 430px;
+}
+
+#tamano-ubigeo-wrap{
+    margin-left:10px;
+    margin-top: -37px;
+}
+
+#cambiarclave{
+    margin: 5px;
+}
+
+.datosdecargoeditor{
+    clear: both;
+    margin-left: 10px;
+}
+
+.datosdecargoeditor label{
+    float: left;
+    width: 340px!important;
+}
+
+.input_corto {
+    width:120px;
+}
+
+.datoperso_req_hab_profesional{
+    right:100px;
+    float:left;
+    height: 10px;
+}
+
+.datoperso_req_hab_profesional input{
+    width: 10px;
+}
+
+.checkbox{
+    clear: both;
+}
+
+.checkbox label{
+    width: auto !important;
+
+}
+.checkbox input{
+    clear: none;
+    width: 10px;
+}
+
+.posicioncheckbox{
+    width: 30%;
+    height: 75px;
+    float: left;
+    margin-left: 5px;
+}
+
+.filtros{
+    width:30%;
+    float: left;
+    margin-left: 5px;
+}
+
+.filtros input{
+    padding: 0px;
+}
+
+.grupocheckbox{
+    clear:both;
+}
+
+.hssemfecha{
+    clear: both;
+}
+
+.fechamenora{
+    margin-right: 100px;
+}
+
+#bouttonambcargos{
+    bottom: 100px;
+}
+
+.input_grande{
+    width: 250px !important;
+}
+
+#select_origen{
+    width:245px;
+}
+
+#num_colegiatura{
+    width:70px !important;
+}
+
+#tdEliminar{
+    width:65px;
+}
+
+#dateInput{
+    width:100px;
+}
+
+#fielddespuesdate{
+    width: 104px;
+}
+
+.margintop11{
+    margin-top: 11px;
+}
+
+#form_tipo_usuario select{
+    width: 275px;
+}
+
+.box_desasignarcargo{
+    height: 350px;
+}
+
+.marginright{
+    margin-left: 18px;
+}
+
+#confirmarZone{
+    position: relative;
+    top: -140px;
+    width: 290px;
+    margin-left: 18px;
+}
+
+.mostraUsuarioMenu{
+    margin-top: 20px;
+    width:100%;
+}
+
+.mostraUsuarioMenu h3{
+    padding-top: 5px;
+}
+
+.guia-right {
+    background: url(images/guia.jpg) top right no-repeat;
+    height:75px;
+    width: 70px;
+    margin-top: 20px;
+}
+
+.seguridad-left {
+    background: url(images/seguridad.jpg) top left no-repeat;
+    height:75px;
+    width: 70px;
+}
+
+#lienPopup{
+    width: 100px;
+}
+
+.centerClave{
+    margin-top: 30px;
+    float:left;
+}
+
+.centerImagenesIndex{
+    margin-left: 90px;
+}
+
+#textoIndexClave{
+    border: 2px solid red;
+    position: absolute;
+    width: 390px;
+    height: 100px;
+    left: 430px;
+    top: 230px;
+    background-color: whiteSmoke;
+    z-index: 9;
+    padding: 10px;
+    overflow: auto;
+    color: black;
+}
+
+#textoIndexUsuario{
+    border: 2px solid red;
+    position: absolute;
+    width: 400px;
+    height: 120px;
+    left: 430px;
+    top: 230px;
+    background-color: whiteSmoke;
+    z-index: 9;
+    padding: 10px;
+    overflow: auto;
+    color: black;
+}
+
+#textoIndexClave span{
+    float:right;
+}
+
+#textoIndexUsuario span{
+    float:right;
+}
+
+#ubigeo_entidadUE{
+    clear:both;
+    width: 99%;
+    margin:0;
+}
+
+#entidadCodDen{
+    clear:both;
+}
+
+#nivelZone{
+    height:55px;
+}
+
+#datosDestino .box form {
+    padding:0;
+}
+
+.button_reporteGlobalTrabajador{
+    margin-top: -26px;
+}
+
+.button_bajaTrabajador{
+    margin-top: -46px;
+    margin-right: 390px;
+}
+
+#datosDestino #SectorZone {
+    width:auto;
+}
+
+#ReporteEntidades #SectorZone {
+    width:auto;
+}
+
+#DatosDeCargo{
+    height: 200px;
+
+}
+
+#formulariodatosdecargo{
+    padding:0px;
+
+}
+
+#cargoAsignado{
+    float:left;
+}
+
+.right{
+    float: left;
+}
+
+/*Para offline */
+#mensaje_inicial {
+    margin:10px;
+    padding:10px;
+}
