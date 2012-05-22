@@ -189,6 +189,7 @@ public class TrabajadorModificar  extends GeneralPage
  
     @CommitAfter
     Object onSuccessFromInstruccion(){
+        actual.setIdtipodocumento("01");
         actual.setFormacionProfesional(formacionProfesional.getFormacion());
         session.saveOrUpdate(actual);
         return instruccionZone;
