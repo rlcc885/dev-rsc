@@ -46,7 +46,7 @@
                 <t:if test="noeditable" negate="true">
                     <div class="f-wrap">
                         <div class="actions f-right clear">
-                            <input type="submit" value="Agregar" class="button f-right"/>
+                            <input type="submit" value="Grabar" class="button f-right"/>
                             <t:actionlink t:id="CancelarNuevo">
                             Cancelar
                             </t:actionlink>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="f-wrap">
                         <div class="actions f-right clear">
-                            <input type="submit" value="Agregar" class="button f-right"/>
+                            <input type="submit" value="Grabar" class="button f-right"/>
                             <t:actionlink t:id="Cancelar">
                             Cancelar
                             </t:actionlink>

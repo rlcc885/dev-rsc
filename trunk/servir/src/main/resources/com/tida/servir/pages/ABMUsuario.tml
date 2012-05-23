@@ -31,7 +31,7 @@
                     </div> <!-- filtrosnombres -->
                 </div> <!-- busquedas -->
                 <div class="actions f-right">
-                    <input id = "buscarsubmit" type="submit" value="Actualizar" class="buttonGrey"/>
+                    <input id = "buscarsubmit" type="submit" value="Buscar" class="button f-right"/>
                     <!-- <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/> -->
                 </div>
             </t:form>
