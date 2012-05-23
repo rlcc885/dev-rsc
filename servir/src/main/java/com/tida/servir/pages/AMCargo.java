@@ -24,47 +24,47 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
  */
 public class AMCargo
 {
-
-
+    
+    
     @Inject
     private Session session;
-
-
+    
+    
     @Property
     private Cargo cargo;
-
-
+    
+    
     @Property
     private Cargo c;
-
+    
     @Component(id = "formularioaltacargo")
     private Form formularioaltacargo;
-
+    
     @Property
     @SessionState
     private Usuario _usuario;
-
+    
     public List<Cargo> getCargos()
     {
     	 return session.createCriteria(Cargo.class).list();
     }
-
+    
     /*
      * levantamos el combo de Organismos informantes
      */
-
-
-
+    
+    
+    
     @Inject
     private PropertyAccess _access;
-
+    
     private GenericSelectModel<UnidadOrganica> _beans;
-
-
+    
+    
     public UnidadOrganica getUnidadOrganica(){
        return cargo.getUnd_organica();
     }
-
+    
     public void setUnidadOrganica(UnidadOrganica _uo){
        cargo.setUnd_organica(_uo);
     }
@@ -76,15 +76,15 @@ public class AMCargo
 /**
  * Hasta acá para levantar combo de unidades organicas
  */
-
+    
     public AMCargo()
     {
         List<UnidadOrganica> list = session.createCriteria(UnidadOrganica.class).list();
-
+        
         _beans = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
     }
-
-
+    
+    
     @Log
     @CommitAfter
     Object onSuccessFromformularioaltacargo()
@@ -96,10 +96,10 @@ public class AMCargo
     	cargo.setUnd_organica(uo);
         session.saveOrUpdate(cargo);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(cargo.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
-
+        
     	return this;
 	}
-
+        
 	@Log
 	void onPrepareFromformularioaltacargo()
 	{
@@ -107,18 +107,18 @@ public class AMCargo
 			cargo = new Cargo();
 		}
 	}
-
+        
         /*
          * reset del formulario (borrar  objeto)
          */
         void onActionFromReset() {
             cargo = new Cargo();
         }
-
+        
         /*
          * Borrar la fila
          */
-
+        
         /*
          Cargar desde los parámetros
          */
@@ -126,7 +126,7 @@ public class AMCargo
         {
             if (c==null)
                 c = new Cargo();
-
+            
             this.cargo = c;
         }
 
