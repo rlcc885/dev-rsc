@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 <div class="f-right actions clear" id="bouttons_oi">
-                    <input id="submit" type="submit" value="Enviar" class="button f-right"/>
+                    <input id="submit" type="submit" value="Grabar" class="button f-right"/>
                     <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>
                 </div>
             </t:form>
