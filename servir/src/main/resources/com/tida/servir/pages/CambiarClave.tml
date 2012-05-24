@@ -41,7 +41,7 @@
                                 t:value="newPass2" size="20" t:validate="required" />
                             </div>
                         </div>
-                        <input id="submit" type="submit" value="Enviar" class="button f-right"/>
+                        <input id="submit" type="submit" value="Grabar" class="button f-right"/>
                     </t:if>
                 </t:form>
             </t:zone>
