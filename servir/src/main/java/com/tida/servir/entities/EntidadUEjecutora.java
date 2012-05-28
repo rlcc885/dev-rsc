@@ -5,10 +5,7 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -23,7 +20,6 @@ public class EntidadUEjecutora implements Serializable {
     public static String ESTADO_ALTA = "Alta";
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    
     //antes datos de organismo informante
     @NonVisual
     private long id;
@@ -37,34 +33,13 @@ public class EntidadUEjecutora implements Serializable {
     String cue_entidad;
     String cue_elemento;
     Boolean def_servir; //Servir Ingresa la información
-
-    
     Boolean pliego_rep; //Visualiza reportes de pliegos
     Boolean sector_rep; //Visualiza reportes de sector
-
-
-    public Boolean getPliego_rep() {
-        return pliego_rep;
-    }
-
-    public void setPliego_rep(Boolean pliego_rep) {
-        this.pliego_rep = pliego_rep;
-    }
-
-    public Boolean getSector_rep() {
-        return sector_rep;
-    }
-
-    public void setSector_rep(Boolean sector_rep) {
-        this.sector_rep = sector_rep;
-   }
     //@Validate("required")
     //String cod_organismo;
     //@Validate("required")
     //private String tipo_email;
-
     String correoElectronicoInstitucional;
-    
     //antes datos de unidad ejecutora
     private int cod_mef_ue;
     @Validate("required")
@@ -76,7 +51,6 @@ public class EntidadUEjecutora implements Serializable {
     @Validate("required")
     private String pliego;
     private String ruc;
-    
     //nuevo campo
     private String localidad;
     @NonVisual
@@ -95,10 +69,30 @@ public class EntidadUEjecutora implements Serializable {
     private String correoElectronicoJefeRRHH;
     private String TEJefeRRHH;
     private String TEMovilJefeRRHH;
-    @Validate("required")    
+    @Validate("required")
     private String codigoEntidadUE;
-    
     private boolean trabajadorAgregaDatos;
+    
+    //@Column(name = "IDCLASFUNCIONAL")
+    private DatoAuxiliar clasificadorFuncional;
+    
+    private DatoAuxiliar idNivelGobierno;
+
+    public Boolean getPliego_rep() {
+        return pliego_rep;
+    }
+
+    public void setPliego_rep(Boolean pliego_rep) {
+        this.pliego_rep = pliego_rep;
+    }
+
+    public Boolean getSector_rep() {
+        return sector_rep;
+    }
+
+    public void setSector_rep(Boolean sector_rep) {
+        this.sector_rep = sector_rep;
+    }
 
     public boolean getTrabajadorAgregaDatos() {
         return trabajadorAgregaDatos;
@@ -107,7 +101,6 @@ public class EntidadUEjecutora implements Serializable {
     public void setTrabajadorAgregaDatos(boolean trabajadorAgregaDatos) {
         this.trabajadorAgregaDatos = trabajadorAgregaDatos;
     }
-
     Boolean proc_batch; // Admite proceso Batch
 
     public String getClas_funcional() {
@@ -116,19 +109,15 @@ public class EntidadUEjecutora implements Serializable {
 
     public void setClas_funcional(String clas_funcional) {
         this.clas_funcional = clas_funcional;
-    
     }
 
-    /*public String getCod_organismo() {
-        return cod_organismo;
+    /*
+     * public String getCod_organismo() { return cod_organismo; }
+     *
+     * public void setCod_organismo(String cod_organismo) { if (cod_organismo !=
+     * null) { this.cod_organismo = cod_organismo.trim(); }
     }
-
-    public void setCod_organismo(String cod_organismo) {
-        if (cod_organismo != null) {
-            this.cod_organismo = cod_organismo.trim();
-        }
-    }*/
-
+     */
     public String getCue_entidad() {
         return cue_entidad;
     }
@@ -167,7 +156,7 @@ public class EntidadUEjecutora implements Serializable {
 
     public void setCod_mef_ue(int cod_mef_ue) {
         this.cod_mef_ue = cod_mef_ue;
-    }  
+    }
 
     @ManyToOne
     public DatoAuxiliar getCod_ubi_dept() {
@@ -299,19 +288,14 @@ public class EntidadUEjecutora implements Serializable {
     public void setCodigoEntidadUE(String codigoEntidadUE) {
         this.codigoEntidadUE = codigoEntidadUE;
     }
-/*
-    public String getDen_organismo() {
-        return den_organismo;
+    /*
+     * public String getDen_organismo() { return den_organismo; }
+     *
+     * public void setDen_organismo(String den_organismo) { if (den_organismo !=
+     * null) { this.den_organismo = den_organismo.trim(); }
     }
+     */
 
-    public void setDen_organismo(String den_organismo) {
-        if (den_organismo != null) {
-            this.den_organismo = den_organismo.trim();
-        }
-    }*/
-
-    
-    
     public Boolean getDef_servir() {
         return def_servir;
     }
@@ -327,7 +311,7 @@ public class EntidadUEjecutora implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
     @Id
     @GeneratedValue
     public long getId() {
@@ -367,4 +351,25 @@ public class EntidadUEjecutora implements Serializable {
         hash = 17 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
+    
+    @ManyToOne
+    public DatoAuxiliar getClasificadorFuncional() {
+        return clasificadorFuncional;
+    }
+
+    public void setClasificadorFuncional(DatoAuxiliar clasificadorFuncional) {
+        this.clasificadorFuncional = clasificadorFuncional;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getIdNivelGobierno() {
+        return idNivelGobierno;
+    }
+
+    public void setIdNivelGobierno(DatoAuxiliar idNivelGobierno) {
+        this.idNivelGobierno = idNivelGobierno;
+    }
+    
+    
+    
 }

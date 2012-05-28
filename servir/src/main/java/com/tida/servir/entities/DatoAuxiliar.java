@@ -1,5 +1,6 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,10 +11,9 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class DatoAuxiliar {
+public class DatoAuxiliar { //implements Serializable {
 
     public enum TipoDeAcceso {
-
         SoloLectura,
         ValorEditable,
         Editable
