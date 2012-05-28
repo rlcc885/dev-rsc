@@ -31,6 +31,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * Clase que maneja las unidades ejecutoras
+ *
  * @author ale
  */
 public class AMEntidadUEjecutora extends GeneralPage {
@@ -90,31 +91,31 @@ public class AMEntidadUEjecutora extends GeneralPage {
     /*
      * levantamos el combo de Unidades ejecutoras
      */
-    /*MultiZoneUpdate tresZonas() {
-    MultiZoneUpdate mu;
-    mu = new MultiZoneUpdate("ubigeoEntidadZone", ubigeoEntidadZone.getBody());
-    
-    return mu;
-    }*/
+    /*
+     * MultiZoneUpdate tresZonas() { MultiZoneUpdate mu; mu = new
+     * MultiZoneUpdate("ubigeoEntidadZone", ubigeoEntidadZone.getBody());
+     *
+     * return mu;
+    }
+     */
     @Inject
     private PropertyAccess _access;
     @Inject
     private Request _request;
     private GenericSelectModel<EntidadUEjecutora> _beans;
 
-    /*private UnidadEjecutora _unidadEjecutora;
-
-    public UnidadEjecutora getUnidadEjecutora(){
-    return entidadUE.getUnidadEjecutora();
+    /*
+     * private UnidadEjecutora _unidadEjecutora;
+     *
+     * public UnidadEjecutora getUnidadEjecutora(){ return
+     * entidadUE.getUnidadEjecutora(); }
+     *
+     * public void setUnidadEjecutora(UnidadEjecutora _unidadEjecutora){
+     * entidadUE.setUnidadEjecutora(_unidadEjecutora); }
+     *
+     * public GenericSelectModel<EntidadUEjecutora> getBeans(){ return _beans;
     }
-
-    public void setUnidadEjecutora(UnidadEjecutora _unidadEjecutora){
-    entidadUE.setUnidadEjecutora(_unidadEjecutora);
-    }
-
-    public GenericSelectModel<EntidadUEjecutora> getBeans(){
-    return _beans;
-    }*/
+     */
     public boolean getNoEditable() {
         return !getEditable();
     }
@@ -127,10 +128,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
      * Hasta acá para levantar combo de unidades ejecutoras
      */
 
-    /*public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxEmail() {
-    List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TiposEmail", null, 0, session);
-    return new GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
-    }*/
+    /*
+     * public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxEmail() {
+     * List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TiposEmail", null, 0,
+     * session); return new
+     * GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
+    }
+     */
     public List<String> getBeanDatoAuxNivel() {
         return Helpers.getValorTablaAuxiliar("NivelGobierno", session);
     }
@@ -171,20 +175,24 @@ public class AMEntidadUEjecutora extends GeneralPage {
         envelope.setContents(helpers.Constantes.EUE_EXITO);
         return this;// La/a zona a actualizar
     }
+    /*
+     * Se altera la obtención del modelo para el combo
+     */
+    /*
+     * @Log public List<String> getClasFuncOrg() { return
+     * Helpers.getValorTablaAuxiliar("ClasFuncOrg", session); }
+     */
 
     @Log
-    public List<String> getClasFuncOrg() {
-        return Helpers.getValorTablaAuxiliar("ClasFuncOrg", session);
+    public GenericSelectModel<DatoAuxiliar> getClasFuncOrg() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasFuncOrg", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
     }
 
     @Log
     public boolean getEsBorrable() {
         /*
-         * Buscamos;
-         * Concepto remunerativo
-         *   Legajo
-         *   Organo
-         *   Usuario
+         * Buscamos; Concepto remunerativo Legajo Organo Usuario
          *
          */
 
@@ -239,11 +247,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PLIEGO_OBLIGATORIO);
             }
         } else {
-            if (ubigeoEntidadUE.getDepartamento() == null ) {
+            if (ubigeoEntidadUE.getDepartamento() == null) {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_DEPARTAMENTO_OBLIGATORIO);
             }
 
-            if (ubigeoEntidadUE.getProvincia() == null ) {
+            if (ubigeoEntidadUE.getProvincia() == null) {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PROVINCIA_OBLIGATORIO);
             }
         }
@@ -253,8 +261,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromformularioaltaentidaduejecutoras() {
         /*
-        Criteria c = session.createCriteria(Usuario.class);
-        c.add(Restrictions.eq("codigo_usuario", usuario.getCodigo_usuario()));
+         * Criteria c = session.createCriteria(Usuario.class);
+         * c.add(Restrictions.eq("codigo_usuario",
+         * usuario.getCodigo_usuario()));
          *
          */
         entidadUE.setCod_ubi_dept(ubigeoEntidadUE.getDepartamento());
@@ -324,7 +333,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     /*
-     * reset del formulario (borrar  objeto)
+     * reset del formulario (borrar objeto)
      */
     @Log
     void onActionFromReset() {
@@ -336,7 +345,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeoEntidadUE = new Ubigeo();
     }
     /*
-    Cargar desde los parámetros
+     * Cargar desde los parámetros
      */
 
     @Log

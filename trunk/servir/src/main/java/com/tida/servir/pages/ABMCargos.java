@@ -169,7 +169,6 @@ public class ABMCargos extends GeneralPage {
     public GenericSelectModel<DatoAuxiliar> getCodFunCargo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
-
     }
 
     @Log

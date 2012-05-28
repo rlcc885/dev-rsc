@@ -1,6 +1,5 @@
 package com.tida.servir.entities;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,68 +16,52 @@ public class Cargo {
     public static String DEN_DEFAULT = "Cargo a designar";
     public static Integer CANT_DEFAULT = 1;
     public static Integer CANT_MAX = 999999;
-    
-	//	@Id
+    //	@Id
 //  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //  @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
-	private long id;
-
+    private long id;
 //	@PrimaryKeyJoinColumn
 //	@Validate("required")
 //	@ManyToOne
-    
-    	/*@Validate("required")
-        private EntidadUEjecutora entidadUE;*/
-        
-        /*@Validate("required")
-        private Integer nivel_unidad_organica;*/
-    
-    	@Validate("required")
-	private UnidadOrganica und_organica;
-        
-    	@Validate("required")        
-        private String cod_cargo;
-
-	@Validate("required")
-	private String den_cargo;
-
-	private String estado;
-
-	private DatoAuxiliar reg_lab_con;
-        
-	private Integer horas_x_sem;
-        
-        private Boolean personasCargo;
-
-        /*
-	@Validate("required")
-	private String cod_est_cargo;
-        */
-	private DatoAuxiliar clasificacion_funcional;
-
-	private Boolean req_hab_profesional;
-
-	private Boolean dec_jurada_byr;
-
-        private String situacion_CAP;
-        
-        private Boolean presupuestado_PAP;
+    /*
+     * @Validate("required") private EntidadUEjecutora entidadUE;
+     */
+    /*
+     * @Validate("required") private Integer nivel_unidad_organica;
+     */
+    @Validate("required")
+    private UnidadOrganica und_organica;
+    @Validate("required")
+    private String cod_cargo;
+    @Validate("required")
+    private String den_cargo;
+    private String estado;
+    private DatoAuxiliar reg_lab_con;
+    private Integer horas_x_sem;
+    private Boolean personasCargo;
 
     /*
-    @Validate("required")
-	private Integer plantillaremunerativa;
-    */
-    
-	/*private Integer ctd_ptos_ocupados_cap;
+     * @Validate("required") private String cod_est_cargo;
+     */
+    private DatoAuxiliar clasificacion_funcional;
+    private Boolean req_hab_profesional;
+    private Boolean dec_jurada_byr;
+    private String situacion_CAP;
+    private Boolean presupuestado_PAP;
 
-	private Integer ctd_ptos_previstos_cap;
-
-	private Integer ctd_ptos_presupuesto_pap;
-
-         */
+    /*
+     * @Validate("required") private Integer plantillaremunerativa;
+     */
+    /*
+     * private Integer ctd_ptos_ocupados_cap;
+     *
+     * private Integer ctd_ptos_previstos_cap;
+     *
+     * private Integer ctd_ptos_presupuesto_pap;
+     *
+     */
     private Integer ctd_puestos_total;
-
     private DatoAuxiliar grupoOcupacional;
     private DatoAuxiliar nivelRemunerativo;
 
@@ -98,16 +81,13 @@ public class Cargo {
         this.cod_cargo = cod_cargo;
     }
     /*
-    @ManyToOne
-    public DatoAuxiliar getCod_est_cargo() {
-
-        return cod_est_cargo;
-    }
-
-    public void setCod_est_cargo(DatoAuxiliar cod_est_cargo) {
-        this.cod_est_cargo = cod_est_cargo;
-    }
-    */
+     * @ManyToOne public DatoAuxiliar getCod_est_cargo() {
+     *
+     * return cod_est_cargo; }
+     *
+     * public void setCod_est_cargo(DatoAuxiliar cod_est_cargo) {
+     * this.cod_est_cargo = cod_est_cargo; }
+     */
 
     @ManyToOne
     public DatoAuxiliar getClasificacion_funcional() {
@@ -118,22 +98,21 @@ public class Cargo {
         this.clasificacion_funcional = clasificacion_funcional;
     }
 
-    /*public EntidadUEjecutora getEntidadUE() {
-        return entidadUE;
+    /*
+     * public EntidadUEjecutora getEntidadUE() { return entidadUE; }
+     *
+     * public void setEntidadUE(EntidadUEjecutora entidadUE) { this.entidadUE =
+     * entidadUE;
     }
+     */
 
-    public void setEntidadUE(EntidadUEjecutora entidadUE) {
-        this.entidadUE = entidadUE;
-    }*/
-
-  /*  public Integer getNivel_unidad_organica() {
-        return nivel_unidad_organica;
-    }
-
-    public void setNivel_unidad_organica(Integer nivel_unidad_organica) {
-        this.nivel_unidad_organica = nivel_unidad_organica;
-    }
-*/
+    /*
+     * public Integer getNivel_unidad_organica() { return nivel_unidad_organica;
+     * }
+     *
+     * public void setNivel_unidad_organica(Integer nivel_unidad_organica) {
+     * this.nivel_unidad_organica = nivel_unidad_organica; }
+     */
     public Boolean getPresupuestado_PAP() {
         return presupuestado_PAP;
     }
@@ -150,31 +129,26 @@ public class Cargo {
         this.situacion_CAP = situacion_CAP;
     }
 
-    /*public Integer getCtd_ptos_ocupados_cap() {
-        return ctd_ptos_ocupados_cap;
-    }
-
-    public void setCtd_ptos_ocupados_cap(Integer ctd_ptos_ocupados_cap) {
-        this.ctd_ptos_ocupados_cap = ctd_ptos_ocupados_cap;
-    }
-
-
-    public Integer getCtd_ptos_presupuesto_pap() {
-        return ctd_ptos_presupuesto_pap;
-    }
-
-    public void setCtd_ptos_presupuesto_pap(Integer ctd_ptos_presupuesto_pap) {
-        this.ctd_ptos_presupuesto_pap = ctd_ptos_presupuesto_pap;
-    }
-
-    public Integer getCtd_ptos_previstos_cap() {
-        return ctd_ptos_previstos_cap;
-    }
-
-    public void setCtd_ptos_previstos_cap(Integer ctd_ptos_previstos_cap) {
-        this.ctd_ptos_previstos_cap = ctd_ptos_previstos_cap;
-    }
-
+    /*
+     * public Integer getCtd_ptos_ocupados_cap() { return ctd_ptos_ocupados_cap;
+     * }
+     *
+     * public void setCtd_ptos_ocupados_cap(Integer ctd_ptos_ocupados_cap) {
+     * this.ctd_ptos_ocupados_cap = ctd_ptos_ocupados_cap; }
+     *
+     *
+     * public Integer getCtd_ptos_presupuesto_pap() { return
+     * ctd_ptos_presupuesto_pap; }
+     *
+     * public void setCtd_ptos_presupuesto_pap(Integer ctd_ptos_presupuesto_pap)
+     * { this.ctd_ptos_presupuesto_pap = ctd_ptos_presupuesto_pap; }
+     *
+     * public Integer getCtd_ptos_previstos_cap() { return
+     * ctd_ptos_previstos_cap; }
+     *
+     * public void setCtd_ptos_previstos_cap(Integer ctd_ptos_previstos_cap) {
+     * this.ctd_ptos_previstos_cap = ctd_ptos_previstos_cap; }
+     *
      *
      */
     public Integer getCtd_puestos_total() {
@@ -184,7 +158,7 @@ public class Cargo {
     public void setCtd_puestos_total(Integer ctd_puestos_total) {
         this.ctd_puestos_total = ctd_puestos_total;
     }
-    
+
     public Boolean getDec_jurada_byr() {
         return dec_jurada_byr;
     }
@@ -217,15 +191,13 @@ public class Cargo {
         this.horas_x_sem = horas_x_sem;
     }
 
-/*
-    public Integer getPlantillaremunerativa() {
-        return plantillaremunerativa;
-    }
-
-    public void setPlantillaremunerativa(Integer plantillaremunerativa) {
-        this.plantillaremunerativa = plantillaremunerativa;
-    }
-*/
+    /*
+     * public Integer getPlantillaremunerativa() { return plantillaremunerativa;
+     * }
+     *
+     * public void setPlantillaremunerativa(Integer plantillaremunerativa) {
+     * this.plantillaremunerativa = plantillaremunerativa; }
+     */
     @ManyToOne
     public DatoAuxiliar getReg_lab_con() {
         return reg_lab_con;
@@ -284,8 +256,6 @@ public class Cargo {
         return hash;
     }
 
-
-    
     @ManyToOne
     public DatoAuxiliar getNivelRemunerativo() {
         return nivelRemunerativo;
@@ -303,5 +273,4 @@ public class Cargo {
     public void setGrupoOcupacional(DatoAuxiliar grupoOcupacional) {
         this.grupoOcupacional = grupoOcupacional;
     }
-
 }
