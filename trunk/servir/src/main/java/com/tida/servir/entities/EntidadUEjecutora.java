@@ -76,7 +76,7 @@ public class EntidadUEjecutora implements Serializable {
     //@Column(name = "IDCLASFUNCIONAL")
     private DatoAuxiliar clasificadorFuncional;
     
-    private DatoAuxiliar idNivelGobierno;
+    //private DatoAuxiliar idNivelGobierno;
 
     public Boolean getPliego_rep() {
         return pliego_rep;
@@ -360,7 +360,7 @@ public class EntidadUEjecutora implements Serializable {
     public void setClasificadorFuncional(DatoAuxiliar clasificadorFuncional) {
         this.clasificadorFuncional = clasificadorFuncional;
     }
-    
+    /*
     @ManyToOne
     public DatoAuxiliar getIdNivelGobierno() {
         return idNivelGobierno;
@@ -369,7 +369,7 @@ public class EntidadUEjecutora implements Serializable {
     public void setIdNivelGobierno(DatoAuxiliar idNivelGobierno) {
         this.idNivelGobierno = idNivelGobierno;
     }
-    
+    */
     
     
 }
