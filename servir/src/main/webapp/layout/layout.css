@@ -598,7 +598,7 @@ a:hover {
 /* Page */
 
 #page {
-    border-top: 25px solid #F2F2F2;
+    /*border-top: 25px solid #F2F2F2;*/
     border-color: #F2F2F2;
 }
 
@@ -1461,7 +1461,14 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 #content h1, .organismo_titulo { font-size:14px; font-weight:bold; color:#fff; background:url(images/bg-title.gif) no-repeat 0 0;padding: 11px 10px 11px 30px; margin:0 0 20px -10px; text-align:left;}
 
 /*HEADER*/
-#header { height:83px; width:900px;background-color:#fff; overflow:auto; zoom:1; margin-bottom:10px;}
+#header { 
+    /*height:83px; */
+    width:900px;
+    background-color:#fff; 
+    overflow:auto; 
+    zoom:1; 
+    /*margin-bottom:10px;*/
+}
 #mainsection.home #header {border:3px solid #d72522; }
 #logo-left h1, #logo-right h1 { padding:0; margin:0;}
 #header #logo-left a { background:url(images/header.gif) no-repeat top left; height:83px; width:660px; float:left;}
