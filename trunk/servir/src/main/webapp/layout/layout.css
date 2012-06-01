@@ -513,19 +513,20 @@ a:hover {
 /* Header */
 
 #header {
-    height: 75px;
+    /*height: 75px;*/
     text-indent:-9999px;
 }
 
 #header #logo{
     background: url(images/header.jpg) no-repeat top left;
-    height: 75px;
-    background-size: 95%;
+    /*height: 75px;*/
+    /*background-size: 95%;*/
     background-position: 0;
+    height: 71px;
 }
 #logo h1 a{
     width: 100%;
-    height: 75px;
+    /*height: 75px;*/
     display: block;
 }
 
@@ -1131,17 +1132,6 @@ form th {
 .datos_familia td{
     vertical-align:  top;
 }
-/*Cambiar clave */
-#ok_msg {
-    background-color: #76EE00;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 20px;
-    margin: 20px;
-    width: 200px;
-    text-align: center;
-
-}
 
 #form_cambio_clave {
     top: 100px;
@@ -1428,11 +1418,18 @@ label { display:block; margin-bottom:5px; font:11px/1.2em Tahoma, Geneva, sans-s
 
 h1, h2, h3, h4, h5, h6 { letter-spacing:normal;}
 h2 { font-size:18px; border-bottom:1px dashed; padding-bottom:10px; margin-bottom:20px !Important;}
-h3 { margin-bottom:15px; font-size:12px;}
+h3 { 
+    /*margin-bottom:15px; */
+    font-size:12px;}
 h4 { font-size:12px; font-weight:bold;}
 
 .box { border:1px solid #707070; background-color:#fff; padding:0; clear:both;}
-.box h3, h3 { background-color:#d72522; color:#fff; font-weight:bold; padding:4px 10px; display:block;}
+.box h3, h3 { 
+    background-color:#d72522; 
+    color:#fff; 
+    font-weight:bold; 
+    padding:4px 10px; 
+    display:block;}
 .box form { padding:20px 18px; }
 .box form label { margin:0 0 5px 0;}
 .box form .f-left.bigger { width:210px;}
@@ -1440,7 +1437,11 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 #formulariousuario { padding:0 25px }
 #formTipoUsuario { padding:0 30px;}
 
-.f-wrap { overflow:auto; zoom:1;}
+.f-wrap { 
+    overflow:auto; 
+    zoom:1;
+    margin-top:10px;
+}
 .f-left{ float:left;}
 .f-right { float:right;}
 .clear { clear:both;}
@@ -1456,9 +1457,22 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 
 #toggle_filtros {height:18px; padding-left:20px; display:-moz-inline-stack; display:inline-block;zoom:1;display:inline; }
 
-#mainsection { margin:0 auto 20px; padding:0; width:900px; background-color:#fff; border:3px solid #b1242d;}
+#mainsection { 
+    margin:0 auto 20px; 
+    padding:0; 
+    width:900px; 
+    background-color:#fff; 
+    border:2px solid #b1242d;
+}
 #page { border: medium none; height: auto !important; min-height: 300px; padding: 10px;}
-#content h1, .organismo_titulo { font-size:14px; font-weight:bold; color:#fff; background:url(images/bg-title.gif) no-repeat 0 0;padding: 11px 10px 11px 30px; margin:0 0 20px -10px; text-align:left;}
+#content h1, .organismo_titulo { 
+    font-size:14px; 
+    font-weight:bold; 
+    color:#fff; 
+    background:url(images/bg-title.gif) no-repeat 0 0;
+    padding: 11px 10px 11px 30px; 
+    /*margin:0 0 20px -10px; */
+    text-align:left;}
 
 /*HEADER*/
 #header { 
@@ -1486,7 +1500,7 @@ html > body div.t-error li { margin:0 0 0 10px;}
 
 
 /*MENU*/
-.menu { background:none;}
+.menu { background:none; margin-bottom:10px;}
 .menu ul a { font-size:11px;  padding:0 14px; width: auto; margin-right: 1px;display:-moz-inline-stack;
              display:inline-block; zoom:1;}
 .menu ul a:hover, .menu ul a.active { background-color:#860907;}
@@ -1566,8 +1580,20 @@ input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#5
 
 
 .no-info { margin:10px; font-weight:bold;  color: #D72522;}
+
 /*OK MSG*/
-#ok_msg { background-color:#91d722; border:none; margin: 0 auto; width: 90%;}
+/*#ok_msg { background-color:#91d722; border:none; margin: 0 auto; width: 90%;}*/
+/*Cambiar clave */
+#ok_msg {
+    background-color: #91d722;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 20px;
+    /*
+    margin: 20px;
+    width: 200px;*/
+    text-align: center;
+}
 
 
 /**/
@@ -1903,7 +1929,7 @@ DIV.t-console DIV.t-debug {
 }
 
 .mostraUsuarioMenu{
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     width:100%;
 }
 
