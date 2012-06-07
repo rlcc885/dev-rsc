@@ -40,9 +40,6 @@
                         <input t:type="Select" t:id="nivel_gobierno" t:value="nivel_gobierno" 
                         model="beanDatoAuxNivel" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                         t:validate="required" t:zone="nivelSectorPliegoZone" disabled ="noeditable" t:blankOption="ALWAYS"/>
-                        
-                        <input t:type="Select" t:id="clasificador_funcional" model="ClasFuncOrg"
-                        t:value="entidadUE.clasificadorFuncional" t:validate="required" t:blankOption="AUTO"/>
                     </div>
                     <t:if test ="esLocal" negate = "true">
                         <div class="f-left"> 

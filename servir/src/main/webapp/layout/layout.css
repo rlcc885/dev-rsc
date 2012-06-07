@@ -1465,6 +1465,9 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
     border:2px solid #b1242d;
 }
 #page { border: medium none; height: auto !important; min-height: 300px; padding: 10px;}
+.entry h1{
+    margin-bottom: 10px;
+}
 #content h1, .organismo_titulo { 
     font-size:14px; 
     font-weight:bold; 
