@@ -109,6 +109,18 @@ public class Trabajador // extends Persona
     @NonVisual
     private String idtipodocumento;
     
+    //LFL
+    @NonVisual
+    private String verificado;
+    
+    public String getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(String verificado) {
+        this.verificado = verificado;
+    }
+   /// 
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
