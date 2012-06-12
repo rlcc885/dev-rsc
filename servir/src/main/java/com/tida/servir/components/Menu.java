@@ -155,6 +155,7 @@ public class Menu {
           if(_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) {
 
             menuhijo = new ArrayList<Accesos.MENUHIJO>();
+            menuhijo.add(Accesos.MENUHIJO.Inicio);
             menuhijo.add(Accesos.MENUHIJO.AdministracionEntidades);
             menuhijo.add(Accesos.MENUHIJO.ReportesEntidades);
             menues.put(Accesos.MENUPADRE.Entidades, menuhijo);
@@ -172,6 +173,7 @@ public class Menu {
           if (_usuario.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
 
             menuhijo = new ArrayList<Accesos.MENUHIJO>();
+            menuhijo.add(Accesos.MENUHIJO.Inicio);
             menuhijo.add(Accesos.MENUHIJO.SeleccionEntidades);
             menuhijo.add(Accesos.MENUHIJO.DescargaArchivoCSV);
             menues.put(Accesos.MENUPADRE.Entidades, menuhijo);

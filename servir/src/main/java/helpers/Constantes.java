@@ -52,6 +52,8 @@ public class Constantes {
    public static final String EVALUACIONES = "Evaluaciones";
    public static final String CONSTANCIAS_DOCUMENTALES = "Constancias Documentales";
    public static final String AUSENCIAS_LICENCIAS = "Ausencias Licencias";
+   //LFL
+   public static final String VERIFICADO = "0";
    
    //numero de campos para cada archivo
    public static final Integer CAMPOS_ENTIDADES_UNIDADES_EJECUTORAS = 22;
