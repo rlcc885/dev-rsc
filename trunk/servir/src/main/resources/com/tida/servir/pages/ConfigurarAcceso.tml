@@ -24,11 +24,13 @@
                             <input t:type="TextField" t:id="cantidad_intentos"
                             t:value="ca.intentos_bloqueo" size="3" t:validate="required" />
                         </div>
-                        <div class="f-left margintop11">
-                            <t:label for="edad_minima"/>
-                            <input t:type="TextField" t:id="edad_minima"
-                            t:value="ca.edad_minima" size="3" t:validate="required" />
+                      
+                        <div class="f-left">
+                            <t:label for="fec_actualizacion"/>
+                            <input t:type="DateField" t:id="fec_actualizacion"
+                                   t:value="ca.fec_actualizacion" t:readonly="readonly" size="30" contenteditable="false" disabled="true" />
                         </div>
+                          
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
@@ -52,8 +54,17 @@
                             t:value="ca.smtp_puerto" size="3" t:validate="required" />
                         </div>
                     </div>
-                <input id="submit" type="submit" value="Enviar" class="button f-right"/><br/>
-
+                <div class="f-wrap">
+                     <div class="f-right">
+                         <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                     </div>
+                     <div class="f-right">
+                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                     </div>
+                     <div class="f-right">
+                        <input id="submit" type="submit" value="Enviar" class="button"/>
+                     </div>
+                </div>
             </t:form>
 	</t:zone>
     </div>
