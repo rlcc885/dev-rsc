@@ -94,20 +94,20 @@ public class UnidadOrganica {
     }
 
     @ManyToOne
-    public EntidadUEjecutora getEntidadUE() {
-        return entidadUE;
+    public Entidad getEntidad() {
+        return entidad;
     }
 
-    public void setEntidadUE(EntidadUEjecutora entidadUE) {
-        this.entidadUE = entidadUE;
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Cargo> getCargos() {
+    public List<Cargoxunidad> getCargos() {
         return cargos;
     }
 
-    public void setCargos(List<Cargo> cargos) {
+    public void setCargos(List<Cargoxunidad> cargos) {
         this.cargos = cargos;
     }
 
@@ -135,10 +135,10 @@ public class UnidadOrganica {
     @Validate("required")
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    @PrimaryKeyJoinColumn
-    private EntidadUEjecutora entidadUE;
+    private Entidad entidad;
 //    @Validate("required")
 //    @OneToMany(cascade = CascadeType.ALL)
-    private List<Cargo> cargos = new ArrayList<Cargo>();
+    private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
     @Validate("required")
     private String cod_und_organica; // Código de la unidad organica
     @Validate("required")
