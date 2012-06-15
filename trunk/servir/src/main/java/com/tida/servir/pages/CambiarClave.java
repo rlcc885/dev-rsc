@@ -10,7 +10,7 @@ import java.util.Date;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.IncludeStylesheet;
 import org.apache.tapestry5.annotations.Log;
@@ -57,9 +57,14 @@ public class CambiarClave  extends GeneralPage {
     @Property
     private String newPass2;
     
+    @Property
+    private String verifi;
+    
     @Persist
     private boolean cambioForzado;
-
+ 
+    private int num=0;
+    
      public Boolean getNoEsAdmSystema(){
         if((_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) ||(_usuario.getTipo_usuario().equals(Usuario.ADMINGRAL)))
             return Boolean.FALSE;
@@ -69,7 +74,7 @@ public class CambiarClave  extends GeneralPage {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad _entidadUE;
         
     public boolean isCambioForzado() {
 		System.out.println("---> isCambioForzado: " + cambioForzado);
@@ -86,11 +91,20 @@ public class CambiarClave  extends GeneralPage {
 
             return envelope.getContents().length() ==0;
         }
+        
+         void onSelectedFromReset() {
+        
+            num=2;
+
+        }
+        
             @Log
     @CommitAfter
-    Zone onSuccessFromFormularioCambioClave()
+    Object onSuccessFromFormularioCambioClave()
     {
-
+        if(num==2){     
+            
+        }else {
         if (!oldPass.equals( _usuario.getMd5Clave())) {
              formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
             //envelope.setContents("Clave actual ingresada incorrecta.");
@@ -119,7 +133,7 @@ public class CambiarClave  extends GeneralPage {
         _usuario.setUltimo_cambio_clave(new Date());
         
         session.saveOrUpdate(_usuario);
-
+        }
     	return zone;
     	// return this;
     }
