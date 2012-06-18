@@ -103,7 +103,7 @@ public class CambiarClave  extends GeneralPage {
     Object onSuccessFromFormularioCambioClave()
     {
         if(num==2){     
-            
+            return "CambiarClave";
         }else {
         if (!oldPass.equals( _usuario.getMd5Clave())) {
              formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
