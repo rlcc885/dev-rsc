@@ -38,18 +38,15 @@ public class Cargoxunidad {
     private String den_cargo;
     private String estado;
     private DatoAuxiliar regimenlaboral;
-    //private Integer horas_x_sem;
-    private Boolean supervisapersonal;
+
+
 
     /*
      * @Validate("required") private String cod_est_cargo;
      */
-    //private DatoAuxiliar clasificacion_funcional;
-    //private Boolean req_hab_profesional;
     private Boolean dec_jurada_byr;
-    //private String situacion_CAP;
+    private String situacioncap_id;//ID
     private Boolean presupuestado_PAP;
-    private Boolean esorganico;
 
     /*
      * @Validate("required") private Integer plantillaremunerativa;
@@ -65,15 +62,7 @@ public class Cargoxunidad {
     private Integer ctd_puestos_total;
     private DatoAuxiliar grupoOcupacional;
     private DatoAuxiliar nivelRemunerativo;
-    private DatoAuxiliar situacioncap;
-
-    public Boolean getSupervisapersonal() {
-        return supervisapersonal;
-    }
-
-    public void setSupervisapersonal(Boolean supervisapersonal) {
-        this.supervisapersonal = supervisapersonal;
-    }
+    //esorganico, supervisapersonal
 
     public String getCod_cargo() {
         return cod_cargo;
@@ -90,15 +79,6 @@ public class Cargoxunidad {
      * public void setCod_est_cargo(DatoAuxiliar cod_est_cargo) {
      * this.cod_est_cargo = cod_est_cargo; }
      */
-
-//    @ManyToOne
-//    public DatoAuxiliar getClasificacion_funcional() {
-//        return clasificacion_funcional;
-//    }
-//
-//    public void setClasificacion_funcional(DatoAuxiliar clasificacion_funcional) {
-//        this.clasificacion_funcional = clasificacion_funcional;
-//    }
 
     /*
      * public EntidadUEjecutora getEntidadUE() { return entidadUE; }
@@ -122,21 +102,14 @@ public class Cargoxunidad {
     public void setPresupuestado_PAP(Boolean presupuestado_PAP) {
         this.presupuestado_PAP = presupuestado_PAP;
     }
-    public Boolean getEsorganico() {
-        return esorganico;
+
+    public String getSituacioncap_id() {
+        return situacioncap_id;
     }
 
-    public void setEsorganico(Boolean esorganico) {
-        this.esorganico = esorganico;
+    public void setSituacioncap_id(String situacioncap_id) {
+        this.situacioncap_id = situacioncap_id;
     }
-
-//    public String getSituacion_CAP() {
-//        return situacion_CAP;
-//    }
-//
-//    public void setSituacion_CAP(String situacion_CAP) {
-//        this.situacion_CAP = situacion_CAP;
-//    }
 
     /*
      * public Integer getCtd_ptos_ocupados_cap() { return ctd_ptos_ocupados_cap;
@@ -192,13 +165,6 @@ public class Cargoxunidad {
         this.estado = estado;
     }
 
-//    public Integer getHoras_x_sem() {
-//        return horas_x_sem;
-//    }
-//
-//    public void setHoras_x_sem(Integer horas_x_sem) {
-//        this.horas_x_sem = horas_x_sem;
-//    }
 
     /*
      * public Integer getPlantillaremunerativa() { return plantillaremunerativa;
@@ -208,37 +174,21 @@ public class Cargoxunidad {
      * this.plantillaremunerativa = plantillaremunerativa; }
      */
     @ManyToOne
-    public DatoAuxiliar getRegimenlaboral() {
+    public DatoAuxiliar getReg_lab_con() {
         return regimenlaboral;
     }
 
-    public void setRegimenlaboral(DatoAuxiliar regimenlaboral) {
+    public void setRegimenlaboral(DatoAuxiliar Regimenlaboral) {
         this.regimenlaboral = regimenlaboral;
     }
-    
-    @ManyToOne
-    public DatoAuxiliar getSituacioncap() {
-        return situacioncap;
-    }
 
-    public void setSituacioncap(DatoAuxiliar situacioncap) {
-        this.situacioncap = situacioncap;
-    }
-
-//    public Boolean getReq_hab_profesional() {
-//        return req_hab_profesional;
-//    }
-//
-//    public void setReq_hab_profesional(Boolean req_hab_profesional) {
-//        this.req_hab_profesional = req_hab_profesional;
-//    }
 
     @ManyToOne
-    public UnidadOrganica getUnidadorganica() {
+    public UnidadOrganica getunidadorganica() {
         return unidadorganica;
     }
 
-    public void setUnidadorganica(UnidadOrganica unidadorganica) {
+    public void setunidadorganica(UnidadOrganica unidadorganica) {
         this.unidadorganica = unidadorganica;
     }
 

@@ -32,7 +32,7 @@ public class Usuario implements Serializable {
     private Long id;
 //	@PrimaryKeyJoinColumn
     @Validate("required")
-    private Entidad_BK entidadUE;
+    private EntidadUEjecutora entidadUE;
     private String login; //el login del usuario
     private String tipo_usuario;
     private String email;
@@ -101,11 +101,11 @@ public class Usuario implements Serializable {
     }
 
     @ManyToOne
-    public Entidad_BK getEntidadUE() {
+    public EntidadUEjecutora getEntidadUE() {
         return entidadUE;
     }
 
-    public void setEntidadUE(Entidad_BK entidadUE) {
+    public void setEntidadUE(EntidadUEjecutora entidadUE) {
         this.entidadUE = entidadUE;
     }
 
