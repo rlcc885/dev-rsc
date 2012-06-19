@@ -10,8 +10,59 @@
 
     <h2> Unidades Orgánicas </h2>
 
+    <div id="mainfiltros" class="pane">
+    <div class="box">
+                <h3>
+                    Búsqueda Básica
+                </h3>
+               
+                                    <!-- t:validate="required,minlength=1" -->
+                <div id="filtrosnombres" class="f-wrap">
+                    <!--1.1-->
+                    <t:zone t:id="bnivelZone">
+                            <form t:type="form" t:id="formNivelUOUnidad" t:zone="bnivelZone">
+                                <div class="f-wrap">
+                                    <div class="f-left">
+                                        Nivel Organizacional
+                                        <input t:type="Select" t:id="uo_nivel"
+                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:value="bnivelUO" model="nivel"/>
+                                    </div>                                    
+                                    <t:if test="siuno">
+                                        <div class="f-left">
+                                            Unidad Orgánica Antecesora
+                                            <input t:type="Select" t:id="bunidadOrganica_uoa"
+                                            onChange="this.form.fire()" 
+                                            t:value="buoAntecesora" model="bbeansUO"                                   t:blankOption="ALWAYS"/>
+                                        </div>                                 
+                                    </t:if>
+                                </div>
+                            </form>
+                        </t:zone>
+                    
+                    
+                    <div t:type="zone" t:id="filtrosZone" > 
+                             <form t:type="form" t:id="formulariofiltrounidad" zone="listaUOZone">   
+                                Categoría
+                                <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
+                                Denominación
+                                <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="30"/>                                
+                                Sigla
+                                <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="30"/>
+                                <div class="actions f-right">
+                                    <input id="buscarsubmit" type="submit" value="Buscar" class="button f-right" />
+                                    <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button f-right"/>  
+                                </div> 
+                            </form>   
+                    </div>
+                </div>
+                                    
+    </div>
+    </div>
+     
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
+        <t:if test="mostrar">
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
                         ${errorBorrar}
@@ -33,12 +84,13 @@
                 </p:accionesCell>
             </t:grid>
         <!-- </t:if> -->
+        </t:if>
     </div> <!-- listaUOZone -->
 
     <!-- <div id="box_uo" class="box"> -->
                 <t:envelope t:id="envelope"/>
                 <div id="box_uo" class="box">
-                    <h3>Crear/Editar Unidad Orgánica</h3>
+                    <h3>Crear/Editar Unidad OrgÃ¡nica</h3>
 
                     <div id="form_unidad_organica" class="abmform">
                         <t:zone t:id="nivelZone">
@@ -58,7 +110,7 @@
                                             t:zone="nivelZone"/>
                                         </div> -->
                                         <div class="f-left">
-                                            * Unidad Orgánica Antecesora
+                                            * Unidad OrgÃ¡nica Antecesora
                                             <input t:type="Select" t:id="unidadOrganica_uoa"
                                             onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                             t:value="uoAntecesora" model="beansUO" t:validate="required"
@@ -104,8 +156,8 @@
                                 </div>
                                 <div class="f-left">
                                     Categoría
-                                    <input t:type="Select" t:id="unidadorganica_tipo_actividad" model="tipoActividad"
-                                    t:value="unidadorganica.tipoActividad"/>
+                                    <!--<input t:type="Select" t:id="unidadorganica_tipo_actividad" model="tipoActividad"
+                                    t:value="unidadorganica.tipoActividad"/>-->
                                 </div>
                             </div>
                             <div id="bouttons_uo" class="actions f-right clear">

@@ -5,12 +5,12 @@
     <t:Menu/>
 
     <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${entidad.denominacion}
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
     <h2>Cargos</h2>
 
-    <div id="mainfiltros" class="pane">
+       <div id="mainfiltros" class="pane">
     <div class="box">
                 <h3>
                     Búsqueda Básica
@@ -21,7 +21,7 @@
                     <!--1.1-->
                     <div class="f-left">
                         <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">                    
-                        * Nivel Organizacional
+                        Nivel Organizacional
                         <input t:type="Select" t:id="unidadorganica_nivel"
                             onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                             t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
@@ -47,7 +47,7 @@
                         <form t:type="form" t:id="formUOCargo" t:zone="abmZone">
                             <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
                                 <t:if test = "hayNivel">
-                                    * Unidad Orgánica
+                                    Unidad Orgánica
                                     <select t:type="select" t:id="select_unidadOrganica"
                                             model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
                                             onChange="this.form.fire()" t:zone="abmZone"/>
@@ -70,16 +70,15 @@
     
 </div>
 
-    
+
     <div t:type="zone" t:id="abmZone" class="abmform">
-        <t:if test="limpio">
         <t:if test="mostrar">
             <t:form t:id="formularioaltacargo" zone="abmZone">
                 <t:errors/>
                 ${errorBorrar}
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                            row="c" exclude= "undidaorganica, reg_lab_con, horas_x_sem, dec_jurada_byr, presupuestado_PAP, ctd_puestos_total,  personasCargo">
+                            row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, presupuestado_PAP, ctd_puestos_total, nivel_unidad_organica">
                         <t:parameter name="empty">
                             <div class="no-info">No hay cargos generados</div>
                         </t:parameter>
@@ -102,29 +101,21 @@
                         <h3> Crear / Editar Cargo </h3>
                         <div id="cargos_izq" class="cargosAM">
                             <div class="f-wrap">
-                                
                                 <!--<div class="f-left">
                                     <label>* Nivel Organizacional</label>
                                     <input t:type="Select" t:id="cargo_nivel" model="beanNivel" t:value="nivel"/>
                                 </div>-->
+
                                 <div class="f-left">
                                     <label>* Unidad Orgánica</label>
-                                    <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" 
-                                           t:value="cargo.unidadorganica" t:validate="required"/>
+                                    <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica"/>
                                 </div>
+
                                 <div class="f-left">
                                     <label>* Código</label>
                                     <input t:type="TextField" t:id="cargo_cod_cargo"
                                            t:value="cargo.cod_cargo" size="4" t:validate="required"/>
                                 </div>
-                                <div class="f-left">
-                                    <label>* Denominación</label>
-                                    <input t:type="TextField" t:id="cargo_den_cargo"
-                                           t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30"/>
-                                </div>
-                                
-
-                                
                                 
                                 <!-- <div class="f-left">
                                     <label>Estado</label>
@@ -142,105 +133,80 @@
                         </div>
                         <div id="cargos_der" class="cargosAM">
                             <div class="f-wrap">
-                                <!-- <div class="f-left">
+                                <div class="f-left">
+                                    <label>* Denominación</label>
+                                    <input t:type="TextField" t:id="cargo_den_cargo"
+                                           t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30"/>
+                                </div>
+                                <!--<div class="f-left">
                                     <label>Clasificación funcional</label>
                                     <input t:type="Select" t:id="cargo_clasificacion_funcional" model="codFunCargo"
                                            t:value="cargo.clasificacion_funcional"/>
-                                </div> -->
-                                
-                                <!--<div class="f-left">
+                                </div>
+                                <div class="f-left">
                                     <label>Horas semanales</label>
                                     <input t:type="TextField" t:id="cargo_horas_x_sem"
                                            t:value="cargo.horas_x_sem" size="2"/>
-                                </div>  -->                  
+                                </div>-->              
                             </div>
-                            
-                            <div class="f-wrap">
+            
+                        <div id="cargos_der" class="cargosAM">
+                            <div class ="f-wrap">
                                 <div class="f-left">
                                     <label>* Situación en el CAP</label>
-                                    <input t:type="Select" t:id="cargo_situacion_CAP" t:value="cargo.situacion_CAP"
+                                    <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap"
                                            model="beanDatoSituacionCAP" t:validate="required"/>                                    
                                 </div>
-                                 <div class="f-left">
-                                    <label>Presupuestado en PAP</label> </div>  
+                                <div class="f-left">
+                                    <label>* Presupuestado en PAP</label> </div>  
                                     <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
                                         <t:radio t:id="pa1" t:value="true"/>Si  
                                         <t:radio t:id="pa2" t:value="false"/>No                                                                              
-                                    </t:radiogroup>                                    
+                                    </t:radiogroup> 
+                                </div>
                                 
                                 <div class="f-left">
-                                    <label>Presenta Declaración Jurada de Bienes y Rentas</label>   
+                                    <label>* Presenta Declaración Jurada de Bienes y Rentas</label>   
                                     <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr" t:validate="required">
                                         <t:radio t:id="de1" t:value="true"/>SI   
                                         <t:radio t:id="de2" t:value="false"/>NO                                                                            
                                     </t:radiogroup>                                    
                                 </div>
-                                
-                            </div> <!-- div f-wrap -->
-                        </div> <!-- div cargo der -->
-
-                        <div id="cargos_der" class="cargosAM">
-                            <div class ="f-wrap">
-                                <!--
+                                <div class="f-left">
+                                    <label>* Es Organico</label>   
+                                    <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
+                                        <t:radio t:id="o1" t:value="true"/>SI   
+                                        <t:radio t:id="o2" t:value="false"/>NO                                                                            
+                                    </t:radiogroup>                                    
+                                </div>
                                 <div class="f-left checkbox">
-                                    <label>Requiere habilitación profesional</label>
-                                    <input t:type="Checkbox" t:id="cargo_req_hab_profesional"
-                                           t:value="cargo.req_hab_profesional"  />
-                                </div>-->
-                                <!--
-                                <div class="f-left checkbox">
-                                    <label>Presenta Declaración Jurada de Bienes y Rentas</label>
-                                    <input t:type="Checkbox" t:id="cargo_dec_jurada_byr"
-                                           t:value="cargo.dec_jurada_byr" />
-                                </div>-->
-                                <!--
-                                <div class="f-left checkbox">
-                                    <label>Presupuestado en PAP</label>
-                                    <input t:type="Checkbox" t:id="cargo_presupuestado_PAP"
-                                           t:value="cargo.presupuestado_PAP"/>
-                                </div>-->
-                                <!--
-                                <div class="f-left checkbox">
+                                    <label>Supervisa Personal</label>
+                                    <input t:type="Checkbox" t:id="cargo_supervisapersonal"
+                                           t:value="cargo.supervisapersonal"/>
+                                </div>
+                                <!--<div class="f-left checkbox">
                                     <label>Tiene personas a cargo</label>
                                     <input t:type="Checkbox" t:id="cargo_personasCargo"
                                            t:value="cargo.personasCargo"/>
-                                </div>
-                                -->
-                                <!--
-                                <div class="f-left checkbox">
-                                    <label>Es orgánico</label>
-                                    <input t:type="Checkbox" t:id="cargo_personasCargo"
-                                           t:value="cargo.personasCargo"/>
-                            </div> 
-                            <div class="f-left checkbox">
-                                    <label>Supervisa Personal</label>
-                                    <input t:type="Checkbox" t:id="cargo_personasCargo"
-                                           t:value="cargo.personasCargo"/>
-                            </div>-->
+                                </div>-->
+                            </div> <!-- div f-wrap -->
                         </div> <!-- div der -->
                         <div class="actions f-right" id="bouttonambcargos">
-                          <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right"/> 
+                            <input id="submit" type="submit" value="Grabar" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button f-right"/> 
                           <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button f-right"/>  
-                          <input id="submit" type="submit" value="Guardar" class="button f-right"/>
-                                       
-                           
-                          <!-- <input id="xxx" type="submit" value="Resetear" class="button f-right"/>-->
-                          <!--<t:actionlink t:id="reset" zone="abmZone" href="#">Limpiar Formulario/Nuevo</t:actionlink>-->
                         </div>
                     </div> <!-- div box -->
-                    </div>
                 </t:if> <!-- puedeEditar -->
             </t:form>
-            
-        </t:if>
         </t:if>
     </div> <!-- abmZone -->
-
+    
+    <div id = "ocupacionalescargo">
     <t:zone t:id="OcupacionalesZone">
-        <t:if test="limpio">
         <t:if test="mostrar">
-             <t:if test="PuedeEditar">
-                <div id = "ocupacionalescargo">                    
+            <t:if test="PuedeEditar">
+                
                     <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="regimengruponivel" t:regimengruponivel="regimengruponivel"
                                t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
@@ -249,9 +215,9 @@
                         <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
                         t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
                     </form> -->
-                </div>
+               
             </t:if> <!-- puedeEditar -->
         </t:if>
-        </t:if>
-     </t:zone> 
+    </t:zone>
+    </div>
 </html>
