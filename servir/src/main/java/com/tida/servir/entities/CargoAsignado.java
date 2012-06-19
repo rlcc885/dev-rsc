@@ -35,7 +35,7 @@ public class CargoAsignado {
 
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
-    private Cargo cargo;
+    private Cargoxunidad cargo;
 
     @Validate("required")
 //  @OneToMany(cascade=CascadeType.ALL)
@@ -83,11 +83,11 @@ public class CargoAsignado {
     }
 
     @ManyToOne
-    public Cargo getCargo() {
+    public Cargoxunidad getCargo() {
         return cargo;
     }
 
-    public void setCargo(Cargo cargo) {
+    public void setCargo(Cargoxunidad cargo) {
         this.cargo = cargo;
     }
 
