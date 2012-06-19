@@ -20,21 +20,21 @@ public class CrearDatos {
     public static final void crearDatosBasicos(Session session) {
 
 
-        Entidad_BK _entidadUEjecutora = new Entidad_BK();
+        EntidadUEjecutora _entidadUEjecutora = new EntidadUEjecutora();
 
         //Metemos en el "usuario" el organismo informante.
-        _entidadUEjecutora = new Entidad_BK();
+        _entidadUEjecutora = new EntidadUEjecutora();
         _entidadUEjecutora.setDenominacion("Organismo Informante 1");
-        _entidadUEjecutora.setEstado(Entidad_BK.ESTADO_ALTA);
+        _entidadUEjecutora.setEstado(EntidadUEjecutora.ESTADO_ALTA);
         _entidadUEjecutora.setCod_mef_ue(2345);
         //_entidadUEjecutora.setCod_ubi_dept();
         
         session.persist(_entidadUEjecutora);
 
         // También creamos un cargo, si no existe.
-        List<Cargoxunidad> lc = session.createCriteria(Cargoxunidad.class).list();
+        List<Cargo> lc = session.createCriteria(Cargo.class).list();
         if (lc.isEmpty()) {
-            Cargoxunidad c = new Cargoxunidad();
+            Cargo c = new Cargo();
             c.setDen_cargo("Den Cargo1");
             c.setEstado(Constantes.ESTADO_ACTIVO);
             c.setHoras_x_sem(40);

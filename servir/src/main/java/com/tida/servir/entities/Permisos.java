@@ -10,13 +10,24 @@ package com.tida.servir.entities;
  */
 public class Permisos {
 
+    
+    /**
+    LFL
+     */
+    public static boolean muestraGrillaEntidad(Usuario u) {
+        if (u.getTipo_usuario().equals(Usuario.ADMINSISTEMA) ) {
+            return true;
+        }
+            return false;
+    }
+    
     /**
      * Dado un usuario ver si tiene permisos de escritura. Es sólo usuario porque no 
      * hay permiso de lecto-escritura por página
      * @param u
      * @return
      */
-    public static boolean puedeEscribir(Usuario u, Entidad_BK eue) {
+    public static boolean puedeEscribir(Usuario u, EntidadUEjecutora eue) {
         if (u.getTipo_usuario().equals(Usuario.OPERADORLECTURALOCAL)
                 || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA) ) {
             return false;
@@ -34,7 +45,7 @@ public class Permisos {
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
          || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA)) {
 
-            return "CambioEntidad";
+            return "Inicio";
         }
 
         if ( u.getTipo_usuario().equals(Usuario.ADMINLOCAL) ||
@@ -43,7 +54,7 @@ public class Permisos {
         }
 
         if (u.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) {
-            return "ABMDatoAuxiliar";
+            return "Inicio";
         }
 
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMLOCAL)
