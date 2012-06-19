@@ -4,10 +4,10 @@
  */
 package helpers;
 
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.entities.Usuario;
@@ -164,7 +164,7 @@ public class Helpers {
      * @param cargo
      * @return
      */
-    public static Integer getCantPuestosOcupadosCargo(Session session, Cargo cargo) {
+    public static Integer getCantPuestosOcupadosCargo(Session session, Cargoxunidad cargo) {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.add(Restrictions.eq("cargo", cargo));
         c.add(Restrictions.eq("estado", Constantes.ESTADO_ACTIVO));
@@ -182,11 +182,11 @@ public class Helpers {
                 || user.getTipo_usuario().equals(Usuario.OPERADORANALISTA));
     }
 
-    public static Integer maxNivelUO(EntidadUEjecutora eue, Session session) {
+    public static Integer maxNivelUO(Entidad_BK eue, Session session) {
         Criteria c;
         Integer nivelMax;
         c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidadUE", eue));
+        c.add(Restrictions.eq("entidad", eue));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         ProjectionList projList = Projections.projectionList();
         projList.add(Projections.max("nivel"));
@@ -211,15 +211,15 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter
-    public static void fusionarUOBase(UnidadOrganica uo, EntidadUEjecutora entidadOrigen,
-            EntidadUEjecutora entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void fusionarUOBase(UnidadOrganica uo, Entidad_BK entidadOrigen,
+            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
 
         uo.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(uo);
 
-        Criteria c = session.createCriteria(Cargo.class);
+        Criteria c = session.createCriteria(Cargoxunidad.class);
         c.add(Restrictions.eq("und_organica", uo));
-        List<Cargo> lc = c.list();
+        List<Cargoxunidad> lc = c.list();
         System.out.println("---------- Fusionando cant. cargos:" + lc.size());
         migrarCargos(entidadOrigen, entidadDestino, uoPadreDestino, lc, session);
 
@@ -237,8 +237,8 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter
-    public static void migrarUOBase(UnidadOrganica uo, EntidadUEjecutora entidadOrigen,
-            EntidadUEjecutora entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void migrarUOBase(UnidadOrganica uo, Entidad_BK entidadOrigen,
+            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         migrarUnidad(uo, entidadOrigen, entidadDestino, uoPadreDestino, session);
     }
 
@@ -257,8 +257,8 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter
-    public static void migrarUnidad(UnidadOrganica uo, EntidadUEjecutora entidadOrigen,
-            EntidadUEjecutora entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void migrarUnidad(UnidadOrganica uo, Entidad_BK entidadOrigen,
+            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         if (uoPadreDestino == null) {
             uo.setUoAntecesora(null);
             uo.setNivel(1);
@@ -273,9 +273,9 @@ public class Helpers {
         session.saveOrUpdate(uo);
 
 
-        Criteria c = session.createCriteria(Cargo.class);
+        Criteria c = session.createCriteria(Cargoxunidad.class);
         c.add(Restrictions.eq("und_organica", uo));
-        List<Cargo> lc = c.list();
+        List<Cargoxunidad> lc = c.list();
 
         migrarCargos(entidadOrigen, entidadDestino, uoPadreDestino, lc, session);
 
@@ -295,12 +295,12 @@ public class Helpers {
      * @param cargos
      */
     @CommitAfter
-    public static void migrarCargos(EntidadUEjecutora entidadOrigen,
-            EntidadUEjecutora entidadDestino, UnidadOrganica uoDestino, List<Cargo> cargos, Session session) {
+    public static void migrarCargos(Entidad_BK entidadOrigen,
+            Entidad_BK entidadDestino, UnidadOrganica uoDestino, List<Cargoxunidad> cargos, Session session) {
         // 
         Criteria c, c1;
         List<CargoAsignado> lca;
-        for (Cargo cargo : cargos) {
+        for (Cargoxunidad cargo : cargos) {
             cargo.setUnd_organica(uoDestino);
             if (!entidadOrigen.equals(entidadDestino)) {
 
