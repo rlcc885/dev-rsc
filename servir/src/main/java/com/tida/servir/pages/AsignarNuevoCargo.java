@@ -1,10 +1,10 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.entities.Usuario;
@@ -38,7 +38,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     private Session session;
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
     @InjectPage
     private Busqueda busqueda;
     @Property
@@ -58,7 +58,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     @SessionState
     private Usuario _usuario;
     @Persist
-    private Cargo cargo;
+    private Cargoxunidad cargo;
     @Property
     @Persist
     private UnidadOrganica unidadorganica;
@@ -78,7 +78,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     //private GenericSelectModel<Cargo> _beans;
 
 
-    public Cargo getcargo() {
+    public Cargoxunidad getcargo() {
         return cargo;
     }
 
@@ -87,16 +87,16 @@ public class AsignarNuevoCargo extends GeneralPage {
         return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
     }
 
-    public CargosSelectModel<Cargo> getBeans() {
-        Criteria c = session.createCriteria(Cargo.class)
+    public CargosSelectModel<Cargoxunidad> getBeans() {
+        Criteria c = session.createCriteria(Cargoxunidad.class)
                 .add(Restrictions.eq("und_organica", unidadorganica))
-                .add(Restrictions.ne("estado", Cargo.ESTADO_BAJA));
+                .add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
 
-        List<Cargo> list = c.list();
+        List<Cargoxunidad> list = c.list();
         
-        cargo = (Cargo) c.list().get(0);
+        cargo = (Cargoxunidad) c.list().get(0);
             
-        return new CargosSelectModel<Cargo>(list, Cargo.class, "cod_cargo", "den_cargo", "id", _access);
+        return new CargosSelectModel<Cargoxunidad>(list, Cargoxunidad.class, "cod_cargo", "den_cargo", "id", _access);
     }
 
     @Log
@@ -110,7 +110,7 @@ public class AsignarNuevoCargo extends GeneralPage {
         return new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
     }
 
-    public void setCargo(Cargo cargo) {
+    public void setCargo(Cargoxunidad cargo) {
         this.cargo = cargo;
     }
 
@@ -168,7 +168,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromformulariounidadorganica() {
-        Criteria c = session.createCriteria(Cargo.class)
+        Criteria c = session.createCriteria(Cargoxunidad.class)
         .add(Restrictions.eq("und_organica", unidadorganica))
         .add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         
@@ -177,7 +177,7 @@ public class AsignarNuevoCargo extends GeneralPage {
             cargo = null;
         } else {
             unidadSeleccionada = true;
-            cargo = (Cargo)c.list().get(0);
+            cargo = (Cargoxunidad)c.list().get(0);
         }
  
         return cargosZone.getBody();

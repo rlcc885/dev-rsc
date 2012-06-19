@@ -5,7 +5,7 @@
 package Batch.Helpers;
 
 import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
@@ -15,7 +15,7 @@ import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.Titulo;
 import com.tida.servir.entities.Trabajador;
@@ -1843,7 +1843,7 @@ public class InformeXLS {
 
     }
 
-    public List<String> creadorCSVEntidadUE(EntidadUEjecutora oi, String file, Session session) {
+    public List<String> creadorCSVEntidadUE(Entidad_BK oi, String file, Session session) {
 
         List<String> errores = new LinkedList<String>();
 
@@ -1999,12 +1999,12 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVCargo(List<Cargo> lc, String file, Session session) {
+    public static List<String> creadorCSVCargo(List<Cargoxunidad> lc, String file, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            for (Cargo c : lc) {
+            for (Cargoxunidad c : lc) {
                 if(c.getUnd_organica() != null){
                     if(c.getUnd_organica().getEntidadUE() != null)
                         escribir.print(InformeXLS.leoCampo(c.getUnd_organica().getEntidadUE().getCodigoEntidadUE()));
@@ -2049,7 +2049,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVTrabajador(List<Trabajador> lt, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVTrabajador(List<Trabajador> lt, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2200,7 +2200,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVFamiliar(List<Familiar> lf, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVFamiliar(List<Familiar> lf, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2269,7 +2269,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVTitulo(List<Titulo> lt, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVTitulo(List<Titulo> lt, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2309,7 +2309,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVCertificacion(List<Certificacion> lc, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVCertificacion(List<Certificacion> lc, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2343,7 +2343,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVCurso(List<Curso> lc, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVCurso(List<Curso> lc, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2379,7 +2379,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVAntecdentLaboral(List<Ant_Laborales> lal, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVAntecdentLaboral(List<Ant_Laborales> lal, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
 
         try {
@@ -2419,7 +2419,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVMeritoDemerito(List<MeritoDemerito> lmd, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVMeritoDemerito(List<MeritoDemerito> lmd, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
         String clase = null;
         String tipo = null;
@@ -2464,7 +2464,7 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVProduccionIntelectual(List<Publicacion> lp, String file, EntidadUEjecutora oi, Session session) {
+    public static List<String> creadorCSVProduccionIntelectual(List<Publicacion> lp, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();
         String clase = null;
         String tipo = null;
@@ -2688,11 +2688,11 @@ public class InformeXLS {
     
        private static String getBoolStrFromEstado(String estado){
         if ((estado != null) || (!estado.trim().equals(""))) {
-            if (estado.trim().equals(Cargo.ESTADO_ALTA) || estado.trim().equals("Activo")) { 
+            if (estado.trim().equals(Cargoxunidad.ESTADO_ALTA) || estado.trim().equals("Activo")) { 
                 return "1";
             } 
             
-            if (estado.trim().equals(Cargo.ESTADO_BAJA)) { 
+            if (estado.trim().equals(Cargoxunidad.ESTADO_BAJA)) { 
                 return "0";
             } 
 

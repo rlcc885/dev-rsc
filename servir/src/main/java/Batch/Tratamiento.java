@@ -15,7 +15,7 @@ import Batch.Helpers.OrigenArchivos;
 import au.com.bytecode.opencsv.CSVReader;
 import com.tida.servir.entities.Ant_Laborales;
 import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
@@ -25,7 +25,7 @@ import com.tida.servir.entities.EvaluacionPersonal;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.RemuneracionPersonal;
 import com.tida.servir.entities.Titulo;
@@ -74,9 +74,9 @@ public final class Tratamiento {
     private List<List<String>> COMPCAR3 = new LinkedList<List<String>>();
     private List<List<String>> COMPLEG1 = new LinkedList<List<String>>();
     
-    private List<EntidadUEjecutora> _entidadesUEjecutora = new LinkedList<EntidadUEjecutora>();
+    private List<Entidad_BK> _entidadesUEjecutora = new LinkedList<Entidad_BK>();
     private List<UnidadOrganica> _unidadOrganica = new LinkedList<UnidadOrganica>();
-    private List<Cargo> _cargo = new LinkedList<Cargo>();
+    private List<Cargoxunidad> _cargo = new LinkedList<Cargoxunidad>();
     private List<ConceptoRemunerativo> _conceptoRemunerativo = new LinkedList<ConceptoRemunerativo>();
     private List<Trabajador> _trabajador  = new LinkedList<Trabajador>();
     private List<Legajo> _legajo  = new LinkedList<Legajo>();
@@ -256,7 +256,7 @@ public final class Tratamiento {
         return _ausLicPersonal;
     }
 
-    public List<Cargo> getCargo() {
+    public List<Cargoxunidad> getCargo() {
         return _cargo;
     }
 
@@ -280,7 +280,7 @@ public final class Tratamiento {
         return _meritoDemerito;
     }
 
-    public List<EntidadUEjecutora> getEntidadesUE() {
+    public List<Entidad_BK> getEntidadesUE() {
         return _entidadesUEjecutora;
     }
 
@@ -328,7 +328,7 @@ public final class Tratamiento {
         this._ausLicPersonal = _ausLicPersonal;
     }
 
-    public void setCargo(List<Cargo> _cargo) {
+    public void setCargo(List<Cargoxunidad> _cargo) {
         this._cargo = _cargo;
     }
 
@@ -368,7 +368,7 @@ public final class Tratamiento {
         this._meritoDemerito = _meritoDemerito;
     }
 
-    public void setEntidadesUE(List<EntidadUEjecutora> _entidadesUE) {
+    public void setEntidadesUE(List<Entidad_BK> _entidadesUE) {
         this._entidadesUEjecutora = _entidadesUE;
     }
 
@@ -681,7 +681,7 @@ public final class Tratamiento {
         //verifica si los organismos informantes estan definidos en la base de dato
         //si no se trata de una carga inicial
         if (!origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
-            for (EntidadUEjecutora _entidaduejecutora : _entidadesUEjecutora) {
+            for (Entidad_BK _entidaduejecutora : _entidadesUEjecutora) {
                 //si no hay en la base de dato el organismo informante, se informa este problema y borra este organismo
                 if (!CreadorDesdeCsv.presenciaTablaEntidadUEjecutora(_entidaduejecutora, session, errores)) {
                     errores.add("Esta entidad unidad ejecutora " + _entidaduejecutora.getCodigoEntidadUE() + " no esta definida en la base de dato!");
@@ -1118,7 +1118,7 @@ public final class Tratamiento {
     }
 
     //ingresar datos del archivo CSV en un list list string que contiene todos los campos del CSV
-    public List<List<String>> cargarCSVToArrayList(String file, List<EntidadUEjecutora> leue, String tipoDato, int rechazado) throws FileNotFoundException, IOException {
+    public List<List<String>> cargarCSVToArrayList(String file, List<Entidad_BK> leue, String tipoDato, int rechazado) throws FileNotFoundException, IOException {
         List<List<String>> documento = new LinkedList<List<String>>();
         ArrayList<String> linea;
         boolean entrada;
@@ -1133,7 +1133,7 @@ public final class Tratamiento {
                 linea = new ArrayList<String>();
                 linea.addAll(Arrays.asList(nextLine));
 
-                for (EntidadUEjecutora eue : leue) {
+                for (Entidad_BK eue : leue) {
                     if ((linea.get(0).equals(eue.getCodigoEntidadUE()))) {
                         hayEntidadUE = true;
                         entrada = false;

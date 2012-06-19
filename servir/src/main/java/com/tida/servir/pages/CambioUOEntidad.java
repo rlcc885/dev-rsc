@@ -7,7 +7,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
@@ -45,7 +45,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Property
     @SessionState
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
     @Property
     @Persist
@@ -65,7 +65,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Property
     @Persist
-    private EntidadUEjecutora entidadDestino;
+    private Entidad_BK entidadDestino;
 
     @Persist
     private GenericSelectModel<UnidadOrganica> _beanUOrganicasOrigen;
@@ -134,7 +134,7 @@ public class CambioUOEntidad extends GeneralPage{
      * @param first
      * @return
      */
-    public List<Integer> getBeanNivel(EntidadUEjecutora eUE, Integer first){
+    public List<Integer> getBeanNivel(Entidad_BK eUE, Integer first){
         List<Integer> nivel = new LinkedList<Integer>();
         Integer nivelMax = 0;
 

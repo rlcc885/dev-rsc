@@ -7,7 +7,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import helpers.Helpers;
 import helpers.Reportes;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ReportesNivel  extends GeneralPage
 {
     @Property
     @SessionState
-    private EntidadUEjecutora eue;
+    private Entidad_BK eue;
 
 
     @Inject

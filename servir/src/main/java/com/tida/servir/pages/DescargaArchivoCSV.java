@@ -13,13 +13,13 @@ import Batch.Helpers.RemuneracionPersonalCSV;
 import Batch.Helpers.Unzip;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.MeritoDemerito;
@@ -73,7 +73,7 @@ public class DescargaArchivoCSV  extends GeneralPage {
     
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
     
     @Property
     @Persist
@@ -144,7 +144,7 @@ public class DescargaArchivoCSV  extends GeneralPage {
             f.mkdirs();
         }
 
-        Criteria criteriaEntidadUE = session.createCriteria(EntidadUEjecutora.class);
+        Criteria criteriaEntidadUE = session.createCriteria(Entidad_BK.class);
         criteriaEntidadUE.add(Restrictions.eq("id", _entidadUE.getId()));
 
         if (!criteriaEntidadUE.list().isEmpty()) {
@@ -171,9 +171,9 @@ public class DescargaArchivoCSV  extends GeneralPage {
 
                     List<UnidadOrganica> luo = new LinkedList<UnidadOrganica>();
                     luo.addAll(criteriaUnidadOrganica.list());
-                    List<Cargo> lcargo = new LinkedList<Cargo>();
+                    List<Cargoxunidad> lcargo = new LinkedList<Cargoxunidad>();
                     for(UnidadOrganica uo: luo){
-                        Criteria criteriaCargo = session.createCriteria(Cargo.class);
+                        Criteria criteriaCargo = session.createCriteria(Cargoxunidad.class);
 
                         criteriaCargo.add(Restrictions.eq("und_organica", uo));
                         lcargo.addAll(criteriaCargo.list());

@@ -20,4 +20,7 @@
                 <maven.test.skip>true</maven.test.skip>
             </properties>
         </action>
+        <action>
+            <actionName>javadoc</actionName>
+        </action>
     </actions>

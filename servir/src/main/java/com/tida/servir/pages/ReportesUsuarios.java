@@ -2,7 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import helpers.Errores;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -42,7 +42,7 @@ public class ReportesUsuarios  extends GeneralPage
     
     @Property
     @SessionState
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
     // Mensajes a mostrar entre paginas. Sólo por única vez
     @Persist(PersistenceConstants.FLASH)

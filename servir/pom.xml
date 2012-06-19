@@ -5,6 +5,10 @@
     <version>2.5.0</version>
     <packaging>war</packaging>
     <name>Registro Nacional de Personal del Servicio Civil</name>
+    <ciManagement>
+        <system>hudson</system>
+        <url>http://localhost:9090/job/Registro%20Nacional%20de%20Personal%20del%20Servicio%20Civil/</url>
+    </ciManagement>
     <dependencies>
       
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
@@ -227,7 +231,12 @@ Fin de librerias pentaho -->
         <artifactId>axis</artifactId>
         <version>1.4</version>
     </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

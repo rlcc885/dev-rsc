@@ -2,7 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 
@@ -33,7 +33,7 @@ public class DesasignarCargo extends GeneralPage {
     private CargoAsignado ca;
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Property
     private Trabajador t;

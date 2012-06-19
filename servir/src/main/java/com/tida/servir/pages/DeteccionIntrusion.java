@@ -6,7 +6,7 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import helpers.Reportes;
 import java.text.SimpleDateFormat;
@@ -32,7 +32,7 @@ public class DeteccionIntrusion extends GeneralPage {
     private Session session;
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
 
     @Property
     @SessionState

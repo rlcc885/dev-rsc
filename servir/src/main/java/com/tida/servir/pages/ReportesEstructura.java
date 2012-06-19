@@ -2,7 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
@@ -59,7 +59,7 @@ public class ReportesEstructura extends GeneralPage {
 
     @Property
     @SessionState
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
     @Inject
     private Context context;
