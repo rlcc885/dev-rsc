@@ -24,8 +24,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class UnidadOrganica {
 
-    public static String ESTADO_BAJA = "Baja";
-    public static String ESTADO_ALTA = "Alta";
+    public static Boolean ESTADO_BAJA = false;
+    public static Boolean ESTADO_ALTA = true;
     public static String CODIGO_DEFAULT = "9999";
     public static String CUE_DEFAULT = "99999999";
     public static String SIGLA_DEFAULT = "IND";
@@ -94,11 +94,11 @@ public class UnidadOrganica {
     }
 
     @ManyToOne
-    public Entidad getEntidad() {
+    public Entidad_BK getEntidad() {
         return entidad;
     }
 
-    public void setEntidad(Entidad entidad) {
+    public void setEntidad(Entidad_BK entidad) {
         this.entidad = entidad;
     }
 
@@ -111,22 +111,22 @@ public class UnidadOrganica {
         this.cargos = cargos;
     }
 
-    public String getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
 
     @ManyToOne
-    public UnidadOrganica getUoAntecesora() {
-        return uoAntecesora;
+    public UnidadOrganica getUnidadOrganica() {
+        return unidadorganica;
     }
 
-    public void setUoAntecesora(UnidadOrganica uoAntecesora) {
-        this.uoAntecesora = uoAntecesora;
+    public void setUnidadOrganica(UnidadOrganica unidadorganica) {
+        this.unidadorganica = unidadorganica;
     }
     //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -135,7 +135,7 @@ public class UnidadOrganica {
     @Validate("required")
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    @PrimaryKeyJoinColumn
-    private Entidad entidad;
+    private Entidad_BK entidad;
 //    @Validate("required")
 //    @OneToMany(cascade = CascadeType.ALL)
     private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
@@ -150,24 +150,32 @@ public class UnidadOrganica {
     private DatoAuxiliar cod_ubi_prov; //ubigeo provincia
     @Validate("required")
     private DatoAuxiliar cod_ubi_dept; //ubigeo depto
-    private String estado; // para manejo del borrado lógico
+    private Boolean estado; // para manejo del borrado lógico
     private String cue;
     @Validate("required")
     private String sigla;
     @Validate("required")
     private Integer nivel;
-    private String tipoActividad;
-    @Validate("required")
-    private UnidadOrganica uoAntecesora;
+//    private String tipoActividad;
+//    @Validate("required")
+    private UnidadOrganica unidadorganica;
+//    private int unidadorganica_id;
 
-    public String getTipoActividad() {
-        return tipoActividad;
-    }
-
-    public void setTipoActividad(String tipoActividad) {
-        this.tipoActividad = tipoActividad;
-    }
+//    public String getTipoActividad() {
+//        return tipoActividad;
+//    }
+//
+//    public void setTipoActividad(String tipoActividad) {
+//        this.tipoActividad = tipoActividad;
+//    }
     
+//    public Integer getUnidadorganica_id() {
+//        return unidadorganica_id;
+//    }
+//
+//    public void setUnidadorganica_id(Integer unidadorganica_id) {
+//        this.unidadorganica_id = unidadorganica_id;
+//    }
 
     public Integer getNivel() {
         return nivel;
