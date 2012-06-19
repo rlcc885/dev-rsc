@@ -13,7 +13,7 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.MeritoDemerito;
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class TrabajadorEditar extends GeneralPage{
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
     	
     @Property
     @Persist

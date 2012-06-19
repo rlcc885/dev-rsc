@@ -1,11 +1,11 @@
 package com.tida.servir.pages;
 
 import annotations.XHR;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
@@ -66,7 +66,7 @@ public class Busqueda extends GeneralPage {
     }
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
     @Property
     @SessionState
     private Usuario _usuario;
@@ -87,8 +87,8 @@ public class Busqueda extends GeneralPage {
 
     public List<String> getEstado() {
         List<String> estadosCargo = new LinkedList<String>();
-        estadosCargo.add(Cargo.ESTADO_ALTA);
-        estadosCargo.add(Cargo.ESTADO_BAJA);
+        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
+        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
         return estadosCargo;
     }
 
@@ -282,7 +282,7 @@ public class Busqueda extends GeneralPage {
     private Trabajador e;
     @Persist
     @Property
-    private Cargo c;
+    private Cargoxunidad c;
     @Persist
     @Property
     private boolean mostrarFiltros;

@@ -8,7 +8,7 @@ package com.tida.servir.pages;
 
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.Trabajador;
 
@@ -35,7 +35,7 @@ public class LegajosModificar  extends GeneralPage {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Persist
     private Legajo legajo;

@@ -2,11 +2,11 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import helpers.Errores;
 import helpers.Logger;
 
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Ubigeo;
 import com.tida.servir.entities.UnidadOrganica;
@@ -28,6 +28,7 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import com.tida.servir.entities.DatoAuxiliar;
 
 /**
  * Clase que maneja las unidades organicas
@@ -79,7 +80,7 @@ public class AMUnidadOrganica extends GeneralPage {
     private String errorBorrar;
     @Property
     @SessionState
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
     @Property
     @Persist
     private Integer nivelUO;
@@ -92,12 +93,106 @@ public class AMUnidadOrganica extends GeneralPage {
     @InjectComponent
     private Envelope envelope;
 
+    @Persist
+    @Property
+    private String bdenouni;
+    @Persist
+    @Property
+    private String bsigla;
+    @Persist
+    @Property
+    private String valcategoria;
+    @InjectComponent
+    @Property
+    private Zone filtrosZone;
+    @InjectComponent
+    @Property
+    private Zone bnivelZone;
+    @Property
+    @Persist
+    private UnidadOrganica buoAntecesora;
+    @Property
+    @Persist
+    private boolean siuno;
+    @Property
+    @Persist
+    private Integer bnivelUO;
+    @Property
+    @Persist
+    private boolean mostrar;    
+    @Component(id = "formulariofiltrounidad")
+    private Form formulariofiltrounidad;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar valcategoria;
+    
+    
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformNivelUOUnidad() {
+        if(bnivelUO==1){
+            siuno=false;
+        }
+        else if(bnivelUO== null){
+            siuno=false;
+        }
+        else{
+            siuno=true;
+        }
+
+        
+//        if (siuno==true) {
+//            System.out.println("--------- entré iuci");
+//            //onUbigeoEntidadUOAntecesora();
+//            return new MultiZoneUpdate("bnivelZone", bnivelZone.getBody());
+//        }
+////        formularioaltaunidadorganica.recordError(String.valueOf(buoAntecesora.getId()));
+////        unidadOrganica.setDen_und_organica(String.valueOf(buoAntecesora.getId()));
+        return bnivelZone.getBody();
+    }
+    
+    @Log
+    public GenericSelectModel<UnidadOrganica> getbbeansUO() {
+        
+        Criteria c;
+        c = session.createCriteria(UnidadOrganica.class);
+        c.add(Restrictions.eq("entidad", entidadUE));
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
+        if(bnivelUO!=null){          
+        c.add(Restrictions.eq("nivel", bnivelUO));}
+
+        return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormulariofiltrounidad() {        
+        mostrar=true;        
+        editando = false;        
+        return listaUOZone.getBody();
+    }
+    
     @Log
     public List<UnidadOrganica> getUnidadesOrganicas() {
         Criteria c;
         c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidadUE", entidadUE));
+        c.add(Restrictions.eq("entidad", entidadUE));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
+        if(bnivelUO!= null){
+           c.add(Restrictions.eq("nivel", bnivelUO));     
+        }
+        if (buoAntecesora != null && !buoAntecesora.equals("")) {
+            c.createAlias("unidadorganica", "unidadorganicax");
+            c.add(Restrictions.eq("unidadorganicax", buoAntecesora));
+        }
+        if (bdenouni != null && !bdenouni.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("den_und_organica", bdenouni + "%").ignoreCase()).add(Restrictions.like("den_und_organica", bdenouni.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("den_und_organica", bdenouni.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        if (bsigla != null && !bsigla.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("sigla", bsigla + "%").ignoreCase()).add(Restrictions.like("sigla", bsigla.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("sigla", bsigla.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
         /*if(!c.list().isEmpty())
             unidadOrganica = (UnidadOrganica) c.list().get(0);*/
         return c.list();
@@ -158,23 +253,7 @@ public class AMUnidadOrganica extends GeneralPage {
     /**
      * Hasta acá para levantar combo de organos
      */
-    private MultiZoneUpdate zonas() {
-        MultiZoneUpdate mu;
-
-        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("unidadesOrganicasZone", unidadesOrganicasZone.getBody()).add("nivelZone", nivelZone.getBody()).add("listaUOZone", listaUOZone.getBody());
-
-        return mu;
-    }
     
-    private MultiZoneUpdate zonasUOAntecesora() {
-        MultiZoneUpdate mu;
-
-        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody())
-                .add("nivelZone", nivelZone.getBody());
-
-        return mu;
-    }
-
     @Log
     void cargoDatos() {
         ubigeoDomicilio = new Ubigeo();
@@ -183,7 +262,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
         ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());
         nivelUO = unidadOrganica.getNivel();
-        uoAntecesora = unidadOrganica.getUoAntecesora();
+        uoAntecesora = unidadOrganica.getUnidadOrganica();
     }
 
     void onCpChanged() {
@@ -201,9 +280,9 @@ public class AMUnidadOrganica extends GeneralPage {
          */
 
         Criteria c;
-        c = session.createCriteria(Cargo.class);
-        c.add(Restrictions.eq("und_organica", uo));
-        c.add(Restrictions.ne("estado", Cargo.ESTADO_BAJA));
+        c = session.createCriteria(Cargoxunidad.class);
+        c.add(Restrictions.eq("unidadorganica", uo));
+        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
         // no quiero las que estén en baja.
         if (c.list().size() > 0) {
             return false;
@@ -225,7 +304,7 @@ public class AMUnidadOrganica extends GeneralPage {
     }
 
     public List<String> getTipoActividad() {
-        return Helpers.getValorTablaAuxiliar("TipoActividad", session);
+        return Helpers.getValorTablaAuxiliar("CATEGORIAUO", session);
     }
 
     /*
@@ -238,12 +317,13 @@ public class AMUnidadOrganica extends GeneralPage {
     return new GenericSelectModel<EntidadUEjecutora>(c.list(),EntidadUEjecutora.class,"denominacion","id",_access);
     }
      */
+    //lista unidades antecesoras
     @Log
     public GenericSelectModel<UnidadOrganica> getbeansUO() {
 
         Criteria c;
         c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidadUE", entidadUE));
+        c.add(Restrictions.eq("entidad", entidadUE));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         c.add(Restrictions.eq("nivel", nivelUO - 1));
 
@@ -270,6 +350,7 @@ public class AMUnidadOrganica extends GeneralPage {
         }
         return nivelZone.getBody();
     }
+    
 
     public Boolean getNivelUno() {
         return nivelUO == 1;
@@ -285,12 +366,12 @@ public class AMUnidadOrganica extends GeneralPage {
         if (editando) {
             c.add(Restrictions.ne("id", unidadOrganica.getId()));
         } else {
-            unidadOrganica.setEntidadUE(entidadUE);
+            unidadOrganica.setEntidad(entidadUE);
             unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
         }
 
         c.add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()));
-        c.add(Restrictions.eq("entidadUE", unidadOrganica.getEntidadUE()));
+        c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
         if (c.list().size() > 0) {
             formularioaltaunidadorganica.recordError(Errores.ERROR_COD_UND_ORG_UNICA);
             formularioaltaunidadorganica.recordError("Código ya existente: "
@@ -307,7 +388,7 @@ public class AMUnidadOrganica extends GeneralPage {
         unidadOrganica.setCod_ubi_dept(ubigeoDomicilio.getDepartamento());
         unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
         unidadOrganica.setCod_ubi_prov(ubigeoDomicilio.getProvincia());
-        unidadOrganica.setUoAntecesora(uoAntecesora);
+        unidadOrganica.setUnidadOrganica(uoAntecesora);
         session.saveOrUpdate(unidadOrganica);
         new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         editando = false;
@@ -316,7 +397,7 @@ public class AMUnidadOrganica extends GeneralPage {
         setupUbigeos();
         formularioaltaunidadorganica.clearErrors();
 
-        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
+        envelope.setContents(helpers.Constantes.CARGO_EXITO);
         return zonas();
     }
     
@@ -423,4 +504,23 @@ public class AMUnidadOrganica extends GeneralPage {
             cargoDatos();
         }
     }
+    
+    private MultiZoneUpdate zonas() {
+        MultiZoneUpdate mu;
+
+        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("unidadesOrganicasZone", unidadesOrganicasZone.getBody()).add("nivelZone", nivelZone.getBody()).add("listaUOZone", listaUOZone.getBody());
+
+        return mu;
+    }
+    
+    private MultiZoneUpdate zonasUOAntecesora() {
+        MultiZoneUpdate mu;
+
+        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody())
+                .add("nivelZone", nivelZone.getBody());
+
+        return mu;
+    }
+
+    
 }

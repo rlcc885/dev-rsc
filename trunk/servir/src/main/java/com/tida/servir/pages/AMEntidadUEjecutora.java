@@ -2,11 +2,11 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Ubigeo;
 import com.tida.servir.entities.UnidadOrganica;
@@ -40,12 +40,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Session session;
     @Property
     @Persist
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
     @Property
     @Persist
     private boolean editando;
     @Property
-    private EntidadUEjecutora oi;
+    private Entidad_BK oi;
     @Component(id = "formularioaltaentidaduejecutoras")
     private Form formularioaltaentidaduejecutoras;
     @Property
@@ -81,10 +81,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     private Envelope envelope;
 
-    public List<EntidadUEjecutora> getEntidadesUEjecutoras() {
+    public List<Entidad_BK> getEntidadesUEjecutoras() {
         Criteria c;
-        c = session.createCriteria(EntidadUEjecutora.class);
-        c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
         return c.list();
     }
 
@@ -102,7 +102,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private PropertyAccess _access;
     @Inject
     private Request _request;
-    private GenericSelectModel<EntidadUEjecutora> _beans;
+    private GenericSelectModel<Entidad_BK> _beans;
 
     /*
      * private UnidadEjecutora _unidadEjecutora;
@@ -168,9 +168,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     @CommitAfter
-    Object onBorrarDato(EntidadUEjecutora dato) {
+    Object onBorrarDato(Entidad_BK dato) {
         //solamente borrado lógico.
-        dato.setEstado(EntidadUEjecutora.ESTADO_BAJA);
+        dato.setEstado(Entidad_BK.ESTADO_BAJA);
         session.saveOrUpdate(dato);
         envelope.setContents(helpers.Constantes.EUE_EXITO);
         return this;// La/a zona a actualizar
@@ -222,7 +222,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     void onValidateFromformularioaltaentidaduejecutoras() {
-        Criteria c = session.createCriteria(EntidadUEjecutora.class);
+        Criteria c = session.createCriteria(Entidad_BK.class);
         if (editando) {
             c.add(Restrictions.ne("id", entidadUE.getId()));
         }
@@ -291,7 +291,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
         if (!editando) {
 
-            entidadUE.setEstado(EntidadUEjecutora.ESTADO_ALTA);
+            entidadUE.setEstado(Entidad_BK.ESTADO_ALTA);
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
             nuevaUnidadOrganica.setEntidadUE(entidadUE);
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
@@ -304,12 +304,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
             new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevaUnidadOrganica.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
             //System.out.println("Creada Unidad Organica. Id: " + nuevaUnidadOrganica.getId());
 
-            Cargo nuevoCargo = new Cargo();
+            Cargoxunidad nuevoCargo = new Cargoxunidad();
             nuevoCargo.setUnd_organica(nuevaUnidadOrganica);
-            nuevoCargo.setCod_cargo(Cargo.CODIGO_DEFAULT);
-            nuevoCargo.setDen_cargo(Cargo.DEN_DEFAULT);
-            nuevoCargo.setEstado(Cargo.ESTADO_ALTA);
-            nuevoCargo.setCtd_puestos_total(Cargo.CANT_MAX);
+            nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
+            nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
+            nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
+            nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
 
             nuevoCargo.setClasificacion_funcional(list.get(0)); // Le asignamos un clasificador funcional
@@ -326,7 +326,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
         //System.out.println("departamento apres  " + entidadUE.getCod_ubi_dept().getValor());
 
-        entidadUE = new EntidadUEjecutora();
+        entidadUE = new Entidad_BK();
         envelope.setContents(helpers.Constantes.EUE_EXITO);
         editando = false;
         return this;
@@ -338,7 +338,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onActionFromReset() {
         editando = false;
-        entidadUE = new EntidadUEjecutora();
+        entidadUE = new Entidad_BK();
         nivel_gobierno = null;
         sector = null;
         pliego = null;
@@ -364,7 +364,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             ubigeoEntidadUE.setDistrito(entidadUE.getCod_ubi_dist());
         } else {
             //System.out.println("=======================Estoy aca, no hay Entidad");
-            entidadUE = new EntidadUEjecutora();
+            entidadUE = new Entidad_BK();
         }
         if (nivel_gobierno == null) {
             nivel_gobierno = new String();
@@ -373,7 +373,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     @Log
-    public void onActivate(EntidadUEjecutora eue) {
+    public void onActivate(Entidad_BK eue) {
         entidadUE = eue;
         editando = true;
     }

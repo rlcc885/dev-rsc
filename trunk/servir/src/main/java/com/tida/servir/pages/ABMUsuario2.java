@@ -1,7 +1,7 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.entities.CrearDatos;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class ABMUsuario2 {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
 
 	@Component(id = "formulariousuario")

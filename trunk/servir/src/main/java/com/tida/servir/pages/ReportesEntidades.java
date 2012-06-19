@@ -2,7 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import helpers.Helpers;
 import helpers.Reportes;
@@ -38,7 +38,7 @@ public class ReportesEntidades  extends GeneralPage
 
     @Property
     @SessionState
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
    @Property
     @Persist

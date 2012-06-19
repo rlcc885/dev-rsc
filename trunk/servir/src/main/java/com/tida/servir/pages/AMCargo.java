@@ -1,6 +1,6 @@
 package com.tida.servir.pages;
 
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
@@ -31,11 +31,11 @@ public class AMCargo
     
     
     @Property
-    private Cargo cargo;
+    private Cargoxunidad cargo;
     
     
     @Property
-    private Cargo c;
+    private Cargoxunidad c;
     
     @Component(id = "formularioaltacargo")
     private Form formularioaltacargo;
@@ -44,9 +44,9 @@ public class AMCargo
     @SessionState
     private Usuario _usuario;
     
-    public List<Cargo> getCargos()
+    public List<Cargoxunidad> getCargos()
     {
-    	 return session.createCriteria(Cargo.class).list();
+    	 return session.createCriteria(Cargoxunidad.class).list();
     }
     
     /*
@@ -104,7 +104,7 @@ public class AMCargo
 	void onPrepareFromformularioaltacargo()
 	{
 		if(cargo == null) {
-			cargo = new Cargo();
+			cargo = new Cargoxunidad();
 		}
 	}
         
@@ -112,7 +112,7 @@ public class AMCargo
          * reset del formulario (borrar  objeto)
          */
         void onActionFromReset() {
-            cargo = new Cargo();
+            cargo = new Cargoxunidad();
         }
         
         /*
@@ -122,15 +122,15 @@ public class AMCargo
         /*
          Cargar desde los parámetros
          */
-        void onActivate(Cargo c)
+        void onActivate(Cargoxunidad c)
         {
             if (c==null)
-                c = new Cargo();
+                c = new Cargoxunidad();
             
             this.cargo = c;
         }
 
-        Cargo onPassivate()
+        Cargoxunidad onPassivate()
         {
             return cargo;
         }

@@ -17,7 +17,7 @@ public class Accesos {
         Organigrama, Trabajadores, ConceptosRemunerativos, ProcesoBatch, ProcesoBatchUpload,
         DeteccionIntrusion, CambiarClave, Salir};
 
-    public static enum MENUHIJO  {AdministrarUsuarios, ReportesUsuarios, Inicio, AdministracionEntidades, ReportesEntidades,
+    public static enum MENUHIJO  {AdministrarUsuarios, ReportesUsuarios, AdministracionEntidades, ReportesEntidades,
          SeleccionEntidades, UnidadesOrganicas, AdministracionTablas, Cargos,ReportesEstructura,
         AltaTrabajador, ModificacionTrabajador, BajaTrabajador, ReportesTrabajador, TrabajadorPage,
         AdministracionConceptos, CambioUOEntidad, ReportesNivel, DescargaArchivoCSV};
@@ -98,9 +98,7 @@ public class Accesos {
             case ReportesUsuarios:
                 nombre = "Reportes de usuarios";
                 break;
-            case Inicio:
-                nombre = "Inicio";
-                break;
+
             case AdministracionEntidades:
                 nombre = "Administrar entidades";
                 break;
@@ -233,9 +231,7 @@ public class Accesos {
             case ReportesUsuarios:
                 nombre = "ReportesUsuarios";
                 break;
-            case Inicio:
-                nombre = "Inicio";
-                break;
+
             case AdministracionEntidades:
                 nombre = "amentidaduejecutora";
                 break;
@@ -255,7 +251,7 @@ public class Accesos {
                 nombre = "amunidadorganica";
                 break;
             case AdministracionTablas:
-                    nombre = "abmdatoauxiliar";
+                nombre = "abmdatoauxiliar";
                 break;
             case Cargos:
                 nombre = "abmcargos";

@@ -5,13 +5,13 @@
 package Batch.Helpers;
 
 import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.EvaluacionPersonal;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.RemuneracionPersonal;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.UnidadOrganica;
@@ -61,7 +61,7 @@ public class CreadorDesdeDB {
      * @param errores
      * @return el ogranismo informante buscado
      */
-    public static EntidadUEjecutora getEntidadUEjecutoraWithCodigoEntidadUE(String codigo_entidadUE, Session session, List<String> errores) {
+    public static Entidad_BK getEntidadUEjecutoraWithCodigoEntidadUE(String codigo_entidadUE, Session session, List<String> errores) {
 
         if (codigo_entidadUE == null) {
             return null;
@@ -71,14 +71,14 @@ public class CreadorDesdeDB {
             return null;
         }
 
-        Criteria c = session.createCriteria(EntidadUEjecutora.class);
+        Criteria c = session.createCriteria(Entidad_BK.class);
         c.add(Restrictions.eq("codigoEntidadUE", codigo_entidadUE));
 
         if (c.list().isEmpty()) {
             return null;
         }
 
-        return (EntidadUEjecutora) c.list().get(0);
+        return (Entidad_BK) c.list().get(0);
     }
 
     /** Obtener Trabajador con Tipo y Numero de documento
@@ -148,7 +148,7 @@ public class CreadorDesdeDB {
      * @param codigo_entidadUE
      * @return el legajo buscado
      */
-    public static Legajo getLegajoWithTrabajadorEntidadUE(Session session, Trabajador trabajador, List<String> errores, EntidadUEjecutora entidadUE) {
+    public static Legajo getLegajoWithTrabajadorEntidadUE(Session session, Trabajador trabajador, List<String> errores, Entidad_BK entidadUE) {
 
         Criteria c = session.createCriteria(Legajo.class);
         c.createAlias("trabajador", "trabajador");
@@ -172,7 +172,7 @@ public class CreadorDesdeDB {
      * @return la unidad organica buscada
      * 
      */
-    public static UnidadOrganica getUnidadOrganicaWithCodigoUnidadOrganica(String codigo_und_organica, EntidadUEjecutora eue, Session session, List<String> errores) {
+    public static UnidadOrganica getUnidadOrganicaWithCodigoUnidadOrganica(String codigo_und_organica, Entidad_BK eue, Session session, List<String> errores) {
 
         if ((codigo_und_organica == null)){
             return null;
@@ -201,7 +201,7 @@ public class CreadorDesdeDB {
      * @param errores
      * @return el cargo buscado
      */
-    public static Cargo getCargoWithCodigoCargoCodigoEntidadUE(String codigo_cargo, String codigo_entidadUE, Session session, List<String> errores) {
+    public static Cargoxunidad getCargoWithCodigoCargoCodigoEntidadUE(String codigo_cargo, String codigo_entidadUE, Session session, List<String> errores) {
 
         if((codigo_cargo == null)||(codigo_entidadUE == null)){
             return null;
@@ -211,21 +211,21 @@ public class CreadorDesdeDB {
                 return null;
         }
         
-        Criteria c = session.createCriteria(Cargo.class);
+        Criteria c = session.createCriteria(Cargoxunidad.class);
         c.createAlias("und_organica.entidadUE", "entidadUE");
         c.add(Restrictions.like("entidadUE.codigoEntidadUE", codigo_entidadUE));
         c.add(Restrictions.like("cod_cargo", codigo_cargo));
       
         
         if(!c.list().isEmpty()){
-            return (Cargo) c.list().get(0);
+            return (Cargoxunidad) c.list().get(0);
         }else{
             return null;
         }
         
     }
 
-    public static Legajo getLegajoWithCodigoEntidadUECodigoLegajo(EntidadUEjecutora eue, String codigo_legajo, Session session, List<String> errores) {
+    public static Legajo getLegajoWithCodigoEntidadUECodigoLegajo(Entidad_BK eue, String codigo_legajo, Session session, List<String> errores) {
 
         if ((codigo_legajo == null) || (eue == null)) {
             return null;
@@ -256,7 +256,7 @@ public class CreadorDesdeDB {
      * @param errores
      * @return el cargo asignado buscado
      */
-    public static CargoAsignado getCargoAsignadoWithLegajoCargo(Session session, Cargo cargo, Legajo legajo, List<String> errores) {
+    public static CargoAsignado getCargoAsignadoWithLegajoCargo(Session session, Cargoxunidad cargo, Legajo legajo, List<String> errores) {
 
         if (cargo == null || legajo == null) {
             return null;
@@ -371,7 +371,7 @@ public class CreadorDesdeDB {
         return (ConceptoRemunerativo) c.list().get(0);
     }
 
-    public static List<RemuneracionPersonalCSV> generarParaCSVRemuneracionPersonal(CargoAsignado ca, EntidadUEjecutora eue) {
+    public static List<RemuneracionPersonalCSV> generarParaCSVRemuneracionPersonal(CargoAsignado ca, Entidad_BK eue) {
         List<RemuneracionPersonalCSV> lrpcsv = new LinkedList<RemuneracionPersonalCSV>();
         
         if(eue == null && ca == null){
@@ -398,7 +398,7 @@ public class CreadorDesdeDB {
         return lrpcsv;
     }
 
-    public static List<EvaluacionPersonalCSV> generarParaCSVEvaluacionPersonal(CargoAsignado ca, EntidadUEjecutora eue) {
+    public static List<EvaluacionPersonalCSV> generarParaCSVEvaluacionPersonal(CargoAsignado ca, Entidad_BK eue) {
         List<EvaluacionPersonalCSV> lepcsv = new LinkedList<EvaluacionPersonalCSV>();
 
         if(eue == null && ca == null){
@@ -424,7 +424,7 @@ public class CreadorDesdeDB {
         return lepcsv;
     }
 
-    public static List<AusLicPersonalCSV> generarParaCSVAusLicPersonal(CargoAsignado ca, EntidadUEjecutora eue) {
+    public static List<AusLicPersonalCSV> generarParaCSVAusLicPersonal(CargoAsignado ca, Entidad_BK eue) {
         List<AusLicPersonalCSV> lalpcsv = new LinkedList<AusLicPersonalCSV>();
 
         if(eue == null && ca == null){

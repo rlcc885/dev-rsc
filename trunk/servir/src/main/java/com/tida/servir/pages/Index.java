@@ -29,7 +29,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
@@ -57,7 +57,7 @@ public class Index {
 
     @Property
     @SessionState(create=false)
-    private EntidadUEjecutora eue;
+    private Entidad_BK eue;
 
     @Property
     private boolean administrador = false;
@@ -85,7 +85,7 @@ public class Index {
     @Inject
     private ComponentClassResolver componentClassResolver;
     @Persist
-    private GenericSelectModel<EntidadUEjecutora> _beanOrganismos;
+    private GenericSelectModel<Entidad_BK> _beanOrganismos;
     @Inject
     private PropertyAccess _access;
     @Inject
@@ -112,16 +112,16 @@ public class Index {
         return !administrador;
     }
 
-    public GenericSelectModel<EntidadUEjecutora> getBeanOrganismos() {
-        List<EntidadUEjecutora> list;
+    public GenericSelectModel<Entidad_BK> getBeanOrganismos() {
+        List<Entidad_BK> list;
         Criteria c;
         //System.out.println("-------------------------------------entrada bean organismo");
-        c = session.createCriteria(EntidadUEjecutora.class);
-        c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
 
         list = c.list();
 
-        _beanOrganismos = new GenericSelectModel<EntidadUEjecutora>(list, EntidadUEjecutora.class, "denominacion", "id", _access);
+        _beanOrganismos = new GenericSelectModel<Entidad_BK>(list, Entidad_BK.class, "denominacion", "id", _access);
 
         return _beanOrganismos;
     }
@@ -254,7 +254,7 @@ public class Index {
         if (sessionService != null) {
             List<String> names = sessionService.getAttributeNames();
             List<String> toKeep = Arrays.asList(new String[]{
-                        "sso:" + EntidadUEjecutora.class.getName(),
+                        "sso:" + Entidad_BK.class.getName(),
                         "sso:" + Usuario.class.getName()
                     });
             for (String name : names) {

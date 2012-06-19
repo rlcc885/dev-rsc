@@ -6,14 +6,14 @@ package Batch.Helpers;
 
 import com.tida.servir.entities.Ant_Laborales;
 import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.Curso;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.EvaluacionPersonal;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
@@ -84,7 +84,7 @@ public class ComparadorEntidades {
      * @param eueDestino - El que vino de la base de datos
      * @return  - Devuelve una linea de informacion
      */
-    public static String entidadUEs(EntidadUEjecutora eueOrigen, EntidadUEjecutora eueDestino) {
+    public static String entidadUEs(Entidad_BK eueOrigen, Entidad_BK eueDestino) {
         String resultado = ResultadoOperacionCSV.SIN_CAMBIO;
         
         resultado = ComparadorEntidades.comparadorDatos(eueOrigen.getClas_funcional(), eueDestino.getClas_funcional());
@@ -173,7 +173,7 @@ public class ComparadorEntidades {
      * @param cdestino - El que vino de la base de datos
      * @return  - Devuelve una linea de informacion
      */
-    public static LineaInformeCodigo cargos(Cargo corigen, Cargo cdestino) {
+    public static LineaInformeCodigo cargos(Cargoxunidad corigen, Cargoxunidad cdestino) {
         LineaInformeCodigo lio = new LineaInformeCodigo();
         
         lio.setCodigoEntidadUE(corigen.getUnd_organica().getEntidadUE().getCodigoEntidadUE());

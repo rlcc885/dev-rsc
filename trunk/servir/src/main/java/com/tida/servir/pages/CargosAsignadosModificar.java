@@ -9,7 +9,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Trabajador;
 
 import org.hibernate.Session;
@@ -31,7 +31,7 @@ public class CargosAsignadosModificar  extends GeneralPage {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     public CargoAsignado get_Ca() {
         return _ca;

@@ -7,7 +7,7 @@ package Batch.Helpers;
 import Batch.Tratamiento;
 import com.tida.servir.entities.Ant_Laborales;
 import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
@@ -17,7 +17,7 @@ import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.EvaluacionPersonal;
 import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.RemuneracionPersonal;
@@ -55,9 +55,9 @@ public class CreadorDesdeCsv {
     }
 
     //entidadUEs
-    public List<EntidadUEjecutora> csvToListEntidadUEjecutora(List<List<String>> leues, Session session, List<String> errores, String origenArchivo) {
-        List<EntidadUEjecutora> leue = new LinkedList<EntidadUEjecutora>();
-        EntidadUEjecutora eue;
+    public List<Entidad_BK> csvToListEntidadUEjecutora(List<List<String>> leues, Session session, List<String> errores, String origenArchivo) {
+        List<Entidad_BK> leue = new LinkedList<Entidad_BK>();
+        Entidad_BK eue;
         for (List<String> eues : leues) {
             eue = entidadUEjecutoraFromCsv(eues, errores, session, origenArchivo);
             if (eue == null) {
@@ -68,8 +68,8 @@ public class CreadorDesdeCsv {
         return leue;
     }
 
-    public EntidadUEjecutora entidadUEjecutoraFromCsv(List<String> _csvOrganismo, List<String> errores, Session session, String origenArchivo) {
-        EntidadUEjecutora eue = new EntidadUEjecutora();
+    public Entidad_BK entidadUEjecutoraFromCsv(List<String> _csvOrganismo, List<String> errores, Session session, String origenArchivo) {
+        Entidad_BK eue = new Entidad_BK();
 
         //verificacion numero campos archivo
         if (_csvOrganismo.size() != helpers.Constantes.CAMPOS_ENTIDADES_UNIDADES_EJECUTORAS) {
@@ -119,7 +119,7 @@ public class CreadorDesdeCsv {
         eue.setCorreoElectronicoInstitucional(_csvOrganismo.get(19));
         eue.setTEJefeRRHH(_csvOrganismo.get(20));
         eue.setTEMovilJefeRRHH(_csvOrganismo.get(21));
-        eue.setEstado(EntidadUEjecutora.ESTADO_ALTA);
+        eue.setEstado(Entidad_BK.ESTADO_ALTA);
 
         // Chequeo cascada de ubigeo
         if(!Helpers.isUbigeoValido(eue.getCod_ubi_dept(), eue.getCod_ubi_prov(), eue.getCod_ubi_dist(), session)) {
@@ -132,17 +132,17 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        EntidadUEjecutora eueOrigen = eue;
+        Entidad_BK eueOrigen = eue;
 
         //verificar si ya existe la entidad UE (modificacion o alta) y guardarla en una lista
         Criteria c;
-        c = session.createCriteria(EntidadUEjecutora.class);
+        c = session.createCriteria(Entidad_BK.class);
         c.add(Restrictions.eq("codigoEntidadUE", eue.getCodigoEntidadUE()));
 
         if (c.list() != null) {
             if (!c.list().isEmpty()) {
                 //modificacion
-                EntidadUEjecutora eueDestino = (EntidadUEjecutora) c.list().get(0);
+                Entidad_BK eueDestino = (Entidad_BK) c.list().get(0);
                 if (myTratamiento.getUsuario().getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
                     //verificar si puede ingresar informacion
                     if (!eueDestino.getDef_servir()) {
@@ -167,7 +167,7 @@ public class CreadorDesdeCsv {
 
         //nueva entidadUE
         if (origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
-            eue.setEstado(EntidadUEjecutora.ESTADO_ALTA);
+            eue.setEstado(Entidad_BK.ESTADO_ALTA);
 
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
             nuevaUnidadOrganica.setEntidadUE(eue);
@@ -179,14 +179,14 @@ public class CreadorDesdeCsv {
             nuevaUnidadOrganica.setSigla(UnidadOrganica.SIGLA_DEFAULT);
             myTratamiento.getUnidadOrganica().add(nuevaUnidadOrganica);
 
-            Cargo nuevoCargo = new Cargo();
+            Cargoxunidad nuevoCargo = new Cargoxunidad();
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
             nuevoCargo.setClasificacion_funcional(list.get(0));
             nuevoCargo.setUnd_organica(nuevaUnidadOrganica);
-            nuevoCargo.setCod_cargo(Cargo.CODIGO_DEFAULT);
-            nuevoCargo.setDen_cargo(Cargo.DEN_DEFAULT);
-            nuevoCargo.setEstado(Cargo.ESTADO_ALTA);
-            nuevoCargo.setCtd_puestos_total(Cargo.CANT_MAX);
+            nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
+            nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
+            nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
+            nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
             myTratamiento.getCargo().add(nuevoCargo);
 
             //se guarda sola aca para no cambiar si los campos son true si alguien modifica estos campos despues de la primera cargada
@@ -215,7 +215,7 @@ public class CreadorDesdeCsv {
 
     public ConceptoRemunerativo conceptoFromCsv(List<String> _csvConcepto, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
         ConceptoRemunerativo concepto = new ConceptoRemunerativo();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvConcepto.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvConcepto.get(0));
         LineaInformeCodigo lic = new LineaInformeCodigo();
 
         //verificacion numero campos archivo
@@ -346,7 +346,7 @@ public class CreadorDesdeCsv {
     public UnidadOrganica unidadOrganicaFromCsv(List<String> _csvUnidadOrganica, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
         UnidadOrganica unidadorganica = new UnidadOrganica();
         UnidadOrganica unidadorganicaAntecesora = new UnidadOrganica();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvUnidadOrganica.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvUnidadOrganica.get(0));
         LineaInformeCodigo lic = new LineaInformeCodigo();
 
         //verificacion numero campos archivo
@@ -446,7 +446,7 @@ public class CreadorDesdeCsv {
         c.add(Restrictions.like("cod_und_organica", unidadorganica.getCod_und_organica()));
         c.add(Restrictions.like("entidadUE.codigoEntidadUE", unidadorganica.getEntidadUE().getCodigoEntidadUE()));
 
-        UnidadOrganica uoOrigen = unidadorganica;
+        UnidadOrganica uoOrigen = unidadorganica; 
         if (c.list() != null) {
             if (!c.list().isEmpty()) {
                 //modificacion
@@ -481,9 +481,9 @@ public class CreadorDesdeCsv {
     }
 
     //cargos
-    public List<Cargo> csvToListCargo(List<List<String>> csvCargos, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
-        List<Cargo> lcargo = new LinkedList<Cargo>();
-        Cargo cargo;
+    public List<Cargoxunidad> csvToListCargo(List<List<String>> csvCargos, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
+        List<Cargoxunidad> lcargo = new LinkedList<Cargoxunidad>();
+        Cargoxunidad cargo;
         for (List<String> csvCargo : csvCargos) {
             cargo = cargoFromCsv(csvCargo, session, errores, origenArchivo, is);
             if (cargo == null) {
@@ -494,9 +494,9 @@ public class CreadorDesdeCsv {
         return lcargo;
     }
 
-    public Cargo cargoFromCsv(List<String> _csvCargo, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
-        Cargo cargo = new Cargo();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCargo.get(0));
+    public Cargoxunidad cargoFromCsv(List<String> _csvCargo, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
+        Cargoxunidad cargo = new Cargoxunidad();
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCargo.get(0));
         LineaInformeCodigo lic = new LineaInformeCodigo();
 
         //verificacion numero campos archivo
@@ -558,7 +558,7 @@ public class CreadorDesdeCsv {
         cargo.setNivelRemunerativo(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("NivelRemunerativo", _csvCargo.get(12), errores, session));
         cargo.setSituacion_CAP(CreadorDesdeDB.verificacionValorDatoAuxiliar("SituacionCAP", _csvCargo.get(13), errores, session));
         cargo.setPersonasCargo(CreadorDesdeCsv.toBoolean(_csvCargo.get(14)));
-        cargo.setCtd_puestos_total(Cargo.CANT_DEFAULT);
+        cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);
 
         if (eue.getId() == 0 || unidadorganica.getId() == 0) {
             //nuveo cargo
@@ -576,16 +576,16 @@ public class CreadorDesdeCsv {
         }
 
         Criteria c;
-        c = myTratamiento.getSession().createCriteria(Cargo.class);
+        c = myTratamiento.getSession().createCriteria(Cargoxunidad.class);
         c.createAlias("und_organica.entidadUE", "entidadUE");
         c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
         c.add(Restrictions.like("entidadUE.codigoEntidadUE", cargo.getUnd_organica().getEntidadUE().getCodigoEntidadUE()));
 
-        Cargo corigen = cargo;
+        Cargoxunidad corigen = cargo;
         if (c.list() != null) {
             if (!c.list().isEmpty()) {
                 //modificacion
-                Cargo cdestino = (Cargo) c.list().get(0);
+                Cargoxunidad cdestino = (Cargoxunidad) c.list().get(0);
                 lic = ComparadorEntidades.cargos(corigen, cdestino);
                 if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
                     // quiero guardar en el objeto de la base, los datos del objeto del csv
@@ -636,7 +636,7 @@ public class CreadorDesdeCsv {
 
     public Trabajador trabajadorFromCsv(List<String> _csvTrabajador, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Trabajador trabajador = new Trabajador();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvTrabajador.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvTrabajador.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -820,7 +820,7 @@ public class CreadorDesdeCsv {
 
     public Legajo legajoFromCsv(List<String> _csvLegajo, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) {
         Legajo legajo = new Legajo();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvLegajo.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvLegajo.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -996,7 +996,7 @@ public class CreadorDesdeCsv {
 
     public CargoAsignado cargoAsignadoFromCsv(List<String> _csvCargosAsignado, Session session, List<String> errores, String origenArchivo, String tipoProceso, boolean yaEntrada, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         CargoAsignado cargoasignado = new CargoAsignado();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCargosAsignado.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCargosAsignado.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
 
@@ -1034,7 +1034,7 @@ public class CreadorDesdeCsv {
         //verificacion si tipoDocumento = DNI then numeroDocumento = 8 y es un numero
         CreadorDesdeCsv.rechazadoDNI(tipoDocumento, _csvCargosAsignado.get(3), errores);
 
-        Cargo cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvCargosAsignado.get(1), eue);
+        Cargoxunidad cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvCargosAsignado.get(1), eue);
 
         //verificacion en la base de dato despues de la verificacion en la lista de cargo
         if (cargo == null) {
@@ -1221,7 +1221,7 @@ public class CreadorDesdeCsv {
 
     public Familiar familiarFromCsv(List<String> _csvFamiliar, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Familiar familiar = new Familiar();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvFamiliar.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvFamiliar.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -1410,7 +1410,7 @@ public class CreadorDesdeCsv {
 
     public Titulo tituloFromCsv(List<String> _csvTitulo, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Titulo titulo = new Titulo();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvTitulo.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvTitulo.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -1578,7 +1578,7 @@ public class CreadorDesdeCsv {
 
     public Certificacion certificacionFromCsv(List<String> _csvCertificacion, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Certificacion certificacion = new Certificacion();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCertificacion.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCertificacion.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -1736,7 +1736,7 @@ public class CreadorDesdeCsv {
 
     public Curso cursoFromCsv(List<String> _csvCurso, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Curso curso = new Curso();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCurso.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvCurso.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -1898,7 +1898,7 @@ public class CreadorDesdeCsv {
 
     public Ant_Laborales ant_laboralFromCsv(List<String> _csvAnt_Laboral, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Ant_Laborales ant_laborale = new Ant_Laborales();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvAnt_Laboral.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvAnt_Laboral.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -2073,7 +2073,7 @@ public class CreadorDesdeCsv {
 
     public MeritoDemerito meritodemeritoFromCsv(List<String> _csvMeritoDemerito, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         MeritoDemerito meritodemerito = new MeritoDemerito();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvMeritoDemerito.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvMeritoDemerito.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -2251,7 +2251,7 @@ public class CreadorDesdeCsv {
 
     public Publicacion produccionintelectualFromCsv(List<String> _csvProductionIntelectual, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
         Publicacion produccionintelectual = new Publicacion();
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvProductionIntelectual.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvProductionIntelectual.get(0));
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -2428,7 +2428,7 @@ public class CreadorDesdeCsv {
     }
 
     public void remuneracionpersonalVerificacionesErrores(List<String> _csvRemuneracionPersonal, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) {
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvRemuneracionPersonal.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvRemuneracionPersonal.get(0));
         RemuneracionPersonal remuneracionpersonal = new RemuneracionPersonal();
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
         List<RemuneracionPersonal> lEval;
@@ -2451,7 +2451,7 @@ public class CreadorDesdeCsv {
             return;
         }
 
-        Cargo cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvRemuneracionPersonal.get(1), eue);
+        Cargoxunidad cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvRemuneracionPersonal.get(1), eue);
 
         //verificacion en la base de dato despues de la verifiacion en la lista de cargo
         if (cargo == null) {
@@ -2650,7 +2650,7 @@ public class CreadorDesdeCsv {
     }
 
     public void evaluacionpersonalVerificacionesErrores(List<String> _csvEvaluacionPersonal, Session session, String origenArchivo, List<String> errores, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvEvaluacionPersonal.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvEvaluacionPersonal.get(0));
         EvaluacionPersonal evaluacionpersonal = new EvaluacionPersonal();
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
         List<EvaluacionPersonal> lEval;
@@ -2673,7 +2673,7 @@ public class CreadorDesdeCsv {
             return;
         }
 
-        Cargo cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvEvaluacionPersonal.get(1), eue);
+        Cargoxunidad cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvEvaluacionPersonal.get(1), eue);
 
         //verificacion en la base de dato despues de la verifiacion en la lista de cargo
         if (cargo == null) {
@@ -2849,7 +2849,7 @@ public class CreadorDesdeCsv {
     }
 
     public void auslicpersonalFromCsv(List<String> _csvAusLicPersonal, Session session, String origenArchivo, List<String> errores, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvAusLicPersonal.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvAusLicPersonal.get(0));
         AusLicPersonal ausencialicencia = new AusLicPersonal();
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
         List<AusLicPersonal> lEval = new LinkedList<AusLicPersonal>();
@@ -2889,7 +2889,7 @@ public class CreadorDesdeCsv {
         //verificacion si tipoDocumento = DNI then numeroDocumento = 8 y es un numero
         CreadorDesdeCsv.rechazadoDNI(tipoDocumento, _csvAusLicPersonal.get(3), errores);
 
-        Cargo cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvAusLicPersonal.get(1), eue);
+        Cargoxunidad cargo = getCargoDesdeListCargoCSV(myTratamiento.getCargo(), _csvAusLicPersonal.get(1), eue);
 
         //verificacion en la base de dato despues de la verifiacion en la lista de cargo
         if (cargo == null) {
@@ -3047,7 +3047,7 @@ public class CreadorDesdeCsv {
     }
 
     public void constanciadocumentalVerificacionesErrores(List<String> _csvConstanciaDocumental, Session session, String origenArchivo, List<String> errores, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
-        EntidadUEjecutora eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvConstanciaDocumental.get(0));
+        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvConstanciaDocumental.get(0));
         ConstanciaDocumental constanciadocumental = new ConstanciaDocumental();
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
@@ -3202,14 +3202,14 @@ public class CreadorDesdeCsv {
      * @param errores
      * @return 
      */
-    public static boolean presenciaTablaEntidadUEjecutora(EntidadUEjecutora eue, Session session, List<String> errores) {
+    public static boolean presenciaTablaEntidadUEjecutora(Entidad_BK eue, Session session, List<String> errores) {
 
         if (eue == null) {
             //errores.add("la entidadUE esta null");
             return false;
         }
 
-        Criteria c = session.createCriteria(EntidadUEjecutora.class);
+        Criteria c = session.createCriteria(Entidad_BK.class);
 
         c.add(Restrictions.eq("codigoEntidadUE", eue.getCodigoEntidadUE()));
 
@@ -3308,7 +3308,7 @@ public class CreadorDesdeCsv {
         return Float.parseFloat(valor);
     }
 
-    public EntidadUEjecutora getEntidadUEDesdeListEntidadUECSV(List<EntidadUEjecutora> leue, String codigoOrganismo) {
+    public Entidad_BK getEntidadUEDesdeListEntidadUECSV(List<Entidad_BK> leue, String codigoOrganismo) {
         if (codigoOrganismo == null || leue == null) {
             return null;
         }
@@ -3317,7 +3317,7 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        for (EntidadUEjecutora eue : leue) {
+        for (Entidad_BK eue : leue) {
             if (eue.getCodigoEntidadUE().equals(codigoOrganismo)) {
                 return eue;
             }
@@ -3342,7 +3342,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public Legajo getLegajoDesdeListLegajoCSV(List<Legajo> ll, Trabajador trabajador, EntidadUEjecutora eue) {
+    public Legajo getLegajoDesdeListLegajoCSV(List<Legajo> ll, Trabajador trabajador, Entidad_BK eue) {
         if (trabajador == null || ll == null || eue == null) {
             return null;
         }
@@ -3360,7 +3360,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public Legajo getLegajoCodigoLegajoDesdeListLegajoCSV(List<Legajo> ll, String codigoLegajo, EntidadUEjecutora eue) {
+    public Legajo getLegajoCodigoLegajoDesdeListLegajoCSV(List<Legajo> ll, String codigoLegajo, Entidad_BK eue) {
         if (codigoLegajo == null || ll == null || eue == null) {
             return null;
         }
@@ -3377,7 +3377,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public CargoAsignado getCargoAsignadoDesdeListCargoAsignadoCSV(List<CargoAsignado> lca, Legajo legajo, Cargo cargo) {
+    public CargoAsignado getCargoAsignadoDesdeListCargoAsignadoCSV(List<CargoAsignado> lca, Legajo legajo, Cargoxunidad cargo) {
         if (legajo == null || lca == null || cargo == null) {
             return null;
         }
@@ -3394,7 +3394,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public UnidadOrganica getUnidadOrganicaDesdeListUnidadOrganicaCSV(List<UnidadOrganica> lua, String codigoUnidadOrganica, EntidadUEjecutora eue) {
+    public UnidadOrganica getUnidadOrganicaDesdeListUnidadOrganicaCSV(List<UnidadOrganica> lua, String codigoUnidadOrganica, Entidad_BK eue) {
         if (codigoUnidadOrganica == null || lua == null || eue == null) {
             return null;
         }
@@ -3411,7 +3411,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public Cargo getCargoDesdeListCargoCSV(List<Cargo> lc, String codigoCargo, EntidadUEjecutora eue) {
+    public Cargoxunidad getCargoDesdeListCargoCSV(List<Cargoxunidad> lc, String codigoCargo, Entidad_BK eue) {
         if (codigoCargo == null || lc == null || eue == null) {
             return null;
         }
@@ -3420,7 +3420,7 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        for (Cargo c : lc) {
+        for (Cargoxunidad c : lc) {
             if (c.getCod_cargo().equals(codigoCargo) && c.getUnd_organica().getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return c;
             }
@@ -3428,7 +3428,7 @@ public class CreadorDesdeCsv {
         return null;
     }
 
-    public ConceptoRemunerativo getConceptoRemunerativoDesdeListConceptoRemunerativoCSV(List<ConceptoRemunerativo> lcr, String codigoConceptoRemunerativo, EntidadUEjecutora eue) {
+    public ConceptoRemunerativo getConceptoRemunerativoDesdeListConceptoRemunerativoCSV(List<ConceptoRemunerativo> lcr, String codigoConceptoRemunerativo, Entidad_BK eue) {
         if (codigoConceptoRemunerativo == null || lcr == null || eue == null) {
             return null;
         }
@@ -3465,17 +3465,17 @@ public class CreadorDesdeCsv {
     private String getEstadoCargoFromBoolStr(String estado, List<String> errores) {
         if (!((estado == null) || (estado.trim().equals("")))) {
             if (estado.trim().equals("1")) {
-                return Cargo.ESTADO_ALTA;
+                return Cargoxunidad.ESTADO_ALTA;
             }
 
             if (estado.trim().equals("0")) {
-                return Cargo.ESTADO_BAJA;
+                return Cargoxunidad.ESTADO_BAJA;
             }
             // si llego hasta aca el codigo no es valido
             errores.add(helpers.Errores.CODIGO_NO_ENCONTRADO + "Cargo");
 
         }
-        return Cargo.ESTADO_ALTA;
+        return Cargoxunidad.ESTADO_ALTA;
     }
 
     private String getEstadoCAFromBoolStr(String estado, List<String> errores) {
@@ -3583,7 +3583,7 @@ public class CreadorDesdeCsv {
         return consIgual;
     }
 
-    public static List<String> verificacionProcesarCargaMassiva(List<EntidadUEjecutora> leue) {
+    public static List<String> verificacionProcesarCargaMassiva(List<Entidad_BK> leue) {
         List<String> errores = new LinkedList<String>();
         String codigoEntidadUE = "";
 
@@ -3595,7 +3595,7 @@ public class CreadorDesdeCsv {
         codigoEntidadUE = leue.get(0).getCodigoEntidadUE();
 
         //verificar si hay una sola entidad en el archivo ORGAN1 y que la entidadUE eue existe en el archivo
-        for (EntidadUEjecutora entidadUE : leue) {
+        for (Entidad_BK entidadUE : leue) {
             if (!codigoEntidadUE.equals(entidadUE.getCodigoEntidadUE())) {
                 errores.add(helpers.Errores.HAY_MAS_UNA_ENTIDAD_ARCHIVO);
                 return errores;
@@ -3605,7 +3605,7 @@ public class CreadorDesdeCsv {
         return errores;
     }
 
-    public static List<String> verificacionEntidadPuedeProcesarEstaArchivo(List<EntidadUEjecutora> leue, EntidadUEjecutora eue) {
+    public static List<String> verificacionEntidadPuedeProcesarEstaArchivo(List<Entidad_BK> leue, Entidad_BK eue) {
         List<String> errores = new LinkedList<String>();
         String codigoEntidadUE = "";
 
@@ -3617,7 +3617,7 @@ public class CreadorDesdeCsv {
         codigoEntidadUE = eue.getCodigoEntidadUE();
 
         //verificar si hay una sola entidad en el archivo ORGAN1 y que la entidadUE eue existe en el archivo
-        for (EntidadUEjecutora entidadUE : leue) {
+        for (Entidad_BK entidadUE : leue) {
             if (!codigoEntidadUE.equals(entidadUE.getCodigoEntidadUE())) {
                 errores.add(helpers.Errores.NO_SE_PUEDE_PROCESAR_ESTE_ARCHIVO_CON_ESTA_ENTIDAD + eue.getDenominacion());
                 return errores;

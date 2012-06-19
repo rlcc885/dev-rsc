@@ -2,12 +2,12 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
 import helpers.Errores;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.UnidadOrganica;
@@ -46,7 +46,7 @@ public class TrabajadorNuevo  extends GeneralPage
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Property
     @SessionState
@@ -74,7 +74,7 @@ public class TrabajadorNuevo  extends GeneralPage
     @Inject
     private PropertyAccess _access;
 
-    private CargosSelectModel<Cargo> _beans;
+    private CargosSelectModel<Cargoxunidad> _beans;
 
     @InjectPage
     private Busqueda index;
@@ -189,22 +189,22 @@ public class TrabajadorNuevo  extends GeneralPage
     }
     */
 
-    public Cargo getcargo(){
+    public Cargoxunidad getcargo(){
        return cargo;
     }
 
 
-    public CargosSelectModel<Cargo> getBeans(){
+    public CargosSelectModel<Cargoxunidad> getBeans(){
        return _beans;
     }
 
-    private Cargo cargo;
+    private Cargoxunidad cargo;
 
-    public Cargo getCargo() {
+    public Cargoxunidad getCargo() {
         return cargo;
     }
 
-    public void setCargo(Cargo cargo) {
+    public void setCargo(Cargoxunidad cargo) {
         this.cargo = cargo;
     }
 
@@ -391,7 +391,7 @@ public class TrabajadorNuevo  extends GeneralPage
     @Log
     @CommitAfter
     Object onSuccessFromformulariounidadorganica() {
-        Criteria c = session.createCriteria(Cargo.class)
+        Criteria c = session.createCriteria(Cargoxunidad.class)
         .add(Restrictions.eq("und_organica", unidadorganica))
         .add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         
@@ -446,13 +446,13 @@ public class TrabajadorNuevo  extends GeneralPage
         }
         
            fec_inicio = new Date();
-           List<Cargo> list = session.createCriteria(Cargo.class)
+           List<Cargoxunidad> list = session.createCriteria(Cargoxunidad.class)
                    .createAlias("und_organica", "und_organica")
                    .add(Restrictions.eq("und_organica", unidadorganica))
                    .add(Restrictions.ne("und_organica.estado", UnidadOrganica.ESTADO_BAJA))
                    .add(Restrictions.ne("estado", Constantes.ESTADO_BAJA))
                    .list(); 
-            _beans = new CargosSelectModel<Cargo>(list,Cargo.class,"cod_cargo", "den_cargo","id",_access);
+            _beans = new CargosSelectModel<Cargoxunidad>(list,Cargoxunidad.class,"cod_cargo", "den_cargo","id",_access);
             if(nuevoLegajo == null) {
                     nuevoLegajo = new Legajo();
                     nuevoLegajo.setEntidadUE(_oi);

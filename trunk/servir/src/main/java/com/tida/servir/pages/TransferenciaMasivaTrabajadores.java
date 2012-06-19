@@ -7,7 +7,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.services.GenericSelectModel;
 import java.util.List;
 import org.apache.tapestry5.annotations.Component;
@@ -39,12 +39,12 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
 
     @Property
     @Persist
-    private EntidadUEjecutora entidadUEDestino;
+    private Entidad_BK entidadUEDestino;
 
 
     @Property
     @Persist
-    private EntidadUEjecutora entidadUEOrigen;
+    private Entidad_BK entidadUEOrigen;
 
 
 
@@ -62,16 +62,16 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
         return !seleccion;
     }
     
-    public GenericSelectModel<EntidadUEjecutora> getBeanOrganismos(){
+    public GenericSelectModel<Entidad_BK> getBeanOrganismos(){
 
-        List<EntidadUEjecutora> list;
+        List<Entidad_BK> list;
         Criteria c;
-        c = session.createCriteria(EntidadUEjecutora.class);
-        c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA ));
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA ));
 
         list = c.list();
 
-        return new GenericSelectModel<EntidadUEjecutora>(list,EntidadUEjecutora.class,"denominacion","id",_access);
+        return new GenericSelectModel<Entidad_BK>(list,Entidad_BK.class,"denominacion","id",_access);
        
     }
 

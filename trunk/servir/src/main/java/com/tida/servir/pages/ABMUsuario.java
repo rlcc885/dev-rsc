@@ -7,7 +7,7 @@ import helpers.Errores;
 import helpers.Logger;
 
 import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
@@ -113,7 +113,7 @@ public class ABMUsuario  extends GeneralPage {
     private Zone tabla_usuario;
 
     @Persist
-    private GenericSelectModel<EntidadUEjecutora> _beanOrganismos;
+    private GenericSelectModel<Entidad_BK> _beanOrganismos;
 
     @Inject
     private PropertyAccess _access;
@@ -126,7 +126,7 @@ public class ABMUsuario  extends GeneralPage {
 
     @Property
     @Persist
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
     @Inject
     private Context context;
@@ -290,17 +290,17 @@ public class ABMUsuario  extends GeneralPage {
         return tipoUsuario.equals(Usuario.TRABAJADOR);
     }
     
-    public GenericSelectModel<EntidadUEjecutora> getBeanOrganismos(){
+    public GenericSelectModel<Entidad_BK> getBeanOrganismos(){
 
-    	List<EntidadUEjecutora> list;
+    	List<Entidad_BK> list;
         Criteria c;
-        c = session.createCriteria(EntidadUEjecutora.class);
-        c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA ));
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA ));
 
     	list = c.list();
 
     	//entidadUE = (EntidadUEjecutora) c.list().get(0); //cargamos el valor por defecto
-    	_beanOrganismos = new GenericSelectModel<EntidadUEjecutora>(list,EntidadUEjecutora.class,"denominacion","id",_access);
+    	_beanOrganismos = new GenericSelectModel<Entidad_BK>(list,Entidad_BK.class,"denominacion","id",_access);
     	return _beanOrganismos;
     }
 

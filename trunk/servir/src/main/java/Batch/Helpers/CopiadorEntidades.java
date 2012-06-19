@@ -6,13 +6,13 @@ package Batch.Helpers;
 
 import com.tida.servir.entities.Ant_Laborales;
 import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.EvaluacionPersonal;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
@@ -30,7 +30,7 @@ import java.util.Date;
  */
 public class CopiadorEntidades {
 
-    public static void entidadUE(EntidadUEjecutora origen, EntidadUEjecutora destino) {
+    public static void entidadUE(Entidad_BK origen, Entidad_BK destino) {
         destino.setClas_funcional(origen.getClas_funcional());
         destino.setCod_mef_ue(origen.getCod_mef_ue());
         destino.setCod_ubi_dept(origen.getCod_ubi_dept());
@@ -79,7 +79,7 @@ public class CopiadorEntidades {
         destino.setUoAntecesora(origen.getUoAntecesora());
     }
     
-    public static void cargo(Cargo origen, Cargo destino) {
+    public static void cargo(Cargoxunidad origen, Cargoxunidad destino) {
         destino.setCod_cargo(CopiadorEntidades.verifacionNull(origen.getCod_cargo()));
         destino.setClasificacion_funcional(origen.getClasificacion_funcional());
         destino.setCtd_puestos_total(CopiadorEntidades.verifacionNull(origen.getCtd_puestos_total()));

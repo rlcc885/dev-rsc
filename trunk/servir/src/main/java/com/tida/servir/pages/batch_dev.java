@@ -13,7 +13,7 @@ import Batch.Helpers.TratamientoXLS;
 import Batch.Helpers.Unzip;
 import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import java.io.File;
 import java.io.FileInputStream;
@@ -96,7 +96,7 @@ public class batch_dev  extends GeneralPage {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
 
     public List<String> getOrigenesArchivos() {
         List<String> org = new ArrayList<String>();
