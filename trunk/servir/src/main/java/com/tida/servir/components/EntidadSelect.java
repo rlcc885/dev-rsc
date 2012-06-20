@@ -6,7 +6,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class EntidadSelect {
 
     @Property
     @Parameter(required = false)
-    private EntidadUEjecutora entidad;
+    private Entidad_BK entidad;
 
         
 
@@ -78,7 +78,7 @@ public class EntidadSelect {
 
     @Property
     @Persist
-    private EntidadUEjecutora entidad_nueva;
+    private Entidad_BK entidad_nueva;
     
     @InjectComponent
     private Envelope envelope;
@@ -114,9 +114,9 @@ public class EntidadSelect {
     public List<String> getBeanDatoAuxSector() {
         List<String> retList = null;
         if (!getEsLocal())
-            retList =  Helpers.getValorTablaAuxiliar("SectorGobierno", session);
+            retList =  Helpers.getValorTablaAuxiliar("SECTORGOBIERNO", session);
         else
-            retList =  Helpers.getValorTablaAuxiliar("UBDepartamento", session);
+            retList =  Helpers.getValorTablaAuxiliar("UBDEPARTAMENTO", session);
 
         if (retList == null)
             return new ArrayList<String>();
@@ -130,14 +130,14 @@ public class EntidadSelect {
         List<String> retList = null;
 
         if (!getEsLocal())
-            retList = Helpers.getValorTablaAuxiliar("Pliego", session);
+            retList = Helpers.getValorTablaAuxiliar("PLIEGO", session);
         else {
 
             // Obtenemos el dato auxiliar del depto.
-            DatoAuxiliar depto =  Helpers.getDatoAuxiliar("UBDepartamento", sector,  session);
+            DatoAuxiliar depto =  Helpers.getDatoAuxiliar("UBDEPARTAMENTO", sector,  session);
             if (depto != null) {
-                retList = Helpers.getValorTablaAuxiliar("UBProvincia", session,
-                    "UBDepartamento", depto.getCodigo());
+                retList = Helpers.getValorTablaAuxiliar("UBPROVINCIA", session,
+                    "UBDEPARTAMENTO", depto.getCodigo());
             }
         }
 
@@ -148,9 +148,9 @@ public class EntidadSelect {
     }
 
     @Log
-    private List<EntidadUEjecutora> searchEntidades() {
-        Criteria c = session.createCriteria(EntidadUEjecutora.class);
-    	c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
+    private List<Entidad_BK> searchEntidades() {
+        Criteria c = session.createCriteria(Entidad_BK.class);
+    	c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
         c.add(Restrictions.eq("nivel_gobierno", nivel_gobierno));
         if (sector != null) {
             if (sector.trim().length() > 0){
@@ -167,9 +167,9 @@ public class EntidadSelect {
     }
 
     @Log
-    public GenericSelectModel<EntidadUEjecutora> getEntidadesUEjecutoras() {
+    public GenericSelectModel<Entidad_BK> getEntidadesUEjecutoras() {
     	
-        return new GenericSelectModel<EntidadUEjecutora>(searchEntidades(),EntidadUEjecutora.class,"denominacion","id",_access);
+        return new GenericSelectModel<Entidad_BK>(searchEntidades(),Entidad_BK.class,"denominacion","id",_access);
 
     }
 
@@ -177,7 +177,7 @@ public class EntidadSelect {
     @SetupRender
     void initializeValue()
     {
-        _beanNivelGobierno = Helpers.getValorTablaAuxiliar("NivelGobierno", session);
+        _beanNivelGobierno = Helpers.getValorTablaAuxiliar("NIVELGOBIERNO", session);
         if (entidad != null){
             nivel_gobierno = entidad.getNivel_gobierno();
             sector = entidad.getSector_gobierno();
@@ -186,9 +186,9 @@ public class EntidadSelect {
         } else {
             if (!vistaCorta) {
                 //Cargamos alguna entidad
-                Criteria c = session.createCriteria(EntidadUEjecutora.class);
-                c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
-                entidad_nueva = entidad = (EntidadUEjecutora)c.list().get(0);
+                Criteria c = session.createCriteria(Entidad_BK.class);
+                c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
+                entidad_nueva = entidad = (Entidad_BK)c.list().get(0);
                 nivel_gobierno = entidad.getNivel_gobierno();
                 sector = entidad.getSector_gobierno();
                 pliego = entidad.getPliego();

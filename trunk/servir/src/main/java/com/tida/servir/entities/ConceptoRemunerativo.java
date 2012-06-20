@@ -21,7 +21,7 @@ public class ConceptoRemunerativo {
     @NonVisual
     private Long id;
 
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
 
     private String codigo;
     
@@ -46,11 +46,11 @@ public class ConceptoRemunerativo {
     }
 
     @ManyToOne
-    public EntidadUEjecutora getEntidadUE() {
+    public Entidad_BK getEntidadUE() {
         return entidadUE;
     }
 
-    public void setEntidadUE(EntidadUEjecutora entidadUE) {
+    public void setEntidadUE(Entidad_BK entidadUE) {
         this.entidadUE = entidadUE;
     }
 

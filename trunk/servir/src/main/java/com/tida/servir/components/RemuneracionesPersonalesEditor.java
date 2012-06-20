@@ -2,7 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.RemuneracionPersonal;
 import com.tida.servir.entities.Usuario;
@@ -47,7 +47,7 @@ public class RemuneracionesPersonalesEditor {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _entidadUE;
+    private Entidad_BK _entidadUE;
 
     @Property
     @Parameter

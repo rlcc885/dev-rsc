@@ -6,7 +6,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -59,7 +59,7 @@ public class AntecedentesEditor {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Inject
     private Session session;

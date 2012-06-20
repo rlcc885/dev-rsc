@@ -1,9 +1,9 @@
 package com.tida.servir.components;
 
 
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 import helpers.Constantes;
@@ -39,7 +39,7 @@ public class DatosDeCargoEditor {
 
     @Property
     @Parameter
-    private Cargo actual;
+    private Cargoxunidad actual;
 
     @Property
     @Parameter
@@ -47,7 +47,7 @@ public class DatosDeCargoEditor {
     
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 	
     /*@Property
     private String vinculoTipo;*/
