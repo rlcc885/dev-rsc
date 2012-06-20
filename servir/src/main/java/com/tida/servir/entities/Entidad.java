@@ -21,7 +21,7 @@ public class Entidad implements Serializable {
 
     public static String ESTADO_BAJA = "Baja";
     public static String ESTADO_ALTA = "Alta";
-    public static String ESTADO_ssss = "Alta";
+    public static String ESTADO_xxx = "Alta";
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     //antes datos de organismo informante
