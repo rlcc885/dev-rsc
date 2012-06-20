@@ -261,7 +261,7 @@ public class Helpers {
             Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         if (uoPadreDestino == null) {
             uo.setUoAntecesora(null);
-            uo.setNivel(1);
+            uo.setNivel(1);     
         } else {
             uo.setUoAntecesora(uoPadreDestino);
             uo.setNivel(uoPadreDestino.getNivel() + 1);
