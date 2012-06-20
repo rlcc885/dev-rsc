@@ -5,7 +5,7 @@ import com.tida.servir.entities.Cargo;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
@@ -52,9 +52,9 @@ public class Inicio  extends GeneralPage {
     private Trabajador e;
     @Property
     @Persist
-    private EntidadUEjecutora entidadUE;
+    private Entidad_BK entidadUE;
     @Property
-    private EntidadUEjecutora oi;
+    private Entidad_BK oi;
     @Property
     @SessionState
     private Usuario _usuario;
@@ -64,19 +64,19 @@ public class Inicio  extends GeneralPage {
     private PropertyAccess _access;
     @Inject
     private Request _request;
-    private GenericSelectModel<EntidadUEjecutora> _beans;
+    private GenericSelectModel<Entidad_BK> _beans;
     
     @InjectComponent
     private Zone empleadoszone;
     
     @Property
-    private EntidadUEjecutora entidad_nueva;
+    private Entidad_BK entidad_nueva;
     
     
-    public List<EntidadUEjecutora> getEntidadesUEjecutoras() {
+    public List<Entidad_BK> getEntidadesUEjecutoras() {
         Criteria c;
-        c = session.createCriteria(EntidadUEjecutora.class);
-        c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
         c.add(Restrictions.eq("verificado", Constantes.VERIFICADO));
         return c.list();
     }
@@ -132,9 +132,9 @@ public class Inicio  extends GeneralPage {
         
         if (entidadUE == null){
                 //Cargamos alguna entidad
-                Criteria c = session.createCriteria(EntidadUEjecutora.class);
-                c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
-                entidad_nueva = entidadUE = (EntidadUEjecutora)c.list().get(0);
+                Criteria c = session.createCriteria(Entidad_BK.class);
+                c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
+                entidad_nueva = entidadUE = (Entidad_BK)c.list().get(0);
 
          }
         

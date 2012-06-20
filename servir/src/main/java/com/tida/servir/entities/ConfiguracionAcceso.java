@@ -1,7 +1,8 @@
 package com.tida.servir.entities;
 
-import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Configuracion de Acceso de Usuarios
@@ -20,8 +21,7 @@ public class ConfiguracionAcceso {
     private String SMTP_usuario;
     private String SMTP_clave;
     private String SMTP_puerto;
-    @Temporal(TemporalType.DATE)
-    private Date fec_actualizacion;
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -116,13 +116,5 @@ public class ConfiguracionAcceso {
 
     public void setSMTP_puerto(String sMTP_puerto) {
         SMTP_puerto = sMTP_puerto;
-    }
-    
-    public Date getFec_actualizacion() {
-        return fec_actualizacion;
-    }
-
-    public void setFec_actualizacion(Date Fec_actualizacion) {
-        fec_actualizacion = Fec_actualizacion;
     }
 }

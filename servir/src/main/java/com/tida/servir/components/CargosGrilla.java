@@ -6,7 +6,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -57,7 +57,7 @@ public class CargosGrilla {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Inject
    private Context context;

@@ -126,7 +126,7 @@ public class Ubigeos {
         }
 
         if (_beanDatoAuxDepto == null) {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("UBDepartamento", null, 0, session);
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("UBDEPARTAMENTO", null, 0, session);
 
             _beanDatoAuxDepto = new GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
 
@@ -140,7 +140,7 @@ public class Ubigeos {
 
         DatoAuxiliar d;
        if (ubigeo.getDepartamento() != null) {
-            lub = Helpers.getDatoAuxiliar("UBProvincia", "UBDepartamento",
+            lub = Helpers.getDatoAuxiliar("UBPROVINCIA", "UBDEPARTAMENTO",
                     ubigeo.getDepartamento().getCodigo(), session);
         } else {
             ubigeo.setProvincia(null);
@@ -151,7 +151,7 @@ public class Ubigeos {
 
         lub = new ArrayList<DatoAuxiliar>();
         if (ubigeo.getProvincia()!= null) {
-            lub = Helpers.getDatoAuxiliar("UBDistrito", "UBProvincia",
+            lub = Helpers.getDatoAuxiliar("UBDISTRITO", "UBPROVINCIA",
                     ubigeo.getProvincia().getCodigo(), session);
         }  else {
             ubigeo.setDistrito(null);
@@ -165,7 +165,7 @@ public class Ubigeos {
         // es una tabla auxiliar (ubigeo)
         DatoAuxiliar ub = (DatoAuxiliar) dato;
         if(ub != null) {
-            if (ub.getNombreTabla().equals("UBDepartamento")) {
+            if (ub.getNombreTabla().equals("UBDEPARTAMENTO")) {
                 // Cargo la provincia
                 /*
                  * Esto lo hago desde el SetupRender
@@ -182,7 +182,7 @@ public class Ubigeos {
 
 
             }
-            if (ub.getNombreTabla().equals("UBProvincia")) {
+            if (ub.getNombreTabla().equals("UBPROVINCIA")) {
                 // Cargo el distrito
                 /*
                  * Esto lo hago desde el setuprender

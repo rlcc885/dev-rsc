@@ -5,7 +5,7 @@ import helpers.Logger;
 
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.FormacionProfesional;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Ubigeo;
@@ -47,7 +47,7 @@ public class FamiliaresEditor {
     private Usuario _usuario;
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
     @Inject
     private Session session;
     @Parameter

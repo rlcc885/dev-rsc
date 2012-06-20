@@ -1,7 +1,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.Trabajador;
@@ -51,7 +51,7 @@ public class PublicacionesEditor {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Component(id = "publicacionesEdit")
     private Form _form;

@@ -9,7 +9,7 @@ import java.util.Date;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 
@@ -61,7 +61,7 @@ public class ConstanciasDocumentalesEditor {
 
     @Property
     @SessionState
-    private EntidadUEjecutora _oi;
+    private Entidad_BK _oi;
 
     @Parameter
     @Property

@@ -1,7 +1,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.EntidadUEjecutora;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -51,7 +51,7 @@ private Usuario _usuario;
 
 @Property
 @SessionState
-private EntidadUEjecutora _oi;
+private Entidad_BK _oi;
 
 @Component(id = "cursosEdit")
 private Form _form;
