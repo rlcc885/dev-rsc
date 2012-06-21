@@ -176,10 +176,10 @@ public class ComparadorEntidades {
     public static LineaInformeCodigo cargos(Cargoxunidad corigen, Cargoxunidad cdestino) {
         LineaInformeCodigo lio = new LineaInformeCodigo();
         
-        lio.setCodigoEntidadUE(corigen.getUnd_organica().getEntidadUE().getCodigoEntidadUE());
+        lio.setCodigoEntidadUE(corigen.getUnidadorganica().getEntidad().getCodigoEntidadUE());
         lio.setCodigo(corigen.getCod_cargo());
 
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUnd_organica(), cdestino.getUnd_organica()));
+        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUnidadorganica(), cdestino.getUnidadorganica()));
         if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
             return lio;
         }        
@@ -199,25 +199,25 @@ public class ComparadorEntidades {
             return lio;
         }
         
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getReg_lab_con(), cdestino.getReg_lab_con()));
+        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getRegimenlaboral(), cdestino.getRegimenlaboral()));
         if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
             return lio;
         }
         
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getHoras_x_sem(), cdestino.getHoras_x_sem()));
-        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return lio;
-        }
+//        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getHoras_x_sem(), cdestino.getHoras_x_sem()));
+//        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return lio;
+//        }
 
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClasificacion_funcional(), cdestino.getClasificacion_funcional()));
-        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return lio;
-        }
-                
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getReq_hab_profesional(), cdestino.getReq_hab_profesional()));
-        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return lio;
-        }
+//        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClasificacion_funcional(), cdestino.getClasificacion_funcional()));
+//        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return lio;
+//        }
+//                
+//        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getReq_hab_profesional(), cdestino.getReq_hab_profesional()));
+//        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return lio;
+//        }
                 
         lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDec_jurada_byr(), cdestino.getDec_jurada_byr()));
         if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
@@ -244,15 +244,15 @@ public class ComparadorEntidades {
             return lio;
         }
         
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getSituacion_CAP(), cdestino.getSituacion_CAP()));
-        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return lio;
-        }
-        
-        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getPersonasCargo(), cdestino.getPersonasCargo()));
-        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return lio;
-        }
+//        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getSituacion_CAP(), cdestino.getSituacion_CAP()));
+//        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return lio;
+//        }
+//        
+//        lio.setResultado(ComparadorEntidades.comparadorDatos(corigen.getPersonasCargo(), cdestino.getPersonasCargo()));
+//        if(lio.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return lio;
+//        }
         
        // Si llego hasta aca es que no hubieron cambios
        lio.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
@@ -269,7 +269,7 @@ public class ComparadorEntidades {
     public static LineaInformeCodigo unidadesOrganicas(UnidadOrganica corigen, UnidadOrganica cdestino) {
         LineaInformeCodigo liuo = new LineaInformeCodigo();
         
-        liuo.setCodigoEntidadUE(corigen.getEntidadUE().getCodigoEntidadUE());
+        liuo.setCodigoEntidadUE(corigen.getEntidad().getCodigoEntidadUE());
         liuo.setCodigo(corigen.getCod_und_organica());
                 
         liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_und_organica(), cdestino.getCod_und_organica()));
@@ -308,11 +308,12 @@ public class ComparadorEntidades {
         if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
             return liuo;
         }
-        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipoActividad(), cdestino.getTipoActividad()));
-        if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-            return liuo;
-        }
-        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUoAntecesora(), cdestino.getUoAntecesora()));
+        // TODO JZM revisar
+//        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipoActividad(), cdestino.getTipoActividad()));
+//        if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//            return liuo;
+//        }
+        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUnidadOrganica(), cdestino.getUnidadOrganica()));
         if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
             return liuo;
         }

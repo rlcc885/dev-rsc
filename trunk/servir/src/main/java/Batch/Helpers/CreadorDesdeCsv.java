@@ -170,7 +170,7 @@ public class CreadorDesdeCsv {
             eue.setEstado(Entidad_BK.ESTADO_ALTA);
 
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
-            nuevaUnidadOrganica.setEntidadUE(eue);
+            nuevaUnidadOrganica.setEntidad(eue);
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
             nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
             nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
@@ -181,8 +181,9 @@ public class CreadorDesdeCsv {
 
             Cargoxunidad nuevoCargo = new Cargoxunidad();
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
-            nuevoCargo.setClasificacion_funcional(list.get(0));
-            nuevoCargo.setUnd_organica(nuevaUnidadOrganica);
+            // TODO revisar linea comentada JZM
+            //nuevoCargo.setClasificacion_funcional(list.get(0));
+            nuevoCargo.setUnidadorganica(nuevaUnidadOrganica);
             nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
             nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
             nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
@@ -378,7 +379,7 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        unidadorganica.setEntidadUE(eue);
+        unidadorganica.setEntidad(eue);
         unidadorganica.setCod_und_organica(_csvUnidadOrganica.get(1));
         unidadorganica.setDen_und_organica(_csvUnidadOrganica.get(2));
         unidadorganica.setLocalidad(_csvUnidadOrganica.get(3));
@@ -388,7 +389,8 @@ public class CreadorDesdeCsv {
         unidadorganica.setCue(_csvUnidadOrganica.get(7));
         unidadorganica.setSigla(_csvUnidadOrganica.get(8));
         unidadorganica.setNivel(CreadorDesdeCsv.toInteger(_csvUnidadOrganica.get(9)));
-        unidadorganica.setTipoActividad(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoActividad", _csvUnidadOrganica.get(10), errores, session));
+        //TODO JZM linea comentada revisar
+        //unidadorganica.setTipoActividad(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoActividad", _csvUnidadOrganica.get(10), errores, session));
         unidadorganicaAntecesora = getUnidadOrganicaDesdeListUnidadOrganicaCSV(myTratamiento.getUnidadOrganica(), _csvUnidadOrganica.get(11), eue);
         if (unidadorganicaAntecesora == null) {
             unidadorganicaAntecesora = CreadorDesdeDB.getUnidadOrganicaWithCodigoUnidadOrganica(_csvUnidadOrganica.get(11), eue, session, errores);
@@ -401,7 +403,7 @@ public class CreadorDesdeCsv {
             errores.add(Errores.ERROR_CASCADA_UBIGEO + " Unidad Orgánica:" + unidadorganica.getCod_und_organica());
 
         }
-        unidadorganica.setUoAntecesora(unidadorganicaAntecesora);
+        unidadorganica.setUnidadOrganica(unidadorganicaAntecesora);
         //verificando que el nivel de la antecesora sea menor que lo de la unidad organica
         if (unidadorganicaAntecesora != null) {
             if (unidadorganica.getNivel() - 1 != unidadorganicaAntecesora.getNivel()) {
@@ -432,7 +434,7 @@ public class CreadorDesdeCsv {
             //nuvea unidad organica
             lic = new LineaInformeCodigo();
             lic.setCodigo(unidadorganica.getCod_und_organica());
-            lic.setCodigoEntidadUE(unidadorganica.getEntidadUE().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(unidadorganica.getEntidad().getCodigoEntidadUE());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -444,7 +446,7 @@ public class CreadorDesdeCsv {
         c = myTratamiento.getSession().createCriteria(UnidadOrganica.class);
         c.createAlias("entidadUE", "entidadUE");
         c.add(Restrictions.like("cod_und_organica", unidadorganica.getCod_und_organica()));
-        c.add(Restrictions.like("entidadUE.codigoEntidadUE", unidadorganica.getEntidadUE().getCodigoEntidadUE()));
+        c.add(Restrictions.like("entidadUE.codigoEntidadUE", unidadorganica.getEntidad().getCodigoEntidadUE()));
 
         UnidadOrganica uoOrigen = unidadorganica; 
         if (c.list() != null) {
@@ -470,7 +472,7 @@ public class CreadorDesdeCsv {
                 //nuvea unidad organica
                 lic = new LineaInformeCodigo();
                 lic.setCodigo(uoOrigen.getCod_und_organica());
-                lic.setCodigoEntidadUE(uoOrigen.getEntidadUE().getCodigoEntidadUE());
+                lic.setCodigoEntidadUE(uoOrigen.getEntidad().getCodigoEntidadUE());
                 lic.setResultado(ResultadoOperacionCSV.NUEVO);
                 is.getLt().add(lic);
                 is.setAlta(is.getAlta() + 1);
@@ -544,27 +546,28 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        cargo.setUnd_organica(unidadorganica);
+        cargo.setUnidadorganica(unidadorganica);
         cargo.setCod_cargo(_csvCargo.get(2));
         cargo.setDen_cargo(_csvCargo.get(3));
         cargo.setEstado(getEstadoCargoFromBoolStr(_csvCargo.get(4), errores));
-        cargo.setReg_lab_con(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("RegimenLaboralContractual", _csvCargo.get(5), errores, session));
-        cargo.setHoras_x_sem(CreadorDesdeCsv.toInteger(_csvCargo.get(6)));
-        cargo.setClasificacion_funcional(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("ClasificadorFuncional", _csvCargo.get(7), errores, session));
-        cargo.setReq_hab_profesional(CreadorDesdeCsv.toBoolean(_csvCargo.get(8)));
+        cargo.setRegimenlaboral(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("RegimenLaboralContractual", _csvCargo.get(5), errores, session));
+        //TODO revisar JZM
+        //cargo.setHoras_x_sem(CreadorDesdeCsv.toInteger(_csvCargo.get(6)));
+        //cargo.setClasificacion_funcional(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("ClasificadorFuncional", _csvCargo.get(7), errores, session));
+        //cargo.setReq_hab_profesional(CreadorDesdeCsv.toBoolean(_csvCargo.get(8)));
         cargo.setDec_jurada_byr(CreadorDesdeCsv.toBoolean(_csvCargo.get(9)));
         cargo.setPresupuestado_PAP(CreadorDesdeCsv.toBoolean(_csvCargo.get(10)));
         cargo.setGrupoOcupacional(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("GrupoOcupacional", _csvCargo.get(11), errores, session));
         cargo.setNivelRemunerativo(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("NivelRemunerativo", _csvCargo.get(12), errores, session));
-        cargo.setSituacion_CAP(CreadorDesdeDB.verificacionValorDatoAuxiliar("SituacionCAP", _csvCargo.get(13), errores, session));
-        cargo.setPersonasCargo(CreadorDesdeCsv.toBoolean(_csvCargo.get(14)));
+        //cargo.setSituacion_CAP(CreadorDesdeDB.verificacionValorDatoAuxiliar("SituacionCAP", _csvCargo.get(13), errores, session));
+        //cargo.setPersonasCargo(CreadorDesdeCsv.toBoolean(_csvCargo.get(14)));
         cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);
 
         if (eue.getId() == 0 || unidadorganica.getId() == 0) {
             //nuveo cargo
             lic = new LineaInformeCodigo();
             lic.setCodigo(cargo.getCod_cargo());
-            lic.setCodigoEntidadUE(cargo.getUnd_organica().getEntidadUE().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(cargo.getUnidadorganica().getEntidad().getCodigoEntidadUE());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -579,7 +582,7 @@ public class CreadorDesdeCsv {
         c = myTratamiento.getSession().createCriteria(Cargoxunidad.class);
         c.createAlias("und_organica.entidadUE", "entidadUE");
         c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
-        c.add(Restrictions.like("entidadUE.codigoEntidadUE", cargo.getUnd_organica().getEntidadUE().getCodigoEntidadUE()));
+        c.add(Restrictions.like("entidadUE.codigoEntidadUE", cargo.getUnidadorganica().getEntidad().getCodigoEntidadUE()));
 
         Cargoxunidad corigen = cargo;
         if (c.list() != null) {
@@ -607,7 +610,7 @@ public class CreadorDesdeCsv {
                 //nuveo cargo
                 lic = new LineaInformeCodigo();
                 lic.setCodigo(corigen.getCod_cargo());
-                lic.setCodigoEntidadUE(corigen.getUnd_organica().getEntidadUE().getCodigoEntidadUE());
+                lic.setCodigoEntidadUE(corigen.getUnidadorganica().getEntidad().getCodigoEntidadUE());
                 lic.setResultado(ResultadoOperacionCSV.NUEVO);
                 is.setAlta(is.getAlta() + 1);
                 is.getLt().add(lic);
@@ -3404,7 +3407,7 @@ public class CreadorDesdeCsv {
         }
 
         for (UnidadOrganica ua : lua) {
-            if (ua.getCod_und_organica().equals(codigoUnidadOrganica) && ua.getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (ua.getCod_und_organica().equals(codigoUnidadOrganica) && ua.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return ua;
             }
         }
@@ -3421,7 +3424,7 @@ public class CreadorDesdeCsv {
         }
 
         for (Cargoxunidad c : lc) {
-            if (c.getCod_cargo().equals(codigoCargo) && c.getUnd_organica().getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (c.getCod_cargo().equals(codigoCargo) && c.getUnidadorganica().getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return c;
             }
         }

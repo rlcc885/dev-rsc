@@ -72,29 +72,29 @@ public class CopiadorEntidades {
         destino.setCod_und_organica(CopiadorEntidades.verifacionNull(origen.getCod_und_organica()));
         destino.setDen_und_organica(CopiadorEntidades.verifacionNull(origen.getDen_und_organica()));
         destino.setLocalidad(CopiadorEntidades.verifacionNull(origen.getLocalidad()));
-        destino.setEntidadUE(origen.getEntidadUE());
+        destino.setEntidad(origen.getEntidad());
         destino.setCue(CopiadorEntidades.verifacionNull(origen.getCue()));
         destino.setSigla(CopiadorEntidades.verifacionNull(origen.getSigla()));
-        destino.setTipoActividad(CopiadorEntidades.verifacionNull(origen.getTipoActividad()));
-        destino.setUoAntecesora(origen.getUoAntecesora());
+        //destino.setTipoActividad(CopiadorEntidades.verifacionNull(origen.getTipoActividad()));
+        destino.setUnidadOrganica(origen.getUnidadOrganica());
     }
     
     public static void cargo(Cargoxunidad origen, Cargoxunidad destino) {
         destino.setCod_cargo(CopiadorEntidades.verifacionNull(origen.getCod_cargo()));
-        destino.setClasificacion_funcional(origen.getClasificacion_funcional());
+        //destino.setClasificacion_funcional(origen.getClasificacion_funcional());
         destino.setCtd_puestos_total(CopiadorEntidades.verifacionNull(origen.getCtd_puestos_total()));
         destino.setPresupuestado_PAP(CopiadorEntidades.verifacionNull(origen.getPresupuestado_PAP()));
-        destino.setSituacion_CAP(CopiadorEntidades.verifacionNull(origen.getSituacion_CAP()));
+        //destino.setSituacion_CAP(CopiadorEntidades.verifacionNull(origen.getSituacion_CAP()));
         destino.setDec_jurada_byr(CopiadorEntidades.verifacionNull(origen.getDec_jurada_byr()));
         destino.setDen_cargo(CopiadorEntidades.verifacionNull(origen.getDen_cargo()));
         destino.setEstado(CopiadorEntidades.verifacionNull(origen.getEstado()));
-        destino.setHoras_x_sem(CopiadorEntidades.verifacionNull(origen.getHoras_x_sem()));
-        destino.setReg_lab_con(origen.getReg_lab_con());
-        destino.setReq_hab_profesional(CopiadorEntidades.verifacionNull(origen.getReq_hab_profesional()));
-        destino.setUnd_organica(origen.getUnd_organica());
+        //destino.setHoras_x_sem(CopiadorEntidades.verifacionNull(origen.getHoras_x_sem()));
+        destino.setRegimenlaboral(origen.getRegimenlaboral());
+        //destino.setReq_hab_profesional(CopiadorEntidades.verifacionNull(origen.getReq_hab_profesional()));
+        destino.setUnidadorganica(origen.getUnidadorganica());
         destino.setGrupoOcupacional(origen.getGrupoOcupacional());
         destino.setNivelRemunerativo(origen.getNivelRemunerativo());
-        destino.setPersonasCargo(CopiadorEntidades.verifacionNull(origen.getPersonasCargo()));
+        //destino.setPersonasCargo(CopiadorEntidades.verifacionNull(origen.getPersonasCargo()));
     }
     
     public static void conceptoRemunerativo(ConceptoRemunerativo origen, ConceptoRemunerativo destino) {

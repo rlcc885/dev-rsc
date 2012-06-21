@@ -293,7 +293,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
             entidadUE.setEstado(Entidad_BK.ESTADO_ALTA);
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
-            nuevaUnidadOrganica.setEntidadUE(entidadUE);
+            nuevaUnidadOrganica.setEntidad(entidadUE);
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
             nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
             nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
@@ -305,14 +305,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
             //System.out.println("Creada Unidad Organica. Id: " + nuevaUnidadOrganica.getId());
 
             Cargoxunidad nuevoCargo = new Cargoxunidad();
-            nuevoCargo.setUnd_organica(nuevaUnidadOrganica);
+            nuevoCargo.setUnidadorganica(nuevaUnidadOrganica);
             nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
             nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
             nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
             nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
 
-            nuevoCargo.setClasificacion_funcional(list.get(0)); // Le asignamos un clasificador funcional
+            //nuevoCargo.setClasificacion_funcional(list.get(0)); // Le asignamos un clasificador funcional
             session.save(nuevoCargo);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevoCargo.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             //System.out.println("Creado Cargo. Id: " + nuevoCargo.getId());
