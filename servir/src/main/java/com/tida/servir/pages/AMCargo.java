@@ -62,11 +62,11 @@ public class AMCargo
     
     
     public UnidadOrganica getUnidadOrganica(){
-       return cargo.getUnd_organica();
+       return cargo.getUnidadorganica();
     }
     
     public void setUnidadOrganica(UnidadOrganica _uo){
-       cargo.setUnd_organica(_uo);
+       cargo.setUnidadorganica(_uo);
     }
 
     public GenericSelectModel<UnidadOrganica> getBeans(){
@@ -92,8 +92,8 @@ public class AMCargo
 		// FIXME: chequear que la ue no esté repetida, etc
     	
     	// System.out.println("Unidad organica: " + cargo.getUnd_organica());
-    	UnidadOrganica uo = (UnidadOrganica) session.load(UnidadOrganica.class, cargo.getUnd_organica().getId());
-    	cargo.setUnd_organica(uo);
+    	UnidadOrganica uo = (UnidadOrganica) session.load(UnidadOrganica.class, cargo.getUnidadorganica().getId());
+    	cargo.setUnidadorganica(uo);
         session.saveOrUpdate(cargo);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(cargo.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
         

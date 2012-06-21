@@ -1957,8 +1957,8 @@ public class InformeXLS {
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (UnidadOrganica uo : luo) {
-                if(uo.getEntidadUE() != null)
-                    escribir.print(InformeXLS.leoCampo(uo.getEntidadUE().getCodigoEntidadUE()));
+                if(uo.getEntidad() != null)
+                    escribir.print(InformeXLS.leoCampo(uo.getEntidad().getCodigoEntidadUE()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(uo.getCod_und_organica()));
                 escribir.print("|");
@@ -1978,10 +1978,10 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.numberToString(uo.getNivel()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoActividad", InformeXLS.leoCampo(uo.getTipoActividad()), errores, session));
-                escribir.print("|");
-                if(uo.getUoAntecesora() != null)
-                    escribir.print(InformeXLS.leoCampo(uo.getUoAntecesora().getCod_und_organica()));
+                //escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoActividad", InformeXLS.leoCampo(uo.getTipoActividad()), errores, session));
+                //escribir.print("|");
+                if(uo.getUnidadOrganica() != null)
+                    escribir.print(InformeXLS.leoCampo(uo.getUnidadOrganica().getCod_und_organica()));
                 /*
                 else
                     escribir.print("X");
@@ -2005,13 +2005,13 @@ public class InformeXLS {
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (Cargoxunidad c : lc) {
-                if(c.getUnd_organica() != null){
-                    if(c.getUnd_organica().getEntidadUE() != null)
-                        escribir.print(InformeXLS.leoCampo(c.getUnd_organica().getEntidadUE().getCodigoEntidadUE()));
+                if(c.getUnidadorganica() != null){
+                    if(c.getUnidadorganica().getEntidad() != null)
+                        escribir.print(InformeXLS.leoCampo(c.getUnidadorganica().getEntidad().getCodigoEntidadUE()));
                 }
                 escribir.print("|");
-                if(c.getUnd_organica() != null)
-                    escribir.print(InformeXLS.leoCampo(c.getUnd_organica().getCod_und_organica()));
+                if(c.getUnidadorganica() != null)
+                    escribir.print(InformeXLS.leoCampo(c.getUnidadorganica().getCod_und_organica()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(c.getCod_cargo()));
                 escribir.print("|");
@@ -2019,13 +2019,14 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo(c.getEstado())));
                 escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(c.getReg_lab_con()));
-                escribir.print("|");
-                escribir.print(InformeXLS.numberToString(c.getHoras_x_sem()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(c.getClasificacion_funcional()));
-                escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(c.getReq_hab_profesional()));
+                escribir.print(InformeXLS.datoAuxiliarToString(c.getRegimenlaboral()));
+                // TODO JZM revisar 
+//                escribir.print("|");
+//                escribir.print(InformeXLS.numberToString(c.getHoras_x_sem()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(c.getClasificacion_funcional()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.booleanToString(c.getReq_hab_profesional()));
                 escribir.print("|");
                 escribir.print(InformeXLS.booleanToString(c.getDec_jurada_byr()));
                 escribir.print("|");
@@ -2034,10 +2035,11 @@ public class InformeXLS {
                 escribir.print(InformeXLS.datoAuxiliarToString(c.getGrupoOcupacional()));
                 escribir.print("|");
                 escribir.print(InformeXLS.datoAuxiliarToString(c.getNivelRemunerativo()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("SituacionCAP", InformeXLS.leoCampo(c.getSituacion_CAP()), errores, session));
-                escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(c.getPersonasCargo()));
+                // TODO revisar JZM
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("SituacionCAP", InformeXLS.leoCampo(c.getSituacion_CAP()), errores, session));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.booleanToString(c.getPersonasCargo()));
                 escribir.println();
             }
             escribir.close();

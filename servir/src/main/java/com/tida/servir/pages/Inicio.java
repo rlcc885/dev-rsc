@@ -1,7 +1,7 @@
 package com.tida.servir.pages;
 
 import annotations.XHR;
-import com.tida.servir.entities.Cargo;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Trabajador;
@@ -105,13 +105,15 @@ public class Inicio  extends GeneralPage {
         //editando = true;
     }
     */
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.muestraGrillaEntidad(_usuario);
-    }
+    
+    // TODO revisar JZM
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.muestraGrillaEntidad(_usuario);
+//    }
    
  
      public String getSelectionRow() {

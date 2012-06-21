@@ -260,13 +260,13 @@ public class Helpers {
     public static void migrarUnidad(UnidadOrganica uo, Entidad_BK entidadOrigen,
             Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         if (uoPadreDestino == null) {
-            uo.setUoAntecesora(null);
+            uo.setUnidadOrganica(null);
             uo.setNivel(1);     
         } else {
-            uo.setUoAntecesora(uoPadreDestino);
+            uo.setUnidadOrganica(uoPadreDestino);
             uo.setNivel(uoPadreDestino.getNivel() + 1);
         }
-        uo.setEntidadUE(entidadDestino);
+        uo.setEntidad(entidadDestino);
         if (!entidadOrigen.equals(entidadDestino)) {
             uo.setCod_und_organica(entidadDestino.getCodigoEntidadUE() + "-" + uo.getCod_und_organica());
         }
@@ -301,7 +301,7 @@ public class Helpers {
         Criteria c, c1;
         List<CargoAsignado> lca;
         for (Cargoxunidad cargo : cargos) {
-            cargo.setUnd_organica(uoDestino);
+            cargo.setUnidadorganica(uoDestino);
             if (!entidadOrigen.equals(entidadDestino)) {
 
                 cargo.setCod_cargo(entidadDestino.getCodigoEntidadUE() + "-"

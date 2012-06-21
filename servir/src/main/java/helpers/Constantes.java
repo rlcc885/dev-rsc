@@ -72,4 +72,6 @@ public class Constantes {
    public static final Integer CAMPOS_EVALUACIONES = 8;
    public static final Integer CAMPOS_CONSTANCIAS_DOCUMENTALES = 7;
    public static final Integer CAMPOS_AUSENCIAS_LICENCIAS = 8;
+   
+   public static final Integer VERIFICADO = 0; //JZM para corregir inicio.java
 }

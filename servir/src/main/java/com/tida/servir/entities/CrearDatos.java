@@ -37,8 +37,8 @@ public class CrearDatos {
             Cargoxunidad c = new Cargoxunidad();
             c.setDen_cargo("Den Cargo1");
             c.setEstado(Constantes.ESTADO_ACTIVO);
-            c.setHoras_x_sem(40);
-            c.setReq_hab_profesional(true);
+            //c.setHoras_x_sem(40);
+            //c.setReq_hab_profesional(true);
 //                    c.setPlantillaremunerativa(4);
             c.setDec_jurada_byr(true);
             c.setPresupuestado_PAP(true);
@@ -53,7 +53,7 @@ public class CrearDatos {
                 uo.setDen_und_organica("UnidadOrganica 1");
                 uo.setEstado(UnidadOrganica.ESTADO_ALTA);
                 uo.setLocalidad("Localidad 1");
-                uo.setEntidadUE(_entidadUEjecutora);
+                uo.setEntidad(_entidadUEjecutora);
                 
                 // sacado porque ahora son datos auxiliares.
                 // uo.setCod_ubi_dept("Depto1");
@@ -79,7 +79,7 @@ public class CrearDatos {
             } else {
                 uo = lUo.get(0);
             }
-            c.setUnd_organica(uo);
+            c.setUnidadorganica(uo);
 
             session.persist(c);
 
