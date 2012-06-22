@@ -320,4 +320,117 @@ public class Entidad implements Serializable {
     public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
     }
+
+    public String getDesczona() {
+        return desczona;
+    }
+
+    public void setDesczona(String desczona) {
+        this.desczona = desczona;
+    }
+
+    public Boolean getEssubentidad() {
+        return essubentidad;
+    }
+
+    public void setEssubentidad(Boolean essubentidad) {
+        this.essubentidad = essubentidad;
+    }
+
+    public Trabajador getJefeoga() {
+        return jefeoga;
+    }
+
+    public void setJefeoga(Trabajador jefeoga) {
+        this.jefeoga = jefeoga;
+    }
+
+    public Trabajador getJeferrhh() {
+        return jeferrhh;
+    }
+
+    public void setJeferrhh(Trabajador jeferrhh) {
+        this.jeferrhh = jeferrhh;
+    }
+
+    public String getLogotipo() {
+        return logotipo;
+    }
+
+    public void setLogotipo(String logotipo) {
+        this.logotipo = logotipo;
+    }
+
+    public DatoAuxiliar getNivelgobierno() {
+        return nivelgobierno;
+    }
+
+    public void setNivelgobierno(DatoAuxiliar nivelgobierno) {
+        this.nivelgobierno = nivelgobierno;
+    }
+
+    public DatoAuxiliar getOrganizacionestado() {
+        return organizacionestado;
+    }
+
+    public void setOrganizacionestado(DatoAuxiliar organizacionestado) {
+        this.organizacionestado = organizacionestado;
+    }
+
+    public DatoAuxiliar getSectorgobierno() {
+        return sectorgobierno;
+    }
+
+    public void setSectorgobierno(DatoAuxiliar sectorgobierno) {
+        this.sectorgobierno = sectorgobierno;
+    }
+
+    public String getTelefonoentidad() {
+        return telefonoentidad;
+    }
+
+    public void setTelefonoentidad(String telefonoentidad) {
+        this.telefonoentidad = telefonoentidad;
+    }
+
+    public DatoAuxiliar getTipoorganismo() {
+        return tipoorganismo;
+    }
+
+    public void setTipoorganismo(DatoAuxiliar tipoorganismo) {
+        this.tipoorganismo = tipoorganismo;
+    }
+
+    public DatoAuxiliar getTiposubentidad() {
+        return tiposubentidad;
+    }
+
+    public void setTiposubentidad(DatoAuxiliar tiposubentidad) {
+        this.tiposubentidad = tiposubentidad;
+    }
+
+    public DatoAuxiliar getTipovia() {
+        return tipovia;
+    }
+
+    public void setTipovia(DatoAuxiliar tipovia) {
+        this.tipovia = tipovia;
+    }
+
+    public DatoAuxiliar getTipozona() {
+        return tipozona;
+    }
+
+    public void setTipozona(DatoAuxiliar tipozona) {
+        this.tipozona = tipozona;
+    }
+
+    public String getUrlEntidad() {
+        return urlEntidad;
+    }
+
+    public void setUrlEntidad(String urlEntidad) {
+        this.urlEntidad = urlEntidad;
+    }
+    
 }
