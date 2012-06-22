@@ -9,6 +9,7 @@
         <div class="organismo_titulo">
             Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
+        
 
         <div id= "datosOrigen" class="box">
             <h3> Seleccione fuente de origen </h3>
