@@ -23,7 +23,7 @@ public class Legajo {
     private long id;
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
-    private Entidad_BK entidadUE;
+    private Entidad_BK entidad;
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
     private Trabajador trabajador;
@@ -97,11 +97,11 @@ public class Legajo {
     }
 
     @ManyToOne
-    public Entidad_BK getEntidadUE() {
-        return entidadUE;
+    public Entidad_BK getEntidad() {
+        return entidad;
     }
 
-    public void setEntidadUE(Entidad_BK entidadUE) {
-        this.entidadUE = entidadUE;
+    public void setEntidad(Entidad_BK entidad) {
+        this.entidad = entidad;
     }
 }

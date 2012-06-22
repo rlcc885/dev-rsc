@@ -121,13 +121,14 @@ public class UnidadOrganica {
 
 
     @ManyToOne
-    public UnidadOrganica getUnidadOrganica() {
+    public UnidadOrganica getUnidadorganica() {
         return unidadorganica;
     }
 
-    public void setUnidadOrganica(UnidadOrganica unidadorganica) {
+    public void setUnidadorganica(UnidadOrganica unidadorganica) {
         this.unidadorganica = unidadorganica;
     }
+    
     //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
@@ -152,12 +153,12 @@ public class UnidadOrganica {
     @Validate("required")
     private Integer nivel;
 //    private String tipoActividad;
-//    @Validate("required")
-    private UnidadOrganica unidadorganica;
+//    @Validate("required")    
     private DatoAuxiliar categoriauo;
     private DatoAuxiliar tipovia;
     private DatoAuxiliar tipozona;
     private String desczona;
+    private UnidadOrganica unidadorganica;
 //    private int unidadorganica_id;
 
 //    public String getTipoActividad() {
