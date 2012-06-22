@@ -22,106 +22,59 @@ public class Entidad implements Serializable {
     public static String ESTADO_BAJA = "Baja";
     public static String ESTADO_ALTA = "Alta";
     public static String ESTADO_ssss = "Alta";
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
     //antes datos de organismo informante
     @NonVisual
     private long id;
-    //@Validate("required")
-//    @PrimaryKeyJoinColumn
-    //private UnidadEjecutora unidadEjecutora;
-    //@Validate("required")
-    String estado;
-    @Validate("required")
-    String clas_funcional;
     String cue_entidad;
-    String cue_elemento;
-    Boolean def_servir; //Servir Ingresa la información
-    Boolean pliego_rep; //Visualiza reportes de pliegos
-    Boolean sector_rep; //Visualiza reportes de sector
-    //@Validate("required")
-    //String cod_organismo;
-    //@Validate("required")
-    //private String tipo_email;
-    String correoElectronicoInstitucional;
-    //antes datos de unidad ejecutora
-    private int cod_mef_ue;
+    @Validate("required")
+    private DatoAuxiliar nivelgobierno;   
+    @Validate("required")
+    private DatoAuxiliar organizacionestado;  
+    @Validate("required")
+    private DatoAuxiliar sectorgobierno;    
+    @Validate("required")
+    private DatoAuxiliar tipoorganismo;    
     @Validate("required")
     private String denominacion;
-    @Validate("required")
-    private String nivel_gobierno;
-    @Validate("required")
-    private String sector_gobierno;
-    @Validate("required")
-    private String pliego;
+    private String sigla;
+    private String abreviatura;
     private String ruc;
-    //nuevo campo
-    private String localidad;
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_dist;
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_prov;
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_dept;
+    Boolean proc_batch;
+    private DatoAuxiliar tipovia;
     private String direcion;
-    private String titularEntidad;
-    private String correoElectronicoTitular;
-    private String jefeRRHHEntidad;
-    private String correoElectronicoJefeRRHH;
-    private String TEJefeRRHH;
-    private String TEMovilJefeRRHH;
+    private DatoAuxiliar tipozona;
+    private String desczona;
+    @NonVisual
     @Validate("required")
-    private String codigoEntidadUE;
-    private boolean trabajadorAgregaDatos;
-    
-    //@Column(name = "IDCLASFUNCIONAL")
-    private DatoAuxiliar clasificadorFuncional;
-    
-    //private DatoAuxiliar idNivelGobierno;
+    private DatoAuxiliar distrito;
+    @NonVisual
+    @Validate("required")
+    private DatoAuxiliar provincia;
+    @NonVisual
+    @Validate("required")
+    private DatoAuxiliar departamento;
+    String emailInstitucional;
+    String urlEntidad;
+    String telefonoentidad;
+    String logotipo;
+    @NonVisual
+    private Trabajador titular;
+    @NonVisual
+    private Trabajador jeferrhh;
+    @NonVisual
+    private Trabajador jefeoga;
+    @NonVisual
+    private DatoAuxiliar tiposubentidad;
+    @NonVisual
+    private Entidad entidad;
+    Boolean essubentidad;      
+    @NonVisual
+    private String validado;
+    @NonVisual
+    String estado;
 
-    public Boolean getPliego_rep() {
-        return pliego_rep;
-    }
-
-    public void setPliego_rep(Boolean pliego_rep) {
-        this.pliego_rep = pliego_rep;
-    }
-
-    public Boolean getSector_rep() {
-        return sector_rep;
-    }
-
-    public void setSector_rep(Boolean sector_rep) {
-        this.sector_rep = sector_rep;
-    }
-
-    public boolean getTrabajadorAgregaDatos() {
-        return trabajadorAgregaDatos;
-    }
-
-    public void setTrabajadorAgregaDatos(boolean trabajadorAgregaDatos) {
-        this.trabajadorAgregaDatos = trabajadorAgregaDatos;
-    }
-    Boolean proc_batch; // Admite proceso Batch
-
-    public String getClas_funcional() {
-        return clas_funcional;
-    }
-
-    public void setClas_funcional(String clas_funcional) {
-        this.clas_funcional = clas_funcional;
-    }
-
-    /*
-     * public String getCod_organismo() { return cod_organismo; }
-     *
-     * public void setCod_organismo(String cod_organismo) { if (cod_organismo !=
-     * null) { this.cod_organismo = cod_organismo.trim(); }
-    }
-     */
+   
     public String getCue_entidad() {
         return cue_entidad;
     }
@@ -129,88 +82,48 @@ public class Entidad implements Serializable {
     public void setCue_entidad(String cue_entidad) {
         this.cue_entidad = cue_entidad;
     }
-
-    public String getCue_elemento() {
-        return cue_elemento;
+    
+    public String getValidado() {
+        return validado;
     }
 
-    public void setCue_elemento(String cue_elemento) {
-        this.cue_elemento = cue_elemento;
-    }
-
-    public String getTEJefeRRHH() {
-        return TEJefeRRHH;
-    }
-
-    public void setTEJefeRRHH(String TEJefeRRHH) {
-        this.TEJefeRRHH = TEJefeRRHH;
-    }
-
-    public String getTEMovilJefeRRHH() {
-        return TEMovilJefeRRHH;
-    }
-
-    public void setTEMovilJefeRRHH(String TEMovilJefeRRHH) {
-        this.TEMovilJefeRRHH = TEMovilJefeRRHH;
-    }
-
-    public int getCod_mef_ue() {
-        return cod_mef_ue;
-    }
-
-    public void setCod_mef_ue(int cod_mef_ue) {
-        this.cod_mef_ue = cod_mef_ue;
+    public void setValidado(String validado) {
+        this.validado = validado;
     }
 
     @ManyToOne
-    public DatoAuxiliar getCod_ubi_dept() {
-        return cod_ubi_dept;
+    public DatoAuxiliar getDepartamento() {
+        return departamento;
     }
 
-    public void setCod_ubi_dept(DatoAuxiliar cod_ubi_dept) {
-        this.cod_ubi_dept = cod_ubi_dept;
-    }
-
-    @ManyToOne
-    public DatoAuxiliar getCod_ubi_dist() {
-        return cod_ubi_dist;
-    }
-
-    public void setCod_ubi_dist(DatoAuxiliar cod_ubi_dist) {
-        this.cod_ubi_dist = cod_ubi_dist;
+    public void setDepartamento(DatoAuxiliar departamento) {
+        this.departamento = departamento;
     }
 
     @ManyToOne
-    public DatoAuxiliar getCod_ubi_prov() {
-        return cod_ubi_prov;
+    public DatoAuxiliar getDistrito() {
+        return distrito;
     }
 
-    public void setCod_ubi_prov(DatoAuxiliar cod_ubi_prov) {
-        this.cod_ubi_prov = cod_ubi_prov;
+    public void setDistrito(DatoAuxiliar distrito) {
+        this.distrito = distrito;
     }
 
-    public String getCorreoElectronicoInstitucional() {
-        return correoElectronicoInstitucional;
+    @ManyToOne
+    public DatoAuxiliar getProvincia() {
+        return provincia;
     }
 
-    public void setCorreoElectronicoInstitucional(String correoElectronicoInstitucional) {
-        this.correoElectronicoInstitucional = correoElectronicoInstitucional;
+    public void setProvincia(DatoAuxiliar provincia) {
+        this.provincia = provincia;
     }
 
-    public String getCorreoElectronicoJefeRRHH() {
-        return correoElectronicoJefeRRHH;
+    public String getEmailInstitucional() {
+        return emailInstitucional;
     }
 
-    public void setCorreoElectronicoJefeRRHH(String correoElectronicoJefeRRHH) {
-        this.correoElectronicoJefeRRHH = correoElectronicoJefeRRHH;
-    }
-
-    public String getCorreoElectronicoTitular() {
-        return correoElectronicoTitular;
-    }
-
-    public void setCorreoElectronicoTitular(String correoElectronicoTitular) {
-        this.correoElectronicoTitular = correoElectronicoTitular;
+    public void setEmailInstitucional(String emailInstitucional) {
+        this.emailInstitucional = emailInstitucional;
     }
 
     public String getDenominacion() {
@@ -229,38 +142,6 @@ public class Entidad implements Serializable {
         this.direcion = direcion;
     }
 
-    public String getJefeRRHHEntidad() {
-        return jefeRRHHEntidad;
-    }
-
-    public void setJefeRRHHEntidad(String jefeRRHHEntidad) {
-        this.jefeRRHHEntidad = jefeRRHHEntidad;
-    }
-
-    public String getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(String localidad) {
-        this.localidad = localidad;
-    }
-
-    public String getNivel_gobierno() {
-        return nivel_gobierno;
-    }
-
-    public void setNivel_gobierno(String nivel_gobierno) {
-        this.nivel_gobierno = nivel_gobierno;
-    }
-
-    public String getPliego() {
-        return pliego;
-    }
-
-    public void setPliego(String pliego) {
-        this.pliego = pliego;
-    }
-
     public String getRuc() {
         return ruc;
     }
@@ -268,46 +149,7 @@ public class Entidad implements Serializable {
     public void setRuc(String ruc) {
         this.ruc = ruc;
     }
-
-    public String getSector_gobierno() {
-        return sector_gobierno;
-    }
-
-    public void setSector_gobierno(String sector_gobierno) {
-        this.sector_gobierno = sector_gobierno;
-    }
-
-    public String getTitularEntidad() {
-        return titularEntidad;
-    }
-
-    public void setTitularEntidad(String titularEntidad) {
-        this.titularEntidad = titularEntidad;
-    }
-
-    public String getCodigoEntidadUE() {
-        return codigoEntidadUE;
-    }
-
-    public void setCodigoEntidadUE(String codigoEntidadUE) {
-        this.codigoEntidadUE = codigoEntidadUE;
-    }
-    /*
-     * public String getDen_organismo() { return den_organismo; }
-     *
-     * public void setDen_organismo(String den_organismo) { if (den_organismo !=
-     * null) { this.den_organismo = den_organismo.trim(); }
-    }
-     */
-
-    public Boolean getDef_servir() {
-        return def_servir;
-    }
-
-    public void setDef_servir(Boolean def_servir) {
-        this.def_servir = def_servir;
-    }
-
+    
     public String getEstado() {
         return estado;
     }
@@ -357,23 +199,125 @@ public class Entidad implements Serializable {
     }
     
     @ManyToOne
-    public DatoAuxiliar getClasificadorFuncional() {
-        return clasificadorFuncional;
+    public DatoAuxiliar getNivelGobierno() {
+        return nivelgobierno;
     }
 
-    public void setClasificadorFuncional(DatoAuxiliar clasificadorFuncional) {
-        this.clasificadorFuncional = clasificadorFuncional;
+    public void setNivelGobierno(DatoAuxiliar nivelgobierno) {
+        this.nivelgobierno = nivelgobierno;
     }
-    /*
+
     @ManyToOne
-    public DatoAuxiliar getIdNivelGobierno() {
-        return idNivelGobierno;
+    public DatoAuxiliar getOrganizacionEstado() {
+        return organizacionestado;
     }
 
-    public void setIdNivelGobierno(DatoAuxiliar idNivelGobierno) {
-        this.idNivelGobierno = idNivelGobierno;
+    public void setOrganizacionEstado_id(DatoAuxiliar organizacionestado) {
+        this.organizacionestado = organizacionestado;
     }
-    */
+
+    @ManyToOne
+    public DatoAuxiliar getSectorGobierno() {
+        return sectorgobierno;
+    }
+
+    public void setSectorGobierno_id(DatoAuxiliar sectorgobierno) {
+        this.sectorgobierno = sectorgobierno;
+    }
     
+    @ManyToOne
+    public DatoAuxiliar getTipoOrganismo() {
+        return tipoorganismo;
+    }
+
+    public void setTipoOrganismo_id(DatoAuxiliar tipoorganismo) {
+        this.tipoorganismo = tipoorganismo;
+    }
     
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+    
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getTipoZona() {
+        return tipozona;
+    }
+
+    public void setTipoZona(DatoAuxiliar tipozona) {
+        this.tipozona = tipozona;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getTipoVia() {
+        return tipovia;
+    }
+
+    public void setTipoVia(DatoAuxiliar tipovia) {
+        this.tipovia = tipovia;
+    }
+   
+    @ManyToOne
+    public DatoAuxiliar getTipoSubEntidad() {
+        return tiposubentidad;
+    }
+
+    public void setTipoSubEntidad(DatoAuxiliar tiposubentidad) {
+        this.tiposubentidad = tiposubentidad;
+    }
+    
+    public String getDescZona() {
+        return desczona;
+    }
+
+    public void setDescZona(String desczona) {
+        this.desczona = desczona;
+    }
+    
+    @ManyToOne
+    public Trabajador getTitular() {
+        return titular;
+    }
+
+    public void setTitular(Trabajador titular) {
+        this.titular = titular;
+    }
+    
+    @ManyToOne
+    public Trabajador getJefeRRHH() {
+        return jeferrhh;
+    }
+
+    public void setJefeRRHH(Trabajador jeferrhh) {
+        this.jeferrhh = jeferrhh;
+    }
+    
+    @ManyToOne
+    public Trabajador getJefeOGA() {
+        return jefeoga;
+    }
+
+    public void setJefeOGA(Trabajador jefeoga) {
+        this.jefeoga = jefeoga;
+    }
+    
+    @ManyToOne   
+    public Entidad getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
 }
