@@ -105,6 +105,17 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Component(id = "formUOFusionar")
     private Form formUOFusionar;
+    
+//    @Persist
+//    @Property
+//    private String bopciones;
+//    
+//    public List<String> getBopciones(){
+//        List<String> mod = new LinkedList<String>();
+//        mod.add("MIGRAR");
+//        mod.add("FUSIONAR");
+//        return mod; 
+//    }
 
     @Log
     public boolean getHayNivelOrigen() {
@@ -176,7 +187,7 @@ public class CambioUOEntidad extends GeneralPage{
         Criteria c = session.createCriteria(UnidadOrganica.class);
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
         c.add(Restrictions.eq("nivel", nivelOrigen));
-        c.add(Restrictions.eq("entidadUE", entidadUE ));
+        c.add(Restrictions.eq("entidad", entidadUE ));
         list = c.list();
         _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
         uoOrigen = null;
@@ -192,7 +203,7 @@ public class CambioUOEntidad extends GeneralPage{
         Criteria c = session.createCriteria(UnidadOrganica.class);
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
         c.add(Restrictions.eq("nivel", nivelDestino));
-        c.add(Restrictions.eq("entidadUE", entidadDestino ));
+        c.add(Restrictions.eq("entidad", entidadDestino ));
         list = c.list();
         _beanUOrganicasDestino = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
         uoDestino = null;

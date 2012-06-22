@@ -210,7 +210,7 @@ public class ABMCargos extends GeneralPage {
         c.createAlias("unidadorganica", "unidadorganica");
  
         c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
-        //c.add(Restrictions.ne("estado", Constantes.ESTADO_BAJA));
+        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
         if(nivel!= null){
            c.add(Restrictions.eq("unidadorganica.nivel", nivel));     
         }
@@ -240,13 +240,13 @@ public class ABMCargos extends GeneralPage {
 
     /*@InjectComponent
     private Zone selectZone;*/
-    @Log
-    public List<String> getEstado() {
-        List<String> estadosCargo = new LinkedList<String>();
-        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
-        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
-        return estadosCargo;
-    }
+//    @Log
+//    public List<String> getEstado() {
+//        List<String> estadosCargo = new LinkedList<String>();
+//        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
+//        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
+//        return estadosCargo;
+//    }
 
     @Log
     public List<String> getRegimen() {
@@ -282,10 +282,11 @@ public class ABMCargos extends GeneralPage {
     Object onActionFromEditar(Cargoxunidad c) {
         cargo = (Cargoxunidad) session.load(Cargoxunidad.class, c.getId());
         //   familiarActual = f;
+        uo=cargo.getUnidadorganica();
         cargoDatos();
         errorBorrar = null;
         editando = true;
-        uo=cargo.getUnidadorganica();
+        //uo=cargo.getUnidadorganica();
         //System.out.println("uo en actionfromeditar "+uo+" getpuedeeditar "+getPuedeEditar() );
         return zonasDatos();
     }
@@ -367,7 +368,7 @@ public class ABMCargos extends GeneralPage {
         Criteria c;
         c = session.createCriteria(CargoAsignado.class);
         c.add(Restrictions.eq("cargo", dato));
-        c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
+        c.add(Restrictions.like("estado", Cargoxunidad.ESTADO_ALTA));
 
         if (c.list().size() > 0) {
             errorBorrar = Errores.ERROR_BORRAR_CARGO;
@@ -460,7 +461,7 @@ public class ABMCargos extends GeneralPage {
     Object onSuccessFromformNivelUOCargo() {
         List<UnidadOrganica> list;
         Criteria c = session.createCriteria(UnidadOrganica.class);
-        //c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         c.add(Restrictions.eq("nivel", nivel));
         c.add(Restrictions.eq("entidad", entidadUE));
         formNivelUOCargo.recordError(String.valueOf(nivel));
@@ -544,7 +545,7 @@ public class ABMCargos extends GeneralPage {
         //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
         //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
         
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SituacionCAP", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SITUACIONCAP", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     /*@Log
