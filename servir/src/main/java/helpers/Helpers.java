@@ -167,7 +167,7 @@ public class Helpers {
     public static Integer getCantPuestosOcupadosCargo(Session session, Cargoxunidad cargo) {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.add(Restrictions.eq("cargo", cargo));
-        c.add(Restrictions.eq("estado", Constantes.ESTADO_ACTIVO));
+        c.add(Restrictions.eq("estado", Cargoxunidad.ESTADO_ALTA));
 
         return c.list().size();
     }
@@ -218,7 +218,7 @@ public class Helpers {
         session.saveOrUpdate(uo);
 
         Criteria c = session.createCriteria(Cargoxunidad.class);
-        c.add(Restrictions.eq("und_organica", uo));
+        c.add(Restrictions.eq("unidadorganica", uo));
         List<Cargoxunidad> lc = c.list();
         System.out.println("---------- Fusionando cant. cargos:" + lc.size());
         migrarCargos(entidadOrigen, entidadDestino, uoPadreDestino, lc, session);
@@ -236,15 +236,44 @@ public class Helpers {
      * @param entidadDestino
      * @param uoPadreDestino
      */
-    @CommitAfter
+    @CommitAfter 
     public static void migrarUOBase(UnidadOrganica uo, Entidad_BK entidadOrigen,
-            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
-        migrarUnidad(uo, entidadOrigen, entidadDestino, uoPadreDestino, session);
+        Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+        uo.setEntidad(entidadDestino);
+        session.saveOrUpdate(uo);
+        if(uo.getNivel()==1){
+            Criteria c = session.createCriteria(UnidadOrganica.class);
+            c.add(Restrictions.eq("entidad", entidadOrigen));
+            c.add(Restrictions.eq("unidadorganica", uo));
+            List<UnidadOrganica> lo = c.list();
+            migrarSubunidades(entidadDestino, lo,session);                      
+        }
+        else{
+            uo.setUnidadorganica(null);
+            uo.setNivel(1);
+            session.saveOrUpdate(uo);
+        } 
+        
+        
+        
+        //migrarUnidad(uo, entidadOrigen, entidadDestino, uoPadreDestino, session);
     }
+    
+    @CommitAfter 
+    public static void migrarSubunidades(Entidad_BK entidadDestino, List<UnidadOrganica> unis, Session session) {
+        for (UnidadOrganica unio : unis) {                                                                                                                         
+           unio.setEntidad(entidadDestino);
+           session.saveOrUpdate(unio);            
+        }
+        session.flush();
+        
+    }          
+    
+    
 
     public static List<UnidadOrganica> uoHijas(UnidadOrganica uo, Session session) {
         Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("uoAntecesora", uo));
+        c.add(Restrictions.eq("unidadorganica", uo));
         return c.list();
     }
 
@@ -260,10 +289,10 @@ public class Helpers {
     public static void migrarUnidad(UnidadOrganica uo, Entidad_BK entidadOrigen,
             Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         if (uoPadreDestino == null) {
-            uo.setUnidadOrganica(null);
-            uo.setNivel(1);     
+            //uo.setUnidadorganica(null);
+            //uo.setNivel(1);
         } else {
-            uo.setUnidadOrganica(uoPadreDestino);
+            //uo.setUnidadorganica(uoPadreDestino);
             uo.setNivel(uoPadreDestino.getNivel() + 1);
         }
         uo.setEntidad(entidadDestino);
@@ -274,7 +303,7 @@ public class Helpers {
 
 
         Criteria c = session.createCriteria(Cargoxunidad.class);
-        c.add(Restrictions.eq("und_organica", uo));
+        c.add(Restrictions.eq("unidadorganica", uo));
         List<Cargoxunidad> lc = c.list();
 
         migrarCargos(entidadOrigen, entidadDestino, uoPadreDestino, lc, session);
@@ -313,11 +342,10 @@ public class Helpers {
                 for (CargoAsignado ca : lca) {
                     // cada cargo asignado lo tengo que meter en un legajo del nuevo organismo.
                     c1 = session.createCriteria(Legajo.class);
-                    c1.add(Restrictions.eq("entidadUE", entidadDestino));
+                    c1.add(Restrictions.eq("entidad", entidadDestino));
                     c1.add(Restrictions.eq("trabajador", ca.getTrabajador()));
                     List<Legajo> ll = c1.list();
                     if (ll.size() > 0) {
-
                         // ya tiene legajo en la entidad.
                         ca.setLegajo(ll.get(0));
                         session.saveOrUpdate(ca);
@@ -325,7 +353,7 @@ public class Helpers {
                         // no tiene legajo en la entidad
                         Legajo l = new Legajo();
                         l.setCod_legajo(entidadDestino.getCodigoEntidadUE() + "-" + ca.getTrabajador().getNroDocumento());
-                        l.setEntidadUE(entidadDestino);
+                        l.setEntidad(entidadDestino);
                         l.setTrabajador(ca.getTrabajador());
                         session.saveOrUpdate(l);
                         ca.setLegajo(l);
@@ -334,7 +362,7 @@ public class Helpers {
                 }
             }
 
-            session.saveOrUpdate(cargo);
+            session.saveOrUpdate(cargo);    
 
         }
 
