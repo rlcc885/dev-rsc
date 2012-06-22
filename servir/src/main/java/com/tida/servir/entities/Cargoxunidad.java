@@ -10,8 +10,8 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 public class Cargoxunidad {
 
-    public static String ESTADO_BAJA = "Baja";
-    public static String ESTADO_ALTA = "Alta";
+    public static boolean ESTADO_BAJA = false;
+    public static boolean ESTADO_ALTA = true;
     public static String CODIGO_DEFAULT = "9999";
     public static String DEN_DEFAULT = "Cargo a designar";
     public static Integer CANT_DEFAULT = 1;
@@ -36,7 +36,7 @@ public class Cargoxunidad {
     private String cod_cargo;
     @Validate("required")
     private String den_cargo;
-    private String estado;
+    private Boolean estado;
     private DatoAuxiliar regimenlaboral;
     //private Integer horas_x_sem;
     private Boolean supervisapersonal;
@@ -184,11 +184,11 @@ public class Cargoxunidad {
         this.den_cargo = den_cargo;
     }
 
-    public String getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

@@ -22,9 +22,6 @@ import org.apache.tapestry5.beaneditor.Validate;
  */
 @Entity
 public class CargoAsignado {
-//	@Id
-//  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//  @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
     private Long id;
 
