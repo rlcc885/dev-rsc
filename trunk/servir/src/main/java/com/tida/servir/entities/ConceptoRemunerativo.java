@@ -14,14 +14,14 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * Conceptos Remunerativos
  */
 @Entity
-@Table(name="CON_REMUNERATIVOS")
+//@Table(name="CON_REMUNERATIVOS")
 public class ConceptoRemunerativo {
    public static List<String> PERIODICIDADES = Arrays.asList(new String[]{"Mensual", "Semestral", "Anual", "Única vez"});
 
     @NonVisual
     private Long id;
 
-    private Entidad_BK entidadUE;
+    private Entidad_BK entidad;
 
     private String codigo;
     
@@ -46,12 +46,12 @@ public class ConceptoRemunerativo {
     }
 
     @ManyToOne
-    public Entidad_BK getEntidadUE() {
-        return entidadUE;
+    public Entidad_BK getEntidad() {
+        return entidad;
     }
 
-    public void setEntidadUE(Entidad_BK entidadUE) {
-        this.entidadUE = entidadUE;
+    public void setEntidad(Entidad_BK entidadUE) {
+        this.entidad = entidadUE;
     }
 
     public String getClasificacion() {

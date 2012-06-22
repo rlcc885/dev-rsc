@@ -83,9 +83,16 @@ public class DatosDeCargoEditor {
     }
 
     public boolean getAsignadoBaja() {
-        if(actual_asignado.getEstado() != null)
+        /*
+         * TODO JZM revisar linea de codigo
+        if(actual_asignado.getEstado() == null)
             return actual_asignado.getEstado().equals(Constantes.ESTADO_BAJA);
         else return false;
+        * 
+        */
+        if(actual_asignado.getEstado() == false)
+            return false;
+        else return true;
     }
     
     @Log
@@ -99,8 +106,16 @@ public class DatosDeCargoEditor {
     
     public List<String> getEstados() {
     	ArrayList<String> estados = new ArrayList<String>();
+        /*
+         * TODO JZM verificar linea de codigo
+        
         estados.add(Constantes.ESTADO_ACTIVO);
         estados.add(Constantes.ESTADO_BAJA);
+        */
+        
+        estados.add("Activo");
+        estados.add("Baja");
+        
         return estados;
     }    
     

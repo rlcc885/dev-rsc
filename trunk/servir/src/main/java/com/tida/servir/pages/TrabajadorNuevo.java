@@ -252,7 +252,7 @@ public class TrabajadorNuevo  extends GeneralPage
         cargoAsignado = new CargoAsignado();
         cargoAsignado.setCargo(cargo);
         if(!trabajadorExiste) {
-            nuevoLegajo.setEntidadUE(_oi);
+            nuevoLegajo.setEntidad(_oi);
             session.saveOrUpdate(nuevoLegajo);
             cargoAsignado.setLegajo(nuevoLegajo);
         } else {
@@ -341,7 +341,7 @@ public class TrabajadorNuevo  extends GeneralPage
         
         if (CargosAsignadosTrabajador.size() > 0) {
             trabajadorTieneCargoOtraEntidad = true;
-            entidadTrabajadorTieneCargo = CargosAsignadosTrabajador.get(0).getLegajo().getEntidadUE().getDenominacion();
+            entidadTrabajadorTieneCargo = CargosAsignadosTrabajador.get(0).getLegajo().getEntidad().getDenominacion();
         }
         
          // Buscamos si ya existe un trabajador igual a ese en algún otro lado, pero no tiene un cargo asignado
@@ -455,7 +455,7 @@ public class TrabajadorNuevo  extends GeneralPage
             _beans = new CargosSelectModel<Cargoxunidad>(list,Cargoxunidad.class,"cod_cargo", "den_cargo","id",_access);
             if(nuevoLegajo == null) {
                     nuevoLegajo = new Legajo();
-                    nuevoLegajo.setEntidadUE(_oi);
+                    nuevoLegajo.setEntidad(_oi);
                     nuevoLegajo.setTrabajador(nuevo);
             }
             if(cargoAsignado == null) {

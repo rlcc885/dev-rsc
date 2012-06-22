@@ -249,7 +249,7 @@ public class Helpers {
             migrarSubunidades(entidadDestino, lo,session);                      
         }
         else{
-            uo.setUnidadorganica(null);
+            uo.setUnidadOrganica(null);
             uo.setNivel(1);
             session.saveOrUpdate(uo);
         } 

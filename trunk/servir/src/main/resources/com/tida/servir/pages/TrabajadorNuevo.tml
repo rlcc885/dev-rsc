@@ -86,7 +86,7 @@
                     <t:if test="trabajadorExiste">
                         <div class="f-left">
                             <label>Código de Legajo:</label>
-                            <label><b>${legajoExistente?.cod_legajo}</b></label>
+                            <label><b>${legajoExistente.cod_legajo}</b></label>
                         </div>
                         <t:parameter name="else">
                             <div class="f-left">

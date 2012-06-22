@@ -121,12 +121,12 @@ public class UnidadOrganica {
 
 
     @ManyToOne
-    public UnidadOrganica getUnidadorganica() {
-        return unidadorganica;
+    public UnidadOrganica getUnidadOrganica() {
+        return unidadOrganica;
     }
 
-    public void setUnidadorganica(UnidadOrganica unidadorganica) {
-        this.unidadorganica = unidadorganica;
+    public void setUnidadOrganica(UnidadOrganica unidadorganica) {
+        this.unidadOrganica = unidadorganica;
     }
     
     //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
@@ -158,7 +158,7 @@ public class UnidadOrganica {
     private DatoAuxiliar tipovia;
     private DatoAuxiliar tipozona;
     private String desczona;
-    private UnidadOrganica unidadorganica;
+    private UnidadOrganica unidadOrganica;
 //    private int unidadorganica_id;
 
 //    public String getTipoActividad() {

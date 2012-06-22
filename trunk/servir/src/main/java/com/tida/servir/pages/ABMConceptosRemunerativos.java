@@ -124,7 +124,7 @@ public class ABMConceptosRemunerativos  extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioConceptoRemunerativo()
     {
-    	conceptoRemunerativo.setEntidadUE(_oi);
+    	conceptoRemunerativo.setEntidad(_oi);
     	session.saveOrUpdate(conceptoRemunerativo);
         new Logger().loguearOperacion(session, loggedUser, String.valueOf(conceptoRemunerativo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
         editando = false;

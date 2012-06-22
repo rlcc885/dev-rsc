@@ -4,7 +4,7 @@
 
       <t:Menu/>
         <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${entidadUE?.denominacion}
+            Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
 
             <h2> Reportes usuarios</h2>

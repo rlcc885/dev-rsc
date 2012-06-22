@@ -1909,8 +1909,8 @@ public class InformeXLS {
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (ConceptoRemunerativo cr : lcr) {
-                if(cr.getEntidadUE() != null)
-                    escribir.print(InformeXLS.leoCampo(cr.getEntidadUE().getCodigoEntidadUE()));
+                if(cr.getEntidad() != null)
+                    escribir.print(InformeXLS.leoCampo(cr.getEntidad().getCodigoEntidadUE()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(cr.getCodigo()));
                 escribir.print("|");
@@ -2017,7 +2017,8 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(c.getDen_cargo()));
                 escribir.print("|");
-                escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo(c.getEstado())));
+                // TODO JZM escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo(c.getEstado())));
+                escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo("Alta")));
                 escribir.print("|");
                 escribir.print(InformeXLS.datoAuxiliarToString(c.getRegimenlaboral()));
                 // TODO JZM revisar 
@@ -2139,8 +2140,8 @@ public class InformeXLS {
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (Legajo l : ll) {
-                if(l.getEntidadUE() != null)
-                    escribir.print(InformeXLS.leoCampo(l.getEntidadUE().getCodigoEntidadUE()));
+                if(l.getEntidad() != null)
+                    escribir.print(InformeXLS.leoCampo(l.getEntidad().getCodigoEntidadUE()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(l.getCod_legajo()));
                 escribir.print("|");
@@ -2167,8 +2168,8 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (CargoAsignado ca : lca) {
                 if(ca.getLegajo() != null){
-                    if(ca.getLegajo().getEntidadUE() != null)
-                        escribir.print(InformeXLS.leoCampo(ca.getLegajo().getEntidadUE().getCodigoEntidadUE()));
+                    if(ca.getLegajo().getEntidad() != null)
+                        escribir.print(InformeXLS.leoCampo(ca.getLegajo().getEntidad().getCodigoEntidadUE()));
                 }
                 escribir.print("|");
                 if(ca.getCargo() != null)
@@ -2180,7 +2181,8 @@ public class InformeXLS {
                 if(ca.getTrabajador() != null)
                     escribir.print(InformeXLS.leoCampo(ca.getTrabajador().getNroDocumento()));
                 escribir.print("|");
-                escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo(ca.getEstado())));
+                // TODO JZM escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo(ca.getEstado())));
+                escribir.print(InformeXLS.getBoolStrFromEstado(InformeXLS.leoCampo("Alta")));
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(ca.getFec_inicio()));
                 escribir.print("|");
@@ -2611,8 +2613,8 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (ConstanciaDocumental cd : lcd) {
                 if(cd.getLegajo() != null){
-                    if(cd.getLegajo().getEntidadUE() != null)
-                        escribir.print(InformeXLS.leoCampo(cd.getLegajo().getEntidadUE().getCodigoEntidadUE()));
+                    if(cd.getLegajo().getEntidad() != null)
+                        escribir.print(InformeXLS.leoCampo(cd.getLegajo().getEntidad().getCodigoEntidadUE()));
                 }
                 escribir.print("|");
                 if(cd.getLegajo() != null)
@@ -2639,7 +2641,7 @@ public class InformeXLS {
     }
 
     public static String leoCampo(String valor) {
-
+        
         if (valor == null) {
             return "";
         }
@@ -2649,6 +2651,8 @@ public class InformeXLS {
         }
 
         return valor;
+        
+        
     }
 
     public static String datoAuxiliarToString(DatoAuxiliar valor) {
