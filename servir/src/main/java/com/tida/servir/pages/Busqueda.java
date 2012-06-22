@@ -87,8 +87,15 @@ public class Busqueda extends GeneralPage {
 
     public List<String> getEstado() {
         List<String> estadosCargo = new LinkedList<String>();
-        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
-        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
+        /*
+         * TODO JZM verificar linea de codigo
+         */
+//        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
+//        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
+        
+        estadosCargo.add("Alta");
+        estadosCargo.add("Baja");
+        
         return estadosCargo;
     }
 

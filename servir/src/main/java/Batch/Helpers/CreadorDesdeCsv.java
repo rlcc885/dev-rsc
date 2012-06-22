@@ -265,7 +265,7 @@ public class CreadorDesdeCsv {
         }
         String periodicidad = ConceptoRemunerativo.PERIODICIDADES.get(CreadorDesdeCsv.toInteger(_csvConcepto.get(6)));
 
-        concepto.setEntidadUE(eue);
+        concepto.setEntidad(eue);
         concepto.setCodigo(_csvConcepto.get(1));
         concepto.setDescripcion(_csvConcepto.get(2));
         concepto.setSustento_legal(_csvConcepto.get(3));
@@ -277,7 +277,7 @@ public class CreadorDesdeCsv {
             //nuveo concepto por ser nueva entidad
             lic = new LineaInformeCodigo();
             lic.setCodigo(concepto.getCodigo());
-            lic.setCodigoEntidadUE(concepto.getEntidadUE().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(concepto.getEntidad().getCodigoEntidadUE());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -807,7 +807,7 @@ public class CreadorDesdeCsv {
 
             // Chequeamos que el legajo de un trabajador y en una entidad no esté 2 veces (con distinto código)
             for (Legajo legCheck : llegajo) {
-                if (legajo.getEntidadUE().getCodigoEntidadUE().equals(legCheck.getEntidadUE().getCodigoEntidadUE())
+                if (legajo.getEntidad().getCodigoEntidadUE().equals(legCheck.getEntidad().getCodigoEntidadUE())
                         && legajo.getTrabajador().getTipoDocumento().equals(legCheck.getTrabajador().getTipoDocumento())
                         && legajo.getTrabajador().getNroDocumento().equals(legCheck.getTrabajador().getNroDocumento())
                         && (!legajo.getCod_legajo().equals(legCheck.getCod_legajo()))) {
@@ -897,7 +897,7 @@ public class CreadorDesdeCsv {
        
 
 
-        legajo.setEntidadUE(eue);
+        legajo.setEntidad(eue);
         legajo.setCod_legajo(_csvLegajo.get(1));
         legajo.setTrabajador(trabajador);
 
@@ -3356,7 +3356,7 @@ public class CreadorDesdeCsv {
 
         for (Legajo l : ll) {
             if (l.getTrabajador().getTipoDocumento().equals(trabajador.getTipoDocumento()) && l.getTrabajador().getNroDocumento().equals(trabajador.getNroDocumento())
-                    && l.getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+                    && l.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return l;
             }
         }
@@ -3373,7 +3373,7 @@ public class CreadorDesdeCsv {
         }
 
         for (Legajo l : ll) {
-            if (l.getCod_legajo().equals(codigoLegajo) && l.getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (l.getCod_legajo().equals(codigoLegajo) && l.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return l;
             }
         }
@@ -3441,7 +3441,7 @@ public class CreadorDesdeCsv {
         }
 
         for (ConceptoRemunerativo cr : lcr) {
-            if (cr.getCodigo().equals(codigoConceptoRemunerativo) && cr.getEntidadUE().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (cr.getCodigo().equals(codigoConceptoRemunerativo) && cr.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
                 return cr;
             }
         }
@@ -3465,7 +3465,7 @@ public class CreadorDesdeCsv {
        // }
     }
 
-    private String getEstadoCargoFromBoolStr(String estado, List<String> errores) {
+    private boolean getEstadoCargoFromBoolStr(String estado, List<String> errores) {
         if (!((estado == null) || (estado.trim().equals("")))) {
             if (estado.trim().equals("1")) {
                 return Cargoxunidad.ESTADO_ALTA;
@@ -3481,7 +3481,7 @@ public class CreadorDesdeCsv {
         return Cargoxunidad.ESTADO_ALTA;
     }
 
-    private String getEstadoCAFromBoolStr(String estado, List<String> errores) {
+    private boolean getEstadoCAFromBoolStr(String estado, List<String> errores) {
         if (!((estado == null) || (estado.trim().equals("")))) {
             if (estado.trim().equals("1")) {
                 return helpers.Constantes.ESTADO_ACTIVO;

@@ -10,7 +10,7 @@
     <t:if test = "entidad">
 
     <div id = "Informacion_Entidad">
-        CUE: ${entidad.}
+        CUE: {entidad.}
     </div>
 
     </t:if>

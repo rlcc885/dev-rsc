@@ -6,7 +6,7 @@
     <t:Menu/>
     <t:if test= "usuarioDeOrganismo">
         <div class="organismo_titulo">
-            Entidad U. Ejecutora: ${loggedUser.entidadUE?.denominacion}
+            Entidad U. Ejecutora: ${loggedUser.entidadUE.denominacion}
         </div>
     </t:if>
     <h1>Usuarios</h1>

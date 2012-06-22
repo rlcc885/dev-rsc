@@ -50,7 +50,7 @@ public class CargoAsignado {
 //    @ManyToOne(cascade = CascadeType.PERSIST)
     private Legajo legajo;
 
-    private String estado;
+    private boolean estado;
 
     @Temporal(TemporalType.DATE)
     private Date fec_inicio;
@@ -96,11 +96,11 @@ public class CargoAsignado {
         this.ctd_per_superv = ctd_per_superv;
     }
 
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 

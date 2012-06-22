@@ -41,7 +41,8 @@ public class ComparadorEntidades {
     public static LineaInformeCodigo conceptos(ConceptoRemunerativo corigen, ConceptoRemunerativo cdestino) {
         LineaInformeCodigo lic = new LineaInformeCodigo();
         
-        lic.setCodigoEntidadUE(corigen.getEntidadUE().getCodigoEntidadUE());
+        //lic.setCodigoEntidadUE(corigen.getEntidad().getCodigoEntidadUE());
+        lic.setCodigoEntidadUE("ARSON");
         lic.setCodigo(corigen.getCodigo());
 
         //System.out.println("CONCEPTO REMUNERATIVO 2");

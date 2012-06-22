@@ -11,8 +11,10 @@ package helpers;
  */
 public class Constantes {
     // Estados de CargosAsignados
-   public static final String ESTADO_ACTIVO = "Activo";
-   public static final String ESTADO_BAJA = "Baja";
+   //public static final String ESTADO_ACTIVO = "Activo";
+   //public static final String ESTADO_BAJA = "Baja";
+   public static boolean ESTADO_BAJA = false;
+   public static boolean ESTADO_ACTIVO = true;
    public static final String TITULO_EXITO ="Titulos modificados exitosamente.";
    public static final String CERTIFICACION_EXITO ="Certificaciones modificados exitosamente.";
    public static final String CURSO_EXITO ="Cursos modificados exitosamente.";

@@ -10,7 +10,6 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 public class Cargoxunidad {
 
-    public String cadena="";
     public static boolean ESTADO_BAJA = false;
     public static boolean ESTADO_ALTA = true;
     public static String CODIGO_DEFAULT = "9999";

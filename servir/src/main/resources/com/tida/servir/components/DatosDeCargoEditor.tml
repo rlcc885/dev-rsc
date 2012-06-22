@@ -27,7 +27,7 @@
                         <div class="datosdecargoeditor">
                             <label><b>Régimen Laboral /Contractual:</b></label>
                             <div class="f-left">
-                                <label>${actual.reg_lab_con?.valor}</label>
+                                <label>${actual.regimenlaboral.getValor()}</label>
                             </div>
                         </div>
                         <div class="datosdecargoeditor">
@@ -43,12 +43,14 @@
                                 <label>${actual.estado}</label>
                             </div>
                         </div>
+                <!--
                         <div class="datosdecargoeditor">
                             <label><b>Clasificación Funcional:</b> </label>
                             <div class="f-left">
-                                <label>${actual.clasificacion_funcional?.valor}</label>
+                                <label>{actual.clasificacion_funcional?.valor}</label>
                             </div>
                         </div>
+                -->
                         <form t:type="form" t:id="formulariodatosdecargo" >
                             <div class="datosdecargoeditor">
                                 <label><b>Habilitación Profesional:</b></label>
