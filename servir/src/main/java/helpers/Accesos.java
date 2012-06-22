@@ -5,7 +5,7 @@
 
 package helpers;
 
-import com.tida.servir.components.Menu;
+import com.tida.servir.components.Menu; 
 
 /**
  *
@@ -112,7 +112,7 @@ public class Accesos {
                 nombre = "Exportación";
                 break;
             case CambioUOEntidad:
-                nombre = "Migrar UO";
+                nombre = "Migrar / Fusión UO";
                 break;
             case UnidadesOrganicas:
                 nombre = "Unidades orgánicas";
