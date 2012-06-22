@@ -86,7 +86,7 @@ public class CambiarClave  extends GeneralPage {
 
             return envelope.getContents().length() ==0;
         }
-            @Log
+    @Log
     @CommitAfter
     Zone onSuccessFromFormularioCambioClave()
     {
