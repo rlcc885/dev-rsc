@@ -182,7 +182,7 @@ public class Ubigeos {
 
 
             }
-            if (ub.getNombreTabla().equals("UBPROVINCIA")) {
+            if (ub.getNombreTabla().equals("UBPROVINCIA")) { 
                 // Cargo el distrito
                 /*
                  * Esto lo hago desde el setuprender
