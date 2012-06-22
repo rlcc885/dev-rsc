@@ -1,3 +1,4 @@
+
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tida</groupId>
@@ -5,10 +6,7 @@
     <version>2.5.0</version>
     <packaging>war</packaging>
     <name>Registro Nacional de Personal del Servicio Civil</name>
-    <ciManagement>
-        <system>hudson</system>
-        <url>http://localhost:9090/job/Registro%20Nacional%20de%20Personal%20del%20Servicio%20Civil/</url>
-    </ciManagement>
+
     <dependencies>
       
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
@@ -77,16 +75,16 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
 
         <dependency>
-                <groupId>net.sf.jsignature.io-tools</groupId>
-                <artifactId>easystream</artifactId>
-                <version>1.2.9</version>
+            <groupId>net.sf.jsignature.io-tools</groupId>
+            <artifactId>easystream</artifactId>
+            <version>1.2.9</version>
             <type>jar</type>
         </dependency>
 
         <dependency>
-                <groupId>c3p0</groupId>
-                <artifactId>c3p0</artifactId>
-                <version>0.9.0</version>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.0</version>
         </dependency>
 
 <!--
@@ -227,11 +225,11 @@ Fin de librerias pentaho -->
 </dependency>
 -->
 <!-- Dependencias de los webservices -->
-    <dependency>
-        <groupId>axis</groupId>
-        <artifactId>axis</artifactId>
-        <version>1.4</version>
-    </dependency>
+        <dependency>
+            <groupId>axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.4</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -242,6 +240,25 @@ Fin de librerias pentaho -->
 
     <build>
         <finalName>servir</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <locales>es_AR</locales>
+                    <inputencoding>utf-8</inputencoding>
+                    <outputencoding>utf-8</outputencoding>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                    <optimize>true</optimize>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+            </plugin>
+        </plugins>
     </build>
 
     <reporting>
