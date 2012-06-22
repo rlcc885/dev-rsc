@@ -236,6 +236,15 @@ Fin de librerias pentaho -->
             <version>1.6.4</version>
             <type>jar</type>
         </dependency>
+        
+        <dependency>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>simple-war</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+  
+  
     </dependencies>
 
     <build>
