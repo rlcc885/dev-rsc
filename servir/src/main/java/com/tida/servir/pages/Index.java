@@ -1,46 +1,32 @@
 package com.tida.servir.pages;
 
-import helpers.Logger;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-
-import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
-import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.PasswordField;
-import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.apache.tapestry5.services.ComponentClassResolver;
-import org.apache.tapestry5.services.Request;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
 import com.tida.servir.entities.ConfiguracionAcceso;
 import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import helpers.Encriptacion;
+import helpers.Logger;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.PasswordField;
+import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.Messages;
-import org.apache.tapestry5.services.Context;
-import org.apache.tapestry5.services.RequestGlobals;
-import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.*;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Login de Usuarios
@@ -52,11 +38,9 @@ public class Index {
     @Property
     @SessionState
     private Usuario usuario;
-
     @Property
-    @SessionState(create=false)
+    @SessionState(create = false)
     private Entidad_BK eue;
-
     @Property
     private boolean administrador = false;
     @Property
@@ -70,9 +54,9 @@ public class Index {
     @Component(id = "formulariologin")
     private Form formulariologin;
     /*
-    @Component(id = "formularioorganismos")
-    private Form formularioOrganismos;
-     * 
+     * @Component(id = "formularioorganismos") private Form
+     * formularioOrganismos;
+     *
      */
     @Component(id = "clave")
     private PasswordField passwordField;
@@ -88,24 +72,19 @@ public class Index {
     private PropertyAccess _access;
     @Inject
     private RequestGlobals requestGlobal;
-    
     @Inject
     private Messages mensajes;
-
-
     @Inject
     private Context context;
-  
-  public String getOlvidoClave()     
-  {
-      return mensajes.get("olvidoClave");
-  }
-  
-  public String getNuevoUsuario()     
-  {
-      return mensajes.get("nuevoUsuario");
-  }
-    
+
+    public String getOlvidoClave() {
+        return mensajes.get("olvidoClave");
+    }
+
+    public String getNuevoUsuario() {
+        return mensajes.get("nuevoUsuario");
+    }
+
     public boolean getMuestroSubmit() {
         return !administrador;
     }
@@ -131,8 +110,9 @@ public class Index {
     @CommitAfter
     Object onSuccessFromFormulariologin() {
         Criteria c = session.createCriteria(Usuario.class);
+        //Encriptacion crypt = Encriptacion();
         c.add(Restrictions.eq("login", login));
-        c.add(Restrictions.eq("md5Clave", clave));
+        c.add(Restrictions.eq("md5Clave", Encriptacion.encriptaEnMD5(clave)));
         c.add(Restrictions.eq("estado", Usuario.ESTADOACTIVO));
 
         //System.out.println(login + " ------------------------------------------------ " + clave + " c? " + c.list().size());
@@ -222,27 +202,23 @@ public class Index {
         session.saveOrUpdate(usuario);
 
         /*
-        if (Helpers.esMultiOrganismo(usuario)) {
-            administrador = true;
-
-            // Seleccionar el organismo
-            return organismosZone.getBody();
-        } else {
-            eue = usuario.getEntidadUE();
-            return Permisos.paginaInicial(usuario);
-        }
-         * */
+         * if (Helpers.esMultiOrganismo(usuario)) { administrador = true;
+         *
+         * // Seleccionar el organismo return organismosZone.getBody(); } else {
+         * eue = usuario.getEntidadUE(); return Permisos.paginaInicial(usuario);
+         * }
+         *
+         */
         eue = usuario.getEntidadUE();
 
         /*
-        if (eue == null){
-            // tiene que haber al menos alguna entidad cargada
-            c = session.createCriteria(EntidadUEjecutora.class);
-            c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
-            eue = (EntidadUEjecutora) c.list().get(0);
-
-        }
-         * 
+         * if (eue == null){ // tiene que haber al menos alguna entidad cargada
+         * c = session.createCriteria(EntidadUEjecutora.class);
+         * c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA)); eue
+         * = (EntidadUEjecutora) c.list().get(0);
+         *
+         * }
+         *
          */
         return Permisos.paginaInicial(usuario);
     }
@@ -264,51 +240,40 @@ public class Index {
     }
 
     /*
-    Object onSuccessFromFormularioOrganismos() {
-        // el match del eue ya lo hace desde el tml
-        return Permisos.paginaInicial(usuario);
-    }
-*/
-    
+     * Object onSuccessFromFormularioOrganismos() { // el match del eue ya lo
+     * hace desde el tml return Permisos.paginaInicial(usuario); }
+     */
     void onActivate() {
         clearCacheData();
         /*
-
-        List<String> paginas;
-        paginas.add("ABMUsuario");
-        paginas.add("ABMDatoAuxiliar");
-        paginas.add("AMOrganismoInformante");
-        paginas.add("AMUnidadEjecutora");
-        paginas.add("TrabajadorNuevo");
-        paginas.add("AMOrgano");
-        paginas.add("AMUnidadOrganica");
-        paginas.add("ABMCargos");
-        paginas.add("Busqueda");
-        paginas.add("CambiarClave");
-
-        paginas.add("ABMConceptosRemunerativos");
-        paginas.add("AsignarNuevoCargo");
-        paginas.add("CargosAsignadosModificar");
-        paginas.add("CreateCargo");
-        paginas.add("DesasignarCargo");
-        paginas.add("TrabajadorModificar");
-        paginas.add("TrabajadorNuevo");
-        paginas.add("TransferenciaMasivaTrabajadores");
-        paginas.add("batch");
-
-        paginas = componentClassResolver.getPageNames();
-
-
-        for(String page: paginas) {
-
-        System.out.println("--------------------Pagina: "+ page);
-        Page clase = pl.loadPage(page, Locale.ENGLISH);
-        System.out.println("--------------------Clase Pagina cargada: "+ clase);
-        clase.discardPersistentFieldChanges();
-
-        }
-        // Todos pueden cambiar su clave
-
+         *
+         * List<String> paginas; paginas.add("ABMUsuario");
+         * paginas.add("ABMDatoAuxiliar"); paginas.add("AMOrganismoInformante");
+         * paginas.add("AMUnidadEjecutora"); paginas.add("TrabajadorNuevo");
+         * paginas.add("AMOrgano"); paginas.add("AMUnidadOrganica");
+         * paginas.add("ABMCargos"); paginas.add("Busqueda");
+         * paginas.add("CambiarClave");
+         *
+         * paginas.add("ABMConceptosRemunerativos");
+         * paginas.add("AsignarNuevoCargo");
+         * paginas.add("CargosAsignadosModificar"); paginas.add("CreateCargo");
+         * paginas.add("DesasignarCargo"); paginas.add("TrabajadorModificar");
+         * paginas.add("TrabajadorNuevo");
+         * paginas.add("TransferenciaMasivaTrabajadores"); paginas.add("batch");
+         *
+         * paginas = componentClassResolver.getPageNames();
+         *
+         *
+         * for(String page: paginas) {
+         *
+         * System.out.println("--------------------Pagina: "+ page); Page clase
+         * = pl.loadPage(page, Locale.ENGLISH);
+         * System.out.println("--------------------Clase Pagina cargada: "+
+         * clase); clase.discardPersistentFieldChanges();
+         *
+         * }
+         * // Todos pueden cambiar su clave
+         *
          */
 
     }
@@ -337,7 +302,7 @@ public class Index {
                     java.util.logging.Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                File fileADescargar = new File(reportesPath+"/Manual del RNSC.pdf");
+                File fileADescargar = new File(reportesPath + "/Manual del RNSC.pdf");
 
                 try {
                     inputStream = new FileInputStream(fileADescargar);
