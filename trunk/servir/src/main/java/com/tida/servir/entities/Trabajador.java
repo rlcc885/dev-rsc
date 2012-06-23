@@ -1,5 +1,6 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,70 +18,79 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  *
  * @author ale
  */
 @Entity
-public class Trabajador // extends Persona 
+public class Trabajador implements Serializable // extends Persona 
 {
     ///cosas de la clase PERSONA
+
     private static final String DNI = "DNI";
+    @Id
+    @GeneratedValue
     @NonVisual
-    public long id;
+    private Long id;
     @Validate("required")
-    public String tipoDocumento;
+    private String tipoDocumento;
     @Validate("required")
-    public String nroDocumento;
+    private String nroDocumento;
     @Validate("required")
-    public String apellidoPaterno;
+    private String apellidoPaterno;
     @Validate("required")
-    public String apellidoMaterno;
+    private String apellidoMaterno;
     @Validate("required")
-    public String nombres;
+    private String nombres;
     @NonVisual
-    public String sexo;
+    private String sexo;
     @NonVisual
     @Temporal(TemporalType.DATE)
-    public Date fechaNacimiento;
+    private Date fechaNacimiento;
     @NonVisual
-    public String pais;
-    @NonVisual
-    @Validate("required")
-    public DatoAuxiliar cod_ubi_dist;
+    private String pais;
+    @ManyToOne
     @NonVisual
     @Validate("required")
-    public DatoAuxiliar cod_ubi_prov;
+    private DatoAuxiliar cod_ubi_dist;
+    @ManyToOne
     @NonVisual
     @Validate("required")
-    public DatoAuxiliar cod_ubi_dept;
+    private DatoAuxiliar cod_ubi_prov;
+    @ManyToOne
     @NonVisual
-    public String nacionalidad;
+    @Validate("required")
+    private DatoAuxiliar cod_ubi_dept;
     @NonVisual
-    public String estadoCivil;
+    private String nacionalidad;
     @NonVisual
-    public String domicilioDireccion;
+    private String estadoCivil;
     @NonVisual
-    public DatoAuxiliar cod_dom_dist;
+    private String domicilioDireccion;
+    @ManyToOne
     @NonVisual
-    public DatoAuxiliar cod_dom_prov;
+    private DatoAuxiliar cod_dom_dist;
+    @ManyToOne
     @NonVisual
-    public DatoAuxiliar cod_dom_dept;
+    private DatoAuxiliar cod_dom_prov;
+    @ManyToOne
     @NonVisual
-    public String domicilioCodigoPostal;
+    private DatoAuxiliar cod_dom_dept;
     @NonVisual
-    public String esSalud;
+    private String domicilioCodigoPostal;
     @NonVisual
-    public String grupoSanguineo;
+    private String esSalud;
     @NonVisual
-    public String tipoDiscapacidad;
+    private String grupoSanguineo;
     @NonVisual
-    public Integer nroCertificadoCONADIS;
+    private String tipoDiscapacidad;
     @NonVisual
-    public String nivelInstruccion;
+    private Integer nroCertificadoCONADIS;
     @NonVisual
-    public DatoAuxiliar formacionProfesional;
+    private String nivelInstruccion;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar formacionProfesional;
     private String formacionInfAdicional;
     @NonVisual
     private String emergenciaNombre;
@@ -102,13 +112,7 @@ public class Trabajador // extends Persona
     private String nroRUC;
     @NonVisual
     private String codigoOSCE;
-    @NonVisual
-    private String idnivelinstruccion;
-    @NonVisual
-    private String idsexo;
-    @NonVisual
-    private String idtipodocumento;
-    
+
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
@@ -169,7 +173,6 @@ public class Trabajador // extends Persona
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    @ManyToOne
     public DatoAuxiliar getFormacionProfesional() {
         return formacionProfesional;
     }
@@ -186,10 +189,7 @@ public class Trabajador // extends Persona
         this.grupoSanguineo = grupoSanguineo;
     }
 
-    @Id
-    @GeneratedValue
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public long getId() {
         return id;
     }
@@ -272,7 +272,6 @@ public class Trabajador // extends Persona
         this.tipoDocumento = tipoDocumento;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_dist() {
         return cod_ubi_dist;
     }
@@ -281,7 +280,6 @@ public class Trabajador // extends Persona
         cod_ubi_dist = codUbiDist;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_prov() {
         return cod_ubi_prov;
     }
@@ -290,7 +288,6 @@ public class Trabajador // extends Persona
         cod_ubi_prov = codUbiProv;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_dept() {
         return cod_ubi_dept;
     }
@@ -299,7 +296,6 @@ public class Trabajador // extends Persona
         cod_ubi_dept = codUbiDept;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_dom_dist() {
         return cod_dom_dist;
     }
@@ -308,7 +304,6 @@ public class Trabajador // extends Persona
         cod_dom_dist = codDomDist;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_dom_prov() {
         return cod_dom_prov;
     }
@@ -317,7 +312,6 @@ public class Trabajador // extends Persona
         cod_dom_prov = codDomProv;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_dom_dept() {
         return cod_dom_dept;
     }
@@ -329,30 +323,6 @@ public class Trabajador // extends Persona
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
-    public String getIdnivelinstruccion() {
-        return idnivelinstruccion;
-    }
-
-    public void setIdnivelinstruccion(String idnivelinstruccion) {
-        this.idnivelinstruccion = idnivelinstruccion;
-    }
-
-    public String getIdsexo() {
-        return idsexo;
-    }
-
-    public void setIdsexo(String idsexo) {
-        this.idsexo = idsexo;
-    }
-
-    public String getIdtipodocumento() {
-        return idtipodocumento;
-    }
-
-    public void setIdtipodocumento(String idtipodocumento) {
-        this.idtipodocumento = idtipodocumento;
-    }
-   
     public String getFormacionInfAdicional() {
         return formacionInfAdicional;
     }
@@ -360,7 +330,7 @@ public class Trabajador // extends Persona
     public void setFormacionInfAdicional(String formacionInfAdicional) {
         this.formacionInfAdicional = formacionInfAdicional;
     }
-    
+
     /// cosas de la clase PERSONA
     public String getEmergenciaNombre() {
         return emergenciaNombre;
@@ -374,7 +344,6 @@ public class Trabajador // extends Persona
         return emergenciaDomicilio;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Certificacion> getCertificaciones() {
         return certificaciones;
     }
@@ -452,8 +421,7 @@ public class Trabajador // extends Persona
             String emergenciaTelefonoAlternativo2) {
         this.emergenciaTelefonoAlternativo2 = emergenciaTelefonoAlternativo2;
     }
-    
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+
     public List<Ant_Laborales> getAnt_Laborales() {
         return ant_Laborales;
     }
@@ -465,38 +433,44 @@ public class Trabajador // extends Persona
     /*
      * Otros tabs
      */
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Ant_Laborales> ant_Laborales = new ArrayList<Ant_Laborales>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<MeritoDemerito> meritosdemeritos = new ArrayList<MeritoDemerito>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Titulo> titulos = new ArrayList<Titulo>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @ManyToMany(cascade = CascadeType.ALL,targetEntity=Familiar.class)
     public List<Familiar> familiares = new ArrayList<Familiar>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<CargoAsignado> cargosAsignados = new ArrayList<CargoAsignado>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
 //  @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Curso> cursos = new ArrayList<Curso>();
 
     /*
-     * A los legajos se acceden según los cargos
-    @NonVisual
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Legajo> legajos = new ArrayList<Legajo>();
+     * A los legajos se acceden según los cargos @NonVisual @OneToMany(mappedBy
+     * = "trabajador", cascade = CascadeType.ALL) public List<Legajo> legajos =
+     * new ArrayList<Legajo>();
      */
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<CargoAsignado> getCargosAsignados() {
         return cargosAsignados;
     }
@@ -505,12 +479,10 @@ public class Trabajador // extends Persona
         this.cargosAsignados = cargosAsignados;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Titulo> getTitulos() {
         return titulos;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Curso> getCursos() {
         return cursos;
     }
@@ -523,7 +495,6 @@ public class Trabajador // extends Persona
         this.titulos = titulos;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<MeritoDemerito> getMeritosdemeritos() {
         return meritosdemeritos;
     }
@@ -532,7 +503,6 @@ public class Trabajador // extends Persona
         this.meritosdemeritos = meritosdemeritos;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }
@@ -541,7 +511,6 @@ public class Trabajador // extends Persona
         this.publicaciones = publicaciones;
     }
 
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Familiar> getFamiliares() {
         return familiares;
     }

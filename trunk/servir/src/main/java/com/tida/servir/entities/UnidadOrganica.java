@@ -4,6 +4,7 @@
  */
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import javax.persistence.OneToMany;
  * @author ale
  */
 @Entity
-public class UnidadOrganica {
+public class UnidadOrganica implements Serializable {
 
     public static Boolean ESTADO_BAJA = false;
     public static Boolean ESTADO_ALTA = true;
