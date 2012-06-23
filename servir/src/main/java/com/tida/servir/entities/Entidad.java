@@ -28,23 +28,24 @@ public class Entidad implements Serializable {
     private long id;
     String cue_entidad;
     @Validate("required")
-    private DatoAuxiliar nivelgobierno;   
+    private DatoAuxiliar nivelGobierno;   
     @Validate("required")
-    private DatoAuxiliar organizacionestado;  
+    private DatoAuxiliar organizacionEstado;  
     @Validate("required")
-    private DatoAuxiliar sectorgobierno;    
+    private DatoAuxiliar sectorGobierno;    
     @Validate("required")
-    private DatoAuxiliar tipoorganismo;    
+    private DatoAuxiliar tipoOrganismo;    
     @Validate("required")
     private String denominacion;
     private String sigla;
     private String abreviatura;
     private String ruc;
-    Boolean proc_batch;
-    private DatoAuxiliar tipovia;
-    private String direcion;
+    Boolean proc_Batch;
+    private DatoAuxiliar tipoVia;
+    private String direccion;
     private DatoAuxiliar tipozona;
-    private String desczona;
+
+    private String descZona;
     @NonVisual
     @Validate("required")
     private DatoAuxiliar distrito;
@@ -56,19 +57,19 @@ public class Entidad implements Serializable {
     private DatoAuxiliar departamento;
     String emailInstitucional;
     String urlEntidad;
-    String telefonoentidad;
+    String telefonoEntidad;
     String logotipo;
-    @NonVisual
+    //@NonVisual
     private Trabajador titular;
+    //@NonVisual
+    private Trabajador jefeRRHH;
+    //@NonVisual
+    private Trabajador jefeOga;
     @NonVisual
-    private Trabajador jeferrhh;
-    @NonVisual
-    private Trabajador jefeoga;
-    @NonVisual
-    private DatoAuxiliar tiposubentidad;
+    private DatoAuxiliar tipoSubEntidad;
     @NonVisual
     private Entidad entidad;
-    Boolean essubentidad;      
+    Boolean esSubEntidad;      
     @NonVisual
     private String validado;
     @NonVisual
@@ -134,12 +135,12 @@ public class Entidad implements Serializable {
         this.denominacion = denominacion;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getRuc() {
@@ -168,12 +169,12 @@ public class Entidad implements Serializable {
         this.id = id;
     }
 
-    public Boolean getProc_batch() {
-        return proc_batch;
+    public Boolean getProc_Batch() {
+        return proc_Batch;
     }
 
-    public void setProc_batch(Boolean proc_batch) {
-        this.proc_batch = proc_batch;
+    public void setProc_Batch(Boolean proc_batch) {
+        this.proc_Batch = proc_batch;
     }
 
     @Override
@@ -200,38 +201,30 @@ public class Entidad implements Serializable {
     
     @ManyToOne
     public DatoAuxiliar getNivelGobierno() {
-        return nivelgobierno;
+        return nivelGobierno;
     }
 
-    public void setNivelGobierno(DatoAuxiliar nivelgobierno) {
-        this.nivelgobierno = nivelgobierno;
+    public void setNivelGobierno(DatoAuxiliar nivelGobierno) {
+        this.nivelGobierno = nivelGobierno;
     }
 
     @ManyToOne
     public DatoAuxiliar getOrganizacionEstado() {
-        return organizacionestado;
+        return organizacionEstado;
     }
 
-    public void setOrganizacionEstado_id(DatoAuxiliar organizacionestado) {
-        this.organizacionestado = organizacionestado;
+    public void setOrganizacionEstado(DatoAuxiliar organizacionEstado) {
+        this.organizacionEstado = organizacionEstado;
     }
 
     @ManyToOne
     public DatoAuxiliar getSectorGobierno() {
-        return sectorgobierno;
-    }
-
-    public void setSectorGobierno_id(DatoAuxiliar sectorgobierno) {
-        this.sectorgobierno = sectorgobierno;
+        return sectorGobierno;
     }
     
     @ManyToOne
     public DatoAuxiliar getTipoOrganismo() {
-        return tipoorganismo;
-    }
-
-    public void setTipoOrganismo_id(DatoAuxiliar tipoorganismo) {
-        this.tipoorganismo = tipoorganismo;
+        return tipoOrganismo;
     }
     
     public String getSigla() {
@@ -261,28 +254,28 @@ public class Entidad implements Serializable {
     
     @ManyToOne
     public DatoAuxiliar getTipoVia() {
-        return tipovia;
+        return tipoVia;
     }
 
-    public void setTipoVia(DatoAuxiliar tipovia) {
-        this.tipovia = tipovia;
+    public void setTipoVia(DatoAuxiliar tipoVia) {
+        this.tipoVia = tipoVia;
     }
    
     @ManyToOne
     public DatoAuxiliar getTipoSubEntidad() {
-        return tiposubentidad;
+        return tipoSubEntidad;
     }
 
-    public void setTipoSubEntidad(DatoAuxiliar tiposubentidad) {
-        this.tiposubentidad = tiposubentidad;
+    public void setTipoSubEntidad(DatoAuxiliar tipoSubEntidad) {
+        this.tipoSubEntidad = tipoSubEntidad;
     }
     
     public String getDescZona() {
-        return desczona;
+        return descZona;
     }
 
     public void setDescZona(String desczona) {
-        this.desczona = desczona;
+        this.descZona = desczona;
     }
     
     @ManyToOne
@@ -296,20 +289,20 @@ public class Entidad implements Serializable {
     
     @ManyToOne
     public Trabajador getJefeRRHH() {
-        return jeferrhh;
+        return jefeRRHH;
     }
 
     public void setJefeRRHH(Trabajador jeferrhh) {
-        this.jeferrhh = jeferrhh;
+        this.jefeRRHH = jeferrhh;
     }
     
     @ManyToOne
-    public Trabajador getJefeOGA() {
-        return jefeoga;
+    public Trabajador getJefeOga() {
+        return jefeOga;
     }
 
-    public void setJefeOGA(Trabajador jefeoga) {
-        this.jefeoga = jefeoga;
+    public void setJefeOga(Trabajador jefeOga) {
+        this.jefeOga = jefeOga;
     }
     
     @ManyToOne   
@@ -321,36 +314,12 @@ public class Entidad implements Serializable {
         this.entidad = entidad;
     }
 
-    public String getDesczona() {
-        return desczona;
+    public Boolean getEsSubEntidad() {
+        return esSubEntidad;
     }
 
-    public void setDesczona(String desczona) {
-        this.desczona = desczona;
-    }
-
-    public Boolean getEssubentidad() {
-        return essubentidad;
-    }
-
-    public void setEssubentidad(Boolean essubentidad) {
-        this.essubentidad = essubentidad;
-    }
-
-    public Trabajador getJefeoga() {
-        return jefeoga;
-    }
-
-    public void setJefeoga(Trabajador jefeoga) {
-        this.jefeoga = jefeoga;
-    }
-
-    public Trabajador getJeferrhh() {
-        return jeferrhh;
-    }
-
-    public void setJeferrhh(Trabajador jeferrhh) {
-        this.jeferrhh = jeferrhh;
+    public void setEsSubEntidad(Boolean esSubEntidad) {
+        this.esSubEntidad = esSubEntidad;
     }
 
     public String getLogotipo() {
@@ -361,68 +330,20 @@ public class Entidad implements Serializable {
         this.logotipo = logotipo;
     }
 
-    public DatoAuxiliar getNivelgobierno() {
-        return nivelgobierno;
+    public void setSectorGobierno(DatoAuxiliar sectorGobierno) {
+        this.sectorGobierno = sectorGobierno;
     }
 
-    public void setNivelgobierno(DatoAuxiliar nivelgobierno) {
-        this.nivelgobierno = nivelgobierno;
+    public String getTelefonoEntidad() {
+        return telefonoEntidad;
     }
 
-    public DatoAuxiliar getOrganizacionestado() {
-        return organizacionestado;
+    public void setTelefonoEntidad(String telefonoEntidad) {
+        this.telefonoEntidad = telefonoEntidad;
     }
 
-    public void setOrganizacionestado(DatoAuxiliar organizacionestado) {
-        this.organizacionestado = organizacionestado;
-    }
-
-    public DatoAuxiliar getSectorgobierno() {
-        return sectorgobierno;
-    }
-
-    public void setSectorgobierno(DatoAuxiliar sectorgobierno) {
-        this.sectorgobierno = sectorgobierno;
-    }
-
-    public String getTelefonoentidad() {
-        return telefonoentidad;
-    }
-
-    public void setTelefonoentidad(String telefonoentidad) {
-        this.telefonoentidad = telefonoentidad;
-    }
-
-    public DatoAuxiliar getTipoorganismo() {
-        return tipoorganismo;
-    }
-
-    public void setTipoorganismo(DatoAuxiliar tipoorganismo) {
-        this.tipoorganismo = tipoorganismo;
-    }
-
-    public DatoAuxiliar getTiposubentidad() {
-        return tiposubentidad;
-    }
-
-    public void setTiposubentidad(DatoAuxiliar tiposubentidad) {
-        this.tiposubentidad = tiposubentidad;
-    }
-
-    public DatoAuxiliar getTipovia() {
-        return tipovia;
-    }
-
-    public void setTipovia(DatoAuxiliar tipovia) {
-        this.tipovia = tipovia;
-    }
-
-    public DatoAuxiliar getTipozona() {
-        return tipozona;
-    }
-
-    public void setTipozona(DatoAuxiliar tipozona) {
-        this.tipozona = tipozona;
+    public void setTipoOrganismo(DatoAuxiliar tipoOrganismo) {
+        this.tipoOrganismo = tipoOrganismo;
     }
 
     public String getUrlEntidad() {
@@ -432,5 +353,5 @@ public class Entidad implements Serializable {
     public void setUrlEntidad(String urlEntidad) {
         this.urlEntidad = urlEntidad;
     }
-    
+
 }

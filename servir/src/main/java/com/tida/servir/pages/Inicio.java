@@ -118,7 +118,7 @@ public class Inicio  extends GeneralPage {
  
      public String getSelectionRow() {
         if (actual != null) {
-            if (e.id == actual.id) {
+            if (e.getId() == actual.getId()) {
                 return "selected";
             }
             return "normal";
