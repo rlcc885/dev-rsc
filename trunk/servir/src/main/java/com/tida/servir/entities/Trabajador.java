@@ -4,9 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -15,6 +25,7 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 public class Trabajador implements Serializable // extends Persona 
 {
+    ///cosas de la clase PERSONA
 
     private static final String DNI = "DNI";
     @Id
@@ -102,42 +113,6 @@ public class Trabajador implements Serializable // extends Persona
     @NonVisual
     private String codigoOSCE;
 
-     /*
-     * Otros tabs
-     */
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Ant_Laborales> ant_Laborales = new ArrayList<Ant_Laborales>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Publicacion> publicaciones = new ArrayList<Publicacion>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<MeritoDemerito> meritosdemeritos = new ArrayList<MeritoDemerito>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Titulo> titulos = new ArrayList<Titulo>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @ManyToMany(cascade = CascadeType.ALL,targetEntity=Familiar.class)
-    public List<Familiar> familiares = new ArrayList<Familiar>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<CargoAsignado> cargosAsignados = new ArrayList<CargoAsignado>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//  @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<Curso> cursos = new ArrayList<Curso>();
-    
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
@@ -344,7 +319,7 @@ public class Trabajador implements Serializable // extends Persona
     public void setCod_dom_dept(DatoAuxiliar codDomDept) {
         cod_dom_dept = codDomDept;
     }
-//	@Id
+//      @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
@@ -454,6 +429,42 @@ public class Trabajador implements Serializable // extends Persona
     public void setAnt_Laborales(List<Ant_Laborales> ant_Laborales) {
         this.ant_Laborales = ant_Laborales;
     }
+
+    /*
+     * Otros tabs
+     */
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<Ant_Laborales> ant_Laborales = new ArrayList<Ant_Laborales>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<MeritoDemerito> meritosdemeritos = new ArrayList<MeritoDemerito>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<Titulo> titulos = new ArrayList<Titulo>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @ManyToMany(cascade = CascadeType.ALL,targetEntity=Familiar.class)
+    public List<Familiar> familiares = new ArrayList<Familiar>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<CargoAsignado> cargosAsignados = new ArrayList<CargoAsignado>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+//  @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    public List<Curso> cursos = new ArrayList<Curso>();
 
     /*
      * A los legajos se acceden según los cargos @NonVisual @OneToMany(mappedBy

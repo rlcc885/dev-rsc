@@ -85,8 +85,8 @@ public class TrabajadorModificar  extends GeneralPage
     @PageActivationContext
     private Trabajador actual;
     
-	
-	/*
+        
+        /*
      * Código de grillas
      */
 
@@ -215,16 +215,16 @@ public class TrabajadorModificar  extends GeneralPage
 
     public List<String> getValorTablaAuxiliar(String tabla) 
     {
-    	// TODO: este codigo esta duplicado
-    	Criteria c = session.createCriteria(DatoAuxiliar.class);
-    	c.add(Restrictions.eq("nombreTabla", tabla));
-    	c.setProjection(Projections.property("valor"));
+        // TODO: este codigo esta duplicado
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla", tabla));
+        c.setProjection(Projections.property("valor"));
         return c.list();
     }
 
     public List<String> getNivelInstruccion() 
     {
-    	return getValorTablaAuxiliar("NivelInstrucción");
+        return getValorTablaAuxiliar("NivelInstrucción");
     }
 
 

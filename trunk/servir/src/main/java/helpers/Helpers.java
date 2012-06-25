@@ -4,7 +4,13 @@
  */
 package helpers;
 
-import com.tida.servir.entities.*;
+import com.tida.servir.entities.Cargoxunidad;
+import com.tida.servir.entities.CargoAsignado;
+import com.tida.servir.entities.DatoAuxiliar;
+import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Legajo;
+import com.tida.servir.entities.UnidadOrganica;
+import com.tida.servir.entities.Usuario;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -359,6 +365,7 @@ public class Helpers {
             session.saveOrUpdate(cargo);    
 
         }
+
 
     }
 }

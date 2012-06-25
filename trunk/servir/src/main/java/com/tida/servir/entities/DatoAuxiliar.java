@@ -11,7 +11,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class DatoAuxiliar implements Serializable { //implements Serializable {
+public class DatoAuxiliar { //implements Serializable {
 
     public enum TipoDeAcceso {
         SoloLectura,
