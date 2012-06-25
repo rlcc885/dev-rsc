@@ -1,9 +1,7 @@
 package com.tida.servir.entities;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Date;
+import javax.persistence.*;
 
 /**
  * Configuracion de Acceso de Usuarios
@@ -12,7 +10,7 @@ import javax.persistence.Id;
  * 
  */
 @Entity
-public class ConfiguracionAcceso implements Serializable {
+public class ConfiguracionAcceso {
 
     private Long id;
     private Long duracion_clave;
@@ -22,7 +20,8 @@ public class ConfiguracionAcceso implements Serializable {
     private String SMTP_usuario;
     private String SMTP_clave;
     private String SMTP_puerto;
-
+    @Temporal(TemporalType.DATE)
+    private Date fec_actualizacion;
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -117,5 +116,13 @@ public class ConfiguracionAcceso implements Serializable {
 
     public void setSMTP_puerto(String sMTP_puerto) {
         SMTP_puerto = sMTP_puerto;
+    }
+    
+    public Date getFec_actualizacion() {
+        return fec_actualizacion;
+    }
+
+    public void setFec_actualizacion(Date Fec_actualizacion) {
+        fec_actualizacion = Fec_actualizacion;
     }
 }
