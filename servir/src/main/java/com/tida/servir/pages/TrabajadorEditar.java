@@ -171,7 +171,7 @@ public class TrabajadorEditar extends GeneralPage{
         c.createAlias("trabajador", "trabajador");
         c.createAlias("legajo", "legajo");
         c.createAlias("cargo", "cargo");
-        c.add(Restrictions.eq("legajo.entidadUE", _usuario.getEntidadUE()));
+        c.add(Restrictions.eq("legajo.entidadUE", _usuario.getEntidad()));
         c.add(Restrictions.eq("trabajador", actual));
         c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
         if (c.list().size() > 0)

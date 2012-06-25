@@ -1,12 +1,8 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -14,14 +10,17 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class Curso {
+public class Curso implements Serializable {
 //	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
+    @Id
+    @GeneratedValue
     @NonVisual
     private Long id;
 //    @ManyToOne(optional = false)
+    @ManyToOne(optional = false)
     private Trabajador trabajador;
     private String denominacion;
     private String centro_estudios;
@@ -48,9 +47,8 @@ public class Curso {
     public void setAgregadoTrabajador(Boolean agregadoTrabajador) {
         this.agregadoTrabajador = agregadoTrabajador;
     }
-    
-    
-       public String getCentro_estudios() {
+
+    public String getCentro_estudios() {
         return centro_estudios;
     }
 
@@ -82,8 +80,6 @@ public class Curso {
         this.horas = horas;
     }
 
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
@@ -108,7 +104,6 @@ public class Curso {
         this.lugar_dictado = lugar_dictado;
     }
 
-    @ManyToOne(optional = false)
     public Trabajador getTrabajador() {
         return trabajador;
     }

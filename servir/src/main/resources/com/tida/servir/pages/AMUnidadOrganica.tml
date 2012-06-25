@@ -4,69 +4,70 @@
 
 
     <t:Menu/>
-        <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${entidadUE.denominacion}
-        </div>
-
-    <h2> Unidades Orgánicas </h2>
     
-     
-    <div id="mainfiltros" class="pane">
-                <!-- t:validate="required,minlength=1" -->
-                           
-               
-                <div id="cargosSelects">                   
-                    <form t:type="form" t:id="formNivelUOUnidad" t:zone="nivelUOZone">                        
-                            <div class="f-left">
-                                Nivel Organizacional
-                                <input t:type="Select" t:id="bunidadorganica_nivel"
-                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
-                            </div>                                    
-                    </form>
-                    <t:zone t:id="nivelUOZone">
-                    <form t:type="form" t:id="xxx" t:zone="listaUOZone">
-                        <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
-                            <t:if test = "hayNivel">
-                                Unidad Orgánica
-                                <select t:type="select" t:id="bunidadOrganica_uoa"
-                                        model="bbeansUO" encoder="bbeansUO" value="buoAntecesora"
-                                        onChange="this.form.fire()" t:zone="listaUOZone"/>
-                            </t:if>
-                        </div> 
-                    </form>
-                    </t:zone>
-                   
-              </div><!-- cargosSelects -->                    
-                <div t:type="zone"  id="form_unidad_organica" class="abmform">
-                    <t:zone t:id="filtrosZone"> 
-                        <form t:type="form" t:id="formulariofiltrounidad" zone="listaUOZone">
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                Categoría                                
-                                <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
-                                </div>
-                                <div class="f-left">
-                                Denominación
-                                <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="30"/>                                
-                                </div>
-                                <div class="f-left">
-                                Sigla
-                                <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="30"/>
-                                </div>
-                            </div>
-                            <div class="actions f-right">
-                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
-                            </div>                         
-                            
-                            </form> 
-                    </t:zone>
-                                    
-                </div>
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
-     
+    <h2> Unidades Orgánicas </h2>
+
+
+    <div id="mainfiltros" class="pane">
+        <!-- t:validate="required,minlength=1" -->
+
+
+        <div id="cargosSelects">                   
+            <form t:type="form" t:id="formNivelUOUnidad" t:zone="nivelUOZone">                        
+                <div class="f-left">
+                    Nivel Organizacional
+                    <input t:type="Select" t:id="bunidadorganica_nivel"
+                           onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                           t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
+                </div>                                    
+            </form>
+            <t:zone t:id="nivelUOZone">
+                <form t:type="form" t:id="xxx" t:zone="listaUOZone">
+                    <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
+                        <t:if test = "hayNivel">
+                            Unidad Orgánica
+                            <select t:type="select" t:id="bunidadOrganica_uoa"
+                                    model="bbeansUO" encoder="bbeansUO" value="buoAntecesora"
+                                    onChange="this.form.fire()" t:zone="listaUOZone"/>
+                        </t:if>
+                    </div> 
+                </form>
+            </t:zone>
+
+        </div><!-- cargosSelects -->                    
+        <div t:type="zone"  id="form_unidad_organica" class="abmform">
+            <t:zone t:id="filtrosZone"> 
+                <form t:type="form" t:id="formulariofiltrounidad" zone="listaUOZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            Categoría                                
+                            <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
+                        </div>
+                        <div class="f-left">
+                            Denominación
+                            <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="30"/>                                
+                        </div>
+                        <div class="f-left">
+                            Sigla
+                            <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="30"/>
+                        </div>
+                    </div>
+                    <div class="actions f-right">
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                        <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
+                    </div>                         
+
+                </form> 
+            </t:zone>
+
+        </div>
+    </div>
+
+
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
         <t:if test="mostrar">
@@ -76,157 +77,157 @@
                         ${errorBorrar}
                     </div>
                 </t:if>
-            <t:grid source="unidadesorganicas" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom"
-                 row="uo" >
-                <t:parameter name="empty">
-                    <div class="no-info">No hay unidades orgánicas generadas</div>
-                </t:parameter>
-                <p:accionesCell>
-                    <t:if test="PuedeEditar">
-                        <a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>
-                        <t:if test="esBorrable">
-                            | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                t:zone="listaUOZone" href="#"> Borrar </a>
+                <t:grid source="unidadesorganicas" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom"
+                        row="uo" >
+                    <t:parameter name="empty">
+                        <div class="no-info">No hay unidades orgánicas generadas</div>
+                    </t:parameter>
+                    <p:accionesCell>
+                        <t:if test="PuedeEditar">
+                            <a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>
+                            <t:if test="esBorrable">
+                                | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
+                                     t:zone="listaUOZone" href="#"> Borrar </a>
+                            </t:if>
                         </t:if>
-                    </t:if>
-                </p:accionesCell>
-            </t:grid>
-        <!-- </t:if> -->
-        </t:form>
+                    </p:accionesCell>
+                </t:grid>
+                <!-- </t:if> -->
+            </t:form>
         </t:if>
-    
+
     </div> <!-- listaUOZone -->
 
     <!-- <div id="box_uo" class="box"> -->
-                <t:envelope t:id="envelope"/>
-                <div id="box-cargos" class="box">
-                    <h3>Crear/Editar Unidad Orgánica</h3>
+    <t:envelope t:id="envelope"/>
+    <div id="box-cargos" class="box">
+        <h3>Crear/Editar Unidad Orgánica</h3>
 
-                    <div id="form_unidad_organica" class="abmform">
-                        <t:zone t:id="nivelZone">
-                            <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
-                                <div class="f-wrap">
-                                    <div class="f-left">
-                                        * Nivel Organizacional
-                                        <input t:type="Select" t:id="unidadorganica_nivel"
-                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                        t:value="nivelUO" model="nivel" t:validate="required"/>
-                                    </div>
-                                    <t:if test="nivelUno" negate= "true">
-                                        <!-- <div class="f-left">
-                                            * Entidad /U.Ejecutora
-                                            <input t:type="Select" t:id="unidadOrganica_entidadUE"
-                                            t:value="entidadUE" model="beansEUE" t:validate="required"
-                                            t:zone="nivelZone"/>
-                                        </div> -->
-                                        <div class="f-left">
-                                            * Unidad Orgánica Antecesora
-                                            <input t:type="Select" t:id="unidadOrganica_uoa"
-                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                            t:value="uoAntecesora" model="beansUO" t:validate="required"
-                                            t:zone="ubigeoDomZone"/>
-                                        </div>
-                                    </t:if>
-                                </div>
-                            </form>
-                        </t:zone>
-                        <t:zone t:id="unidadesOrganicasZone">
-                         <t:if test="PuedeEditar">
+        <div id="form_unidad_organica" class="abmform">
+            <t:zone t:id="nivelZone">
+                <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            * Nivel Organizacional
+                            <input t:type="Select" t:id="unidadorganica_nivel"
+                                   onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                   t:value="nivelUO" model="nivel" t:validate="required"/>
+                        </div>
+                        <t:if test="nivelUno" negate= "true">
+                            <!-- <div class="f-left">
+                                * Entidad /U.Ejecutora
+                                <input t:type="Select" t:id="unidadOrganica_entidadUE"
+                                t:value="entidadUE" model="beansEUE" t:validate="required"
+                                t:zone="nivelZone"/>
+                            </div> -->
+                            <div class="f-left">
+                                * Unidad Orgánica Antecesora
+                                <input t:type="Select" t:id="unidadOrganica_uoa"
+                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       t:value="uoAntecesora" model="beansUO" t:validate="required"
+                                       t:zone="ubigeoDomZone"/>
+                            </div>
+                        </t:if>
+                    </div>
+                </form>
+            </t:zone>
+            <t:zone t:id="unidadesOrganicasZone">
+                <t:if test="PuedeEditar">
 
-                        <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                            <t:errors/>
+                    <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
+                        <t:errors/>
 
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                    Código
-                                    <input t:type="TextField" t:id="unidadorganica_cod_und_organica"
-                                    t:value="unidadorganica.cod_und_organica" size="4"/>
-                                </div>
-                                <div class="f-left">
-                                    * Denominación
-                                    <input t:type="TextField" t:id="unidadOrganica_den_und_organica"
-                                    t:value="unidadorganica.den_und_organica" size="60" t:validate="required"/>
-                                </div>
-                                <div class="f-left">
-                                    Sigla
-                                    <input t:type="TextField" t:id="unidadOrganica_sigla"
-                                    t:value="unidadorganica.sigla" size="60"/>
-                                </div>                                
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Código
+                                <input t:type="TextField" t:id="unidadorganica_cod_und_organica"
+                                       t:value="unidadorganica.cod_und_organica" size="4"/>
                             </div>
-                            <div class="f-wrap">
-                                 <div class="f-left">
-                                    Tipo Zona
-                                    <input t:type="Select" t:id="unidadOrganica_tipozona" model="tipozona"
-                                    t:value="unidadorganica.tipozona"/>
-                                </div>
-                                <div class="f-left">
-                                    Descripción Zona
-                                    <input t:type="TextField" t:id="unidadOrganica_desczona"
-                                    t:value="unidadorganica.desczona" size="8"/>
-                                </div>
-                                
-                                <div class="f-left">
-                                    CUE
-                                    <input t:type="TextField" t:id="unidadOrganica_cue"
-                                    t:value="unidadorganica.cue" size="8"/>
-                                </div>                                
+                            <div class="f-left">
+                                * Denominación
+                                <input t:type="TextField" t:id="unidadOrganica_den_und_organica"
+                                       t:value="unidadorganica.den_und_organica" size="60" t:validate="required"/>
                             </div>
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                    Tipo Via
-                                    <input t:type="Select" t:id="unidadOrganica_tipovia" model="tipovia"
-                                    t:value="unidadorganica.tipovia"/>
-                                </div>
-                                <div class="f-left">
-                                    Dirección
-                                    <input t:type="TextField" t:id="unidadOrganica_localidad"
-                                    t:value="unidadorganica.localidad" size="60"/>
-                                </div>
-                                <div class="f-left">
-                                    Categoría
-                                    <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
-                                    t:value="unidadorganica.categoriauo"/>
-                                </div>
-                               
+                            <div class="f-left">
+                                Sigla
+                                <input t:type="TextField" t:id="unidadOrganica_sigla"
+                                       t:value="unidadorganica.sigla" size="60"/>
+                            </div>                                
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Tipo Zona
+                                <input t:type="Select" t:id="unidadOrganica_tipozona" model="tipozona"
+                                       t:value="unidadorganica.tipozona"/>
                             </div>
-                            
-                            <div id="bouttons_uo" class="actions f-right clear">
-                                <input id="submit" type="submit" value="Grabar" class="button f-right"/>
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/>
-                                <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
-                                <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
+                            <div class="f-left">
+                                Descripción Zona
+                                <input t:type="TextField" t:id="unidadOrganica_desczona"
+                                       t:value="unidadorganica.desczona" size="8"/>
                             </div>
-                        </t:form>
-                 
-                <!-- </t:if> -->
-            </t:if>
-        </t:zone>
-       </div>
 
- <div id="unidad_organica_ubi_geo">                    
-    <t:zone t:id="ubigeoDomZone">
-            <t:if test="PuedeEditar">
-                <!-- <t:if test = "hayOrgano"> -->
+                            <div class="f-left">
+                                CUE
+                                <input t:type="TextField" t:id="unidadOrganica_cue"
+                                       t:value="unidadorganica.cue" size="8"/>
+                            </div>                                
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Tipo Via
+                                <input t:type="Select" t:id="unidadOrganica_tipovia" model="tipovia"
+                                       t:value="unidadorganica.tipovia"/>
+                            </div>
+                            <div class="f-left">
+                                Dirección
+                                <input t:type="TextField" t:id="unidadOrganica_localidad"
+                                       t:value="unidadorganica.localidad" size="60"/>
+                            </div>
+                            <div class="f-left">
+                                Categoría
+                                <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
+                                       t:value="unidadorganica.categoriauo"/>
+                            </div>
+
+                        </div>
+
+                        <div id="bouttons_uo" class="actions f-right clear">
+                            <input id="submit" type="submit" value="Grabar" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/>
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                            <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
+                        </div>
+                    </t:form>
+
+                    <!-- </t:if> -->
+                </t:if>
+            </t:zone>
+        </div>
+
+        <div id="unidad_organica_ubi_geo">                    
+            <t:zone t:id="ubigeoDomZone">
+                <t:if test="PuedeEditar">
+                    <!-- <t:if test = "hayOrgano"> -->
                     <!-- INICIO - Componente para las ubicaciones geograficas -->
-                    
-                        <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
-                            <table>
-                                <tr>
-                                    <td colspan="3">
-                                        <div id="tamano-ubigeo-wrap">
-                                            <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                                    t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone"/>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                    
+
+                    <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
+                        <table>
+                            <tr>
+                                <td colspan="3">
+                                    <div id="tamano-ubigeo-wrap">
+                                        <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
+                                               t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
                     <!-- FIN    - Componente para las ubicaciones geograficas -->
-                <!-- </t:if> -->
-            </t:if>
-        </t:zone>
-     </div>
-   </div> <!--  fin box -->
+                    <!-- </t:if> -->
+                </t:if>
+            </t:zone>
+        </div>
+    </div> <!--  fin box -->
 </html>
 

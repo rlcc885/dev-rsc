@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tida</groupId>
     <artifactId>servir</artifactId>
-    <version>2.5.0</version>
+    <version>3.0</version>
     <packaging>war</packaging>
     <name>Registro Nacional de Personal del Servicio Civil</name>
 
@@ -236,11 +236,36 @@ Fin de librerias pentaho -->
             <version>1.6.4</version>
             <type>jar</type>
         </dependency>
-  
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>servir</finalName>
+        
+        <!--
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -254,12 +279,30 @@ Fin de librerias pentaho -->
                     <optimize>true</optimize>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
             </plugin>
+          -->
+	<!-- Plugin de jboss -->
+    <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jboss-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <jbossHome>/opt/jboss6</jbossHome>
+                    <hostName>localhost</hostName>
+                    <port>8079</port>
+                    <filenames>
+                        <fileName>target/servir.war</fileName>
+                    </filenames>
+                </configuration>
+            </plugin>
         </plugins>
+        -->
     </build>
 
     <reporting>
@@ -300,6 +343,12 @@ Fin de librerias pentaho -->
           <url>http://repository.pentaho.org/artifactory/repo</url>
         </repository>
 Hasta aca repositorio de pentaho -->
+        <repository>
+            <url>http://download.eclipse.org/rt/eclipselink/maven.repo/</url>
+            <id>eclipselink</id>
+            <layout>default</layout>
+            <name>Repository for library Library[eclipselink]</name>
+        </repository>
     </repositories>
 
     <pluginRepositories>

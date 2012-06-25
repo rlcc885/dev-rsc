@@ -5,18 +5,11 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.ArrayList;
-
-import javax.persistence.CascadeType;
+import java.util.List;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -32,6 +25,37 @@ public class UnidadOrganica implements Serializable {
     public static String SIGLA_DEFAULT = "IND";
     public static String NOMBRE_DEFAULT = "Unidad Organica indeterminada";
     public static Integer NIVEL_DEFAULT = 1;
+    
+        //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @NonVisual
+    private int id;
+    @Validate("required")
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @PrimaryKeyJoinColumn
+    private Entidad_BK entidad;
+//    @Validate("required")
+//    @OneToMany(cascade = CascadeType.ALL)
+    private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
+    private String cod_und_organica; // Código de la unidad organica
+    @Validate("required")
+    private String den_und_organica; //Denominación del órgano
+    private String localidad;
+    private DatoAuxiliar cod_ubi_dist; //ubigeo distrito
+    private DatoAuxiliar cod_ubi_prov; //ubigeo provincia
+    private DatoAuxiliar cod_ubi_dept; //ubigeo depto
+    private Boolean estado; // para manejo del borrado lógico
+    private String cue;
+    private String sigla;
+    @Validate("required")
+    private Integer nivel;
+//    private String tipoActividad;
+//    @Validate("required")    
+    private DatoAuxiliar categoriauo;
+    private DatoAuxiliar tipovia;
+    private DatoAuxiliar tipozona;
+    private String desczona;
+    private UnidadOrganica unidadOrganica;
 
     @ManyToOne
     public DatoAuxiliar getCod_ubi_dist() {
@@ -130,36 +154,6 @@ public class UnidadOrganica implements Serializable {
         this.unidadOrganica = unidadorganica;
     }
     
-    //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @NonVisual
-    private int id;
-    @Validate("required")
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @PrimaryKeyJoinColumn
-    private Entidad_BK entidad;
-//    @Validate("required")
-//    @OneToMany(cascade = CascadeType.ALL)
-    private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
-    private String cod_und_organica; // Código de la unidad organica
-    @Validate("required")
-    private String den_und_organica; //Denominación del órgano
-    private String localidad;
-    private DatoAuxiliar cod_ubi_dist; //ubigeo distrito
-    private DatoAuxiliar cod_ubi_prov; //ubigeo provincia
-    private DatoAuxiliar cod_ubi_dept; //ubigeo depto
-    private Boolean estado; // para manejo del borrado lógico
-    private String cue;
-    private String sigla;
-    @Validate("required")
-    private Integer nivel;
-//    private String tipoActividad;
-//    @Validate("required")    
-    private DatoAuxiliar categoriauo;
-    private DatoAuxiliar tipovia;
-    private DatoAuxiliar tipozona;
-    private String desczona;
-    private UnidadOrganica unidadOrganica;
 //    private int unidadorganica_id;
 
 //    public String getTipoActividad() {
