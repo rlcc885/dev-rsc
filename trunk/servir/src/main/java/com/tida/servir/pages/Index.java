@@ -38,6 +38,11 @@ public class Index {
     @Property
     @SessionState
     private Usuario usuario;
+    /*@Property
+    @SessionState
+    private UsuarioAcceso usuarioAcceso;
+    * 
+    */
     @Property
     @SessionState(create = false)
     private Entidad_BK eue;
@@ -110,7 +115,6 @@ public class Index {
     @CommitAfter
     Object onSuccessFromFormulariologin() {
         Criteria c = session.createCriteria(Usuario.class);
-        //Encriptacion crypt = Encriptacion();
         c.add(Restrictions.eq("login", login));
         c.add(Restrictions.eq("md5Clave", Encriptacion.encriptaEnMD5(clave)));
         c.add(Restrictions.eq("estado", Usuario.ESTADOACTIVO));
@@ -120,7 +124,7 @@ public class Index {
         if (c.list().isEmpty()) {
             c = session.createCriteria(Usuario.class);
             c.add(Restrictions.eq("login", login));
-            c.add(Restrictions.eq("md5Clave", clave));
+            c.add(Restrictions.eq("md5Clave", Encriptacion.encriptaEnMD5(clave)));
             c.add(Restrictions.eq("estado", Usuario.ESTADOBLOQUEADO));
             if (!c.list().isEmpty()) {
                 formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
@@ -209,7 +213,7 @@ public class Index {
          * }
          *
          */
-        eue = usuario.getEntidadUE();
+        eue = usuario.getEntidad();
 
         /*
          * if (eue == null){ // tiene que haber al menos alguna entidad cargada

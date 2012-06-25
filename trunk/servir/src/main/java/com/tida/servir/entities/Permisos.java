@@ -33,7 +33,6 @@ public class Permisos {
     public static String paginaInicial(Usuario u) {
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
          || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA)) {
-
             return "CambioEntidad";
         }
 

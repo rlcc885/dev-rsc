@@ -1,34 +1,20 @@
 package com.tida.servir.pages;
 
 import annotations.XHR;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
-import helpers.Constantes;
-
-import helpers.Helpers;
+import com.tida.servir.entities.*;
+import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.services.SelectIdModelFactory;
-
+import helpers.Constantes;
+import helpers.Helpers;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.SelectModel;
-
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
-
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -92,10 +78,10 @@ public class Busqueda extends GeneralPage {
          */
 //        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
 //        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
-        
+
         estadosCargo.add("Alta");
         estadosCargo.add("Baja");
-        
+
         return estadosCargo;
     }
 
@@ -105,7 +91,6 @@ public class Busqueda extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
 
     }
-
 
     public GenericSelectModel<DatoAuxiliar> getCodFunCargo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
@@ -265,24 +250,21 @@ public class Busqueda extends GeneralPage {
             return getEmpleadosZones(); // actualizo los trabajadores
         }
     }
-
     @Inject
-	private SelectIdModelFactory selectIdModelFactory;
-    
+    private SelectIdModelFactory selectIdModelFactory;
     @Property
-	@SuppressWarnings("unused")
-	private SelectModel tipoDocumentosIdModel;
-    
-    void onPrepareForRender() {
-		// Get all persons - ask business service to find them (from the database)
-		List<DatoAuxiliar> datoAuxiliar = Helpers.getValoresTablaAuxiliar("TipoDocumento", session);
+    @SuppressWarnings("unused")
+    private SelectModel tipoDocumentosIdModel;
 
-		tipoDocumentosIdModel = selectIdModelFactory.create(datoAuxiliar, "valor", "id");
-	}
-    
+    void onPrepareForRender() {
+        // Get all persons - ask business service to find them (from the database)
+        List<DatoAuxiliar> datoAuxiliar = Helpers.getValoresTablaAuxiliar("TipoDocumento", session);
+
+        tipoDocumentosIdModel = selectIdModelFactory.create(datoAuxiliar, "valor", "id");
+    }
+
     @CommitAfter
     void onPrepare() {
-        
     }
     @Persist
     @Property
@@ -380,16 +362,14 @@ public class Busqueda extends GeneralPage {
     public List<String> getTiposDiscapacidad() {
         return Helpers.getValorTablaAuxiliar("TipoDiscapacidad", session);
     }
-/*
-    public List<String> getTiposDoc() {
-        return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
-    }
-*/
+    /*
+     * public List<String> getTiposDoc() { return
+     * Helpers.getValorTablaAuxiliar("TipoDocumento", session); }
+     */
+
     public List<String> getNivelInstruccion() {
         return Helpers.getValorTablaAuxiliar("NivelInstrucción", session);
     }
-
-
     /*
      * Para armar la zona dinámica
      */

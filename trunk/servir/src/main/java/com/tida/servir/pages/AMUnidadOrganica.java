@@ -38,17 +38,37 @@ import com.tida.servir.entities.DatoAuxiliar;
  * 
  */
 public class AMUnidadOrganica extends GeneralPage {
-
+    
+    @Property
+    @SessionState
+    private Usuario loggedUser;
+    @Property
+    @SessionState
+    private Entidad_BK entidadUE;
+    
     @Inject
     private Session session;
+    @Inject
+    private Request _request;
+    
+    @InjectComponent
+    private Zone listaUOZone;
+    @InjectComponent
+    private Zone unidadesOrganicasZone;
+    
+    @InjectComponent
+    @Property
+    private Zone ubigeoDomZone;
+    @InjectComponent
+    @Property
+    private Zone nivelUOZone;
+    
     @Property
     @Persist
     private UnidadOrganica unidadOrganica;
     @Property
     @Persist
     private UnidadOrganica uoAntecesora;
-    @Inject
-    private Request _request;
     @Property
     private UnidadOrganica uo;
     @Property
@@ -57,31 +77,17 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private String domicilioDireccion;
-
     @Persist
     private boolean editando;
-    @InjectComponent
-    private Zone listaUOZone;
-    @InjectComponent
-    private Zone unidadesOrganicasZone;
-    @InjectComponent
-    @Property
-    private Zone ubigeoDomZone;
     // datos del formulario (que son persistentes)
     @Property
     @Persist
     private Ubigeo ubigeoDomicilio;
-    @Property
-    @SessionState
-    private Usuario loggedUser;
     @Component(id = "formularioaltaunidadorganica")
     private Form formularioaltaunidadorganica;
     @Property
     @Persist
     private String errorBorrar;
-    @Property
-    @SessionState
-    private Entidad_BK entidadUE;
     @Property
     @Persist
     private Integer nivelUO;
@@ -93,7 +99,6 @@ public class AMUnidadOrganica extends GeneralPage {
     private Zone nivelZone;
     @InjectComponent
     private Envelope envelope;
-
     @Persist
     @Property
     private String bdenouni;
@@ -121,11 +126,6 @@ public class AMUnidadOrganica extends GeneralPage {
     @Component(id = "formlistaunidad")
     private Form formlistaunidad;
     private int num;
-    @InjectComponent
-    @Property
-    private Zone nivelUOZone;
-   
-    
     
     @Log
     @CommitAfter

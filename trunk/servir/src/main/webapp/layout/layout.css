@@ -1460,7 +1460,7 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 #mainsection { 
     margin:0 auto 20px; 
     padding:0; 
-    width:900px; 
+    width:960px; 
     background-color:#fff; 
     border:2px solid #b1242d;
 }
@@ -1504,7 +1504,7 @@ html > body div.t-error li { margin:0 0 0 10px;}
 
 /*MENU*/
 .menu { background:none; margin-bottom:10px;}
-.menu ul a { font-size:11px;  padding:0 14px; width: auto; margin-right: 1px;display:-moz-inline-stack;
+.menu ul a { font-size:11px;  padding:0 10px; width: auto; margin-right: 1px;display:-moz-inline-stack;
              display:inline-block; zoom:1;}
 .menu ul a:hover, .menu ul a.active { background-color:#860907;}
 
@@ -1932,7 +1932,7 @@ DIV.t-console DIV.t-debug {
 }
 
 .mostraUsuarioMenu{
-    /*margin-top: 20px;*/
+    margin-top: 10px;
     width:100%;
 }
 

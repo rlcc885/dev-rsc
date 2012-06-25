@@ -2,13 +2,7 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -28,11 +22,14 @@ public class Usuario implements Serializable {
     public static final String TRABAJADOR = "Trabajador";
 //       @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //       @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Id
+    @GeneratedValue
     @NonVisual
     private Long id;
 //	@PrimaryKeyJoinColumn
+    @ManyToOne
     @Validate("required")
-    private Entidad_BK entidadUE;
+    private Entidad_BK entidad;
     private String login; //el login del usuario
     private String tipo_usuario;
     private String email;
@@ -46,10 +43,19 @@ public class Usuario implements Serializable {
     private Date ultimo_cambio_clave;
     @NonVisual
     private Long intentos_fallidos;
-    @Validate("required")    
-    private Trabajador trabajador;
-    
     @ManyToOne
+    @Validate("required")
+    private Trabajador trabajador;
+    private String clave;
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
     public Trabajador getTrabajador() {
         return trabajador;
     }
@@ -82,8 +88,6 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
@@ -100,13 +104,12 @@ public class Usuario implements Serializable {
         this.md5Clave = md5Clave;
     }
 
-    @ManyToOne
-    public Entidad_BK getEntidadUE() {
-        return entidadUE;
+    public Entidad_BK getEntidad() {
+        return entidad;
     }
 
-    public void setEntidadUE(Entidad_BK entidadUE) {
-        this.entidadUE = entidadUE;
+    public void setEntidad(Entidad_BK entidadUE) {
+        this.entidad = entidadUE;
     }
 
     public String getLogin() {
@@ -148,7 +151,7 @@ public class Usuario implements Serializable {
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

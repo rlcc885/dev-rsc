@@ -1,80 +1,39 @@
 <div class="menu" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <ul id='menu-1' class='menu' >
-        <li t:type="loop" source="pagesMenuPadre" value="currentPadre" class="sub">
-            <t:if test = "tieneHijos" negate="true">
-                <a t:type="pagelink" page="${currentPadrePageName}" class="${isActivePadre}">
-                    ${pagePadreName}
-                </a>
-            <t:parameter name = "else">
-                <a href = "#" class="${isActivePadre}">
-                    ${pagePadreName}
-                </a>
-            </t:parameter>
-
-            </t:if>
-           <ul>
-                <li t:type="loop" source="pagesMenuHijos" value="currentHijo">
-                    <a t:type="pagelink" page="${currentHijoPageName}" class="${isActiveHijo}">
-                        ${pageHijoName}
+    <ul id='menu-1' class='menu'>
+        <li t:type="loop" source="OpcionesMenuPrincipal" value="opcion"  class="sub">
+        <t:if test = "tieneHijo">
+            <a href = "#" class="${clase}">
+                ${opcion.descmenu}
+            </a>
+            <ul>
+                <li t:type="loop" source="OpcionesMenu" value="opcion">
+                    <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
+                        ${opcion.descmenu}
                     </a>
                 </li>
             </ul>
-
+            <t:parameter name = "else">
+                <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
+                    ${opcion.descmenu}
+                </a>
+            </t:parameter>
+        </t:if>
+        </li>
+        <li  class="sub">
+            <a t:type="pagelink" page="Index">Salir</a>
         </li>
         <li  class="sub">
             <a t:type="actionlink" t:id="returnstreamresponse" href="#">Ayuda</a>
         </li>
     </ul>
-
-
+    <br style="clear: both;" />
     <div class="mostraUsuarioMenu">
-        <h3>${apellidos } ${nombres} - ${tipoUsuario}
-            
-        </h3>
+        <h3>${nombreusuario}</h3>
     </div>
 
     <script type='text/javascript'>
         document.observe('dom:loaded', function(){
-        ProtoFish('menu-1', '200', 'hover', false, true, true);
-
+            ProtoFish('menu-1', '200', 'hover', false, true, true);
         });
     </script>
-
-<!--
-    <ul id='menu-1' class='menu' >
-        <t:if test="accedeUsuarios">
-            <li class="${isPage}"><a class='sub' href='#'>Usuarios</a>
-                    <ul>
-                        <t:if test="accedeAdmUsuarios">
-                                <li><a href='#'>Administrar usuarios</a></li>
-                        </t:if>
-                        <t:if test="accedeRepUsuarios">
-                                <li><a href='#'>Reportes de usuarios</a></li>
-                        </t:if>
-                    </ul>
-            </li>
-       </t:if>
-            <li class='active'><a class='sub' href='#'>Item 2</a>
-
-                    <ul>
-                            <li><a href='#'>Item 2.1</a></li>
-                            <li class='active'><a href='#'>Item 2.2</a></li>
-                            <li><a href='#'>Item 2.3</a></li>
-                            <li class='last'><a href='#'>Item 2.4</a></li>
-                    </ul>
-            </li>
-
-            <li><a href='#'>Item 3</a></li>
-            <li><a class='sub' href='#'>Item 4</a>
-                    <ul>
-                            <li><a href='#'>Item 4.1</a></li>
-                            <li><a href='#'>Item 4.2</a></li>
-                            <li><a href='#'>Item 4.3</a></li>
-
-                            <li class='last'><a href='#'>Item 4.4</a></li>
-                    </ul>
-            </li>
-            <li class='last'><a href='#'>Item 5</a></li>
-    </ul>
--->
 </div>

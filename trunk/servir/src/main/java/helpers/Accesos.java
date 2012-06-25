@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package helpers;
 
 import com.tida.servir.components.Menu; 
@@ -13,17 +12,24 @@ import com.tida.servir.components.Menu;
  */
 public class Accesos {
 
-    public static enum MENUPADRE  {Usuarios, Entidades, TablasAuxiliares, Parametros,
-        Organigrama, Trabajadores, ConceptosRemunerativos, ProcesoBatch, ProcesoBatchUpload,
-        DeteccionIntrusion, CambiarClave, Salir};
+    public static enum MENUPADRE {
 
-    public static enum MENUHIJO  {AdministrarUsuarios, ReportesUsuarios, AdministracionEntidades, ReportesEntidades,
-         SeleccionEntidades, UnidadesOrganicas, AdministracionTablas, Cargos,ReportesEstructura,
+        Usuarios, Entidades, TablasAuxiliares, Parametros,
+        Organigrama, Trabajadores, ConceptosRemunerativos, ProcesoBatch, ProcesoBatchUpload,
+        DeteccionIntrusion, CambiarClave, Salir
+    };
+
+    public static enum MENUHIJO {
+
+        AdministrarUsuarios, ReportesUsuarios, AdministracionEntidades, ReportesEntidades,
+        SeleccionEntidades, UnidadesOrganicas, AdministracionTablas, Cargos, ReportesEstructura,
         AltaTrabajador, ModificacionTrabajador, BajaTrabajador, ReportesTrabajador, TrabajadorPage,
-        AdministracionConceptos, CambioUOEntidad, ReportesNivel, DescargaArchivoCSV};
+        AdministracionConceptos, CambioUOEntidad, ReportesNivel, DescargaArchivoCSV
+    };
 
     /**
      * A partir del menú padre, obtiene el nombre de dicho menú
+     *
      * @param item
      * @return
      */
@@ -32,23 +38,23 @@ public class Accesos {
 
         switch (item) {
             case Usuarios:
-                 nombre ="Usuarios";
-                 break;
+                nombre = "Usuarios";
+                break;
 
             case Entidades:
-                nombre ="Entidades";
+                nombre = "Entidades";
                 break;
 
             case TablasAuxiliares:
-                nombre ="Tablas auxiliares";
+                nombre = "Tablas auxiliares";
                 break;
 
             case Parametros:
-                nombre ="Parámetros";
+                nombre = "Parámetros";
                 break;
 
             case Organigrama:
-                nombre ="Organigrama";
+                nombre = "Organigrama";
                 break;
 
             case Trabajadores:
@@ -76,17 +82,17 @@ public class Accesos {
                 break;
 
             case Salir:
-                nombre ="Salir";
+                nombre = "Salir";
                 break;
 
-                
+
             default:
                 break;
         }
         return nombre;
     }
 
-    /* 
+    /*
      * A partir del menú hijo, obtiene el nombre
      */
     public static String getNombreHijo(MENUHIJO item) {
@@ -151,35 +157,37 @@ public class Accesos {
         return nombre;
     }
 
-
-        /**
+    /**
      * A partir del menú padre, obtiene, de existir el nombre de la página
+     *
      * @param item
      * @return
      */
     public static String getPagePadreName(MENUPADRE item) {
         String nombre = "";
-        /*String nombreAyuda = "";
-        Menu menu = new Menu();
-        nombreAyuda = menu.getCurrentPadrePageName();
-        System.out.println("------------------------------ page padre hijo de puta "+nombreAyuda);*/
+        /*
+         * String nombreAyuda = ""; Menu menu = new Menu(); nombreAyuda =
+         * menu.getCurrentPadrePageName();
+         * System.out.println("------------------------------ page padre hijo de
+         * puta "+nombreAyuda);
+         */
 
         switch (item) {
             case Usuarios:
-                 nombre = null;
-                 break;
+                nombre = null;
+                break;
 
             case Entidades:
-                 nombre = null;
-                 break;
+                nombre = null;
+                break;
 
             case TablasAuxiliares:
-                 nombre = null;
-                 break;
+                nombre = null;
+                break;
 
             case Parametros:
-                 nombre ="ConfigurarAcceso";
-                 break;
+                nombre = "ConfigurarAcceso";
+                break;
 
             case Organigrama:
                 nombre = null;
@@ -210,7 +218,7 @@ public class Accesos {
                 break;
 
             case Salir:
-                nombre ="Index";
+                nombre = "Index";
                 break;
 
             default:
@@ -283,5 +291,4 @@ public class Accesos {
         }
         return nombre;
     }
-
 }

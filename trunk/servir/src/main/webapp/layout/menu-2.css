@@ -5,6 +5,7 @@ ul.menu {
     list-style: none outside none;
     margin: 20px 0;
     padding: 0;
+    margin-bottom: 10px;
 }
 ul.menu li {
     float: left;
