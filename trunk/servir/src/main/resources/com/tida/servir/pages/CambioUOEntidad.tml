@@ -5,41 +5,75 @@
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
 
         <t:Menu/>
-
+        
+        
         <div class="organismo_titulo">
             Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
+        <div id= "datosDestino" class="box">
+            <h3> Seleccione una opción</h3>
+            <div class="f-wrap">
+                <form t:type="form" t:id="formOpciones" t:zone="UOOrigenZone">
+                    <div class="f-left">
+                    Opciones
+                    <input t:type="Select" t:id="cambio_opciones"
+                    t:value="opcion" model="bopciones"/>
+                    </div>
+                </form>     
+            </div>
+        </div>
         
-
         <div id= "datosOrigen" class="box">
             <h3> Seleccione fuente de origen </h3>
             <div class="f-wrap">
                 <div class="f-left">
-                    <t:zone t:id="UOOrigenNivelZone">
-                        <form t:type="form" t:id="formNivelUOOrigen" t:zone="UOOrigenZone">
-                                * Nivel Organizacional
-                                <input t:type="Select" t:id="unidadorganica_nivel_origen"
-                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                t:value="nivelOrigen" model="beanNivelOrigen" t:zone="UOOrigenZone"/>
-
-                        </form>
-                    </t:zone>
+                    <form t:type="form" t:id="formEOrigen">                            
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Entidad Origen
+                                <input t:type="TextField" t:id="entidad_den"
+                                        t:value="entidad_origen" t:readonly="readonly" size="30"/>
+                            </div>
+                            <input t:type="Submit" t:id="buscar" value="..." class="button"/>
+                        </div>                
+                    </form>
                 </div>
                 <div class="f-left">
                     <t:zone t:id="UOOrigenZone">
-                        <form t:type="form" t:id="formUOOrigen" t:zone="UOChangeZone">
-                                <t:if test = "hayNivelOrigen">
-                                    * Unidad Orgánica
-                                    <select t:type="select" t:id="select_unidadOrganicaOrigen"
-                                    model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
-                                    onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
-                                </t:if>
+                        <form t:type="form" t:id="formUOOrigen" t:zone="UOChangeZone"> 
+                            <div class="f-left">
+                            * Unidad Orgánica
+                            <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                            model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                            t:validate="required"/>
+                            </div>
                         </form>
                     </t:zone>
                 </div>
-          </div> <!-- f-wrap -->
-        </div> <!-- DatosOrigen -->
- 
+            </div>
+            
+        </div>
+        
+        
+        
+        
+          
+<!--
+        <div id="mainfiltros" class="pane">
+                              
+                    <t:zone t:id="UOOrigenZone">
+                        <form t:type="form" t:id="formUOOrigen" t:zone="UOChangeZone">
+                           
+                                <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
+                                    * Unidad Orgánica
+                                    <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                                    model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                                    t:validate="required"/>
+                                </div>                                
+                        </form>
+                    </t:zone>
+        </div> -->
+
         <div id= "datosDestino" class="box">
             <h3> Seleccione destino</h3>
             <div class="f-wrap datosDestinos">
@@ -91,4 +125,18 @@
                     </div>
             </div> <!-- f-wrap -->
         </div> <!-- Datos Destino -->
+        <a href="javascript:popup('buscarentidad',900,500)">abrir</a>
+        
+        
+<script type="text/javascript">
+function popup(url,ancho,alto) {
+var posicion_x; 
+var posicion_y; 
+posicion_x=(screen.width/2)-(ancho/2); 
+posicion_y=(screen.height/2)-(alto/2); 
+window.open(url, "", "width="+ancho+",height="+alto+",menubar=0,toolbar=0,directories=0,scrollbars=no,resizable=no,left="+posicion_x+",top="+posicion_y+"");
+}
+</script>
+        
+        
 </html>
