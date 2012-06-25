@@ -1480,7 +1480,7 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 /*HEADER*/
 #header { 
     /*height:83px; */
-    width:900px;
+    width:960px;
     background-color:#fff; 
     overflow:auto; 
     zoom:1; 
