@@ -15,6 +15,7 @@ import javax.persistence.*;
  * from USUARIOACCESO where nrodocumento=:in_nrodocumento and nivel=:in_nivel",
  * resultClass = UsuarioAcceso.class, ) })
  */
+
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpUsuarioAcceso",
     query = "CALL SP_USUARIOACCESO(?,:in_nrodocumento,:in_menuid,:in_pagename)",
@@ -23,6 +24,7 @@ import javax.persistence.*;
         @QueryHint(name = "org.hibernate.callable", value = "true")
     })
 })
+
 @Entity
 public class UsuarioAcceso implements Serializable {
 

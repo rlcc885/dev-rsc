@@ -4,7 +4,6 @@
  */
 package com.tida.servir.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -16,7 +15,7 @@ import org.apache.tapestry5.beaneditor.Validate;
  * @author ale
  */
 @Entity
-public class UnidadOrganica implements Serializable {
+public class UnidadOrganica {
 
     public static Boolean ESTADO_BAJA = false;
     public static Boolean ESTADO_ALTA = true;
