@@ -6,7 +6,7 @@ import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Ubigeo;
 import com.tida.servir.entities.UnidadOrganica;
@@ -32,7 +32,7 @@ import org.hibernate.criterion.Restrictions;
 /**
  * Clase que maneja las unidades ejecutoras
  *
- * @author ale
+ * @author LFL
  */
 public class AMEntidadUEjecutora extends GeneralPage {
 
@@ -40,12 +40,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Session session;
     @Property
     @Persist
-    private Entidad_BK entidadUE;
+    private Entidad entidadUE;
     @Property
     @Persist
     private boolean editando;
     @Property
-    private Entidad_BK oi;
+    private Entidad oi;
     @Component(id = "formularioaltaentidaduejecutoras")
     private Form formularioaltaentidaduejecutoras;
     @Property
@@ -57,15 +57,20 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     @Property
     private Zone ubigeoEntidadZone;
+    @Inject
+    private PropertyAccess _access;
+ /*   @Property
+    @Persist
+    private String nivelgobierno;
     @Property
     @Persist
-    private String nivel_gobierno;
+    private String organizacionestado;
     @Property
     @Persist
-    private String pliego;
+    private String sectorgobierno;
     @Property
     @Persist
-    private String sector;
+    private String tipoorganismo;
     @Property
     @Persist
     private DatoAuxiliar departamento;
@@ -75,126 +80,105 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar provincia;
-    @InjectComponent
+  @InjectComponent
     @Property
-    private Zone nivelSectorPliegoZone;
-    @InjectComponent
+    private Zone nivelOrganizacionSectorZone;
+ */   @InjectComponent
     private Envelope envelope;
 
-    public List<Entidad_BK> getEntidadesUEjecutoras() {
+   
+   //para la busqueda de entidades
+   
+    public List<Entidad> getEntidadesUEjecutoras() {
         Criteria c;
-        c = session.createCriteria(Entidad_BK.class);
-        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
+        c = session.createCriteria(Entidad.class);
+        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
         return c.list();
     }
-
-    /*
-     * levantamos el combo de Unidades ejecutoras
-     */
-    /*
-     * MultiZoneUpdate tresZonas() { MultiZoneUpdate mu; mu = new
-     * MultiZoneUpdate("ubigeoEntidadZone", ubigeoEntidadZone.getBody());
-     *
-     * return mu;
+    
+    //para obtener datatos del Nivel Gobierno
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxNivel() {
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-     */
-    @Inject
-    private PropertyAccess _access;
-    @Inject
-    private Request _request;
-    private GenericSelectModel<Entidad_BK> _beans;
-
-    /*
-     * private UnidadEjecutora _unidadEjecutora;
-     *
-     * public UnidadEjecutora getUnidadEjecutora(){ return
-     * entidadUE.getUnidadEjecutora(); }
-     *
-     * public void setUnidadEjecutora(UnidadEjecutora _unidadEjecutora){
-     * entidadUE.setUnidadEjecutora(_unidadEjecutora); }
-     *
-     * public GenericSelectModel<EntidadUEjecutora> getBeans(){ return _beans;
+    
+    //para obtener datatos del Sector Gobierno
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxSector() {
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-     */
+    
+    //para obtener datatos de la Organizacion
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxOrganizacion() {
+             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    //para obtener datatos del Tipo Organismo
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxTipoOrganismo() {
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoVia() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+     @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoZona() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+     
+      /*
+    @Log
+    Object onSuccessFromformNivSecPli() {
+        entidadUE.getNivelGobierno().setValor(nivelgobierno);
+        entidadUE.getOrganizacionEstado().setValor(organizacionestado);
+        entidadUE.getSectorGobierno().setValor(sectorgobierno);
+        entidadUE.getTipoOrganismo().setValor(tipoorganismo);
+        return nivelOrganizacionSectorZone.getBody();
+    }
+
+     * 
+    */
     public boolean getNoEditable() {
         return !getEditable();
     }
 
     public boolean getEditable() {
-        return Permisos.puedeEscribir(_usuario, entidadUE);
+        return Permisos.puedeEscribirBK(_usuario, entidadUE);
     }
-
-    /**
-     * Hasta acá para levantar combo de unidades ejecutoras
-     */
-
-    /*
-     * public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxEmail() {
-     * List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TiposEmail", null, 0,
-     * session); return new
-     * GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
-    }
-     */
-    public List<String> getBeanDatoAuxNivel() {
-        return Helpers.getValorTablaAuxiliar("NivelGobierno", session);
-    }
-
-    public List<String> getBeanDatoAuxSector() {
-        return Helpers.getValorTablaAuxiliar("SectorGobierno", session);
-    }
-
-    public List<String> getBeanDatoAuxPliego() {
-        return Helpers.getValorTablaAuxiliar("Pliego", session);
-    }
-
-    @Log
-    Object onSuccessFromformNivSecPli() {
-
-        entidadUE.setNivel_gobierno(nivel_gobierno);
-        entidadUE.setSector_gobierno(sector);
-        entidadUE.setPliego(pliego);
-        //System.out.println("--------------------------------------------on succes from form niv sec pli pliego "+pliego+" nivel " +nivel_gobierno);
-        return nivelSectorPliegoZone.getBody();
-    }
-
+   
+  /*  
     @Log
     public boolean getEsLocal() {
-        if (nivel_gobierno == null) {
-            nivel_gobierno = new String();
+        if (nivelgobierno == null) {
+            nivelgobierno = new String();
         }
-        System.out.println("Es local:" + nivel_gobierno.equals("NIVEL LOCAL"));
-        return nivel_gobierno.equals("NIVEL LOCAL");
+        System.out.println("Es local:" + nivelgobierno.equals("NIVEL LOCAL"));
+        return nivelgobierno.equals("NIVEL LOCAL");
     }
 
     @Log
     @CommitAfter
-    Object onBorrarDato(Entidad_BK dato) {
-        //solamente borrado lógico.
-        dato.setEstado(Entidad_BK.ESTADO_BAJA);
+    Object onBorrarDato(Entidad dato) {
+        dato.setEstado(Entidad.ESTADO_BAJA);
         session.saveOrUpdate(dato);
         envelope.setContents(helpers.Constantes.EUE_EXITO);
         return this;// La/a zona a actualizar
     }
-    /*
-     * Se altera la obtención del modelo para el combo
-     */
-    /*
-     * @Log public List<String> getClasFuncOrg() { return
-     * Helpers.getValorTablaAuxiliar("ClasFuncOrg", session); }
-     */
-
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getClasFuncOrg() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasFuncOrg", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
-    }
-
+    
     @Log
     public boolean getEsBorrable() {
-        /*
-         * Buscamos; Concepto remunerativo Legajo Organo Usuario
-         *
-         */
+       
 
         Criteria c;
         c = session.createCriteria(Legajo.class);
@@ -219,31 +203,36 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         return true;
     }
-
+*/
     @Log
     void onValidateFromformularioaltaentidaduejecutoras() {
-        Criteria c = session.createCriteria(Entidad_BK.class);
+
+        Criteria c = session.createCriteria(Entidad.class);
         if (editando) {
             c.add(Restrictions.ne("id", entidadUE.getId()));
         }
 
-        c.add(Restrictions.eq("codigoEntidadUE", entidadUE.getCodigoEntidadUE()));
+        c.add(Restrictions.eq("cue_entidad", entidadUE.getCue_entidad()));
 
         if (c.list().size() > 0) {
             formularioaltaentidaduejecutoras.recordError(Errores.ERROR_ORGANISMO_REPETIDO);
         }
-
-        if (nivel_gobierno == null || nivel_gobierno.trim().length() == 0) {
+/*
+        if (nivelgobierno == null || nivelgobierno.trim().length() == 0) {
             formularioaltaentidaduejecutoras.recordError(Errores.ERROR_NIVEL_OBLIGATORIO);
         }
 
-        if (!nivel_gobierno.contains("NIVEL LOCAL")) {
+        if (!nivelgobierno.contains("NIVEL LOCAL")) {
 
-            if (sector == null || sector.trim().length() == 0) {
+            if (organizacionestado == null || organizacionestado.trim().length() == 0) {
+                formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PLIEGO_OBLIGATORIO);
+            }
+            
+            if (sectorgobierno == null || sectorgobierno.trim().length() == 0) {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_SECTOR_OBLIGATORIO);
             }
-
-            if (pliego == null || pliego.trim().length() == 0) {
+            
+            if (tipoorganismo == null || tipoorganismo.trim().length() == 0) {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PLIEGO_OBLIGATORIO);
             }
         } else {
@@ -255,43 +244,35 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PROVINCIA_OBLIGATORIO);
             }
         }
+        * 
+        */
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromformularioaltaentidaduejecutoras() {
-        /*
-         * Criteria c = session.createCriteria(Usuario.class);
-         * c.add(Restrictions.eq("codigo_usuario",
-         * usuario.getCodigo_usuario()));
-         *
-         */
-        entidadUE.setCod_ubi_dept(ubigeoEntidadUE.getDepartamento());
-        entidadUE.setCod_ubi_dist(ubigeoEntidadUE.getDistrito());
-        entidadUE.setCod_ubi_prov(ubigeoEntidadUE.getProvincia());
-
-        if (nivel_gobierno.contains("NIVEL LOCAL")) {
-            if (entidadUE.getCod_ubi_dept() != null) {
-                sector = ubigeoEntidadUE.getDepartamento().getValor();
+ 
+        entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
+        entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+        entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
+/*
+        if (nivelgobierno.contains("NIVEL LOCAL")) {
+            if (entidadUE.getDepartamento() != null) {
+                sectorgobierno = ubigeoEntidadUE.getDepartamento().getValor();
             } else {
-                sector = "";
+                sectorgobierno = "";
             }
-
-            if (entidadUE.getCod_ubi_prov() != null) {
-                pliego = ubigeoEntidadUE.getProvincia().getValor();
-            } else {
-                pliego = "";
-            }
-
-            entidadUE.setSector_gobierno(sector);
-            entidadUE.setPliego(pliego);
+            
+            entidadUE.getSectorGobierno().setValor(sectorgobierno);
         }
+        * 
+        */
         session.saveOrUpdate(entidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-
+/*
         if (!editando) {
 
-            entidadUE.setEstado(Entidad_BK.ESTADO_ALTA);
+            entidadUE.setEstado(Entidad.ESTADO_ALTA);
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
             nuevaUnidadOrganica.setEntidad(entidadUE);
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
@@ -305,11 +286,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
             //System.out.println("Creada Unidad Organica. Id: " + nuevaUnidadOrganica.getId());
 
             Cargoxunidad nuevoCargo = new Cargoxunidad();
+            nuevoCargo.setUnd_organica(nuevaUnidadOrganica);
+            nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
+            nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
+            nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
+            nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
+=======
+            Cargoxunidad nuevoCargo = new Cargoxunidad();
             nuevoCargo.setUnidadorganica(nuevaUnidadOrganica);
             nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
             nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
             nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
             nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
+>>>>>>> .r72
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
 
             //nuevoCargo.setClasificacion_funcional(list.get(0)); // Le asignamos un clasificador funcional
@@ -322,11 +311,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_MODIFICACION, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         }
 
-
+*/
 
         //System.out.println("departamento apres  " + entidadUE.getCod_ubi_dept().getValor());
 
-        entidadUE = new Entidad_BK();
+        entidadUE = new Entidad();
         envelope.setContents(helpers.Constantes.EUE_EXITO);
         editando = false;
         return this;
@@ -338,10 +327,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onActionFromReset() {
         editando = false;
-        entidadUE = new Entidad_BK();
-        nivel_gobierno = null;
-        sector = null;
-        pliego = null;
+        entidadUE = new Entidad();
+  /*      nivelgobierno = null;
+        sectorgobierno = null;
+        organizacionestado = null;
+        tipoorganismo = null;
+        
+        */
+
         ubigeoEntidadUE = new Ubigeo();
     }
     /*
@@ -353,27 +346,33 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private void setupCombos() {
         //System.out.println("=======================Estoy aca,");
         if (entidadUE != null) {
-            nivel_gobierno = entidadUE.getNivel_gobierno();
-            sector = entidadUE.getSector_gobierno();
-            pliego = entidadUE.getPliego();
+            /*
+            nivelgobierno = entidadUE.getNivelGobierno().getValor();
+            sectorgobierno = entidadUE.getSectorGobierno().getValor();
+            organizacionestado = entidadUE.getOrganizacionEstado().getValor();
+            tipoorganismo = entidadUE.getTipoOrganismo().getValor();
+            */
             if (ubigeoEntidadUE == null) {
                 ubigeoEntidadUE = new Ubigeo();
             }
-            ubigeoEntidadUE.setDepartamento(entidadUE.getCod_ubi_dept());
-            ubigeoEntidadUE.setProvincia(entidadUE.getCod_ubi_prov());
-            ubigeoEntidadUE.setDistrito(entidadUE.getCod_ubi_dist());
+            ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
+            ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
+            ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
         } else {
             //System.out.println("=======================Estoy aca, no hay Entidad");
-            entidadUE = new Entidad_BK();
+            entidadUE = new Entidad();
         }
-        if (nivel_gobierno == null) {
-            nivel_gobierno = new String();
+        /*
+        if (nivelgobierno == null) {
+            nivelgobierno = new String();
         }
+        * 
+        */
 
     }
 
     @Log
-    public void onActivate(Entidad_BK eue) {
+    public void onActivate(Entidad eue) {
         entidadUE = eue;
         editando = true;
     }
