@@ -29,6 +29,20 @@ public class Permisos {
         }
         return true; // El resto puede escribir
     }
+    
+    public static boolean puedeEscribirBK(Usuario u, Entidad eue) {
+        if (u.getTipo_usuario().equals(Usuario.OPERADORLECTURALOCAL)
+                || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA) ) {
+            return false;
+        }
+
+        if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
+            if (eue.def_servir == null)
+                return true; // Permitimos carga via servir si no se especifica otra cosa
+            return eue.def_servir;
+        }
+        return true; // El resto puede escribir
+    }
 
     public static String paginaInicial(Usuario u) {
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
