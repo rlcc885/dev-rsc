@@ -23,9 +23,15 @@ public class Logger
 	public static final String LOGIN_STATUS_OK = "OK";
 	public static final String LOGIN_STATUS_ERROR = "ERROR";
 
-	public static final String LOGIN_MOTIVO_RECHAZO_OK = "INGRESO EXITOSO";
-	public static final String LOGIN_MOTIVO_RECHAZO_ERROR = "USUARIO/CLAVE INCORRECTO";
-	public static final String LOGIN_MOTIVO_RECHAZO_BLOQUEADO = "USUARIO BLOQUEDAO";
+	public static final String LOGIN_OK = "INGRESO EXITOSO";
+	//public static final String LOGIN_MOTIVO_RECHAZO_ERROR = "USUARIO/CLAVE INCORRECTO";
+	public static final String LOGIN_MOTIVO_RECHAZO_USERLOCKED = "USUARIO BLOQUEDAO";
+    public static final String LOGIN_MOTIVO_RECHAZO_USERLOW = "USUARIO DADO DE BAJA";
+    public static final String LOGIN_MOTIVO_RECHAZO_USERNOEXIST = "USUARIO NO EXISTE";
+    public static final String LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL = "ERROR INGRESO DE CLAVE";
+    public static final String LOGIN_MOTIVO_RECHAZO_PASSWORDCHANGE = "CAMBIO DE CLAVE";
+    public static final String LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED = "EXPIRACIÓN DE CLAVE";
+    public static final String LOGIN_MOTIVO_RECHAZO_PASSWORFIRST = "PRIMER INGRESO";
 	
 	public static final String CODIGO_ERROR_USUARIO_UNICO = "1";
 	public static final String CODIGO_ERROR_USUARIO_EXISTE = "2";
@@ -71,6 +77,7 @@ public class Logger
 
 	public static final String RESULTADO_OPERACION_OK    = "OK";
 	public static final String RESULTADO_OPERACION_ERROR = "ERROR";
+    
 	
 	@Inject
 	private HttpServletRequest requestGlobal;

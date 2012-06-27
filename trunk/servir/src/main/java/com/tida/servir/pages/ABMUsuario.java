@@ -26,7 +26,7 @@ import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.crypto.*;
+//import javax.crypto.*;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 
@@ -286,13 +286,13 @@ public class ABMUsuario extends GeneralPage {
                     return this;
                 }
                 Trabajador trabajador = (Trabajador) c.list().get(0);
-                usuario.setApellidos(trabajador.getApellidoPaterno() + " " + trabajador.getApellidoMaterno());
-                usuario.setNombres(trabajador.getNombres());
+//                usuario.setApellidos(trabajador.getApellidoPaterno() + " " + trabajador.getApellidoMaterno());
+//                usuario.setNombres(trabajador.getNombres());
                 usuario.setTrabajador(trabajador);
             }
             Criteria c = session.createCriteria(Usuario.class);
-            c.add(Restrictions.eq("apellidos", usuario.getApellidos()));
-            c.add(Restrictions.eq("nombres", usuario.getNombres()));
+//            c.add(Restrictions.eq("apellidos", usuario.getApellidos()));
+//            c.add(Restrictions.eq("nombres", usuario.getNombres()));
             if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
                 c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             }
@@ -305,19 +305,19 @@ public class ABMUsuario extends GeneralPage {
                 return this;
             }
 
-            c = session.createCriteria(Usuario.class);
-            c.add(Restrictions.eq("login", usuario.getLogin()));
-            if (c.list().size() > 0) {
-                Logger logger = new Logger();
-                logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
-                        Logger.CODIGO_ERROR_USUARIO_EXISTE,
-                        Errores.ERROR_LOGIN_USUARIO_UNICO, Logger.TIPO_OBJETO_USUARIO);
-                formularioUsuario.recordError(Errores.ERROR_LOGIN_USUARIO_UNICO);
-                return this;
-            }
+//            c = session.createCriteria(Usuario.class);
+//            c.add(Restrictions.eq("login", usuario.getLogin()));
+//            if (c.list().size() > 0) {
+//                Logger logger = new Logger();
+//                logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
+//                        Logger.CODIGO_ERROR_USUARIO_EXISTE,
+//                        Errores.ERROR_LOGIN_USUARIO_UNICO, Logger.TIPO_OBJETO_USUARIO);
+//                formularioUsuario.recordError(Errores.ERROR_LOGIN_USUARIO_UNICO);
+//                return this;
+//            }
 
             c = session.createCriteria(Usuario.class);
-            c.add(Restrictions.eq("email", usuario.getEmail()));
+//            c.add(Restrictions.eq("email", usuario.getEmail()));
             if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
                 c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             }
@@ -378,7 +378,7 @@ public class ABMUsuario extends GeneralPage {
         session.saveOrUpdate(usuario);
 
         if (!editando) {
-            sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
+//            sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
         }
 
         envelope.setContents(helpers.Constantes.USUARIO_EXITO);

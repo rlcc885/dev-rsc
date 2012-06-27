@@ -32,12 +32,12 @@ public class Usuario implements Serializable {
     private Entidad_BK entidad;
     private String login; //el login del usuario
     private String tipo_usuario;
-    private String email;
-    private String estado; // Si está desactivado(Falta confirme mail),
+//    private String email;
+    private int estado; // Si está desactivado(Falta confirme mail),
     // Si venció el passwd, etc.
     private String md5Clave; // Poner el hash.
-    private String nombres;
-    private String apellidos;
+//    private String nombres;
+//    private String apellidos;
     @NonVisual
     @Temporal(TemporalType.DATE)
     private Date ultimo_cambio_clave;
@@ -80,13 +80,13 @@ public class Usuario implements Serializable {
         this.ultimo_cambio_clave = ultimo_cambio_clave;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
 
     public Long getId() {
         return id;
@@ -128,29 +128,29 @@ public class Usuario implements Serializable {
         this.tipo_usuario = tipo_usuario;
     }
 
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
+//    public String getApellidos() {
+//        return apellidos;
+//    }
+//
+//    public void setApellidos(String apellidos) {
+//        this.apellidos = apellidos;
+//    }
+//
+//    public String getNombres() {
+//        return nombres;
+//    }
+//
+//    public void setNombres(String nombres) {
+//        this.nombres = nombres;
+//    }
 
     @Override
     public boolean equals(Object obj) {
