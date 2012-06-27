@@ -74,7 +74,7 @@ public class Entidad implements Serializable {
     private String validado;
     @NonVisual
     String estado;
-    Boolean def_servir; //Servir Ingresa la información
+
    
     public String getCue_entidad() {
         return cue_entidad;
@@ -352,14 +352,6 @@ public class Entidad implements Serializable {
 
     public void setUrlEntidad(String urlEntidad) {
         this.urlEntidad = urlEntidad;
-    }
-    
-    public Boolean getDef_servir() {
-        return def_servir;
-    }
-
-    public void setDef_servir(Boolean def_servir) {
-        this.def_servir = def_servir;
     }
 
 }
