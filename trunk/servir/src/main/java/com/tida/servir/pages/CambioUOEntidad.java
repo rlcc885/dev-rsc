@@ -47,13 +47,13 @@ public class CambioUOEntidad extends GeneralPage{
     @SessionState
     private Entidad_BK entidadUE;
 
-    @Property
-    @Persist
-    private Integer nivelOrigen;
-
-    @Property
-    @Persist
-    private Integer nivelDestino;
+//    @Property
+//    @Persist
+//    private Integer nivelOrigen;
+//
+//    @Property
+//    @Persist
+//    private Integer nivelDestino;
 
     @Property
     @Persist
@@ -78,18 +78,21 @@ public class CambioUOEntidad extends GeneralPage{
     private PropertyAccess _access;
 
     @InjectComponent
-    private Zone UOOrigenZone;
+    private Zone EOrigenZone;
 
-    @Property
-    @InjectComponent
-    private Zone NivelDestinoZone;
+//    @Property
+//    @InjectComponent
+//    private Zone NivelDestinoZone;
 
 //    @Property
 //    @InjectComponent
 //    private Zone UOOrigenNivelZone;
 
+//    @InjectComponent
+//    private Zone UODestinoZone;
+    
     @InjectComponent
-    private Zone UODestinoZone;
+    private Zone EDestiZone;
 
     @InjectComponent
     private Zone UOChangeZone;
@@ -116,17 +119,40 @@ public class CambioUOEntidad extends GeneralPage{
     
     @Persist
     @Property
+    private String entidad_destino;
+    
+    @Persist
+    @Property
     private String bdenoentidad;
     
     @Property
     @Persist
     private boolean mostrar;
     
-    @InjectComponent
-    private Zone organismosZone;
+    @Property
+    private Entidad_BK entio;
     
     @Property
-    private Entidad_BK ex;
+    private Entidad_BK entid;
+    
+    @Property
+    @Persist
+    private boolean entixo;
+    
+    @Property
+    @Persist
+    private boolean entixd;
+    
+    @Property
+    @Persist
+    private boolean mostrarUOD;
+    
+    @InjectComponent
+    private Zone entiZone;
+    
+    @InjectComponent
+    private Zone busZone;
+    
     
     public List<String> getBopciones(){
         List<String> mod = new LinkedList<String>();
@@ -148,15 +174,25 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     @CommitAfter
     Object onSuccessFromformEOrigen(){
-              
-        return UOOrigenZone.getBody();
+        entixo=true; 
+        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
+                    .add("entiZone", entiZone.getBody());
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformEDestino() {
+        entixd=true;        
+        return new MultiZoneUpdate("EDestiZone", EOrigenZone.getBody())                             
+                    .add("entiZone", entiZone.getBody());
     }
     
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
         mostrar=true;
-        return organismosZone.getBody();
+        return new MultiZoneUpdate("busZone", busZone.getBody())                             
+                    .add("entiZone", entiZone.getBody());
     }
     
     @Log
@@ -167,21 +203,33 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    Object onActionFromEditar(Entidad_BK entix) {
-        ex = entix;
-        entidad_origen=ex.getDenominacion();        
-        return UOOrigenZone.getBody();  
+    Object onActionFromEditar(Entidad_BK entix) {        
+        entio = entix;
+        entidad_origen=entio.getDenominacion();  
+        entixo=false;
+        return EOrigenZone.getBody();  
     }
-
+    
     @Log
-    public boolean getHayNivelOrigen() {
-        return !(nivelOrigen == null) ;
+    Object onActionFromSelec (Entidad_BK enti2) {        
+        entid = enti2;
+        entidad_destino=entid.getDenominacion();
+        mostrarUOD=true;
+        entixd=false;        
+        return EDestiZone.getBody();  
     }
+    
+    
 
-    @Log
-    public boolean getHayNivelDestino() {
-        return !(nivelDestino == null)&& (nivelDestino > 0);
-    }
+//    @Log
+//    public boolean getHayNivelOrigen() {
+//        return !(nivelOrigen == null) ;
+//    }
+//
+//    @Log
+//    public boolean getHayNivelDestino() {
+//        return !(nivelDestino == null)&& (nivelDestino > 0);
+//    }
 
 
     public boolean getHayEntidadDestino() {
@@ -190,8 +238,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Log
     public boolean getActivoSubmit() {
-        boolean salida = getHayEntidadDestino() && (uoOrigen != null) &&
-                ((nivelDestino ==0) || (getHayNivelDestino() && (uoDestino != null)));
+        boolean salida = getHayEntidadDestino() && (uoOrigen != null);
         return salida;
     }
 
@@ -201,30 +248,30 @@ public class CambioUOEntidad extends GeneralPage{
      * @param first
      * @return
      */
-    public List<Integer> getBeanNivel(Entidad_BK eUE, Integer first){
-        List<Integer> nivel = new LinkedList<Integer>();
-        Integer nivelMax = 0;
+//    public List<Integer> getBeanNivel(Entidad_BK eUE, Integer first){
+//        List<Integer> nivel = new LinkedList<Integer>();
+//        Integer nivelMax = 0;
+//
+//        nivelMax = Helpers.maxNivelUO(eUE, session);
+//
+//        for(int i=first; i <= nivelMax; i++){
+//            // Es mas uno porque agregamos hasta un nivel mas
+//            nivel.add(i);
+//        }
+//
+//        return nivel; // nivel 0 van asociadas a las entidades directamente
+//    }
 
-        nivelMax = Helpers.maxNivelUO(eUE, session);
-
-        for(int i=first; i <= nivelMax; i++){
-            // Es mas uno porque agregamos hasta un nivel mas
-            nivel.add(i);
-        }
-
-        return nivel; // nivel 0 van asociadas a las entidades directamente
-    }
-
-    @Log
-    public List<Integer> getBeanNivelOrigen(){
-        return getBeanNivel(entidadUE, 1);
-    }
-
-    @Log
-    public List<Integer> getBeanNivelDestino(){
-        return getBeanNivel(entidadDestino, 0); // las Entidades (sin uo) pueden ser válidas, luego hay de nivel 0
-
-    }
+//    @Log
+//    public List<Integer> getBeanNivelOrigen(){
+//        return getBeanNivel(entidadUE, 1);
+//    }
+//
+//    @Log
+//    public List<Integer> getBeanNivelDestino(){
+//        return getBeanNivel(entidadDestino, 0); // las Entidades (sin uo) pueden ser válidas, luego hay de nivel 0
+//
+//    }
 
     @Log
     public GenericSelectModel<UnidadOrganica> getBeanUOrganicasOrigen(){
@@ -239,48 +286,53 @@ public class CambioUOEntidad extends GeneralPage{
     }
 
     @Log
-    public GenericSelectModel<UnidadOrganica> getBeanUOrganicasDestino(){
-        return _beanUOrganicasDestino;
-    }
-
-    @Log
-    @CommitAfter
-    Object onSuccessFromformNivelUOOrigen(){
+    public GenericSelectModel<UnidadOrganica> getBeanUOrganicasDestino(){  
         List<UnidadOrganica> list;
         Criteria c = session.createCriteria(UnidadOrganica.class);
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-        c.add(Restrictions.eq("nivel", nivelOrigen));
-        c.add(Restrictions.eq("entidad", entidadUE ));
-        list = c.list();
-        _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
-        uoOrigen = null;
-        return new MultiZoneUpdate("UOOrigenZone",UOOrigenZone.getBody())
-                    .add("UOChangeZone", UOChangeZone.getBody());
+        c.add(Restrictions.eq("entidad", entid));
+        list = c.list();        
+        return new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
     }
 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormNivelUODestino(){
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromformNivelUOOrigen(){
+//        List<UnidadOrganica> list;
+//        Criteria c = session.createCriteria(UnidadOrganica.class);
+//        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
+//        c.add(Restrictions.eq("nivel", nivelOrigen));
+//        c.add(Restrictions.eq("entidad", entidadUE ));
+//        list = c.list();
+//        _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
+//        uoOrigen = null;
+//        return new MultiZoneUpdate("EOrigenZone",EOrigenZone.getBody())
+//                    .add("UOChangeZone", UOChangeZone.getBody());
+//    }
 
-        List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-        c.add(Restrictions.eq("nivel", nivelDestino));
-        c.add(Restrictions.eq("entidad", entidadDestino ));
-        list = c.list();
-        _beanUOrganicasDestino = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
-        uoDestino = null;
-        return new MultiZoneUpdate("UODestinoZone",UODestinoZone.getBody())
-                    .add("UOChangeZone", UOChangeZone.getBody());
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormNivelUODestino(){
+//
+//        List<UnidadOrganica> list;
+//        Criteria c = session.createCriteria(UnidadOrganica.class);
+//        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
+//        c.add(Restrictions.eq("nivel", nivelDestino));
+//        c.add(Restrictions.eq("entidad", entidadDestino ));
+//        list = c.list();
+//        _beanUOrganicasDestino = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
+//        uoDestino = null;
+//        return new MultiZoneUpdate("UODestinoZone",UODestinoZone.getBody())
+//                    .add("UOChangeZone", UOChangeZone.getBody());
+//    }
 
     Object onSuccessFromformUODestino() {
         return UOChangeZone.getBody();
     }
 
-    Object onSuccessFromFormUOOrigen() {
-        return UOOrigenZone.getBody();
-    }
+//    Object onSuccessFromFormEOrigen() {
+//        return EOrigenZone.getBody();
+//    }
 
 
     @CommitAfter
@@ -289,13 +341,12 @@ public class CambioUOEntidad extends GeneralPage{
         session.flush();
         uoOrigen = null;
         uoDestino = null;
-        nivelOrigen = null;
-        nivelDestino = null;
+//        nivelOrigen = null;
+//        nivelDestino = null;
         envelope.setContents("Unidad Orgánica migrada exitosamente");
-        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())
-                    .add("UODestinoZone", UODestinoZone.getBody())
-                    .add("NivelDestinoZone", NivelDestinoZone.getBody())
-                    .add("UOOrigenZone", UOOrigenZone.getBody());
+        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                
+                    .add("EOrigenZone", EOrigenZone.getBody())
+                    .add("EDestiZone", EDestiZone.getBody());
                     //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
 
     }
@@ -307,13 +358,12 @@ public class CambioUOEntidad extends GeneralPage{
         session.flush();
         uoOrigen = null;
         uoDestino = null;
-        nivelOrigen = null;
-        nivelDestino = null;
+//        nivelOrigen = null;
+//        nivelDestino = null;
         envelope.setContents("Unidad Orgánica fusionada exitosamente");
-        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())
-                    .add("UODestinoZone", UODestinoZone.getBody())
-                    .add("NivelDestinoZone", NivelDestinoZone.getBody())
-                    .add("UOOrigenZone", UOOrigenZone.getBody());
+        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                      
+                    .add("EOrigenZone", EOrigenZone.getBody())
+                    .add("EDestiZone", EDestiZone.getBody());
                     //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
 
     }
