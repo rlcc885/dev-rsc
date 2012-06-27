@@ -82,7 +82,8 @@ public class ConfigurarAcceso extends GeneralPage {
         else{
             Date fechaactual=new Date();
             ca.setFec_actualizacion(fechaactual);
-            session.saveOrUpdate(ca);           
+            session.saveOrUpdate(ca);
+            envelope.setContents(helpers.Constantes.CONFIGURAR_ACCESO_EXITO);
         }
         return zone;
     }

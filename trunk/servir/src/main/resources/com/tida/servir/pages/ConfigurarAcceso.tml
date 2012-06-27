@@ -62,7 +62,7 @@
                          <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
                      </div>
                      <div class="f-right">
-                        <input id="submit" type="submit" value="Enviar" class="button"/>
+                        <input id="submit" type="submit" value="Guardar" class="button"/>
                      </div>
                 </div>
             </t:form>
