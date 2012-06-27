@@ -54,7 +54,7 @@ public class UnidadOrganica {
     private DatoAuxiliar tipovia;
     private DatoAuxiliar tipozona;
     private String desczona;
-    private UnidadOrganica unidadOrganica;
+    private UnidadOrganica unidadorganica;
 
     @ManyToOne
     public DatoAuxiliar getCod_ubi_dist() {
@@ -146,12 +146,12 @@ public class UnidadOrganica {
 
 
     @ManyToOne
-    public UnidadOrganica getUnidadOrganica() {
-        return unidadOrganica;
+    public UnidadOrganica getUnidadorganica() {
+        return unidadorganica;
     }
 
-    public void setUnidadOrganica(UnidadOrganica unidadorganica) {
-        this.unidadOrganica = unidadorganica;
+    public void setUnidadorganica(UnidadOrganica unidadorganica) {
+        this.unidadorganica = unidadorganica;
     }
     
 //    private int unidadorganica_id;

@@ -1980,8 +1980,8 @@ public class InformeXLS {
                 escribir.print("|");
                 //escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoActividad", InformeXLS.leoCampo(uo.getTipoActividad()), errores, session));
                 //escribir.print("|");
-                if(uo.getUnidadOrganica() != null)
-                    escribir.print(InformeXLS.leoCampo(uo.getUnidadOrganica().getCod_und_organica()));
+                if(uo.getUnidadorganica() != null)
+                    escribir.print(InformeXLS.leoCampo(uo.getUnidadorganica().getCod_und_organica()));
                 /*
                 else
                     escribir.print("X");
