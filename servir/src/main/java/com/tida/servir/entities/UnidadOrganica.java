@@ -54,6 +54,7 @@ public class UnidadOrganica {
     private DatoAuxiliar tipovia;
     private DatoAuxiliar tipozona;
     private String desczona;
+    @Validate("required")
     private UnidadOrganica unidadorganica;
 
     @ManyToOne
@@ -153,6 +154,7 @@ public class UnidadOrganica {
     public void setUnidadorganica(UnidadOrganica unidadorganica) {
         this.unidadorganica = unidadorganica;
     }
+
     
 //    private int unidadorganica_id;
 

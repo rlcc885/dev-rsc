@@ -1210,6 +1210,11 @@ form th {
     margin-left: 12px;
 }
 
+#entiZone{
+    top: 200px;
+    margin-left: 12px;
+}
+
 /* Cargos */
 .cargosAM {
     float: left;
