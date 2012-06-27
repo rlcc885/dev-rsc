@@ -108,12 +108,13 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private DatoAuxiliar valcategoria;
+    @Property
+    @Persist
+    private UnidadOrganica buoAntece;
 //    @InjectComponent
 //    @Property
 //    private Zone filtrosZone;
-    @Property
-    @Persist
-    private UnidadOrganica buoAntecesora;
+    
 //    @Property
 //    @Persist
 //    private boolean siuno;
@@ -147,6 +148,7 @@ public class AMUnidadOrganica extends GeneralPage {
 //        }
 ////        formularioaltaunidadorganica.recordError(String.valueOf(buoAntecesora.getId()));
 ////        unidadOrganica.setDen_und_organica(String.valueOf(buoAntecesora.getId()));
+        buoAntece=null;
         return nivelUOZone.getBody();
     }
     
@@ -181,7 +183,11 @@ public class AMUnidadOrganica extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormulariofiltrounidad() {        
         mostrar=true;        
-        editando = false;        
+        editando = false;
+        envelope.setContents(String.valueOf(uoAntecesora)+"-"+String.valueOf(nivelUO));
+        
+        unidadOrganica = new UnidadOrganica();
+        //formularioaltaunidadorganica.recordError(String.valueOf(buoAntece));
         return listaUOZone.getBody();
     }
     
@@ -209,9 +215,9 @@ public class AMUnidadOrganica extends GeneralPage {
         if(bnivelUO!= null){
            c.add(Restrictions.eq("nivel", bnivelUO));     
         }
-        if (buoAntecesora != null && !buoAntecesora.equals("")) {
+        if (buoAntece != null && !buoAntece.equals("")) {
             c.createAlias("unidadorganica", "unidadorganica");
-            c.add(Restrictions.eq("unidadorganica", buoAntecesora));
+            c.add(Restrictions.eq("unidadorganica", buoAntece));
         }
         if (bdenouni != null && !bdenouni.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("den_und_organica", bdenouni + "%").ignoreCase()).add(Restrictions.like("den_und_organica", bdenouni.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("den_und_organica", bdenouni.replaceAll("n", "ñ") + "%").ignoreCase()));
@@ -464,7 +470,8 @@ public class AMUnidadOrganica extends GeneralPage {
         onSelectedFromReset();
         setupUbigeos();
         formularioaltaunidadorganica.clearErrors();
-        envelope.setContents(helpers.Constantes.CARGO_EXITO);
+        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
+        
         }
         return zonas();
     }

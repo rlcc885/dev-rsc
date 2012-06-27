@@ -29,10 +29,12 @@
                 <form t:type="form" t:id="xxx" t:zone="listaUOZone">
                     <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
                         <t:if test = "hayNivel">
-                            Unidad Orgánica
+                            Unidad Orgánica Antecesora
                             <select t:type="select" t:id="bunidadOrganica_uoa"
-                                    model="bbeansUO" encoder="bbeansUO" value="buoAntecesora"
+                                    model="bbeansUO" encoder="bbeansUO" value="buoAntece"
                                     onChange="this.form.fire()" t:zone="listaUOZone"/>
+                            
+                            
                         </t:if>
                     </div> 
                 </form>
@@ -71,7 +73,8 @@
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
         <t:if test="mostrar">
-            <t:form t:id="formlistaunidad">
+            <t:form t:id="formlistaunidad"> 
+                <t:envelope t:id="envelope"/>
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
                         ${errorBorrar}
@@ -99,13 +102,14 @@
     </div> <!-- listaUOZone -->
 
     <!-- <div id="box_uo" class="box"> -->
-    <t:envelope t:id="envelope"/>
+    
     <div id="box-cargos" class="box">
         <h3>Crear/Editar Unidad Orgánica</h3>
 
         <div id="form_unidad_organica" class="abmform">
             <t:zone t:id="nivelZone">
                 <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
+                   <!-- <t:envelope t:id="envelope"/>-->
                     <div class="f-wrap">
                         <div class="f-left">
                             * Nivel Organizacional
@@ -122,10 +126,12 @@
                             </div> -->
                             <div class="f-left">
                                 * Unidad Orgánica Antecesora
-                                <input t:type="Select" t:id="unidadOrganica_uoa"
-                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:value="uoAntecesora" model="beansUO" t:validate="required"
-                                       t:zone="ubigeoDomZone"/>
+                                <!--<input t:type="Select" t:id="unidadOrganica_uoa"
+                                       onChange="this.form.fire()" 
+                                       t:value="uoAntecesora" model="beansUO" encoder="beansUO" t:validate="required"
+                                       t:zone="ubigeoDomZone"/>-->
+                                <input t:type="Select" t:id="unidadOrganica_uoa" model="beansUO" 
+                                       encoder="beansUO" t:value="uoAntecesora" t:validate="required"/>
                             </div>
                         </t:if>
                     </div>

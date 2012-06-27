@@ -103,9 +103,7 @@ public class CambioUOEntidad extends GeneralPage{
     @Inject
     private ComponentResources _resources;
 
-    @InjectComponent
-    private Envelope envelope;
-
+    
     @Component(id = "formUOFusionar")
     private Form formUOFusionar;
     
@@ -153,6 +151,9 @@ public class CambioUOEntidad extends GeneralPage{
     @InjectComponent
     private Zone busZone;
     
+    @InjectComponent
+    private Envelope envelope;
+    
     
     public List<String> getBopciones(){
         List<String> mod = new LinkedList<String>();
@@ -183,6 +184,7 @@ public class CambioUOEntidad extends GeneralPage{
     @CommitAfter
     Object onSuccessFromformEDestino() {
         entixd=true;        
+        envelope.setContents("sjdhsd");
         return new MultiZoneUpdate("EDestiZone", EOrigenZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -219,7 +221,12 @@ public class CambioUOEntidad extends GeneralPage{
         return EDestiZone.getBody();  
     }
     
-    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormBotones() {
+        envelope.setContents("sjdhsd"); 
+        return EDestiZone.getBody();
+    }
 
 //    @Log
 //    public boolean getHayNivelOrigen() {
