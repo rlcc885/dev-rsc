@@ -101,7 +101,7 @@ public class CambiarClave extends GeneralPage {
         _usuario.setMd5Clave(Encriptacion.encriptaEnMD5(newPass1));
         _usuario.setClave(newPass1);
         _usuario.setUltimo_cambio_clave(new Date());
-
+        _usuario.setIntentos_fallidos(0L);
         session.saveOrUpdate(_usuario);
 
         return zone;

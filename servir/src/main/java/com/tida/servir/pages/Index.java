@@ -1,15 +1,10 @@
 package com.tida.servir.pages;
 
-import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
 import helpers.Logger;
 import java.io.*;
-
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +22,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.*;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -40,14 +36,18 @@ public class Index {
     @Property
     @SessionState
     private Usuario usuario;
-    /*@Property
-    @SessionState
-    private UsuarioAcceso usuarioAcceso;
-    * 
-    */
     @Property
     @SessionState(create = false)
     private Entidad_BK eue;
+    /*
+     * @Property @SessionState private UsuarioAcceso usuarioAcceso;
+     *
+     */
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
+    @Property
+    @Persist
+    private ConfiguracionAcceso configuracionAcceso;
     @Property
     private boolean administrador = false;
     @Property
@@ -60,6 +60,7 @@ public class Index {
     private Request request;
     @Component(id = "formulariologin")
     private Form formulariologin;
+    @Property
     /*
      * @Component(id = "formularioorganismos") private Form
      * formularioOrganismos;
@@ -116,90 +117,63 @@ public class Index {
 
     @CommitAfter
     Object onSuccessFromFormulariologin() {
-        Criteria c = session.createCriteria(Usuario.class);
-        c.add(Restrictions.eq("login", login));
-        c.add(Restrictions.eq("md5Clave", Encriptacion.encriptaEnMD5(clave)));
-        c.add(Restrictions.eq("estado", Usuario.ESTADOACTIVO));
-
-        //System.out.println(login + " ------------------------------------------------ " + clave + " c? " + c.list().size());
-
-        if (c.list().isEmpty()) {
-            c = session.createCriteria(Usuario.class);
-            c.add(Restrictions.eq("login", login));
-            c.add(Restrictions.eq("md5Clave", Encriptacion.encriptaEnMD5(clave)));
-            c.add(Restrictions.eq("estado", Usuario.ESTADOBLOQUEADO));
-            if (!c.list().isEmpty()) {
-                formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
-                Logger logger = new Logger();
-                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_BLOQUEADO, getIp_Adress());
-
-            } else {
-
-                formulariologin.recordError("Usuario o Clave incorrecto/a.");
-
-                // incrementar el contador del bloqueo si puso mal la clave
-                // (si es que el usuario existe)
-                Criteria cu = session.createCriteria(Usuario.class);
-                cu.add(Restrictions.eq("login", login));
-                if (cu.list().size() == 1) {
-
-                    Usuario u = (Usuario) cu.list().get(0);
-                    if (u.getIntentos_fallidos() != null) {
-                        u.setIntentos_fallidos(u.getIntentos_fallidos() + 1);
-                    } else {
-                        u.setIntentos_fallidos(1L);
-                    }
-                    session.saveOrUpdate(u);
-                }
-                Logger logger = new Logger();
-                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_ERROR, getIp_Adress());
-
-            }
-
-
-            return this;
-        }
-
-        usuario = (Usuario) c.list().get(0); // Guardamos la sesión
-
-
-        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-        Date now = new Date();
-
-        long maxIntentos = 3;
-        if (ca.getIntentos_bloqueo() != null && ca.getIntentos_bloqueo() > 0) {
-            maxIntentos = ca.getIntentos_bloqueo();
-        }
-
-        long intentosFallidos = 0;
-        if (usuario.getIntentos_fallidos() != null && usuario.getIntentos_fallidos() > 0) {
-            intentosFallidos = usuario.getIntentos_fallidos();
-        }
-
-        if (intentosFallidos >= maxIntentos) {
-            formulariologin.recordError("Demasiados Intentos Fallidos, el Usuario ha sido bloqueado.");
-
-            Logger logger = new Logger();
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_BLOQUEADO, getIp_Adress());
-
-            return this;
-        }
-
         Logger logger = new Logger();
-        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_OK, getIp_Adress());
+        configuracionAcceso = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
+        query.setParameter("nrodocumento", login);
+        List c = query.list();
+
+        System.out.println("termina criterio");
+        if (c.isEmpty()) {
+            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
+            formulariologin.recordError("Usuario no existe. Contacte a un administrador");
+            return this;
+        }
+
+        usuarioTrabajador = (UsuarioTrabajador) c.get(0);
+
+        if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
+            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+            formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
+            return this;
+        }
+
+        if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
+            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
+            formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
+            return this;
+        }
+
+        Criteria cq = session.createCriteria(Usuario.class);
+        cq.add(Restrictions.eq("id", usuarioTrabajador.getId()));
+        usuario = (Usuario) cq.list().get(0); // Guardamos la sesión
+
+        if (!usuarioTrabajador.getMd5clave().equals(Encriptacion.encriptaEnMD5(clave))) {
+            usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
+            if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
+                usuario.setEstado(2);
+                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+                formulariologin.recordError("Demasiados Intentos Fallidos. el Usuario ha sido bloqueado.");
+            } else {
+                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, getIp_Adress());
+                formulariologin.recordError("Clave incorrecta.");
+            }
+            session.saveOrUpdate(usuario);
+            return this;
+        }
 
         if (usuario.getUltimo_cambio_clave() != null) {
             Calendar c1 = Calendar.getInstance();
             c1.setTime(usuario.getUltimo_cambio_clave());
-            c1.add(Calendar.DATE, ca.getDuracion_clave().intValue());
-
+            c1.add(Calendar.DATE, configuracionAcceso.getDuracion_clave().intValue());
             if (c1.getTime().before(new Date())) {
-                // la clave expiro
+                logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED, getIp_Adress());
                 cambioClave.flagCambioForzado("Su clave ha expirado");
                 return cambioClave;
             }
         } else {
-            // el ultimo cambio de clave es null
+            logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST, getIp_Adress());
             cambioClave.flagCambioForzado("Usted nunca ha cambiado su clave, debe hacerlo ahora.");
             return cambioClave;
         }
@@ -210,22 +184,14 @@ public class Index {
         /*
          * if (Helpers.esMultiOrganismo(usuario)) { administrador = true;
          *
-         * // Seleccionar el organismo return organismosZone.getBody(); } else {
-         * eue = usuario.getEntidadUE(); return Permisos.paginaInicial(usuario);
-         * }
+         * // Seleccionar el organismo return organismosZone.getBody(); } else
+         * { eue = usuario.getEntidadUE(); return
+         * Permisos.paginaInicial(usuario); }
          *
          */
         eue = usuario.getEntidad();
 
-        /*
-         * if (eue == null){ // tiene que haber al menos alguna entidad cargada
-         * c = session.createCriteria(EntidadUEjecutora.class);
-         * c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA)); eue
-         * = (EntidadUEjecutora) c.list().get(0);
-         *
-         * }
-         *
-         */
+        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
         return Permisos.paginaInicial(usuario);
     }
 
@@ -285,13 +251,20 @@ public class Index {
     }
 
     public String getIp_Adress() {
-        String ip_Adress = "";
+        //String ip_Adress = "";
+        String ip_Adress = requestGlobal.getHTTPServletRequest().getHeader("X-Forwarded-For"); 
+        if (ip_Adress != null) 
+            return ip_Adress; 
+        else 
+            return requestGlobal.getHTTPServletRequest().getRemoteAddr();
+        /*
         try {
             ip_Adress = requestGlobal.getHTTPServletRequest().getRemoteAddr();
         } catch (Exception e) {
             //error
         }
-        return ip_Adress;
+        */
+        //return ip_Adress;
     }
 
     StreamResponse onActionFromReturnStreamResponse() {
