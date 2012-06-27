@@ -2,15 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Ubigeo;
-import com.tida.servir.entities.UnidadOrganica;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
@@ -43,7 +35,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Entidad entidadUE;
     @Property
     @Persist
-    private boolean editando;
+    private SubEntidad subEntidadUE;
     @Property
     private Entidad oi;
     @Component(id = "formularioaltaentidaduejecutoras")
@@ -59,6 +51,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Zone ubigeoEntidadZone;
     @Inject
     private PropertyAccess _access;
+    @Persist
+    @Property
+    private boolean mostrarFiltros;
+    @Persist
+    @Property
+    private String mostrarEsconder;
  /*   @Property
     @Persist
     private String nivelgobierno;
@@ -80,13 +78,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar provincia;
-  @InjectComponent
+ */ @InjectComponent
     @Property
-    private Zone nivelOrganizacionSectorZone;
- */   @InjectComponent
+     private Zone nivelOrganizacionSectorZone;
+    @InjectComponent
     private Envelope envelope;
 
-   
+   //Inicio de lac carga de la pagina
+    @Log
+    @SetupRender
+    private void inicio() {
+            entidadUE = new Entidad();
+            subEntidadUE = new SubEntidad();
+    }
    //para la busqueda de entidades
    
     public List<Entidad> getEntidadesUEjecutoras() {
@@ -98,63 +102,84 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     //para obtener datatos del Nivel Gobierno
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxNivel() {
+    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
     //para obtener datatos del Sector Gobierno
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxSector() {
+    public GenericSelectModel<DatoAuxiliar> getSectorGobierno() {
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
     //para obtener datatos de la Organizacion
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxOrganizacion() {
+    public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
              List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
     //para obtener datatos del Tipo Organismo
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanDatoAuxTipoOrganismo() {
+    public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    //para obtener datatos del Tipo Via
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoVia() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+    //para obtener datatos del Tipo Zona
      @Log
     public GenericSelectModel<DatoAuxiliar> getTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+
      
-      /*
+     //reset del formulario (borrar objeto)
+     
     @Log
-    Object onSuccessFromformNivSecPli() {
-        entidadUE.getNivelGobierno().setValor(nivelgobierno);
-        entidadUE.getOrganizacionEstado().setValor(organizacionestado);
-        entidadUE.getSectorGobierno().setValor(sectorgobierno);
-        entidadUE.getTipoOrganismo().setValor(tipoorganismo);
-        return nivelOrganizacionSectorZone.getBody();
+    void onActionFromReset() {
+        entidadUE = new Entidad();
+        ubigeoEntidadUE = new Ubigeo();
+    }
+     
+
+    @Log
+    @CommitAfter    
+    Object onSuccessFromformularioaltaentidaduejecutoras() {
+        
+    
+        entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
+        entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
+        entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+        
+        
+        session.saveOrUpdate(entidadUE);
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
+        
+       
+        return null;
     }
 
-     * 
-    */
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-        return Permisos.puedeEscribirBK(_usuario, entidadUE);
+ 
+    AMEntidadUEjecutora onActionFromToggle_filtros() {
+        if (mostrarFiltros) {
+            mostrarFiltros = false;
+            mostrarEsconder = "Mostrar";
+        } else {
+            mostrarFiltros = true;
+            mostrarEsconder = "Oscultar";
+        }
+        return this;
     }
    
   /*  
@@ -203,14 +228,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         return true;
     }
-*/
+
     @Log
     void onValidateFromformularioaltaentidaduejecutoras() {
 
         Criteria c = session.createCriteria(Entidad.class);
-        if (editando) {
-            c.add(Restrictions.ne("id", entidadUE.getId()));
-        }
+ 
 
         c.add(Restrictions.eq("cue_entidad", entidadUE.getCue_entidad()));
 
@@ -244,8 +267,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 formularioaltaentidaduejecutoras.recordError(Errores.ERROR_PROVINCIA_OBLIGATORIO);
             }
         }
-        * 
-        */
+     
     }
 
     @Log
@@ -265,11 +287,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             
             entidadUE.getSectorGobierno().setValor(sectorgobierno);
         }
-        * 
-        */
+      
         session.saveOrUpdate(entidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-/*
+
         if (!editando) {
 
             entidadUE.setEstado(Entidad.ESTADO_ALTA);
@@ -311,7 +332,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_MODIFICACION, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         }
 
-*/
+
 
         //System.out.println("departamento apres  " + entidadUE.getCod_ubi_dept().getValor());
 
@@ -321,27 +342,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return this;
     }
 
-    /*
-     * reset del formulario (borrar objeto)
-     */
-    @Log
-    void onActionFromReset() {
-        editando = false;
-        entidadUE = new Entidad();
-  /*      nivelgobierno = null;
-        sectorgobierno = null;
-        organizacionestado = null;
-        tipoorganismo = null;
-        
-        */
 
-        ubigeoEntidadUE = new Ubigeo();
-    }
-    /*
-     * Cargar desde los parámetros
-     */
-
-    @Log
+*/
+ /*   @Log
     @SetupRender
     private void setupCombos() {
         //System.out.println("=======================Estoy aca,");
@@ -351,7 +354,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             sectorgobierno = entidadUE.getSectorGobierno().getValor();
             organizacionestado = entidadUE.getOrganizacionEstado().getValor();
             tipoorganismo = entidadUE.getTipoOrganismo().getValor();
-            */
+            
             if (ubigeoEntidadUE == null) {
                 ubigeoEntidadUE = new Ubigeo();
             }
@@ -366,14 +369,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (nivelgobierno == null) {
             nivelgobierno = new String();
         }
-        * 
-        */
+
 
     }
-
+    
+*/
     @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
-        editando = true;
+        mostrarEsconder = "Ocultar";
+        mostrarFiltros = true;
     }
+    
+
 }

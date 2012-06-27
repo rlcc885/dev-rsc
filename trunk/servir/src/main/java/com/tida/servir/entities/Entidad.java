@@ -27,13 +27,13 @@ public class Entidad implements Serializable {
     @NonVisual
     private long id;
     String cue_entidad;
-    @Validate("required")
+
     private DatoAuxiliar nivelGobierno;   
-    @Validate("required")
+
     private DatoAuxiliar organizacionEstado;  
-    @Validate("required")
+
     private DatoAuxiliar sectorGobierno;    
-    @Validate("required")
+
     private DatoAuxiliar tipoOrganismo;    
     @Validate("required")
     private String denominacion;
