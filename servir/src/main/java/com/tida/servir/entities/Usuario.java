@@ -2,7 +2,12 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -20,6 +25,7 @@ public class Usuario implements Serializable {
     public static final String OPERADORLECTURALOCAL = "Operador lectura de entidad U.Ejecutora";
     public static final String OPERADORANALISTA = "Operador lectura general - analista";
     public static final String TRABAJADOR = "Trabajador";
+    private static final long serialVersionUID = 1L;
 //       @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //       @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Id

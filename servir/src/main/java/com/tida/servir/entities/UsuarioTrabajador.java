@@ -5,9 +5,15 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-//import java.math.BigInteger;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -15,6 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "USUARIOTRABAJADOR")
+
 @NamedQueries({
     @NamedQuery(name = "UsuarioTrabajador.findAll", query = "SELECT u FROM UsuarioTrabajador u"),
     @NamedQuery(name = "UsuarioTrabajador.findByNrodocumento", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nrodocumento = :nrodocumento"),
@@ -25,9 +32,12 @@ import javax.persistence.*;
     @NamedQuery(name = "UsuarioTrabajador.findByIntentosFallidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.intentosFallidos = :intentosFallidos"),
     @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
     @NamedQuery(name = "UsuarioTrabajador.findByEstado", query = "SELECT u FROM UsuarioTrabajador u WHERE u.estado = :estado"),
-    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id")})
+    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id")
+})
+
 public class UsuarioTrabajador implements Serializable {
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "NRODOCUMENTO")
     private String nrodocumento;
     @Column(name = "NOMBRES")
@@ -46,7 +56,7 @@ public class UsuarioTrabajador implements Serializable {
     @Column(name = "ESTADO")
     private Short estado;
     @Id
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @Column(name = "ID")
     private long id;
 
