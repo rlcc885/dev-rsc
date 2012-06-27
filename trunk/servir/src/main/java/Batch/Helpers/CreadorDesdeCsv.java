@@ -403,7 +403,7 @@ public class CreadorDesdeCsv {
             errores.add(Errores.ERROR_CASCADA_UBIGEO + " Unidad Orgánica:" + unidadorganica.getCod_und_organica());
 
         }
-        unidadorganica.setUnidadOrganica(unidadorganicaAntecesora);
+        unidadorganica.setUnidadorganica(unidadorganicaAntecesora);
         //verificando que el nivel de la antecesora sea menor que lo de la unidad organica
         if (unidadorganicaAntecesora != null) {
             if (unidadorganica.getNivel() - 1 != unidadorganicaAntecesora.getNivel()) {

@@ -291,7 +291,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
         ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());
         nivelUO = unidadOrganica.getNivel();
-        uoAntecesora = unidadOrganica.getUnidadOrganica();
+        uoAntecesora = unidadOrganica.getUnidadorganica();
     }
 
     void onCpChanged() {
@@ -456,7 +456,7 @@ public class AMUnidadOrganica extends GeneralPage {
         unidadOrganica.setCod_ubi_dept(ubigeoDomicilio.getDepartamento());
         unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
         unidadOrganica.setCod_ubi_prov(ubigeoDomicilio.getProvincia());
-        unidadOrganica.setUnidadOrganica(uoAntecesora);
+        unidadOrganica.setUnidadorganica(uoAntecesora);
         session.saveOrUpdate(unidadOrganica);
         new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         editando = false;
