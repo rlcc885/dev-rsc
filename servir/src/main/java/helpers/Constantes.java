@@ -34,6 +34,7 @@ public class Constantes {
    public static final String REMUNERACION_EXITO ="Remuneraciones personales modificadas exitosamente.";
    public static final String EVALUACION_EXITO ="Evaluaciones personales modificadas exitosamente.";
    public static final String CONSTANCIAS_DOCUMENTALES_EXITO ="Modificados exitosamente.";
+   public static final String CONFIGURAR_ACCESO_EXITO ="Parametros modificados exitosamente.";
    
    //nombre archivos
    public static final String ENTIDADES_UE = "Entidades U./Ejecutoras";
