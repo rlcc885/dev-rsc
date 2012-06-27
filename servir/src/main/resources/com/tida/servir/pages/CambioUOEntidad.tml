@@ -15,16 +15,18 @@
         <div id= "datosOrigen" class="box">
             <h3> Opciones / Fuente de Origen</h3>
            <div class="f-wrap">
-                    <t:zone t:id="UOOrigenZone">
-                        <form t:type="form" t:id="formUOOrigen" t:zone="UOOrigenZone">
-                          <div class="f-wrap">
+                    <div class="f-left">
+                        <form t:type="form" t:id="formOpciones">
+                        Opciones
+                        <input t:type="Select" t:id="cambio_opciones"
+                        t:value="opcion" model="bopciones"/>
+                        </form>
+                    </div> 
+                    <t:zone t:id="EOrigenZone">
+                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">
+                          <div class="f-wrap">                                                       
                             <div class="f-left">
-                                Opciones
-                                <input t:type="Select" t:id="cambio_opciones"
-                                t:value="opcion" model="bopciones"/>
-                            </div>                            
-                            <div class="f-left">
-                            * Unidad Orgánica
+                            * Unidad Orgánica Origen
                             <select t:type="select" t:id="select_unidadOrganicaOrigen"
                             model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
                             t:validate="required"/>
@@ -66,12 +68,38 @@
 
         <div id= "datosDestino" class="box">
             <h3> Seleccione destino</h3>
+            <t:zone t:id="EDestiZone">
+                <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">
+                    <div class="f-wrap">
+                    <div class="f-left">
+                    <if test="mostrarUOD">                        
+                        * Unidad Orgánica Destino
+                        <!--<select t:type="select" t:id="select_unidadOrganicaDestino"
+                        model="beanUOrganicasDestino"  value="uoDestino"/>-->
+                         <input t:type="Select" t:id="select_unidadOrganicaDestino"                         
+                        t:value="uoDestino" model="beanUOrganicasDestino"/>                        
+                    </if>
+                    </div>                    
+                    <div class="f-left">    
+                        Entidad Destino
+                        <input t:type="TextField" t:id="entidad_den_des"
+                            t:value="entidad_destino" t:readonly="readonly" style="width: 400px;"/>                            
+                    </div>
+                    </div>
+                    <div class="actions f-right">  
+                        <input id="buscar2submit" type="submit" value="Buscar" class="button" onClick="javascript: mostrar();" />
+                    </div>              
+                </form>
+            </t:zone>
+            
+            <!--
             <div class="f-wrap datosDestinos">
                 <t:EntidadSelect  t:id="entidades" t:entidad="entidadDestino"
                     t:zone = "NivelDestinoZone" t:zoneName = "NivelDestinoZone"
                     t:vistaCorta = "true"/>
-            </div>
+            </div>-->
             <div class="f-wrap">
+                <!--
                     <div class="f-left">
                         <t:zone t:id="NivelDestinoZone">
                             <t:if test= "hayentidadDestino">
@@ -83,7 +111,8 @@
                                 </form>
                             </t:if>
                         </t:zone>
-                    </div>
+                    </div>-->
+                    <!--
                     <div class="f-left">
                         <t:zone t:id="UODestinoZone">
                             <t:if test= "hayentidadDestino">
@@ -98,7 +127,7 @@
                                 </form>
                              </t:if>
                         </t:zone>
-                    </div>
+                    </div>-->
                     <div class="f-left">
                         <t:zone t:id="UOChangeZone">
                             <t:if test = "ActivoSubmit">
@@ -113,9 +142,13 @@
                              </t:if>
                         </t:zone>
                     </div>
-            </div> <!-- f-wrap -->
-        </div> <!-- Datos Destino -->
-        <a href="javascript:popup('buscarentidad',900,500)">abrir</a>
+            </div>
+        </div> 
+        <div class="actions f-right">
+           <input id="aceptar" type="submit" value="Aceptar" class="button" />
+           <input id="limpiar" type="submit" value="Limpiar Formulario" class="button" />
+           <input id="cancelar" type="submit" value="Cancelar" class="button" />
+        </div> 
         
 <!--        
 <script type="text/javascript">
@@ -185,7 +218,8 @@ function datos(val1,val2){
         <div id="modal">           
             <h1>Selección de entidad</h1>
             <div class="pane">
-                <form t:type="form" t:id="formulariobusqueda" zone="organismosZone">
+                <t:zone t:id="busZone">
+                <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
                             Denominación
@@ -195,25 +229,52 @@ function datos(val1,val2){
                         <div class="actions f-right">
                             <input id="buscarsubmit" type="submit" value="Buscar" class="button" />                    
                         </div>  
-                </form>     
+                </form>
+                </t:zone>
             </div>
             <div class="f-wrap">
             </div>
+            <!-- Eorigen-->
+             
             <div t:type="zone" t:id="organismosZone">
-                <t:if test="mostrar">                                        
-                         <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                        row="ex" include="denominacion" inPlace="true" t:zone="organismosZone">
-                        <t:parameter name="empty">
-                            <div class="no-info">No hay entidades generadas</div>
-                        </t:parameter>
-                        <p:accionesCell>                            
-                                <t:actionlink t:id="editar" zone="UOOrigenZone" context="ex" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
-                        </p:accionesCell>
-                    </t:grid>  
-
+                <t:if test="mostrar"> 
+                
                 </t:if>
-             </div> <!-- abmZone --> 
+             </div> <!-- abmZone -->
             
+             <!-- Edestino-->
+                 
+                <div t:type="zone" t:id="entiZone">
+                    <t:if test="mostrar">
+                    <t:if test="entixo">
+                        <h2>Entidad Origen</h2>
+                        <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                            row="entio" include="denominacion" inPlace="true" t:zone="organismosZone">
+                            <t:parameter name="empty">
+                                <div class="no-info">No hay entidades generadas</div>
+                            </t:parameter>
+                            <p:accionesCell>                            
+                                    <t:actionlink t:id="editar" zone="EOrigenZone" context="entio" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            </p:accionesCell>
+                        </t:grid> 
+                    </t:if>     
+                    <t:if test="entixd">
+                        <h2>Entidad Destino</h2>
+                        <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                            row="entid" include="denominacion" inPlace="true" t:zone="entiZone">
+                            <t:parameter name="empty">
+                                <div class="no-info">No hay entidades generadas</div>
+                            </t:parameter>
+                            <p:accionesCell>                            
+                                    <t:actionlink t:id="selec" zone="EDestiZone" context="entid" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            </p:accionesCell>
+                        </t:grid>
+                    </t:if>
+                      
+                    </t:if>
+                </div>
+                
+             
         </div>
          
 <script type="text/javascript">
