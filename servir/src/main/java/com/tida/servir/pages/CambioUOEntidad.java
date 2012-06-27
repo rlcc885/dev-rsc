@@ -114,6 +114,20 @@ public class CambioUOEntidad extends GeneralPage{
     @Property
     private String entidad_origen;
     
+    @Persist
+    @Property
+    private String bdenoentidad;
+    
+    @Property
+    @Persist
+    private boolean mostrar;
+    
+    @InjectComponent
+    private Zone organismosZone;
+    
+    @Property
+    private Entidad_BK ex;
+    
     public List<String> getBopciones(){
         List<String> mod = new LinkedList<String>();
         mod.add("MIGRAR");
@@ -122,13 +136,41 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromformOpciones(){
+//        
+//        
+//        return new MultiZoneUpdate("UOOrigenZone",UOOrigenZone.getBody())
+//                    .add("UOChangeZone", UOChangeZone.getBody());
+//    }
+    
     @Log
     @CommitAfter
-    Object onSuccessFromformOpciones(){
-        
-        
-        return new MultiZoneUpdate("UOOrigenZone",UOOrigenZone.getBody())
-                    .add("UOChangeZone", UOChangeZone.getBody());
+    Object onSuccessFromformEOrigen(){
+              
+        return UOOrigenZone.getBody();
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormulariobusqueda() {
+        mostrar=true;
+        return organismosZone.getBody();
+    }
+    
+    @Log
+    public List<Entidad_BK> getEntidades() {
+        Criteria c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        return c.list();
+    }
+    
+    @Log
+    Object onActionFromEditar(Entidad_BK entix) {
+        ex = entix;
+        entidad_origen=ex.getDenominacion();        
+        return UOOrigenZone.getBody();  
     }
 
     @Log
@@ -237,7 +279,7 @@ public class CambioUOEntidad extends GeneralPage{
     }
 
     Object onSuccessFromFormUOOrigen() {
-        return UOChangeZone.getBody();
+        return UOOrigenZone.getBody();
     }
 
 
