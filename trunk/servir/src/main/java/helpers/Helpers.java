@@ -41,9 +41,7 @@ public class Helpers {
         return c.list();
     }
 
-    public static List<String> getValorTablaAuxiliar(String tabla, Session session,
-            String tablaRelacion,
-            long relacionCodigo) {
+    public static List<String> getValorTablaAuxiliar(String tabla, Session session,String tablaRelacion,long relacionCodigo) {
         // TODO: este codigo esta duplicado
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla", tabla));
@@ -76,8 +74,7 @@ public class Helpers {
      * @param relacionCodigo
      * @return
      */
-    public static List<DatoAuxiliar> getDatoAuxiliar(String tabla, String tablaRelacion,
-            long relacionCodigo, Session session) {
+    public static List<DatoAuxiliar> getDatoAuxiliar(String tabla, String tablaRelacion, long relacionCodigo, Session session) {
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.like("nombreTabla", tabla));
         if (tablaRelacion != null) {
@@ -98,7 +95,6 @@ public class Helpers {
      * @return
      */
     public static DatoAuxiliar getDatoAuxiliar(String tabla, Long codigo, Session session) {
-
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.like("nombreTabla", tabla));
         c.add(Restrictions.like("codigo", codigo));

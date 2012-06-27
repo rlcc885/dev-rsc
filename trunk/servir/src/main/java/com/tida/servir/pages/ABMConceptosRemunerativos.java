@@ -85,14 +85,14 @@ public class ABMConceptosRemunerativos  extends GeneralPage {
   public List<ConceptoRemunerativo> getConceptosRemunerativos() {
       Criteria c;
       c = session.createCriteria(ConceptoRemunerativo.class);
-      c.add(Restrictions.eq("entidadUE", _oi));
+      c.add(Restrictions.eq("entidad", _oi));
      return c.list();
   }
 
   void onValidateFromFormularioConceptoRemunerativo() {
       Criteria c;
       c = session.createCriteria(ConceptoRemunerativo.class);
-      c.add(Restrictions.eq("entidadUE", _oi));
+      c.add(Restrictions.eq("entidad", _oi));
       c.add(Restrictions.like("codigo", conceptoRemunerativo.getCodigo()));
       
       if (editando)
@@ -103,7 +103,7 @@ public class ABMConceptosRemunerativos  extends GeneralPage {
       }
 
       c = session.createCriteria(ConceptoRemunerativo.class);
-      c.add(Restrictions.eq("entidadUE", _oi));
+      c.add(Restrictions.eq("entidad", _oi));
       c.add(Restrictions.like("descripcion", conceptoRemunerativo.getDescripcion()));
 
       if (editando)

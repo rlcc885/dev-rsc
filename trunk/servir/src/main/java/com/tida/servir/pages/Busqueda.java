@@ -58,6 +58,99 @@ public class Busqueda extends GeneralPage {
     private Usuario _usuario;
     @InjectPage
     private TrabajadorNuevo trabajadorNuevo;
+    
+        @Persist
+    @Property
+    private Trabajador e;
+    @Persist
+    @Property
+    private Cargoxunidad c;
+    @Persist
+    @Property
+    private boolean mostrarFiltros;
+    @Persist
+    @Property
+    private String mostrarEsconder;
+    @Persist
+    @Property
+    private boolean yaEntrada;
+    //
+    // Datos para la busqueda
+    //
+    @Persist
+    @Property
+    private String apellidoPaterno;
+    @Persist
+    @Property
+    private String apellidoMaterno;
+    @Persist
+    @Property
+    private String nombres;
+    @Persist
+    @Property
+    private String nroDocumento;
+    @Persist
+    @Property
+    private String tipoDocumento;
+    @Persist
+    @Property
+    private String codigoLegajoInstitucion;
+    //
+    // Datos para los filtros
+    //
+    @Persist
+    @Property
+    private String sexo;
+    @Persist
+    @Property
+    private Boolean checkfechadenacimientomayora;
+    @Persist
+    @Property
+    private Boolean checkfechadenacimientomenora;
+    @Persist
+    @Property
+    private Boolean checkhabilitacionprofesional;
+    @Persist
+    @Property
+    private Boolean checkdeclaracion;
+    @Persist
+    @Property
+    private Boolean checkconfianza;
+    @Persist
+    @Property
+    private Date fechadenacimientomenora;
+    @Persist
+    @Property
+    private Date fechadenacimientomayora;
+    @Property
+    @Persist
+    private String valTipoDiscapacidad;
+    @Property
+    @Persist
+    private String valNivelInstruccion;
+    @Property
+    @Persist
+    private DatoAuxiliar valRegimenContratacion;
+    @Property
+    @Persist
+    private Integer valhorassemanalesmayora;
+    @Property
+    @Persist
+    private Integer valhorassemanalesmenora;
+    @Property
+    @Persist
+    private DatoAuxiliar valcodigofuncionaldelcargo;
+    @Property
+    @Persist
+    private Boolean valhabilitacionprofesional;
+    @Property
+    @Persist
+    private Boolean valdeclaracion;
+    @Property
+    @Persist
+    private Boolean valconfianza;
+    @Inject
+    private Request request;
 
     public List<String> getSexos() {
         return Helpers.getValorTablaAuxiliar("Sexo", session);
@@ -107,7 +200,7 @@ public class Busqueda extends GeneralPage {
         c.createAlias("legajo", "legajo");
         c.createAlias("cargo", "cargo");
 
-        c.add(Restrictions.eq("legajo.entidadUE", _entidadUE));
+        c.add(Restrictions.eq("legajo.entidad", _entidadUE));
 
         // busquedasI
         if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
@@ -258,7 +351,7 @@ public class Busqueda extends GeneralPage {
 
     void onPrepareForRender() {
         // Get all persons - ask business service to find them (from the database)
-        List<DatoAuxiliar> datoAuxiliar = Helpers.getValoresTablaAuxiliar("TipoDocumento", session);
+        List<DatoAuxiliar> datoAuxiliar = Helpers.getValoresTablaAuxiliar("DOCUMENTOIDENTIDAD", session);
 
         tipoDocumentosIdModel = selectIdModelFactory.create(datoAuxiliar, "valor", "id");
     }
@@ -266,98 +359,6 @@ public class Busqueda extends GeneralPage {
     @CommitAfter
     void onPrepare() {
     }
-    @Persist
-    @Property
-    private Trabajador e;
-    @Persist
-    @Property
-    private Cargoxunidad c;
-    @Persist
-    @Property
-    private boolean mostrarFiltros;
-    @Persist
-    @Property
-    private String mostrarEsconder;
-    @Persist
-    @Property
-    private boolean yaEntrada;
-    //
-    // Datos para la busqueda
-    //
-    @Persist
-    @Property
-    private String apellidoPaterno;
-    @Persist
-    @Property
-    private String apellidoMaterno;
-    @Persist
-    @Property
-    private String nombres;
-    @Persist
-    @Property
-    private String nroDocumento;
-    @Persist
-    @Property
-    private String tipoDocumento;
-    @Persist
-    @Property
-    private String codigoLegajoInstitucion;
-    //
-    // Datos para los filtros
-    //
-    @Persist
-    @Property
-    private String sexo;
-    @Persist
-    @Property
-    private Boolean checkfechadenacimientomayora;
-    @Persist
-    @Property
-    private Boolean checkfechadenacimientomenora;
-    @Persist
-    @Property
-    private Boolean checkhabilitacionprofesional;
-    @Persist
-    @Property
-    private Boolean checkdeclaracion;
-    @Persist
-    @Property
-    private Boolean checkconfianza;
-    @Persist
-    @Property
-    private Date fechadenacimientomenora;
-    @Persist
-    @Property
-    private Date fechadenacimientomayora;
-    @Property
-    @Persist
-    private String valTipoDiscapacidad;
-    @Property
-    @Persist
-    private String valNivelInstruccion;
-    @Property
-    @Persist
-    private DatoAuxiliar valRegimenContratacion;
-    @Property
-    @Persist
-    private Integer valhorassemanalesmayora;
-    @Property
-    @Persist
-    private Integer valhorassemanalesmenora;
-    @Property
-    @Persist
-    private DatoAuxiliar valcodigofuncionaldelcargo;
-    @Property
-    @Persist
-    private Boolean valhabilitacionprofesional;
-    @Property
-    @Persist
-    private Boolean valdeclaracion;
-    @Property
-    @Persist
-    private Boolean valconfianza;
-    @Inject
-    private Request request;
 
     public List<String> getTiposDiscapacidad() {
         return Helpers.getValorTablaAuxiliar("TipoDiscapacidad", session);

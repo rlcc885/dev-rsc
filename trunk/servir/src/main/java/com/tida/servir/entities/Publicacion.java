@@ -6,13 +6,7 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -20,7 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class Publicacion {
+public class Publicacion implements Serializable {
 
     public static String CLASE_PUBLICACION = "PUBLICACION";
     public static String CLASE_INVESTIGACION = "INVESTIGACION";
@@ -28,6 +22,9 @@ public class Publicacion {
 //  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //  @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
+    @Id
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "PUBLICACION_ID_SEQ", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
     private Long id;
 //    @ManyToOne(optional = false)
     private Trabajador trabajador;
@@ -111,8 +108,6 @@ public class Publicacion {
         this.fecha = fecha;
     }
 
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
