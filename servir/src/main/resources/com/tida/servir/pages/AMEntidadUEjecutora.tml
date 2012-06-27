@@ -23,84 +23,101 @@
         -->
     </div>  
 
-     <div class="box f-wrap" id="box_oi">
+
+   <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
+<div t:type="zone" t:id="nivelOrganizacionSectorZone" >
+    <div class="wrap" id="selectors">
+        <t:form t:id="formularioaltaentidaduejecutoras"  zone="nivelOrganizacionSectorZone">
+
+ <!-- the tabs -->
+            <ul id="tabs-top" class="tabs">
+                <li><a href="#"> Entidad</a></li>
+                <li><a href="#"> SubEntidad</a></li>
+            </ul>
+
+    <div id="entidad" class="pane" style="display:block;">    
+    <div class="box">
         <h3>Crear/Editar Entidades /U. Ejecutoras</h3>
-        
-        <div id="form_organismo_informante" class="abmform">
-        
-            <t:form t:id="formularioaltaentidaduejecutoras">
-                <t:errors/>
-                  <!-- 
+        <t:errors/>
+        <div id="form_organismo_informante" class="f-wrap">
+
                 <div class="f-wrap">
                     <div class="f-left">
                         <t:label for="nivelgobierno"/>
                             <input t:type="Select" t:id="nivelgobierno" t:value="nivelgobierno" 
-                            model="beanDatoAuxNivel" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                            t:validate="required" disabled ="noeditable" t:blankOption="ALWAYS"/>
+                            model="NivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:blankOption="ALWAYS"/>
                     </div>
                     <div class="f-left"> 
                         <t:label for="organizacionestado"/>
                             <input t:type="Select" t:id="organizacionestado" t:value="organizacionestado" 
-                            model="beanDatoAuxOrganizacion" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                            t:validate="required"  disabled ="noeditable" t:blankOption="ALWAYS"/>
+                            model="OrganizacionEstado" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:blankOption="ALWAYS"/>
                     </div>
                     <div class="f-left"> 
                         <t:label for="sectorgobierno"/>
                             <input t:type="Select" t:id="sectorgobierno" t:value="sectorgobierno" 
-                            model="beanDatoAuxSector" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                            t:validate="required" disabled ="noeditable" t:blankOption="ALWAYS"/>
+                            model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                            t:validate="required" t:blankOption="ALWAYS"/>
                     </div>
+                    
+                 </div>
+                
+                <div class="f-wrap" id="entidadCodDen">
+
                     <div class="f-left"> 
                         <t:label for="tipoorganismo"/>
                             <input t:type="Select" t:id="tipoorganismo" t:value="tipoorganismo" 
-                            model="beanDatoAuxTipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                            t:validate="required"  disabled ="noeditable" t:blankOption="ALWAYS"/>
+                            model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                            t:validate="required" t:blankOption="ALWAYS"/>
                     </div>
-                 </div>
-                 -->
-                
-                <div class="f-wrap" id="entidadCodDen">
                     <div class="f-left">
                         <t:label for ="denominacion"/>
                         <input t:type="TextField" t:id="denominacion"
                         t:value="entidadUE.denominacion" t:validate="required, maxlength=60" size="85"/>
                     </div>
                     <div class="f-left">
-                        <t:label for="cue_entidad"/>
-                        <input t:type="TextField" t:id="cue_entidad"
-                        t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" />
-                    </div>
-                    <div class="f-left">
                         <t:label for="sigla"/>
                         <input t:type="TextField" t:id="sigla" 
                         t:value="entidadUE.sigla" t:validate="maxlength=12" size="12" />
                     </div>
+               
+                    
                 </div>
-                
-                
+                  
                 <div class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="abreviatura"/>
-                        <input t:type="TextField" t:id="abreviatura"
-                        t:value="entidadUE.abreviatura"/>
-                    </div>
                     <div class="f-left">
                         <t:label for="RUC"/>
                         <input t:type="TextField" t:id="RUC"
                         t:value="entidadUE.ruc" t:validate="regexp"/>
                     </div>
-                    <div class="f-left mar-top24">
+                     <div class="f-left">
+                        <t:label for="cue_entidad"/>
+                        <input t:type="TextField" t:id="cue_entidad"
+                        t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" />
+                    </div>
+                    
+                    <div class="f-left">
                         <t:label for ="proc_batch"/>
-                        <input t:type="Checkbox" t:id="proc_batch"
+                        <input t:type="Checkbox" t:id="proc_batch" 
                         t:value="entidadUE.proc_batch" />
                     </div>
+
                 </div>
+
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Logo </label>
+                        <input id="examinar" type="file" value="Examinar" style="width: 450px;" />
+                    </div>
+                </div>
+
                 <div class="f-wrap">
                     <div class="f-left">
                         <t:label for="tipovia"/>
                         <input t:type="Select" t:id="tipovia" t:value="tipovia" 
                         model="TipoVia" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                        t:validate="required" disabled ="noeditable" t:blankOption="ALWAYS"/>
+                        t:blankOption="ALWAYS"/>
                     </div>
                     <div class="f-left">
                         <t:label for="direccion"/>
@@ -111,7 +128,7 @@
                         <t:label for="tipozona"/>
                         <input t:type="Select" t:id="tipozona" t:value="tipozona" 
                         model="TipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                        t:validate="required" disabled ="noeditable" t:blankOption="ALWAYS"/>
+                        t:blankOption="ALWAYS"/>
                     </div> 
                      <div class="f-left">
                         <t:label for="desczona"/>
@@ -124,7 +141,7 @@
                     <div class="f-wrap">
                          <div class="f-left" id="ubigeo_entidadUE"> 
                              <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE"
-                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" disabled ="noeditable"/>         
+                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />         
                         </div>
                     </div>
                 </t:zone>
@@ -144,39 +161,31 @@
                         <input t:type="TextField" t:id="telefonoEntidad"
                         t:value="entidadUE.telefonoEntidad"/>
                     </div>
+                  
                 </div>
-                <div class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="logotipo"/>
-                        <input t:type="TextField" t:id="logotipo"
-                        t:value="entidadUE.logotipo"/>
-                    </div>
-                    <div class="f-left">
-                        <input id="examinar" type="file" value="Examinar" class="button f-right"/>
-                    </div>
-                </div>
-                <!--
+
+                
                 <div class="f-wrap">
                     <div class="f-left">
                         <t:label for="titular"/>
                         <input t:type="TextField" t:id="titular"
-                        t:value="entidadUE.titular"/>
-                        <input id="buscarte" type="submit" value="Buscar" class="button f-right"/>
+                        t:value="entidadUE.urlentidad"/>
+                        <input id="buscarte" type="submit" value="..." class="button f-right"/>
                     </div>
                     <div class="f-left">
                         <t:label for="jefeRRHH"/>
                         <input t:type="TextField" t:id="jefeRRHH"
-                        t:value="entidadUE.jefeRRHH"/>
-                        <input id="buscarjr" type="submit" value="Buscar" class="button f-right"/>
+                        t:value="entidadUE.urlentidad"/>
+                        <input id="buscarjr" type="submit" value="..." class="button f-right"/>
                     </div>
                      <div class="f-left">
                         <t:label for="jefeOGA"/>
                         <input t:type="TextField" t:id="jefeOGA"
-                        t:value="entidadUE.jefeOGA"/>
-                        <input id="buscarjo" type="submit" value="Buscar" class="button f-right"/>
+                        t:value="entidadUE.urlentidad"/>
+                        <input id="buscarjo" type="submit" value="..." class="button f-right"/>
                     </div>
                 </div>
-                -->
+               
                 
                 <div class="f-wrap">
                      <div class="f-right">
@@ -189,10 +198,202 @@
                         <input id="submit" type="submit" value="Enviar" class="button"/>
                      </div>
                 </div>
-                 
-                 
-            </t:form>
-                  
         </div>
     </div>
+</div>
+
+<div id="subentidad" class="pane" >
+
+     <div class="box">
+        <h3>Crear/Editar Sub Entidades /U. Ejecutoras</h3>
+            <t:errors/>
+            <div id="form_suborganismo_informante" class="f-wrap">
+                <!--  
+                   <div class="f-wrap">
+                
+                    <div class="f-left">
+                        <t:label for="Subnivelgobierno"/>
+                            <input t:type="Select" t:id="Subnivelgobierno" t:value="Subnivelgobierno" 
+                            model="NivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:blankOption="ALWAYS"/>
+                    </div>
+                    <div class="f-left"> 
+                        <t:label for="Suborganizacionestado"/>
+                            <input t:type="Select" t:id="Suborganizacionestado" t:value="Suborganizacionestado" 
+                            model="OrganizacionEstado" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:blankOption="ALWAYS"/>
+                    </div>
+                    <div class="f-left"> 
+                        <t:label for="Subsectorgobierno"/>
+                            <input t:type="Select" t:id="Subsectorgobierno" t:value="Subsectorgobierno" 
+                            model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                            t:validate="required" t:blankOption="ALWAYS"/>
+                    </div>
+                    
+                 </div>
+                -->
+                <div class="f-wrap">
+                <!--    
+                    <div class="f-left"> 
+                        <t:label for="Subtipoorganismo"/>
+                            <input t:type="Select" t:id="Subtipoorganismo" t:value="Subtipoorganismo" 
+                            model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                            t:validate="required" t:blankOption="ALWAYS"/>
+                    </div>
+                -->
+                    <div class="f-left">
+                        <t:label for ="SubDenominacion"/>
+                        <input t:type="TextField" t:id="SubDenominacion"
+                        t:value="subEntidadUE.denominacion" t:validate="required, maxlength=60" size="85"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="Subsigla"/>
+                        <input t:type="TextField" t:id="Subsigla" 
+                        t:value="subEntidadUE.sigla" t:validate="maxlength=12" size="12" />
+                    </div>
+               
+                    
+                </div>
+                  
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="SubRUC"/>
+                        <input t:type="TextField" t:id="SubRUC"
+                        t:value="subEntidadUE.ruc" t:validate="regexp"/>
+                    </div>
+                     <div class="f-left">
+                        <t:label for="Subcue_entidad"/>
+                        <input t:type="TextField" t:id="Subcue_entidad"
+                        t:value="subEntidadUE.cue_entidad" t:validate="maxlength=12" size="12" />
+                    </div>
+                    
+                    <div class="f-left">
+                        <t:label for ="Subproc_batch"/>
+                        <input t:type="Checkbox" t:id="Subproc_batch" 
+                        t:value="subEntidadUE.proc_batch" />
+                    </div>
+
+                </div>
+
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Logo </label>
+                        <input id="examinar" type="file" value="Examinar" style="width: 450px;" />
+                    </div>
+                </div>
+
+                <div class="f-wrap">
+ <!--
+                   <div class="f-left">
+                        <t:label for="Subtipovia"/>
+                        <input t:type="Select" t:id="Subtipovia" t:value="tipovia" 
+                        model="TipoVia" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                        t:blankOption="ALWAYS"/>
+                    </div>
+-->
+                    <div class="f-left">
+                        <t:label for="Subdireccion"/>
+                        <input t:type="TextField" t:id="Subdireccion"
+                        t:value="subEntidadUE.direccion"/>
+                    </div>
+<!--  
+                  <div class="f-left">
+                        <t:label for="Subtipozona"/>
+                        <input t:type="Select" t:id="Subtipozona" t:value="Subtipozona" 
+                        model="TipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                        t:blankOption="ALWAYS"/>
+                    </div> 
+--> 
+                    <div class="f-left">
+                        <t:label for="Subdesczona"/>
+                        <input t:type="TextField" t:id="Subdesczona"
+                        t:value="subEntidadUE.desczona"/>
+                    </div>
+                 </div>   
+ <!--           
+                <t:zone t:id="ubigeoEntidadZone">
+                    <div class="f-wrap">
+                         <div class="f-left" id="ubigeo_entidadUE"> 
+                             <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE"
+                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />         
+                        </div>
+                    </div>
+                </t:zone>
+-->
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="Subemailinstitucional"/>
+                        <input t:type="TextField" t:id="Subemailinstitucional"
+                        t:value="subEntidadUE.emailinstitucional"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="Suburlentidad"/>
+                        <input t:type="TextField" t:id="Suburlentidad"
+                        t:value="subEntidadUE.urlentidad"/>
+                    </div>
+                     <div class="f-left">
+                        <t:label for="SubtelefonoEntidad"/>
+                        <input t:type="TextField" t:id="SubtelefonoEntidad"
+                        t:value="subEntidadUE.telefonoEntidad"/>
+                    </div>
+                  
+                </div>
+
+                
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="Subtitular"/>
+                        <input t:type="TextField" t:id="Subtitular"
+                        t:value="subEntidadUE.urlentidad"/>
+                        <input id="buscarte" type="submit" value="..." class="button f-right"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="SubjefeRRHH"/>
+                        <input t:type="TextField" t:id="SubjefeRRHH"
+                        t:value="subEntidadUE.urlentidad"/>
+                        <input id="buscarjr" type="submit" value="..." class="button f-right"/>
+                    </div>
+                     <div class="f-left">
+                        <t:label for="SubjefeOGA"/>
+                        <input t:type="TextField" t:id="SubjefeOGA"
+                        t:value="subEntidadUE.urlentidad"/>
+                        <input id="buscarjo" type="submit" value="..." class="button f-right"/>
+                    </div>
+                </div>
+               
+                
+                <div class="f-wrap">
+                     <div class="f-right">
+                         <input t:type="Submit" t:id="Subcancel" value="Cancelar" class="button"/> 
+                     </div>
+                     <div class="f-right">
+                         <input t:type="Submit" t:id="Subreset" value="Limpiar Formulario" class="button"/>  
+                     </div>
+                     <div class="f-right">
+                        <input id="Subsubmit" type="submit" value="Enviar" class="button"/>
+                     </div>
+                </div>
+        </div>
+ </div>
+</div>
+  </t:form>
+</div>
+</div> 
+
+    <SCRIPT LANGUAGE="JavaScript"> 
+            function mostrarEsconder() { 
+                cach.visibility = "visible";
+            } 
+        </SCRIPT>
+
+     <script>
+        <!--
+
+// perform JavaScript after the document is scriptable.
+        jQuery(function() {
+            jQuery("ul.tabs").tabs("> .pane");
+        });
+     -->
+     </script>
+      
 </html>
