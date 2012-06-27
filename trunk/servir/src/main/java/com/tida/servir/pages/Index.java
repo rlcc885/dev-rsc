@@ -1,10 +1,19 @@
 package com.tida.servir.pages;
 
-import com.tida.servir.entities.*;
+
+import com.tida.servir.entities.ConfiguracionAcceso;
+import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Permisos;
+import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.UsuarioTrabajador;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
 import helpers.Logger;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,7 +21,12 @@ import java.util.List;
 import java.util.logging.Level;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.annotations.InjectPage;
+import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.PasswordField;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -20,7 +34,11 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.apache.tapestry5.services.*;
+import org.apache.tapestry5.services.ComponentClassResolver;
+import org.apache.tapestry5.services.Context;
+import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.RequestGlobals;
+import org.apache.tapestry5.services.Response;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -124,7 +142,6 @@ public class Index {
         query.setParameter("nrodocumento", login);
         List c = query.list();
 
-        System.out.println("termina criterio");
         if (c.isEmpty()) {
             logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
             formulariologin.recordError("Usuario no existe. Contacte a un administrador");
