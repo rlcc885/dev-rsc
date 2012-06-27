@@ -179,7 +179,7 @@ public class ABMUsuario extends GeneralPage {
         }
 
         if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-            c.add(Restrictions.eq("entidadUE", loggedUser.getEntidad()));
+            c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             c.add(Restrictions.ne("tipo_usuario", Usuario.ADMINLOCAL));
         } else {
             // Administrador de usuarios general
@@ -294,7 +294,7 @@ public class ABMUsuario extends GeneralPage {
             c.add(Restrictions.eq("apellidos", usuario.getApellidos()));
             c.add(Restrictions.eq("nombres", usuario.getNombres()));
             if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-                c.add(Restrictions.eq("entidadUE", loggedUser.getEntidad()));
+                c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             }
             if (c.list().size() > 0) {
                 Logger logger = new Logger();
@@ -319,7 +319,7 @@ public class ABMUsuario extends GeneralPage {
             c = session.createCriteria(Usuario.class);
             c.add(Restrictions.eq("email", usuario.getEmail()));
             if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-                c.add(Restrictions.eq("entidadUE", loggedUser.getEntidad()));
+                c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             }
             // Pedimos únicos mail por entidadUE
             if (c.list().size() > 0) {

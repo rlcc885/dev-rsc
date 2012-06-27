@@ -156,7 +156,7 @@ public class TrabajadorNuevo  extends GeneralPage
     
     public List<String> getTiposDoc() {
     	Criteria c = session.createCriteria(DatoAuxiliar.class);
-    	c.add(Restrictions.eq("nombreTabla", "TipoDocumento"));
+    	c.add(Restrictions.eq("nombreTabla", "DOCUMENTOIDENTIDAD"));
         c.add(Restrictions.ne("valor", "Partida de nacimiento (solo a menores)"));
     	c.setProjection(Projections.property("valor"));
         return c.list();
@@ -165,7 +165,7 @@ public class TrabajadorNuevo  extends GeneralPage
     @Log
     public GenericSelectModel<UnidadOrganica> getBeansUO() {
         Criteria c = session.createCriteria(UnidadOrganica.class)
-                .add(Restrictions.eq("entidadUE", _oi))
+                .add(Restrictions.eq("entidad", _oi))
                 .add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
 
         List<UnidadOrganica> list = c.list();
@@ -310,7 +310,7 @@ public class TrabajadorNuevo  extends GeneralPage
             .add(Restrictions.like("trabajador.nombres", nuevo.getNombres()).ignoreCase())
             .add(Restrictions.like("trabajador.apellidoMaterno", nuevo.getApellidoMaterno()).ignoreCase())
             .add(Restrictions.like("trabajador.apellidoPaterno", nuevo.getApellidoPaterno()).ignoreCase())
-            .add(Restrictions.eq("entidadUE", _oi))
+            .add(Restrictions.eq("entidad", _oi))
             .list();
 
         if (legajos.size() > 0) {
@@ -326,7 +326,7 @@ public class TrabajadorNuevo  extends GeneralPage
         }  
             
         trabajadorExiste = false;
-        //busco si el trabajador ya tiene un cargo en una otra entidadUE o en esta, pero no esta activo
+        //busco si el trabajador ya tiene un cargo en una otra entidad o en esta, pero no esta activo
         List<CargoAsignado> CargosAsignadosTrabajador =  session.createCriteria(CargoAsignado.class)
             .createAlias("trabajador","trabajador")
             .createAlias("legajo","legajo")
@@ -335,7 +335,7 @@ public class TrabajadorNuevo  extends GeneralPage
             .add(Restrictions.like("trabajador.nombres", nuevo.getNombres()).ignoreCase())
             .add(Restrictions.like("trabajador.apellidoMaterno", nuevo.getApellidoMaterno()).ignoreCase())
             .add(Restrictions.like("trabajador.apellidoPaterno", nuevo.getApellidoPaterno()).ignoreCase())
-            .add(Restrictions.ne("legajo.entidadUE", _oi))
+            .add(Restrictions.ne("legajo.entidad", _oi))
             .add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO))
             .list();
         
@@ -392,7 +392,7 @@ public class TrabajadorNuevo  extends GeneralPage
     @CommitAfter
     Object onSuccessFromformulariounidadorganica() {
         Criteria c = session.createCriteria(Cargoxunidad.class)
-        .add(Restrictions.eq("und_organica", unidadorganica))
+        .add(Restrictions.eq("unidadorganica", unidadorganica))
         .add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         
         unidadSeleccionada = true;
@@ -447,10 +447,10 @@ public class TrabajadorNuevo  extends GeneralPage
         
            fec_inicio = new Date();
            List<Cargoxunidad> list = session.createCriteria(Cargoxunidad.class)
-                   .createAlias("und_organica", "und_organica")
-                   .add(Restrictions.eq("und_organica", unidadorganica))
-                   .add(Restrictions.ne("und_organica.estado", UnidadOrganica.ESTADO_BAJA))
-                   .add(Restrictions.ne("estado", Constantes.ESTADO_BAJA))
+                   .createAlias("unidadorganica", "unidadorganica")
+                   .add(Restrictions.eq("unidadorganica", unidadorganica))
+                   //.add(Restrictions.ne("unidadorganica.estado", UnidadOrganica.ESTADO_BAJA))
+                   //.add(Restrictions.ne("estado", Constantes.ESTADO_BAJA))
                    .list(); 
             _beans = new CargosSelectModel<Cargoxunidad>(list,Cargoxunidad.class,"cod_cargo", "den_cargo","id",_access);
             if(nuevoLegajo == null) {

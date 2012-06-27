@@ -100,7 +100,8 @@ public class UnidadOrganica {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "UNIDADORGANICA_ID_SEQ" )
     public int getId() {
         return id;
     }

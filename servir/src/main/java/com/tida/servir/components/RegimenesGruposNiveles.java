@@ -124,7 +124,7 @@ public class RegimenesGruposNiveles {
         }
 
         if (_beanDatoAuxReg == null) {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("RegimenLaboralContractual", null, 0, session);
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGIMENLABORAL", null, 0, session);
             _beanDatoAuxReg = new GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
 
         }
@@ -138,7 +138,7 @@ public class RegimenesGruposNiveles {
 
         DatoAuxiliar d;
        if (regimengruponivel.getRegimen() != null) {
-            lrgn = Helpers.getDatoAuxiliar("GrupoOcupacional", "RegimenLaboralContractual",
+            lrgn = Helpers.getDatoAuxiliar("GrupoOcupacional", "REGIMENLABORAL",
                     regimengruponivel.getRegimen().getCodigo(), session);
         } else {
             regimengruponivel.setGrupo(null);
@@ -148,7 +148,7 @@ public class RegimenesGruposNiveles {
 
         lrgn = new ArrayList<DatoAuxiliar>();
         if (regimengruponivel.getGrupo()!= null) {
-            lrgn = Helpers.getDatoAuxiliar("NivelRemunerativo", "GrupoOcupacional",
+            lrgn = Helpers.getDatoAuxiliar("NivelRemunerativo", "GRUPOOCUPACIONAL",
                     regimengruponivel.getGrupo().getCodigo(), session);
         }  else {
             regimengruponivel.setNivelRemunerativo(null);
@@ -162,7 +162,7 @@ public class RegimenesGruposNiveles {
         // es una tabla auxiliar (regimengruponivel)
         DatoAuxiliar ub = (DatoAuxiliar) dato;
         if(ub != null) {
-            if (ub.getNombreTabla().equals("RegimenLaboralContractual")) {
+            if (ub.getNombreTabla().equals("REGIMENLABORAL")) {
                 // Cargo la provincia
                 /*
                  * Esto lo hago desde el SetupRender
@@ -179,7 +179,7 @@ public class RegimenesGruposNiveles {
 
 
             }
-            if (ub.getNombreTabla().equals("GrupoOcupacional")) {
+            if (ub.getNombreTabla().equals("GRUPOOCUPACIONAL")) {
                 // Cargo el distrito
                 /*
                  * Esto lo hago desde el setuprender
