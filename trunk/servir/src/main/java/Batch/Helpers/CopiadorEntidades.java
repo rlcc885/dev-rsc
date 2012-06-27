@@ -8,7 +8,7 @@ import com.tida.servir.entities.Ant_Laborales;
 import com.tida.servir.entities.AusLicPersonal;
 import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Certificacion;
+import com.tida.servir.entities.Certificacion; 
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.Curso;
@@ -76,7 +76,7 @@ public class CopiadorEntidades {
         destino.setCue(CopiadorEntidades.verifacionNull(origen.getCue()));
         destino.setSigla(CopiadorEntidades.verifacionNull(origen.getSigla()));
         //destino.setTipoActividad(CopiadorEntidades.verifacionNull(origen.getTipoActividad()));
-        destino.setUnidadOrganica(origen.getUnidadOrganica());
+        destino.setUnidadorganica(origen.getUnidadorganica());
     }
     
     public static void cargo(Cargoxunidad origen, Cargoxunidad destino) {

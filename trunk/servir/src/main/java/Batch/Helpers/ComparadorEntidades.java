@@ -4,7 +4,7 @@
  */
 package Batch.Helpers;
 
-import com.tida.servir.entities.Ant_Laborales;
+import com.tida.servir.entities.Ant_Laborales; 
 import com.tida.servir.entities.AusLicPersonal;
 import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
@@ -314,7 +314,7 @@ public class ComparadorEntidades {
 //        if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
 //            return liuo;
 //        }
-        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUnidadOrganica(), cdestino.getUnidadOrganica()));
+        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getUnidadorganica(), cdestino.getUnidadorganica()));
         if(liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
             return liuo;
         }
