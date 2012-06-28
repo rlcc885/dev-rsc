@@ -33,18 +33,95 @@
                             <div class="f-left">
                                 <t:label for="clave_nueva_1"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_1"
-                                t:value="newPass1" size="20" t:validate="required" />
+                                       t:value="newPass1" size="20" t:validate="required" />
                             </div>
                             <div class="f-left">
                                 <t:label for="clave_nueva_2"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_2"
-                                t:value="newPass2" size="20" t:validate="required" />
+                                t:value="newPass2" size="20" t:validate="required" onclick="javascript: verificar();" />
                             </div>
                         </div>
-                        <input id="submit" type="submit" value="Grabar" class="button f-right"/>
+                        <div class="f-wrap" id="complejidadclave">                                 
+                            <input type="text" id="verificacion" size="12" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-right">
+                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
+                            </div>
+                            <div class="f-right">
+                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Grabar" class="button" />
+                            </div>
+                        </div>
                     </t:if>
                 </t:form>
             </t:zone>
         </div>
     </div>
+        
+        
+<script language="javascript">
+var letras=/[A-Za-z\s]/;
+var caracteres =  /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,100})$/;
+var numeros=/[0-9]/;
+var cantidad =  /[a-zA-Z0-9]{6,100}/;
+var porcentaje=0;
+
+function verificar(){
+ 
+porcentaje=0;
+var texto = document.getElementById("clave_nueva_1").value;
+if(tiene_letras(texto)) porcentaje++;   
+if(tiene_numeros(texto)) porcentaje++;  
+if(tiene_pocoscaracteres(texto)) porcentaje++;  
+if(tiene_caracteres(texto)) porcentaje++;  
+
+if(porcentaje==0){ 
+    document.getElementById("verificacion").value="Complejidad de clave: 0%";
+    document.getElementById("clave_nueva_1").value="";
+}
+if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 25%";
+if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
+if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 75%";
+if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 100%";
+}
+
+function tiene_caracteres(texto){
+    
+    if ((texto.match(caracteres))) {
+         return true;
+    } else {
+         return false;
+    } 
+}
+
+function tiene_letras(texto){
+    
+    if ((texto.match(letras))) {
+         return true;
+    } else {
+         return false;
+    } 
+}    
+
+function tiene_numeros(texto){
+    
+    if ((texto.match(numeros))) {
+         return true;
+    } else {
+         return false;
+    } 
+} 
+
+function tiene_pocoscaracteres(texto){
+    
+    if ((texto.match(cantidad))) {
+         return true;
+    } else {
+         return false;
+    } 
+}
+
+
+</script>
+        
 </html>
