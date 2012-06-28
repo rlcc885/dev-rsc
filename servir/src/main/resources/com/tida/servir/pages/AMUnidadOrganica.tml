@@ -29,12 +29,10 @@
                 <form t:type="form" t:id="xxx" t:zone="listaUOZone">
                     <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
                         <t:if test = "hayNivel">
-                            Unidad Orgánica Antecesora
+                            Unidad Orgánica
                             <select t:type="select" t:id="bunidadOrganica_uoa"
                                     model="bbeansUO" encoder="bbeansUO" value="buoAntece"
                                     onChange="this.form.fire()" t:zone="listaUOZone"/>
-                            
-                            
                         </t:if>
                     </div> 
                 </form>
@@ -59,9 +57,11 @@
                         </div>
                     </div>
                     <div class="actions f-right">
-                        <t:actionlink t:id="mostrar" zone="listaUOZone">Mostrar Todo</t:actionlink>
+                        <!--<t:actionlink t:id="muestra" zone="listaUOZone">Mostrar Todo</t:actionlink>-->
+                        <!--<a t:type="eventLink" t:event="toMostrar" t:context="literal:1" t:zone="listaUOZone" href="#"> Mostrar </a>-->
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/> 
                         <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                        <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
+                        <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/> 
                     </div>                         
 
                 </form> 
@@ -74,14 +74,16 @@
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
         <t:if test="mostrar">
-            <t:form t:id="formlistaunidad">                 
+            <t:form t:id="formlistaunidad">
+                <t:envelope t:id="envelope"/>
+                
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
                         ${errorBorrar}
                     </div>
                 </t:if>
                 <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="uo">
+                        row="uo" >
                     <t:parameter name="empty">
                         <div class="no-info">No hay unidades orgánicas generadas</div>
                     </t:parameter>
@@ -90,13 +92,11 @@
                             <a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>
                             <t:if test="esBorrable">
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                     t:zone="listaUOZone" href="#"> Borrar </a>
+                                     t:zone="listaUOZone" href="#" t:mixins="confirm" page="AMUnidadOrganica">Eliminar</a>
                             </t:if>
                         </t:if>
                     </p:accionesCell>
                 </t:grid>
-                <t:envelope t:id="envelope"/>
-                <t:errors/>
                 <!-- </t:if> -->
             </t:form>
         </t:if>
@@ -129,7 +129,8 @@
                                 * Unidad Orgánica Antecesora
                                 <input t:type="Select" t:id="unidadOrganica_uoa"
                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:value="uoAntecesora" model="beansUO" t:zone="ubigeoDomZone"/>
+                                       t:value="uoAntecesora" model="beansUO"
+                                       t:zone="ubigeoDomZone"/>
                             </div>
                         </t:if>
                     </div>
@@ -139,8 +140,7 @@
                 <t:if test="PuedeEditar">
 
                     <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                        
-
+                        <t:errors/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 Código
@@ -196,10 +196,11 @@
                         </div>
 
                         <div id="bouttons_uo" class="actions f-right clear">
-                            <!--<input id="submit" type="submit" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button f-right"/>-->
-                            <input t:type="Submit" t:id="guardar" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
+                            <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
+                            
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>
                     </t:form>

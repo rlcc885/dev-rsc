@@ -79,6 +79,11 @@ public class Entidad_BK implements Serializable {
     //@Column(name = "IDCLASFUNCIONAL")
     private DatoAuxiliar clasificadorFuncional;
     
+    private DatoAuxiliar tipovia;
+    private DatoAuxiliar tipozona;
+    private String desczona;
+    private String direccion;
+    
     //private DatoAuxiliar idNivelGobierno;
 
     public Boolean getPliego_rep() {
@@ -373,6 +378,40 @@ public class Entidad_BK implements Serializable {
         this.idNivelGobierno = idNivelGobierno;
     }
     */
+    
+        @ManyToOne
+    public DatoAuxiliar getTipovia() {
+        return tipovia;
+    }
+
+    public void setTipovia(DatoAuxiliar tipovia) {
+        this.tipovia = tipovia;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getTipozona() {
+        return tipozona;
+    }
+
+    public void setTipozona(DatoAuxiliar tipozona) {
+        this.tipozona = tipozona;
+    }
+    
+    public String getDesczona() {
+        return desczona;
+    }
+
+    public void setDesczona(String desczona) {
+        this.desczona = desczona;
+    }
+    
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     
     
 }
