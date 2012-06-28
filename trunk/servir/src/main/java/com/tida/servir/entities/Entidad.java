@@ -68,8 +68,7 @@ public class Entidad implements Serializable {
     private Trabajador jefeOga;
     @NonVisual
     private DatoAuxiliar tipoSubEntidad;
-    @NonVisual
-    private Entidad entidad;
+
     Boolean esSubEntidad;      
     @NonVisual
     private String validado;
@@ -304,15 +303,6 @@ public class Entidad implements Serializable {
 
     public void setJefeOga(Trabajador jefeOga) {
         this.jefeOga = jefeOga;
-    }
-    
-    @ManyToOne   
-    public Entidad getEntidad() {
-        return entidad;
-    }
-
-    public void setEntidad(Entidad entidad) {
-        this.entidad = entidad;
     }
 
     public Boolean getEsSubEntidad() {
