@@ -184,7 +184,7 @@ public class AMUnidadOrganica extends GeneralPage {
     Object onSuccessFromFormulariofiltrounidad() {        
         mostrar=true;        
         editando = false;
-        envelope.setContents(String.valueOf(uoAntecesora)+"-"+String.valueOf(nivelUO));
+        envelope.setContents(String.valueOf(unidadOrganica.getUoantecesora())+"-"+String.valueOf(nivelUO));
         
         unidadOrganica = new UnidadOrganica();
         //formularioaltaunidadorganica.recordError(String.valueOf(buoAntece));
@@ -297,7 +297,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
         ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());
         nivelUO = unidadOrganica.getNivel();
-        uoAntecesora = unidadOrganica.getUnidadorganica();
+        uoAntecesora = unidadOrganica.getUoantecesora();
     }
 
     void onCpChanged() {
@@ -431,6 +431,10 @@ public class AMUnidadOrganica extends GeneralPage {
             unidadOrganica.setEntidad(entidadUE);
             unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
         }
+        if (uoAntecesora == null) {
+            formularioaltaunidadorganica.recordError("Debe selecciona Unidad Orgánica Antecesora");
+            return zonas();
+        }
         c.add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()));        
         c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
         
@@ -441,6 +445,7 @@ public class AMUnidadOrganica extends GeneralPage {
             return zonas();
         }
         else{
+            
             c = session.createCriteria(UnidadOrganica.class);
             if (editando) {
             c.add(Restrictions.ne("id", unidadOrganica.getId()));
@@ -462,7 +467,7 @@ public class AMUnidadOrganica extends GeneralPage {
         unidadOrganica.setCod_ubi_dept(ubigeoDomicilio.getDepartamento());
         unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
         unidadOrganica.setCod_ubi_prov(ubigeoDomicilio.getProvincia());
-        unidadOrganica.setUnidadorganica(uoAntecesora);
+        unidadOrganica.setUoantecesora(uoAntecesora);
         session.saveOrUpdate(unidadOrganica);
         new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         editando = false;

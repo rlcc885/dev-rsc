@@ -22,7 +22,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @IncludeJavaScriptLibrary("context:client/js/confirm.js")
 public class Confirm {
 
-    @Parameter(value = "Está seguro ?", defaultPrefix = BindingConstants.LITERAL)
+    @Parameter(value = "¿Está seguro de realizar esta acción?", defaultPrefix = BindingConstants.LITERAL)
     private String message;
 
     @Inject
