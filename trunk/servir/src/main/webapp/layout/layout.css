@@ -1147,15 +1147,15 @@ form th {
 }
 
 #unidad_organica_ubi_geo {
-    position:relative;
+    /*position:relative;*/
     float:left;
-    margin-left:-10px;
-    margin-top: 14px;
+    margin-left:0;
+    margin-top: 0;
 }
 
 #form_unidad_organica {
     float:left;
-    width:450px;
+    width:350px;
 }
 
 #timeout {
@@ -1593,10 +1593,10 @@ input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#5
 /*#ok_msg { background-color:#91d722; border:none; margin: 0 auto; width: 90%;}*/
 /*Cambiar clave */
 #ok_msg {
-    background-color: #91d722;
-    color: #ffffff;
+    background-color: #A60E0B;
+    color: #fff;
     font-weight: bold;
-    padding: 20px;
+    padding: 10px;
     /*
     margin: 20px;
     width: 200px;*/
