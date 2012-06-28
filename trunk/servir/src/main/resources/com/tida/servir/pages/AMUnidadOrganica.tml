@@ -109,7 +109,6 @@
         <div id="form_unidad_organica" class="abmform">
             <t:zone t:id="nivelZone">
                 <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
-                   <!-- <t:envelope t:id="envelope"/>-->
                     <div class="f-wrap">
                         <div class="f-left">
                             * Nivel Organizacional
@@ -126,12 +125,9 @@
                             </div> -->
                             <div class="f-left">
                                 * Unidad Orgánica Antecesora
-                                <!--<input t:type="Select" t:id="unidadOrganica_uoa"
-                                       onChange="this.form.fire()" 
-                                       t:value="uoAntecesora" model="beansUO" encoder="beansUO" t:validate="required"
-                                       t:zone="ubigeoDomZone"/>-->
-                                <input t:type="Select" t:id="unidadOrganica_uoa" model="beansUO" 
-                                       encoder="beansUO" t:value="uoAntecesora" t:validate="required"/>
+                                <input t:type="Select" t:id="unidadOrganica_uoa"
+                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       t:value="uoAntecesora" model="beansUO" t:zone="ubigeoDomZone"/>
                             </div>
                         </t:if>
                     </div>
@@ -198,9 +194,9 @@
                         </div>
 
                         <div id="bouttons_uo" class="actions f-right clear">
-                            <input id="submit" type="submit" value="Grabar" class="button f-right"/>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/>
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                            <input id="submit" type="submit" value="Grabar" t:mixins="confirm" page="AMUnidadOrganica" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>
                     </t:form>
