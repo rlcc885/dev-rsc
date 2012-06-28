@@ -35,12 +35,14 @@ public class Permisos {
                 || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA) ) {
             return false;
         }
-
+/*
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
             if (eue.def_servir == null)
                 return true; // Permitimos carga via servir si no se especifica otra cosa
             return eue.def_servir;
         }
+        * 
+        */
         return true; // El resto puede escribir
     }
 
