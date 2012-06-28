@@ -59,6 +59,7 @@
                         </div>
                     </div>
                     <div class="actions f-right">
+                        <t:actionlink t:id="mostrar" zone="listaUOZone">Mostrar Todo</t:actionlink>
                         <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
                     </div>                         
@@ -73,15 +74,14 @@
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
         <t:if test="mostrar">
-            <t:form t:id="formlistaunidad"> 
-                <t:envelope t:id="envelope"/>
+            <t:form t:id="formlistaunidad">                 
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
                         ${errorBorrar}
                     </div>
                 </t:if>
-                <t:grid source="unidadesorganicas" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom"
-                        row="uo" >
+                <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                        row="uo">
                     <t:parameter name="empty">
                         <div class="no-info">No hay unidades orgánicas generadas</div>
                     </t:parameter>
@@ -95,6 +95,8 @@
                         </t:if>
                     </p:accionesCell>
                 </t:grid>
+                <t:envelope t:id="envelope"/>
+                <t:errors/>
                 <!-- </t:if> -->
             </t:form>
         </t:if>
@@ -137,7 +139,7 @@
                 <t:if test="PuedeEditar">
 
                     <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                        <t:errors/>
+                        
 
                         <div class="f-wrap">
                             <div class="f-left">
@@ -194,7 +196,8 @@
                         </div>
 
                         <div id="bouttons_uo" class="actions f-right clear">
-                            <input id="submit" type="submit" value="Grabar" t:mixins="confirm" page="AMUnidadOrganica" class="button f-right"/>
+                            <!--<input id="submit" type="submit" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button f-right"/>-->
+                            <input t:type="Submit" t:id="guardar" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
