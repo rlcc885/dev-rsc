@@ -38,7 +38,7 @@ public class Entidad implements Serializable {
     @Validate("required")
     private String denominacion;
     private String sigla;
-    private String abreviatura;
+
     private String ruc;
     Boolean proc_Batch;
     private DatoAuxiliar tipoVia;
@@ -233,14 +233,6 @@ public class Entidad implements Serializable {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-    
-    public String getAbreviatura() {
-        return abreviatura;
-    }
-
-    public void setAbreviatura(String abreviatura) {
-        this.abreviatura = abreviatura;
     }
     
     @ManyToOne
