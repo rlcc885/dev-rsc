@@ -184,7 +184,6 @@ public class CambioUOEntidad extends GeneralPage{
     @CommitAfter
     Object onSuccessFromformEDestino() {
         entixd=true;        
-        envelope.setContents("sjdhsd");
         return new MultiZoneUpdate("EDestiZone", EOrigenZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -224,7 +223,12 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
-        envelope.setContents("sjdhsd"); 
+        if(opcion.equals("MIGRAR")){
+           //envelope.setContents(helpers.Constantes.CARGO_EXITO); 
+        }
+        else if(opcion.equals("FUSIONAR")){
+            
+        }
         return EDestiZone.getBody();
     }
 
