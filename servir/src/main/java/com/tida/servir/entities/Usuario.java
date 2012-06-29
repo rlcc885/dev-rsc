@@ -2,12 +2,7 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -35,7 +30,7 @@ public class Usuario implements Serializable {
 //	@PrimaryKeyJoinColumn
     @ManyToOne
     @Validate("required")
-    private Entidad_BK entidad;
+    private Entidad entidad;
     private String login; //el login del usuario
     private String tipo_usuario;
 //    private String email;
@@ -53,6 +48,8 @@ public class Usuario implements Serializable {
     @Validate("required")
     private Trabajador trabajador;
     private String clave;
+    @Column(name = "ROL_ID")
+    private long rolid;
 
     public String getClave() {
         return clave;
@@ -110,12 +107,12 @@ public class Usuario implements Serializable {
         this.md5Clave = md5Clave;
     }
 
-    public Entidad_BK getEntidad() {
+    public Entidad getEntidad() {
         return entidad;
     }
 
-    public void setEntidad(Entidad_BK entidadUE) {
-        this.entidad = entidadUE;
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
     }
 
     public String getLogin() {
@@ -142,6 +139,16 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
+    public long getRolid() {
+        return rolid;
+    }
+
+    public void setRolid(long rolid) {
+        this.rolid = rolid;
+    }
+
+    
+    
 //    public String getApellidos() {
 //        return apellidos;
 //    }

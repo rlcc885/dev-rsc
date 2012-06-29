@@ -27,6 +27,7 @@ import javax.persistence.*;
 
 @Entity
 public class UsuarioAcceso implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "TRABAJADOR_ID")
     private BigInteger trabajadorId;
@@ -57,6 +58,8 @@ public class UsuarioAcceso implements Serializable {
     private Short hijo;
     @Column(name = "ACTIVO")
     private Short activo;
+    @Column(name = "ROL_ID")
+    private long rolid;
 
     public UsuarioAcceso() {
     }
@@ -164,4 +167,13 @@ public class UsuarioAcceso implements Serializable {
     public void setActivo(Short activo) {
         this.activo = activo;
     }
+
+    public long getRolid() {
+        return rolid;
+    }
+
+    public void setRolid(Short rolid) {
+        this.rolid = rolid;
+    }
+    
 }
