@@ -26,7 +26,6 @@ public class Entidad implements Serializable {
     //antes datos de organismo informante
     @NonVisual
     private long id;
-    private long entidad_id;
     String cue_entidad;
 
     private DatoAuxiliar nivelGobierno;   
@@ -68,7 +67,8 @@ public class Entidad implements Serializable {
     private Trabajador jefeOga;
     @NonVisual
     private DatoAuxiliar tipoSubEntidad;
-
+    @NonVisual
+    private Entidad entidad;
     Boolean esSubEntidad;      
     @NonVisual
     private String validado;
@@ -167,14 +167,6 @@ public class Entidad implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-    
-     public long getEntidad_id() {
-        return entidad_id;
-    }
-
-    public void setEntidad_id(long entidad_id) {
-        this.entidad_id = entidad_id;
     }
 
     public Boolean getProc_Batch() {
@@ -303,6 +295,15 @@ public class Entidad implements Serializable {
 
     public void setJefeOga(Trabajador jefeOga) {
         this.jefeOga = jefeOga;
+    }
+    
+    @ManyToOne   
+    public Entidad getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
     }
 
     public Boolean getEsSubEntidad() {
