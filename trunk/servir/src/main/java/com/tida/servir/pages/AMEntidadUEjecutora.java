@@ -121,6 +121,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private void inicio() {
             entidadUE = new Entidad();
             subEntidadUE = new Entidad();
+            entio = new Entidad();
     }
    //para la busqueda de entidades
    
@@ -236,7 +237,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
         subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
         subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
-        
+        subEntidadUE.setEntidad(entio);
        // nombreArchivo = file.getFileName();
         //System.out.println(nombreArchivo);
         //entidadUE.setLogotipo(nombreArchivo);
@@ -299,8 +300,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromEditar(Entidad entix) {        
         entio = entix;
         subEntidadUE.setDenominacion(entio.getDenominacion());
-        subEntidadUE.setEntidad_id(entio.getId());
-        subEntidadUE.setEsSubEntidad(true);
+        //subEntidadUE.setEntidad_id(entio.getId());
+        subEntidadUE.setEsSubEntidad(true); 
         entixo=false;
         return EOrigenZone.getBody();  
     }
