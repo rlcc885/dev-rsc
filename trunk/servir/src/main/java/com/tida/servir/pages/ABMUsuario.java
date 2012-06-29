@@ -3,33 +3,25 @@ package com.tida.servir.pages;
 import com.sun.mail.smtp.SMTPMessage;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
+import com.tida.servir.entities.*;
 import helpers.Errores;
 import helpers.Logger;
-
-import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.*;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-//import javax.crypto.*;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Log;
@@ -44,9 +36,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
-
 import org.hibernate.Session;
-
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -62,7 +52,7 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     private Usuario usuario;
     @Property
-    private Usuario u;
+    private UsuarioTrabajador u;
     @Property
     @Persist
     private String nroDocumento;
@@ -97,7 +87,7 @@ public class ABMUsuario extends GeneralPage {
     @InjectComponent
     private Zone tabla_usuario;
     @Persist
-    private GenericSelectModel<Entidad_BK> _beanOrganismos;
+    private GenericSelectModel<Entidad> _beanOrganismos;
     @Inject
     private PropertyAccess _access;
     @Inject
@@ -106,7 +96,7 @@ public class ABMUsuario extends GeneralPage {
     private Boolean reinitialisarpassword;
     @Property
     @Persist
-    private Entidad_BK entidadUE;
+    private Entidad entidad;
     @Inject
     private Context context;
     @InjectComponent
@@ -120,6 +110,8 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private String nombresBusqueda;
+    @Property
+    private long primeraVez=0;
 
     public ABMUsuario() {
     }
@@ -161,34 +153,40 @@ public class ABMUsuario extends GeneralPage {
         return tc;
     }
 
-    public List<Usuario> getUsuarios() {
+    public List<UsuarioTrabajador> getUsuarios() {
         Criteria c;
-        c = session.createCriteria(Usuario.class);
+        List<UsuarioTrabajador> listaUsuarios = null;
+        
+        if (this.primeraVez==0){
+            this.primeraVez=1;
+        }else{
+        if (loggedUser.getRolid() > 1) {
+            c = session.createCriteria(UsuarioTrabajador.class);
 
-        //busqueda
-        if (identificacionBusqueda != null && !identificacionBusqueda.equals("")) {
+            //busqueda
+            if (identificacionBusqueda != null && !identificacionBusqueda.equals("")) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", identificacionBusqueda + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
+            }
+            if (apellidosBusqueda != null && !apellidosBusqueda.equals("")) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("apellidos", apellidosBusqueda + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
+            }
+            if (nombresBusqueda != null && !nombresBusqueda.equals("")) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresBusqueda + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
+            }
 
-            c.add(Restrictions.disjunction().add(Restrictions.like("login", identificacionBusqueda + "%").ignoreCase()).add(Restrictions.like("login", identificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("login", identificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
+            if (loggedUser.getRolid() == 2) { // Si es administrador de Entidad, sólo puede ver su información
+                c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
+                //c.add(Restrictions.ne("tipo_usuario", Usuario.ADMINLOCAL));
+            //} else {
+                // Administrador de usuarios general
+                //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORABMLOCAL));
+                //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORLECTURALOCAL));
+                //c.add(Restrictions.ne("tipo_usuario", Usuario.TRABAJADOR));
+            }
+            listaUsuarios = c.list();
+            }
         }
-        if (apellidosBusqueda != null && !apellidosBusqueda.equals("")) {
-
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidos", apellidosBusqueda + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
-        if (nombresBusqueda != null && !nombresBusqueda.equals("")) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresBusqueda + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
-
-        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-            c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
-            c.add(Restrictions.ne("tipo_usuario", Usuario.ADMINLOCAL));
-        } else {
-            // Administrador de usuarios general
-            c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORABMLOCAL));
-            c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORLECTURALOCAL));
-            c.add(Restrictions.ne("tipo_usuario", Usuario.TRABAJADOR));
-
-        }
-        return c.list();
+        return listaUsuarios;
 
     }
 
@@ -247,23 +245,23 @@ public class ABMUsuario extends GeneralPage {
         return tipoUsuario.equals(Usuario.TRABAJADOR);
     }
 
-    public GenericSelectModel<Entidad_BK> getBeanOrganismos() {
+    public GenericSelectModel<Entidad> getBeanOrganismos() {
 
-        List<Entidad_BK> list;
+        List<Entidad> list;
         Criteria c;
-        c = session.createCriteria(Entidad_BK.class);
-        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
+        c = session.createCriteria(Entidad.class);
+        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
 
         list = c.list();
 
         //entidadUE = (EntidadUEjecutora) c.list().get(0); //cargamos el valor por defecto
-        _beanOrganismos = new GenericSelectModel<Entidad_BK>(list, Entidad_BK.class, "denominacion", "id", _access);
+        _beanOrganismos = new GenericSelectModel<Entidad>(list, Entidad.class, "denominacion", "id", _access);
         return _beanOrganismos;
     }
 
     void onPrepareFromFormularioUsuario() {
         if (loggedUser.getEntidad() != null) {
-            entidadUE = loggedUser.getEntidad();
+            entidad = loggedUser.getEntidad();
         }
     }
 
@@ -344,7 +342,6 @@ public class ABMUsuario extends GeneralPage {
             }
 
             if (reinitialisarpassword) {
-                System.out.println("aqui");
                 //aca falta de generar el la contrasena, de mandarla por mail con la function sendPasswordByEmail y de guardar la en la base de dato
                 //password = usuario.getLogin() + "123.";
                 SecureRandom random = new SecureRandom();
@@ -357,20 +354,17 @@ public class ABMUsuario extends GeneralPage {
 
         usuario.setTipo_usuario(tipoUsuario);
         if (usuarioDeOrganismo()) {
-            usuario.setEntidad(entidadUE);
+            usuario.setEntidad(entidad);
         } else {
             usuario.setEntidad(null);
         }
 
         if (editando) {
             Logger logger = new Logger();
-            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION,
-                    loggedUser);
+            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION, loggedUser);
         } else {
             Logger logger = new Logger();
-            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_CREACION,
-                    loggedUser);
-
+            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_CREACION, loggedUser);
             usuario.setUltimo_cambio_clave(null);
             usuario.setIntentos_fallidos(0L);
         }
@@ -435,11 +429,11 @@ public class ABMUsuario extends GeneralPage {
     }
 
     private Usuario createNewUsuario() {
-        Usuario usuario = new Usuario();
-        usuario.setIntentos_fallidos(0L);
+        Usuario usuario_local = new Usuario();
+        usuario_local.setIntentos_fallidos(0L);
         tipoDocumento = null;
         nroDocumento = null;
-        return usuario;
+        return usuario_local;
     }
 
 
@@ -449,7 +443,7 @@ public class ABMUsuario extends GeneralPage {
     void onActionFromReset() {
         usuario = createNewUsuario();
         tipoUsuario = usuario.getTipo_usuario();
-        entidadUE = usuario.getEntidad();
+        entidad = usuario.getEntidad();
         editando = false;
     }
 
@@ -479,8 +473,8 @@ public class ABMUsuario extends GeneralPage {
                 }
 
             }
-            if (entidadUE == null) {
-                entidadUE = usuario.getEntidad();
+            if (entidad == null) {
+                entidad = usuario.getEntidad();
             }
         }
 

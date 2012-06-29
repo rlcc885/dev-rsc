@@ -2,7 +2,7 @@ package com.tida.servir.pages;
 
 
 import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioTrabajador;
@@ -56,7 +56,7 @@ public class Index {
     private Usuario usuario;
     @Property
     @SessionState(create = false)
-    private Entidad_BK eue;
+    private Entidad eue;
     /*
      * @Property @SessionState private UsuarioAcceso usuarioAcceso;
      *
@@ -93,7 +93,7 @@ public class Index {
     @Inject
     private ComponentClassResolver componentClassResolver;
     @Persist
-    private GenericSelectModel<Entidad_BK> _beanOrganismos;
+    private GenericSelectModel<Entidad> _beanOrganismos;
     @Inject
     private PropertyAccess _access;
     @Inject
@@ -115,16 +115,16 @@ public class Index {
         return !administrador;
     }
 
-    public GenericSelectModel<Entidad_BK> getBeanOrganismos() {
-        List<Entidad_BK> list;
+    public GenericSelectModel<Entidad> getBeanOrganismos() {
+        List<Entidad> list;
         Criteria c;
         //System.out.println("-------------------------------------entrada bean organismo");
-        c = session.createCriteria(Entidad_BK.class);
-        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
+        c = session.createCriteria(Entidad.class);
+        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
 
         list = c.list();
 
-        _beanOrganismos = new GenericSelectModel<Entidad_BK>(list, Entidad_BK.class, "denominacion", "id", _access);
+        _beanOrganismos = new GenericSelectModel<Entidad>(list, Entidad.class, "denominacion", "id", _access);
 
         return _beanOrganismos;
     }
@@ -217,7 +217,7 @@ public class Index {
         if (sessionService != null) {
             List<String> names = sessionService.getAttributeNames();
             List<String> toKeep = Arrays.asList(new String[]{
-                        "sso:" + Entidad_BK.class.getName(),
+                        "sso:" + Entidad.class.getName(),
                         "sso:" + Usuario.class.getName()
                     });
             for (String name : names) {

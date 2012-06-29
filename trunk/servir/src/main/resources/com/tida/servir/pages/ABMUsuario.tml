@@ -6,7 +6,7 @@
     <t:Menu/>
     <t:if test= "usuarioDeOrganismo">
         <div class="organismo_titulo">
-            Entidad U. Ejecutora: ${loggedUser.entidadUE.denominacion}
+            Entidad U. Ejecutora: ${loggedUser.entidad.denominacion}
         </div>
     </t:if>
     <h1>Usuarios</h1>
@@ -39,13 +39,14 @@
 <br/>
     <t:zone t:id="tabla_usuario">    
         <div id = "tabla_usuario_grid" >
-            <t:grid source="usuarios" rowsPerPage="15" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave,clave">
+            <t:grid source="usuarios" rowsPerPage="30" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave,clave">
                 <t:parameter name="empty">
                     <div class="no-info">No hay usuarios generados</div>
                 </t:parameter>
+                
                 <p:organismoCell>
-                    <t:if test="u.entidadUE">
-                        ${u.entidadUE.denominacion}
+                    <t:if test="u.entidad">
+                        ${u.entidad.denominacion}
                     </t:if>
                 </p:organismoCell>
                 <p:accionesCell>
@@ -53,8 +54,8 @@
                     | <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                 </p:accionesCell>
             </t:grid>
-        </div> 
-    </t:zone>        
+        </div>
+    </t:zone>
 
     <div class="box f-wrap" id="box_u">
         <t:envelope t:id="envelope"/>
@@ -74,7 +75,7 @@
                 <t:if test="muestroOrganismos">
                     <t:form  t:id="formOrganismo" t:zone="editarUsuarioZone" >
                         <label>Entidad /U. Ejecutora</label>
-                        <input t:type="select" t:id="organismos" t:value="entidadUE"
+                        <input t:type="select" t:id="organismos" t:value="entidad"
                             model="beanOrganismos" encoder="beanOrganismos" t:validate="required"
                             onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                             t:zone="editarUsuarioZone" t:blankOption="ALWAYS"/>
@@ -99,11 +100,11 @@
                         <t:parameter name="else">
                             <div class="f-left">
                                 <t:label for="apellidos" />
-                                <input t:type="TextField" t:id="apellidos" t:value="usuario.apellidos" t:validate="required" size="10"/>
+                                <input t:type="TextField" t:id="apellidos" t:value="usuario.login" t:validate="required" size="10"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="nombres" />
-                                <input t:type="TextField" t:id="nombres" t:value="usuario.nombres" t:validate="required" size="10"/>
+                                <input t:type="TextField" t:id="nombres" t:value="usuario.login" t:validate="required" size="10"/>
                             </div>
                         </t:parameter>
                     </t:if>
@@ -113,7 +114,7 @@
                     </div>
                     <div class="f-left">
                         <t:label for="email" />
-                        <input t:type="TextField" t:id="email" t:value="usuario.email" 
+                        <input t:type="TextField" t:id="email" t:value="usuario.login" 
                         t:validate="required, regexp" size="10"/>
                     </div>
                     <div class="f-left">

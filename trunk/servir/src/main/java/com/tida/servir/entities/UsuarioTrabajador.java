@@ -6,14 +6,7 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  *
@@ -28,6 +21,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "UsuarioTrabajador.findByNombres", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nombres = :nombres"),
     @NamedQuery(name = "UsuarioTrabajador.findByApellidopaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidopaterno = :apellidopaterno"),
     @NamedQuery(name = "UsuarioTrabajador.findByApellidomaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidomaterno = :apellidomaterno"),
+    @NamedQuery(name = "UsuarioTrabajador.findByApellidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidos = :apellidos"),
     @NamedQuery(name = "UsuarioTrabajador.findByMd5clave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.md5clave = :md5clave"),
     @NamedQuery(name = "UsuarioTrabajador.findByIntentosFallidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.intentosFallidos = :intentosFallidos"),
     @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
@@ -46,6 +40,8 @@ public class UsuarioTrabajador implements Serializable {
     private String apellidopaterno;
     @Column(name = "APELLIDOMATERNO")
     private String apellidomaterno;
+    @Column(name = "APELLIDOS")
+    private String apellidos;
     @Column(name = "MD5CLAVE")
     private String md5clave;
     @Column(name = "INTENTOS_FALLIDOS")
@@ -56,10 +52,14 @@ public class UsuarioTrabajador implements Serializable {
     @Column(name = "ESTADO")
     private Short estado;
     @Id
-    //@Basic(optional = false)
+    @Basic(optional = false)
     @Column(name = "ID")
     private long id;
-
+    @ManyToOne
+    private Entidad entidad;
+    @Column(name = "ROL_ID")
+    private long rolid;
+    
     public UsuarioTrabajador() {
     }
 
@@ -133,6 +133,30 @@ public class UsuarioTrabajador implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public Entidad getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
+
+    public long getRolid() {
+        return rolid;
+    }
+
+    public void setRolid(long rolid) {
+        this.rolid = rolid;
     }
     
 }
