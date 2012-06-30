@@ -138,7 +138,7 @@ public class RegimenesGruposNiveles {
 
         DatoAuxiliar d;
        if (regimengruponivel.getRegimen() != null) {
-            lrgn = Helpers.getDatoAuxiliar("GrupoOcupacional", "REGIMENLABORAL",
+            lrgn = Helpers.getDatoAuxiliar("GRUPOOCUPACIONAL", "REGIMENLABORALCONTRACTUAL",
                     regimengruponivel.getRegimen().getCodigo(), session);
         } else {
             regimengruponivel.setGrupo(null);
@@ -148,7 +148,7 @@ public class RegimenesGruposNiveles {
 
         lrgn = new ArrayList<DatoAuxiliar>();
         if (regimengruponivel.getGrupo()!= null) {
-            lrgn = Helpers.getDatoAuxiliar("NivelRemunerativo", "GRUPOOCUPACIONAL",
+            lrgn = Helpers.getDatoAuxiliar("NIVELREMUNERATIVO", "GRUPOOCUPACIONAL",
                     regimengruponivel.getGrupo().getCodigo(), session);
         }  else {
             regimengruponivel.setNivelRemunerativo(null);

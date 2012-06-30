@@ -15,15 +15,15 @@
                                     <!-- t:validate="required,minlength=1" -->
                                     
                 <div id="cargosSelects">
-                    <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">
-                    <div class="f-left">
-                    Nivel Organizacional
-                    <input t:type="Select" t:id="unidadorganica_nivel"
-                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                        t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
-                    </div>
-                    </form>                    
                     <t:zone t:id="nivelCargoZone">
+                        <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">
+                            <div class="f-left">
+                            Nivel Organizacional
+                            <input t:type="Select" t:id="unidadorganica_nivel"
+                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
+                            </div>
+                        </form>
                         <form t:type="form" t:id="formUOCargo" t:zone="abmZone">
                             <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
                                 <t:if test = "hayNivel">
@@ -33,16 +33,7 @@
                                             onChange="this.form.fire()" t:zone="abmZone"/>
                                 </t:if>
                             </div> 
-                        </form>
-                    </t:zone>                    
-                  
-                </div>                 
-                 
-                <div t:type="zone"  id="form_unidad_organica" class="abmform">
-                          
-                        <t:zone t:id="filtrosZone" >            
-                            <form t:type="form" t:id="formulariofiltrocargo" zone="abmZone">
-                                <div class="f-wrap">
+                            <div class="f-wrap">
                                     <div class="f-left">
                                     Denominación
                                     <input t:type="TextField" t:id="bdenocargo" t:value="bdenocargo" size="30"/> 
@@ -51,14 +42,10 @@
                                     Situación CAP
                                     <input t:type="Select" t:id="bsituacioncap" t:value="valsituacioncap" model="beanDatoSituacionCAP" />
                                     </div> 
-                                </div>
-                                <div class="actions f-right">
-                                    <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                    <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
-                                </div>                                 
-                            </form>   
-                        </t:zone>
-                    <div id = "ocupacionalescargoxx">
+                            </div>
+                        </form>
+                    </t:zone>
+                <div id = "ocupacionalescargoxx">
                 <t:zone t:id="BOcupacionalesZone" >            
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
@@ -66,6 +53,24 @@
                     </form>                 
                 </t:zone>    
                 </div>
+                <t:zone t:id="filtrosZone" >            
+                            <form t:type="form" t:id="formulariofiltrocargo" zone="abmZone">
+                                
+                                <div class="actions f-right">
+                                    <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
+                                    <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
+                                    <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                    <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                                </div>                                 
+                            </form>   
+                </t:zone>
+                  
+                </div>                 
+                 
+                <div t:type="zone"  id="form_unidad_organica" class="abmform">
+                          
+                       
+  
                     
                  </div>
                   <!-- aqui-->                  
@@ -74,16 +79,15 @@
             </div> 
 
   <div t:type="zone" t:id="abmZone" class="abmform">
-      <t:if test="limpio">
         <t:if test="mostrar">
             <t:form t:id="formularioaltacargo" zone="abmZone">
                 <t:errors/>
                 ${errorBorrar}
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                            row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, presupuestado_PAP, ctd_puestos_total, nivel_unidad_organica">
+                            row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, estado, nivel_unidad_organica,ctd_puestos_total,presupuestado_PAP">
                         <t:parameter name="empty">
-                            <div class="no-info">No hay cargos generados</div>
+                            <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="PuedeEditar">
@@ -92,7 +96,7 @@
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
                                 -->
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="c"
-                                     t:zone="abmZone" href="#">Borrar</a>
+                                     t:zone="abmZone" href="#">Eliminar</a>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>
@@ -202,7 +206,8 @@
                             <!--</div>--> <!-- div f-wrap -->
                        <!-- </div> --><!-- div der -->
                         <div class="actions f-right">
-                            <input id="submit" type="submit" value="Grabar" class="button f-right"/>
+                            <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/> 
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/> 
                           <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
@@ -210,7 +215,6 @@
                 </t:if> <!-- puedeEditar -->
             </t:form>
         </t:if>
-      </t:if>
     </div> <!-- abmZone -->
     
     <div id = "ocupacionalescargo">
