@@ -128,9 +128,12 @@ public class CambioUOEntidad extends GeneralPage{
     private boolean mostrar;
     
     @Property
+    @Persist
     private Entidad entio;
     
+    
     @Property
+    @Persist
     private Entidad entid;
     
     @Property
@@ -153,6 +156,12 @@ public class CambioUOEntidad extends GeneralPage{
     
     @InjectComponent
     private Envelope envelope;
+    
+    @Component(id = "formBotones")
+    private Form formBotones;
+    
+    @InjectComponent
+    private Zone botonZone;
     
     
     public List<String> getBopciones(){
@@ -184,7 +193,7 @@ public class CambioUOEntidad extends GeneralPage{
     @CommitAfter
     Object onSuccessFromformEDestino() {
         entixd=true;        
-        return new MultiZoneUpdate("EDestiZone", EOrigenZone.getBody())                             
+        return new MultiZoneUpdate("EDestiZone", EDestiZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
     
@@ -204,10 +213,10 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    Object onActionFromEditar(Entidad entix) {        
-        entio = entix;
+    Object onActionFromEditar(Entidad enti1) {        
+        entio = enti1;
         entidad_origen=entio.getDenominacion();  
-        entixo=false;
+        entixo=false;        
         return EOrigenZone.getBody();  
     }
     
@@ -223,13 +232,28 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
+        
+        if(uoOrigen==uoDestino){
+            formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
+            return botonZone.getBody();
+        }
         if(opcion.equals("MIGRAR")){
-           //envelope.setContents(helpers.Constantes.CARGO_EXITO); 
+            envelope.setContents(helpers.Constantes.CARGO_EXITO);
+
         }
         else if(opcion.equals("FUSIONAR")){
-            
+            if(entio==entid){
+                formBotones.recordError("FUSIÓN: La Entidad Origen no debe ser igual a la Entidad Destino");
+                return botonZone.getBody();
+            }
+            else{
+                
+            }
         }
-        return EDestiZone.getBody();
+        formBotones.clearErrors(); 
+        //envelope.setContents(String.valueOf(entio)+String.valueOf(uoOrigen)+String.valueOf(entid)+String.valueOf(uoDestino));
+        
+        return botonZone.getBody();
     }
 
 //    @Log
@@ -290,7 +314,13 @@ public class CambioUOEntidad extends GeneralPage{
         Criteria c = session.createCriteria(UnidadOrganica.class);
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
         //c.add(Restrictions.eq("nivel", nivelOrigen));
-        c.add(Restrictions.eq("entidad", entidadUE ));
+        if(entio==null){
+            c.add(Restrictions.eq("entidad", entidadUE ));
+        }
+        else{
+            c.add(Restrictions.eq("entidad", entio ));
+        }
+        
         list = c.list();
         _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);       
         return _beanUOrganicasOrigen;
@@ -300,7 +330,7 @@ public class CambioUOEntidad extends GeneralPage{
     public GenericSelectModel<UnidadOrganica> getBeanUOrganicasDestino(){  
         List<UnidadOrganica> list;
         Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));        
         c.add(Restrictions.eq("entidad", entid));
         list = c.list();        
         return new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
