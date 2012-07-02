@@ -54,7 +54,7 @@ h4 { font-size:12px; font-weight:bold;}
 
 #page {
     min-height: 500px;
-    overflow:auto;
+    /*overflow:auto;*/
 }
 #footer {
     width:900px;
@@ -905,7 +905,7 @@ DIV.t-error-popup SPAN {
 #busquedas, #mainfiltros {
     height: 180px;
     border:  1px solid #E40132;
-    width: 780px;
+    /*width: 780px;*/
     margin-bottom: 10px;
 }
 
@@ -1202,13 +1202,15 @@ form th {
     float:left;
     margin-left:0;
     margin-top: 0;
+    position: relative;
+    top: -90px;
 }
-
+/*
 #form_unidad_organica {
     float:left;
     width:350px;
 }
-
+*/
 #timeout {
     left:200px;
     top: 100px;
@@ -1445,10 +1447,10 @@ DIV.t-available-values UL LI
     font-weight:bold; 
     padding:4px 10px; 
     display:block;}
-.box form { padding:20px 18px; }
+/*.box form { padding:20px 18px; }*/
 .box form label { margin:0 0 5px 0;}
 .box form .f-left.bigger { width:210px;}
-form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; width:197px; font-size:11px;}
+form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px;/* width:197px; */font-size:11px;}
 #formulariousuario { padding:0 25px }
 #formTipoUsuario { padding:0 30px;}
 
@@ -1524,7 +1526,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
     /*display:inline;*/
     margin: 10px;
 }
-#busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ width:95% !important; height:auto; border-color:#D72522; padding:20px 18px;}
+#busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ /*width:920px;*/ height:auto; border-color:#D72522; padding:20px;}
 #busquedas select, #mainfiltros select, #form_conceptoremunerativo select, #form_usuario select {font-size:11px;}
 #filtrosnombres, #filtrosdoc, #mainfiltros .seccionfiltros { float:none; margin:0;}
 #busquedas label, #mainfiltros label {margin-right:0;}
@@ -1675,13 +1677,13 @@ DIV.t-console DIV.t-debug {
 
 #cue_uo {
     width:100px;
-}*/
+}
 
 #bouttons_uo {
     top: 88px;
     position: relative;
 }
-
+*/
 #bouttons_oi {
     top: -31px;
     position: relative;
@@ -1800,12 +1802,12 @@ DIV.t-console DIV.t-debug {
 #box-cargos{
     height: 430px;
 }
-*/
+
 #tamano-ubigeo-wrap{
     margin-left:10px;
     margin-top: -37px;
 }
-
+*/
 #cambiarclave{
     margin: 5px;
 }
@@ -2007,11 +2009,11 @@ DIV.t-console DIV.t-debug {
 #entidadCodDen{
     clear:both;
 }
-
+/*
 #nivelZone{
     height:55px;
 }
-
+*/
 #datosDestino .box form {
     padding:0;
 }
