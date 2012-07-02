@@ -33,6 +33,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ale
@@ -163,7 +165,9 @@ public class CambioUOEntidad extends GeneralPage{
     @InjectComponent
     private Zone botonZone;
     
+    private int num2=0;
     
+    @Log
     public List<String> getBopciones(){
         List<String> mod = new LinkedList<String>();
         mod.add("MIGRAR");
@@ -197,10 +201,23 @@ public class CambioUOEntidad extends GeneralPage{
                     .add("entiZone", entiZone.getBody());
     }
     
+    void onSelectedFromCancel() {        
+        num2=2;
+        entixo=false;
+        entixd=false;
+        mostrar=false;
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
-        mostrar=true;
+        if(num2==2){
+            
+        }
+        else{
+           mostrar=true;
+        }
+        
         return new MultiZoneUpdate("busZone", busZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -216,7 +233,8 @@ public class CambioUOEntidad extends GeneralPage{
     Object onActionFromEditar(Entidad enti1) {        
         entio = enti1;
         entidad_origen=entio.getDenominacion();  
-        entixo=false;        
+        entixo=false;
+        uoOrigen=null;
         return EOrigenZone.getBody();  
     }
     
@@ -225,34 +243,95 @@ public class CambioUOEntidad extends GeneralPage{
         entid = enti2;
         entidad_destino=entid.getDenominacion();
         mostrarUOD=true;
-        entixd=false;        
+        entixd=false;
+        uoDestino=null;
         return EDestiZone.getBody();  
     }
     
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
-        
-        if(uoOrigen==uoDestino){
-            formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
-            return botonZone.getBody();
-        }
-        if(opcion.equals("MIGRAR")){
-            envelope.setContents(helpers.Constantes.CARGO_EXITO);
+//        
+//        if(opcion.equalsIgnoreCase("MIGRAR")){
+//           envelope.setContents("migrarasss");
+//           return botonZone.getBody();
+//
+//        }
+//        else if(opcion==null && opcion.equals("")){
+//            
+//        }
+        if (opcion != null && !opcion.equals("")) {
+           if(opcion.equalsIgnoreCase("MIGRAR")){//migrar
+                if(uoOrigen==null){
+                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+                    return botonZone.getBody();
+                }
+                if(entid==null){
+                    formBotones.recordError("Debe seleccionar Entidad Destino");
+                    return botonZone.getBody();
+                }
+                if(entio==null){ //validar x usuario
+                    Helpers.migrarUOBase(uoOrigen, entidadUE, entid, session);
+                    session.flush();
+                    formBotones.clearErrors();
+                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
+                }
+                else{
+                    Helpers.migrarUOBase(uoOrigen, entio, entid, session);
+                     session.flush();
+                     formBotones.clearErrors();
+                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
+                }           
 
-        }
-        else if(opcion.equals("FUSIONAR")){
-            if(entio==entid){
-                formBotones.recordError("FUSIÓN: La Entidad Origen no debe ser igual a la Entidad Destino");
-                return botonZone.getBody();
+           }
+           else if(opcion.equalsIgnoreCase("FUSIONAR")){//fusionar                   
+                if(uoOrigen==null){
+                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+                    return botonZone.getBody();
+                }
+                if(uoDestino==null){
+                    formBotones.recordError("Debe seleccionar U. Orgánica Destino");
+                    return botonZone.getBody();
+                }            
+                if(uoOrigen.getId()==uoDestino.getId()){
+                    formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
+                    return botonZone.getBody();
+                }
+                if(entio==null){ //validar x usuario
+                    if(entidadUE.getId()==entid.getId()){
+                        Helpers.fusionarUOBase(uoOrigen, entidadUE, entid, uoDestino, session);
+                        session.flush();
+                        formBotones.clearErrors();
+                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+                    }
+                    else{
+                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");
+                        return botonZone.getBody();
+                    }
+                }
+                else{
+                    if(entio.getId()==entid.getId()){
+                        Helpers.fusionarUOBase(uoOrigen, entio, entid, uoDestino, session);
+                        session.flush();
+                        formBotones.clearErrors();
+                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+                    }
+                    else{
+                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");                    
+                        return botonZone.getBody(); 
+                    }
+                }            
             }
-            else{
-                
-            }
+           
         }
-        formBotones.clearErrors(); 
-        //envelope.setContents(String.valueOf(entio)+String.valueOf(uoOrigen)+String.valueOf(entid)+String.valueOf(uoDestino));
+        else{
+           formBotones.recordError("Debe seleccionar una Opción");
+           return botonZone.getBody(); 
+        }
         
+//        //formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+//        envelope.setContents(String.valueOf(entio)+String.valueOf(uoOrigen)+String.valueOf(entid)+String.valueOf(uoDestino)+opcion);
+          //envelope.setContents(opcion);
         return botonZone.getBody();
     }
 
@@ -378,7 +457,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @CommitAfter
     Object onSuccessFromFormUOChange() {
-        Helpers.migrarUOBase(uoOrigen, entidadUE, entidadDestino, uoDestino, session);
+        Helpers.migrarUOBase(uoOrigen, entidadUE, entidadDestino, session);
         session.flush();
         uoOrigen = null;
         uoDestino = null;
@@ -406,6 +485,16 @@ public class CambioUOEntidad extends GeneralPage{
                     .add("EOrigenZone", EOrigenZone.getBody())
                     .add("EDestiZone", EDestiZone.getBody());
                     //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
+
+    }
+    
+    @Log
+    private MultiZoneUpdate zonasDatos() {
+        MultiZoneUpdate mu;
+
+        mu = new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody()).add("EOrigenZone", EOrigenZone.getBody())                                
+                    .add("EDestiZone", EDestiZone.getBody());
+        return mu;
 
     }
 
