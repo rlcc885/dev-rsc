@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
     private String login; //el login del usuario
     private String tipo_usuario;
 //    private String email;
-    private int estado; // Si está desactivado(Falta confirme mail),
+    private int estado;
     // Si venció el passwd, etc.
     private String md5Clave; // Poner el hash.
 //    private String nombres;
@@ -48,8 +48,8 @@ public class Usuario implements Serializable {
     @Validate("required")
     private Trabajador trabajador;
     private String clave;
-    @Column(name = "ROL_ID")
-    private long rolid;
+    @ManyToOne
+    private RscRol rol;
 
     public String getClave() {
         return clave;
@@ -139,12 +139,20 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-    public long getRolid() {
-        return rolid;
+//    public long getRolid() {
+//        return rolid;
+//    }
+//
+//    public void setRolid(long rolid) {
+//        this.rolid = rolid;
+//    }
+
+    public RscRol getRol() {
+        return rol;
     }
 
-    public void setRolid(long rolid) {
-        this.rolid = rolid;
+    public void setRol(RscRol rol) {
+        this.rol = rol;
     }
 
     

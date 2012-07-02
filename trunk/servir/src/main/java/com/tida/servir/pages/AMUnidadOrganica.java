@@ -6,7 +6,7 @@ import com.tida.servir.entities.Cargoxunidad;
 import helpers.Errores;
 import helpers.Logger;
 
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Ubigeo;
 import com.tida.servir.entities.UnidadOrganica;
@@ -44,7 +44,7 @@ public class AMUnidadOrganica extends GeneralPage {
     private Usuario loggedUser;
     @Property
     @SessionState
-    private Entidad_BK entidadUE;
+    private Entidad entidadUE;
     
     @Inject
     private Session session;
@@ -662,9 +662,9 @@ public class AMUnidadOrganica extends GeneralPage {
                 ubigeoDomicilio.setProvincia(uoAntecesora.getCod_ubi_prov());                
             }else{
                 System.out.println("----------- antecesora null "+uoAntecesora);
-                ubigeoDomicilio.setDepartamento(entidadUE.getCod_ubi_dept());
-                ubigeoDomicilio.setDistrito(entidadUE.getCod_ubi_dist());
-                ubigeoDomicilio.setProvincia(entidadUE.getCod_ubi_prov());
+                ubigeoDomicilio.setDepartamento(entidadUE.getDepartamento());
+                ubigeoDomicilio.setDistrito(entidadUE.getDistrito());
+                ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
             }
 
         }
@@ -698,13 +698,13 @@ public class AMUnidadOrganica extends GeneralPage {
     }
     
     void ubicacion(){
-        ubigeoDomicilio.setDepartamento(entidadUE.getCod_ubi_dept());
-        ubigeoDomicilio.setDistrito(entidadUE.getCod_ubi_dist());
-        ubigeoDomicilio.setProvincia(entidadUE.getCod_ubi_prov());
-        unidadOrganica.setTipovia(entidadUE.getTipovia());
-        unidadOrganica.setTipozona(entidadUE.getTipozona());
+        ubigeoDomicilio.setDepartamento(entidadUE.getDepartamento());
+        ubigeoDomicilio.setDistrito(entidadUE.getDistrito());
+        ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
+        unidadOrganica.setTipovia(entidadUE.getTipoVia());
+        unidadOrganica.setTipozona(entidadUE.getTipoZona());
         unidadOrganica.setLocalidad(entidadUE.getDireccion());        
-        unidadOrganica.setDesczona(entidadUE.getDesczona());
+        unidadOrganica.setDesczona(entidadUE.getDescZona());
     }
 
     @Log

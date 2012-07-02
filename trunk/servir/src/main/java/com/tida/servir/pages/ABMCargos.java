@@ -48,7 +48,7 @@ public class ABMCargos extends GeneralPage {
     private UnidadOrganica uo;
     @Property
     @SessionState
-    private Entidad_BK entidadUE;
+    private Entidad entidadUE;
     @InjectComponent
     @Property
     private Zone nivelCargoZone;
@@ -167,17 +167,17 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     public List<Integer> getBeanNivel() {
-        List<Integer> nivel = new LinkedList<Integer>();
+        List<Integer> niv = new LinkedList<Integer>();
         Integer nivelMax = 0;
 
         nivelMax = Helpers.maxNivelUO(entidadUE, session);
 
         for (int i = 1; i <= nivelMax; i++) {
             // Es mas uno porque agregamos hasta un nivel mas
-            nivel.add(i);
+            niv.add(i);
         }
 
-        return nivel;
+        return niv;
     }
 
     @Log
@@ -188,53 +188,53 @@ public class ABMCargos extends GeneralPage {
     @Log
     public GenericSelectModel<UnidadOrganica> getBeanUOrganicas2() {
         List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidad", entidadUE));
+        Criteria cargoporunidad = session.createCriteria(UnidadOrganica.class);
+        cargoporunidad.add(Restrictions.eq("entidad", entidadUE));
         if(nivel!= null){
-            c.add(Restrictions.eq("nivel", nivel));
+            cargoporunidad.add(Restrictions.eq("nivel", nivel));
         }
-        list = c.list();
+        list = cargoporunidad.list();
         _beanUOrganicas2 = new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
         return _beanUOrganicas2;
     }
     
     @Log
     public List<Cargoxunidad> getCargos() {
-        Criteria c = session.createCriteria(Cargoxunidad.class);
-        c.createAlias("unidadorganica", "unidadorganica");
+        Criteria cargoporunidad = session.createCriteria(Cargoxunidad.class);
+        cargoporunidad.createAlias("unidadorganica", "unidadorganica");
  
-        c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
-        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
+        cargoporunidad.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
+        cargoporunidad.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
         if(num3==2){
             
         }
         else{  
             if(nivel!= null){
-            c.add(Restrictions.eq("unidadorganica.nivel", nivel));     
+            cargoporunidad.add(Restrictions.eq("unidadorganica.nivel", nivel));     
             }
             if (uo != null && !uo.equals("")) {
-                c.add(Restrictions.eq("unidadorganica", uo));
+                cargoporunidad.add(Restrictions.eq("unidadorganica", uo));
             }
             if (bdenocargo != null && !bdenocargo.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("den_cargo", bdenocargo + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdenocargo.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdenocargo.replaceAll("n", "ñ") + "%").ignoreCase()));
+                cargoporunidad.add(Restrictions.disjunction().add(Restrictions.like("den_cargo", bdenocargo + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdenocargo.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdenocargo.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (valsituacioncap != null && !valsituacioncap.equals("")) {
-                c.add(Restrictions.like("situacioncap", valsituacioncap));
+                cargoporunidad.add(Restrictions.like("situacioncap", valsituacioncap));
             }
             if (bregimengruponivel.getRegimen() != null && !bregimengruponivel.getRegimen().equals("")) {
-                c.createAlias("regimenlaboral", "regimenlaboral");
-                c.add(Restrictions.like("regimenlaboral", bregimengruponivel.getRegimen()));
+                cargoporunidad.createAlias("regimenlaboral", "regimenlaboral");
+                cargoporunidad.add(Restrictions.like("regimenlaboral", bregimengruponivel.getRegimen()));
             }
             if (bregimengruponivel.getGrupo() != null && !bregimengruponivel.getGrupo().equals("")) {
-                c.createAlias("grupoOcupacional", "grupoOcupacional");
-                c.add(Restrictions.like("grupoOcupacional", bregimengruponivel.getGrupo()));
+                cargoporunidad.createAlias("grupoOcupacional", "grupoOcupacional");
+                cargoporunidad.add(Restrictions.like("grupoOcupacional", bregimengruponivel.getGrupo()));
             }
             if (bregimengruponivel.getNivelRemunerativo() != null && !bregimengruponivel.getNivelRemunerativo().equals("")) {
-                c.createAlias("nivelRemunerativo", "nivelRemunerativo");  
-                c.add(Restrictions.like("nivelRemunerativo", bregimengruponivel.getNivelRemunerativo()));
+                cargoporunidad.createAlias("nivelRemunerativo", "nivelRemunerativo");  
+                cargoporunidad.add(Restrictions.like("nivelRemunerativo", bregimengruponivel.getNivelRemunerativo()));
             } 
         }
-        return c.list();
+        return cargoporunidad.list();
     }
 
     /*@InjectComponent

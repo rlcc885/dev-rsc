@@ -1,7 +1,7 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.RemuneracionPersonal;
@@ -48,7 +48,7 @@ public class ABMConceptosRemunerativos  extends GeneralPage {
 
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
 
     @Inject
     private PropertyAccess _access;

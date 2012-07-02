@@ -32,7 +32,7 @@ public class UnidadOrganica {
     @Validate("required")
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    @PrimaryKeyJoinColumn
-    private Entidad_BK entidad;
+    private Entidad entidad;
 //    @Validate("required")
 //    @OneToMany(cascade = CascadeType.ALL)
     private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
@@ -120,11 +120,11 @@ public class UnidadOrganica {
     }
 
     @ManyToOne
-    public Entidad_BK getEntidad() {
+    public Entidad getEntidad() {
         return entidad;
     }
 
-    public void setEntidad(Entidad_BK entidad) {
+    public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
     }
 

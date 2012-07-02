@@ -2,7 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.AusLicPersonal;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Usuario;
 import helpers.Errores;
@@ -58,7 +58,7 @@ public class AusLicPersonalesEditor {
     
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
     
     @InjectComponent
     private Envelope envelope;

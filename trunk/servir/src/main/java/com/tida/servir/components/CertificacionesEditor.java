@@ -2,7 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -52,7 +52,7 @@ public class CertificacionesEditor {
         
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
 
     @Component(id = "certificacionesEdit")
     private Form _form;

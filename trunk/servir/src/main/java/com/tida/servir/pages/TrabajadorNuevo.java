@@ -7,7 +7,7 @@ import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.DatoAuxiliar;
 import helpers.Errores;
 import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.UnidadOrganica;
@@ -46,7 +46,7 @@ public class TrabajadorNuevo  extends GeneralPage
 
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
 
     @Property
     @SessionState

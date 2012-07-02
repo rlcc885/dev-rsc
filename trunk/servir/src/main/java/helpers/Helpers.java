@@ -4,18 +4,13 @@
  */
 package helpers;
 
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.UnidadOrganica;
-import com.tida.servir.entities.Usuario;
-import java.util.Date; 
+import com.tida.servir.entities.*;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
@@ -26,6 +21,23 @@ import org.hibernate.criterion.Restrictions;
  * @author ale
  */
 public class Helpers {
+    public static LkEstadoUsuario getEstadoUsuario(int estadoId,Session session){
+        Query query = session.getNamedQuery("LkEstadoUsuario.findById");
+        query.setParameter("id", estadoId);
+        return (LkEstadoUsuario) query.list().get(0);
+    }
+    
+    public static List<LkEstadoUsuario> getEstadoUsuario(Session session){
+        Query query = session.getNamedQuery("LkEstadoUsuario.findAll");
+        return query.list();
+    }
+    
+    public static List<RscRol> getRolUSuario(long rolid,Session session){
+        Query query = session.getNamedQuery("RscRol.findByIdLow");
+        query.setParameter("id", rolid);
+        return query.list();
+    }
+    
     public static List<DatoAuxiliar> getValoresTablaAuxiliar(String tabla, Session session){
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla", tabla));
@@ -178,7 +190,7 @@ public class Helpers {
                 || user.getTipo_usuario().equals(Usuario.OPERADORANALISTA));
     }
 
-    public static Integer maxNivelUO(Entidad_BK eue, Session session) {
+    public static Integer maxNivelUO(Entidad eue, Session session) {
         Criteria c;
         Integer nivelMax;
         c = session.createCriteria(UnidadOrganica.class);
@@ -207,8 +219,8 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter
-    public static void fusionarUOBase(UnidadOrganica uo, Entidad_BK entidadOrigen,
-            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void fusionarUOBase(UnidadOrganica uo, Entidad entidadOrigen,
+            Entidad entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
 
         uo.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(uo);
@@ -233,8 +245,8 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter 
-    public static void migrarUOBase(UnidadOrganica uo, Entidad_BK entidadOrigen,
-        Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void migrarUOBase(UnidadOrganica uo, Entidad entidadOrigen,
+        Entidad entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         uo.setEntidad(entidadDestino);
         session.saveOrUpdate(uo);
         if(uo.getNivel()==1){
@@ -256,7 +268,7 @@ public class Helpers {
     }
     
     @CommitAfter 
-    public static void migrarSubunidades(Entidad_BK entidadDestino, List<UnidadOrganica> unis, Session session) {
+    public static void migrarSubunidades(Entidad entidadDestino, List<UnidadOrganica> unis, Session session) {
         for (UnidadOrganica unio : unis) {                                                                                                                         
            unio.setEntidad(entidadDestino);
            session.saveOrUpdate(unio);            
@@ -282,8 +294,8 @@ public class Helpers {
      * @param uoPadreDestino
      */
     @CommitAfter
-    public static void migrarUnidad(UnidadOrganica uo, Entidad_BK entidadOrigen,
-            Entidad_BK entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+    public static void migrarUnidad(UnidadOrganica uo, Entidad entidadOrigen,
+            Entidad entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
         if (uoPadreDestino == null) {
             //uo.setUnidadorganica(null);
             //uo.setNivel(1);
@@ -293,7 +305,7 @@ public class Helpers {
         }
         uo.setEntidad(entidadDestino);
         if (!entidadOrigen.equals(entidadDestino)) {
-            uo.setCod_und_organica(entidadDestino.getCodigoEntidadUE() + "-" + uo.getCod_und_organica());
+            uo.setCod_und_organica(entidadDestino.getCue_entidad() + "-" + uo.getCod_und_organica());
         }
         session.saveOrUpdate(uo);
 
@@ -320,8 +332,8 @@ public class Helpers {
      * @param cargos
      */
     @CommitAfter
-    public static void migrarCargos(Entidad_BK entidadOrigen,
-            Entidad_BK entidadDestino, UnidadOrganica uoDestino, List<Cargoxunidad> cargos, Session session) {
+    public static void migrarCargos(Entidad entidadOrigen,
+            Entidad entidadDestino, UnidadOrganica uoDestino, List<Cargoxunidad> cargos, Session session) {
         // 
         Criteria c, c1;
         List<CargoAsignado> lca;
@@ -329,7 +341,7 @@ public class Helpers {
             cargo.setUnidadorganica(uoDestino);
             if (!entidadOrigen.equals(entidadDestino)) {
 
-                cargo.setCod_cargo(entidadDestino.getCodigoEntidadUE() + "-"
+                cargo.setCod_cargo(entidadDestino.getCue_entidad() + "-"
                         + cargo.getCod_cargo());
                 // Ahora migro los legajos y los cargos asignados.
                 c = session.createCriteria(CargoAsignado.class);
@@ -348,7 +360,7 @@ public class Helpers {
                     } else {
                         // no tiene legajo en la entidad
                         Legajo l = new Legajo();
-                        l.setCod_legajo(entidadDestino.getCodigoEntidadUE() + "-" + ca.getTrabajador().getNroDocumento());
+                        l.setCod_legajo(entidadDestino.getCue_entidad() + "-" + ca.getTrabajador().getNroDocumento());
                         l.setEntidad(entidadDestino);
                         l.setTrabajador(ca.getTrabajador());
                         session.saveOrUpdate(l);

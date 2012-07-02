@@ -226,6 +226,12 @@ Fin de librerias pentaho -->
             <version>1.6.4</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

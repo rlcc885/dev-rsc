@@ -3,8 +3,6 @@
       xmlns:p="tapestry:parameter">
 
 
-    <t:Menu/>
-    
     <div class="organismo_titulo">
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
@@ -76,7 +74,7 @@
         <t:if test="mostrar">
             <t:form t:id="formlistaunidad">
                 <t:envelope t:id="envelope"/>
-                
+
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
                         ${errorBorrar}
@@ -104,7 +102,7 @@
     </div> <!-- listaUOZone -->
 
     <!-- <div id="box_uo" class="box"> -->
-    
+
     <div id="box-cargos" class="box">
         <h3>Crear/Editar Unidad Orgánica</h3>
 
@@ -200,7 +198,7 @@
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
-                            
+
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>
                     </t:form>
