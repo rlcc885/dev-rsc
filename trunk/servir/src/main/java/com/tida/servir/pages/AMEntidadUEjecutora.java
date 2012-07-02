@@ -62,6 +62,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     private Zone ubigeoEntidadZone;
 
+    
+    //Entidad Origen
     @InjectComponent
     private Zone EOrigenZone;
     @InjectComponent
@@ -69,18 +71,55 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String bdenoentidad; 
-    @Persist
-    private GenericSelectModel<UnidadOrganica> _beanUOrganicasOrigen;
     @Property
     @Persist
     private boolean mostrar;
     @Property
-    @Persist
-    private boolean entixo;
-    @Property
     private Entidad entio;
     @InjectComponent
     private Zone busZone;
+    @Persist
+    @Property
+    private String entidad_origen;
+    
+    
+    //Trabajador
+    @InjectComponent
+    private Zone busZone2;
+    @Persist
+    @Property
+    private String apeTrabajador; 
+    @InjectComponent
+    private Zone trabajadorZone;    
+    @Property
+    private Trabajador trabajador;
+    @Persist
+    @Property
+    private String valida;
+    @Persist
+    @Property
+    private String titular;
+    @Persist
+    @Property
+    private String jefeOGA;
+    @Persist
+    @Property
+    private String jefeRRHH;
+    @InjectComponent
+    private Zone TitularZone;
+    @InjectComponent
+    private Zone JefeRRHHZone;
+    @InjectComponent
+    private Zone JefeOGAZone;
+    @Property
+    @Persist
+    private boolean btitular;
+    @Property
+    @Persist
+    private boolean bjefeOGA;    
+    @Property
+    @Persist
+    private boolean bjefeRRHH;
     
     
     @Property
@@ -209,6 +248,21 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
 
+    @Log
+    void onSelectFromBuscarTitular() {
+         btitular = true; 
+    }
+    
+    @Log
+    void onSelectFromBuscarjeferrhh() {
+         bjefeRRHH=true;
+    }
+    
+    @Log
+    void onSelectFromBuscarjefeoga() {
+         bjefeOGA=true;
+    }
+    
 
     @Log
     @CommitAfter    
@@ -267,7 +321,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
         mostrarEsconder = "Ocultar";
         mostrarFiltros = true;
     }
+
     
+    
+    
+    //Metodos de Busqueda de Entidades    
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
@@ -275,22 +333,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return c.list();
     }
     
-    @Log
-    public GenericSelectModel<UnidadOrganica> getBeanUOrganicasOrigen(){
-        List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-        //c.add(Restrictions.eq("nivel", nivelOrigen));
-        c.add(Restrictions.eq("entidad", entidadUE ));
-        list = c.list();
-        _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);       
-        return _beanUOrganicasOrigen;
-    }
     
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
-        entixo=true; 
         mostrar=true;
         return new MultiZoneUpdate("busZone", busZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
@@ -299,10 +345,65 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromEditar(Entidad entix) {        
         entio = entix;
-        subEntidadUE.setDenominacion(entio.getDenominacion());
-        //subEntidadUE.setEntidad_id(entio.getId());
+        entidad_origen=entio.getDenominacion(); 
+        subEntidadUE.setEntidad(entio);
         subEntidadUE.setEsSubEntidad(true); 
-        entixo=false;
+        mostrar=false;
         return EOrigenZone.getBody();  
     }
+    
+    //Metodos de Busqueda de Trabajadores
+     @Log
+    @CommitAfter
+    Object onSuccessFromFormularioTrabajador() { 
+        mostrar=true;
+        btitular=true;
+        bjefeRRHH=true;
+        bjefeOGA=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+     
+   @Log
+    public List<Trabajador> getTrabajadores() {
+        Criteria c = session.createCriteria(Trabajador.class);
+        c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apeTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        return c.list();
+    }
+   
+   @Log
+    Object onActionFromeditarTitular(Trabajador traba) {        
+        trabajador = traba;
+       
+            titular=trabajador.getApellidoPaterno();
+            btitular=false;
+       
+        mostrar=false;
+        return TitularZone.getBody();  
+    }
+   
+    @Log
+    Object onActionFromeditarJefeRRHH(Trabajador traba) {        
+        trabajador = traba;
+       
+        jefeRRHH=trabajador.getApellidoPaterno();
+        bjefeRRHH=false;
+        
+        mostrar=false;
+        return TitularZone.getBody();  
+    }
+    
+     @Log
+    Object onActionFromeditarJefeOGA(Trabajador traba) {        
+        trabajador = traba;
+        
+            jefeOGA=trabajador.getApellidoPaterno();
+            bjefeOGA=false;
+
+        mostrar=false;
+        return TitularZone.getBody();  
+    }
+   
+   
+    
 }
