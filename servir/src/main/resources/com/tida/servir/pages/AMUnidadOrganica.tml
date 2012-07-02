@@ -102,9 +102,9 @@
     </div> <!-- listaUOZone -->
 
     <!-- <div id="box_uo" class="box"> -->
-
+    <h3>Crear/Editar Unidad Orgánica</h3>
     <div id="box-cargos" class="box">
-        <h3>Crear/Editar Unidad Orgánica</h3>
+        
 
         <div id="form_unidad_organica" class="abmform">
             <t:zone t:id="nivelZone">
@@ -201,6 +201,7 @@
 
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>
+                        <br style="clear: both;"/>
                     </t:form>
 
                     <!-- </t:if> -->
