@@ -25,7 +25,6 @@ public class CambioEntidad  extends GeneralPage
     @SessionState(create=false)
     private Entidad_BK eue;
 
-
     @Inject
     private Session session;
     

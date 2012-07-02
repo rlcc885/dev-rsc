@@ -21,7 +21,7 @@ public class CrearDatos {
 
 
         Entidad_BK _entidadUEjecutora = new Entidad_BK();
-
+        Entidad eueTemporal = new Entidad();
         //Metemos en el "usuario" el organismo informante.
         _entidadUEjecutora = new Entidad_BK();
         _entidadUEjecutora.setDenominacion("Organismo Informante 1");
@@ -53,7 +53,7 @@ public class CrearDatos {
                 uo.setDen_und_organica("UnidadOrganica 1");
                 uo.setEstado(UnidadOrganica.ESTADO_ALTA);
                 uo.setLocalidad("Localidad 1");
-                uo.setEntidad(_entidadUEjecutora);
+                uo.setEntidad(eueTemporal);
                 
                 // sacado porque ahora son datos auxiliares.
                 // uo.setCod_ubi_dept("Depto1");

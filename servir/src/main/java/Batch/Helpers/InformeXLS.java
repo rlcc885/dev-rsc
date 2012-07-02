@@ -1910,7 +1910,7 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (ConceptoRemunerativo cr : lcr) {
                 if(cr.getEntidad() != null)
-                    escribir.print(InformeXLS.leoCampo(cr.getEntidad().getCodigoEntidadUE()));
+                    escribir.print(InformeXLS.leoCampo(cr.getEntidad().getCue_entidad()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(cr.getCodigo()));
                 escribir.print("|");
@@ -1958,7 +1958,7 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (UnidadOrganica uo : luo) {
                 if(uo.getEntidad() != null)
-                    escribir.print(InformeXLS.leoCampo(uo.getEntidad().getCodigoEntidadUE()));
+                    escribir.print(InformeXLS.leoCampo(uo.getEntidad().getCue_entidad()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(uo.getCod_und_organica()));
                 escribir.print("|");
@@ -2007,7 +2007,7 @@ public class InformeXLS {
             for (Cargoxunidad c : lc) {
                 if(c.getUnidadorganica() != null){
                     if(c.getUnidadorganica().getEntidad() != null)
-                        escribir.print(InformeXLS.leoCampo(c.getUnidadorganica().getEntidad().getCodigoEntidadUE()));
+                        escribir.print(InformeXLS.leoCampo(c.getUnidadorganica().getEntidad().getCue_entidad()));
                 }
                 escribir.print("|");
                 if(c.getUnidadorganica() != null)
@@ -2141,7 +2141,7 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (Legajo l : ll) {
                 if(l.getEntidad() != null)
-                    escribir.print(InformeXLS.leoCampo(l.getEntidad().getCodigoEntidadUE()));
+                    escribir.print(InformeXLS.leoCampo(l.getEntidad().getCue_entidad()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(l.getCod_legajo()));
                 escribir.print("|");
@@ -2169,7 +2169,7 @@ public class InformeXLS {
             for (CargoAsignado ca : lca) {
                 if(ca.getLegajo() != null){
                     if(ca.getLegajo().getEntidad() != null)
-                        escribir.print(InformeXLS.leoCampo(ca.getLegajo().getEntidad().getCodigoEntidadUE()));
+                        escribir.print(InformeXLS.leoCampo(ca.getLegajo().getEntidad().getCue_entidad()));
                 }
                 escribir.print("|");
                 if(ca.getCargo() != null)
@@ -2614,7 +2614,7 @@ public class InformeXLS {
             for (ConstanciaDocumental cd : lcd) {
                 if(cd.getLegajo() != null){
                     if(cd.getLegajo().getEntidad() != null)
-                        escribir.print(InformeXLS.leoCampo(cd.getLegajo().getEntidad().getCodigoEntidadUE()));
+                        escribir.print(InformeXLS.leoCampo(cd.getLegajo().getEntidad().getCue_entidad()));
                 }
                 escribir.print("|");
                 if(cd.getLegajo() != null)
