@@ -16,28 +16,35 @@
             <h3> Opciones / Fuente de Origen</h3>
            <div class="f-wrap">                  
                     
+                    <!--
+                    <t:zone t:id="UOZOne">
+                        
+                        
+                       
+                    </t:zone>-->
                     
                                        
                     <t:zone t:id="EOrigenZone">
-                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">
-                          <div class="f-wrap">
+                        <form t:type="form" t:id="formUOO">
                             <div class="f-left">
                             Opciones
                             <input t:type="Select" t:id="cambio_opciones"
                             t:value="opcion" model="bopciones"/>
-                            </div>   
+                            </div> 
                             <div class="f-left">
                             * Unidad Orgánica Origen
                             <select t:type="select" t:id="select_unidadOrganicaOrigen"
                             model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
-                            t:validate="required"/>
-                            </div>
+                            t:validate="required"/>    
+                             </div>
                             <div class="f-left">    
                                 Entidad Origen
                                 <input t:type="TextField" t:id="entidad_den"
                                     t:value="entidad_origen" t:readonly="readonly" style="width: 400px;"/>                            
-                            </div>
-                         </div>
+                            </div> 
+                        </form>
+                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">                       
+                                                          
                          <div class="actions f-right">  
                              <input id="buscarsubmit" type="submit" value="Buscar" class="button" onClick="javascript: mostrar();" />
                          </div>              
@@ -254,7 +261,7 @@ function datos(val1,val2){
                     <t:if test="entixo">
                         <h2>Entidad Origen</h2>
                         <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="entio" include="denominacion" inPlace="true" t:zone="organismosZone">
+                            row="entio" include="denominacion" t:zone="organismosZone">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
                             </t:parameter>
@@ -266,7 +273,7 @@ function datos(val1,val2){
                     <t:if test="entixd">
                         <h2>Entidad Destino</h2>
                         <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="entid" include="denominacion" inPlace="true" t:zone="entiZone">
+                            row="entid" include="denominacion" t:zone="entiZone">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
                             </t:parameter>
