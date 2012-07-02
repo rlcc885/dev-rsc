@@ -27,7 +27,8 @@
                             <div class="f-left">
                             Opciones
                             <input t:type="Select" t:id="cambio_opciones"
-                            t:value="opcion" model="bopciones"/>
+                            t:value="opcion" model="bopciones"
+                            onChange="this.form.fire()" t:zone="EOrigenZone"/>
                             </div> 
                             <div class="f-left">
                             Unidad Orgánica Origen
@@ -76,6 +77,7 @@
             <h3> Seleccione destino</h3>
             <t:zone t:id="EDestiZone">
                   <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">
+                    
                     <div class="f-wrap">
                     <div class="f-left">
                     <if test="mostrarUOD">                        
@@ -153,16 +155,23 @@
         </div> 
         <div t:type="zone" t:id="botonZone"> 
             <form t:type="form" t:id="formBotones" t:zone ="botonZone">
-                <t:envelope t:id="envelope"/>
                 <t:errors/>
+                <t:envelope t:id="envelope"/>
+                
                 <div class="actions f-right">
                 <input id="aceptar" type="submit" value="Aceptar" class="button" />
-                <input id="limpiar" type="submit" value="Limpiar Formulario" class="button" />
-                <input id="cancelar" type="submit" value="Cancelar" class="button" />
-                </div> 
+                <!--<input id="limpiar" type="submit" value="Limpiar Formulario" class="button" />
+                <input id="cancelar" type="submit" value="Cancelar" class="button" />-->
+                </div>
+                <a href="javascript:abrir()">Enlace</a> 
+                
             </form>
         </div>
-        
+      <script> 
+function abrir() { 
+open('perfil','','top=300,left=300,width=300,height=300') ; 
+} 
+</script>   
 <!--        
 <script type="text/javascript">
 function popup(url,ancho,alto) {
@@ -240,7 +249,8 @@ function datos(val1,val2){
                             </div>                   
                         </div>
                         <div class="actions f-right">
-                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" />                    
+                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" /> 
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                         </div>  
                 </form>
                 </t:zone>

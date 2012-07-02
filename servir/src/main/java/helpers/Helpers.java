@@ -246,7 +246,7 @@ public class Helpers {
      */
     @CommitAfter 
     public static void migrarUOBase(UnidadOrganica uo, Entidad entidadOrigen,
-        Entidad entidadDestino, UnidadOrganica uoPadreDestino, Session session) {
+        Entidad entidadDestino, Session session) {
         uo.setEntidad(entidadDestino);
         session.saveOrUpdate(uo);
         if(uo.getNivel()==1){
