@@ -55,7 +55,7 @@ public class Index {
     @SessionState
     private Usuario usuario;
     @Property
-    @SessionState(create = false)
+    @SessionState
     private Entidad eue;
     /*
      * @Property @SessionState private UsuarioAcceso usuarioAcceso;
@@ -206,7 +206,7 @@ public class Index {
          * Permisos.paginaInicial(usuario); }
          *
          */
-        eue = usuario.getEntidad();
+        eue = usuarioTrabajador.getEntidad();
 
         logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
         return Permisos.paginaInicial(usuario);

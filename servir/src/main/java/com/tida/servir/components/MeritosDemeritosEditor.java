@@ -2,7 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
@@ -56,7 +56,7 @@ public class MeritosDemeritosEditor {
 
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
     
     @Component(id = "meritosdemeritosEdit")
     private Form _form;

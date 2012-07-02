@@ -1,3 +1,161 @@
+
+/*css reset*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;margin:0;padding:0;}:focus{outline:0;}body{line-height:1;color:#000;background:#FFF;}ol,ul{list-style:none;}table{border-collapse:separate;border-spacing:0;}caption,th,td{text-align:left;font-weight:400;}blockquote:before,blockquote:after,q:before,q:after{content:"";}blockquote,q{quotes:"" "";}
+/*en css reset*/
+
+body {
+    font-size:12px;
+    font-family: Tahoma, Geneva, sans-serif;
+    text-align:left;
+    background: url("images/page-bg.png") repeat-x #FFFFFF;
+    color: #333333;
+}
+a, a:visited, a:link { font-size:11px; color:#e10827; text-decoration:none;}
+a:hover { text-decoration:underline;}
+input, select, textarea {
+    /*font:12px/1.2em Tahoma, Geneva, sans-serif normal;
+    /*
+    background-color:#fff;
+    border:1px solid #989898;*/
+    padding:4px;
+    color:#555454;
+    /*width:185px;*/
+    /*margin-bottom:15px !important;*/
+    /*clear:both;*/
+    font-size:11px;
+}
+select { width:195px;  padding: 3px 4px;}
+label { display:block; margin-bottom:5px; width:auto;}
+.check { float:left;}
+.check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
+
+.button, .buttonGrey {
+    color:#fff;
+    font-weight:bold;
+    font-size:12px;
+    cursor:pointer;
+    background:url(images/bg-button.gif) repeat-x 0 0;
+    border:1px solid #be0a16;
+    padding:4px 8px;
+    width:auto !important;
+    overflow:visible;
+    margin:5px !important;
+}
+.buttonGrey { background-image:url(images/bg-buttongrey.gif); border-color:#676767;}
+.button:hover {background:url(images/bg-buttonO.gif) repeat-x 0 0;}
+.buttonGrey:hover {background:url(images/bg-buttongreyO.gif) repeat-x 0 0;}
+
+h1, h2, h3, h4, h5, h6 { letter-spacing:normal;}
+h2 { font-size:18px; border-bottom:1px dashed; padding-bottom:10px; margin-bottom:20px !Important;}
+h3 { 
+    /*margin-bottom:15px; */
+    font-size:12px;}
+h4 { font-size:12px; font-weight:bold;}
+
+#page {
+    min-height: 500px;
+    overflow:auto;
+}
+#footer {
+    width:900px;
+    margin-left: 50px;
+}
+#mainsection {
+    background-color: #f5f5f5;
+    width: 960px;
+    margin:0 auto 20px;
+}
+
+/*HEADER*/
+#header { 
+    /*height:83px; */
+    width:960px;
+    background-color:#fff; 
+    overflow:auto; 
+    zoom:1; 
+    /*margin-bottom:10px;*/
+    text-indent:-9999px;
+    background: url(images/header-bg.png) repeat-x top left;
+    height: 90px;
+}
+
+#logo{
+    /*background: url(images/header.jpg) no-repeat top left;*/
+    /*height: 75px;*/
+    /*background-size: 95%;*/
+    /*height: 71px;*/
+}
+/*
+#logo h1 a{
+    width: 100%;
+    display: block;
+}*/
+#header #logo-left a { background:url(images/) no-repeat top left;  float:left;}
+#header #logo-right a { 
+    background:url(images/logo-servir.png) no-repeat top left; 
+    float:right; 
+    height:61px; 
+    width:167px; 
+    margin-right: 20px;
+    margin-top: 5px;
+    /*  padding:0; margin:7px 30px 0;*/
+}
+form {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+h1, h1 a, h2, h2 a, h3, h3 a {
+    margin: 0;
+    text-decoration: none;
+    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+    font-weight: normal;
+    color: #444444;
+}
+
+th {
+    background-color: #444444;
+}
+
+h1 {
+    letter-spacing: -1px;
+    font-size: 2.2em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin-bottom:10px;
+}
+
+h2 {
+    letter-spacing: -1px;
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+p, ol, ul {
+    margin-bottom: 2em;
+    line-height: 200%;
+}
+
+blockquote {
+    margin: 0 0 0 1.5em;
+    padding-left: 1em;
+    border-left: 5px solid #DDDDDD;
+}
+
+a {
+    color: #1692B8;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+
 /* Tapestry styles all start with "t-" */
 DIV.t-error {
     border: 1px solid red;
@@ -415,121 +573,13 @@ DIV.t-error-popup SPAN {
     padding: 0px 5px 10px 22px;
 }
 
+/*
+#mainsection.home #header {border:3px solid #d72522; }
+#logo-left h1, #logo-right h1 { padding:0; margin:0;}
 
+*/
 
-
-
-
-
-
-
-
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #d9d9d9;
-    text-align: justify;
-    font: 12px Arial, Helvetica, sans-serif;
-    color: #626262;
-}
-
-#page {
-    min-height: 500px;
-    overflow:auto;
-}
-
-#footer {
-    width:900px;
-    margin-left: 50px;
-}
-
-#mainsection {
-    background-color: #ffffff;
-    width: 900px;
-    margin-left: 50px;
-    border: #f2f2f2 3px solid ;
-    padding-bottom: 30px;
-    border-bottom:none;
-}
-
-form {
-    margin: 0;
-    padding: 0;
-}
-
-input {
-    border: 1px solid #a60e0b;
-    font: normal 1em Arial, Helvetica, sans-serif;
-}
-
-h1, h1 a, h2, h2 a, h3, h3 a {
-    margin: 0;
-    text-decoration: none;
-    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
-    font-weight: normal;
-    color: #444444;
-}
-
-th {
-    background-color: #444444;
-}
-
-h1 {
-    letter-spacing: -1px;
-    font-size: 2.2em;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    margin-bottom:10px;
-}
-
-h2 {
-    letter-spacing: -1px;
-    font-size: 2em;
-}
-
-h3 {
-    font-size: 1em;
-}
-
-p, ol, ul {
-    margin-bottom: 2em;
-    line-height: 200%;
-}
-
-blockquote {
-    margin: 0 0 0 1.5em;
-    padding-left: 1em;
-    border-left: 5px solid #DDDDDD;
-}
-
-a {
-    color: #1692B8;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-/* Header */
-
-#header {
-    /*height: 75px;*/
-    text-indent:-9999px;
-}
-
-#header #logo{
-    background: url(images/header.jpg) no-repeat top left;
-    /*height: 75px;*/
-    /*background-size: 95%;*/
-    background-position: 0;
-    height: 71px;
-}
-#logo h1 a{
-    width: 100%;
-    /*height: 75px;*/
-    display: block;
-}
-
+/*
 #logo-left h1, #logo-left p {
     float: left;
     text-transform: lowercase;
@@ -595,7 +645,7 @@ a:hover {
 
 #logo-right .current_page_item a {
 }
-
+*/
 /* Page */
 
 #page {
@@ -1054,17 +1104,18 @@ form th {
 }
 
 /* amb usuarios */
+/*
 #tabla_usuario {
     margin-bottom: 40px;
 }
-
+*/
 
 #form_usuario label {
     font: normal 1em Arial, Helvetica, sans-serif;
     width: 150px;
     text-align: left;
     margin-right: 10px;
-    display: block;
+    /*display: block;*/
     margin-bottom: 5px;
 }
 
@@ -1078,7 +1129,7 @@ form th {
     margin-bottom: 5px;
     font-size:10px;
 }
-
+/*
 #formularioselectorgano select {
     display:block;
 }
@@ -1092,9 +1143,9 @@ form th {
 }
 
 #abmZone{
-    height:500px;
+    padding:20px;
 }
-
+*/
 #formulariotrabajadornuevolegajocargo input,
 #formulariotrabajadornuevolegajocargo select {
     display:block;
@@ -1227,21 +1278,28 @@ form th {
 }
 
 #ocupacionalescargo {
+    /*
     height:130px;
     width:212px;
-    position: relative;
+    
     left: 2px;
-    top: -212px;
+    */
+    top: -115px;
+    position: relative;
+    width: 900px;
+    left: 20px;
+    /*
     float: left;
     filter:alpha(opacity=100);
     -moz-opacity: 1;
     opacity: 1;
-
-
+*/
 }
+
+/*
 #OcupacionalesZone {
 
-    /*height:130px;
+    height:130px;
         width:350px;
         position: relative;
         left: 0px;
@@ -1249,8 +1307,9 @@ form th {
         float: left;
         filter:alpha(opacity=100);
         -moz-opacity: 1;
-        opacity: 1;*/
+        opacity: 1;
 }
+
 #formOcupacional {
 }
 #OcupacionalesZone form {
@@ -1258,7 +1317,7 @@ form th {
     width: 250px;
     position: absolute;
 }
-
+*/
 #formacionZone {
     position: relative;
     top: -200px;
@@ -1378,57 +1437,8 @@ DIV.t-available-values UL LI
 
 
 
-/*css reset*/
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;margin:0;padding:0;}:focus{outline:0;}body{line-height:1;color:#000;background:#FFF;}ol,ul{list-style:none;}table{border-collapse:separate;border-spacing:0;}caption,th,td{text-align:left;font-weight:400;}blockquote:before,blockquote:after,q:before,q:after{content:"";}blockquote,q{quotes:"" "";}
-/*en css reset*/
-
-body {
-    font:12px/1.2em Tahoma, Geneva, sans-serif normal;
-    color:#333;
-    text-align:left;
-    background-color:#666565;
-}
-a, a:visited, a:link { font-size:11px; color:#e10827; text-decoration:none;}
-a:hover { text-decoration:underline;}
-input, select, textarea {
-    font:12px/1.2em Tahoma, Geneva, sans-serif normal;
-    background-color:#fff;
-    border:1px solid #989898;
-    padding:4px;
-    color:#555454;
-    width:185px;
-    margin-bottom:15px !important;
-    clear:both;
-}
-select { width:195px;  padding: 3px 4px;}
-label { display:block; margin-bottom:5px; font:11px/1.2em Tahoma, Geneva, sans-serif normal !important; width:auto;}
-.check { float:left;}
-.check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
-
-.button, .buttonGrey {
-    color:#fff;
-    font-weight:bold;
-    font-size:12px;
-    cursor:pointer;
-    background:url(images/bg-button.gif) repeat-x 0 0;
-    border:1px solid #be0a16;
-    padding:4px 8px;
-    width:auto !important;
-    overflow:visible;
-    margin:5px !important;
-}
-.buttonGrey { background-image:url(images/bg-buttongrey.gif); border-color:#676767;}
-.button:hover {background:url(images/bg-buttonO.gif) repeat-x 0 0;}
-.buttonGrey:hover {background:url(images/bg-buttongreyO.gif) repeat-x 0 0;}
-
-h1, h2, h3, h4, h5, h6 { letter-spacing:normal;}
-h2 { font-size:18px; border-bottom:1px dashed; padding-bottom:10px; margin-bottom:20px !Important;}
-h3 { 
-    /*margin-bottom:15px; */
-    font-size:12px;}
-h4 { font-size:12px; font-weight:bold;}
-
-.box { border:1px solid #707070; background-color:#fff; padding:0; clear:both;}
+.box { border:1px solid #707070; background-color:#fff; padding:20px; clear:both;}
+.box .actions { overflow:auto;zoom:1; margin-top: 50px;}
 .box h3, h3 { 
     background-color:#d72522; 
     color:#fff; 
@@ -1462,13 +1472,7 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
 
 #toggle_filtros {height:18px; padding-left:20px; display:-moz-inline-stack; display:inline-block;zoom:1;display:inline; }
 
-#mainsection { 
-    margin:0 auto 20px; 
-    padding:0; 
-    width:960px; 
-    background-color:#fff; 
-    border:2px solid #b1242d;
-}
+
 #page { border: medium none; height: auto !important; min-height: 300px; padding: 10px;}
 .entry h1{
     margin-bottom: 10px;
@@ -1482,19 +1486,6 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px; widt
     /*margin:0 0 20px -10px; */
     text-align:left;}
 
-/*HEADER*/
-#header { 
-    /*height:83px; */
-    width:960px;
-    background-color:#fff; 
-    overflow:auto; 
-    zoom:1; 
-    /*margin-bottom:10px;*/
-}
-#mainsection.home #header {border:3px solid #d72522; }
-#logo-left h1, #logo-right h1 { padding:0; margin:0;}
-#header #logo-left a { background:url(images/header.gif) no-repeat top left; height:83px; width:660px; float:left;}
-#header #logo-right a { background:url(images/servir-logo.gif) no-repeat top left; float:right; width:177px; height:65px; padding:0; margin:7px 30px 0;}
 
 /*LOGIN - HOME*/
 #mainsection.home { background-color:#666565; border:none; }
@@ -1525,7 +1516,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
 /*BUSQUEDA*/
 .wrap .pane { padding:20px;}
 #selectors { border:none; height:auto; padding:0; width:100%;}
-.actions { overflow:auto;zoom:1;}
+.actions { overflow:auto;zoom:1; margin-bottom: 5px;}
 .actions a { 
     display:-moz-inline-stack;
     display:inline-block;
@@ -1717,11 +1708,11 @@ DIV.t-console DIV.t-debug {
 #box_ue {
     height: 220px;
 }
-
+/*
 #box_u {
     height: 440px;
 }
-
+*/
 #box_asignarcargo {
     height: 500px;
 }
@@ -1805,11 +1796,11 @@ DIV.t-console DIV.t-debug {
     width: 100%;
     height:50px;
 }
-
+/*
 #box-cargos{
     height: 430px;
 }
-
+*/
 #tamano-ubigeo-wrap{
     margin-left:10px;
     margin-top: -37px;

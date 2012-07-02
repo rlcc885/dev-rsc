@@ -3,7 +3,6 @@
       xmlns:p="tapestry:parameter">
 
 
-    <t:Menu/>
     <t:if test= "usuarioDeOrganismo">
         <div class="organismo_titulo">
             Entidad U. Ejecutora: ${loggedUser.entidad.denominacion}
@@ -11,7 +10,7 @@
     </t:if>
     <h1>Usuarios</h1>
         <div class="box f-wrap">
-            <h3>Busqueda</h3>
+            <h3>Busqueda de usuarios</h3>
             <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">
                 <div style="display:block;">
                     <t:errors/>
@@ -39,9 +38,9 @@
 <br/>
     <t:zone t:id="tabla_usuario">    
         <div id = "tabla_usuario_grid" >
-            <t:grid source="usuarios" rowsPerPage="30" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave,clave">
+            <t:grid source="usuarios" rowsPerPage="30" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave,clave,apellidopaterno,apellidomaterno,rol">
                 <t:parameter name="empty">
-                    <div class="no-info">No hay usuarios generados</div>
+                    <div class="no-info">No hay usuarios generadoS</div>
                 </t:parameter>
                 
                 <p:organismoCell>
@@ -60,15 +59,6 @@
     <div class="box f-wrap" id="box_u">
         <t:envelope t:id="envelope"/>
         <h3>Crear/Editar Usuarios</h3>
-        <div class= "wrap" id = "form_tipo_usuario">
-            <form t:type="form"  t:id="formTipoUsuario" t:zone="entidadZone" >
-                <t:label for="tipousuario" />
-                <t:select t:id="tipousuario" t:value="tipoUsuario"
-                model = "tiposUsuarios" t:validate="required"
-                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                t:zone="entidadZone" />
-            </form>
-        </div>
 
         <div id= "form_organismos" class="abmform">
             <t:zone t:id="entidadZone">
@@ -95,27 +85,30 @@
                         </div>
                         <div class="f-left">
                             <t:label for="nroDocumento" />
-                            <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="required, regexp" size="10"/>
+                            <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="required, regexp" size="10" readonly="readonly"/>
                         </div>
                         <t:parameter name="else">
                             <div class="f-left">
-                                <t:label for="apellidos" />
-                                <input t:type="TextField" t:id="apellidos" t:value="usuario.login" t:validate="required" size="10"/>
+                                <t:label for="apellidoPaterno" />
+                                <input t:type="TextField" t:id="apellidoPaterno" t:value="trabajador.apellidopaterno" size="10" readonly="readonly"/>
+                            </div>
+                            <div class="f-left">
+                                <t:label for="apellidoMaterno" />
+                                <input t:type="TextField" t:id="apellidoMaterno" t:value="trabajador.apellidomaterno" size="10" readonly="readonly"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="nombres" />
-                                <input t:type="TextField" t:id="nombres" t:value="usuario.login" t:validate="required" size="10"/>
+                                <input t:type="TextField" t:id="nombres" t:value="trabajador.nombres" size="10" readonly="readonly"/>
                             </div>
                         </t:parameter>
                     </t:if>
                     <div class="f-left">
                         <t:label for="identificacion_usuario" />
-                        <input t:type="TextField" t:id="identificacion_usuario" t:value="usuario.login" t:validate="required" size="10"/>
+                        <input t:type="TextField" t:id="identificacion_usuario" t:value="usuario.login" size="10" readonly="readonly"/>
                     </div>
                     <div class="f-left">
                         <t:label for="email" />
-                        <input t:type="TextField" t:id="email" t:value="usuario.login" 
-                        t:validate="required, regexp" size="10"/>
+                        <input t:type="TextField" t:id="email" t:value="trabajador.emailLaboral" size="10" readonly="readonly"/>
                     </div>
                     <div class="f-left">
                         <t:label for="intentos_fallidos" />
@@ -128,14 +121,19 @@
                     <div class="f-left">
                         <label>Ultimo cambio de clave: <strong>${usuario.ultimo_cambio_clave}</strong></label>
                     </div>
+                    <br style="clear: both;" />
                     <div class="f-left">
                         <t:label for="estadousuario" />
-                        <input t:type="Select" t:id="estadousuario" t:value="usuario.estado" model = "estadosUsuarios" t:validate="required"/>
+                        <t:select t:id="estadousuario" model = "estadoUsuario" encoder="estadoUsuario" t:value="lkEstadoUsuario"  t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>Reiniciar contraseña</label>
                         <input t:type="Checkbox" t:value="reinitialisarpassword" />
                     </div>
+                    <div class="f-left">
+                            <t:label for="rolUsuario"/>
+                            <t:select t:id="rolUsuario" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rscrol"/>
+                        </div>
                     <div class="actions f-right clear" id="buttons_u">
                         <input type="submit" value="Grabar" class="button f-right"/>
                         <t:actionlink t:id="reset">

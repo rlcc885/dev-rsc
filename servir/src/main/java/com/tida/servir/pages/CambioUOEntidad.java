@@ -7,7 +7,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
@@ -45,7 +45,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Property
     @SessionState
-    private Entidad_BK entidadUE;
+    private Entidad entidadUE;
 
 //    @Property
 //    @Persist
@@ -65,7 +65,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Property
     @Persist
-    private Entidad_BK entidadDestino;
+    private Entidad entidadDestino;
 
     @Persist
     private GenericSelectModel<UnidadOrganica> _beanUOrganicasOrigen;
@@ -128,10 +128,10 @@ public class CambioUOEntidad extends GeneralPage{
     private boolean mostrar;
     
     @Property
-    private Entidad_BK entio;
+    private Entidad entio;
     
     @Property
-    private Entidad_BK entid;
+    private Entidad entid;
     
     @Property
     @Persist
@@ -197,14 +197,14 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    public List<Entidad_BK> getEntidades() {
-        Criteria c = session.createCriteria(Entidad_BK.class);
+    public List<Entidad> getEntidades() {
+        Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
         return c.list();
     }
     
     @Log
-    Object onActionFromEditar(Entidad_BK entix) {        
+    Object onActionFromEditar(Entidad entix) {        
         entio = entix;
         entidad_origen=entio.getDenominacion();  
         entixo=false;
@@ -212,7 +212,7 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    Object onActionFromSelec (Entidad_BK enti2) {        
+    Object onActionFromSelec (Entidad enti2) {        
         entid = enti2;
         entidad_destino=entid.getDenominacion();
         mostrarUOD=true;

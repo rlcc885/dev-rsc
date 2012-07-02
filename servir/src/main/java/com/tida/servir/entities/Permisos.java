@@ -16,17 +16,17 @@ public class Permisos {
      * @param u
      * @return
      */
-    public static boolean puedeEscribir(Usuario u, Entidad_BK eue) {
+    public static boolean puedeEscribir(Usuario u, Entidad eue) {
         if (u.getTipo_usuario().equals(Usuario.OPERADORLECTURALOCAL)
                 || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA) ) {
             return false;
         }
-
-        if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
-            if (eue.def_servir == null)
-                return true; // Permitimos carga via servir si no se especifica otra cosa
-            return eue.def_servir;
-        }
+//TODO JZM 01/07/2012 Revisar este código
+//        if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
+//            if (eue.def_servir == null)
+//                return true; // Permitimos carga via servir si no se especifica otra cosa
+//            return eue.def_servir;
+//        }
         return true; // El resto puede escribir
     }
     

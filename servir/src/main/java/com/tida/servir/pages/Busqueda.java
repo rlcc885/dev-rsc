@@ -52,7 +52,7 @@ public class Busqueda extends GeneralPage {
     }
     @Property
     @SessionState
-    private Entidad_BK _entidadUE;
+    private Entidad _entidadUE;
     @Property
     @SessionState
     private Usuario _usuario;

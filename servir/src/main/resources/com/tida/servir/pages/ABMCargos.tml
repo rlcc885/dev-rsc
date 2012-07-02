@@ -2,72 +2,70 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <t:Menu/>
-
     <div class="organismo_titulo">
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
     <h2>Cargos</h2>
 
-       <div id="mainfiltros" class="pane">
-              
-                                    <!-- t:validate="required,minlength=1" -->
-                                    
-                <div id="cargosSelects">
-                    <t:zone t:id="nivelCargoZone">
-                        <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">
-                            <div class="f-left">
-                            Nivel Organizacional
-                            <input t:type="Select" t:id="unidadorganica_nivel"
-                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
-                            </div>
-                        </form>
-                        <form t:type="form" t:id="formUOCargo" t:zone="abmZone">
-                            <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
-                                <t:if test = "hayNivel">
-                                    Unidad Orgánica
-                                    <select t:type="select" t:id="select_unidadOrganica"
-                                            model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
-                                            onChange="this.form.fire()" t:zone="abmZone"/>
-                                </t:if>
-                            </div> 
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                Denominación
-                                <input t:type="TextField" t:id="bdenocargo" t:value="bdenocargo" size="30"/> 
-                                </div>
-                                <div class="f-left">
-                                Situación CAP
-                                <input t:type="Select" t:id="bsituacioncap" t:value="valsituacioncap" model="beanDatoSituacionCAP" />
-                                </div> 
-                            </div>
-                        </form>
-                    </t:zone>
-                <div id = "ocupacionalescargoxx">
+    <div id="mainfiltros" class="pane">
+
+        <!-- t:validate="required,minlength=1" -->
+
+        <div id="cargosSelects">
+            <t:zone t:id="nivelCargoZone">
+                <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">
+                    <div class="f-left">
+                        Nivel Organizacional
+                        <input t:type="Select" t:id="unidadorganica_nivel"
+                               onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                               t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
+                    </div>
+                </form>
+                <form t:type="form" t:id="formUOCargo" t:zone="abmZone">
+                    <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
+                        <t:if test = "hayNivel">
+                            Unidad Orgánica
+                            <select t:type="select" t:id="select_unidadOrganica"
+                                    model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
+                                    onChange="this.form.fire()" t:zone="abmZone"/>
+                        </t:if>
+                    </div> 
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            Denominación
+                            <input t:type="TextField" t:id="bdenocargo" t:value="bdenocargo" size="30"/> 
+                        </div>
+                        <div class="f-left">
+                            Situación CAP
+                            <input t:type="Select" t:id="bsituacioncap" t:value="valsituacioncap" model="beanDatoSituacionCAP" />
+                        </div> 
+                    </div>
+                </form>
+            </t:zone>
+            <div id = "ocupacionalescargoxx">
                 <t:zone t:id="BOcupacionalesZone" >            
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
-                            t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone" disabled ="noeditable"/>
+                               t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone" disabled ="noeditable"/>
                     </form>                 
                 </t:zone>    
-                </div>
-                <t:zone t:id="filtrosZone" >            
-                            <form t:type="form" t:id="formulariofiltrocargo" zone="abmZone">
-                                
-                                <div class="actions f-right">
-                                    <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
-                                    <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
-                                    <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                    <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
-                                </div>                                 
-                            </form>   
-                </t:zone>                  
-                </div>          
-            </div> 
+            </div>
+            <t:zone t:id="filtrosZone" >            
+                <form t:type="form" t:id="formulariofiltrocargo" zone="abmZone">
 
-  <div t:type="zone" t:id="abmZone" class="abmform">
+                    <div class="actions f-right">
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
+                        <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                        <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                    </div>                                 
+                </form>   
+            </t:zone>                  
+        </div>          
+    </div> 
+
+    <div t:type="zone" t:id="abmZone" class="abmform">
         <t:if test="mostrar">
             <t:form t:id="formularioaltacargo" zone="abmZone">
                 <t:errors/>
@@ -93,125 +91,133 @@
 
                 <t:if test="PuedeEditar">
                     <t:envelope t:id="envelope"/>
+                    <h3> Crear / Editar Cargo </h3>
                     <div class="box" id="box-cargos">
-                        <h3> Crear / Editar Cargo </h3>
-                       <!-- <div id="cargos_izq" class="cargosAM">-->
-                       <!--<div id="cargos_izq" class="cargosAM">-->
-                            <div class="f-wrap">
-                                <!--<div class="f-left">
-                                    <label>* Nivel Organizacional</label>
-                                    <input t:type="Select" t:id="cargo_nivel" model="beanNivel" t:value="nivel"/>
-                                </div>-->
+                        
+                        <!-- <div id="cargos_izq" class="cargosAM">-->
+                        <!--<div id="cargos_izq" class="cargosAM">-->
+                        <div class="f-wrap">
+                            <!--<div class="f-left">
+                                <label>* Nivel Organizacional</label>
+                                <input t:type="Select" t:id="cargo_nivel" model="beanNivel" t:value="nivel"/>
+                            </div>-->
 
-                                <div class="f-left">
-                                    <label>* Unidad Orgánica</label>
-                                    <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica"/>
-                                </div>
-                                <div class="f-left">
-                                    <label>* Código</label>
-                                    <input t:type="TextField" t:id="cargo_cod_cargo"
-                                           t:value="cargo.cod_cargo" size="4" t:validate="required"/>
-                                </div>
-                                <div class="f-left">
-                                    <label>* Denominación</label>
-                                    <input t:type="TextField" t:id="cargo_den_cargo"
-                                           t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30"/>
-                                </div>                            
-                                                              
-                                
-                                
-                                <!-- <div class="f-left">
-                                    <label>Estado</label>
-                                    <input t:type="Select" t:id="cargo_estado" model="estado"
-                                    t:value="cargo.estado"/>
-                                </div>-->
-                            </div> <!-- div f-wrap -->
-                       <!--</div>-->
-                       
-                            <div class ="f-wrap">
-                                <div class="f-left">
-                                    <label>Supervisa Personal</label>
-                                    <input t:type="Checkbox" t:id="cargo_supervisapersonal"
-                                           t:value="cargo.supervisapersonal"/>
-                                </div>  
-                                <div class="f-left">
-                                    Situación CAP
-                                    <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" />
-                                </div>
-                                
-                                                               
-                             </div> 
-                       
-                            <!-- <div class="f-wrap">
-                                <div class="f-left">              
-                                    <label>Régimen Laboral /Contractual</label>
-                                    <input t:type="Select" t:id="cargo_reg_lab_con" model="regimen"
-                                    t:value="cargo.reg_lab_con"/>
-                                </div>
-                            </div> -->
+                            <div class="f-left">
+                                <label>* Unidad Orgánica</label>
+                                <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Código</label>
+                                <input t:type="TextField" t:id="cargo_cod_cargo"
+                                       t:value="cargo.cod_cargo" size="4" t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Denominación</label>
+                                <input t:type="TextField" t:id="cargo_den_cargo"
+                                       t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30"/>
+                            </div>                            
+
+
+
+                            <!-- <div class="f-left">
+                                <label>Estado</label>
+                                <input t:type="Select" t:id="cargo_estado" model="estado"
+                                t:value="cargo.estado"/>
+                            </div>-->
+                        </div> <!-- div f-wrap -->
+                        <!--</div>-->
+
+                        <div class ="f-wrap">
+                            <div class="f-left">
+                                <fieldset>
+                                <label><input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal"/> Supervisa Personal</label>
+                                </fieldset>
+                            </div>  
+                            <div class="f-left">
+                                Situación CAP
+                                <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" />
+                            </div>
+
+
+                        </div> 
+
+                        <!-- <div class="f-wrap">
+                            <div class="f-left">              
+                                <label>Régimen Laboral /Contractual</label>
+                                <input t:type="Select" t:id="cargo_reg_lab_con" model="regimen"
+                                t:value="cargo.reg_lab_con"/>
+                            </div>
+                        </div> -->
                         <!--</div>-->
                         <!--<div id="cargos_der" class="cargosAM">-->
-                                                  
-                            <div class="f-wrap">
-                                <div class="f-left checkbox">
-                                    <label>* Presenta Declaración Jurada de Bienes y Rentas</label>   
+
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <fieldset>
+                                    <legend>* Presenta Declaración Jurada de Bienes y Rentas</legend>
                                     <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr" t:validate="required">
-                                        <label>SI</label> <t:radio t:id="de1" t:value="true"/>  
-                                        <label>NO</label> <t:radio t:id="de2" t:value="false"/>                                                                            
-                                    </t:radiogroup>                                    
-                                </div>
-                                <div class="f-left checkbox">                                    
-                                    <label>* Presupuestado en PAP</label>
-                                    <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
-                                        SI<t:radio t:id="pa1" t:value="true"/>  
-                                        NO<t:radio t:id="pa2" t:value="false"/>                                                                          
+                                        <label><t:radio t:id="de1" t:value="true" /> Si</label>
+                                        <label><t:radio t:id="de2" t:value="false" /> No</label>
                                     </t:radiogroup>  
-                                </div>
-                                <div class="f-left checkbox">
-                                    <label>* Es Organico</label>   
-                                    <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
-                                         SI<t:radio t:id="o1" t:value="true"/>
-                                         NO<t:radio t:id="o2" t:value="false"/>
-                                    </t:radiogroup>                                    
-                                </div>
-                                <!--<div class="f-left">
-                                    <label>Clasificación funcional</label>
-                                    <input t:type="Select" t:id="cargo_clasificacion_funcional" model="codFunCargo"
-                                           t:value="cargo.clasificacion_funcional"/>
-                                </div>
-                                <div class="f-left">
-                                    <label>Horas semanales</label>
-                                    <input t:type="TextField" t:id="cargo_horas_x_sem"
-                                           t:value="cargo.horas_x_sem" size="2"/>
-                                </div>-->              
+                                </fieldset>                                                                 
                             </div>
-                        
-            
+                            <div class="f-left">
+                                <fieldset>
+                                <label>* Presupuestado en PAP</label>
+                                <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
+                                    <label><t:radio t:id="pa1" t:value="true" /> Si</label>
+                                    <label><t:radio t:id="pa2" t:value="false" /> No</label>
+                                </t:radiogroup>
+                                </fieldset>
+                            </div>
+                            <div class="f-left">
+                                <fieldset>
+                                <label>* Es Organico</label>   
+                                <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
+                                    <label><t:radio t:id="o1" t:value="true" /> Si</label>
+                                    <label><t:radio t:id="o2" t:value="false" /> No</label>
+                                </t:radiogroup>
+                                </fieldset>
+                            </div>
+                            <!--<div class="f-left">
+                                <label>Clasificación funcional</label>
+                                <input t:type="Select" t:id="cargo_clasificacion_funcional" model="codFunCargo"
+                                       t:value="cargo.clasificacion_funcional"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Horas semanales</label>
+                                <input t:type="TextField" t:id="cargo_horas_x_sem"
+                                       t:value="cargo.horas_x_sem" size="2"/>
+                            </div>-->              
+                        </div>
+
+
                         <!--<div id="cargos_der" class="cargosAM">-->
-                              
-                                <!--<div class="f-left checkbox">
-                                    <label>Tiene personas a cargo</label>
-                                    <input t:type="Checkbox" t:id="cargo_personasCargo"
-                                           t:value="cargo.personasCargo"/>
-                                </div>-->
-                            <!--</div>--> <!-- div f-wrap -->
-                       <!-- </div> --><!-- div der -->
+
+                        <!--<div class="f-left checkbox">
+                            <label>Tiene personas a cargo</label>
+                            <input t:type="Checkbox" t:id="cargo_personasCargo"
+                                   t:value="cargo.personasCargo"/>
+                        </div>-->
+                        <!--</div>--> <!-- div f-wrap -->
+                        <!-- </div> --><!-- div der -->
                         <div class="actions f-right">
                             <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/> 
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/> 
-                          <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
+                        <br style="clear: both;" />
                     </div> <!-- div box -->
                 </t:if> <!-- puedeEditar -->
             </t:form>
         </t:if>
     </div> <!-- abmZone -->
-    
+
     <div id = "ocupacionalescargo">
-    <t:zone t:id="OcupacionalesZone">
-        <t:if test="mostrar">
-            <t:if test="PuedeEditar">                
+        <t:zone t:id="OcupacionalesZone">
+            <t:if test="mostrar">
+                <t:if test="PuedeEditar">                
                     <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="regimengruponivel" t:regimengruponivel="regimengruponivel"
                                t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
@@ -220,10 +226,10 @@
                         <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
                         t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
                     </form> -->
-               
-            </t:if> <!-- puedeEditar -->
-        </t:if>
-    </t:zone>
+
+                </t:if> <!-- puedeEditar -->
+            </t:if>
+        </t:zone>
     </div>
-  
+
 </html>

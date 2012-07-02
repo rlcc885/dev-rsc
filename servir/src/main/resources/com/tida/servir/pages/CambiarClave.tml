@@ -3,8 +3,7 @@
       xmlns:p="tapestry:parameter">
 
     <t:if test="cambioForzado" negate="true">
-        <t:Menu/>
-
+ 
        <t:if test="noEsAdmSystema">
             <div class="organismo_titulo">
                 Entidad /U. Ejecutora: ${entidadUE.denominacion}

@@ -1,6 +1,6 @@
 package com.tida.servir.pages;
 
-import com.sun.mail.smtp.SMTPMessage;
+//import com.sun.mail.smtp.SMTPMessage;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
@@ -14,20 +14,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
+//import java.util.Properties;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.PasswordAuthentication;
+////import javax.mail.Session;
+//import javax.mail.internet.MimeMessage;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
@@ -55,6 +52,23 @@ public class ABMUsuario extends GeneralPage {
     private UsuarioTrabajador u;
     @Property
     @Persist
+    private Trabajador trabajador;
+    @Property
+    @Persist
+    private RscRol rscrol;
+    @Property
+    @Persist
+    private LkEstadoUsuario lkEstadoUsuario;
+    @Persist
+    private GenericSelectModel<Entidad> _beanOrganismos;
+    @Persist
+    private GenericSelectModel<RscRol> _RscRol;
+    @Persist
+    private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
+    @Inject
+    private PropertyAccess _access;
+    @Property
+    @Persist
     private String nroDocumento;
     @Property
     @Persist
@@ -64,8 +78,8 @@ public class ABMUsuario extends GeneralPage {
     private Usuario loggedUser;
     @Component(id = "formulariousuario")
     private Form formularioUsuario;
-    @Component(id = "formTipoUsuario")
-    private Form formTipoUsuario;
+//    @Component(id = "formTipoUsuario")
+//    private Form formTipoUsuario;
     @Component(id = "formulariobusqueda")
     private Form formulariobusqueda;
     @Component(id = "formOrganismo")
@@ -86,10 +100,6 @@ public class ABMUsuario extends GeneralPage {
     private Zone editarUsuarioZone;
     @InjectComponent
     private Zone tabla_usuario;
-    @Persist
-    private GenericSelectModel<Entidad> _beanOrganismos;
-    @Inject
-    private PropertyAccess _access;
     @Inject
     private Request _request;
     @Property
@@ -110,18 +120,53 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private String nombresBusqueda;
+    @Persist
     @Property
-    private long primeraVez=0;
+    private int primeraVez;
 
     public ABMUsuario() {
+        System.out.println("ABMUsuario");
     }
 
     public List<String> getTiposDoc() {
+        System.out.println("getTiposDoc");
         return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
+    }
+
+    public GenericSelectModel<RscRol> getRolUsuario() {
+        List<RscRol> list;
+        if (usuario.getRol() == null) {
+            list = Helpers.getRolUSuario(1, session);
+        } else {
+            list = Helpers.getRolUSuario(loggedUser.getRol().getId(), session);
+        }
+        _RscRol = new GenericSelectModel<RscRol>(list, RscRol.class, "descrol", "id", _access);
+        return _RscRol;
+    }
+
+    public GenericSelectModel<LkEstadoUsuario> getEstadoUsuario() {
+        List<LkEstadoUsuario> list;
+        list = Helpers.getEstadoUsuario(session);
+        _lkEstadoUsuario = new GenericSelectModel<LkEstadoUsuario>(list, LkEstadoUsuario.class, "descestadousuario", "id", _access);
+        return _lkEstadoUsuario;
+    }
+
+    public GenericSelectModel<Entidad> getBeanOrganismos() {
+        List<Entidad> list;
+        Criteria c;
+        c = session.createCriteria(Entidad.class);
+        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
+        System.out.println("getBeanOrganismos");
+        list = c.list();
+
+        //entidadUE = (EntidadUEjecutora) c.list().get(0); //cargamos el valor por defecto
+        _beanOrganismos = new GenericSelectModel<Entidad>(list, Entidad.class, "denominacion", "id", _access);
+        return _beanOrganismos;
     }
 
     public List<String> getTiposUsuarios() {
         List<String> tc = new ArrayList<String>();
+        System.out.println("getTiposUsuarios");
         // Sólo los usuarios admin_graal pueden generar administradores generales y locales
         if (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
             tc.add(Usuario.ADMINGRAL);
@@ -140,27 +185,12 @@ public class ABMUsuario extends GeneralPage {
         return tc;
     }
 
-    /**
-     * Obtiene los estados de los usuarios de la tabla auxiliar adecuada
-     *
-     * @return
-     */
-    public List<String> getEstadosUsuarios() {
-        List<String> tc = new ArrayList<String>();
-        tc.add(Usuario.ESTADOACTIVO);
-        tc.add(Usuario.ESTADOBORRADO);
-        tc.add(Usuario.ESTADOBLOQUEADO);
-        return tc;
-    }
-
     public List<UsuarioTrabajador> getUsuarios() {
         Criteria c;
         List<UsuarioTrabajador> listaUsuarios = null;
-        
-        if (this.primeraVez==0){
-            this.primeraVez=1;
-        }else{
-        if (loggedUser.getRolid() > 1) {
+        System.out.println("getUsuarios");
+
+        if (loggedUser.getRol().getId() > 1 && this.primeraVez > 0) {
             c = session.createCriteria(UsuarioTrabajador.class);
 
             //busqueda
@@ -174,36 +204,33 @@ public class ABMUsuario extends GeneralPage {
                 c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresBusqueda + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
 
-            if (loggedUser.getRolid() == 2) { // Si es administrador de Entidad, sólo puede ver su información
+            if (loggedUser.getRol().getId() == 2) { // Si es administrador de Entidad, sólo puede ver su información
                 c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
                 //c.add(Restrictions.ne("tipo_usuario", Usuario.ADMINLOCAL));
-            //} else {
+                //} else {
                 // Administrador de usuarios general
                 //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORABMLOCAL));
                 //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORLECTURALOCAL));
                 //c.add(Restrictions.ne("tipo_usuario", Usuario.TRABAJADOR));
             }
             listaUsuarios = c.list();
-            }
         }
+
         return listaUsuarios;
 
     }
-
-    void onPrepareFromformTipoUsuario() {
-        if (tipoUsuario == null) {
-            tipoUsuario = "";
-        }
-
-        if (editando) {
-            tipoUsuario = usuario.getTipo_usuario();
-        }
-    }
+    /*
+     * void onPrepareFromformTipoUsuario() {
+     * System.out.println("onPrepareFromformTipoUsuario"); if (tipoUsuario ==
+     * null) { tipoUsuario = ""; }
+     *
+     * if (editando) { tipoUsuario = usuario.getTipo_usuario(); } }
+     */
 
     StreamResponse onActionFromReporteUsuario(Long userID) {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
-
+        System.out.println("onActionFromReporteUsuario");
         parametros.put("MandatoryParameter_UsuarioID", userID);
         return rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
     }
@@ -214,52 +241,45 @@ public class ABMUsuario extends GeneralPage {
      * tipoUsuario = _request.getParameter("param"); return
      * entidadZone.getBody(); }
      */
-    @Log
-    Object onSuccessFromformTipoUsuario() {
-        return new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("entidadZone", entidadZone.getBody());
-    }
-
+    /*
+     * @Log Object onSuccessFromformTipoUsuario() {
+     * System.out.println("onSuccessFromformTipoUsuario"); return new
+     * MultiZoneUpdate("editarUsuarioZone",
+     * editarUsuarioZone.getBody()).add("entidadZone", entidadZone.getBody()); }
+     */
     Object onSuccessFromformulariobusqueda() {
+        primeraVez++;
+        System.out.println("onSuccessFromformulariobusqueda");
         return tabla_usuario.getBody();
     }
 
     @Log
     Object onSuccessFromformOrganismo() {
+        System.out.println("onSuccessFromformOrganismo");
         return editarUsuarioZone.getBody();
     }
 
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-
+        System.out.println("zonasTotal");
         mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("tabla_usuario", tabla_usuario.getBody()).add("entidadZone", entidadZone.getBody());
 
         return mu;
     }
 
     public boolean getMuestroOrganismos() {
+        System.out.println("getMuestroOrganismos");
         return ((tipoUsuario.equals(Usuario.ADMINLOCAL)) && (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)));
     }
 
     public boolean getEsTrabajador() {
+        System.out.println("getEsTrabajador");
         return tipoUsuario.equals(Usuario.TRABAJADOR);
     }
 
-    public GenericSelectModel<Entidad> getBeanOrganismos() {
-
-        List<Entidad> list;
-        Criteria c;
-        c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
-
-        list = c.list();
-
-        //entidadUE = (EntidadUEjecutora) c.list().get(0); //cargamos el valor por defecto
-        _beanOrganismos = new GenericSelectModel<Entidad>(list, Entidad.class, "denominacion", "id", _access);
-        return _beanOrganismos;
-    }
-
     void onPrepareFromFormularioUsuario() {
+        System.out.println("onPrepareFromFormularioUsuario");
         if (loggedUser.getEntidad() != null) {
             entidad = loggedUser.getEntidad();
         }
@@ -268,8 +288,9 @@ public class ABMUsuario extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioUsuario() {
+        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
         String password = null;
-
+        System.out.println("onSuccessFromFormularioUsuario");
         if (!editando) {
             if (tipoUsuario.equals(Usuario.TRABAJADOR)) {
                 Criteria c = session.createCriteria(Trabajador.class);
@@ -342,23 +363,31 @@ public class ABMUsuario extends GeneralPage {
             }
 
             if (reinitialisarpassword) {
-                //aca falta de generar el la contrasena, de mandarla por mail con la function sendPasswordByEmail y de guardar la en la base de dato
-                //password = usuario.getLogin() + "123.";
                 SecureRandom random = new SecureRandom();
                 password = new BigInteger(50, random).toString(32);
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 usuario.setClave(password);
-                //sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
+                //sendPasswordByEMail(usuario.getTrabajador().getEmailLaboral(), usuario.getLogin(), password);
+                String subject = "Datos de acceso al sistema Servir";
+                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getNroDocumento(), password);
+                //SMTPConfig.sendMail(subject,body, usuario.getTrabajador().getEmailLaboral(),ca);
+                if (SMTPConfig.sendMail(subject, body, "jumizamo@hotmail.com", ca)) {
+                    System.out.println("envío Correcto");
+                } else {
+                    System.out.println("envío Fallido");
+                }
+
             }
         }
 
-        usuario.setTipo_usuario(tipoUsuario);
-        if (usuarioDeOrganismo()) {
-            usuario.setEntidad(entidad);
-        } else {
-            usuario.setEntidad(null);
-        }
-
+        usuario.setEstado(lkEstadoUsuario.getId());
+        usuario.setRol(rscrol);
+        //usuario.setTipo_usuario(tipoUsuario);
+//        if (usuarioDeOrganismo()) {
+//            usuario.setEntidad(entidad);
+//        } else {
+//            usuario.setEntidad(null);
+//        }
         if (editando) {
             Logger logger = new Logger();
             logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION, loggedUser);
@@ -371,10 +400,9 @@ public class ABMUsuario extends GeneralPage {
 
         session.saveOrUpdate(usuario);
 
-        if (!editando) {
-//            sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
-        }
-
+//        if (!editando) {
+////            sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
+//        }
         envelope.setContents(helpers.Constantes.USUARIO_EXITO);
         editando = false;
         usuario = createNewUsuario();
@@ -382,55 +410,10 @@ public class ABMUsuario extends GeneralPage {
         return zonasTotal();
     }
 
-    private void sendPasswordByEMail(String email, String loginid, String password) {
-        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-
-//    	String smtpHost = "localhost";
-//    	String smtpPort = "25";
-//    	String accountMail = "ejemplo@gmail.com";
-//    	String accountPass = "la password";
-
-        String smtpHost = ca.getSMTP_servidor();
-        String smtpPort = ca.getSMTP_puerto();
-        String accountMail = ca.getSMTP_usuario();
-        String accountPass = ca.getSMTP_clave();
-
-        String destination = email;
-        String subject = "Datos de acceso al sistema Servir";
-        String body = String.format("Login Id: %s\nPassword: \"%s\"  (Sin las comillas) \n", loginid, password);
-
-        Properties props = new Properties();
-        props.setProperty("mail.smtp.host", smtpHost);
-        props.setProperty("mail.smtp.port", smtpPort);
-        props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.starttls.enable", "true");
-        Transport t = null;
-        try {
-            javax.mail.Session mailSession = javax.mail.Session.getDefaultInstance(props);
-            Message message = new SMTPMessage(mailSession);
-            message.addRecipient(RecipientType.TO, new InternetAddress(destination));
-            message.setSubject(subject);
-            message.setText(body);
-            message.setFrom(new InternetAddress(accountMail));
-            t = mailSession.getTransport("smtp");
-            t.connect(accountMail, accountPass);
-            t.sendMessage(message, message.getAllRecipients());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (t != null) {
-                try {
-                    t.close();
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     private Usuario createNewUsuario() {
         Usuario usuario_local = new Usuario();
         usuario_local.setIntentos_fallidos(0L);
+        System.out.println("createNewUsuario");
         tipoDocumento = null;
         nroDocumento = null;
         return usuario_local;
@@ -441,6 +424,7 @@ public class ABMUsuario extends GeneralPage {
      * reset del formulario
      */
     void onActionFromReset() {
+        System.out.println("onActionFromReset");
         usuario = createNewUsuario();
         tipoUsuario = usuario.getTipo_usuario();
         entidad = usuario.getEntidad();
@@ -452,9 +436,12 @@ public class ABMUsuario extends GeneralPage {
      * Cargar desde los parámetros
      */
     void onActivate() {
-
+        System.out.println("onActivate");
         if (usuario == null) {
             usuario = createNewUsuario();
+            trabajador = new Trabajador();
+            rscrol = new RscRol();
+            lkEstadoUsuario = new LkEstadoUsuario();
             editando = false;
             if (loggedUser.getEntidad() != null) //No soy dios
             {
@@ -482,16 +469,19 @@ public class ABMUsuario extends GeneralPage {
     }
 
     void onActivate(Usuario user) {
-
+        System.out.println("onActivate(Usuario user)");
         if (user == null) {
             user = createNewUsuario();
             editando = false;
         } else {
-
+            System.out.println("onActivate(Usuario user)" + user.getTipo_usuario());
             if (user.getTipo_usuario().equals(Usuario.TRABAJADOR)) {
                 nroDocumento = user.getTrabajador().getNroDocumento();
                 tipoDocumento = user.getTrabajador().getTipoDocumento();
             }
+            trabajador = user.getTrabajador();
+            rscrol = user.getRol();
+            lkEstadoUsuario = Helpers.getEstadoUsuario(user.getEstado(), session);
             errorBorrar = null;
             editando = true;
         }
@@ -499,10 +489,12 @@ public class ABMUsuario extends GeneralPage {
     }
 
     Usuario onPassivate() {
+        System.out.println("onPassivate");
         return null;
     }
 
     private boolean usuarioDeOrganismo() {
+        System.out.println("usuarioDeOrganismo");
         return (tipoUsuario.equals(Usuario.ADMINLOCAL)
                 || tipoUsuario.equals(Usuario.OPERADORLECTURALOCAL)
                 || tipoUsuario.equals(Usuario.OPERADORABMLOCAL)
@@ -511,6 +503,7 @@ public class ABMUsuario extends GeneralPage {
     }
 
     public boolean getUsuarioDeOrganismo() {
+        System.out.println("getUsuarioDeOrganismo");
         return this.usuarioDeOrganismo();
     }
 }

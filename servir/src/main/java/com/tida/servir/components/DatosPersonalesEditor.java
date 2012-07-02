@@ -2,7 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.ConfiguracionAcceso;
 import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad_BK;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Ubigeo;
@@ -59,7 +59,7 @@ public class DatosPersonalesEditor {
     private Usuario _usuario;
     @Property
     @SessionState
-    private Entidad_BK _oi;
+    private Entidad _oi;
     @InjectComponent
     @Property
     private Zone ubigeoNacZone;

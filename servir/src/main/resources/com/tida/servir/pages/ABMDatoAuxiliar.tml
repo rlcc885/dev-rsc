@@ -3,8 +3,6 @@
       xmlns:p="tapestry:parameter">
 
 
-        <t:Menu/>
-
         <H2>Tablas Auxiliares</H2>
          <div t:type="zone" t:id="selectZone" class="selectform" >
                 <t:form t:id="formularioselecttabla" >

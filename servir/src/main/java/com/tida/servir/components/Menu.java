@@ -1,5 +1,6 @@
 package com.tida.servir.components;
 
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioAcceso;
 import java.io.*;
@@ -24,6 +25,9 @@ public class Menu {
     @Property
     @SessionState
     private Usuario _usuario;
+    @Property
+    @SessionState
+    private Entidad entidad;
     @Inject
     private ComponentClassResolver componentClassResolver;
     @Inject
@@ -72,7 +76,7 @@ public class Menu {
         List result = query.list();
         for (int i = 0; i < result.size(); i++) {
             UsuarioAcceso stock = (UsuarioAcceso) result.get(i);
-            System.out.println(stock.getDescmenu()+stock.getActivo().toString());
+            //System.out.println(stock.getDescmenu()+stock.getActivo().toString());
         }
         return result;
     }
@@ -102,7 +106,7 @@ public class Menu {
     }
     
     public String getNombreUsuario(){
-        return _usuario.getTrabajador().getApellidoPaterno()+" "+_usuario.getTrabajador().getApellidoMaterno()+", "+_usuario.getTrabajador().getNombres();
+        return _usuario.getTrabajador().getApellidoPaterno()+" "+_usuario.getTrabajador().getApellidoMaterno()+", "+_usuario.getTrabajador().getNombres()+" - "+entidad.getDenominacion();
     }
 /*
     public Set<Accesos.MENUPADRE> getPagesMenuPadre() {
