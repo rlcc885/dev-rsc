@@ -69,7 +69,7 @@
         <!-- start footer -->
         <div id="footer">
             <p class="legal">
-                &copy;2010 Sistema SERVIR. Todos los derechos reservados.<br/>
+                &copy;2012 Sistema SERVIR. Todos los derechos reservados.<br/>
                 SERVIR V.${appVersion}
             </p>
             

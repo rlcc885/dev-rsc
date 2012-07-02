@@ -5,26 +5,7 @@
 package Batch.Helpers;
 
 import Batch.Tratamiento;
-import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Certificacion;
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Familiar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.EvaluacionPersonal;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.RemuneracionPersonal;
-import com.tida.servir.entities.Titulo;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.UnidadOrganica;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import helpers.Errores;
 import helpers.Helpers;
 import java.text.ParseException;
@@ -70,7 +51,8 @@ public class CreadorDesdeCsv {
 
     public Entidad_BK entidadUEjecutoraFromCsv(List<String> _csvOrganismo, List<String> errores, Session session, String origenArchivo) {
         Entidad_BK eue = new Entidad_BK();
-
+        Entidad eueO = new Entidad();
+        Entidad eueD = new Entidad();
         //verificacion numero campos archivo
         if (_csvOrganismo.size() != helpers.Constantes.CAMPOS_ENTIDADES_UNIDADES_EJECUTORAS) {
             errores.add(helpers.Errores.TAMANO_CAMPOS_ARCHIVO_DIFFERENTE + helpers.Constantes.ENTIDADES_UE);
@@ -156,8 +138,8 @@ public class CreadorDesdeCsv {
                         return null;
                     }
                 }
-
-                if (ComparadorEntidades.entidadUEs(eueOrigen, eueDestino).equals(ResultadoOperacionCSV.MODIFICADO)) {
+                    // revisar
+                if (ComparadorEntidades.entidadUEs(eueO, eueD).equals(ResultadoOperacionCSV.MODIFICADO)) {
                     CopiadorEntidades.entidadUE(eueOrigen, eueDestino);
                 }
 
@@ -170,7 +152,7 @@ public class CreadorDesdeCsv {
             eue.setEstado(Entidad_BK.ESTADO_ALTA);
 
             UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
-            nuevaUnidadOrganica.setEntidad(eue);
+            nuevaUnidadOrganica.setEntidad(eueO); // revisar
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
             nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
             nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
@@ -217,6 +199,7 @@ public class CreadorDesdeCsv {
     public ConceptoRemunerativo conceptoFromCsv(List<String> _csvConcepto, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
         ConceptoRemunerativo concepto = new ConceptoRemunerativo();
         Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvConcepto.get(0));
+        Entidad eueTemporal = new Entidad();
         LineaInformeCodigo lic = new LineaInformeCodigo();
 
         //verificacion numero campos archivo
@@ -265,7 +248,7 @@ public class CreadorDesdeCsv {
         }
         String periodicidad = ConceptoRemunerativo.PERIODICIDADES.get(CreadorDesdeCsv.toInteger(_csvConcepto.get(6)));
 
-        concepto.setEntidad(eue);
+        concepto.setEntidad(eueTemporal);
         concepto.setCodigo(_csvConcepto.get(1));
         concepto.setDescripcion(_csvConcepto.get(2));
         concepto.setSustento_legal(_csvConcepto.get(3));
@@ -277,7 +260,7 @@ public class CreadorDesdeCsv {
             //nuveo concepto por ser nueva entidad
             lic = new LineaInformeCodigo();
             lic.setCodigo(concepto.getCodigo());
-            lic.setCodigoEntidadUE(concepto.getEntidad().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(concepto.getEntidad().getCue_entidad());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -348,6 +331,7 @@ public class CreadorDesdeCsv {
         UnidadOrganica unidadorganica = new UnidadOrganica();
         UnidadOrganica unidadorganicaAntecesora = new UnidadOrganica();
         Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvUnidadOrganica.get(0));
+        Entidad eueTemporal = new Entidad();
         LineaInformeCodigo lic = new LineaInformeCodigo();
 
         //verificacion numero campos archivo
@@ -379,7 +363,7 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        unidadorganica.setEntidad(eue);
+        unidadorganica.setEntidad(eueTemporal);
         unidadorganica.setCod_und_organica(_csvUnidadOrganica.get(1));
         unidadorganica.setDen_und_organica(_csvUnidadOrganica.get(2));
         unidadorganica.setLocalidad(_csvUnidadOrganica.get(3));
@@ -434,7 +418,7 @@ public class CreadorDesdeCsv {
             //nuvea unidad organica
             lic = new LineaInformeCodigo();
             lic.setCodigo(unidadorganica.getCod_und_organica());
-            lic.setCodigoEntidadUE(unidadorganica.getEntidad().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(unidadorganica.getEntidad().getCue_entidad());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -446,7 +430,7 @@ public class CreadorDesdeCsv {
         c = myTratamiento.getSession().createCriteria(UnidadOrganica.class);
         c.createAlias("entidadUE", "entidadUE");
         c.add(Restrictions.like("cod_und_organica", unidadorganica.getCod_und_organica()));
-        c.add(Restrictions.like("entidadUE.codigoEntidadUE", unidadorganica.getEntidad().getCodigoEntidadUE()));
+        c.add(Restrictions.like("entidadUE.codigoEntidadUE", unidadorganica.getEntidad().getCue_entidad()));
 
         UnidadOrganica uoOrigen = unidadorganica; 
         if (c.list() != null) {
@@ -472,7 +456,7 @@ public class CreadorDesdeCsv {
                 //nuvea unidad organica
                 lic = new LineaInformeCodigo();
                 lic.setCodigo(uoOrigen.getCod_und_organica());
-                lic.setCodigoEntidadUE(uoOrigen.getEntidad().getCodigoEntidadUE());
+                lic.setCodigoEntidadUE(uoOrigen.getEntidad().getCue_entidad());
                 lic.setResultado(ResultadoOperacionCSV.NUEVO);
                 is.getLt().add(lic);
                 is.setAlta(is.getAlta() + 1);
@@ -567,7 +551,7 @@ public class CreadorDesdeCsv {
             //nuveo cargo
             lic = new LineaInformeCodigo();
             lic.setCodigo(cargo.getCod_cargo());
-            lic.setCodigoEntidadUE(cargo.getUnidadorganica().getEntidad().getCodigoEntidadUE());
+            lic.setCodigoEntidadUE(cargo.getUnidadorganica().getEntidad().getCue_entidad());
             lic.setResultado(ResultadoOperacionCSV.NUEVO);
             is.setAlta(is.getAlta() + 1);
             is.getLt().add(lic);
@@ -582,7 +566,7 @@ public class CreadorDesdeCsv {
         c = myTratamiento.getSession().createCriteria(Cargoxunidad.class);
         c.createAlias("und_organica.entidadUE", "entidadUE");
         c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
-        c.add(Restrictions.like("entidadUE.codigoEntidadUE", cargo.getUnidadorganica().getEntidad().getCodigoEntidadUE()));
+        c.add(Restrictions.like("entidadUE.codigoEntidadUE", cargo.getUnidadorganica().getEntidad().getCue_entidad()));
 
         Cargoxunidad corigen = cargo;
         if (c.list() != null) {
@@ -610,7 +594,7 @@ public class CreadorDesdeCsv {
                 //nuveo cargo
                 lic = new LineaInformeCodigo();
                 lic.setCodigo(corigen.getCod_cargo());
-                lic.setCodigoEntidadUE(corigen.getUnidadorganica().getEntidad().getCodigoEntidadUE());
+                lic.setCodigoEntidadUE(corigen.getUnidadorganica().getEntidad().getCue_entidad());
                 lic.setResultado(ResultadoOperacionCSV.NUEVO);
                 is.setAlta(is.getAlta() + 1);
                 is.getLt().add(lic);
@@ -807,7 +791,7 @@ public class CreadorDesdeCsv {
 
             // Chequeamos que el legajo de un trabajador y en una entidad no esté 2 veces (con distinto código)
             for (Legajo legCheck : llegajo) {
-                if (legajo.getEntidad().getCodigoEntidadUE().equals(legCheck.getEntidad().getCodigoEntidadUE())
+                if (legajo.getEntidad().getCue_entidad().equals(legCheck.getEntidad().getCue_entidad())
                         && legajo.getTrabajador().getTipoDocumento().equals(legCheck.getTrabajador().getTipoDocumento())
                         && legajo.getTrabajador().getNroDocumento().equals(legCheck.getTrabajador().getNroDocumento())
                         && (!legajo.getCod_legajo().equals(legCheck.getCod_legajo()))) {
@@ -824,6 +808,7 @@ public class CreadorDesdeCsv {
     public Legajo legajoFromCsv(List<String> _csvLegajo, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) {
         Legajo legajo = new Legajo();
         Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvLegajo.get(0));
+        Entidad eueTemporal = new Entidad();
         LineaInformeTipoNumeroDocumento litnd = new LineaInformeTipoNumeroDocumento();
 
         //verificacion numero campos archivo
@@ -897,7 +882,7 @@ public class CreadorDesdeCsv {
        
 
 
-        legajo.setEntidad(eue);
+        legajo.setEntidad(eueTemporal);
         legajo.setCod_legajo(_csvLegajo.get(1));
         legajo.setTrabajador(trabajador);
 
@@ -3356,7 +3341,7 @@ public class CreadorDesdeCsv {
 
         for (Legajo l : ll) {
             if (l.getTrabajador().getTipoDocumento().equals(trabajador.getTipoDocumento()) && l.getTrabajador().getNroDocumento().equals(trabajador.getNroDocumento())
-                    && l.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+                    && l.getEntidad().getCue_entidad().equals(eue.getCodigoEntidadUE())) {
                 return l;
             }
         }
@@ -3373,7 +3358,7 @@ public class CreadorDesdeCsv {
         }
 
         for (Legajo l : ll) {
-            if (l.getCod_legajo().equals(codigoLegajo) && l.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (l.getCod_legajo().equals(codigoLegajo) && l.getEntidad().getCue_entidad().equals(eue.getCodigoEntidadUE())) {
                 return l;
             }
         }
@@ -3407,7 +3392,7 @@ public class CreadorDesdeCsv {
         }
 
         for (UnidadOrganica ua : lua) {
-            if (ua.getCod_und_organica().equals(codigoUnidadOrganica) && ua.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (ua.getCod_und_organica().equals(codigoUnidadOrganica) && ua.getEntidad().getCue_entidad().equals(eue.getCodigoEntidadUE())) {
                 return ua;
             }
         }
@@ -3424,7 +3409,7 @@ public class CreadorDesdeCsv {
         }
 
         for (Cargoxunidad c : lc) {
-            if (c.getCod_cargo().equals(codigoCargo) && c.getUnidadorganica().getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (c.getCod_cargo().equals(codigoCargo) && c.getUnidadorganica().getEntidad().getCue_entidad().equals(eue.getCodigoEntidadUE())) {
                 return c;
             }
         }
@@ -3441,7 +3426,7 @@ public class CreadorDesdeCsv {
         }
 
         for (ConceptoRemunerativo cr : lcr) {
-            if (cr.getCodigo().equals(codigoConceptoRemunerativo) && cr.getEntidad().getCodigoEntidadUE().equals(eue.getCodigoEntidadUE())) {
+            if (cr.getCodigo().equals(codigoConceptoRemunerativo) && cr.getEntidad().getCue_entidad().equals(eue.getCodigoEntidadUE())) {
                 return cr;
             }
         }
