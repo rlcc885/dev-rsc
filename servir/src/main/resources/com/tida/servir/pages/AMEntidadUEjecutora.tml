@@ -320,6 +320,7 @@
                                     </div>
                                 </div>
                             </t:zone>
+
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="Subemailinstitucional"/>
@@ -331,34 +332,44 @@
                                     <input t:type="TextField" t:id="Suburlentidad"
                                            t:value="subEntidadUE.urlentidad"/>
                                 </div>
+
+
                             </div>
 
                          <div class="f-wrap">
-                                                  
+                             
+                             
+                             
                              <t:zone t:id="TitularZone">
+                                 <input t:type="TextField" t:id="validax" t:value="valida" t:readonly="readonly" />
                                     <div class="f-left">
                                         <t:label for ="Subtitular"/>
                                         <input t:type="TextField" t:id="Subtitular"
                                                t:value="titular" t:readonly="readonly" /> 
-                                        <input t:id="buscarTitular" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar2();" />             
+                                        <input t:id="buscarTitular" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar2(1);" />             
                                     </div>
-                             </t:zone>                            
+                             </t:zone>
+                            
                             <t:zone t:id="JefeRRHHZone">
                                     <div class="f-left">
                                         <t:label for ="SubjefeRRHH"/>
                                         <input t:type="TextField" t:id="SubjefeRRHH"
                                                t:value="jefeRRHH" t:readonly="readonly" />
-                                        <input t:type="submit" t:id="buscarjeferrhh" value="..." class="button f-right" onClick="javascript: mostrar2();" />
+                                        <input t:type="submit" t:id="buscarjeferrhh" value="..." class="button f-right" onClick="javascript: mostrar2(2);" />
                                     </div>
-                             </t:zone>                            
+                             </t:zone>
+                             
                              <t:zone t:id="JefeOGAZone">
                                     <div class="f-left">
                                         <t:label for ="SubjefeOGA"/>
                                         <input t:type="TextField" t:id="SubjefeOGA"
                                                t:value="jefeOGA" t:readonly="readonly" />
-                                        <input t:type="submit" t:id="buscarjefeoga" value="..." class="button f-right" onClick="javascript: mostrar2();" />
+                                        <input t:type="submit" t:id="buscarjefeoga" value="..." class="button f-right" onClick="javascript: mostrar2(3);" />
                                     </div>
-                             </t:zone>                                                         
+                             </t:zone>
+                              
+                              
+                             
                             </div>
 
                             <div class="f-wrap">
@@ -527,7 +538,12 @@
     <script type="text/javascript">
         var modal2= document.getElementById('modal2');
         var shade2= document.getElementById('shade2');
-        function mostrar2() {
+        function mostrar2(num) {
+            alert(num);
+            if(num==1){
+                document.getElementById('validax').value='titular';
+                alert(document.getElementById('validax').value);
+            }
             modal2.style.display=shade2.style.display= 'block';
         };
         function ocultar2() {
