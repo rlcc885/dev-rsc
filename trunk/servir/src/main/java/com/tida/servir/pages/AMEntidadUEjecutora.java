@@ -249,22 +249,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
 
     @Log
-    void onSelectFromBuscarTitular() {
-         btitular = true; 
-    }
-    
-    @Log
-    void onSelectFromBuscarjeferrhh() {
-         bjefeRRHH=true;
-    }
-    
-    @Log
-    void onSelectFromBuscarjefeoga() {
-         bjefeOGA=true;
-    }
-    
-
-    @Log
     @CommitAfter    
     Object onSuccessFromFormularioentidad() {
      
@@ -338,6 +322,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
         mostrar=true;
+        
         return new MultiZoneUpdate("busZone", busZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -357,9 +342,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioTrabajador() { 
         mostrar=true;
-        btitular=true;
-        bjefeRRHH=true;
-        bjefeOGA=true;
+        System.out.println("esss:");
+        if(valida.equalsIgnoreCase("titular"))btitular=true;
         return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
                     .add("trabajadorZone", trabajadorZone.getBody());
     }
