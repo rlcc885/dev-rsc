@@ -8,6 +8,7 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.LkBusquedaEntidad;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
@@ -131,12 +132,12 @@ public class CambioUOEntidad extends GeneralPage{
     
     @Property
     @Persist
-    private Entidad entio;
+    private LkBusquedaEntidad entio;
     
     
     @Property
     @Persist
-    private Entidad entid;
+    private LkBusquedaEntidad entid;
     
     @Property
     @Persist
@@ -225,13 +226,13 @@ public class CambioUOEntidad extends GeneralPage{
     
     @Log
     public List<Entidad> getEntidades() {
-        Criteria c = session.createCriteria(Entidad.class);
+        Criteria c = session.createCriteria(LkBusquedaEntidad.class);
         c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
         return c.list();
     }
     
     @Log
-    Object onActionFromEditar(Entidad enti1) {        
+    Object onActionFromEditar(LkBusquedaEntidad enti1) {        
         entio = enti1;
         entidad_origen=entio.getDenominacion();  
         entixo=false;
@@ -240,7 +241,7 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    Object onActionFromSelec (Entidad enti2) {        
+    Object onActionFromSelec (LkBusquedaEntidad enti2) {        
         entid = enti2;
         entidad_destino=entid.getDenominacion();
         mostrarUOD=true;
@@ -275,83 +276,84 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
-    if(num==2){
-        return zonasDatos();
-    }
-    else if(num==3){
-        return CambioEntidad.class;
-    }
-    else{
-        if (opcion != null && !opcion.equals("")) {
-           if(opcion.equalsIgnoreCase("MIGRAR")){//migrar
-                if(uoOrigen==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
-                    return botonZone.getBody();
-                }
-                if(entid==null){
-                    formBotones.recordError("Debe seleccionar Entidad Destino");
-                    return botonZone.getBody();
-                }
-                if(entio==null){ //validar x usuario
-                    Helpers.migrarUOBase(uoOrigen, entidadUE, entid, session);
-                    session.flush();
-                    formBotones.clearErrors();
-                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
-                }
-                else{
-                    Helpers.migrarUOBase(uoOrigen, entio, entid, session);
-                     session.flush();
-                     formBotones.clearErrors();
-                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
-                }           
-
-           }
-           else if(opcion.equalsIgnoreCase("FUSIONAR")){//fusionar                   
-                if(uoOrigen==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
-                    return botonZone.getBody();
-                }
-                if(uoDestino==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Destino");
-                    return botonZone.getBody();
-                }            
-                if(uoOrigen.getId()==uoDestino.getId()){
-                    formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
-                    return botonZone.getBody();
-                }
-                if(entio==null){ //validar x usuario
-                    if(entidadUE.getId()==entid.getId()){
-                        Helpers.fusionarUOBase(uoOrigen, entidadUE, entid, uoDestino, session);
-                        session.flush();
-                        formBotones.clearErrors();
-                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
-                    }
-                    else{
-                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");
-                        return botonZone.getBody();
-                    }
-                }
-                else{
-                    if(entio.getId()==entid.getId()){
-                        Helpers.fusionarUOBase(uoOrigen, entio, entid, uoDestino, session);
-                        session.flush();
-                        formBotones.clearErrors();
-                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
-                    }
-                    else{
-                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");                    
-                        return botonZone.getBody(); 
-                    }
-                }            
-            }
-           
-        }
-        else{
-           formBotones.recordError("Debe seleccionar una Opción");
-           return botonZone.getBody(); 
-        }
-    }
-    onSelectedFromReset();
+//    if(num==2){
+//        return zonasDatos();
+//    }
+//    else if(num==3){
+//        return CambioEntidad.class;
+//    }
+//    else{
+//        if (opcion != null && !opcion.equals("")) {
+//           if(opcion.equalsIgnoreCase("MIGRAR")){//migrar
+//                if(uoOrigen==null){
+//                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+//                    return botonZone.getBody();
+//                }
+//                if(entid==null){
+//                    formBotones.recordError("Debe seleccionar Entidad Destino");
+//                    return botonZone.getBody();
+//                }
+//                if(entio==null){ //validar x usuario
+//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entid, session);
+//                    session.flush();
+//                    formBotones.clearErrors();
+//                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
+//                }
+//                else{
+//                    //Helpers.migrarUOBase(uoOrigen, entio, entid, session);
+//                     session.flush();
+//                     formBotones.clearErrors();
+//                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
+//                }           
+//
+//           }
+//           else if(opcion.equalsIgnoreCase("FUSIONAR")){//fusionar                   
+//                if(uoOrigen==null){
+//                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+//                    return botonZone.getBody();
+//                }
+//                if(uoDestino==null){
+//                    formBotones.recordError("Debe seleccionar U. Orgánica Destino");
+//                    return botonZone.getBody();
+//                }            
+//                if(uoOrigen.getId()==uoDestino.getId()){
+//                    formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
+//                    return botonZone.getBody();
+//                }
+//                if(entio==null){ //validar x usuario
+//                    if(entidadUE.getId()==entid.getId()){
+//                        //Helpers.fusionarUOBase(uoOrigen, entidadUE, entid, uoDestino, session);
+//                        session.flush();
+//                        formBotones.clearErrors();
+//                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+//                    }
+//                    else{
+//                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");
+//                        return botonZone.getBody();
+//                    }
+//                }
+//                else{
+//                    if(entio.getId()==entid.getId()){
+//                        //Helpers.fusionarUOBase(uoOrigen, entio, entid, uoDestino, session);
+//                        session.flush();
+//                        formBotones.clearErrors();
+//                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+//                    }
+//                    else{
+//                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");                    
+//                        return botonZone.getBody(); 
+//                    }
+//                }            
+//            }
+//           
+//        }
+//        else{
+//           formBotones.recordError("Debe seleccionar una Opción");
+//           return botonZone.getBody(); 
+//        }
+//    }
+//    onSelectedFromReset();
+        envelope.setContents(String.valueOf(entio)+String.valueOf(uoOrigen)+String.valueOf(entid)+String.valueOf(uoDestino));
     return zonasDatos();
     }
 
