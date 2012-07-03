@@ -255,18 +255,28 @@ public class CambioUOEntidad extends GeneralPage{
     
     void onSelectedFromReset() {        
         num=2;   
-        opcion=null;
+        opcion=null;        
+        entid=null;
+        uoDestino=null;
+        entidad_destino=null;        
+        if(entio!=null){
+            entio=null;
+            List<UnidadOrganica> list;
+            Criteria c = session.createCriteria(UnidadOrganica.class);
+            c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
+            c.add(Restrictions.eq("entidad", entidadUE ));        
+            list = c.list();
+            _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);       
+        }
         uoOrigen=null;
         entidad_origen=null;
-        uoDestino=null;
-        entidad_destino=null;
     }
     
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
     if(num==2){
-        
+        return zonasDatos();
     }
     else if(num==3){
         return CambioEntidad.class;
@@ -341,8 +351,8 @@ public class CambioUOEntidad extends GeneralPage{
            return botonZone.getBody(); 
         }
     }
-
-    return botonZone.getBody();
+    onSelectedFromReset();
+    return zonasDatos();
     }
 
 //    @Log
@@ -498,15 +508,15 @@ public class CambioUOEntidad extends GeneralPage{
 //
 //    }
     
-//    @Log
-//    private MultiZoneUpdate zonasDatos() {
-//        MultiZoneUpdate mu;
-//
-//        mu = new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody()).add("EOrigenZone", EOrigenZone.getBody())                                
-//                    .add("EDestiZone", EDestiZone.getBody());
-//        return mu;
-//
-//    }
+    @Log
+    private MultiZoneUpdate zonasDatos() {
+        MultiZoneUpdate mu;
+
+        mu = new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("EDestiZone", EDestiZone.getBody())                                
+                    .add("botonZone", botonZone.getBody());
+        return mu;
+
+    }
 
 
 //    @SetupRender
