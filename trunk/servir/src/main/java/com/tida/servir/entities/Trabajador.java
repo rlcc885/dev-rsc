@@ -1,22 +1,17 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,6 +20,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Trabajador implements Serializable // extends Persona 
 {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     ///cosas de la clase PERSONA
 
     private static final String DNI = "DNI";
@@ -540,4 +536,5 @@ public class Trabajador implements Serializable // extends Persona
         hash = 29 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
+
 }

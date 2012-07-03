@@ -1,0 +1,53 @@
+<html t:type="layout" title="About servir"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:zone t:id="listaZone" id="listaZone">
+        <t:grid t:source="allPerfiles" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" remove="Id">
+            <t:parameter name="descperfilCell">
+                <t:eventLink t:event="editaPerfil" t:context="rowPerfil" href="#" page="PagePerfil" t:zone="editZone">
+                    ${rowPerfil.descperfil}
+                </t:eventLink>
+            </t:parameter>
+            <p:accionesCell>
+                <a t:type="pagelink" t:page="PagePerfilPermiso" t:context="rowPerfil" href="#">Permisos</a>
+<!--                <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listapermisoZone">Permisos</a>-->
+                |
+                <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">Eliminar</a>
+            </p:accionesCell>
+        </t:grid>
+    </t:zone>
+    <t:zone t:id="newZone" id="newZone">
+        <t:if test = "mostrarNew">
+            <div id="bouttons" class="f-right">
+                <t:eventLink t:event="nuevoPerfil" href="#" page="PagePerfil" t:zone="editZone" class="button f-right">
+                    Nuevo Perfil
+                </t:eventLink>
+            </div>
+            <br class="clear"/>
+        </t:if>
+    </t:zone>
+    <t:zone t:id="editZone" id="editZone">
+        <t:if test = "mostrarEdit">
+            <h3>Crear/Editar Perfiles de Usuarios</h3>
+            <div id="box-cargos" class="box" t:zone="editZone">
+                <t:form t:id="perfilInputForm">
+                    <fieldset>
+                        <legend>Denominacion del Cargo:</legend>
+                        <label><t:textfield t:value="perfil.descperfil" t:size="80" /></label>
+                    </fieldset>  
+                    <div id="bouttons" class="f-right">
+                        <input type="submit" value="Guardar" class="button f-right"/>
+                        <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
+                        <!--
+                        <input type="submit" t:type="submit" t:id="submit" value="Guardar"  class="button"/>
+                        <input t:type="submit" t:id="reset" value="Cancelar" t:mixins="confirm" page="PagePerfil" class="button"/>
+                        -->
+                    </div>
+                    <br class="clear"/>
+                </t:form>
+            </div>
+        </t:if>
+    </t:zone>
+
+</html>

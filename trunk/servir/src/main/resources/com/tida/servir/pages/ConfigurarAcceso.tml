@@ -5,65 +5,65 @@
 
     <h2>Alta/modificación de parámetros</h2>
 
-        <div id="form_cambio_clave" class="abmform">
-            <t:zone t:id="zone">
-                <t:form t:id="formularioconfiguraracceso" t:zone = "zone">
-                	<t:envelope t:id="envelope"/> <br/>
-       		        <t:errors/>
+    <div id="form_cambio_clave" class="abmform">
+        <t:zone t:id="zone">
+            <t:form t:id="formularioconfiguraracceso" t:zone = "zone">
+                <t:envelope t:id="envelope"/> <br/>
+                <t:errors/>
 
-                    <div class="f-wrap">
-                        <div class="f-left margintop11">
-                            <t:label for="duracion_clave"/>
-                            <input t:type="TextField" t:id="duracion_clave"
-                            t:value="ca.duracion_clave" size="3" t:validate="required" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="cantidad_intentos"/>
-                            <input t:type="TextField" t:id="cantidad_intentos"
-                            t:value="ca.intentos_bloqueo" size="3" t:validate="required" />
-                        </div>
-                      
-                        <div class="f-left">
-                            <t:label for="fec_actualizacion"/>
-                            <input t:type="DateField" t:id="fec_actualizacion"
-                                   t:value="ca.fec_actualizacion" t:readonly="readonly" size="30" contenteditable="false" disabled="true" />
-                        </div>
-                          
-                    </div>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <t:label for="smtp_servidor"/>
-                            <input t:type="TextField" t:id="smtp_servidor"
-                            t:value="ca.smtp_servidor" size="30" t:validate="required" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="smtp_usuario"/>
-                            <input t:type="TextField" t:id="smtp_usuario"
-                            t:value="ca.smtp_usuario" size="30" t:validate="required" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="smtp_clave"/>
-                            <input t:type="TextField" t:id="smtp_clave"
-                            t:value="ca.smtp_clave" size="30" t:validate="required" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="smtp_puerto"/>
-                            <input t:type="TextField" t:id="smtp_puerto"
-                            t:value="ca.smtp_puerto" size="3" t:validate="required" />
-                        </div>
-                    </div>
                 <div class="f-wrap">
-                     <div class="f-right">
-                         <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
-                     </div>
-                     <div class="f-right">
-                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
-                     </div>
-                     <div class="f-right">
+                    <div class="f-left margintop11">
+                        <t:label for="duracion_clave"/>
+                        <input t:type="TextField" t:id="duracion_clave"
+                               t:value="ca.duracion_clave" size="3" t:validate="required" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="cantidad_intentos"/>
+                        <input t:type="TextField" t:id="cantidad_intentos"
+                               t:value="ca.intentos_bloqueo" size="3" t:validate="required" />
+                    </div>
+
+                    <div class="f-left">
+                        <t:label for="fec_actualizacion"/>
+                        <input t:type="DateField" t:id="fec_actualizacion"
+                               t:value="ca.fec_actualizacion" t:readonly="readonly" size="30" contenteditable="false" disabled="true" />
+                    </div>
+
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="smtp_servidor"/>
+                        <input t:type="TextField" t:id="smtp_servidor"
+                               t:value="ca.smtp_servidor" size="30" t:validate="required" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="smtp_usuario"/>
+                        <input t:type="TextField" t:id="smtp_usuario"
+                               t:value="ca.smtp_usuario" size="30" t:validate="required" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="smtp_clave"/>
+                        <input t:type="TextField" t:id="smtp_clave"
+                               t:value="ca.smtp_clave" size="30" t:validate="required" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="smtp_puerto"/>
+                        <input t:type="TextField" t:id="smtp_puerto"
+                               t:value="ca.smtp_puerto" size="3" t:validate="required" />
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                    </div>
+                    <div class="f-right">
                         <input id="submit" type="submit" value="Guardar" class="button"/>
-                     </div>
+                    </div>
                 </div>
             </t:form>
-	</t:zone>
+        </t:zone>
     </div>
 </html>
