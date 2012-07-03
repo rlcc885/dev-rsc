@@ -9,6 +9,8 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.LkBusquedaEntidad;
+//import com.tida.servir.entities.Usuario;
+//import com.tida.servir.entities.RscRol;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
@@ -49,6 +51,14 @@ public class CambioUOEntidad extends GeneralPage{
     @Property
     @SessionState
     private Entidad entidadUE;
+    
+//    @Property
+//    @SessionState
+//    private Usuario usuario;
+//    
+//    @Property
+//    @Persist
+//    private RscRol rolx;
 
 //    @Property
 //    @Persist
@@ -151,6 +161,9 @@ public class CambioUOEntidad extends GeneralPage{
     @Persist
     private boolean mostrarUOD;
     
+//    @Property
+//    @Persist
+//    private boolean mostrarUO;
     
     
     @InjectComponent
@@ -186,6 +199,18 @@ public class CambioUOEntidad extends GeneralPage{
         mod.add("FUSIONAR");
         return mod; 
     }
+    
+//    @Log
+//    @SetupRender
+//    private void inicio() {
+//        if(usuario.getRol().getId()==3){
+//            mostrarUO=true;
+//        }
+//        else if(usuario.getRol().getId()==2){
+//            mostrarUO=false;
+//        }
+//        
+//    }
     
     
 //    @Log

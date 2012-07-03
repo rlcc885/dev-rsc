@@ -22,24 +22,29 @@
                             <input t:type="Select" t:id="cambio_opciones"
                             t:value="opcion" model="bopciones"
                             onChange="this.form.fire()" t:zone="EOrigenZone"/>
-                            </div> 
+                            </div>
+                            
                             <div class="f-left">
                             Unidad Orgánica Origen
                             <select t:type="select" t:id="select_unidadOrganicaOrigen"
                             model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
                             onChange="this.form.fire()" t:zone="EOrigenZone"/>    
-                            </div>
-                            <div class="f-left">    
-                            Entidad Origen
-                            <input t:type="TextField" t:id="entidad_den"
-                                    t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
-                            </div> 
+                            </div>                            
+                            
+                                <div class="f-left">    
+                                Entidad Origen
+                                <input t:type="TextField" t:id="entidad_den"
+                                        t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
+                                </div> 
+                            
                         </form>
-                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">                                                    
-                         <div class="actions f-right">  
-                             <input id="buscarsubmit" type="submit" value="Buscar" class="button" onClick="javascript: mostrar();" />
-                         </div>              
-                        </form>
+                        
+                            <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">                                                    
+                            <div class="actions f-right">  
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" onClick="javascript: mostrar();" />
+                            </div>              
+                            </form>
+                        
                     </t:zone>
               
             </div>
