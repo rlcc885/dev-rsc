@@ -94,6 +94,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formulariosubjefeoga;
     @Component(id = "formulariosubbotones")
     private Form formulariosubbotones;
+    @Component(id = "formulariotitular")
+    private Form formulariotitular;
+    @Component(id = "formulariojeferrhh")
+    private Form formulariojeferrhh;
+    @Component(id = "formulariojefeoga")
+    private Form formulariojefeoga;
+    @Component(id = "formulariobotones")
+    private Form formulariobotones;
     @InjectComponent
     private Zone busZone2;
     @Persist
@@ -107,6 +115,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Trabajador subjeferrhht;
     @Property
     private Trabajador subjefeogat;
+    @Property
+    private Trabajador titulart;
+    @Property
+    private Trabajador jeferrhht;
+    @Property
+    private Trabajador jefeogat;
     @Persist
     @Property
     private String subtitular;
@@ -116,12 +130,27 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String subjefeRRHH;
+    @Persist
+    @Property
+    private String titular;
+    @Persist
+    @Property
+    private String jefeOGA;
+    @Persist
+    @Property
+    private String jefeRRHH;
     @InjectComponent
     private Zone subTitularZone;
     @InjectComponent
     private Zone subJefeRRHHZone;
     @InjectComponent
     private Zone subJefeOGAZone;
+    @InjectComponent
+    private Zone TitularZone;
+    @InjectComponent
+    private Zone JefeRRHHZone;
+    @InjectComponent
+    private Zone JefeOGAZone;
     @Property
     @Persist
     private boolean btitular;
@@ -131,6 +160,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private boolean bjefeRRHH;
+    @Property
+    @Persist
+    private boolean btitulari;
+    @Property
+    @Persist
+    private boolean bjefeOGAi;    
+    @Property
+    @Persist
+    private boolean bjefeRRHHi;
     
     
     @Property
@@ -173,19 +211,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             subEntidadUE = new Entidad();
             entio = new Entidad();
     }
-    /*
-   //para la busqueda de entidades
-   
-    public List<Entidad> getEntidadesUEjecutoras() {
-        Criteria c;
-        c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
-        return c.list();
-    }
-    */
+
     //para obtener datatos del Nivel Gobierno
     @Log
-    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
+    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {        
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
@@ -252,25 +281,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     void onSelectFromReset() {
         entidadUE = new Entidad();
         //ubigeoEntidadUE = new Ubigeo();
-    }
-    
-    @Log
-    void onSelectFromBuscarentidad() {
-         elemento=1;
-    }
-
+    }    
 
     @Log
     @CommitAfter    
-    Object onSuccessFromFormularioentidad() {
-     
-        
+    Object onSuccessFromFormulariobotones() {
+            
         entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
         entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
         entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
         
         //nombreArchivo = file.getFileName() ;
-        //System.out.println(nombreArchivo);
         //entidadUE.setLogotipo(nombreArchivo);
         session.saveOrUpdate(entidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
@@ -281,9 +302,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     @CommitAfter    
-    Object onSuccessFromFormulariosubentidad() {
- 
-        
+    Object onSuccessFromFormulariosubbotones() {
+         
         subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
         subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
         subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
@@ -379,6 +399,30 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     .add("trabajadorZone", trabajadorZone.getBody());
     }
     
+     @Log
+    @CommitAfter
+    Object onSuccessFromformulariotitular() { 
+        btitulari=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariojeferrhh() { 
+        bjefeRRHHi=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+     
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariojefeoga() { 
+        bjefeOGAi=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromFormularioTrabajador() { 
@@ -397,21 +441,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
    @Log
     Object onActionFromeditarsubTitular(Trabajador traba) {        
         subtitulart = traba;
-       
-            subtitular=subtitulart.getApellidoPaterno();
-            btitular=false;
-       
+        subtitular=subtitulart.getApellidoPaterno();
+        subEntidadUE.setTitular(subtitulart);
+        btitular=false;
         mostrar=false;
         return subTitularZone.getBody();  
     }
    
     @Log
     Object onActionFromeditarsubJefeRRHH(Trabajador traba) {        
-        subjeferrhht = traba;
-       
+        subjeferrhht = traba;   
         subjefeRRHH=subjeferrhht.getApellidoPaterno();
+        subEntidadUE.setJefeRRHH(subjeferrhht);
         bjefeRRHH=false;
-        
         mostrar=false;
         return subJefeRRHHZone.getBody();  
     }
@@ -419,14 +461,41 @@ public class AMEntidadUEjecutora extends GeneralPage {
      @Log
     Object onActionFromeditarsubJefeOGA(Trabajador traba) {        
         subjefeogat = traba;
-        
-            subjefeOGA=subjefeogat.getApellidoPaterno();
-            bjefeOGA=false;
-
+        subjefeOGA=subjefeogat.getApellidoPaterno();
+        subEntidadUE.setJefeOga(subjefeogat);
+        bjefeOGA=false;
         mostrar=false;
         return subJefeOGAZone.getBody();  
     }
    
+   @Log
+    Object onActionFromeditarTitular(Trabajador traba) {        
+        titulart = traba;
+        titular=titulart.getApellidoPaterno();
+        entidadUE.setTitular(titulart);
+        btitulari=false;
+        mostrar=false;
+        return TitularZone.getBody();  
+    }
    
+    @Log
+    Object onActionFromeditarJefeRRHH(Trabajador traba) {        
+        jeferrhht = traba;     
+        jefeRRHH=jeferrhht.getApellidoPaterno();
+        entidadUE.setJefeRRHH(jeferrhht);
+        bjefeRRHHi=false;    
+        mostrar=false;
+        return JefeRRHHZone.getBody();  
+    }
+    
+     @Log
+    Object onActionFromeditarJefeOGA(Trabajador traba) {        
+        jefeogat = traba;
+        jefeOGA=jefeogat.getApellidoPaterno();
+        entidadUE.setJefeOga(jefeogat);
+        bjefeOGAi=false;
+        mostrar=false;
+        return JefeOGAZone.getBody();  
+    }
     
 }
