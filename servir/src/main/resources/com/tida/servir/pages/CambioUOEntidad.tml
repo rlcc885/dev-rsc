@@ -14,14 +14,7 @@
             <h3> Opciones / Fuente de Origen</h3>
            <div class="f-wrap">                  
                     
-                    <!--
-                    <t:zone t:id="UOZOne">
-                        
-                        
-                       
-                    </t:zone>-->
-                    
-                                       
+                              
                     <t:zone t:id="EOrigenZone">
                         <form t:type="form" t:id="formUOO" t:zone="EOrigenZone">
                             <div class="f-left">
@@ -37,8 +30,8 @@
                             onChange="this.form.fire()" t:zone="EOrigenZone"/>    
                             </div>
                             <div class="f-left">    
-                                Entidad Origen
-                                <input t:type="TextField" t:id="entidad_den"
+                            Entidad Origen
+                            <input t:type="TextField" t:id="entidad_den"
                                     t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
                             </div> 
                         </form>
@@ -162,16 +155,9 @@
                 <input id="aceptar" type="submit" value="Aceptar" class="button" />                
                 <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
                 <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
-                </div>
-                <a href="javascript:abrir()">Enlace</a> 
-                
+                </div>               
             </form>
-        </div>
-      <script> 
-function abrir() { 
-open('perfil','','top=300,left=300,width=300,height=300') ; 
-} 
-</script>   
+        </div>  
 <!--        
 <script type="text/javascript">
 function popup(url,ancho,alto) {
@@ -255,16 +241,8 @@ function datos(val1,val2){
                 </form>
                 </t:zone>
             </div>
-            <div class="f-wrap">
-            </div>
             <!-- Eorigen-->
              
-            <div t:type="zone" t:id="organismosZone">
-                <t:if test="mostrar"> 
-                
-                </t:if>
-             </div> <!-- abmZone -->
-            
              <!-- Edestino-->
                  
                 <div t:type="zone" t:id="entiZone">
@@ -284,7 +262,7 @@ function datos(val1,val2){
                     <t:if test="entixd">
                         <h2>Entidad Destino</h2>
                         <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="entid" include="denominacion" inPlace="true" t:zone="entiZone">
+                            row="entidad2" include="denominacion" inPlace="true" t:zone="entiZone">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
                             </t:parameter>
