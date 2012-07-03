@@ -67,7 +67,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     private Zone EOrigenZone;
     @InjectComponent
-    private Zone entiZone;    
+    private Zone entiZone;
+    @Component(id = "formularioentidadorigen")
+    private Form formularioentidadorigen;
     @Persist
     @Property
     private String bdenoentidad; 
@@ -84,33 +86,42 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     
     //Trabajador
+    @Component(id = "formulariosubtitular")
+    private Form formulariosubtitular;
+    @Component(id = "formulariosubjeferrhh")
+    private Form formulariosubjeferrhh;
+    @Component(id = "formulariosubjefeoga")
+    private Form formulariosubjefeoga;
+    @Component(id = "formulariosubbotones")
+    private Form formulariosubbotones;
     @InjectComponent
     private Zone busZone2;
     @Persist
     @Property
     private String apeTrabajador; 
     @InjectComponent
-    private Zone trabajadorZone;    
+    private Zone trabajadorZone;
     @Property
-    private Trabajador trabajador;
+    private Trabajador subtitulart;
+    @Property
+    private Trabajador subjeferrhht;
+    @Property
+    private Trabajador subjefeogat;
     @Persist
     @Property
-    private String valida;
+    private String subtitular;
     @Persist
     @Property
-    private String titular;
+    private String subjefeOGA;
     @Persist
     @Property
-    private String jefeOGA;
-    @Persist
-    @Property
-    private String jefeRRHH;
+    private String subjefeRRHH;
     @InjectComponent
-    private Zone TitularZone;
+    private Zone subTitularZone;
     @InjectComponent
-    private Zone JefeRRHHZone;
+    private Zone subJefeRRHHZone;
     @InjectComponent
-    private Zone JefeOGAZone;
+    private Zone subJefeOGAZone;
     @Property
     @Persist
     private boolean btitular;
@@ -162,6 +173,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             subEntidadUE = new Entidad();
             entio = new Entidad();
     }
+    /*
    //para la busqueda de entidades
    
     public List<Entidad> getEntidadesUEjecutoras() {
@@ -170,7 +182,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
         return c.list();
     }
-    
+    */
     //para obtener datatos del Nivel Gobierno
     @Log
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
@@ -307,9 +319,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     
+    //Metodos de Busqueda de Entidades origenes para la subentidad   
     
+    @Log
+    @CommitAfter
+    Object onSuccessFromformularioentidadorigen(){
+        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
+                    .add("entiZone", entiZone.getBody());
+    }
     
-    //Metodos de Busqueda de Entidades    
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
@@ -317,12 +335,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return c.list();
     }
     
-    
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
-        mostrar=true;
-        
+        mostrar=true;        
         return new MultiZoneUpdate("busZone", busZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -338,12 +354,35 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
     
     //Metodos de Busqueda de Trabajadores
-     @Log
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosubtitular() { 
+        btitular=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosubjeferrhh() { 
+        bjefeRRHH=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+     
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosubjefeoga() { 
+        bjefeOGA=true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
+                    .add("trabajadorZone", trabajadorZone.getBody());
+    }
+    
+    @Log
     @CommitAfter
     Object onSuccessFromFormularioTrabajador() { 
         mostrar=true;
-        System.out.println("esss:");
-        if(valida.equalsIgnoreCase("titular"))btitular=true;
         return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
                     .add("trabajadorZone", trabajadorZone.getBody());
     }
@@ -356,36 +395,36 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
    
    @Log
-    Object onActionFromeditarTitular(Trabajador traba) {        
-        trabajador = traba;
+    Object onActionFromeditarsubTitular(Trabajador traba) {        
+        subtitulart = traba;
        
-            titular=trabajador.getApellidoPaterno();
+            subtitular=subtitulart.getApellidoPaterno();
             btitular=false;
        
         mostrar=false;
-        return TitularZone.getBody();  
+        return subTitularZone.getBody();  
     }
    
     @Log
-    Object onActionFromeditarJefeRRHH(Trabajador traba) {        
-        trabajador = traba;
+    Object onActionFromeditarsubJefeRRHH(Trabajador traba) {        
+        subjeferrhht = traba;
        
-        jefeRRHH=trabajador.getApellidoPaterno();
+        subjefeRRHH=subjeferrhht.getApellidoPaterno();
         bjefeRRHH=false;
         
         mostrar=false;
-        return TitularZone.getBody();  
+        return subJefeRRHHZone.getBody();  
     }
     
      @Log
-    Object onActionFromeditarJefeOGA(Trabajador traba) {        
-        trabajador = traba;
+    Object onActionFromeditarsubJefeOGA(Trabajador traba) {        
+        subjefeogat = traba;
         
-            jefeOGA=trabajador.getApellidoPaterno();
+            subjefeOGA=subjefeogat.getApellidoPaterno();
             bjefeOGA=false;
 
         mostrar=false;
-        return TitularZone.getBody();  
+        return subJefeOGAZone.getBody();  
     }
    
    
