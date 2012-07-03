@@ -262,7 +262,7 @@ function datos(val1,val2){
                     <t:if test="entixd">
                         <h2>Entidad Destino</h2>
                         <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="entidad2" include="denominacion" inPlace="true" t:zone="entiZone">
+                            row="entid" include="denominacion" inPlace="true" t:zone="entiZone">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
                             </t:parameter>
