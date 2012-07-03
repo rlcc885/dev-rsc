@@ -44,8 +44,23 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private Entidad subEntidadUE;
+    
     @Property
     private Entidad oi;
+    
+    @Component(id = "formulariomensajes")
+    private Form formulariomensajes;
+    @InjectComponent
+    private Zone mensajesZone;    
+        
+    @Component(id = "formularionivelgobierno")
+    private Form formularionivelgobierno;
+    @Component(id = "formularioorganizacion")
+    private Form formularioorganizacion;
+    @Component(id = "formulariosector")
+    private Form formulariosector;
+    @Component(id = "formularioorganismo")
+    private Form formularioorganismo;
     @Component(id = "formularioentidad")
     private Form formularioentidad;
     @Component(id = "formulariosubentidad")
@@ -61,7 +76,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     @Property
     private Zone ubigeoEntidadZone;
-
+    @Property
+    @Persist
+    private boolean bsector;
+    @Property
+    @Persist
+    private boolean btipoorganismo;
+    @Component(id = "formularioubigeo")
+    private Form formularioubigeo;
+    @Component(id = "formulariosububigeo")
+    private Form formulariosububigeo;
+    
     
     //Entidad Origen
     @InjectComponent
@@ -76,6 +101,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private boolean mostrar;
+    @Persist
     @Property
     private Entidad entio;
     @InjectComponent
@@ -191,6 +217,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
      private Zone nivelOrganizacionSectorZone;
     @InjectComponent
+    @Property
+    private Zone principalZone;
+    @InjectComponent
+    @Property
+     private Zone botonesZone;
+    @InjectComponent
+    @Property
+    private Zone subprincipalZone;
+    @InjectComponent
+    @Property
+     private Zone subbotonesZone;
+    @InjectComponent
     private Envelope envelope;
    
         
@@ -278,15 +316,36 @@ public class AMEntidadUEjecutora extends GeneralPage {
      //reset del formulario (borrar objeto)
      
     @Log
+    void onSelectFromSubreset() {
+           elemento=1;
+    }
+    
+    @Log
+    void onSelectFromSubcancel() {
+        elemento=2;
+    }
+    
+    @Log
     void onSelectFromReset() {
-        entidadUE = new Entidad();
-        //ubigeoEntidadUE = new Ubigeo();
-    }    
+           elemento=1;
+    }
+    
+    @Log
+    void onSelectFromCancel() {
+        elemento=2;
+    }
+    
+    
 
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariobotones() {
-            
+        
+        if(elemento==1){
+            return "AMEntidadUEjecutora";
+        }else if(elemento==2){
+            return "AMEntidadUEjecutora";
+        }else{    
         entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
         entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
         entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
@@ -296,14 +355,27 @@ public class AMEntidadUEjecutora extends GeneralPage {
         session.saveOrUpdate(entidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         envelope.setContents(helpers.Constantes.EUE_EXITO);
-        return nivelOrganizacionSectorZone.getBody();
+        return 
+        new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody())                             
+                    .add("principalZone", principalZone.getBody())
+                    .add("ubigeoEntidadZone", ubigeoEntidadZone.getBody())
+                    .add("TitularZone", TitularZone.getBody())
+                    .add("JefeRRHHZone", JefeRRHHZone.getBody())
+                    .add("JefeOGAZone", JefeOGAZone.getBody())
+                    .add("mensajesZone", mensajesZone.getBody());
+        }
         
     }
 
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariosubbotones() {
-         
+        
+        if(elemento==1){
+            return "AMEntidadUEjecutora";
+        }else if(elemento==2){
+            return "AMEntidadUEjecutora";
+        }else{    
         subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
         subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
         subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
@@ -314,6 +386,29 @@ public class AMEntidadUEjecutora extends GeneralPage {
         session.saveOrUpdate(subEntidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(subEntidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         envelope.setContents(helpers.Constantes.EUE_EXITO);
+         envelope.setContents("Clave modificada con éxito.");
+        return   new MultiZoneUpdate("subprincipalZone", subprincipalZone.getBody())                             
+                    .add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody())
+                    .add("subTitularZone", subTitularZone.getBody())
+                    .add("subJefeRRHHZone", subJefeRRHHZone.getBody())
+                    .add("subJefeOGAZone", subJefeOGAZone.getBody())
+                    .add("mensajesZone", mensajesZone.getBody());
+        }
+        
+    }
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormularioorganizacion() {
+        bsector=true;    
+        return nivelOrganizacionSectorZone.getBody();
+        
+    }
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormulariosector() {
+        btipoorganismo=true;    
         return nivelOrganizacionSectorZone.getBody();
         
     }
@@ -367,10 +462,22 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromEditar(Entidad entix) {        
         entio = entix;
         entidad_origen=entio.getDenominacion(); 
+        
         subEntidadUE.setEntidad(entio);
+        
+        subEntidadUE.setTipoVia(entio.getTipoVia());
+        subEntidadUE.setTipoZona(entio.getTipoZona());
+        subEntidadUE.setDireccion(entio.getDireccion());
+        subEntidadUE.setDescZona(entio.getDescZona());
+        ubigeoSubEntidadUE.setDepartamento(entio.getDepartamento());
+        ubigeoSubEntidadUE.setProvincia(entio.getProvincia());
+        ubigeoSubEntidadUE.setDistrito(entio.getDistrito());
+        
         subEntidadUE.setEsSubEntidad(true); 
         mostrar=false;
-        return EOrigenZone.getBody();  
+             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
+                    .add("subprincipalZone", subprincipalZone.getBody())
+                     .add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody());
     }
     
     //Metodos de Busqueda de Trabajadores
