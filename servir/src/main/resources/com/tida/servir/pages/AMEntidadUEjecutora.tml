@@ -24,7 +24,7 @@
 
 
     <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
-    <div t:type="zone" t:id="nivelOrganizacionSectorZone" >
+   
         <div class="wrap" id="selectors">
             <!-- the tabs -->
             <ul id="tabs-top" class="tabs">
@@ -32,42 +32,64 @@
                 <li><a href="#"> SubEntidad</a></li>
             </ul>
 
+            <div t:type="zone" t:id="mensajesZone" >
+                <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+            </div>
+            
             <div id="entidad" class="pane" style="display:block;">    
                 <div class="box">
                  
                         <h3>Crear/Editar Entidades /U. Ejecutoras</h3>
-                        <div class="f-wrap">
-                          <t:form t:id="formularioentidad"  zone="nivelOrganizacionSectorZone">   
+                          <div t:type="zone" t:id="nivelOrganizacionSectorZone" >
                             <div class="f-wrap">
+                                
+                                <t:form t:id="formularionivelgobierno"  zone="nivelOrganizacionSectorZone"> 
                                 <div class="f-left">
                                     <t:label for="nivelgobierno"/>
                                     <input t:type="Select" t:id="nivelgobierno" t:value="entidadUE.nivelgobierno" 
                                            model="NivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                            t:validate="required" t:blankOption="ALWAYS" />
                                 </div>
+                                </t:form>
+                                <t:form t:id="formularioorganizacion"  zone="nivelOrganizacionSectorZone"> 
                                 <div class="f-left"> 
                                     <t:label for="organizacionestado"/>
                                     <input t:type="Select" t:id="organizacionestado" t:value="entidadUE.organizacionestado" 
                                            model="OrganizacionEstado" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                            t:validate="required" t:blankOption="ALWAYS"/>
                                 </div>
+                                </t:form>
+                                <t:if test="bsector">
+                                <t:form t:id="formulariosector"  zone="nivelOrganizacionSectorZone"> 
                                 <div class="f-left"> 
                                     <t:label for="sectorgobierno"/>
                                     <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno" 
                                            model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                            t:validate="required" t:blankOption="ALWAYS"/>
                                 </div>
-
-                            </div>
-
-                            <div class="f-wrap" id="entidadCodDen">
-
+                                </t:form>
+                                <t:if test="btipoorganismo">    
+                                <t:form t:id="formularioorganismo"  zone="nivelOrganizacionSectorZone">     
                                 <div class="f-left"> 
                                     <t:label for="tipoorganismo"/>
                                     <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
                                            model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                            t:validate="required" t:blankOption="ALWAYS"/>
                                 </div>
+                                </t:form>
+                                </t:if>  
+                                 </t:if>    
+                            </div>
+                        </div>
+                         
+                        <div t:type="zone" t:id="principalZone" >
+                         <t:form t:id="formularioentidad"  zone="principalZone">  
+                            <div class="f-wrap">
+
+                                
                                 <div class="f-left">
                                     <t:label for ="denominacion"/>
                                     <input t:type="TextField" t:id="denominacion"
@@ -157,18 +179,20 @@
                                            t:value="entidadUE.telefonoEntidad"/>
                                 </div>
                             </div>
-
-                            <t:zone t:id="ubigeoEntidadZone">
+                        
+                        </t:form>
+                       </div>
+                        
+                        <t:zone t:id="ubigeoEntidadZone">
+                             <t:form t:id="formularioubigeo"  zone="ubigeoEntidadZone">  
                                 <div class="f-wrap">
                                     <div class="f-left" id="ubigeo_entidadUE"> 
                                         <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE"
                                                t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />         
                                     </div>
                                 </div>
-                            </t:zone> 
-
-                          
-                        </t:form>
+                             </t:form>    
+                         </t:zone>     
                          
                             
                         <div class="f-wrap">                             
@@ -208,8 +232,9 @@
                              </t:zone>
                             
                          </div>
-                            
-                             <t:form t:id="formulariobotones"  zone="nivelOrganizacionSectorZone">
+                         
+                        <div t:type="zone" t:id="botonesZone" >
+                             <t:form t:id="formulariobotones"  zone="botonesZone">
                             <div class="f-wrap">
                                 <div class="f-right">
                                     <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
@@ -250,7 +275,8 @@
                                     </t:form>
                              </t:zone>
                            
-                            <t:form t:id="formulariosubentidad"  zone="nivelOrganizacionSectorZone">
+                            <div t:type="zone" t:id="subprincipalZone" >
+                            <t:form t:id="formulariosubentidad"  zone="subprincipalZone">
                             <div class="f-wrap">
 
                                 <div class="f-left"> 
@@ -356,17 +382,23 @@
 
                             </div>
                                 
-                            <t:zone t:id="ubigeoSubEntidadZone">
+                      
+                                
+                        </t:form> 
+                        </div>
+                            
+                          <t:zone t:id="ubigeoSubEntidadZone">
+                              <t:form t:id="formulariosububigeo"  zone="ubigeoSubEntidadZone">  
                                 <div class="f-wrap">
                                     <div class="f-left" id="ubigeo_subentidadUE"> 
                                         <input t:type="Ubigeos" t:id="ubigeo_subentidadUE" t:ubigeo="ubigeoSubEntidadUE"
                                                t:zone="ubigeoSubEntidadZone" t:zoneName="ubigeoSubEntidadZone" />         
                                     </div>
                                 </div>
-                            </t:zone>
-                                
-                        </t:form> 
-                           
+                                  </t:form> 
+                            </t:zone>    
+                            
+                            
                          <div class="f-wrap">                             
                              
                              
@@ -404,7 +436,7 @@
                              </t:zone>
                             
                             </div>
-
+                        <div t:type="zone" t:id="subbotonesZone" >
                            <t:form t:id="formulariosubbotones"  zone="nivelOrganizacionSectorZone">
                             <div class="f-wrap">
                                 <div class="f-right">
@@ -418,6 +450,8 @@
                                 </div>
                             </div>
                              </t:form>
+                            
+                            
                         </div>
                    
                 </div>
