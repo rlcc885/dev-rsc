@@ -65,9 +65,9 @@ public class CambioUOEntidad extends GeneralPage{
     @Persist
     private UnidadOrganica uoDestino;
 
-    @Property
-    @Persist
-    private Entidad entidadDestino;
+//    @Property
+//    @Persist
+//    private Entidad entidadDestino;
 
     @Persist
     private GenericSelectModel<UnidadOrganica> _beanUOrganicasOrigen;
@@ -96,8 +96,8 @@ public class CambioUOEntidad extends GeneralPage{
     @InjectComponent
     private Zone EDestiZone;
 
-    @InjectComponent
-    private Zone UOChangeZone;
+//    @InjectComponent
+//    private Zone UOChangeZone;
 
     @Inject
     private Request _request;
@@ -106,8 +106,8 @@ public class CambioUOEntidad extends GeneralPage{
     private ComponentResources _resources;
 
     
-    @Component(id = "formUOFusionar")
-    private Form formUOFusionar;
+//    @Component(id = "formUOFusionar")
+//    private Form formUOFusionar;
     
     @Persist
     @Property
@@ -165,7 +165,8 @@ public class CambioUOEntidad extends GeneralPage{
     @InjectComponent
     private Zone botonZone;
     
-    private int num2=0;
+    private int num=0,num2=0;
+    private Object retorno;
     
     @Log
     public List<String> getBopciones(){
@@ -248,18 +249,29 @@ public class CambioUOEntidad extends GeneralPage{
         return EDestiZone.getBody();  
     }
     
+    void onSelectedFromCancelar() {
+        num=3;        
+    }
+    
+    void onSelectedFromReset() {        
+        num=2;   
+        opcion=null;
+        uoOrigen=null;
+        entidad_origen=null;
+        uoDestino=null;
+        entidad_destino=null;
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
-//        
-//        if(opcion.equalsIgnoreCase("MIGRAR")){
-//           envelope.setContents("migrarasss");
-//           return botonZone.getBody();
-//
-//        }
-//        else if(opcion==null && opcion.equals("")){
-//            
-//        }
+    if(num==2){
+        
+    }
+    else if(num==3){
+        return CambioEntidad.class;
+    }
+    else{
         if (opcion != null && !opcion.equals("")) {
            if(opcion.equalsIgnoreCase("MIGRAR")){//migrar
                 if(uoOrigen==null){
@@ -328,11 +340,9 @@ public class CambioUOEntidad extends GeneralPage{
            formBotones.recordError("Debe seleccionar una Opción");
            return botonZone.getBody(); 
         }
-        
-//        //formBotones.recordError("Debe seleccionar U. Orgánica Origen");
-//        envelope.setContents(String.valueOf(entio)+String.valueOf(uoOrigen)+String.valueOf(entid)+String.valueOf(uoDestino)+opcion);
-          //envelope.setContents(opcion);
-        return botonZone.getBody();
+    }
+
+    return botonZone.getBody();
     }
 
 //    @Log
@@ -346,15 +356,15 @@ public class CambioUOEntidad extends GeneralPage{
 //    }
 
 
-    public boolean getHayEntidadDestino() {
-        return entidadDestino != null;
-    }
-
-    @Log
-    public boolean getActivoSubmit() {
-        boolean salida = getHayEntidadDestino() && (uoOrigen != null);
-        return salida;
-    }
+//    public boolean getHayEntidadDestino() {
+//        return entidadDestino != null;
+//    }
+//
+//    @Log
+//    public boolean getActivoSubmit() {
+//        boolean salida = getHayEntidadDestino() && (uoOrigen != null);
+//        return salida;
+//    }
 
     /**
      * El parámetro first es porque la unidad origen no puede ser nivel 0, pero si la destino
@@ -446,61 +456,61 @@ public class CambioUOEntidad extends GeneralPage{
 //                    .add("UOChangeZone", UOChangeZone.getBody());
 //    }
 
-    Object onSuccessFromformUODestino() {
-        return UOChangeZone.getBody();
-    }
+//    Object onSuccessFromformUODestino() {
+//        return UOChangeZone.getBody();
+//    }
 
 //    Object onSuccessFromFormEOrigen() {
 //        return EOrigenZone.getBody();
 //    }
 
 
-    @CommitAfter
-    Object onSuccessFromFormUOChange() {
-        Helpers.migrarUOBase(uoOrigen, entidadUE, entidadDestino, session);
-        session.flush();
-        uoOrigen = null;
-        uoDestino = null;
-//        nivelOrigen = null;
-//        nivelDestino = null;
-        envelope.setContents("Unidad Orgánica migrada exitosamente");
-        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                
-                    .add("EOrigenZone", EOrigenZone.getBody())
-                    .add("EDestiZone", EDestiZone.getBody());
-                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
+//    @CommitAfter
+//    Object onSuccessFromFormUOChange() {
+////        Helpers.migrarUOBase(uoOrigen, entidadUE, entidadDestino, session);
+//        session.flush();
+//        uoOrigen = null;
+//        uoDestino = null;
+////        nivelOrigen = null;
+////        nivelDestino = null;
+//        envelope.setContents("Unidad Orgánica migrada exitosamente");
+//        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                
+//                    .add("EOrigenZone", EOrigenZone.getBody())
+//                    .add("EDestiZone", EDestiZone.getBody());
+//                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
+//
+//    }
 
-    }
 
-
-    @CommitAfter
-    Object onSuccessFromFormUOFusionar() {
-        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidadDestino, uoDestino, session);
-        session.flush();
-        uoOrigen = null;
-        uoDestino = null;
-//        nivelOrigen = null;
-//        nivelDestino = null;
-        envelope.setContents("Unidad Orgánica fusionada exitosamente");
-        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                      
-                    .add("EOrigenZone", EOrigenZone.getBody())
-                    .add("EDestiZone", EDestiZone.getBody());
-                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
-
-    }
+//    @CommitAfter
+//    Object onSuccessFromFormUOFusionar() {
+////        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidadDestino, uoDestino, session);
+//        session.flush();
+//        uoOrigen = null;
+//        uoDestino = null;
+////        nivelOrigen = null;
+////        nivelDestino = null;
+//        envelope.setContents("Unidad Orgánica fusionada exitosamente");
+//        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                      
+//                    .add("EOrigenZone", EOrigenZone.getBody())
+//                    .add("EDestiZone", EDestiZone.getBody());
+//                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
+//
+//    }
     
-    @Log
-    private MultiZoneUpdate zonasDatos() {
-        MultiZoneUpdate mu;
+//    @Log
+//    private MultiZoneUpdate zonasDatos() {
+//        MultiZoneUpdate mu;
+//
+//        mu = new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody()).add("EOrigenZone", EOrigenZone.getBody())                                
+//                    .add("EDestiZone", EDestiZone.getBody());
+//        return mu;
+//
+//    }
 
-        mu = new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody()).add("EOrigenZone", EOrigenZone.getBody())                                
-                    .add("EDestiZone", EDestiZone.getBody());
-        return mu;
 
-    }
-
-
-    @SetupRender
-    void initValues() {
-        entidadDestino = null;
-    }
+//    @SetupRender
+//    void initValues() {
+//        entidadDestino = null;
+//    }
 }

@@ -39,11 +39,10 @@
                             <div class="f-left">    
                                 Entidad Origen
                                 <input t:type="TextField" t:id="entidad_den"
-                                    t:value="entidad_origen" t:readonly="readonly" style="width: 250px;"/>                            
+                                    t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
                             </div> 
                         </form>
-                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">                       
-                                                          
+                        <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">                                                    
                          <div class="actions f-right">  
                              <input id="buscarsubmit" type="submit" value="Buscar" class="button" onClick="javascript: mostrar();" />
                          </div>              
@@ -73,11 +72,11 @@
                     </t:zone>
         </div> -->
 
-        <div id= "datosDestino" class="box">
+        <div id= "datosDestinox" class="box">
             <h3> Seleccione destino</h3>
-            <t:zone t:id="EDestiZone">
-                  <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">
-                    
+            <div class="f-wrap">
+            <t:zone t:id="EDestiZone">            
+                  <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">                    
                     <div class="f-wrap">
                     <div class="f-left">
                     <if test="mostrarUOD">                        
@@ -107,7 +106,7 @@
                     t:zone = "NivelDestinoZone" t:zoneName = "NivelDestinoZone"
                     t:vistaCorta = "true"/>
             </div>-->
-            <div class="f-wrap">
+            <!--<div class="f-wrap">-->
                 <!--
                     <div class="f-left">
                         <t:zone t:id="NivelDestinoZone">
@@ -137,10 +136,10 @@
                              </t:if>
                         </t:zone>
                     </div>-->
+                    <!--
                     <div class="f-left">
                         <t:zone t:id="UOChangeZone">
                             <t:if test = "ActivoSubmit">
-                                <!--<t:envelope t:id="envelope"/>-->
                                 <form t:type="form" t:id="formUOChange" t:zone ="UOChangeZone">
                                     <input id="submit" type="submit" value="Cambiar UO a esta Entidad" class="button"/>
                                 </form>
@@ -150,18 +149,19 @@
                                 </form>
                              </t:if>
                         </t:zone>
-                    </div>
+                    </div>-->
             </div>
         </div> 
+            
+            
         <div t:type="zone" t:id="botonZone"> 
             <form t:type="form" t:id="formBotones" t:zone ="botonZone">
                 <t:errors/>
-                <t:envelope t:id="envelope"/>
-                
+                <t:envelope t:id="envelope"/>                
                 <div class="actions f-right">
-                <input id="aceptar" type="submit" value="Aceptar" class="button" />
-                <!--<input id="limpiar" type="submit" value="Limpiar Formulario" class="button" />
-                <input id="cancelar" type="submit" value="Cancelar" class="button" />-->
+                <input id="aceptar" type="submit" value="Aceptar" class="button" />                
+                <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
+                <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
                 </div>
                 <a href="javascript:abrir()">Enlace</a> 
                 
