@@ -20,7 +20,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 @IncludeStylesheet({"context:layout/menu.css", "context:layout/menu-2.css"})
-public class Menu {
+public class ComponenteMenu {
 
     @Property
     @SessionState
@@ -312,7 +312,7 @@ public class Menu {
                 try {
                     reportesPath = context.getRealFile("/").getCanonicalPath();
                 } catch (IOException ex) {
-                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ComponenteMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 File fileADescargar = new File(reportesPath + "/Manual del RNSC.pdf");
 

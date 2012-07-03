@@ -1,9 +1,10 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -11,7 +12,9 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class DatoAuxiliar { //implements Serializable {
+public class DatoAuxiliar {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+//implements Serializable {
 
     public enum TipoDeAcceso {
         SoloLectura,
@@ -110,4 +113,5 @@ public class DatoAuxiliar { //implements Serializable {
     public void setTipoDeAcceso(TipoDeAcceso tipoDeAcceso) {
         this.tipoDeAcceso = tipoDeAcceso;
     }
+
 }

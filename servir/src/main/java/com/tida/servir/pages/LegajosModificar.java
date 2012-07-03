@@ -5,19 +5,15 @@
 
 package com.tida.servir.pages;
 
-
-
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.Trabajador;
-
-import org.hibernate.Session;
-
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**

@@ -4,7 +4,7 @@
  */
 package helpers;
 
-import com.tida.servir.components.Menu; 
+import com.tida.servir.components.ComponenteMenu; 
 
 /**
  *
@@ -166,7 +166,7 @@ public class Accesos {
     public static String getPagePadreName(MENUPADRE item) {
         String nombre = "";
         /*
-         * String nombreAyuda = ""; Menu menu = new Menu(); nombreAyuda =
+         * String nombreAyuda = ""; ComponenteMenu menu = new ComponenteMenu(); nombreAyuda =
          * menu.getCurrentPadrePageName();
          * System.out.println("------------------------------ page padre hijo de
          * puta "+nombreAyuda);

@@ -50,10 +50,10 @@ public class UsuarioAcceso implements Serializable {
     private Short accesoselect;
     @Column(name = "ACCESOUPDATE")
     private Short accesoupdate;
+    @Column(name = "ACCESOINSERT")
+    private Short accesoinsert;
     @Column(name = "ACCESODELETE")
     private Short accesodelete;
-    @Column(name = "ACCESOREPORT")
-    private Short accesoreport;
     @Column(name = "HIJO")
     private Short hijo;
     @Column(name = "ACTIVO")
@@ -145,11 +145,11 @@ public class UsuarioAcceso implements Serializable {
     }
 
     public Short getAccesoreport() {
-        return accesoreport;
+        return accesoinsert;
     }
 
     public void setAccesoreport(Short accesoreport) {
-        this.accesoreport = accesoreport;
+        this.accesoinsert = accesoreport;
     }
 
     public Short getHijo() {
