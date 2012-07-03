@@ -127,6 +127,9 @@ public class AMUnidadOrganica extends GeneralPage {
     @Component(id = "formlistaunidad")
     private Form formlistaunidad;
     private int num,mostra,num2;
+    @Persist
+    @Property
+    private String bescon;
     
     @Log
     @CommitAfter
@@ -164,7 +167,9 @@ public class AMUnidadOrganica extends GeneralPage {
         c = session.createCriteria(UnidadOrganica.class);
         c.add(Restrictions.eq("entidad", entidadUE));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
-        c.add(Restrictions.eq("nivel", bnivelUO - 1));
+        if(bnivelUO!=null){
+            c.add(Restrictions.eq("nivel", bnivelUO - 1));
+        }
         
         return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
     }
@@ -537,7 +542,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 onSelectedFromReset();
                 setupUbigeos();
                 formularioaltaunidadorganica.clearErrors();
-                envelope.setContents(helpers.Constantes.CARGO_EXITO);
+                envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
             }
         }
         else{
@@ -590,7 +595,7 @@ public class AMUnidadOrganica extends GeneralPage {
             onSelectedFromReset();
             setupUbigeos();
             formularioaltaunidadorganica.clearErrors();
-            envelope.setContents(helpers.Constantes.CARGO_EXITO);
+            envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
             
         }
         
@@ -611,13 +616,20 @@ public class AMUnidadOrganica extends GeneralPage {
     @Log
     @CommitAfter
     Object onBorrarDato(UnidadOrganica dato) {
-        errorBorrar = null;
-        dato.setEstado(UnidadOrganica.ESTADO_BAJA);
-        session.saveOrUpdate(dato);
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-        onSelectedFromReset();
-        envelope.setContents("Unidad Orgánica Eliminada");
-        //setupUbigeos();
+//        errorBorrar = null;
+//        dato.setEstado(UnidadOrganica.ESTADO_BAJA);
+//        session.saveOrUpdate(dato);
+//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+//        onSelectedFromReset();
+//        envelope.setContents("Unidad Orgánica Eliminada");
+//        //setupUbigeos();
+        if(bescon==null){
+            envelope.setContents("Borrooo");
+        }
+        else{
+            envelope.setContents("NO Borrooo");
+        }
+        
         return zonas();// La/a zona a actualizar
     }
 
