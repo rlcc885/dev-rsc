@@ -50,10 +50,10 @@ public class SMTPConfig {
             //Propiedades de la conexion
             Properties propiedades = new Properties();
             //propiedades.setProperty("mail.transport.protocol", props.getString("mail.transport.protocol"));
-            propiedades.setProperty("mail.smtp.host", "smtp.gmail.com");
-            propiedades.setProperty("mail.smtp.port", "587");
-            //propiedades.setProperty("mail.smtp.host", ca.getSMTP_servidor());
-            //propiedades.setProperty("mail.smtp.port", ca.getSMTP_puerto());
+            //propiedades.setProperty("mail.smtp.host", "smtp.gmail.com");
+            //propiedades.setProperty("mail.smtp.port", "587");
+            propiedades.setProperty("mail.smtp.host", ca.getSMTP_servidor());
+            propiedades.setProperty("mail.smtp.port", ca.getSMTP_puerto());
             propiedades.setProperty("mail.smtp.auth", "true");
             propiedades.setProperty("mail.smtp.starttls.enable", "true");
 //            propiedades.put("mail.smtp.socketFactory.class", props.getString("mail.smtp.socketFactory.class"));

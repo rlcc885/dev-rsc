@@ -4,8 +4,6 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
-import helpers.Errores;
-import helpers.Logger;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.*;
 import java.math.BigInteger;
@@ -14,14 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//import java.util.Properties;
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.Transport;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.PasswordAuthentication;
-////import javax.mail.Session;
-//import javax.mail.internet.MimeMessage;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -371,7 +361,7 @@ public class ABMUsuario extends GeneralPage {
                 String subject = "Datos de acceso al sistema Servir";
                 String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getNroDocumento(), password);
                 //SMTPConfig.sendMail(subject,body, usuario.getTrabajador().getEmailLaboral(),ca);
-                if (SMTPConfig.sendMail(subject, body, "jumizamo@hotmail.com", ca)) {
+                if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
                     System.out.println("envío Correcto");
                 } else {
                     System.out.println("envío Fallido");

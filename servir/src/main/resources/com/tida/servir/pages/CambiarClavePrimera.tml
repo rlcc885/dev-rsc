@@ -1,4 +1,4 @@
-<html t:type="layout" title="Servir - Seleccionar/Cambiar Entidad"
+<html t:type="layoutlogin" title="Cambiar clave"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
@@ -11,11 +11,12 @@
         </t:if >
 
     </t:if>
-    <h2>Modificación de clave</h2>
 
-
-    <div class="change-pass box">
+    
+    <div class="change-pass">
         
+        <h3>Modificación de clave</h3>
+        <div class="box">
         <div id="form_cambio_clave" class="abmform">
             <t:zone t:id="zone">
                 <t:form t:id="formulariocambioclave" t:zone = "zone">
@@ -24,24 +25,24 @@
                     <t:errors/>
                     <t:if test= "FormDisplay">
                         <div class="f-wrap" id="div_cambiarclave">
-                            <t:label for="clave_vieja"/>
-                            <input t:type="PasswordField" t:id="clave_vieja"
+                            <t:label for="clave_actual"/>
+                            <input t:type="PasswordField" t:id="clave_actual"
                                    t:value="oldPass" size="20" t:validate="required" />
                         </div>
                         <div class="f-wrap" id="cambiarclave">
                             <div class="f-left">
-                                <t:label for="clave_nueva_1"/>
-                                <input t:type="PasswordField" t:id="clave_nueva_1"
+                                <t:label for="nueva_clave"/>
+                                <input t:type="PasswordField" t:id="nueva_clave"
                                        t:value="newPass1" size="20" t:validate="required" />
                             </div>
                             <div class="f-left">
-                                <t:label for="clave_nueva_2"/>
-                                <input t:type="PasswordField" t:id="clave_nueva_2"
+                                <t:label for="repita_nueva_clave"/>
+                                <input t:type="PasswordField" t:id="repita_nueva_clave"
                                        t:value="newPass2" size="20" t:validate="required" onclick="javascript: verificar();" />
                             </div>
                         </div>
                         <div class="f-wrap" id="complejidadclave">                                 
-                            <input type="text" id="verificacion" size="12" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
+                            <input type="text" id="verificacion" size="50" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
                         </div>
                         <div class="f-wrap">
                             <div class="f-right">
@@ -55,6 +56,7 @@
                 </t:form>
             </t:zone>
         </div>
+            </div>
     </div>
 
 
@@ -68,7 +70,7 @@
         function verificar(){
  
             porcentaje=0;
-            var texto = document.getElementById("clave_nueva_1").value;
+            var texto = document.getElementById("nueva_clave").value;
             if(tiene_letras(texto)) porcentaje++;   
             if(tiene_numeros(texto)) porcentaje++;  
             if(tiene_pocoscaracteres(texto)) porcentaje++;  
@@ -76,7 +78,7 @@
 
             if(porcentaje==0){ 
                 document.getElementById("verificacion").value="Complejidad de clave: 0%";
-                document.getElementById("clave_nueva_1").value="";
+                document.getElementById("nueva_clave").value="";
             }
             if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 25%";
             if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
