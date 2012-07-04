@@ -5,8 +5,6 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -22,50 +20,52 @@ import javax.persistence.*;
     @NamedQuery(name = "Menu.findByNivel", query = "SELECT m FROM Menu m WHERE m.nivel = :nivel"),
     @NamedQuery(name = "Menu.findByPagename", query = "SELECT m FROM Menu m WHERE m.pagename = :pagename"),
     @NamedQuery(name = "Menu.findByOrden", query = "SELECT m FROM Menu m WHERE m.orden = :orden")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "callSpMenuSinAsignarPorPerfil",
+    query = "CALL SP_MENUSINASIGNARPORPERFIL(?,:in_perfil_id)",
+    resultClass = Menu.class,
+    hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
+    })
+})
 public class Menu implements Serializable {
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
-    private BigDecimal id;
+    private long id;
     @Basic(optional = false)
     @Column(name = "DESCMENU")
     private String descmenu;
     @Column(name = "NIVEL")
-    private Short nivel;
+    private long nivel;
     @Column(name = "PAGENAME")
     private String pagename;
     @Column(name = "ORDEN")
-    private Short orden;
-    
-//    @OneToMany(mappedBy = "menuId")
-//    private List<Menu> menuList;
-    
+    private long orden;
     @JoinColumn(name = "MENU_ID", referencedColumnName = "ID")
     @ManyToOne
     private Menu menuId;
-    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
-//    private List<Menuperfil> menuperfilList;
 
     public Menu() {
     }
 
-    public Menu(BigDecimal id) {
+    public Menu(long id) {
         this.id = id;
     }
 
-    public Menu(BigDecimal id, String descmenu) {
+    public Menu(long id, String descmenu) {
         this.id = id;
         this.descmenu = descmenu;
     }
 
-    public BigDecimal getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -77,11 +77,11 @@ public class Menu implements Serializable {
         this.descmenu = descmenu;
     }
 
-    public Short getNivel() {
+    public long getNivel() {
         return nivel;
     }
 
-    public void setNivel(Short nivel) {
+    public void setNivel(long nivel) {
         this.nivel = nivel;
     }
 
@@ -93,21 +93,13 @@ public class Menu implements Serializable {
         this.pagename = pagename;
     }
 
-    public Short getOrden() {
+    public long getOrden() {
         return orden;
     }
 
-    public void setOrden(Short orden) {
+    public void setOrden(long orden) {
         this.orden = orden;
     }
-
-//    public List<Menu> getMenuList() {
-//        return menuList;
-//    }
-//
-//    public void setMenuList(List<Menu> menuList) {
-//        this.menuList = menuList;
-//    }
 
     public Menu getMenuId() {
         return menuId;
@@ -117,37 +109,8 @@ public class Menu implements Serializable {
         this.menuId = menuId;
     }
 
-//    public List<Menuperfil> getMenuperfilList() {
-//        return menuperfilList;
-//    }
-//
-//    public void setMenuperfilList(List<Menuperfil> menuperfilList) {
-//        this.menuperfilList = menuperfilList;
-//    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Menu)) {
-            return false;
-        }
-        Menu other = (Menu) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
         return "com.tida.servir.entities.Menu[ id=" + id + " ]";
     }
-    
 }

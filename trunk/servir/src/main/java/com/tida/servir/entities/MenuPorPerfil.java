@@ -11,7 +11,7 @@ import javax.persistence.*;
  *
  * @author Jurguen Zambrano
  */
-
+@Entity
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpMenuPorPerfil",
     query = "CALL SP_MENUPORPERFIL(?,:in_perfil_id)",
@@ -20,15 +20,15 @@ import javax.persistence.*;
         @QueryHint(name = "org.hibernate.callable", value = "true")
     })
 })
-@Entity
+
 public class MenuPorPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "ID")
+    private String id;
     @Column(name = "MENU_ID")
     private long menuId;
-    @Id
-    @Basic(optional = false)
     @Column(name = "PERFIL_ID")
     private long perfilId;
     @Column(name = "DESCMENU")
@@ -41,10 +41,18 @@ public class MenuPorPerfil implements Serializable {
     private long accesoinsert;
     @Column(name = "ACCESODELETE")
     private long accesodelete;
-    @Column(name = "ROWNUM")
+    @Column(name = "ROW_NUM")
     private long rownum;
 
     public MenuPorPerfil() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public long getAccesoselect() {

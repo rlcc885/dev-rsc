@@ -23,46 +23,46 @@ public class Menuperfil implements Serializable {
     @Column(name = "PERFIL_ID")
     private long perfilId;
     @Column(name = "ACCESOSELECT")
-    private long accesoselect;
+    private Boolean accesoselect;
     @Column(name = "ACCESOUPDATE")
-    private long accesoupdate;
+    private Boolean accesoupdate;
     @Column(name = "ACCESOINSERT")
-    private long accesoinsert;
+    private Boolean accesoinsert;
     @Column(name = "ACCESODELETE")
-    private long accesodelete;
+    private Boolean accesodelete;
 
     public Menuperfil() {
     }
 
-    public long getAccesoselect() {
+    public Boolean getAccesoselect() {
         return accesoselect;
     }
 
-    public void setAccesoselect(long accesoselect) {
+    public void setAccesoselect(Boolean accesoselect) {
         this.accesoselect = accesoselect;
     }
 
-    public long getAccesoupdate() {
+    public Boolean getAccesoupdate() {
         return accesoupdate;
     }
 
-    public void setAccesoupdate(long accesoupdate) {
+    public void setAccesoupdate(Boolean accesoupdate) {
         this.accesoupdate = accesoupdate;
     }
 
-    public long getAccesoinsert() {
+    public Boolean getAccesoinsert() {
         return accesoinsert;
     }
 
-    public void setAccesoinsert(long accesoinsert) {
+    public void setAccesoinsert(Boolean accesoinsert) {
         this.accesoinsert = accesoinsert;
     }
 
-    public long getAccesodelete() {
+    public Boolean getAccesodelete() {
         return accesodelete;
     }
 
-    public void setAccesodelete(long accesodelete) {
+    public void setAccesodelete(Boolean accesodelete) {
         this.accesodelete = accesodelete;
     }
 
