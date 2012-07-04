@@ -89,7 +89,7 @@ public class Index {
     @Inject
     private ComponentResources _resources;
     @InjectPage
-    private CambiarClave cambioClave;
+    private CambiarClavePrimera cambioClave;
     @Inject
     private ComponentClassResolver componentClassResolver;
     @Persist

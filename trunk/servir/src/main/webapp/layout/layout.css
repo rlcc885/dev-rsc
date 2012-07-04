@@ -11,6 +11,7 @@ blockquote,q{quotes:"" "";}
 
 body {
     font-size:11px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Sans-Serif; 
     font-family: Tahoma, Geneva, sans-serif;
     text-align:left;
     background: url("images/page-bg.png") repeat-x #FFFFFF;
@@ -64,7 +65,7 @@ form {
 h1, h1 a, h2, h2 a, h3, h3 a {
     margin: 0;
     text-decoration: none;
-    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+    /*font-family: Tahoma, Georgia, "Times New Roman", Times, serif;*/
     font-weight: normal;
     color: #444444;
 }
@@ -76,7 +77,7 @@ th {
 h1 {
     letter-spacing: -1px;
     font-size: 2.2em;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    /*font-family: Verdana, Arial, Helvetica, sans-serif;*/
     margin-bottom:10px;
 }
 
@@ -189,7 +190,7 @@ DIV.t-exception-message {
 }
 
 DIV.t-exception-report, DIV.t-env-data {
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, sans-serif;*/
 }
 
 DIV.t-exception-report LI {
@@ -222,7 +223,7 @@ SPAN.t-exception-stack-controls {
 }
 
 UL.t-stack-trace LI {
-    font-family: Monaco, Times, monospace;
+    /*font-family: Monaco, Times, monospace;*/
     font-size: 10pt;
     margin-left: -25px;
     list-style: square;
@@ -240,7 +241,7 @@ LI.t-omitted-frame {
 }
 
 H1.t-exception-report {
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, sans-serif;*/
     color: red;
 }
 
@@ -273,7 +274,7 @@ DIV.t-beaneditor {
     background: #ffc;
     border: 2px outset brown;
     padding: 2px;
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, sans-serif;*/
 }
 
 DIV.t-beaneditor-row {
@@ -287,7 +288,7 @@ DIV.t-beaneditor-row LABEL:after {
 DL.t-beandisplay {
     display: block;
     padding: 2px;
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, sans-serif;*/
     background: #CCBE99;
     border: 2px outset black;
     width: auto;
@@ -358,7 +359,7 @@ table.t-data-grid tbody tr #entidadPublica{
 }
 
 DIV.t-data-grid {
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    /*font-family: "Trebuchet MS", Arial, sans-serif;*/
 }
 
 DIV.t-data-grid-pager {
@@ -712,7 +713,7 @@ DIV.t-error-popup SPAN {
 
 .post .title {
     border-bottom: 1px #999999 dashed;
-    font-family: Tahoma, Georgia, "Times New Roman", Times, serif;
+    /*font-family: Tahoma, Georgia, "Times New Roman", Times, serif;*/
 }
 
 .post .title h2 {
@@ -1013,7 +1014,7 @@ form th {
 }
 
 /* Login */
-
+/*
 .login {
     padding:20px;
     border:thin solid;
@@ -1022,9 +1023,9 @@ form th {
     margin-left: 200px;
     width:400px;
 }
-
+*/
 .login label {
-    font: normal 1em Arial, Helvetica, sans-serif;
+    /*font: normal 1em Arial, Helvetica, sans-serif;*/
     width: 150px;
     text-align: left;
     margin-right: 10px;
@@ -1117,7 +1118,7 @@ form th {
 */
 
 #form_usuario label {
-    font: normal 1em Arial, Helvetica, sans-serif;
+    /*font: normal 1em Arial, Helvetica, sans-serif;*/
     width: 150px;
     text-align: left;
     margin-right: 10px;
@@ -1196,6 +1197,7 @@ form th {
 
 #div_cambiarclave{
     margin-left: 5px !important;
+    margin-bottom: 5px;
 }
 
 /* Titulos editor */
@@ -1240,7 +1242,7 @@ form th {
 
 
 #form_conceptoremunerativo label {
-    font: normal 1em Arial, Helvetica, sans-serif;
+    /*font: normal 1em Arial, Helvetica, sans-serif;*/
     width: 150px;
     text-align: left;
     margin-right: 10px;
@@ -1263,12 +1265,12 @@ form th {
 #tabla_oi {
     overflow:auto;
 }
-
+/*
 #organismosZone{
     top: 200px;
     margin-left: 12px;
 }
-
+*/
 #entiZone{
     top: 200px;
     margin-left: 12px;
@@ -1454,9 +1456,9 @@ DIV.t-available-values UL LI
     padding:4px 10px; 
     display:block;}
 /*.box form { padding:20px 18px; }*/
-.box form label { margin:0 0 5px 0;}
+/*.box form label { margin:0 0 5px 0;}*/
 .box form .f-left.bigger { width:210px;}
-form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px;/* width:197px; */font-size:11px;}
+/*form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px;font-size:11px;}*/
 #formulariousuario { padding:0 25px }
 #formTipoUsuario { padding:0 30px;}
 
@@ -1465,7 +1467,7 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px;/* wi
     zoom:1;
     margin-top:10px;
 }
-.f-left{ float:left;}
+.f-left{ float:left; margin-right: 10px;}
 .f-right { float:right;}
 .clear { clear:both;}
 .light-grey { background-color:#535152 !important;}
@@ -1501,7 +1503,7 @@ form .f-left, #filtrosnombres .f-left, #filtrosdoc .f-left { margin: 0 5px;/* wi
 .login .button { margin-right:5px;}
 .change-pass { 
     margin-top:50px;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 html > body div.t-error li { margin:0 0 0 10px;}
 
@@ -1604,12 +1606,12 @@ input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#5
 
 
 /**/
-#formulariocambioclave div { margin: 0 5px;}
-#formulariocambioclave div.f-wrap { margin:0;}
+/*#formulariocambioclave div { margin: 0 5px;}
+#formulariocambioclave div.f-wrap { margin:0;}*/
 
 
 /*TABLES*/
-table { margin-bottom:20px; font-size:11px; font-family: Tahoma,Geneva,sans-serif;}
+table { margin-bottom:20px; font-size:11px; /*font-family: Tahoma,Geneva,sans-serif;*/}
 table.t-data-grid { width:100%; clear:both;}
 th.login { border-top:none;}
 th { background-color:#525252;}
@@ -1958,7 +1960,7 @@ DIV.t-console DIV.t-debug {
 #lienPopup{
     width: 100px;
 }
-
+/*
 .centerClave{
     margin-top: 30px;
     float:left;
@@ -1967,7 +1969,7 @@ DIV.t-console DIV.t-debug {
 .centerImagenesIndex{
     margin-left: 90px;
 }
-
+*/
 #textoIndexClave{
     border: 2px solid red;
     position: absolute;
