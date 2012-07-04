@@ -5,21 +5,17 @@
     <h1> Entidades /U. Ejecutoras </h1>
 
     <div id = "tabla_oi">
-        <t:envelope t:id="envelope"/>   
-        <!-- 
-       <t:zone t:id="entidadZone">
-           <t:grid source="EntidadesUEjecutoras" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom"
-                row="oi" exclude= "organizacionestado,tipoorganismo,sigla,abreviatura,ruc,proc_batch,tipovia,direcion,tipozona,desczona,emailInstitucional,urlEntidad,telefonoentidad,logotipo,essubentidad"
-                    reorder="denominacion, cue_entidad, nivelgobierno, sectorgobierno" >
-               <t:parameter name="empty">
-                   <div class="no-info">No hay Entidades /U. Ejecutoras generadas</div><br/>
-               </t:parameter>
-               <p:accionesCell>
-                   <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="oi.id" href="#">Editar</a>
-               </p:accionesCell>
-           </t:grid>
-       </t:zone>
-        -->
+           <t:zone t:id="listaentidadZone">
+                    <t:grid source="listadoEntidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                            row="listaentidad" include="denominacion,cue_entidad,nivelGobierno,sectorgobierno" inPlace="true" >
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>
+                             <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="listaentidad.id" href="#">Editar</a>                                           
+                        </p:accionesCell>
+                    </t:grid>  
+         </t:zone>
     </div>  
 
 
@@ -124,13 +120,6 @@
 
                             </div>
 
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                    <label>Logo </label>
-                                    <input t:type="upload" t:id="file" style="width: 550px;"/>
-
-                                </div>
-                            </div>
 
                             <div class="f-wrap">
                                 <div class="f-left">
@@ -180,6 +169,27 @@
                                 </div>
                             </div>
                         
+                        </t:form>
+                       </div>
+                        
+                        
+                        <div t:type="zone" t:id="logoentidadZone" >
+                         <t:form t:id="formulariologoentidad"  zone="logoentidadZone">
+                             <t:errors/>
+                            <div class="f-wrap">
+                                <div class="f-left  input_grande">
+                                    <label>Logo </label>
+                                    <t:if test="blogoentidadi">
+                                        <input t:type="upload" t:id="file" style="width: 550px;" />
+                                    <input type="submit" value="Upload"  onclick="prueba();" class="button f-left"/>
+                                    </t:if>
+                                    <t:if test="blogoentidadf">
+                                    <input t:type="TextField" t:id="logotipo"
+                                           t:value="entidadUE.logotipo"/>
+                                     </t:if>
+                                    
+                                </div>
+                            </div>
                         </t:form>
                        </div>
                         
@@ -688,6 +698,14 @@
             window.onscroll=window.onresize= modalsize2;
             modalsize2();
         }
+    </script>
+    
+    <script type="text/javascript">
+        function prueba() {
+            alert(document.getElementById('file').value);
+            document.getElementById('logotipo').value=document.getElementById('file').value;
+        };
+
     </script>
 
 </html>

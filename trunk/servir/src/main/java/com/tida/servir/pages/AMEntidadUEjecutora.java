@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 
@@ -22,6 +23,7 @@ import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.ApplicationGlobals;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.internal.services.UploadedFileItem;
@@ -86,7 +88,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formularioubigeo;
     @Component(id = "formulariosububigeo")
     private Form formulariosububigeo;
-    
+    @Component(id = "formulariologoentidad")
+    private Form formulariologoentidad;
+    @InjectComponent
+    private Zone logoentidadZone;   
     
     //Entidad Origen
     @InjectComponent
@@ -195,7 +200,20 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private boolean bjefeRRHHi;
+    @Property
+    @Persist
+    private boolean blogoentidadf;
+    @Property
+    @Persist
+    private boolean blogoentidadi;
     
+    
+    //Listado de entidades
+    @InjectComponent
+    private Zone listaentidadZone;
+    @Persist
+    @Property
+    private LkBusquedaEntidad listaentidad;
     
     @Property
     @Persist
@@ -231,13 +249,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     private Envelope envelope;
    
-        
+    //Logotipo    
     @Property
     @Persist
     private UploadedFile file;
     @Property
     @Persist
     private UploadedFile file2;
+    @Persist
+    @Property
+    private String uploadmessage;
+    @Inject
+    private ApplicationGlobals globals;
+    
 
     private int elemento=0;
 
@@ -248,6 +272,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE = new Entidad();
             subEntidadUE = new Entidad();
             entio = new Entidad();
+            blogoentidadi=true;
     }
 
     //para obtener datatos del Nivel Gobierno
@@ -349,8 +374,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
         entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
         entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-        
+        //nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
         //nombreArchivo = file.getFileName() ;
+        //System.out.println(nombreArchivo);
         //entidadUE.setLogotipo(nombreArchivo);
         session.saveOrUpdate(entidadUE);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
@@ -362,6 +388,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     .add("TitularZone", TitularZone.getBody())
                     .add("JefeRRHHZone", JefeRRHHZone.getBody())
                     .add("JefeOGAZone", JefeOGAZone.getBody())
+                    .add("logoentidadZone", logoentidadZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
         
@@ -407,6 +434,40 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     @Log
     @CommitAfter    
+    Object onSuccessFromFormulariologoentidad() {
+        blogoentidadi=false;
+        blogoentidadf=true;
+        System.out.println("entroeeeeeeee");
+        System.out.println(entidadUE.getLogotipo());
+        // Set Path
+        //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
+
+        //File copied;
+
+        // Get File
+        //copied = new File("D:/entidad/" + file.getFileName());
+
+        // File Saved
+        //file.write(copied);
+        return this;
+        
+    }
+    
+    public String getUploadError(){
+        
+        return uploadmessage;
+    }
+    
+    public Object onUploadException(FileUploadException ex)
+    {
+        uploadmessage = "Upload exception: " + ex.getMessage() + " You can only upload file less than or equal to 500kb.";
+
+        return this;
+    }
+    
+    
+    @Log
+    @CommitAfter    
     Object onSuccessFromFormulariosector() {
         btipoorganismo=true;    
         return nivelOrganizacionSectorZone.getBody();
@@ -449,6 +510,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
         c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
         return c.list();
     }
+    
+    @Log
+    public List<LkBusquedaEntidad> getListadoEntidades() {
+        Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+        return c.list();
+    }
+    
     
     @Log
     @CommitAfter
