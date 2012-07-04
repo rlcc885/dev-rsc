@@ -2,7 +2,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-     <h2>Administración de Usuarios</h2>
+     <h2>Administración de Perfiles</h2>
      
     <t:zone t:id="listaZone" id="listaZone">
         <t:grid t:source="allPerfiles" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" remove="Id">
