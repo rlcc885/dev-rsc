@@ -1,7 +1,9 @@
-<html t:type="layout" title="About servir"
+<html t:type="layout" title="Administración de Perfiles"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
+     <h2>Administración de Usuarios</h2>
+     
     <t:zone t:id="listaZone" id="listaZone">
         <t:grid t:source="allPerfiles" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" remove="Id">
             <t:parameter name="descperfilCell">
@@ -10,8 +12,8 @@
                 </t:eventLink>
             </t:parameter>
             <p:accionesCell>
-                <a t:type="pagelink" t:page="PagePerfilPermiso" t:context="rowPerfil" href="#">Permisos</a>
-<!--                <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listapermisoZone">Permisos</a>-->
+                <!--<a t:type="pagelink" t:page="PagePerfilPermiso" t:context="rowPerfil.id" href="#">Permisos</a>-->
+                <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listaPermisoZone">Permisos</a>
                 |
                 <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">Eliminar</a>
             </p:accionesCell>
@@ -21,7 +23,7 @@
         <t:if test = "mostrarNew">
             <div id="bouttons" class="f-right">
                 <t:eventLink t:event="nuevoPerfil" href="#" page="PagePerfil" t:zone="editZone" class="button f-right">
-                    Nuevo Perfil
+                    Agregar Perfil
                 </t:eventLink>
             </div>
             <br class="clear"/>
@@ -33,11 +35,13 @@
             <div id="box-cargos" class="box" t:zone="editZone">
                 <t:form t:id="perfilInputForm">
                     <fieldset>
-                        <legend>Denominacion del Cargo:</legend>
+                        <legend>Descripción del Perfil::</legend>
                         <label><t:textfield t:value="perfil.descperfil" t:size="80" /></label>
                     </fieldset>  
                     <div id="bouttons" class="f-right">
-                        <input type="submit" value="Guardar" class="button f-right"/>
+                       <input type="submit" value="Guardar Perfil" class="button f-right"/>
+<!--                        <a t:type="eventLink" t:event="guardaPerfil" t:context="perfil" t:mixins="confirm" href="#" t:zone="listaPermisoZone" class="button f-right">Guardar Perfil</a>-->
+                        <a t:type="eventLink" t:event="cancelaPerfil" t:mixins="confirm" href="#" t:zone="listaPermisoZone" class="button f-right">Cancelar</a>
                         <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
                         <!--
                         <input type="submit" t:type="submit" t:id="submit" value="Guardar"  class="button"/>
@@ -50,4 +54,126 @@
         </t:if>
     </t:zone>
 
+
+    <t:zone t:id="listaPermisoZone" id="listaPermisoZone">
+        <t:if test = "mostrarPermiso">
+            <h3>Permisos del Perfil ${perfil.descperfil}</h3>
+            <t:grid t:source="allPermisos" t:add="Acciones" pagerPosition="bottom" row="rowPermiso" exclude="rownum,menuId,perfilId,id" reorder="descmenu,accesoselect,accesoupdate,accesoinsert,accesodelete" >
+                <t:parameter name="descmenuCell">
+                    <t:eventLink t:event="editaPermiso" t:context="rowPermiso" href="#" page="PagePerfil" t:zone="editPermisoZone">
+                        ${rowPermiso.descmenu}
+                    </t:eventLink>
+                </t:parameter>
+                <p:accionesCell>
+                    <a t:type="eventLink" t:event="eliminaPermiso" t:context="rowPermiso" href="#" t:zone="listaPermisoZone">Eliminar</a>
+                </p:accionesCell>
+            </t:grid>
+        </t:if>
+    </t:zone>
+
+    <t:zone t:id="newPermisoZone" id="newPermisoZone">
+        <t:if test = "mostrarNewPermiso">
+            <div id="bouttons" class="f-right">
+                <t:eventLink t:event="nuevoPermiso" href="#" page="PagePerfil" t:zone="editPermisoZone" class="button f-right">
+                    Agregar Permiso
+                </t:eventLink>
+            </div>
+            <br class="clear"/>
+        </t:if>
+    </t:zone>
+
+    <t:zone t:id="editPermisoZone" id="editPermisoZone">
+        <t:if test = "mostrarNuevoPermiso">
+            <h3>Crear/Editar Permisos a un determinado Perfil de Usuario</h3>
+            <div id="box-cargos" class="box">
+                <t:form t:id="permisoInputForm">
+                    <div class ="f-wrap">
+                        <div class="f-left">
+                            <fieldset>
+                                <legend>Seleccione Opción:</legend>
+                                <label>
+                                    <t:select t:id="beanOpciones" model="beanOpciones" encoder="beanOpciones" t:validate="required" t:value="menu" style="width: 400px;" />
+                                </label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class ="f-wrap">
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoConsultaNuevo" t:value="permiso.accesoselect"/> Consulta</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoModificaNuevo" t:value="permiso.accesoupdate"/> Modifica</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoInsertaNuevo" t:value="permiso.accesoinsert"/> Inserta</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoEliminaNuevo" t:value="permiso.accesodelete"/> Elimina</label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div id="bouttons" class="f-right">
+                        <input type="submit" value="Grabar Permiso" class="button f-right"/>
+                        <t:actionlink t:id="resetNuevoPermiso" t:mixins="confirm" class="button f-right">
+                            Cancelar
+                        </t:actionlink>
+                    </div>
+                    <br class="clear"/>
+                </t:form>
+            </div>
+        </t:if>
+        <t:if test = "mostrarEditPermiso">
+            <h3>Crear/Editar Permisos a un determinado Perfil de Usuario</h3>
+            <div id="box-cargos" class="box">
+                <t:form t:id="permisoEditForm">
+                    <div class ="f-wrap">
+                        <div class="f-left">
+                            <fieldset>
+                                <legend>Seleccione Opción:</legend>
+                                <label>
+                                    <t:select t:id="beanOpcionesTodo" model="beanOpcionesTodo" encoder="beanOpcionesTodo" disabled="true" t:validate="required" t:value="menu" style="width: 400px;" />
+                                </label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class ="f-wrap">
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoConsulta" t:value="permiso.accesoselect"/> Consulta</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoModifica" t:value="permiso.accesoupdate"/> Modifica</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoInserta" t:value="permiso.accesoinsert"/> Inserta</label>
+                            </fieldset>
+                        </div>
+                        <div class="f-left" style="width:100px;">
+                            <fieldset>
+                                <label><input t:type="Checkbox" t:id="accesoElimina" t:value="permiso.accesodelete"/> Elimina</label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div id="bouttons" class="f-right">
+                        <input type="submit" value="Grabar Permiso" class="button f-right"/>
+                        <t:actionlink t:id="resetEditPermiso" t:mixins="confirm" class="button f-right">
+                            Cancelar
+                        </t:actionlink>
+                    </div>
+                    <br class="clear"/>
+                </t:form>
+            </div>
+        </t:if>
+    </t:zone>
 </html>

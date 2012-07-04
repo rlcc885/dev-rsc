@@ -8,7 +8,7 @@
             Entidad U. Ejecutora: ${loggedUser.entidad.denominacion}
         </div>
     </t:if>
-    <h1>Usuarios</h1>
+    <h2>Usuarios</h2>
         <div class="box f-wrap">
             <h3>Busqueda de usuarios</h3>
             <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">

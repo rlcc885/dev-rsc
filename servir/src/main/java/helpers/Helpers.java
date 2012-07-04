@@ -21,24 +21,31 @@ import org.hibernate.criterion.Restrictions;
  * @author ale
  */
 public class Helpers {
-    public static LkEstadoUsuario getEstadoUsuario(int estadoId,Session session){
+
+    public static List<Menu> getOpcionesDelMenu(long inPerfilId, Session session) {
+        Query query = session.getNamedQuery("callSpMenuSinAsignarPorPerfil");
+        query.setParameter("in_perfil_id", inPerfilId);
+        return query.list();
+    }
+
+    public static LkEstadoUsuario getEstadoUsuario(int estadoId, Session session) {
         Query query = session.getNamedQuery("LkEstadoUsuario.findById");
         query.setParameter("id", estadoId);
         return (LkEstadoUsuario) query.list().get(0);
     }
-    
-    public static List<LkEstadoUsuario> getEstadoUsuario(Session session){
+
+    public static List<LkEstadoUsuario> getEstadoUsuario(Session session) {
         Query query = session.getNamedQuery("LkEstadoUsuario.findAll");
         return query.list();
     }
-    
-    public static List<RscRol> getRolUSuario(long rolid,Session session){
+
+    public static List<RscRol> getRolUSuario(long rolid, Session session) {
         Query query = session.getNamedQuery("RscRol.findByIdLow");
         query.setParameter("id", rolid);
         return query.list();
     }
-    
-    public static List<DatoAuxiliar> getValoresTablaAuxiliar(String tabla, Session session){
+
+    public static List<DatoAuxiliar> getValoresTablaAuxiliar(String tabla, Session session) {
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla", tabla));
         return c.list();
@@ -53,7 +60,7 @@ public class Helpers {
         return c.list();
     }
 
-    public static List<String> getValorTablaAuxiliar(String tabla, Session session,String tablaRelacion,long relacionCodigo) {
+    public static List<String> getValorTablaAuxiliar(String tabla, Session session, String tablaRelacion, long relacionCodigo) {
         // TODO: este codigo esta duplicado
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla", tabla));
@@ -81,6 +88,7 @@ public class Helpers {
 
     /**
      * Obtiene las tablas en forma de objeto de tablas auxiliares.
+     *
      * @param tabla
      * @param tablaRelacion
      * @param relacionCodigo
@@ -101,6 +109,7 @@ public class Helpers {
 
     /**
      * Obtiene el dato auxiliar de la tabla y códigos dados
+     *
      * @param tabla
      * @param codigo
      * @param session
@@ -120,6 +129,7 @@ public class Helpers {
 
     /**
      * Obtiene un dato auxiliar segun tabla y valor
+     *
      * @param tabla
      * @param valor
      * @param session
@@ -138,29 +148,31 @@ public class Helpers {
         }
     }
 
-
     /**
      * Calcula si es válido o no un agrupamiento de datos auxiliares de ubigeo
+     *
      * @param depto - El valor del departamento. UBDepartamento
      * @param prov - El valor de la provincia. UBProvincia
      * @param dist - El valor del distrito. UBDistrito
      */
-
     public static Boolean isUbigeoValido(DatoAuxiliar depto, DatoAuxiliar prov, DatoAuxiliar dist, Session session) {
-        if(dist == null) {
-            if (prov == null)
+        if (dist == null) {
+            if (prov == null) {
                 return true;
-            else {
-                if(depto == null)
+            } else {
+                if (depto == null) {
                     return false; // prov no nulo y depto nulo.
-            return (prov.getRelacionCodigo() == depto.getCodigo());
+                }
+                return (prov.getRelacionCodigo() == depto.getCodigo());
 
             }
         } else {
-            if (prov == null)
+            if (prov == null) {
                 return false;
-            if (dist == null)
+            }
+            if (dist == null) {
                 return false;
+            }
 
         }
         return (dist.getRelacionCodigo() == prov.getCodigo()) && (prov.getRelacionCodigo() == depto.getCodigo());
@@ -168,6 +180,7 @@ public class Helpers {
 
     /**
      * Calcula para un cargo la cantidad de puestos que tiene ocupados
+     *
      * @param session
      * @param cargo
      * @return
@@ -182,6 +195,7 @@ public class Helpers {
 
     /**
      * Según el usuario pasado devuelve si opera en varios organismos o no
+     *
      * @param user
      * @return
      */
@@ -212,8 +226,9 @@ public class Helpers {
     }
 
     /**
-     * Fusiona la uo con la entidad destino y la pone los cargos y las hijas debajo de UoPadreDestino
-     * Maneja la base.
+     * Fusiona la uo con la entidad destino y la pone los cargos y las hijas
+     * debajo de UoPadreDestino Maneja la base.
+     *
      * @param uo
      * @param entidadDestino
      * @param uoPadreDestino
@@ -240,44 +255,42 @@ public class Helpers {
     /**
      * Migra la uo hacia la entidad destino y la pone debajo de uoPadreDestino.
      * Maneja la base.
+     *
      * @param uo
      * @param entidadDestino
      * @param uoPadreDestino
      */
-    @CommitAfter 
+    @CommitAfter
     public static void migrarUOBase(UnidadOrganica uo, Entidad entidadOrigen,
-        Entidad entidadDestino, Session session) {
+            Entidad entidadDestino, Session session) {
         uo.setEntidad(entidadDestino);
         session.saveOrUpdate(uo);
-        if(uo.getNivel()==1){
+        if (uo.getNivel() == 1) {
             Criteria c = session.createCriteria(UnidadOrganica.class);
             c.add(Restrictions.eq("entidad", entidadOrigen));
             c.add(Restrictions.eq("unidadorganica", uo));
             List<UnidadOrganica> lo = c.list();
-            migrarSubunidades(entidadDestino, lo,session);                      
-        }
-        else{
+            migrarSubunidades(entidadDestino, lo, session);
+        } else {
             uo.setUnidadorganica(null);
             uo.setNivel(1);
             session.saveOrUpdate(uo);
-        } 
-        
-        
-        
+        }
+
+
+
         //migrarUnidad(uo, entidadOrigen, entidadDestino, uoPadreDestino, session);
     }
-    
-    @CommitAfter 
+
+    @CommitAfter
     public static void migrarSubunidades(Entidad entidadDestino, List<UnidadOrganica> unis, Session session) {
-        for (UnidadOrganica unio : unis) {                                                                                                                         
-           unio.setEntidad(entidadDestino);
-           session.saveOrUpdate(unio);            
+        for (UnidadOrganica unio : unis) {
+            unio.setEntidad(entidadDestino);
+            session.saveOrUpdate(unio);
         }
         session.flush();
-        
-    }          
-    
-    
+
+    }
 
     public static List<UnidadOrganica> uoHijas(UnidadOrganica uo, Session session) {
         Criteria c = session.createCriteria(UnidadOrganica.class);
@@ -288,6 +301,7 @@ public class Helpers {
     /**
      * Migra la uo hacia la entidad destino y la pone debajo de uoPadreDestino.
      * Maneja las que tienen alguna arriba.
+     *
      * @param uo
      * @param entidadOrigen
      * @param entidadDestino
@@ -324,9 +338,10 @@ public class Helpers {
 
     /**
      * Migra los cargos de un lado al otro. Para eso sólo hace falta cambiarle a
-     * cada uno de ellos el código del cargo
-     * Migra los cargos asignados también a esos cargos, creando los legajos necesarios
-     * o haciendo nuevos en la nueva entidad
+     * cada uno de ellos el código del cargo Migra los cargos asignados también
+     * a esos cargos, creando los legajos necesarios o haciendo nuevos en la
+     * nueva entidad
+     *
      * @param entidadOrigen
      * @param entidadDestino
      * @param cargos
@@ -370,7 +385,7 @@ public class Helpers {
                 }
             }
 
-            session.saveOrUpdate(cargo);    
+            session.saveOrUpdate(cargo);
 
         }
 
