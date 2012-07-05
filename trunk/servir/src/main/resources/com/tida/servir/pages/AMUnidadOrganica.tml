@@ -14,15 +14,17 @@
         <!-- t:validate="required,minlength=1" -->
 
 
-        <div id="cargosSelects">                   
-            <form t:type="form" t:id="formNivelUOUnidad" t:zone="nivelUOZone">                        
-                <div class="f-left">
-                    Nivel Organizacional
-                    <input t:type="Select" t:id="bunidadorganica_nivel"
-                           onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                           t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
-                </div>                                    
-            </form>
+        <div id="cargosSelects">   
+            <t:zone t:id="nivelOrga">
+                <form t:type="form" t:id="formNivelUOUnidad" t:zone="nivelUOZone">                        
+                    <div class="f-left">
+                        Nivel Organizacional
+                        <input t:type="Select" t:id="bunidadorganica_nivel"
+                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
+                    </div>                                    
+                </form>
+            </t:zone>
             <t:zone t:id="nivelUOZone">
                 <form t:type="form" t:id="xxx" t:zone="listaUOZone">
                     <!--<div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
@@ -55,14 +57,19 @@
                             Sigla
                             <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="30"/>
                         </div>
+                        <!--First name: <input t:type="TextField" t:id="firstName" t:value="bescon"/>-->
+                        
+                        <!--<input t:type="TextField" t:id="escon" t:value="bescon" size="30"/>-->
+                        
                     </div>
                     <div class="actions f-right">
                         <!--<t:actionlink t:id="muestra" zone="listaUOZone">Mostrar Todo</t:actionlink>-->
                         <!--<a t:type="eventLink" t:event="toMostrar" t:context="literal:1" t:zone="listaUOZone" href="#"> Mostrar </a>-->
-                        <input t:type="TextField" t:id="escon" t:value="bescon" size="30"/>
+                        
                         <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/> 
                         <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/> 
+                        
                     </div>                         
 
                 </form> 
@@ -90,10 +97,13 @@
                     <p:accionesCell>
                         <t:if test="PuedeEditar">
                             <a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>
+                            
                             <t:if test="esBorrable">
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                     t:zone="listaUOZone" href="#" onclick="confirmar('Desea eliminar?')">Eliminar</a>
-                                <!--<input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>-->
+                                     t:zone="listaUOZone" href="#" >Eliminar</a>
+
+                                
+                                <!--onClick="javascript: mostrar2('firstName');" <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>-->
                             </t:if>
                         </t:if>
                     </p:accionesCell>
@@ -104,13 +114,20 @@
 
     </div> <!-- listaUOZone -->
     
-    <script language="javascript">
-    function confirmar ( mensaje ) {        
-        if(!confirm(mensaje)){
-            document.getElementById('escon').value='1';            
-            return " "
-        }            
+    <script type="text/javascript">
+    //function confirmar ( mensaje ) {        
+        //if(!confirm(mensaje)){
+        //  document.getElementById('escon').value='1';            
+        //    return " "
+      //  }     
+      
+    //}
+    function mostrar2(textboxId){
+        this.textbox = $(textboxId);
+        this.textbox.value = 'primero';
     }
+
+    
     </script>
 
     <!-- <div id="box_uo" class="box"> return false
@@ -123,6 +140,7 @@
             <t:zone t:id="nivelZone">
                 <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
                     <t:envelope t:id="envelope"/>
+                     <t:errors/>
                     <div class="f-wrap">
                         <div class="f-left">
                             * Nivel Organizacional
@@ -151,7 +169,7 @@
             <t:zone t:id="unidadesOrganicasZone">
                 <t:if test="PuedeEditar">
                     <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                        <t:errors/>
+                       
                         
                         <div class="f-wrap">
                             <div class="f-left">
@@ -248,5 +266,13 @@
             </t:zone>
         </div>
     </div> <!--  fin box -->
+    <t:zone t:id="prieli">
+        <form t:type="form" t:id="formelis" t:zone="prieli">
+            <!--<input type="text" id="escon" value="bescon"/>-->
+            
+        </form>
+    </t:zone>
+    
+    
 </html>
 

@@ -36,6 +36,7 @@ public class Errores {
 
     // Errores del ABMCargo
     public static final String ERROR_COD_CARGO_UNICO = "El código del cargo debe ser único dentro de la entidad.";
+    public static final String ERROR_DEN_CARGO_UNICO = "La denominación del cargo debe ser única dentro de la entidad.";
     public static final String ERROR_BORRAR_CARGO = "El cargo tiene cargos asignados asociados.";
     public static final String ERROR_CTD_PUESTOS_MAY_TOTALES = "El cargo no puede tener mas puestos ocupados que totales.";
     public static final String ERROR_CARGO_OCUPADO = "El cargo ya está asignado.";

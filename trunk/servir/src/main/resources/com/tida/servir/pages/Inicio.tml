@@ -8,7 +8,7 @@
         </div>
          
 <!-- Listado de Entidades -->    
-   <t:if test = "editable">
+  
                                               
         <div id = "tabla_oi">
             <h2>Entidades/U. Ejecutoras</h2>
@@ -27,7 +27,7 @@
                 </t:grid>
             </t:zone>
         </div>
-</t:if>  
+
 
         <div id="tablaTrabajador">
             <h2>Trabajadores</h2>

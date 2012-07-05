@@ -63,7 +63,8 @@ public class Permisos {
 
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMLOCAL)
                 || u.getTipo_usuario().equals(Usuario.OPERADORLECTURALOCAL)) {
-            return "Busqueda";
+            //return "Busqueda";
+            return "ABMDatoAuxiliar";
         }
         
         if(u.getTipo_usuario().equals(Usuario.TRABAJADOR)){

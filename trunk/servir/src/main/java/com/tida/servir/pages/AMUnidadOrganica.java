@@ -130,6 +130,10 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private String bescon;
+    @InjectComponent
+    @Property
+    private Zone nivelOrga;
+
     
     @Log
     @CommitAfter
@@ -188,20 +192,20 @@ public class AMUnidadOrganica extends GeneralPage {
         num2=3;     
         mostra=2;
         mostrar=true;
-        
+        bnivelUO=null;
+        buoAntece=null;
+        valcategoria=null;
+        bdenouni=null;
+        bsigla=null;        
     }
     
     void onSelectedFromLimpia() {        
-        num2=2;     
-        unidadOrganica = new UnidadOrganica();
-        ubigeoDomicilio = new Ubigeo();
+        num2=2;   
         bnivelUO=null;
         buoAntece=null;
         valcategoria=null;
         bdenouni=null;
         bsigla=null;
-        editando = false; 
-        mostrar=false;
     }
     
     void onSelectedFromSave() {        
@@ -222,10 +226,11 @@ public class AMUnidadOrganica extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormulariofiltrounidad() { 
         if(num2==3){
+            return zonasfiltros();
             
         }
         else if(num2==2){
-        
+            return zonasfiltros();
         }
         else{        
         mostrar=true;        
@@ -487,7 +492,7 @@ public class AMUnidadOrganica extends GeneralPage {
             
         }
         else if(num==1){
-            if(nivelUO>1){
+          if(nivelUO>1){
             if(uoAntecesora==null){
                 formularioaltaunidadorganica.recordError("Debe seleccionar Unidad Organica Antecesora"); 
                 return zonas();
@@ -616,19 +621,20 @@ public class AMUnidadOrganica extends GeneralPage {
     @Log
     @CommitAfter
     Object onBorrarDato(UnidadOrganica dato) {
-//        errorBorrar = null;
-//        dato.setEstado(UnidadOrganica.ESTADO_BAJA);
-//        session.saveOrUpdate(dato);
-//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-//        onSelectedFromReset();
-//        envelope.setContents("Unidad Orgánica Eliminada");
+        errorBorrar = null;
+        dato.setEstado(UnidadOrganica.ESTADO_BAJA);
+        session.saveOrUpdate(dato);
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+        onSelectedFromReset();
+        envelope.setContents("Unidad Orgánica Eliminada");
 //        //setupUbigeos();
-        if(bescon==null){
-            envelope.setContents("Borrooo");
-        }
-        else{
-            envelope.setContents("NO Borrooo");
-        }
+//        javaScriptSupport.addScript("new Prin();");
+//        if(bescon==null){
+//            envelope.setContents("Borrooo--"+String.valueOf(bescon));
+//        }
+//        else{
+//            envelope.setContents("NO Borrooo");
+//        }
         
         return zonas();// La/a zona a actualizar
     }
@@ -733,11 +739,12 @@ public class AMUnidadOrganica extends GeneralPage {
         
     }
     
+    
     private MultiZoneUpdate zonas() {
         MultiZoneUpdate mu;
 
         mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("unidadesOrganicasZone", unidadesOrganicasZone.getBody()).add("nivelZone", nivelZone.getBody())
-                .add("listaUOZone", listaUOZone.getBody()).add("filtrosZone", filtrosZone.getBody()).add("nivelUOZone", nivelUOZone.getBody());
+                .add("listaUOZone", listaUOZone.getBody());
 
         return mu;
     }
@@ -750,4 +757,15 @@ public class AMUnidadOrganica extends GeneralPage {
 
         return mu;
     }
+    
+   private MultiZoneUpdate zonasfiltros() {
+        MultiZoneUpdate mu;
+
+        mu = new MultiZoneUpdate("nivelUOZone", nivelUOZone.getBody()).add("filtrosZone", filtrosZone.getBody())
+                .add("nivelOrga", nivelOrga.getBody()).add("listaUOZone", listaUOZone.getBody());;
+
+        return mu;
+    }
+    
+
 }

@@ -13,24 +13,33 @@
         <!-- t:validate="required,minlength=1" -->
 
         <div id="cargosSelects">
-            <t:zone t:id="nivelCargoZone">
-                <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelCargoZone">
+            <t:zone t:id="nivelcargo">
+                <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelUOZone">
                     <div class="f-left">
                         Nivel Organizacional
                         <input t:type="Select" t:id="unidadorganica_nivel"
                                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                               t:value="nivel" model="beanNivel" t:zone="nivelCargoZone"/>
+                               t:value="nivel" model="beanNivel" t:zone="nivelUOZone"/>
                     </div>
                 </form>
-                <form t:type="form" t:id="formUOCargo" t:zone="abmZone">
-                    <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
-                        <t:if test = "hayNivel">
+            </t:zone>
+            <t:zone t:id="nivelUOZone">
+                <form t:type="form" t:id="xxx" t:zone="listaCargo">
+                   <!-- <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
+                        <!--<t:if test = "hayNivel">-->
+                            <div class="f-left">
                             Unidad Orgánica
                             <select t:type="select" t:id="select_unidadOrganica"
                                     model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
-                                    onChange="this.form.fire()" t:zone="abmZone"/>
-                        </t:if>
-                    </div> 
+                                    onChange="this.form.fire()" t:zone="listaCargo"/>
+                            </div>
+                        <!--</t:if>-->
+                    <!--</div>-->
+                </form>
+            </t:zone>
+        <div t:type="zone"  id="form_unidad_organica" class="abmform">
+            <t:zone t:id="nivelCargoZone">
+                <form t:type="form" t:id="formUOCargo" t:zone="listaCargo">
                     <div class="f-wrap">
                         <div class="f-left">
                             Denominación
@@ -43,6 +52,7 @@
                     </div>
                 </form>
             </t:zone>
+            </div>
             <div id = "ocupacionalescargoxx">
                 <t:zone t:id="BOcupacionalesZone" >            
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
@@ -65,10 +75,10 @@
         </div>          
     </div> 
 
-    <div t:type="zone" t:id="abmZone" class="abmform">
-        <t:if test="mostrar">
-            <t:form t:id="formularioaltacargo" zone="abmZone">
-                <t:errors/>
+    <div t:type="zone" t:id="listaCargo" class="selectform" >
+        <t:if test="mostrar">  
+            <t:form t:id="formlistaunidad">
+                
                 ${errorBorrar}
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
@@ -78,21 +88,29 @@
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="PuedeEditar">
-                                <t:actionlink t:id="editar" zone="abmZone" context="c">Editar</t:actionlink>
+                                <t:actionlink t:id="editar" zone="listaCargo" context="c">Editar</t:actionlink>
                                 <!--
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
                                 -->
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="c"
-                                     t:zone="abmZone" href="#">Eliminar</a>
+                                     t:zone="listaCargo" href="#">Eliminar</a>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>
-                </div> <!-- tabla cargos -->
-
-                <t:if test="PuedeEditar">
-                    <t:envelope t:id="envelope"/>
-                    <h3> Crear / Editar Cargo </h3>
-                    <div class="box" id="box-cargos">
+                </div>
+            </t:form>
+        </t:if>
+     </div> <!-- tabla cargos -->
+    
+     <h3> Crear / Editar Cargo </h3>
+        <div class="box" id="box-cargos">
+          <div t:type="zone" t:id="abmZone" class="abmform">
+            <t:form t:id="formularioaltacargo" zone="abmZone">
+                <t:envelope t:id="envelope"/>
+                <t:errors/>
+                    <t:if test="PuedeEditar">
+                    
+                    
                         
                         <!-- <div id="cargos_izq" class="cargosAM">-->
                         <!--<div id="cargos_izq" class="cargosAM">-->
@@ -208,10 +226,11 @@
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
                         <br style="clear: both;" />
-                    </div> <!-- div box -->
-                </t:if> <!-- puedeEditar -->
-            </t:form>
-        </t:if>
+                        </t:if>
+                </t:form>  
+            </div> <!-- div box -->
+                 <!-- puedeEditar -->
+                  
     </div> <!-- abmZone -->
 
     <div id = "ocupacionalescargo">
