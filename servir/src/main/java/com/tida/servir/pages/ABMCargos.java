@@ -230,7 +230,7 @@ public class ABMCargos extends GeneralPage {
         }
         else{  
             if(nivel!= null){
-            cargoporunidad.add(Restrictions.eq("unidadorganica.nivel", nivel));     
+                cargoporunidad.add(Restrictions.eq("unidadorganica.nivel", nivel));     
             }
             if (uo != null && !uo.equals("")) {
                 cargoporunidad.add(Restrictions.eq("unidadorganica", uo));
