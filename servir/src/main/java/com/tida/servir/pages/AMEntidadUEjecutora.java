@@ -215,6 +215,60 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     private LkBusquedaEntidad listaentidad;
     
+    
+    //Busqueda Entidad Zone
+    @InjectComponent
+    private Zone busquedacombosZone;
+    @Component(id = "formulariocombosbusqueda")
+    private Form formulariocombosbusqueda;
+    @Component(id = "formulariobotonesbusqueda")
+    private Form formulariobotonesbusqueda;
+    @Property
+    @Persist
+    private DatoAuxiliar bnivelGobierno;
+    @Property
+    @Persist
+    private DatoAuxiliar borganizacionEstado;
+    @Property
+    @Persist
+    private DatoAuxiliar bsectorGobierno;
+    @Property
+    @Persist
+    private DatoAuxiliar btipoOrganismo;
+    @Property
+    @Persist
+    private Ubigeo ubigeobusEntidadUE;
+    @InjectComponent
+    @Property
+    private Zone ubigeobusEntidadZone;
+    @Component(id = "formulariobusubigeo")
+    private Form formulariobusubigeo;
+    @Persist
+    @Property
+    private String busdenominacion; 
+    
+    //Busqueda SubEntidad Zone
+    @InjectComponent
+    private Zone busquedasubcombosZone;
+    @Component(id = "formulariosubcombosbusqueda")
+    private Form formulariosubcombosbusqueda;
+    @Component(id = "formulariosubbotonesbusqueda")
+    private Form formulariosubbotonesbusqueda;
+    @Property
+    @Persist
+    private DatoAuxiliar btiposubentidad;
+    @Property
+    @Persist
+    private Ubigeo ubigeobusSubEntidadUE;
+    @InjectComponent
+    @Property
+    private Zone ubigeobusSubEntidadZone;
+    @Component(id = "formulariobussububigeo")
+    private Form formulariobussububigeo;
+    @Persist
+    @Property
+    private String bussubdenominacion;     
+    
     @Property
     @Persist
     private Ubigeo ubigeoSubEntidadUE;
@@ -353,6 +407,35 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onSelectFromReset() {
            elemento=1;
+    }
+    
+    @Log
+    void onSelectFromBusreset() {
+         bnivelGobierno=null;
+            bsectorGobierno=null;
+            borganizacionEstado=null;
+            btipoOrganismo=null;
+            busdenominacion=null;
+            ubigeobusEntidadUE=null;
+            btiposubentidad=null;
+            bussubdenominacion=null;
+            ubigeobusSubEntidadUE=null;
+            elemento=3;
+    }
+        
+    @Log
+    void onSelectFromBussubreset() {
+         bnivelGobierno=null;
+            bsectorGobierno=null;
+            borganizacionEstado=null;
+            btipoOrganismo=null;
+            busdenominacion=null;
+            ubigeobusEntidadUE=null;
+            btiposubentidad=null;
+            bussubdenominacion=null;
+            ubigeobusSubEntidadUE=null;
+            elemento=3;
+             System.out.println("entroeeeeeeee al elemento" + elemento);
     }
     
     @Log
@@ -514,9 +597,96 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+  
+        //Entidad
+        if (bnivelGobierno != null) {
+            System.out.println("------------------ Nivel Gobierno " + bnivelGobierno.getValor());
+            c.add(Restrictions.eq("nivelgobierno", bnivelGobierno.getValor()));
+        }
+        if (bsectorGobierno != null) {
+            System.out.println("------------------ Sector Gobierno " + bsectorGobierno.getValor());
+            c.add(Restrictions.eq("sectorgobierno", bsectorGobierno.getValor()));
+        }
+        if (borganizacionEstado != null) {
+            System.out.println("------------------ Organizacion Estado " + borganizacionEstado.getValor());
+            c.add(Restrictions.eq("organizacionestado", borganizacionEstado.getValor()));
+        }
+        if (btipoOrganismo != null) {
+            System.out.println("------------------ Tipo Organismo " + btipoOrganismo.getValor());
+            c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
+        }
+        if (busdenominacion != null && !busdenominacion.equals("")) {
+            System.out.println("------------------ Enitidad " + busdenominacion);
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", busdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        }
+        if (ubigeobusEntidadUE.getDepartamento() != null) {
+            System.out.println("------------------ Departamento " + ubigeobusEntidadUE.getDepartamento().getValor());
+            c.add(Restrictions.eq("departamento", ubigeobusEntidadUE.getDepartamento().getValor()));
+        }
+        if (ubigeobusEntidadUE.getProvincia() != null) {
+            System.out.println("------------------ Provincia " + ubigeobusEntidadUE.getProvincia().getValor());
+            c.add(Restrictions.eq("provincia", ubigeobusEntidadUE.getProvincia().getValor()));
+        }
+        if (ubigeobusEntidadUE.getDistrito() != null) {
+            System.out.println("------------------ Distrito" + ubigeobusEntidadUE.getDistrito().getValor());
+            c.add(Restrictions.eq("distrito", ubigeobusEntidadUE.getDistrito().getValor()));
+        }
+        
+        //Sub Entidad
+        if (btiposubentidad != null) {
+            System.out.println("------------------ Tipo Sub Entidad " + btiposubentidad.getValor());
+            c.add(Restrictions.eq("tiposubentidad", btiposubentidad.getValor()));
+        }
+        if (bussubdenominacion != null && !bussubdenominacion.equals("")) {
+            System.out.println("------------------ Enitidad " + bussubdenominacion);
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        }
+        if (ubigeobusSubEntidadUE.getDepartamento() != null) {
+            System.out.println("------------------ Departamento " + ubigeobusSubEntidadUE.getDepartamento().getValor());
+            c.add(Restrictions.eq("departamento", ubigeobusSubEntidadUE.getDepartamento().getValor()));
+        }
+        if (ubigeobusSubEntidadUE.getProvincia() != null) {
+            System.out.println("------------------ Provincia " + ubigeobusSubEntidadUE.getProvincia().getValor());
+            c.add(Restrictions.eq("provincia", ubigeobusSubEntidadUE.getProvincia().getValor()));
+        }
+        if (ubigeobusSubEntidadUE.getDistrito() != null) {
+            System.out.println("------------------ Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
+            c.add(Restrictions.eq("distrito", ubigeobusSubEntidadUE.getDistrito().getValor()));
+        }
+        
+        
         return c.list();
     }
     
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariobotonesbusqueda(){
+        System.out.println("ellll" + elemento);
+        if(elemento==3){
+            System.out.println("entroeeeeeeee al elemento" + elemento);
+            return new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody())                             
+                    .add("ubigeobusEntidadZone", ubigeobusEntidadZone.getBody());
+                    
+        }else{
+            return listaentidadZone.getBody();
+        }
+        
+
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosubbotonesbusqueda(){
+         System.out.println("ellll" + elemento);
+         if(elemento==3){
+            return new MultiZoneUpdate("busquedasubcombosZone", busquedasubcombosZone.getBody())                             
+                    .add("ubigeobusSubEntidadZone", ubigeobusSubEntidadZone.getBody());
+                    
+        }else{
+            return listaentidadZone.getBody();
+        }
+
+    }
     
     @Log
     @CommitAfter
