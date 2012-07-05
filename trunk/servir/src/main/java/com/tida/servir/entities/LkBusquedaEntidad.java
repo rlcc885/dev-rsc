@@ -26,7 +26,7 @@ public class LkBusquedaEntidad implements Serializable {
     private String departamento;
     private String provincia;
     private String distrito;
-    
+    private String tiposubentidad;
     
     public LkBusquedaEntidad() {
     }
@@ -112,6 +112,14 @@ public class LkBusquedaEntidad implements Serializable {
 
     public void setDistrito(String distrito) {
         this.distrito = distrito;
+    }
+    
+    public String geTiposubentidad() {
+        return tiposubentidad;
+    }
+
+    public void setTiposubentidad(String tiposubentidad) {
+        this.tiposubentidad = tiposubentidad;
     }
    
 }

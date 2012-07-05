@@ -2,8 +2,129 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <h1> Entidades /U. Ejecutoras </h1>
-
+    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
+    
+    <h1> Búsqueda de Entidades y Sub-Entidades </h1>
+    <div class="wrap" id="selectors">
+         <ul id="tabs-topb" class="tabs">
+                    <li><a href="#"> Entidad</a></li>
+                    <li><a href="#"> Subentidad</a></li>
+                </ul>
+     <div id="busquedasenti" class="pane" style="display:block;">
+         <div class="box">
+    <div t:type="zone" t:id="busquedacombosZone" >
+      <t:form t:id="formulariocombosbusqueda" t:zone="busquedacombosZone"> 
+        <div class="f-wrap">
+            <div class="f-left">
+                <t:label for="bnivelgobierno"/>
+                <input t:type="Select" t:id="bnivelgobierno" t:value="bnivelGobierno" 
+                        model="NivelGobierno"
+                        t:blankOption="ALWAYS" />
+            </div>
+            <div class="f-left"> 
+                <t:label for="borganizacionestado"/>
+                <input t:type="Select" t:id="borganizacionestado" t:value="borganizacionEstado" 
+                        model="OrganizacionEstado"
+                        t:blankOption="ALWAYS"/>
+            </div>        
+            <div class="f-left"> 
+                <t:label for="bsectorgobierno"/>
+                <input t:type="Select" t:id="bsectorgobierno" t:value="bsectorGobierno" 
+                        model="SectorGobierno"
+                        t:blankOption="ALWAYS"/>
+            </div>  
+            <div class="f-left"> 
+                <t:label for="btipoorganismo"/>
+                <input t:type="Select" t:id="btipoorganismo" t:value="btipoOrganismo" 
+                        model="TipoOrganismo" 
+                        t:blankOption="ALWAYS"/>
+            </div> 
+        </div>
+        </t:form>
+          <t:form t:id="formulariobotonesbusqueda" t:zone="listaentidadZone">  
+         <div class="f-wrap">
+            <div class="f-left">
+                <t:label for ="busdenominacion"/>
+                <input t:type="TextField" t:id="busdenominacion"
+                        t:value="busdenominacion" t:validate="maxlength=60" size="75"/>
+            </div>
+        </div> 
+        
+            
+        <div class="f-wrap">
+            <div class="f-right">
+                <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+            </div>
+            <div class="f-right">
+                <input t:type="Submit" t:id="busenviar" value="Buscar" class="button" t:mixins="confirm" />
+            </div>
+        </div>  
+          
+       </t:form>
+    </div>
+         <t:zone t:id="ubigeobusEntidadZone">
+            <t:form t:id="formulariobusubigeo"  zone="ubigeobusEntidadZone">
+                  <div class="f-wrap">
+                <div class="f-left" id="ubigeo_busentidadUE"> 
+                    <input t:type="Ubigeos" t:id="ubigeo_busentidadUE" t:ubigeo="ubigeobusEntidadUE"
+                            t:zone="ubigeobusEntidadZone" t:zoneName="ubigeobusEntidadZone" />         
+                </div>
+                      </div>
+            </t:form>    
+        </t:zone>
+    
+  </div>
+  </div>
+  <div id="busquedassubenti" class="pane">
+            <div class="box">
+                 <div t:type="zone" t:id="busquedasubcombosZone" >
+      <t:form t:id="formulariosubcombosbusqueda" t:zone="busquedasubcombosZone"> 
+        <div class="f-wrap">
+            <div class="f-left"> 
+                <t:label for="btiposubentidad"/>
+                <input t:type="Select" t:id="btiposubentidad" t:value="btiposubentidad" 
+                        model="TipoSubEntidad" 
+                        t:blankOption="ALWAYS"/>
+            </div> 
+        </div>
+        </t:form>
+         <t:form t:id="formulariosubbotonesbusqueda" t:zone="listaentidadZone">   
+        <div class="f-wrap">
+        <div class="f-left">
+            <t:label for ="bussubdenominacion"/>
+            <input t:type="TextField" t:id="bussubdenominacion"
+                    t:value="bussubdenominacion" t:validate="maxlength=60" size="75"/>
+        </div>
+        </div> 
+        
+            
+        <div class="f-wrap">
+            <div class="f-right">
+                <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+            </div>
+            <div class="f-right">
+                <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button" t:mixins="confirm" />
+            </div>
+        </div>  
+          
+       </t:form>
+    </div>
+         <t:zone t:id="ubigeobusSubEntidadZone">
+            <t:form t:id="formulariobussububigeo"  zone="ubigeobusSubEntidadZone">
+                  <div class="f-wrap">
+                <div class="f-left" id="ubigeo_busentidadUE"> 
+                    <input t:type="Ubigeos" t:id="ubigeo_bussubentidadUE" t:ubigeo="ubigeobusSubEntidadUE"
+                            t:zone="ubigeobusSubEntidadZone" t:zoneName="ubigeobusSubEntidadZone" />         
+                </div>
+                      </div>
+            </t:form>    
+        </t:zone>       
+    
+            </div>       
+   </div>       
+ </div>
+    
+    
     <div id = "tabla_oi">
            <t:zone t:id="listaentidadZone">
                     <t:grid source="listadoEntidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
@@ -19,8 +140,8 @@
     </div>  
 
 
-    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
-   
+ 
+       <h1> Creación de Entidades y Sub-Entidades </h1>
         <div class="wrap" id="selectors">
             <!-- the tabs -->
             <ul id="tabs-top" class="tabs">
