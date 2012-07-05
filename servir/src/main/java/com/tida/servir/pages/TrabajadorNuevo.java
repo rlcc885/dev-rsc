@@ -250,7 +250,7 @@ public class TrabajadorNuevo  extends GeneralPage
         System.out.println("--------- nuevo legajo "+nuevoLegajo.getCod_legajo()+" nuevo "+nuevo.getNombres());
         session.saveOrUpdate(nuevo);
         cargoAsignado = new CargoAsignado();
-        cargoAsignado.setCargo(cargo);
+        cargoAsignado.setCargoxunidad(cargo);
         if(!trabajadorExiste) {
             nuevoLegajo.setEntidad(_oi);
             session.saveOrUpdate(nuevoLegajo);

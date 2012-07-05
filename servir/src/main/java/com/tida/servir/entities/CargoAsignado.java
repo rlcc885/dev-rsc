@@ -32,7 +32,7 @@ public class CargoAsignado {
 
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
-    private Cargoxunidad cargo;
+    private Cargoxunidad cargoxunidad;
 
     @Validate("required")
 //  @OneToMany(cascade=CascadeType.ALL)
@@ -50,7 +50,7 @@ public class CargoAsignado {
 //    @ManyToOne(cascade = CascadeType.PERSIST)
     private Legajo legajo;
 
-    private boolean estado;
+    private Boolean estado;
 
     @Temporal(TemporalType.DATE)
     private Date fec_inicio;
@@ -80,12 +80,12 @@ public class CargoAsignado {
     }
 
     @ManyToOne
-    public Cargoxunidad getCargo() {
-        return cargo;
+    public Cargoxunidad getCargoxunidad() {
+        return cargoxunidad;
     }
 
-    public void setCargo(Cargoxunidad cargo) {
-        this.cargo = cargo;
+    public void setCargoxunidad(Cargoxunidad cargoxunidad) {
+        this.cargoxunidad = cargoxunidad;
     }
 
     public Integer getCtd_per_superv() {
