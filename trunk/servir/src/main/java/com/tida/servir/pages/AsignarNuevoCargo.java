@@ -138,7 +138,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     Object onSuccessFromformularioasignar() {
 
         cargoAsignado = new CargoAsignado();
-        cargoAsignado.setCargo(cargo);
+        cargoAsignado.setCargoxunidad(cargo);
 
         //Buscamos el legajo de este trabajador en este oi (hay uno solo)
         Criteria crit = session.createCriteria(Legajo.class);
