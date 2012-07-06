@@ -1,5 +1,6 @@
 package com.tida.servir.components;
 
+import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.MeritoDemerito;
 import com.tida.servir.entities.Entidad;
@@ -27,6 +28,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.apache.tapestry5.annotations.*;
 
 
 
@@ -74,6 +76,9 @@ public class MeritosDemeritosEditor {
     @Property
     @Parameter(required=false)
     private Boolean readOnly;
+    
+
+    
 
     public Boolean getEsTrabajador(){
         return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR) || getNoEditable();

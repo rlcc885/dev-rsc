@@ -8,7 +8,7 @@ package com.tida.servir.entities;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 /**
@@ -17,6 +17,7 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "RSC_CONEXIONSANCIONES")
 public class ConexionSanciones {
     
     private String password;

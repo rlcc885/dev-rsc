@@ -1,8 +1,7 @@
 <html t:type="layout" title="Editar méritos y deméritos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-
-    <t:content>
+     <t:content>
         <div name="meritosdemeritos" id="meritosdemeritos" class="pane" style="display:block;">
             <div class="t-zone" id="meritosZone">
                 <h3>${clase}</h3>
@@ -29,10 +28,11 @@
                                     <td><input t:type="DateInput" t:id="fecha" t:date="meritodemerito.fecha"
                                     t:label="Fecha" t:validate="required" size="10" disabled ="esTrabajador"/></td>
                                     <td><input t:type="TextArea" t:id="motivo" t:value="meritodemerito.motivo" t:validate="required, maxlength=80" disabled ="esTrabajador"/></td>
-
+  
                                     <!-- If optimistic locking is needed then uncomment this next line.
                                     <t:hidden value="meritodemerito.version"/>
                                     -->
+  
                                     <td>
                                         <t:if test = "editable">
                                             <t:removerowlink>Eliminar</t:removerowlink>
@@ -58,4 +58,5 @@
             </div>
         </div>
     </t:content>
+ 
 </html>

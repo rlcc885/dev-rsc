@@ -14,6 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * Conceptos Remunerativos
  */
 @Entity
+@Table(name = "RSC_CONCEPTOREMUNERATIVO")
 //@Table(name="CON_REMUNERATIVOS")
 public class ConceptoRemunerativo {
    public static List<String> PERIODICIDADES = Arrays.asList(new String[]{"Mensual", "Semestral", "Anual", "Única vez"});

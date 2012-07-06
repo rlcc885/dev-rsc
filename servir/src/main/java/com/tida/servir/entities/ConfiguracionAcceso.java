@@ -10,6 +10,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name = "RSC_CONFIGURACIONACCESO")
 public class ConfiguracionAcceso {
 
     private Long id;

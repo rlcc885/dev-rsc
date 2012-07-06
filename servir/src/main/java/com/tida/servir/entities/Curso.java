@@ -10,6 +10,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
+@Table(name = "RSC_CURSO")
 public class Curso implements Serializable {
 //	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")

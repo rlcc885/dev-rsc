@@ -1,0 +1,50 @@
+<html t:type="layout" title="Sistema SERVIR"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
+        </div>
+<!--
+        <t:if test = "haymensajes">
+            <div id="Mensajes">
+                ${mensajes}
+            </div>
+        </t:if>-->
+
+      <div id = "Datos_Generales">
+           <h2> Modificar trabajador </h2>
+           <div id= "basicosTrabajador">
+               <h3>${actual.tipoDocumento}: ${actual.nroDocumento}
+               ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
+           </div>
+      </div>
+     <div class="wrap">
+
+
+    <!-- the tabs -->
+
+        <div>
+        <ul id="tabs-Personales" class="tabs">
+            <li><a href="#"> Personales</a></li>
+            <li><a href="#"> Familia</a></li>
+        </ul>
+        <div class= "pane" id='datosdecargo' name='datosdecargo'>             
+                sdfsd            
+        </div>
+
+        <div class= "pane" id='datosPersonales' name='cargos'>    
+                <t:CargosGrilla t:id="cargosGrilla" actual= "actual" />              
+        </div>        
+     <script>
+        <!--
+
+// perform JavaScript after the document is scriptable.
+        jQuery(function() {
+            jQuery("ul.tabs").tabs("> .pane");
+        });
+     -->
+     </script>
+
+</html>
