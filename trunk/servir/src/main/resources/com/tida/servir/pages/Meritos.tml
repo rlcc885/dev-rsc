@@ -20,15 +20,12 @@
                ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
            </div>
       </div>
-     <div class="wrap">
+ <div class="wrap">
 
-
-    <!-- the tabs -->
-
-        <div>
+    <div>
         <ul id="tabs-Personales" class="tabs">
-            <li><a href="#"> Personales</a></li>
-            <li><a href="#"> Familia</a></li>
+            <li><a href="#"> Méritos/Deméritos</a></li>
+            <li><a href="#"> Cargo/Puesto</a></li>
         </ul>
         <div class= "pane" id='datosdecargo' name='datosdecargo'>             
                 sdfsd            
@@ -36,7 +33,10 @@
 
         <div class= "pane" id='datosPersonales' name='cargos'>    
                 <t:CargosGrilla t:id="cargosGrilla" actual= "actual" />              
-        </div>        
+        </div> 
+    </div>
+ </div>
+           
      <script>
         <!--
 

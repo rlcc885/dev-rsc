@@ -81,21 +81,21 @@ public class CargosGrilla {
             actual = new Trabajador();
         }
     }
-
-    StreamResponse onActionFromReportetrabajos(Long idLegajo) {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_LegajoID", idLegajo); 
-        return rep.callReporte(Reportes.REPORTE.A1, Reportes.TIPO.PDF,  parametros ,context);
-        
-    }
+//
+//    StreamResponse onActionFromReportetrabajos(Long idLegajo) {
+//        Reportes rep = new Reportes();
+//        Map<String, Object> parametros = new HashMap<String, Object>();
+//        parametros.put("MandatoryParameter_LegajoID", idLegajo); 
+//        return rep.callReporte(Reportes.REPORTE.A1, Reportes.TIPO.PDF,  parametros ,context);
+//        
+//    }
 
     public List<CargoAsignado> getCargosAsignados() {
           Criteria c = session.createCriteria(CargoAsignado.class);
           c.createAlias("legajo", "legajo");
           c.add(Restrictions.eq("trabajador", actual));
           c.add(Restrictions.eq("legajo.entidad", _oi));
-          c.add(Restrictions.ne("estado", Constantes.ESTADO_BAJA));
+          c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           return c.list();
     }

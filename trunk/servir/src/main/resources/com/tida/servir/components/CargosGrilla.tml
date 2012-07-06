@@ -3,36 +3,19 @@
       xmlns:p="tapestry:parameter">
 
 <t:content>
-     <t:if test="actual">
-        <!-- <div id="datostrabajador"> -->
-        <h3>
-            ${actual.TipoDocumento}: ${actual.NroDocumento} -- ${actual.apellidoPaterno}
-            ${actual.apellidoMaterno} ${actual.nombres}
-        </h3>
-        <!-- </div> -->
-     </t:if>
-     <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Legajo, Acciones, Den_Cargo"
-            reorder="Den_Cargo,estado, fec_inicio, fec_fin, motivo_cese, Legajo, Acciones"
-            exclude= "ctd_per_superv, tipoVinculo">
+     <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Acciones, Den_Cargo"            
+            reorder="Den_Cargo,fec_inicio,fec_fin">
             <t:parameter name="empty">
                 El trabajador no contiene cargos asignados.
             </t:parameter>
-
 
         <p:den_cargoCell>
             ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>
 
-        <p:legajoCell>
-            ${ca.legajo.cod_legajo}
-        </p:legajoCell>
-
         <p:accionesCell>
-        <t:if test="busqueda">
-            <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
-        | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>
-
-        </t:if>
+       <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
+       <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
          <t:if test = "editable">
             <t:if test="evaluodesasignar">
                 <a t:type="pagelink" t:class="desasignar" t:page="DesasignarCargo" t:context="ca.id" href="#"> | Desasignar</a>
