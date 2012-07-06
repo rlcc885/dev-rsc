@@ -12,6 +12,7 @@ import javax.persistence.*;
  * @author Jurguen Zambrano
  */
 @Entity
+@Table(name = "RSC_MENUPORPERFIL")
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpMenuPorPerfil",
     query = "CALL SP_MENUPORPERFIL(?,:in_perfil_id)",
