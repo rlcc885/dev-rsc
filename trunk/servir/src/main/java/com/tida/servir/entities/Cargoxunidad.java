@@ -7,8 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "RSC_CARGOXUNIDAD")
 public class Cargoxunidad implements Serializable {
 
     public static boolean ESTADO_BAJA = false;

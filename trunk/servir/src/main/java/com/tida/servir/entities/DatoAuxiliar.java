@@ -12,6 +12,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
+@Table(name = "RSC_DATOAUXILIAR")
 public class DatoAuxiliar {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 //implements Serializable {

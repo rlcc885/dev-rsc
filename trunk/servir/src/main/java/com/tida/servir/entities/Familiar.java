@@ -1,18 +1,13 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@Table(name = "RSC_FAMILIAR")
 public class Familiar // extends Persona
 {
     /// cosas de la clase PERSONA

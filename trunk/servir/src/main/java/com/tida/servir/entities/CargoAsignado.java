@@ -15,12 +15,13 @@ import javax.persistence.TemporalType;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
-
+import javax.persistence.*;
 /**
  *
  * @author ale
  */
 @Entity
+@Table(name = "RSC_CARGOASIGNADO")
 public class CargoAsignado {
     
     public static boolean ESTADO_BAJA = false;

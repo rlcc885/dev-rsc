@@ -15,7 +15,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-@Table(name = "EVALUACIONES")
+@Table(name = "RSC_EVALUACIONES")
 public class EvaluacionPersonal {
 
 //	@Id

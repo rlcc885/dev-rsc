@@ -14,6 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author Jurguen Zambrano
  */
 @Entity
+@Table(name = "RSC_EVENTO")
 public class Evento implements Serializable {
 
     public static boolean ESTADO_BAJA = false;
