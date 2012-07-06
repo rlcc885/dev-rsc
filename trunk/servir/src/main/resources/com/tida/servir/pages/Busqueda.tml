@@ -122,20 +122,21 @@
                             <div class="filtros">
 
                                 <div class="hssemfecha">
-                                    <t:label for="fechadenacimientomenora">Fec. de Ingreso a la Institu. (desde)</t:label>
+                                 Fec. de Ingreso a la Institu. (desde)
                                     <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
                                                  t:label="Fecha de nacimiento mayor a" size="10"/>-->
                                     <input t:type="DateField" t:id="fechaingresodesde"
-                               t:date="fechadeingresodesdea" size="30" />
+                               t:value="fechadeingresodesdea" size="30" />
+
                                 </div>
                             </div>
                             <div class="filtros" id="fechamenora">                                
                                 <div class="hssemfecha">
-                                    <t:label for="fechadenacimientomayora">Fec. de Ingreso a la Institu. (hasta)</t:label>
+                                   Fec. de Ingreso a la Institu. (hasta)
                                     <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
                                                  t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
                                     <input t:type="DateField" t:id="fechaingresohasta"
-                               t:date="fechadeingresohastaa" size="30" />
+                               t:value="fechadeingresohastaa" size="30" />
                                 </div>
                             </div>
                             <div class="filtros">
@@ -205,7 +206,7 @@
                 </div> <!-- Filtros -->
 
                 <div class="actions f-right">
-                    <input id = "buscarsubmit" type="submit" value="Actualizar" class="buttonGrey"/>
+                    <input id = "buscarsubmit" type="submit" value="Buscar" class="button"/>
                     <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/>
                 </div>
 
@@ -237,7 +238,7 @@
             <t:zone t:id="empleadoszone">
                 <t:form t:id="xxx"  zone="empleadoszone">
                    <t:errors/> 
-                <t:grid source="empleados" rowsPerPage="10" row="e" t:add="Acciones"
+                <t:grid source="empleados" rowsPerPage="15" row="e" t:add="Acciones"
                         pagerPosition="bottom" reorder="tipoDocumento,nroDocumento,apellidoPaterno,
                         apellidoMaterno,nombres" t:context="e" t:rowclass="prop:selectionrow"
                         include="tipoDocumento,nroDocumento,apellidoPaterno,apellidoMaterno,nombres">
@@ -253,9 +254,11 @@
 
 
                     <p:accionesCell>
-                        <a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Datos</a>
+                        <a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Personales</a>
+                        |<a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Familiares</a>
+                        |<a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Laborales</a>
                         |<a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#"> Cargos </a>
-                        |<a t:type="pagelink" t:page="LegajosModificar" t:context="e.id" href="#"> Legajo </a>
+                        |<a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Documentos</a>
                     </p:accionesCell>
 
                 </t:grid>

@@ -374,6 +374,8 @@ public class Busqueda extends GeneralPage {
             valhabilitacionprofesional = false;
             valdeclaracion = false;
             valconfianza = false;
+            fechadeingresodesdea=null;
+            fechadeingresohastaa=null;
         }
         formulariobusquedasfiltros.clearErrors();
         if (resetBusquedas) {

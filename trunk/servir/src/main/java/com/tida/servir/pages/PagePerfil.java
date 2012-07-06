@@ -185,7 +185,7 @@ public class PagePerfil {
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
         mostrarNuevoPermiso = false;
-        return zonasTotal();
+        return PagePerfil.class;
     }
     
     
