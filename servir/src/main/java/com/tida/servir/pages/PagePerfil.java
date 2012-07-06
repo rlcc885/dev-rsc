@@ -10,8 +10,10 @@ import helpers.Helpers;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.annotations.Log;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -202,32 +204,32 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPermiso(MenuPorPerfil lPermiso) {
-        Criteria c = session.createCriteria(Menuperfil.class);
-        c.add(Restrictions.eq("menuId", lPermiso.getMenuId()));
-        c.add(Restrictions.eq("perfilId", lPermiso.getPerfilId()));
-        Menuperfil menuperfil = (Menuperfil) c.list().get(0);
-        session.delete(menuperfil);
+//        Criteria c = session.createCriteria(Menuperfil.class);
+//        c.add(Restrictions.eq("menuId", lPermiso.getMenuId()));
+//        c.add(Restrictions.eq("perfilId", lPermiso.getPerfilId()));
+//        Menuperfil menuperfil = (Menuperfil) c.list().get(0);
+        MenuperfilPK  menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(),lPermiso.getPerfilId());
+        permiso = (Menuperfil) session.load(Menuperfil.class, menuperfilpk);
+        
+        session.delete(permiso);
         mostrarPermiso = true;
         mostrarNewPermiso = true;
-        return listaPermisoZone.getBody();
+        return zonasPermiso();
     }
     @Log
     @CommitAfter
     Object onEditaPermiso(MenuPorPerfil lPermiso) {
-        Criteria c = session.createCriteria(Menuperfil.class);
-        c.add(Restrictions.eq("menuId", lPermiso.getMenuId()));
-        c.add(Restrictions.eq("perfilId", lPermiso.getPerfilId()));
-        permiso = (Menuperfil) c.list().get(0);
-        
-        c = session.createCriteria(Menu.class);
+        Criteria c = session.createCriteria(Menu.class);
         c.add(Restrictions.eq("id", lPermiso.getMenuId()));
         menu = (Menu) c.list().get(0);
-
+        MenuperfilPK  menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(),lPermiso.getPerfilId());
+        permiso = (Menuperfil) session.load(Menuperfil.class, menuperfilpk);
+        
         mostrarPermiso = true;
         mostrarNewPermiso = false;
         mostrarEditPermiso = true;
         mostrarNuevoPermiso = false;
-        return editPermisoZone.getBody();
+        return zonasPermiso();
     }
     @Log
     @CommitAfter
@@ -237,7 +239,7 @@ public class PagePerfil {
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
         mostrarNuevoPermiso = true;
-        return editPermisoZone.getBody();
+        return zonasPermiso();
     }
 
     @Log
@@ -251,10 +253,12 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
-        permiso.setMenuId(menu.getId());
-        permiso.setPerfilId(perfil.getId());
+        MenuperfilPK  menuperfilpk = new MenuperfilPK();
+        menuperfilpk.setMenuId(menu.getId());
+        menuperfilpk.setPerfilId(perfil.getId());
+        permiso.setMenuperfilPK(menuperfilpk);
         System.out.println(permiso);
-        session.saveOrUpdate(permiso);
+        session.save(permiso);
         return "PagePerfil";
     }
     
