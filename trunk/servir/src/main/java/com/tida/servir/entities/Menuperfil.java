@@ -5,6 +5,7 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.*;
 
 /**
@@ -13,74 +14,101 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "MENUPERFIL")
+@NamedQueries({
+    @NamedQuery(name = "Menuperfil.findAll", query = "SELECT m FROM Menuperfil m"),
+    @NamedQuery(name = "Menuperfil.findByMenuId", query = "SELECT m FROM Menuperfil m WHERE m.menuperfilPK.menuId = :menuId"),
+    @NamedQuery(name = "Menuperfil.findByPerfilId", query = "SELECT m FROM Menuperfil m WHERE m.menuperfilPK.perfilId = :perfilId"),
+    @NamedQuery(name = "Menuperfil.findByAccesoselect", query = "SELECT m FROM Menuperfil m WHERE m.accesoselect = :accesoselect"),
+    @NamedQuery(name = "Menuperfil.findByAccesoupdate", query = "SELECT m FROM Menuperfil m WHERE m.accesoupdate = :accesoupdate"),
+    @NamedQuery(name = "Menuperfil.findByAccesoinsert", query = "SELECT m FROM Menuperfil m WHERE m.accesoinsert = :accesoinsert"),
+    @NamedQuery(name = "Menuperfil.findByAccesodelete", query = "SELECT m FROM Menuperfil m WHERE m.accesodelete = :accesodelete")})
 public class Menuperfil implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "MENU_ID")
-    private long menuId;
-    @Basic(optional = false)
-    @Column(name = "PERFIL_ID")
-    private long perfilId;
+    @EmbeddedId
+    protected MenuperfilPK menuperfilPK;
     @Column(name = "ACCESOSELECT")
-    private Boolean accesoselect;
+    private boolean accesoselect;
     @Column(name = "ACCESOUPDATE")
-    private Boolean accesoupdate;
+    private boolean accesoupdate;
     @Column(name = "ACCESOINSERT")
-    private Boolean accesoinsert;
+    private boolean accesoinsert;
     @Column(name = "ACCESODELETE")
-    private Boolean accesodelete;
+    private boolean accesodelete;
 
     public Menuperfil() {
     }
 
-    public Boolean getAccesoselect() {
+    public Menuperfil(MenuperfilPK menuperfilPK) {
+        this.menuperfilPK = menuperfilPK;
+    }
+
+    public Menuperfil(Long menuId, Long perfilId) {
+        this.menuperfilPK = new MenuperfilPK(menuId, perfilId);
+    }
+
+    public MenuperfilPK getMenuperfilPK() {
+        return menuperfilPK;
+    }
+
+    public void setMenuperfilPK(MenuperfilPK menuperfilPK) {
+        this.menuperfilPK = menuperfilPK;
+    }
+
+    public boolean getAccesoselect() {
         return accesoselect;
     }
 
-    public void setAccesoselect(Boolean accesoselect) {
+    public void setAccesoselect(boolean accesoselect) {
         this.accesoselect = accesoselect;
     }
 
-    public Boolean getAccesoupdate() {
+    public boolean getAccesoupdate() {
         return accesoupdate;
     }
 
-    public void setAccesoupdate(Boolean accesoupdate) {
+    public void setAccesoupdate(boolean accesoupdate) {
         this.accesoupdate = accesoupdate;
     }
 
-    public Boolean getAccesoinsert() {
+    public boolean getAccesoinsert() {
         return accesoinsert;
     }
 
-    public void setAccesoinsert(Boolean accesoinsert) {
+    public void setAccesoinsert(boolean accesoinsert) {
         this.accesoinsert = accesoinsert;
     }
 
-    public Boolean getAccesodelete() {
+    public boolean getAccesodelete() {
         return accesodelete;
     }
 
-    public void setAccesodelete(Boolean accesodelete) {
+    public void setAccesodelete(boolean accesodelete) {
         this.accesodelete = accesodelete;
     }
 
-    public long getMenuId() {
-        return menuId;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (menuperfilPK != null ? menuperfilPK.hashCode() : 0);
+        return hash;
     }
 
-    public void setMenuId(long menuId) {
-        this.menuId = menuId;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Menuperfil)) {
+            return false;
+        }
+        Menuperfil other = (Menuperfil) object;
+        if ((this.menuperfilPK == null && other.menuperfilPK != null) || (this.menuperfilPK != null && !this.menuperfilPK.equals(other.menuperfilPK))) {
+            return false;
+        }
+        return true;
     }
 
-    public long getPerfilId() {
-        return perfilId;
+    @Override
+    public String toString() {
+        return "com.tida.servir.entities.Menuperfil[ menuperfilPK=" + menuperfilPK + " ]";
     }
-
-    public void setPerfilId(long perfilId) {
-        this.perfilId = perfilId;
-    }
-
     
 }

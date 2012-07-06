@@ -5,7 +5,6 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,32 +17,32 @@ import javax.persistence.Embeddable;
 public class MenuperfilPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "MENU_ID")
-    private BigInteger menuId;
+    private Long menuId;
     @Basic(optional = false)
     @Column(name = "PERFIL_ID")
-    private BigInteger perfilId;
+    private Long perfilId;
 
     public MenuperfilPK() {
     }
 
-    public MenuperfilPK(BigInteger menuId, BigInteger perfilId) {
+    public MenuperfilPK(Long menuId, Long perfilId) {
         this.menuId = menuId;
         this.perfilId = perfilId;
     }
 
-    public BigInteger getMenuId() {
+    public Long getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(BigInteger menuId) {
+    public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 
-    public BigInteger getPerfilId() {
+    public Long getPerfilId() {
         return perfilId;
     }
 
-    public void setPerfilId(BigInteger perfilId) {
+    public void setPerfilId(Long perfilId) {
         this.perfilId = perfilId;
     }
 

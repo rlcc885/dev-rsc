@@ -13,7 +13,7 @@
             </t:parameter>
             <p:accionesCell>
                 <!--<a t:type="pagelink" t:page="PagePerfilPermiso" t:context="rowPerfil.id" href="#">Permisos</a>-->
-                <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listaPermisoZone">Permisos</a>
+                <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listaPermisoZone">Derechos</a>
                 |
                 <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">Eliminar</a>
             </p:accionesCell>
@@ -65,7 +65,7 @@
                     </t:eventLink>
                 </t:parameter>
                 <p:accionesCell>
-                    <a t:type="eventLink" t:event="eliminaPermiso" t:context="rowPermiso" href="#" t:zone="listaPermisoZone">Eliminar</a>
+                    <a t:type="eventLink" t:mixins="confirm" t:event="eliminaPermiso" t:context="rowPermiso" href="#" t:zone="listaPermisoZone">Eliminar</a>
                 </p:accionesCell>
             </t:grid>
         </t:if>
@@ -74,7 +74,7 @@
     <t:zone t:id="newPermisoZone" id="newPermisoZone">
         <t:if test = "mostrarNewPermiso">
             <div id="bouttons" class="f-right">
-                <t:eventLink t:event="nuevoPermiso" href="#" page="PagePerfil" t:zone="editPermisoZone" class="button f-right">
+                <t:eventLink t:event="nuevoPermiso" href="#" page="PagePerfil" t:zone="newPermisoZone" class="button f-right">
                     Agregar Permiso
                 </t:eventLink>
             </div>
@@ -84,7 +84,7 @@
 
     <t:zone t:id="editPermisoZone" id="editPermisoZone">
         <t:if test = "mostrarNuevoPermiso">
-            <h3>Crear/Editar Permisos a un determinado Perfil de Usuario</h3>
+            <h3>Asignar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
                 <t:form t:id="permisoInputForm">
                     <div class ="f-wrap">
@@ -130,7 +130,7 @@
             </div>
         </t:if>
         <t:if test = "mostrarEditPermiso">
-            <h3>Crear/Editar Permisos a un determinado Perfil de Usuario</h3>
+            <h3>Editar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
                 <t:form t:id="permisoEditForm">
                     <div class ="f-wrap">
