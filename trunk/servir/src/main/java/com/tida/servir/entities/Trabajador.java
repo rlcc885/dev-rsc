@@ -18,6 +18,7 @@ import org.apache.tapestry5.beaneditor.Validate;
  * @author ale
  */
 @Entity
+@Table(name = "RSC_TRABAJADOR")
 public class Trabajador implements Serializable // extends Persona 
 {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

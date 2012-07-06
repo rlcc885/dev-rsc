@@ -16,7 +16,6 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 @Table(name = "RSC_ENTIDAD")
 public class Entidad implements Serializable {
-
     public static String ESTADO_BAJA = "Baja";
     public static String ESTADO_ALTA = "Alta";
     public static String ESTADO_ssss = "Alta";
