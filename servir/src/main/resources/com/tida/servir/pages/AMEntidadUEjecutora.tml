@@ -368,13 +368,13 @@
                              <t:form t:id="formulariobotones"  zone="botonesZone">
                             <div class="f-wrap">
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                                    <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
                                 </div>
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
                                 </div>
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button"/>
+                                    <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" />
                                 </div>
                             </div>
                              </t:form>
@@ -571,13 +571,13 @@
                            <t:form t:id="formulariosubbotones"  zone="nivelOrganizacionSectorZone">
                             <div class="f-wrap">
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="subcancel" value="Cancelar" class="button"/> 
+                                    <input t:type="Submit" t:id="subcancel" value="Cancelar" class="button" t:mixins="confirm" /> 
                                 </div>
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="subreset" value="Limpiar Formulario" class="button"/>  
+                                    <input t:type="Submit" t:id="subreset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
                                 </div>
                                 <div class="f-right">
-                                    <input t:type="Submit" t:id="subguardarentidad" value="Guardar" class="button"/>
+                                    <input t:type="Submit" t:id="subguardarentidad" value="Guardar" class="button" t:mixins="confirm" />
                                 </div>
                             </div>
                              </t:form>

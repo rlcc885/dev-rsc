@@ -15,10 +15,12 @@ import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -27,7 +29,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class EntidadSelect {
 
-   // @InjectComponent
+    //@InjectComponent
     //private Envelope envelope;
     @Inject
     private Session session;
@@ -194,6 +196,23 @@ public class EntidadSelect {
 
    // }
     
+    
+    //Para inicializar valores
+    @Log
+    @SetupRender
+    void initializeValue() {
+        
+        borganizacionestado=false;
+        bsectorgobierno=false;
+        btipoorganismo=false;
+        bessubentidad=false;
+        elemento=0;
+        snivelGobierno=null;
+        sorganizacionestado=null;
+        ssectorGobierno=null;
+        stipoOrganismo=null;
+    }
+    
     //para obtener datos del Nivel Gobierno
     @Log
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {        
@@ -235,20 +254,18 @@ public class EntidadSelect {
         Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.eq("estado", true));
         if(snivelGobierno!=null){
-           c.add(Restrictions.eq("nivelgobierno_id", snivelGobierno.getId()));
+           c.add(Restrictions.eq("nivelGobierno", snivelGobierno));
         }
-        /*c.add(Restrictions.eq("nivelgobierno", nivelgobierno));
-        if (sector != null) {
-            if (sector.trim().length() > 0) {
-                c.add(Restrictions.eq("sector_gobierno", sector));
-            }
+        if(sorganizacionestado!=null){
+           c.add(Restrictions.eq("organizacionEstado", sorganizacionestado));
         }
-        if (pliego != null) {
-            if (pliego.trim().length() > 0) {
-                c.add(Restrictions.eq("pliego", pliego));
-            }
+        if(ssectorGobierno!=null){
+           c.add(Restrictions.eq("sectorGobierno", ssectorGobierno));
         }
-        */    
+        if(stipoOrganismo!=null){
+           c.add(Restrictions.eq("tipoOrganismo", stipoOrganismo));
+        }
+     
         return c.list();
     }
     
@@ -262,8 +279,9 @@ public class EntidadSelect {
     @Log
     private List<Entidad> searchSubEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.eq("estado", false));
-        //c.add(Restrictions.ne("essubentidad", true));
+        c.add(Restrictions.eq("estado", true));
+        c.add(Restrictions.eq("esSubEntidad", true));
+        c.addOrder(Order.asc("denominacion"));
         /*c.add(Restrictions.eq("nivelgobierno", nivelgobierno));
         if (sector != null) {
             if (sector.trim().length() > 0) {
@@ -295,18 +313,25 @@ public class EntidadSelect {
     Object onSuccessFromformOrganizacionEstado() {
         if(sorganizacionestado.getValor().equalsIgnoreCase("PODER EJECUTIVO")){
             bsectorgobierno=true;
-            return SectorZone.getBody();
         }else{
             bsectorgobierno=false;
-            return SectorZone.getBody();
+            btipoorganismo=false;
         }
-            
+       return new MultiZoneUpdate("SectorZone", SectorZone.getBody())
+                .add("EntidadZone", EntidadZone.getBody());      
 
     }
     
     Object onSuccessFromformSectorGobierno() {
-        btipoorganismo=true;
-        return TipoOrganismoZone.getBody();
+        if(bsectorgobierno)btipoorganismo=true;
+        return new MultiZoneUpdate("TipoOrganismoZone", TipoOrganismoZone.getBody())
+                .add("EntidadZone", EntidadZone.getBody());  
+
+    }
+    
+    Object onSuccessFromformTipoOrganismo() {
+
+        return EntidadZone.getBody();  
 
     }
     
@@ -322,6 +347,29 @@ public class EntidadSelect {
     
     void onSelectedFromReset() {
          elemento=1;
+    }
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormulariobotones() {
+        
+        if(elemento==1){
+            return "CambioEntidad";
+        }else if(elemento==2){
+            return "Alerta";
+        }else{    
+        entidad = sentidad;
+        //envelope.setContents("Entidad /U. Ejecutora seleccionada");
+        return 
+        new MultiZoneUpdate("NivelZone", NivelZone.getBody())                             
+                    .add("OrganizacionZone", OrganizacionZone.getBody())
+                    .add("SectorZone", SectorZone.getBody())
+                    .add("TipoOrganismoZone", TipoOrganismoZone.getBody())
+                    .add("EntidadZone", EntidadZone.getBody())
+                    .add("TipoSubEntidadZone", TipoSubEntidadZone.getBody())
+                    .add("SubEntidadZone", SubEntidadZone.getBody());
+        }
+        
     }
     
     /*
