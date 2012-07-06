@@ -139,7 +139,7 @@ public class TrabajadorNuevo  extends GeneralPage
     private Envelope envelope;
     
     public boolean getDNI(){
-        if(nuevo.getTipoDiscapacidad().equals("DNI"))
+        if(nuevo.getTipodiscapacidad().equals("DNI"))
             return true;
         
         return false;

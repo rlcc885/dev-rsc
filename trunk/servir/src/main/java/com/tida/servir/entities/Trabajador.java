@@ -59,8 +59,9 @@ public class Trabajador implements Serializable // extends Persona
     private DatoAuxiliar cod_ubi_dept;
     @NonVisual
     private String nacionalidad;
+    @ManyToOne
     @NonVisual
-    private String estadoCivil;
+    private DatoAuxiliar estadocivil;
     @NonVisual
     private String domicilioDireccion;
     @ManyToOne
@@ -78,15 +79,17 @@ public class Trabajador implements Serializable // extends Persona
     private String esSalud;
     @NonVisual
     private String grupoSanguineo;
-    @NonVisual
-    private String tipoDiscapacidad;
-    @NonVisual
-    private Integer nroCertificadoCONADIS;
-    @NonVisual
-    private String nivelInstruccion;
     @ManyToOne
     @NonVisual
-    private DatoAuxiliar formacionProfesional;
+    private DatoAuxiliar tipodiscapacidad;
+    @NonVisual
+    private Integer nroCertificadoCONADIS;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar nivelinstruccion;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar formacionprofesional;
     private String formacionInfAdicional;
     @NonVisual
     private String emergenciaNombre;
@@ -108,6 +111,15 @@ public class Trabajador implements Serializable // extends Persona
     private String nroRUC;
     @NonVisual
     private String codigoOSCE;
+
+    
+    public DatoAuxiliar getFormacionprofesional() {
+        return formacionprofesional;
+    }
+
+    public void setFormacionprofesional(DatoAuxiliar formacionprofesional) {
+        this.formacionprofesional = formacionprofesional;
+    }
 
     public String getApellidoMaterno() {
         return apellidoMaterno;
@@ -153,12 +165,12 @@ public class Trabajador implements Serializable // extends Persona
         this.esSalud = esSalud;
     }
 
-    public String getEstadoCivil() {
-        return estadoCivil;
+    public DatoAuxiliar getEstadocivil() {
+        return estadocivil;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
+    public void setEstadocivil(DatoAuxiliar estadocivil) {
+        this.estadocivil = estadocivil;
     }
 
     public Date getFechaNacimiento() {
@@ -169,13 +181,13 @@ public class Trabajador implements Serializable // extends Persona
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public DatoAuxiliar getFormacionProfesional() {
-        return formacionProfesional;
-    }
-
-    public void setFormacionProfesional(DatoAuxiliar formacionProfesional) {
-        this.formacionProfesional = formacionProfesional;
-    }
+//    public DatoAuxiliar getFormacionProfesional() {
+//        return formacionProfesional;
+//    }
+//
+//    public void setFormacionProfesional(DatoAuxiliar formacionProfesional) {
+//        this.formacionProfesional = formacionProfesional;
+//    }
 
     public String getGrupoSanguineo() {
         return grupoSanguineo;
@@ -202,12 +214,12 @@ public class Trabajador implements Serializable // extends Persona
         this.nacionalidad = nacionalidad;
     }
 
-    public String getNivelInstruccion() {
-        return nivelInstruccion;
+    public DatoAuxiliar getNivelinstruccion() {
+        return nivelinstruccion;
     }
 
-    public void setNivelInstruccion(String nivelInstruccion) {
-        this.nivelInstruccion = nivelInstruccion;
+    public void setNivelinstruccion(DatoAuxiliar nivelinstruccion) {
+        this.nivelinstruccion = nivelinstruccion;
     }
 
     public String getNombres() {
@@ -252,12 +264,12 @@ public class Trabajador implements Serializable // extends Persona
         this.sexo = sexo;
     }
 
-    public String getTipoDiscapacidad() {
-        return tipoDiscapacidad;
+    public DatoAuxiliar getTipodiscapacidad() {
+        return tipodiscapacidad;
     }
 
-    public void setTipoDiscapacidad(String tipoDiscapacidad) {
-        this.tipoDiscapacidad = tipoDiscapacidad;
+    public void setTipodiscapacidad(DatoAuxiliar tipodiscapacidad) {
+        this.tipodiscapacidad = tipodiscapacidad;
     }
 
     public String getTipoDocumento() {

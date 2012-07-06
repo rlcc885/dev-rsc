@@ -35,7 +35,7 @@
                         <h3>
                             Búsqueda Básica
                         </h3>
-                        <t:errors/>
+                        
                         <!-- t:validate="required,minlength=1" -->
                         <div id="filtrosnombres" class="f-wrap">
                             <div class="f-left">
@@ -51,22 +51,18 @@
                                 <input t:type="TextField" t:id="nombres" size="30"/>
                             </div>
                         </div> <!-- filtrosnombres -->
-
+                        
                         <div id="filtrosdoc">
+                            <!--
                             <div class="f-left">
                                 <t:label for="tipoDocumento"/>
                                 <t:select t:id="tipoDocumento" model="tipoDocumentosIdModel" />
 
-                            </div>
+                            </div>-->
                             <div class="f-left">
                                 <!-- t:validate="required,minlength=1" -->
                                 <t:label for="nroDocumento"/>
                                 <input t:type="TextField" t:id="nroDocumento" t:validate="regexp" size="30"/>
-                            </div>
-
-                            <div class="f-left">
-                                <t:label for="codigoLegajoInstitucion"/>
-                                <input t:type="TextField" t:id="codigoLegajoInstitucion" size="30"/>
                             </div>
                         </div> <!-- filtrosdoc -->
                     </div> 
@@ -75,7 +71,7 @@
                 <div id="mainfiltros" class="pane">
                     <div class="box">
                         <h3>
-                            Búsquedas Avanzadas
+                            Búsqueda Avanzada
                         </h3>
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
@@ -87,34 +83,67 @@
                                 <select t:type="Select" t:id="tipodiscapacidad" t:value="valTipoDiscapacidad" model="tiposDiscapacidad" />
                             </div>
                             <div class="filtros">
-                                <t:label for="filtronivelinstruccion"/>
-                                <select t:type="Select" t:id="filtronivelinstruccion" t:value="valNivelInstruccion" model="nivelInstruccion" />
+                                <t:label for="filtroestadocivil"/>
+                                <input t:type="Select" t:id="filtroestadocivil" t:value="valestadocivil" model="estadocivil" />
                             </div>
                         </div>
 
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
-                                <div class="checkbox">
+                                <!--div class="checkbox">
                                     <t:label for="checkfechadenacimientomayora" /> 
                                     <t:checkbox t:id="checkfechadenacimientomayora" value="checkfechadenacimientomayora"/>
-                                </div>
+                                </div>-->
                                 <div class="hssemfecha">
                                     <t:label for="fechadenacimientomayora"> Fec. de nac. mayor o igual a</t:label>
-                                    <t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
-                                                 t:label="Fecha de nacimiento mayor a" size="10"/>
+                                    <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
+                                                 t:label="Fecha de nacimiento mayor a" size="10"/>-->
+                                    <input t:type="DateField" t:id="fechadenacimientomayora"
+                               t:date="fechadenacimientomayora" size="30" />
                                 </div>
                             </div>
                             <div class="filtros" id="fechamenora">
-                                <div class="checkbox">
+                                <!--<div class="checkbox">
                                     <t:label for="checkfechadenacimientomenora" />
                                     <t:checkbox t:id="checkfechadenacimientomenora" value="checkfechadenacimientomenora"/>
-                                </div>
+                                </div>-->
                                 <div class="hssemfecha">
                                     <t:label for="fechadenacimientomenora"> Fec. de nac. menor o igual a </t:label>
-                                    <t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
-                                                 t:label="Fecha de nacimiento menor a" size="10"/><br/>
+                                    <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
+                                                 t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
+                                    <input t:type="DateField" t:id="fechadenacimientomenora"
+                               t:date="fechadenacimientomenora" size="30" />
                                 </div>
                             </div>
+                            <div class="filtros">
+                                <t:label for="filtronivelinstruccion"/>
+                                <input t:type="Select" t:id="filtronivelinstruccion" t:value="valnivelinstruccion" model="nivelinstruccion" />
+                            </div>
+                            <div class="filtros">
+
+                                <div class="hssemfecha">
+                                    <t:label for="fechadenacimientomenora">Fec. de Ingreso a la Institu. (desde)</t:label>
+                                    <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
+                                                 t:label="Fecha de nacimiento mayor a" size="10"/>-->
+                                    <input t:type="DateField" t:id="fechaingresodesde"
+                               t:date="fechadeingresodesdea" size="30" />
+                                </div>
+                            </div>
+                            <div class="filtros" id="fechamenora">                                
+                                <div class="hssemfecha">
+                                    <t:label for="fechadenacimientomayora">Fec. de Ingreso a la Institu. (hasta)</t:label>
+                                    <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
+                                                 t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
+                                    <input t:type="DateField" t:id="fechaingresohasta"
+                               t:date="fechadeingresohastaa" size="30" />
+                                </div>
+                            </div>
+                            <div class="filtros">
+                                <t:label for="filtroformacionprofe"/>
+                                <input t:type="Select" t:id="filtroformacionprofe" t:value="valformacionprofe" model="formacionprofesional" />
+                            </div>
+                            
+                            <!--
                             <div class="filtros">
                                 <t:label for="filtroregimen"/>
                                 <select t:type="Select" t:id="filtroregimen" t:value="valRegimenContratacion" model="regimenContratacion" />
@@ -126,9 +155,9 @@
                             <div class="filtros">
                                 <t:label for="horassemanalesmenora"/>
                                 <input t:type="TextField" t:id="horassemanalesmenora" value="valhorassemanalesmenora" size="15"/>
-                            </div>
+                            </div>-->
                         </div>
-
+                        <!--
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
                                 <t:label for="codigofuncionaldelcargo"/>
@@ -156,7 +185,7 @@
                                         <t:checkbox t:id="declaracion" value="valdeclaracion" size="30"/>
                                     </div>
                                 </div>
-                                <!-- <div class="posicioncheckbox">
+                                <div class="posicioncheckbox">
                                    <div class="checkbox">
                                        <t:label for="checkconfianza" />
                                        <t:checkbox t:id="checkconfianza" value="checkconfianza" size="30"/>
@@ -165,9 +194,9 @@
                                       <t:label class="checklabel" for="confianza"/>
                                       <t:checkbox t:id="confianza" value="valconfianza" size="30"/>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <!--
                                   <div class="seccionfiltros">
@@ -206,7 +235,8 @@
 
 
             <t:zone t:id="empleadoszone">
-
+                <t:form t:id="xxx"  zone="empleadoszone">
+                   <t:errors/> 
                 <t:grid source="empleados" rowsPerPage="10" row="e" t:add="Acciones"
                         pagerPosition="bottom" reorder="tipoDocumento,nroDocumento,apellidoPaterno,
                         apellidoMaterno,nombres" t:context="e" t:rowclass="prop:selectionrow"
@@ -229,6 +259,7 @@
                     </p:accionesCell>
 
                 </t:grid>
+                </t:form>
             </t:zone>
 
             <!--

@@ -135,9 +135,9 @@ public class CopiadorEntidades {
         destino.setEmergenciaTelefonoAlternativo1(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonoAlternativo1()));
         destino.setEmergenciaTelefonoAlternativo2(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonoAlternativo2()));
         destino.setEsSalud(CopiadorEntidades.verifacionNull(origen.getEsSalud()));
-        destino.setEstadoCivil(CopiadorEntidades.verifacionNull(origen.getEstadoCivil()));
+        //destino.setEstadocivil(CopiadorEntidades.verifacionNull(origen.getEstadocivil()));
         destino.setFechaNacimiento(CopiadorEntidades.verifacionNull(origen.getFechaNacimiento()));
-        destino.setFormacionProfesional(origen.getFormacionProfesional());
+        destino.setFormacionprofesional(origen.getFormacionprofesional());
         if(origen.getFamiliares() != null)
             destino.setFamiliares(origen.getFamiliares());
         destino.setFormacionInfAdicional(CopiadorEntidades.verifacionNull(origen.getFormacionInfAdicional()));
@@ -145,7 +145,7 @@ public class CopiadorEntidades {
         if(origen.getMeritosdemeritos() != null)
             destino.setMeritosdemeritos(origen.getMeritosdemeritos());
         destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
-        destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelInstruccion()));
+        //destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelinstruccion()));
         destino.setNombres(CopiadorEntidades.verifacionNull(origen.getNombres()));
         destino.setNroCertificadoCONADIS(CopiadorEntidades.verifacionNull(origen.getNroCertificadoCONADIS()));
         destino.setNroRUC(CopiadorEntidades.verifacionNull(origen.getNroRUC()));
@@ -154,7 +154,7 @@ public class CopiadorEntidades {
             destino.setPublicaciones(origen.getPublicaciones());
         destino.setRegimenPensionario(CopiadorEntidades.verifacionNull(origen.getRegimenPensionario()));
         destino.setSexo(CopiadorEntidades.verifacionNull(origen.getSexo()));
-        destino.setTipoDiscapacidad(CopiadorEntidades.verifacionNull(origen.getTipoDiscapacidad()));
+        //destino.setTipodiscapacidad(CopiadorEntidades.verifacionNull(origen.getTipodiscapacidad()));
         if(origen.getTitulos() != null)
             destino.setTitulos(origen.getTitulos());
     }
@@ -170,7 +170,7 @@ public class CopiadorEntidades {
     public static void cargoAsignado(CargoAsignado origen, CargoAsignado destino){
         if(origen.getAusLicPersonales() != null)
             destino.setAusLicPersonales(origen.getAusLicPersonales());
-        destino.setCargo(origen.getCargo());
+        destino.setCargoxunidad(origen.getCargoxunidad());
         destino.setCtd_per_superv(CopiadorEntidades.verifacionNull(origen.getCtd_per_superv()));
         destino.setEstado(CopiadorEntidades.verifacionNull(origen.getEstado()));
         if(origen.getEvaluacionesPersonales() != null)

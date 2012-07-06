@@ -20,7 +20,7 @@
 
 
         <p:den_cargoCell>
-            ${ca.cargo.den_cargo}
+            ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>
 
         <p:legajoCell>

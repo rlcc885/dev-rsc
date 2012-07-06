@@ -684,7 +684,7 @@ public class CreadorDesdeCsv {
         trabajador.setCod_ubi_prov(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvTrabajador.get(10), errores, session));
         trabajador.setCod_ubi_dept(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvTrabajador.get(11), errores, session));
         trabajador.setNacionalidad(CreadorDesdeDB.verificacionValorDatoAuxiliar("Nacionalidades", _csvTrabajador.get(12), errores, session));
-        trabajador.setEstadoCivil(CreadorDesdeDB.verificacionValorDatoAuxiliar("EstadoCivil", _csvTrabajador.get(13), errores, session));
+       // trabajador.setEstadocivil(CreadorDesdeDB.verificacionValorDatoAuxiliar("EstadoCivil", _csvTrabajador.get(13), errores, session));
         trabajador.setDomicilioDireccion(_csvTrabajador.get(14));
         trabajador.setCod_dom_dist(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDistrito", _csvTrabajador.get(15), errores, session));
         trabajador.setCod_dom_prov(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvTrabajador.get(16), errores, session));
@@ -692,10 +692,10 @@ public class CreadorDesdeCsv {
         trabajador.setDomicilioCodigoPostal(_csvTrabajador.get(18));
         trabajador.setEsSalud(_csvTrabajador.get(19));
         trabajador.setGrupoSanguineo(CreadorDesdeDB.verificacionValorDatoAuxiliar("GrupoSanguineo", _csvTrabajador.get(20), errores, session));
-        trabajador.setTipoDiscapacidad(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoDiscapacidad", _csvTrabajador.get(21), errores, session));
+        //trabajador.setTipoDiscapacidad(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoDiscapacidad", _csvTrabajador.get(21), errores, session));
         trabajador.setNroCertificadoCONADIS(CreadorDesdeCsv.toInteger(_csvTrabajador.get(22)));
-        trabajador.setNivelInstruccion(CreadorDesdeDB.verificacionValorDatoAuxiliar("NivelInstrucción", _csvTrabajador.get(23), errores, session));
-        trabajador.setFormacionProfesional(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("FormacionProfesional", _csvTrabajador.get(24), errores, session));
+        //trabajador.setNivelInstruccion(CreadorDesdeDB.verificacionValorDatoAuxiliar("NivelInstrucción", _csvTrabajador.get(23), errores, session));
+        trabajador.setFormacionprofesional(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("FormacionProfesional", _csvTrabajador.get(24), errores, session));
         trabajador.setEmergenciaNombre(_csvTrabajador.get(25));
         trabajador.setEmergenciaDomicilio(_csvTrabajador.get(26));
         trabajador.setEmergenciaTelefonos(_csvTrabajador.get(27));
@@ -1093,7 +1093,7 @@ public class CreadorDesdeCsv {
             return null;
         }
 
-        cargoasignado.setCargo(cargo);
+        cargoasignado.setCargoxunidad(cargo);
         cargoasignado.setTrabajador(trabajador);
         cargoasignado.setLegajo(legajo);
         cargoasignado.setEstado(getEstadoCAFromBoolStr(_csvCargosAsignado.get(4), errores));
@@ -1143,7 +1143,7 @@ public class CreadorDesdeCsv {
         c = myTratamiento.getSession().createCriteria(CargoAsignado.class)
                 .createAlias("cargo", "cargo")
                 .createAlias("legajo", "legajo")
-                .add(Restrictions.eq("cargo.cod_cargo", cargoasignado.getCargo().getCod_cargo()))
+                .add(Restrictions.eq("cargo.cod_cargo", cargoasignado.getCargoxunidad().getCod_cargo()))
                 .add(Restrictions.eq("legajo.cod_legajo", cargoasignado.getLegajo().getCod_legajo()));
         
         CargoAsignado caOrigen = cargoasignado;
@@ -3375,7 +3375,7 @@ public class CreadorDesdeCsv {
         }
 
         for (CargoAsignado ca : lca) {
-            if (ca.getLegajo().getCod_legajo().equals(legajo.getCod_legajo()) && ca.getCargo().getCod_cargo().equals(cargo.getCod_cargo())) {
+            if (ca.getLegajo().getCod_legajo().equals(legajo.getCod_legajo()) && ca.getCargoxunidad().getCod_cargo().equals(cargo.getCod_cargo())) {
                 return ca;
             }
         }

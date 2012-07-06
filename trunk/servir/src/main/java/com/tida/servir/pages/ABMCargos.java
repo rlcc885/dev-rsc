@@ -342,6 +342,7 @@ public class ABMCargos extends GeneralPage {
         if (regimengruponivel == null) {
             regimengruponivel = new RegimenGrupoNivel();
         }
+        
         //System.out.println("---------------on activate regimengruponivel "+regimengruponivel.getGrupo());
     }
 
@@ -420,7 +421,7 @@ public class ABMCargos extends GeneralPage {
         regimengruponivel = new RegimenGrupoNivel();
     }
     
-    void onSelectedFromCancelar() {        
+    void onSelectedFromCancel() {        
         num=3;     
         cargo = new Cargoxunidad();
         editando = false;
@@ -473,17 +474,18 @@ public class ABMCargos extends GeneralPage {
                     
             }
             else{
-                Criteria co;
-                co = session.createCriteria(Cargoxunidad.class);
+                c = session.createCriteria(Cargoxunidad.class);
                 if (editando) {
                     c.add(Restrictions.ne("id", cargo.getId()));
                 }
-                co.add(Restrictions.like("den_cargo", cargo.getDen_cargo()));
-                co.createAlias("unidadorganica", "unidadorganica");
-                co.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
+
+                c.add(Restrictions.like("den_cargo", cargo.getDen_cargo()));
+                c.createAlias("unidadorganica", "unidadorganica");
+                c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
                 //c.add(Restrictions.like("und_organica", uo));
-                if (co.list().size() > 0) {
+                if (c.list().size() > 0) {
                     _altaForm.recordError(Errores.ERROR_DEN_CARGO_UNICO);
+
                 }
                 
             }

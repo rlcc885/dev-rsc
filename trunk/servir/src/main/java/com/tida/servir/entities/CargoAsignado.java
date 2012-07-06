@@ -22,6 +22,10 @@ import org.apache.tapestry5.beaneditor.Validate;
  */
 @Entity
 public class CargoAsignado {
+    
+    public static boolean ESTADO_BAJA = false;
+    public static boolean ESTADO_ALTA = true;
+    
     @NonVisual
     private Long id;
 
