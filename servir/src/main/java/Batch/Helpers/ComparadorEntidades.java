@@ -1058,7 +1058,7 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEstadoCivil(), cdestino.getEstadoCivil()));
+        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEstadocivil(), cdestino.getEstadocivil()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
@@ -1090,7 +1090,7 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipoDiscapacidad(), cdestino.getTipoDiscapacidad()));
+        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipodiscapacidad(), cdestino.getTipodiscapacidad()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
@@ -1098,11 +1098,11 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivelInstruccion(), cdestino.getNivelInstruccion()));
+        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivelinstruccion(), cdestino.getNivelinstruccion()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getFormacionProfesional(), cdestino.getFormacionProfesional()));
+        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getFormacionprofesional(), cdestino.getFormacionprofesional()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }

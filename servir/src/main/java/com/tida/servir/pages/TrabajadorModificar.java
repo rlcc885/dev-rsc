@@ -173,7 +173,7 @@ public class TrabajadorModificar  extends GeneralPage
     void loadFormacion() {
         if (formacionProfesional == null)
             formacionProfesional = new FormacionProfesional();
-        formacionProfesional.setFormacion(actual.getFormacionProfesional());
+        formacionProfesional.setFormacion(actual.getFormacionprofesional());
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.createAlias("trabajador", "trabajador");
         c.createAlias("legajo", "legajo");
@@ -190,7 +190,7 @@ public class TrabajadorModificar  extends GeneralPage
     @CommitAfter
     Object onSuccessFromInstruccion(){
         actual.setTipoDocumento("01");
-        actual.setFormacionProfesional(formacionProfesional.getFormacion());
+        actual.setFormacionprofesional(formacionProfesional.getFormacion());
         session.saveOrUpdate(actual);
         return instruccionZone;
     }

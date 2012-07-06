@@ -244,9 +244,8 @@
                         <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
                         t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
                     </form> -->
-                </t:if> <!-- puedeEditar -->
-            </t:if>
-  
+                </t:if> <!-- puedeEditar -->   
+        </t:zone>
     </div>
 
 </html>

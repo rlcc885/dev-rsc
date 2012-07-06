@@ -140,7 +140,7 @@
             <t:zone t:id="nivelZone">
                 <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">
                     <t:envelope t:id="envelope"/>
-                     <t:errors/>
+                     
                     <div class="f-wrap">
                         <div class="f-left">
                             * Nivel Organizacional
@@ -169,7 +169,7 @@
             <t:zone t:id="unidadesOrganicasZone">
                 <t:if test="PuedeEditar">
                     <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                       
+                       <t:errors/>
                         
                         <div class="f-wrap">
                             <div class="f-left">

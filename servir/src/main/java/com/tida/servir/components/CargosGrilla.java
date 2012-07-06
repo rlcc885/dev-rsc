@@ -94,7 +94,7 @@ public class CargosGrilla {
           Criteria c = session.createCriteria(CargoAsignado.class);
           c.createAlias("legajo", "legajo");
           c.add(Restrictions.eq("trabajador", actual));
-          c.add(Restrictions.eq("legajo.entidadUE", _oi));
+          c.add(Restrictions.eq("legajo.entidad", _oi));
           c.add(Restrictions.ne("estado", Constantes.ESTADO_BAJA));
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           return c.list();

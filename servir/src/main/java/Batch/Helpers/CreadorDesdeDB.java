@@ -381,8 +381,8 @@ public class CreadorDesdeDB {
         for (RemuneracionPersonal rp : ca.getRemuneracionesPersonales()) {
             RemuneracionPersonalCSV rpcsv = new RemuneracionPersonalCSV();
             rpcsv.setCodigo_entidadUE(eue.getCodigoEntidadUE());
-            if(ca.getCargo() != null)
-                rpcsv.setCodigo_cargo(ca.getCargo().getCod_cargo());
+            if(ca.getCargoxunidad() != null)
+                rpcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
             else
                 rpcsv.setCodigo_cargo("");
             rpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
@@ -408,8 +408,8 @@ public class CreadorDesdeDB {
         for (EvaluacionPersonal ep : ca.getEvaluacionesPersonales()) {
             EvaluacionPersonalCSV epcsv = new EvaluacionPersonalCSV();
             epcsv.setCalificacion_procentaje(ep.getCalificacion());
-            if(ca.getCargo() != null)
-                epcsv.setCodigo_cargo(ca.getCargo().getCod_cargo());
+            if(ca.getCargoxunidad() != null)
+                epcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
             else
                 epcsv.setCodigo_cargo("");
             epcsv.setCodigo_entidadUE(eue.getCodigoEntidadUE());
@@ -434,8 +434,8 @@ public class CreadorDesdeDB {
         for (AusLicPersonal alp : ca.getAusLicPersonales()) {
             AusLicPersonalCSV alpcsv = new AusLicPersonalCSV();
 
-            if(ca.getCargo() != null)
-                alpcsv.setCodigo_cargo(ca.getCargo().getCod_cargo());
+            if(ca.getCargoxunidad() != null)
+                alpcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
             else
                 alpcsv.setCodigo_cargo("");
             alpcsv.setCodigEntidadUE(eue.getCodigoEntidadUE());

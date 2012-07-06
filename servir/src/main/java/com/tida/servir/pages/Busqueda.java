@@ -89,12 +89,9 @@ public class Busqueda extends GeneralPage {
     @Persist
     @Property
     private String nroDocumento;
-    @Persist
-    @Property
-    private String tipoDocumento;
-    @Persist
-    @Property
-    private String codigoLegajoInstitucion;
+//    @Persist
+//    @Property
+//    private String tipoDocumento;
     //
     // Datos para los filtros
     //
@@ -124,10 +121,10 @@ public class Busqueda extends GeneralPage {
     private Date fechadenacimientomayora;
     @Property
     @Persist
-    private String valTipoDiscapacidad;
+    private DatoAuxiliar valTipoDiscapacidad;
     @Property
     @Persist
-    private String valNivelInstruccion;
+    private DatoAuxiliar valestadocivil;
     @Property
     @Persist
     private DatoAuxiliar valRegimenContratacion;
@@ -150,33 +147,65 @@ public class Busqueda extends GeneralPage {
     @Persist
     private Boolean valconfianza;
     @Inject
-    private Request request;
+    private Request request;    
+    
+    
+    @Property
+    @Persist
+    private DatoAuxiliar valnivelinstruccion;
+    @Property
+    @Persist
+    private DatoAuxiliar valformacionprofe;
+    @Persist
+    @Property
+    private Date fechadeingresodesdea;
+    @Persist
+    @Property
+    private Date fechadeingresohastaa;
+    
+    
+    @Component(id = "xxx")
+    private Form xxx;
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getFormacionprofesional() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("FORMACIONPROFESIONAL", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getNivelinstruccion() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELINSTRUCCIÓN", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }    
 
     public List<String> getSexos() {
-        return Helpers.getValorTablaAuxiliar("Sexo", session);
+        return Helpers.getValorTablaAuxiliar("SEXO", session);
     }
 
-    public List<String> getDiscapacidades() {
-        return Helpers.getValorTablaAuxiliar("TipoDiscapacidad", session);
+//    public List<String> getDiscapacidades() {
+//        return Helpers.getValorTablaAuxiliar("TIPODISCAPACIDAD", session);
+//    }
+//    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getEstadocivil() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ESTADOCIVIL", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    public List<String> getNivelesInstruccion() {
-        return Helpers.getValorTablaAuxiliar("Nivel Instrucción", session);
-    }
-
-    public List<String> getEstado() {
-        List<String> estadosCargo = new LinkedList<String>();
-        /*
-         * TODO JZM verificar linea de codigo
-         */
-//        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
-//        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
-
-        estadosCargo.add("Alta");
-        estadosCargo.add("Baja");
-
-        return estadosCargo;
-    }
+//    public List<String> getEstado() {
+//        List<String> estadosCargo = new LinkedList<String>();
+//        /*
+//         * TODO JZM verificar linea de codigo
+//         */
+////        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
+////        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
+//
+//        estadosCargo.add("Alta");
+//        estadosCargo.add("Baja");
+//
+//        return estadosCargo;
+//    }
 
     public GenericSelectModel<DatoAuxiliar> getRegimenContratacion() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("RegimenLaboralContractual", null, 0, session);
@@ -198,7 +227,7 @@ public class Busqueda extends GeneralPage {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.createAlias("trabajador", "trabajador");
         c.createAlias("legajo", "legajo");
-        c.createAlias("cargo", "cargo");
+        c.createAlias("cargoxunidad", "cargoxunidad");
 
         c.add(Restrictions.eq("legajo.entidad", _entidadUE));
 
@@ -216,73 +245,86 @@ public class Busqueda extends GeneralPage {
             c.add(Restrictions.disjunction().add(Restrictions.like("trabajador.nombres", nombres + "%").ignoreCase()).add(Restrictions.like("trabajador.nombres", nombres.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("trabajador.nombres", nombres.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
 
-        if (nroDocumento != null) {
+        if (nroDocumento != null && !nroDocumento.equals("")) {
             System.out.println("------------------ empleados nroDocumento " + nroDocumento);
             c.add(Restrictions.eq("trabajador.nroDocumento", nroDocumento));
         }
-        if (tipoDocumento != null && !tipoDocumento.equals("")) {
-            c.add(Restrictions.like("trabajador.tipoDocumento", tipoDocumento));
-        }
-
-        if (codigoLegajoInstitucion != null && !codigoLegajoInstitucion.equals("")) {
-            c.add(Restrictions.eq("legajo.cod_legajo", codigoLegajoInstitucion));
-        }
-        // filtros
+////        if (tipoDocumento != null && !tipoDocumento.equals("")) {
+////            c.add(Restrictions.like("trabajador.tipoDocumento", tipoDocumento));
+////        }
+//        
+//        // filtros
         if (sexo != null && !sexo.equals("")) {
 
             c.add(Restrictions.like("trabajador.sexo", sexo));
         }
 
-        if (fechadenacimientomenora != null && checkfechadenacimientomenora) {
+        if (fechadenacimientomenora != null) {
             fechadenacimientomenora.setHours(23);
             fechadenacimientomenora.setMinutes(59);
             fechadenacimientomenora.setSeconds(59);
             c.add(Restrictions.le("trabajador.fechaNacimiento", fechadenacimientomenora));
 
         }
-        if (fechadenacimientomayora != null && checkfechadenacimientomayora) {
+        if (fechadenacimientomayora != null) {
             c.add(Restrictions.ge("trabajador.fechaNacimiento", fechadenacimientomayora));
+        }
+        
+        if (fechadeingresohastaa != null) {
+            fechadeingresohastaa.setHours(23);
+            fechadeingresohastaa.setMinutes(59);
+            fechadeingresohastaa.setSeconds(59);
+            c.add(Restrictions.le("fec_inicio", fechadeingresohastaa));
+
+        }
+        if (fechadeingresodesdea != null) {
+            c.add(Restrictions.ge("fec_inicio", fechadeingresodesdea));
         }
 
         if (valTipoDiscapacidad != null && !valTipoDiscapacidad.equals("")) {
-            c.add(Restrictions.like("trabajador.tipoDiscapacidad", valTipoDiscapacidad));
+            c.add(Restrictions.like("trabajador.tipodiscapacidad", valTipoDiscapacidad));
         }
 
-        if (valNivelInstruccion != null && !valNivelInstruccion.equals("")) {
-            c.add(Restrictions.like("trabajador.nivelInstruccion", valNivelInstruccion));
+        if (valestadocivil != null && !valestadocivil.equals("")) {
+            c.add(Restrictions.like("trabajador.estadocivil", valestadocivil));
+        }
+        if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
+            c.add(Restrictions.like("trabajador.nivelinstruccion.", valnivelinstruccion));
+        }
+        if (valformacionprofe != null && !valformacionprofe.equals("")) {            
+            c.add(Restrictions.like("trabajador.formacionprofesional", valformacionprofe));            
         }
 
-
-        if (valRegimenContratacion != null) {
-            c.add(Restrictions.eq("cargo.reg_lab_con", valRegimenContratacion));
-        }
-
-
-        if (valhorassemanalesmayora != null) {
-            c.add(Restrictions.ge("cargo.horas_x_sem", valhorassemanalesmayora));
-        }
-
-        if (valhorassemanalesmenora != null) {
-            c.add(Restrictions.le("cargo.horas_x_sem", valhorassemanalesmenora));
-        }
+//        if (valRegimenContratacion != null) {
+//            c.add(Restrictions.eq("cargo.reg_lab_con", valRegimenContratacion));
+//        }
 
 
-        if (valcodigofuncionaldelcargo != null) {
-            c.add(Restrictions.eq("cargo.clasificacion_funcional", valcodigofuncionaldelcargo));
-        }
+//        if (valhorassemanalesmayora != null) {
+//            c.add(Restrictions.ge("cargo.horas_x_sem", valhorassemanalesmayora));
+//        }
+//
+//        if (valhorassemanalesmenora != null) {
+//            c.add(Restrictions.le("cargo.horas_x_sem", valhorassemanalesmenora));
+//        }
+//
+//
+//        if (valcodigofuncionaldelcargo != null) {
+//            c.add(Restrictions.eq("cargo.clasificacion_funcional", valcodigofuncionaldelcargo));
+//        }
+//
+//        if (valhabilitacionprofesional != null && checkhabilitacionprofesional) {
+//            c.add(Restrictions.eq("cargo.req_hab_profesional", valhabilitacionprofesional));
+//        }
 
-        if (valhabilitacionprofesional != null && checkhabilitacionprofesional) {
-            c.add(Restrictions.eq("cargo.req_hab_profesional", valhabilitacionprofesional));
-        }
+//        if (valdeclaracion != null && checkdeclaracion) {
+//            c.add(Restrictions.eq("cargo.dec_jurada_byr", valdeclaracion));
+//        }
+//        if (valconfianza != null && checkconfianza) {
+//            c.add(Restrictions.eq("cargo.cargo_confianza", valconfianza));
+//        }
 
-        if (valdeclaracion != null && checkdeclaracion) {
-            c.add(Restrictions.eq("cargo.dec_jurada_byr", valdeclaracion));
-        }
-        if (valconfianza != null && checkconfianza) {
-            c.add(Restrictions.eq("cargo.cargo_confianza", valconfianza));
-        }
-
-        c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
+        c.add(Restrictions.like("estado", CargoAsignado.ESTADO_ALTA));
         c.setProjection(Projections.distinct(Projections.property("trabajador")));
         Trabajador trabajador = new Trabajador();
         //System.out.println("-------------------- trabajador "+trabajador.getNroDocumento());
@@ -314,13 +356,12 @@ public class Busqueda extends GeneralPage {
             apellidoMaterno = null;
             nombres = null;
             nroDocumento = null;
-            tipoDocumento = null;
-            codigoLegajoInstitucion = null;
+//            tipoDocumento = null;
             sexo = null;
             fechadenacimientomenora = null;
             fechadenacimientomayora = null;
             valTipoDiscapacidad = null;
-            valNivelInstruccion = null;
+            valestadocivil = null;
             valcodigofuncionaldelcargo = null;
             valRegimenContratacion = null;
             valhorassemanalesmayora = null;
@@ -340,6 +381,7 @@ public class Busqueda extends GeneralPage {
             //return getTodasZones(); // actualizo toda la pantalla
             return Busqueda.class;
         } else {
+            //xxx.recordError(String.valueOf(valformacionprofe));
             return getEmpleadosZones(); // actualizo los trabajadores
         }
     }
@@ -359,18 +401,19 @@ public class Busqueda extends GeneralPage {
     @CommitAfter
     void onPrepare() {
     }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTiposDiscapacidad() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODISCAPACIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
 
-    public List<String> getTiposDiscapacidad() {
-        return Helpers.getValorTablaAuxiliar("TipoDiscapacidad", session);
     }
+
     /*
      * public List<String> getTiposDoc() { return
      * Helpers.getValorTablaAuxiliar("TipoDocumento", session); }
      */
 
-    public List<String> getNivelInstruccion() {
-        return Helpers.getValorTablaAuxiliar("NivelInstrucción", session);
-    }
     /*
      * Para armar la zona dinámica
      */
