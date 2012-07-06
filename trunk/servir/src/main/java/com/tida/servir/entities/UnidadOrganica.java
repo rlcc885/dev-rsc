@@ -15,6 +15,7 @@ import org.apache.tapestry5.beaneditor.Validate;
  * @author ale
  */
 @Entity
+@Table(name = "RSC_UNIDADORGANICA")
 public class UnidadOrganica {
 
     public static Boolean ESTADO_BAJA = false;

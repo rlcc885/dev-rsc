@@ -13,6 +13,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author Jurguen Zambrano
  */
 @Entity
+@Table(name = "RSC_TIPOEVENTO")
 public class Tipoevento implements Serializable {
     @Id
     private long id;
