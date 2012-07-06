@@ -38,8 +38,10 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AMEntidadUEjecutora extends GeneralPage {
 
+      
     @Inject
     private Session session;
+
     @Property
     @Persist
     private Entidad entidadUE;
@@ -221,8 +223,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Zone busquedacombosZone;
     @Component(id = "formulariocombosbusqueda")
     private Form formulariocombosbusqueda;
-    @Component(id = "formulariobotonesbusqueda")
-    private Form formulariobotonesbusqueda;
     @Property
     @Persist
     private DatoAuxiliar bnivelGobierno;
@@ -252,8 +252,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Zone busquedasubcombosZone;
     @Component(id = "formulariosubcombosbusqueda")
     private Form formulariosubcombosbusqueda;
-    @Component(id = "formulariosubbotonesbusqueda")
-    private Form formulariosubbotonesbusqueda;
     @Property
     @Persist
     private DatoAuxiliar btiposubentidad;
@@ -267,7 +265,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formulariobussububigeo;
     @Persist
     @Property
-    private String bussubdenominacion;     
+    private String bussubdenominacion;  
+    @Property
+    @Persist
+    private boolean bessubentidad;
     
     @Property
     @Persist
@@ -317,6 +318,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private ApplicationGlobals globals;
     
 
+    //Edicion
+    @Property
+    @Persist
+    private boolean badmentidad;
+    
     private int elemento=0;
 
    //Inicio de lac carga de la pagina
@@ -394,53 +400,61 @@ public class AMEntidadUEjecutora extends GeneralPage {
      
      //reset del formulario (borrar objeto)
      
-    @Log
-    void onSelectFromSubreset() {
+
+    void onSelectedFromSubreset() {
            elemento=1;
+           bessubentidad=false;
+           badmentidad=false;
     }
     
-    @Log
-    void onSelectFromSubcancel() {
+    void onSelectedFromSubcancel() {
         elemento=2;
+         bessubentidad=false;
+         badmentidad=false;
     }
     
-    @Log
-    void onSelectFromReset() {
+    void onSelectedFromReset() {
            elemento=1;
+           bessubentidad=false;
+           badmentidad=false;
     }
     
-    @Log
-    void onSelectFromBusreset() {
-         bnivelGobierno=null;
+
+    void onSelectedFromBusreset() {
+            bnivelGobierno=null;
             bsectorGobierno=null;
             borganizacionEstado=null;
             btipoOrganismo=null;
-            busdenominacion=null;
+            busdenominacion="";
             ubigeobusEntidadUE=null;
             btiposubentidad=null;
-            bussubdenominacion=null;
+            bussubdenominacion="";
             ubigeobusSubEntidadUE=null;
             elemento=3;
+    }
+    
+    void onSelectedFromBusenviar() {
+          bessubentidad=true;
     }
         
-    @Log
-    void onSelectFromBussubreset() {
-         bnivelGobierno=null;
+    void onSelectedFromBussubreset() {
+            bnivelGobierno=null;
             bsectorGobierno=null;
             borganizacionEstado=null;
             btipoOrganismo=null;
-            busdenominacion=null;
+            busdenominacion="";
             ubigeobusEntidadUE=null;
             btiposubentidad=null;
-            bussubdenominacion=null;
+            bussubdenominacion="";
             ubigeobusSubEntidadUE=null;
             elemento=3;
-             System.out.println("entroeeeeeeee al elemento" + elemento);
     }
     
-    @Log
-    void onSelectFromCancel() {
+
+    void onSelectedFromCancel() {
         elemento=2;
+         bessubentidad=false;
+         badmentidad=false;
     }
     
     
@@ -576,6 +590,37 @@ public class AMEntidadUEjecutora extends GeneralPage {
         mostrarEsconder = "Ocultar";
         mostrarFiltros = true;
     }
+    
+    @Log
+    Object onActionFromEditarSeleccion(Entidad enti1) {        
+        entidadUE=enti1;
+        ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
+        ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
+        ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
+        titular=entidadUE.getTitular().getApellidoPaterno();
+        jefeRRHH=entidadUE.getJefeRRHH().getApellidoPaterno();
+        jefeOGA=entidadUE.getJefeOga().getApellidoPaterno();
+        bsector=true;
+        btipoorganismo=true;
+        if(_usuario.getRol().getId()==2)badmentidad=true;
+
+           return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody())                             
+                    .add("principalZone", principalZone.getBody())
+                    .add("ubigeoEntidadZone", ubigeoEntidadZone.getBody())
+                    .add("TitularZone", TitularZone.getBody())
+                    .add("JefeRRHHZone", JefeRRHHZone.getBody())
+                    .add("JefeOGAZone", JefeOGAZone.getBody())
+                    .add("logoentidadZone", logoentidadZone.getBody()); 
+    }
+    
+    @Log
+    @CommitAfter        
+    Object onActionFromEliminarSeleccion(Entidad enti1) {
+        enti1.setEstado(false);
+        session.saveOrUpdate(enti1);
+           return listaentidadZone.getBody();
+    }
+
 
     
     //Metodos de Busqueda de Entidades origenes para la subentidad   
@@ -597,7 +642,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
-  
+        c.add(Restrictions.eq("estado",true));
+        
         //Entidad
         if (bnivelGobierno != null) {
             System.out.println("------------------ Nivel Gobierno " + bnivelGobierno.getValor());
@@ -615,11 +661,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Tipo Organismo " + btipoOrganismo.getValor());
             c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
         }
-        if (busdenominacion != null && !busdenominacion.equals("")) {
+        if (busdenominacion != null) {
             System.out.println("------------------ Enitidad " + busdenominacion);
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", busdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
         }
-        if (ubigeobusEntidadUE.getDepartamento() != null) {
+        if (ubigeobusEntidadUE.getDepartamento() != null ) {
             System.out.println("------------------ Departamento " + ubigeobusEntidadUE.getDepartamento().getValor());
             c.add(Restrictions.eq("departamento", ubigeobusEntidadUE.getDepartamento().getValor()));
         }
@@ -637,7 +683,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Tipo Sub Entidad " + btiposubentidad.getValor());
             c.add(Restrictions.eq("tiposubentidad", btiposubentidad.getValor()));
         }
-        if (bussubdenominacion != null && !bussubdenominacion.equals("")) {
+        if (bussubdenominacion != null) {
             System.out.println("------------------ Enitidad " + bussubdenominacion);
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
         }
@@ -653,6 +699,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusSubEntidadUE.getDistrito().getValor()));
         }
+        if(bessubentidad){
+            c.add(Restrictions.eq("essubentidad", bessubentidad));
+        }
         
         
         return c.list();
@@ -660,7 +709,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     @Log
     @CommitAfter
-    Object onSuccessFromformulariobotonesbusqueda(){
+    Object onSuccessFromformulariocombosbusqueda(){
         System.out.println("ellll" + elemento);
         if(elemento==3){
             System.out.println("entroeeeeeeee al elemento" + elemento);
@@ -676,16 +725,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     @Log
     @CommitAfter
-    Object onSuccessFromformulariosubbotonesbusqueda(){
+    Object onSuccessFromformulariosubcombosbusqueda(){
          System.out.println("ellll" + elemento);
          if(elemento==3){
             return new MultiZoneUpdate("busquedasubcombosZone", busquedasubcombosZone.getBody())                             
-                    .add("ubigeobusSubEntidadZone", ubigeobusSubEntidadZone.getBody());
-                    
+                    .add("ubigeobusSubEntidadZone", ubigeobusSubEntidadZone.getBody());                    
         }else{
             return listaentidadZone.getBody();
         }
-
     }
     
     @Log

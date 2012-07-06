@@ -72,8 +72,7 @@ public class Entidad implements Serializable {
     Boolean esSubEntidad;      
     @NonVisual
     private String validado;
-    @NonVisual
-    String estado;
+    Boolean estado;
 
    
     public String getCue_entidad() {
@@ -151,11 +150,11 @@ public class Entidad implements Serializable {
         this.ruc = ruc;
     }
     
-    public String getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

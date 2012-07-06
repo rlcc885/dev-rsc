@@ -22,11 +22,15 @@ public class LkBusquedaEntidad implements Serializable {
     private String sectorgobierno;
     private String organizacionestado;
     private String tipoorganismo;
-    private String estado;
+    private boolean estado;
     private String departamento;
     private String provincia;
     private String distrito;
     private String tiposubentidad;
+    @Column(name="SIGLA")
+    private String SIGLA;
+    @Column(name="SUBENTIDAD")
+    private String subentidad;
     
     public LkBusquedaEntidad() {
     }
@@ -85,11 +89,11 @@ public class LkBusquedaEntidad implements Serializable {
     public void setTipoorganismo(String tipoorganismo) {
         this.tipoorganismo = tipoorganismo;
     }
-      public String getEstado() {
+      public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
       public String getDepartamento() {
@@ -120,6 +124,22 @@ public class LkBusquedaEntidad implements Serializable {
 
     public void setTiposubentidad(String tiposubentidad) {
         this.tiposubentidad = tiposubentidad;
+    }
+    
+    public String getSIGLA() {
+        return SIGLA;
+    }
+
+    public void setSIGLA(String SIGLA) {
+        this.SIGLA = SIGLA;
+    }
+    
+    public String getSubentidad() {
+        return subentidad;
+    }
+
+    public void setSubentidad(String subentidad) {
+        this.subentidad = subentidad;
     }
    
 }
