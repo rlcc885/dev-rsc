@@ -48,18 +48,22 @@ public class PagePerfil {
     private String descPerfil;
     
     @Property
-    private boolean mostrarEdit = false;
+    private boolean mostrarEdit;
     @Property
-    private boolean mostrarNew = true;
+    private boolean mostrarNew;
     
+    @Persist
     @Property
-    private boolean mostrarPermiso = false;
+    private boolean mostrarPermiso;
+    @Persist
     @Property
-    private boolean mostrarEditPermiso = false;
+    private boolean mostrarEditPermiso;
+    @Persist
     @Property
-    private boolean mostrarNewPermiso = false;
+    private boolean mostrarNewPermiso;
+    @Persist
     @Property
-    private boolean mostrarNuevoPermiso = false;
+    private boolean mostrarNuevoPermiso;
     
     @InjectComponent
     private Zone listaZone;
@@ -266,7 +270,7 @@ public class PagePerfil {
     @CommitAfter
     Object onSuccessFromPermisoEditForm() {
         session.saveOrUpdate(permiso);
-        return "PagePerfil";
+        return editPermisoZone.getBody();
     }
     
     

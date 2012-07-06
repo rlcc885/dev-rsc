@@ -1,23 +1,24 @@
+
 <div class="menu" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <ul id='menu-1' class='menu'>
         <li t:type="loop" source="OpcionesMenuPrincipal" value="opcion"  class="sub">
-        <t:if test = "tieneHijo">
-            <a href = "#" class="${clase}">
+            <t:if test = "tieneHijo">
+                <a href = "#" class="${clase}">
                 ${opcion.descmenu}
-            </a>
-            <ul>
-                <li t:type="loop" source="OpcionesMenu" value="opcion">
-                    <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
+                </a>
+                <ul>
+                    <li t:type="loop" source="OpcionesMenu" value="opcion">
+                        <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
                         ${opcion.descmenu}
-                    </a>
-                </li>
-            </ul>
+                        </a>
+                    </li>
+                </ul>
             <t:parameter name = "else">
                 <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
-                    ${opcion.descmenu}
+                ${opcion.descmenu}
                 </a>
             </t:parameter>
-        </t:if>
+            </t:if>
         </li>
         <li  class="sub">
             <a t:type="pagelink" page="Index">Salir</a>
