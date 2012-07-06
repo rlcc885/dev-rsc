@@ -6,6 +6,7 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Entidad_BK;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
@@ -23,7 +24,7 @@ public class CambioEntidad  extends GeneralPage
 {
     @Property
     @SessionState(create=false)
-    private Entidad_BK eue;
+    private Entidad eue;
 
     @Inject
     private Session session;
@@ -31,9 +32,9 @@ public class CambioEntidad  extends GeneralPage
     @SetupRender
     void initValues() {
         if (eue == null) {
-            Criteria c = session.createCriteria(Entidad_BK.class);
-            c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
-            eue = (Entidad_BK) c.list().get(0);
+            Criteria c = session.createCriteria(Entidad.class);
+            c.add(Restrictions.ne("estado", true));
+            eue = (Entidad) c.list().get(0);
         }
     }
 }
