@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @author Jurguen Zambrano
  */
 @Entity
-@Table(name = "MENUPERFIL")
+@Table(name = "RSC_MENUPERFIL")
 @NamedQueries({
     @NamedQuery(name = "Menuperfil.findAll", query = "SELECT m FROM Menuperfil m"),
     @NamedQuery(name = "Menuperfil.findByMenuId", query = "SELECT m FROM Menuperfil m WHERE m.menuperfilPK.menuId = :menuId"),

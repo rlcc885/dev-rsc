@@ -9,11 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
 @Entity
+@Table(name = "RSC_LEGAJO")
 public class Legajo {
 //	@Id
 //  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")

@@ -14,7 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-@Table(name = "REM_PERSONALES")
+@Table(name = "RSC_REM_PERSONALES")
 public class RemuneracionPersonal {
 
     @NonVisual
