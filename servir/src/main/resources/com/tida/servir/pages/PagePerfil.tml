@@ -86,7 +86,7 @@
         <t:if test = "mostrarNuevoPermiso">
             <h3>Asignar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
-                <t:form t:id="permisoInputForm">
+                <t:form t:id="permisoInputForm" t:zone="editPermisoZone">
                     <div class ="f-wrap">
                         <div class="f-left">
                             <fieldset>
@@ -132,7 +132,7 @@
         <t:if test = "mostrarEditPermiso">
             <h3>Editar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
-                <t:form t:id="permisoEditForm">
+                <t:form t:id="permisoEditForm"  t:zone="editPermisoZone">
                     <div class ="f-wrap">
                         <div class="f-left">
                             <fieldset>

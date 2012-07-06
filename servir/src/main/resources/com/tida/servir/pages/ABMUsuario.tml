@@ -1,3 +1,4 @@
+
 <html t:type="layout" title="Editar Usuarios"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -8,34 +9,35 @@
             Entidad U. Ejecutora: ${loggedUser.entidad.denominacion}
         </div>
     </t:if>
-    <h2>Usuarios</h2>
-        <div class="box f-wrap">
-            <h3>Busqueda de usuarios</h3>
-            <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">
-                <div style="display:block;">
-                    <t:errors/>
-                    <div id="filtrosnombres" class="f-wrap">
-                        <div class="f-left">
-                            <t:label for="identificacionBusqueda"/>
-                            <input t:type="TextField" t:id="identificacionBusqueda" size="30"/>
-                        </div>
-                        <div class="f-left">
-                            <t:label for="apellidosBusqueda"/>
-                            <input t:type="TextField" t:id="apellidosBusqueda" size="30"/>
-                        </div>
-                        <div class="f-left">
-                            <t:label for="nombresBusqueda"/>
-                            <input t:type="TextField" t:id="nombresBusqueda" size="30"/>
-                        </div>
-                    </div> <!-- filtrosnombres -->
-                </div> <!-- busquedas -->
-                <div class="actions f-right">
-                    <input id = "buscarsubmit" type="submit" value="Buscar" class="button f-right"/>
+    <h2>Administración de Usuarios</h2>
+    <h3>Busqueda de usuarios</h3>
+    <div class="box">
+        <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">
+            <div style="display:block;">
+                <t:errors/>
+                <div id="filtrosnombres" class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="identificacionBusqueda"/>
+                        <input t:type="TextField" t:id="identificacionBusqueda" size="30"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="apellidosBusqueda"/>
+                        <input t:type="TextField" t:id="apellidosBusqueda" size="30"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="nombresBusqueda"/>
+                        <input t:type="TextField" t:id="nombresBusqueda" size="30"/>
+                    </div>
+                </div> <!-- filtrosnombres -->
+            </div> <!-- busquedas -->
+            <div id="bouttons" class="f-right">
+                <input id="buscarsubmit" type="submit" value="Buscar" class="button f-right"/>
                     <!-- <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/> -->
-                </div>
-            </t:form>
-        </div> <!-- Zona filtros -->
-<br/>
+            </div>
+            <br class="clear" />
+        </t:form>
+    </div> <!-- Zona filtros -->
+    <br/>
     <t:zone t:id="tabla_usuario">    
         <div id = "tabla_usuario_grid" >
             <t:grid source="usuarios" rowsPerPage="30" t:add="organismo,Acciones" pagerPosition="bottom" row="u" exclude= "id, md5Clave,clave,apellidopaterno,apellidomaterno,rol">
@@ -50,16 +52,16 @@
                 </p:organismoCell>
                 <p:accionesCell>
                     <a t:type="pagelink" t:page="ABMUsuario" t:context="u.id" href="#">Editar</a>
-                    | <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
+                    | 
+                    <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                 </p:accionesCell>
             </t:grid>
         </div>
     </t:zone>
-
-    <div class="box f-wrap" id="box_u">
+    
+    <h3>Crear/Editar Usuarios</h3>
+    <div class="box" id="box_u">
         <t:envelope t:id="envelope"/>
-        <h3>Crear/Editar Usuarios</h3>
-
         <div id= "form_organismos" class="abmform">
             <t:zone t:id="entidadZone">
                 <t:if test="muestroOrganismos">
@@ -119,7 +121,9 @@
                         <input t:type="Checkbox" t:value="blanquearIntentosFallidos" />
                     </div>
                     <div class="f-left">
-                        <label>Ultimo cambio de clave: <strong>${usuario.ultimo_cambio_clave}</strong></label>
+                        <label>Ultimo cambio de clave: 
+                            <strong>${usuario.ultimo_cambio_clave}</strong>
+                        </label>
                     </div>
                     <br style="clear: both;" />
                     <div class="f-left">
@@ -131,16 +135,17 @@
                         <input t:type="Checkbox" t:value="reinitialisarpassword" />
                     </div>
                     <div class="f-left">
-                            <t:label for="rolUsuario"/>
-                            <t:select t:id="rolUsuario" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rscrol"/>
-                        </div>
-                    <div class="actions f-right clear" id="buttons_u">
+                        <t:label for="rolUsuario"/>
+                        <t:select t:id="rolUsuario" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rscrol"/>
+                    </div>
+                    <div class="f-right" id="buttons">
                         <input type="submit" value="Grabar" class="button f-right"/>
                         <t:actionlink t:id="reset">
                           Cancelar
                         </t:actionlink>
                         <!-- <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink> -->
-                    </div>    
+                    </div>
+                    <br class="clear" />
                 </t:form>
             </div>
         </t:zone>
