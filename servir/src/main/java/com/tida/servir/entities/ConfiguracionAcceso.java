@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "RSC_CONFIGURACIONACCESO")
 public class ConfiguracionAcceso implements Serializable {
-
     private Long id;
     private Long duracion_clave;
     private Long intentos_bloqueo;
