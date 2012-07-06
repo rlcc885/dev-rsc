@@ -101,11 +101,11 @@ public class CargoAsignado {
         this.ctd_per_superv = ctd_per_superv;
     }
 
-    public boolean getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
