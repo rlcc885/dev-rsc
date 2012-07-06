@@ -4,14 +4,128 @@
 
     <t:content>
         <div class="f-wrap">
-            <form t:type="form" t:id="formNivel" t:zone="SectorZone" class="f-left">
+          <t:zone t:id="NivelZone" class="f-left">
+            <form t:type="form" t:id="formNivelGobierno" t:zone="OrganizacionZone" class="f-left">
                 <div class="f-left">
-                    <t:label for="nivel_gobierno">Nivel de Gobierno</t:label>
-                    <input t:type="Select" t:id="nivel_gobierno" t:value="nivel_gobierno"
-                           model="beanNivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                    <t:label for="snivelGobierno">Nivel de Gobierno</t:label>
+                    <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno"
+                           model="NivelGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                           t:validate="required" t:zone="OrganizacionZone" t:blankOption="ALWAYS" />
+                </div>
+            </form>
+          </t:zone>
+            
+                 
+          <t:zone t:id="OrganizacionZone" class="f-left">
+            <t:if test="borganizacionestado">   
+            <form t:type="form" t:id="formOrganizacionEstado" t:zone="SectorZone" class="f-left">
+                <div class="f-left">
+                    <t:label for="sorganizacionestado">Organización Estado</t:label>
+                    <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado"
+                           model="OrganizacionEstado" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                            t:validate="required" t:zone="SectorZone" t:blankOption="ALWAYS" />
                 </div>
             </form>
+             </t:if>
+           </t:zone> 
+    
+           <t:zone t:id="SectorZone" class="f-left">
+             <t:if test="bsectorgobierno">    
+            <form t:type="form" t:id="formSectorGobierno" t:zone="TipoOrganismoZone" class="f-left">
+                <div class="f-left">
+                    <t:label for="ssectorgobierno">Sector</t:label>
+                    <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno"
+                           model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                           t:validate="required" t:zone="TipoOrganismoZone" t:blankOption="ALWAYS" />
+                </div>
+            </form>
+             </t:if>    
+           </t:zone>
+                
+            <t:zone t:id="TipoOrganismoZone" class="f-left">
+               <t:if test="btipoorganismo">    
+            <form t:type="form" t:id="formTipoOrganismo" t:zone="EntidadZone" class="f-left">
+                <div class="f-left">
+                    <t:label for="stipoOrganismo">Tipo Organismo</t:label>
+                    <input t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo"
+                           model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                           t:validate="required" t:zone="EntidadZone" t:blankOption="ALWAYS" />
+                </div>
+            </form>
+              </t:if>
+           </t:zone>
+            
+           <t:zone t:id="EntidadZone" class="f-left">        
+            <form t:type="form" t:id="formEntidad" t:zone="EsSubEntidadZone" class="f-left">
+                    <div class="f-left">
+                        <t:label for="sentidad">Entidad</t:label>
+                        <input t:type="Select" t:id="sentidad" t:value="sentidad"
+                            model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:zone="EsSubEntidadZone" t:blankOption="ALWAYS" />
+                    </div>
+            </form>            
+           </t:zone>
+            
+           <t:zone t:id="EsSubEntidadZone" class="f-left">        
+            <form t:type="form" t:id="formEsSubEntidad" t:zone="TipoSubEntidadZone" class="f-left">
+                    <div class="f-left">
+                        <t:label for ="sessubentidad">Es Sub-Entidad</t:label>
+                        <input t:type="Checkbox" t:id="sessubentidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                t:value="sessubentidad" />
+                    </div>
+ 
+            </form>            
+           </t:zone>   
+            
+                 
+           <t:zone t:id="TipoSubEntidadZone" class="f-left">
+                <t:if test="bessubentidad">  
+             <form t:type="form" t:id="formTipoSubEntidad" t:zone="SubEntidadZone" class="f-left">
+                    <div class="f-left">
+                        <t:label for="stipoSubEntidad">Tipo Sub-Entidad</t:label>
+                        <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad"
+                            model="TipoSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
+                    </div>
+             </form>
+                 </t:if>
+             </t:zone>
+            
+            <t:zone t:id="SubEntidadZone" class="f-left">
+                <t:if test="bessubentidad">  
+            <form t:type="form" t:id="formSubEntidad" t:zone="SubEntidadZone" class="f-left">
+                <div class="f-wrap"> 
+                    <div class="f-left">
+                        <t:label for="ssubentidad">Sub-Entidad</t:label>
+                        <input t:type="Select" t:id="ssubentidad" t:value="ssubentidad"
+                            model="SubEntidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
+                </div>
+                </div>
+            </form>
+                </t:if>
+           </t:zone>
+   
+            <div class="f-wrap">  
+            <div t:type="zone" t:id="botonesZone" >
+                    <t:form t:id="formulariobotones"  zone="botonesZone">
+
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button"/>
+                    </div>
+                    </t:form>
+
+            </div>
+           </div>
+                 
+            <!--
+
             <t:zone t:id="SectorZone" class="f-left">
                 <form t:type="form" t:id="formSector" t:zone="PliegoZone">
                     <t:errors/>
@@ -76,6 +190,8 @@
                 </t:if>
 
             </t:zone>
+            
+            -->
         </div>
     </t:content>
 </html>
