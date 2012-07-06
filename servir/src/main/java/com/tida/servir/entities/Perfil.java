@@ -15,7 +15,7 @@ import javax.persistence.*;
  * @author Jurguen Zambrano
  */
 @Entity
-@Table(name = "PERFIL")
+@Table(name = "RSC_PERFIL")
 @NamedQueries({
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
     @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id"),

@@ -14,6 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
+@Table(name = "RSC_PUBLICACION")
 public class Publicacion implements Serializable {
 
     public static String CLASE_PUBLICACION = "PUBLICACION";
