@@ -111,13 +111,13 @@
                     <t:form t:id="formulariobotones"  zone="botonesZone">
 
                     <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button"/>
+                        <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button" t:mixins="confirm" />
                     </div>
                     </t:form>
 
