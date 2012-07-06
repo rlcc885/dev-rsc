@@ -14,12 +14,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "RSC_MENU")
 @NamedQueries({
-    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM RSC_Menu m"),
-    @NamedQuery(name = "Menu.findById", query = "SELECT m FROM RSC_Menu m WHERE m.id = :id"),
-    @NamedQuery(name = "Menu.findByDescmenu", query = "SELECT m FROM RSC_Menu m WHERE m.descmenu = :descmenu"),
-    @NamedQuery(name = "Menu.findByNivel", query = "SELECT m FROM RSC_Menu m WHERE m.nivel = :nivel"),
-    @NamedQuery(name = "Menu.findByPagename", query = "SELECT m FROM RSC_Menu m WHERE m.pagename = :pagename"),
-    @NamedQuery(name = "Menu.findByOrden", query = "SELECT m FROM RSC_Menu m WHERE m.orden = :orden")})
+    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
+    @NamedQuery(name = "Menu.findById", query = "SELECT m FROM Menu m WHERE m.id = :id"),
+    @NamedQuery(name = "Menu.findByDescmenu", query = "SELECT m FROM Menu m WHERE m.descmenu = :descmenu"),
+    @NamedQuery(name = "Menu.findByNivel", query = "SELECT m FROM Menu m WHERE m.nivel = :nivel"),
+    @NamedQuery(name = "Menu.findByPagename", query = "SELECT m FROM Menu m WHERE m.pagename = :pagename"),
+    @NamedQuery(name = "Menu.findByOrden", query = "SELECT m FROM Menu m WHERE m.orden = :orden")})
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpMenuSinAsignarPorPerfil",
     query = "CALL SP_MENUSINASIGNARPORPERFIL(?,:in_perfil_id)",

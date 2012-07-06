@@ -8,6 +8,7 @@ package com.tida.servir.entities;
  * Define permisos según el usuario
  * @author ale
  */
+@Table(name = "RSC_PERMISOS")
 public class Permisos {
 
     /**

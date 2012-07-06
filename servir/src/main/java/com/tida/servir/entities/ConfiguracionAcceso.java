@@ -1,5 +1,6 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "RSC_CONFIGURACIONACCESO")
-public class ConfiguracionAcceso {
+public class ConfiguracionAcceso implements Serializable {
 
     private Long id;
     private Long duracion_clave;
