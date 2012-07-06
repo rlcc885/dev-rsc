@@ -49,22 +49,26 @@ public class Permisos {
     public static String paginaInicial(Usuario u) {
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
          || u.getTipo_usuario().equals(Usuario.OPERADORANALISTA)) {
-            return "CambioEntidad";
+           // return "CambioEntidad";
+            return "Alerta";
         }
 
         if ( u.getTipo_usuario().equals(Usuario.ADMINLOCAL) ||
                 u.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
-            return "ABMUsuario";
+            //return "ABMUsuario";
+            return "Alerta";
         }
 
         if (u.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) {
-            return "ABMDatoAuxiliar";
+            //return "ABMDatoAuxiliar";
+            return "Alerta";
         }
 
         if (u.getTipo_usuario().equals(Usuario.OPERADORABMLOCAL)
                 || u.getTipo_usuario().equals(Usuario.OPERADORLECTURALOCAL)) {
             //return "Busqueda";
-            return "ABMDatoAuxiliar";
+            //return "ABMDatoAuxiliar";
+            return "Alerta";
         }
         
         if(u.getTipo_usuario().equals(Usuario.TRABAJADOR)){
