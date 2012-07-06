@@ -4,6 +4,8 @@
  */
 package com.tida.servir.entities;
 
+import javax.persistence.Table;
+
 /**
  * Define permisos según el usuario
  * @author ale
