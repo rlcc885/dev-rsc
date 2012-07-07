@@ -166,7 +166,8 @@
                         </div>
                     </div>
                     <div id="bouttons" class="f-right">
-                        <input type="submit" value="Grabar Permiso" class="button f-right"/>
+<!--                        <input type="submit" value="Grabar Permiso" class="button f-right"/>-->
+                        <input t:type="Submit" t:id="clear" value="Grabar Permiso" t:mixins="confirm" class="button f-right"/>  
                         <t:actionlink t:id="resetEditPermiso" t:mixins="confirm" class="button f-right">
                             Cancelar
                         </t:actionlink>
