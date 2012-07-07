@@ -270,7 +270,11 @@ public class PagePerfil {
     @CommitAfter
     Object onSuccessFromPermisoEditForm() {
         session.saveOrUpdate(permiso);
-        return editPermisoZone.getBody();
+        mostrarPermiso = true;
+        mostrarNewPermiso = true;
+        mostrarEditPermiso = false;
+        mostrarNuevoPermiso = false;
+        return zonasPermiso();
     }
     
     
