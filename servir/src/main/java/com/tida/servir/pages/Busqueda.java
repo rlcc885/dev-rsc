@@ -162,6 +162,9 @@ public class Busqueda extends GeneralPage {
     @Persist
     @Property
     private Date fechadeingresohastaa;
+    @Property
+    @Persist
+    private DatoAuxiliar valdocumentoide;
     
     
     @Component(id = "xxx")
@@ -181,6 +184,12 @@ public class Busqueda extends GeneralPage {
 
     public List<String> getSexos() {
         return Helpers.getValorTablaAuxiliar("SEXO", session);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
 //    public List<String> getDiscapacidades() {
@@ -293,6 +302,9 @@ public class Busqueda extends GeneralPage {
         }
         if (valformacionprofe != null && !valformacionprofe.equals("")) {            
             c.add(Restrictions.like("trabajador.formacionprofesional", valformacionprofe));            
+        }
+        if (valdocumentoide != null && !valdocumentoide.equals("")) {            
+            c.add(Restrictions.like("trabajador.documentoidentidad", valdocumentoide));            
         }
 
 //        if (valRegimenContratacion != null) {
