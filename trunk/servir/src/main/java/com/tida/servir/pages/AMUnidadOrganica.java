@@ -124,8 +124,8 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private boolean mostrar;    
-    @Component(id = "formlistaunidad")
-    private Form formlistaunidad;
+//    @Component(id = "formlistaunidad")
+//    private Form formlistaunidad;
     private int num,mostra,num2;
     @Persist
     @Property
@@ -766,6 +766,21 @@ public class AMUnidadOrganica extends GeneralPage {
 
         return mu;
     }
-    
+   
+   void onSelectedFromEli(UnidadOrganica d) {        
+        errorBorrar = null;
+        d.setEstado(UnidadOrganica.ESTADO_BAJA);
+        session.saveOrUpdate(d);
+        //new Logger().loguearOperacion(session, loggedUser, String.valueOf(d.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+        //onSelectedFromReset();
+        envelope.setContents("Unidad Orgánica Eliminada");
+    }
+   
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioxx() { 
+        
+        return zonas();
+    }
 
 }

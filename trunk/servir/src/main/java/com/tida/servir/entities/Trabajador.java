@@ -112,7 +112,17 @@ public class Trabajador implements Serializable // extends Persona
     private String nroRUC;
     @NonVisual
     private String codigoOSCE;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar documentoidentidad;
 
+    public DatoAuxiliar getDocumentoidentidad() {
+        return documentoidentidad;
+    }
+
+    public void setDocumentoidentidad(DatoAuxiliar documentoidentidad) {
+        this.documentoidentidad = documentoidentidad;
+    }
     
     public DatoAuxiliar getFormacionprofesional() {
         return formacionprofesional;

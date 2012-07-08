@@ -59,6 +59,10 @@
                                 <t:select t:id="tipoDocumento" model="tipoDocumentosIdModel" />
 
                             </div>-->
+                             <div class="filtros">
+                                Regimen Laboral
+                                <select t:type="Select" t:id="documentoide" t:value="valdocumentoide" model="documentoide" />
+                            </div>
                             <div class="f-left">
                                 <!-- t:validate="required,minlength=1" -->
                                 <t:label for="nroDocumento"/>
@@ -129,7 +133,7 @@
                                t:value="fechadeingresodesdea" size="30" />
 
                                 </div>
-                            </div>
+                            </div>                           
                             <div class="filtros" id="fechamenora">                                
                                 <div class="hssemfecha">
                                    Fec. de Ingreso a la Institu. (hasta)
