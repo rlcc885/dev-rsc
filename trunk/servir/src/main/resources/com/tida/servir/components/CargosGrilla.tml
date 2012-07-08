@@ -14,14 +14,16 @@
         </p:den_cargoCell>
 
         <p:accionesCell>
-       <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
-       <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
+        <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
+        <!--
          <t:if test = "editable">
             <t:if test="evaluodesasignar">
-                <a t:type="pagelink" t:class="desasignar" t:page="DesasignarCargo" t:context="ca.id" href="#"> | Desasignar</a>
-
+                <a t:type="pagelink" t:class="desasignar" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> |Desasignar</a>
             </t:if>
-        </t:if>
+        </t:if>-->
+        <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> |Asignar</a>
+       <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
+        
 
 
         </p:accionesCell>

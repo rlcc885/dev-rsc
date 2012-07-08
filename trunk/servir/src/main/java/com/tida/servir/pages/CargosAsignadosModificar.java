@@ -27,18 +27,18 @@ public class CargosAsignadosModificar  extends GeneralPage {
     private Session session;
 
     @PageActivationContext
-    private CargoAsignado _ca;
+    private CargoAsignado ca;
 
     @Property
     @SessionState
     private Entidad_BK _oi;
 
-    public CargoAsignado get_Ca() {
-        return _ca;
+    public CargoAsignado getCa() {
+        return ca;
     }
 
-    public void set_Ca(CargoAsignado _ca) {
-        this._ca = _ca;
+    public void setCa(CargoAsignado ca) {
+        this.ca = ca;
     }
 
   
@@ -57,21 +57,21 @@ public class CargosAsignadosModificar  extends GeneralPage {
     // zonas relacionadas al ABM de Cargos
     
 
-    @InjectComponent
-    private Zone remuneracionesPersonalesZone;
-
-
-    @InjectComponent
-    private Zone evaluacionesPersonalesZone;
-
-    @InjectComponent
-    private Zone ausLicPersonalesZone;
+//    @InjectComponent
+//    private Zone remuneracionesPersonalesZone;
+//
+//
+//    @InjectComponent
+//    private Zone evaluacionesPersonalesZone;
+//
+//    @InjectComponent
+//    private Zone ausLicPersonalesZone;
 
 
      @SetupRender
     void initializeValue()
     {
-           trabajador = _ca.getTrabajador();
+           trabajador = ca.getTrabajador();
     }
     
 }

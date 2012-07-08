@@ -44,6 +44,7 @@ public class CargosGrilla {
     @Parameter
     @Property
     private Boolean busqueda; // si no es una búsqueda, sólo puede eliminar.
+    
 
     @Property
     private CargoAsignado ca;

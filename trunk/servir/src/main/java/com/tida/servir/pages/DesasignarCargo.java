@@ -29,7 +29,7 @@ public class DesasignarCargo extends GeneralPage {
     private Session session;
     @Property
     @PageActivationContext
-    @Persist
+    //@Persist
     private CargoAsignado ca;
     @Property
     @SessionState
