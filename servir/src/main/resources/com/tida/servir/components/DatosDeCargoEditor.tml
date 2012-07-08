@@ -24,20 +24,14 @@
                                 <label>${actual.den_cargo}</label>
                             </div>
                         </div>
+                <!--
                         <div class="datosdecargoeditor">
                             <label><b>Régimen Laboral /Contractual:</b></label>
                             <div class="f-left">
                                 <label>${actual.regimenlaboral.getValor()}</label>
                             </div>
-                        </div>
-                        <div class="datosdecargoeditor">
-                            <label><b>Horas Semanales:</b></label>
-                            <div class="f-left">
-                                <label>${actual.horas_x_sem}</label>
-                            </div>
-                        </div>
-
-                        <div class="datosdecargoeditor">
+                        </div>-->
+                          <div class="datosdecargoeditor">
                             <label><b>Estado:</b></label>
                             <div class="f-left">
                                 <label>${actual.estado}</label>
@@ -52,7 +46,7 @@
                         </div>
                 -->
                         <form t:type="form" t:id="formulariodatosdecargo" >
-                            <div class="datosdecargoeditor">
+                            <!--<div class="datosdecargoeditor">
                                 <label><b>Habilitación Profesional:</b></label>
                                 <div class="datoperso_req_hab_profesional">
                                     <t:checkbox t:id="req_hab_profesional" value="actual.req_hab_profesional" size="30" disabled = "true"/>
@@ -63,7 +57,7 @@
                                 <div class="datoperso_req_hab_profesional">
                                     <t:checkbox t:id="dec_jurada_byr" value="actual.dec_jurada_byr" size="30" disabled = "true"/>
                                 </div>
-                            </div>
+                            </div>-->
                         </form>
                 <!-- </table> -->
              </div> <!-- Datos del cargo -->
