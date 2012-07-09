@@ -66,14 +66,50 @@
                     <h3> Datos del Cargo Asignado</h3>
                     <form t:type="form" t:id="formulariodatosdecargoasignado" t:zone="datosDeCargoZone">
                         <t:errors/>
-                        <t:envelope t:id="envelope"/>
-                        <table>
-                            <div class="datosdecargoeditor">
+                        <t:envelope t:id="envelope"/>                        
+                            <div class="f-left">
+                                <label><b>Tipo de Vinculo:</b></label>
+                                <div class="f-left">
+                                    <input t:type="Select" t:id="tipovinculo" t:value="actual_asignado.tipovinculo" model="tipoVinculo" />
+                                </div>
+                            </div>
+                            <div class="f-left">
+                                <label><b></b></label>
+                                <div class="f-left">
+                                    
+                                </div>
+                            </div>
+                            <div class="f-left">
                                 <label><b>Fecha de Inicio:</b></label>
                                 <div class="f-left">
-                                    <input t:type="DateInput" t:id="fec_inicio" t:date="actual_asignado.fec_inicio"
-                                    t:validate="required" t:label="Fecha de Inicio" size="10" disabled = "noeditable" t:zone="datosDeCargoZone"/>
+                                    <input t:type="DateField" t:id="fec_inicio" t:value="actual_asignado.fec_inicio"
+                                    t:validate="required" size="30" />
                                 </div>
+                            </div>
+                            <div class="f-left">
+                                <label><b>Fecha de Fin:</b></label>
+                                <div class="f-left">
+                                    <input t:type="DateField" t:id="fec_fin" t:value="actual_asignado.fec_fin"
+                                           onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" size="30"/>
+                                   </div>
+                            </div>                  
+                            <div class="f-left">
+                                <label><b>Motivo de Cese:</b></label>
+                                <div class="f-left">
+                                    <input t:type="TextField" t:id="motivo_cese" t:value="actual_asignado.motivo_cese" 
+                                    size="30" disabled = "noeditable" t:zone="datosDeCargoZone"/>
+                                </div>
+                            </div>
+                     </form>
+                     
+                            
+
+                            
+                        
+                        <!--
+                        <table>
+                            <div class="datosdecargoeditor">
+                                
                             </div>
                             <div class="datosdecargoeditor">
                                 <label><b>Estado:</b></label>
@@ -91,18 +127,10 @@
                             </div>
                             <t:if test="asignadoBaja">
                                 <div class="datosdecargoeditor">
-                                    <label><b>Fecha de Fin:</b></label>
-                                    <div class="f-left">
-                                        <input t:type="DateInput" t:id="fec_fin" t:date="actual_asignado.fec_fin"
-                                                t:label="Fecha de Fin" size="10" disabled = "noeditable" t:zone="datosDeCargoZone"/>
-                                    </div>
+                                    
                                 </div>
                                 <div class="datosdecargoeditor">
-                                    <label><b>Motivo de Cese:</b></label>
-                                    <div class="f-left">
-                                        <input t:type="TextField" t:id="motivo_cese" t:value="actual_asignado.motivo_cese" 
-                                        size="30" disabled = "noeditable" t:zone="datosDeCargoZone"/>
-                                    </div>
+                                    
                                 </div>
                             </t:if>
                             <t:if test="noeditable" negate="true">
@@ -110,7 +138,20 @@
                                     <input type="submit" value="Actualizar" class="button f-right"/>
                                 </div>
                             </t:if>
-                        </table>
+                            <t:if test="noeditable" negate="true">
+                                <div class="actions f-right">
+                                    <input t:type="Submit" t:id="save" value="Guardar" class="button"/>
+                                </div>
+                            </t:if>
+                        </table>-->
+                    
+                    <form t:type="form" t:id="formulariobotones" t:zone="datosDeCargoZone">
+                        <t:if test="noeditable" negate="true">
+                                <div class="actions f-right">
+                                    <input t:type="Submit" t:id="savexx" value="Guardar Datos" class="button"/>
+                                    
+                                </div>
+                            </t:if>
                     </form>
                 </div>
             </t:zone>

@@ -150,7 +150,7 @@ public class AsignarNuevoCargo extends GeneralPage {
         cargoAsignado.setCtd_per_superv(ctd_per_superv);
         cargoAsignado.setTrabajador(trabajador);
         cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
-        cargoAsignado.setTipoVinculo(tipoVinculo);
+        //cargoAsignado.setTipoVinculo(tipoVinculo);
         session.merge(cargoAsignado);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(cargoAsignado.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO_ASIGNADO);
 

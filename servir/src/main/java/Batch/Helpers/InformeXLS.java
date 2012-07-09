@@ -2192,7 +2192,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(ca.getMotivo_cese()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoVínculo", InformeXLS.leoCampo(ca.getTipoVinculo()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoVínculo", InformeXLS.leoCampo(ca.getTipoVinculo()), errores, session));
                 escribir.println();
             }
             escribir.close();

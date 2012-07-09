@@ -181,7 +181,7 @@ public class CopiadorEntidades {
         destino.setMotivo_cese(CopiadorEntidades.verifacionNull(origen.getMotivo_cese()));
         if(origen.getRemuneracionesPersonales() != null)
             destino.setRemuneracionesPersonales(origen.getRemuneracionesPersonales());
-        destino.setTipoVinculo(CopiadorEntidades.verifacionNull(origen.getTipoVinculo()));
+        //destino.setTipovinculo(CopiadorEntidades.verifacionNull(origen.getTipovinculo()));
         destino.setTrabajador(origen.getTrabajador());
     }
     
