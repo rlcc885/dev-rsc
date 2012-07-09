@@ -30,8 +30,8 @@ public class DatosDeCargoEditor {
     @Property
     private String _zone;
 
-    @Property
-    @Persist
+    @Property    
+    @Parameter
     private Cargoxunidad actual;
 
     @Property
@@ -52,8 +52,8 @@ public class DatosDeCargoEditor {
     @Inject
     private Session session;
     
-    @Component(id = "formulariodatosdecargoasignado")
-    private Form formularioDatosDeCargoAsignado;
+    @Component(id = "formulariodatos")
+    private Form formulariodatos;
 
     @InjectComponent
     private Zone datosDeCargoZone;
@@ -65,6 +65,8 @@ public class DatosDeCargoEditor {
     private Envelope envelope;
     
     private int elemento=0;
+    @InjectComponent
+    private Zone muestraZone;
     
     public boolean getNoEditable() {
         return !getEditable();
@@ -146,18 +148,25 @@ public class DatosDeCargoEditor {
     @CommitAfter
     Object onSuccessFromFormulariobotones(){
         
+        if(actual_asignado.getFec_fin()==null){
+           
+                formulariodatos.recordError("Debe ingresar el motivo de Cese");
+                return muestraZone.getBody();
+
+        }
+        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
         //envelope.setContents(String.valueOf(actual_asignado.getFec_fin())+String.valueOf(actual_asignado.getFec_inicio()));   
         return datosDeCargoZone.getBody();
     }
     
-    @Log
-    void onValidateFromFormulariobotones() {
-        if(actual_asignado.getFec_fin()!=null){
-            if(actual_asignado.getMotivo_cese()==null)
-                formularioDatosDeCargoAsignado.recordError("Debe ingresar el motivo de Cese");
-        }
-        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
-    }
+//    @Log
+//    void onValidateFromFormulariobotones() {
+//        if(actual_asignado.getFec_fin()!=null){
+//            if(actual_asignado.getMotivo_cese()==null)
+//                formularioDatosDeCargoAsignado.recordError("Debe ingresar el motivo de Cese");
+//        }
+//        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+//    }
      
     
 /*	@Log

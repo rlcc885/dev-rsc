@@ -61,11 +61,17 @@
                         </form>
                 <!-- </table> -->
              </div> <!-- Datos del cargo -->
-              <t:zone t:id="datosDeCargoZone">
+             
+              
                 <div id = "DatosDeCargoAsignado">
                     <h3> Datos del Cargo Asignado</h3>
+                    <t:zone t:id="muestraZone">
+                        <form t:type="form" t:id="formulariodatos" t:zone="muestraZone">
+                                <t:errors/>
+                        </form>
+                     </t:zone>
+                    <t:zone t:id="datosDeCargoZone">
                     <form t:type="form" t:id="formulariodatosdecargoasignado" t:zone="datosDeCargoZone">
-                        <t:errors/>
                         <t:envelope t:id="envelope"/>                        
                             <div class="f-left">
                                 <label><b>Tipo de Vinculo:</b></label>
@@ -90,7 +96,7 @@
                                 <label><b>Fecha de Fin:</b></label>
                                 <div class="f-left">
                                     <input t:type="DateField" t:id="fec_fin" t:value="actual_asignado.fec_fin"
-                                           onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" size="30"/>
+                                            size="30"/>
                                    </div>
                             </div>                  
                             <div class="f-left">
@@ -153,8 +159,9 @@
                                 </div>
                             </t:if>
                     </form>
+                   </t:zone>
                 </div>
-            </t:zone>
+            
         </div>
     </t:content>
 </html>
