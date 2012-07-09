@@ -53,7 +53,7 @@ public class TrabajadorNuevo  extends GeneralPage
     private Usuario loggedUser;
 
     @InjectPage
-    private TrabajadorModificar trabajadormodificar;
+    private TrabajadorPersonal trabajadormodificar;
 
     @Component(id = "formulariotrabajadornuevolegajocargo")
     private Form formulariotrabajadornuevolegajocargo;

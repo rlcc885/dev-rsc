@@ -26,47 +26,51 @@
 
     <!-- the tabs -->
 
-    <div>
+        <div>
         <ul id="tabs-Personales" class="tabs">
             <li><a href="#"> Personales</a></li>
-            <li><a href="#"> Familia</a></li>
+            <li><a href="#"> Datos</a></li>
+            <!--<li><a href="#"> Familia</a></li>
             <li><a href="#"> Formación</a></li>
-            <li><a href="#"> Antecedentes Laborales</a></li>
+            <li><a href="#"> Antecedentes Laborales</a></li>            
             <li><a href="#"> Producción Intelectual</a></li>
             <li><a href="#"> Méritos y Deméritos</a></li>
             <t:if test= "hayCargosAsignados">
                 <li><a href="#"> Remuneraciones</a></li>
                 <li><a href="#"> Evaluaciones</a></li>
                 <li><a href="#"> Ausencias y Licencias</a></li>
-            </t:if>
+            </t:if>-->
         </ul>
 
 
 
-		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB -->
+		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
 		
         <div class= "pane" id='datosPersonales' name='datosPersonales'>
               
                 <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual" />
               
         </div>
-
+        <div class= "pane" id='familiares' name='familiares'>
+            
+                    sdsd
+	</div>
 		<!-- FIN / Zona de datosPersonales, correspondientes al TAB -->
        
 
 
 		<!-- INICIO / Zona de familiares, correspondientes al TAB -->
-		
+	<!--	
         <div class= "pane" id='familiares' name='familiares'>
             
                     <t:FamiliaresEditor t:id="FamiliaresEditor" actual="actual"/>
-	</div>
+	</div>-->
 
 		<!-- FIN / Zona de familiares, correspondientes al TAB -->
 
 
 
-
+        <!--
         <div class= "pane" id="formacion" name="formacion" style="display: block;">
         
             <t:zone t:id="instruccionZone">
@@ -132,10 +136,12 @@
                 <t:MeritosDemeritosEditor t:id="demeritosEditor" actual= "actual"
                 clase = "ClaseDeMeritos" zone="demeritosZone"/>
             </t:zone>
-        </div>
+        </div>-->
+        
+        <!--
          <t:if test= "hayCargosAsignados">
 
-            <!-- TAB - Remuneraciones del Cargo -->
+           
             <div class="pane"  id='remuneraciones' name='remuneraciones'>
               <t:zone t:id="remuneracionesPersonalesZone">
                     <t:RemuneracionesPersonalesEditor  t:id="remuneracionesPersonalesEditor"  actual_asignado="ca"
@@ -145,7 +151,7 @@
 
 
             <div class="pane"  id='evaluaciones' name='evaluaciones'>
-                   <!-- TAB - Evaluaciones del Cargo -->
+                   <
                   <t:zone t:id="evaluacionesPersonalesZone">
                         <t:EvaluacionesPersonalesEditor  t:id="evaluacionesPersonalesEditor"  actual_asignado="ca"
                         zone="evaluacionesPersonalesZone" readOnly = "true"/>
@@ -153,17 +159,17 @@
             </div>
 
             <div class="pane"  id='auslics' name='auslics'>
-                   <!-- TAB - Ausencias y Licencias del Cargo -->
+                   
                   <t:zone t:id="ausLicPersonalesZone">
                         <t:AusLicPersonalesEditor  t:id="ausLicPersonalesEditor"  actual_asignado="ca"
                             zone="ausLicPersonalesZone" readOnly = "true"/>
                   </t:zone>
             </div>
-         </t:if> <!-- Hay cargos asignados -->
-    </div>  <!-- pane persona-->
+         </t:if> -->
+    </div>  
 
 
-    </div> <!-- wrapper -->
+    </div>
 
      <script>
         <!--

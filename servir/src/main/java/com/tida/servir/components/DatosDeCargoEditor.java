@@ -3,9 +3,12 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
+import com.tida.servir.pages.Busqueda;
 import helpers.Constantes;
 import helpers.Helpers;
+import helpers.Logger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.tapestry5.BindingConstants;
@@ -25,18 +28,18 @@ import org.hibernate.Session;
  */
 public class DatosDeCargoEditor {
 
-	@SuppressWarnings("unused")
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    @Property
-    private String _zone;
-
+	//@SuppressWarnings("unused")
+//    @Parameter(required = true, principal = true, autoconnect = true)
+//    @Property
+//    private String _zone;
+    @SuppressWarnings("unused")
     @Property    
-    @Parameter
+    @Parameter(required = true, principal = true, autoconnect = true)
     private Cargoxunidad actual;
 
+    @SuppressWarnings("unused")
     @Property
-    @Parameter
-    @Persist
+    @Parameter(required = true, principal = true, autoconnect = true)
     private CargoAsignado actual_asignado;
     
     @Property
@@ -53,8 +56,8 @@ public class DatosDeCargoEditor {
     @Inject
     private Session session;
     
-    @Component(id = "formulariodatos")
-    private Form formulariodatos;
+    @Component(id = "formulariodatosdecargoasignado")
+    private Form formulariodatosdecargoasignado;
 
     @InjectComponent
     private Zone datosDeCargoZone;
@@ -66,8 +69,29 @@ public class DatosDeCargoEditor {
     private Envelope envelope;
     
     private int elemento=0;
-    @InjectComponent
-    private Zone muestraZone;
+    
+    @Property
+    @Persist
+    private String valmotivo;
+    @Persist
+    @Property
+    private Date valfec_inicio;
+    @Persist
+    @Property
+    private Date valfec_fin;
+    @Property
+    @Persist
+    private DatoAuxiliar valtipovinculo;
+    
+    @Log
+    @SetupRender
+    private void inicio() {
+        valmotivo=actual_asignado.getMotivo_cese();
+        valfec_inicio=actual_asignado.getFec_inicio();
+        valfec_fin=actual_asignado.getFec_fin();
+        valtipovinculo=actual_asignado.getTipovinculo();        
+    }
+    
     
     public boolean getNoEditable() {
         return !getEditable();
@@ -128,43 +152,101 @@ public class DatosDeCargoEditor {
         return estados;
     }    
     
+    void onSelectedFromSave() {        
+        elemento=1;   
+    }
+    
+    void onSelectedFromCancel() {        
+        elemento=2;   
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromformulariodatosdecargoasignado(){
         if(elemento==2){
-            envelope.setContents("Primero");
+            return Busqueda.class;
         }
-        else{
-            envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
-        }
-        
-        return datosDeCargoZone.getBody();
-    }
-    
-     void onSelectedFromSave() {        
-         elemento=2;
-    }     
-                 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormulariobotones(){
-        
-        if(actual_asignado.getFec_fin()==null){
-           
-                formulariodatos.recordError("Debe ingresar el motivo de Cese");
+        else{         
+            if(valfec_fin!=null){
+                if(valmotivo != null && !valmotivo.equals("")){
+                    if (valfec_fin.before(valfec_inicio)) {
+                        formulariodatosdecargoasignado.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                        return datosDeCargoZone.getBody();
+                    }
+                    if(valfec_inicio.after(new Date())) {
+                        formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                        return datosDeCargoZone.getBody();
+                    }
+                    registrar(false);
+                    return datosDeCargoZone.getBody();
+                }
+                else{
+                    formulariodatosdecargoasignado.recordError("Debe ingresar Motivo Cese");
+                    return datosDeCargoZone.getBody();
+                }       
+            } 
+            if(valmotivo != null && !valmotivo.equals("")){        
+                if(valfec_fin!=null){
+                    if (valfec_fin.before(valfec_inicio)) {
+                        formulariodatosdecargoasignado.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                        return datosDeCargoZone.getBody();
+                    }
+                    if(valfec_inicio.after(new Date())) {
+                        formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                        return datosDeCargoZone.getBody();
+                    }
+                    registrar(false);
+                    return datosDeCargoZone.getBody();
+                }
+                else{
+                    formulariodatosdecargoasignado.recordError("Debe seleccionar Fecha Finalización");
+                    return datosDeCargoZone.getBody();
+                }       
+            }
+            if(valfec_inicio.after(new Date())) {
+                formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                 return datosDeCargoZone.getBody();
-
+            }
+            registrar(true);
         }
-        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
-        //envelope.setContents(String.valueOf(actual_asignado.getFec_fin())+String.valueOf(actual_asignado.getFec_inicio()));   
         return datosDeCargoZone.getBody();
     }
     
+    void registrar(Boolean e){
+       actual_asignado.setMotivo_cese(valmotivo);
+       actual_asignado.setFec_inicio(valfec_inicio);
+       actual_asignado.setFec_fin(valfec_fin);
+       actual_asignado.setTipovinculo(valtipovinculo);
+       actual_asignado.setEstado(e);
+       session.saveOrUpdate(actual_asignado);
+       //new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+       session.flush();
+       formulariodatosdecargoasignado.clearErrors();
+       envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+    }
+    
+//     void onSelectedFromSave() {        
+//         elemento=2;
+//    }     
+                 
 //    @Log
-//    void onValidateFromFormulariobotones() {
-//        if(actual_asignado.getFec_fin()!=null){
-//            if(actual_asignado.getMotivo_cese()==null)
-//                formularioDatosDeCargoAsignado.recordError("Debe ingresar el motivo de Cese");
+//    @CommitAfter
+//    Object onSuccessFromFormulariobotones(){
+//        
+////        if(actual_asignado.getMotivo_cese()==null){           
+////                formulariodatosdecargoasignado.recordError("Debe ingresar el motivo de Cese");
+////                return datosDeCargoZone.getBody();
+////
+////        }
+//        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+//        //envelope.setContents(String.valueOf(actual_asignado.getFec_fin())+String.valueOf(actual_asignado.getFec_inicio()));   
+//        return datosDeCargoZone.getBody();
+//    }
+//    
+//    @Log
+//    void onValidateFromformulariodatosdecargoasignado() {
+//        if(valmotivo==null){            
+//                formulariodatosdecargoasignado.recordError("Debe ingresar el motivo de Cese");
 //        }
 //        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
 //    }

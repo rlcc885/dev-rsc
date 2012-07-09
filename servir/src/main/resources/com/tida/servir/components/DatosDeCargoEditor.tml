@@ -65,18 +65,14 @@
               
                 <div id = "DatosDeCargoAsignado">
                     <h3> Datos del Cargo Asignado</h3>
-                    <t:zone t:id="muestraZone">
-                        <form t:type="form" t:id="formulariodatos" t:zone="muestraZone">
-                                <t:errors/>
-                        </form>
-                     </t:zone>
-                    <t:zone t:id="datosDeCargoZone">
+                     <t:zone t:id="datosDeCargoZone">
                     <form t:type="form" t:id="formulariodatosdecargoasignado" t:zone="datosDeCargoZone">
+                        <t:errors/>
                         <t:envelope t:id="envelope"/>                        
                             <div class="f-left">
                                 <label><b>Tipo de Vinculo:</b></label>
                                 <div class="f-left">
-                                    <input t:type="Select" t:id="tipovinculo" t:value="actual_asignado.tipovinculo" model="tipoVinculo" />
+                                    <input t:type="Select" t:id="tipovinculo" t:value="valtipovinculo" model="tipoVinculo" />
                                 </div>
                             </div>
                             <div class="f-left">
@@ -88,23 +84,27 @@
                             <div class="f-left">
                                 <label><b>Fecha de Inicio:</b></label>
                                 <div class="f-left">
-                                    <input t:type="DateField" t:id="fec_inicio" t:value="actual_asignado.fec_inicio"
+                                    <input t:type="DateField" t:id="fec_inicio" t:value="valfec_inicio"
                                     t:validate="required" size="30" />
                                 </div>
                             </div>
                             <div class="f-left">
-                                <label><b>Fecha de Fin:</b></label>
+                                <label><b>Fecha de Finalización:</b></label>
                                 <div class="f-left">
-                                    <input t:type="DateField" t:id="fec_fin" t:value="actual_asignado.fec_fin"
+                                    <input t:type="DateField" t:id="fec_fin" t:value="valfec_fin"
                                             size="30"/>
                                    </div>
                             </div>                  
                             <div class="f-left">
                                 <label><b>Motivo de Cese:</b></label>
                                 <div class="f-left">
-                                    <input t:type="TextField" t:id="motivo_cese" t:value="actual_asignado.motivo_cese" 
-                                    size="30" disabled = "noeditable" t:zone="datosDeCargoZone"/>
+                                    <input t:type="TextField" t:id="motivo_cese" t:value="valmotivo" 
+                                    size="30" t:zone="datosDeCargoZone"/>
                                 </div>
+                            </div>
+                            <div class="actions f-right">
+                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/> 
+                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>                                    
                             </div>
                      </form>
                      
@@ -150,7 +150,7 @@
                                 </div>
                             </t:if>
                         </table>-->
-                    
+                    <!--
                     <form t:type="form" t:id="formulariobotones" t:zone="datosDeCargoZone">
                         <t:if test="noeditable" negate="true">
                                 <div class="actions f-right">
@@ -158,7 +158,7 @@
                                     
                                 </div>
                             </t:if>
-                    </form>
+                    </form>-->
                    </t:zone>
                 </div>
             

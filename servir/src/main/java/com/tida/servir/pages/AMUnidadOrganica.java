@@ -134,6 +134,12 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     private Zone nivelOrga;
 
+    @Log
+    @SetupRender
+    private void inicio() {
+        ubicacion();        
+    }
+    
     
     @Log
     @CommitAfter
