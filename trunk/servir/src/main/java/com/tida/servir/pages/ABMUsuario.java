@@ -349,6 +349,10 @@ public class ABMUsuario extends GeneralPage {
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK(lPermiso.getUsuarioId(), lPermiso.getPerfilId());
         permiso = (Perfilusuario) session.load(Perfilusuario.class, perfilusuariopk);
         session.delete(permiso);
+        primeraVez = true;
+        editaUsuario = true;
+        botonPerfil = true;
+        newPerfil = false;
         return zonasTotal();
     }
     /*
