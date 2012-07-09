@@ -61,6 +61,8 @@ public class UsuarioTrabajador implements Serializable {
     private long rolid;
     @Column(name = "EMAILLABORAL")
     private String emaillaboral;
+    @Column(name = "TRABAJADOR_ID")
+    private Long trabajadorid;
     
     public UsuarioTrabajador() {
     }
@@ -167,6 +169,14 @@ public class UsuarioTrabajador implements Serializable {
 
     public void setEmaillaboral(String emaillaboral) {
         this.emaillaboral = emaillaboral;
+    }
+
+    public Long getTrabajadorid() {
+        return trabajadorid;
+    }
+
+    public void setTrabajadorid(Long trabajadorid) {
+        this.trabajadorid = trabajadorid;
     }
     
 }

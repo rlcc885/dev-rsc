@@ -21,25 +21,33 @@ import javax.persistence.*;
     @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id"),
     @NamedQuery(name = "Perfil.findByDescperfil", query = "SELECT p FROM Perfil p WHERE p.descperfil = :descperfil"),
     @NamedQuery(name = "Perfil.findByFechacreacion", query = "SELECT p FROM Perfil p WHERE p.fechacreacion = :fechacreacion")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "callSpPerfilSinAsignarPorUsuario",
+    query = "CALL SP_PERFILSINASIGNARPORUSUARIO(?,:in_usuario_id)",
+    resultClass = Perfil.class,
+    hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
+    })
+})
 public class Perfil implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
-    @JoinTable(name = "PERFILUSUARIO", joinColumns = {
+    
+    @JoinTable(name = "RSC_PERFILUSUARIO", joinColumns = {
         @JoinColumn(name = "PERFIL_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")})
     @ManyToMany
     private Collection<Usuario> usuarioCollection;
-    @JoinTable(name = "MENUPERFIL", joinColumns = {
+    @JoinTable(name = "RSC_MENUPERFIL", joinColumns = {
         @JoinColumn(name = "PERFIL_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "MENU_ID", referencedColumnName = "ID")})
     @ManyToMany
     private Collection<Menu> menuCollection;
     
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
-//    private List<Menuperfil> menuperfilList;
+    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id

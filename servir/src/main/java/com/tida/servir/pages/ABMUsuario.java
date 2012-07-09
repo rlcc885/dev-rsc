@@ -5,7 +5,10 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.*;
+import helpers.Encriptacion;
+import helpers.Helpers;
+import helpers.Reportes;
+import helpers.SMTPConfig;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -43,23 +46,24 @@ public class ABMUsuario extends GeneralPage {
     private UsuarioTrabajador u;
     @Property
     @Persist
-    //private UsuarioTrabajador usuariotrabajador;
-    private Trabajador trabajador;
+    private UsuarioTrabajador usuariotrabajador;
     @Property
     @Persist
     private Perfilporusuario perfilporusuario;
     @Property
     private Perfilporusuario rowPerfil;
-    
-    
+    @Persist
+    @Property
+    private Perfil perfil;
+    @Persist
+    @Property
+    private Perfilusuario permiso;
     @Property
     @Persist
     private RscRol rscrol;
     @Property
     @Persist
     private LkEstadoUsuario lkEstadoUsuario;
-    @Persist
-    private GenericSelectModel<Entidad> _beanOrganismos;
     @Persist
     private GenericSelectModel<RscRol> _RscRol;
     @Persist
@@ -77,30 +81,22 @@ public class ABMUsuario extends GeneralPage {
     private Usuario loggedUser;
     @Component(id = "formulariousuario")
     private Form formularioUsuario;
-//    @Component(id = "formTipoUsuario")
-//    private Form formTipoUsuario;
     @Component(id = "formulariobusqueda")
     private Form formulariobusqueda;
-    @Component(id = "formOrganismo")
-    private Form formOrganismo;
     @Property
     private boolean blanquearIntentosFallidos;
-//    @Persist
-//    private boolean editando;
     @Property
     @Persist
     private String tipoUsuario;
-    @Property
-    @Persist
-    private String errorBorrar;
-    @InjectComponent
-    private Zone entidadZone;
+//    @Property
+//    @Persist
+//    private String errorBorrar;
     @InjectComponent
     private Zone editarUsuarioZone;
     @InjectComponent
     private Zone tabla_usuario;
     @InjectComponent
-    private Zone asignarPerfilZone;
+    private Zone perfilZone;
     @Inject
     private Request _request;
     @Property
@@ -123,26 +119,25 @@ public class ABMUsuario extends GeneralPage {
     private String nombresBusqueda;
     @Persist
     @Property
-    private int primeraVez;
+    private boolean primeraVez;
     @Persist
     @Property
     private boolean editaUsuario;
     @Persist
     @Property
-    private boolean mostrarPerfilUsuario;
-    @Persist
-    @Property
     private boolean cancelaEditUsuario;
     @Persist
     @Property
-    private boolean asignaPerfilUsuario;
+    private boolean botonPerfil;
+    @Persist
+    @Property
+    private boolean newPerfil;
 
     public ABMUsuario() {
-        System.out.println("ABMUsuario");
+
     }
 
     public List<String> getTiposDoc() {
-        System.out.println("getTiposDoc");
         return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
     }
 
@@ -160,26 +155,17 @@ public class ABMUsuario extends GeneralPage {
     public GenericSelectModel<LkEstadoUsuario> getEstadoUsuario() {
         List<LkEstadoUsuario> list;
         list = Helpers.getEstadoUsuario(session);
-        _lkEstadoUsuario = new GenericSelectModel<LkEstadoUsuario>(list, LkEstadoUsuario.class, "descestadousuario", "id", _access);
-        return _lkEstadoUsuario;
+        return new GenericSelectModel<LkEstadoUsuario>(list, LkEstadoUsuario.class, "descestadousuario", "id", _access);
     }
 
-    public GenericSelectModel<Entidad> getBeanOrganismos() {
-        List<Entidad> list;
-        Criteria c;
-        c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.ne("estado", Entidad.ESTADO_BAJA));
-        System.out.println("getBeanOrganismos");
-        list = c.list();
-
-        //entidadUE = (EntidadUEjecutora) c.list().get(0); //cargamos el valor por defecto
-        _beanOrganismos = new GenericSelectModel<Entidad>(list, Entidad.class, "denominacion", "id", _access);
-        return _beanOrganismos;
+    public GenericSelectModel<Perfil> getSelectPerfiles() {
+        List<Perfil> list;
+        list = Helpers.getPerfilesSinAsignarPorUsuario(usuario.getId(), session);
+        return new GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
     }
 
     public List<String> getTiposUsuarios() {
         List<String> tc = new ArrayList<String>();
-        System.out.println("getTiposUsuarios");
         // Sólo los usuarios admin_graal pueden generar administradores generales y locales
         if (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
             tc.add(Usuario.ADMINGRAL);
@@ -201,9 +187,8 @@ public class ABMUsuario extends GeneralPage {
     public List<UsuarioTrabajador> getUsuarios() {
         Criteria c;
         List<UsuarioTrabajador> listaUsuarios = null;
-        System.out.println("getUsuarios");
 
-        if (loggedUser.getRol().getId() > 1 && this.primeraVez > 0) {
+        if (loggedUser.getRol().getId() > 1 && this.primeraVez) {
             c = session.createCriteria(UsuarioTrabajador.class);
 
             //busqueda
@@ -219,12 +204,6 @@ public class ABMUsuario extends GeneralPage {
 
             if (loggedUser.getRol().getId() == 2) { // Si es administrador de Entidad, sólo puede ver su información
                 c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
-                //c.add(Restrictions.ne("tipo_usuario", Usuario.ADMINLOCAL));
-                //} else {
-                // Administrador de usuarios general
-                //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORABMLOCAL));
-                //c.add(Restrictions.ne("tipo_usuario", Usuario.OPERADORLECTURALOCAL));
-                //c.add(Restrictions.ne("tipo_usuario", Usuario.TRABAJADOR));
             }
             listaUsuarios = c.list();
         }
@@ -237,69 +216,41 @@ public class ABMUsuario extends GeneralPage {
         List<Perfilporusuario> lista = null;
         Query query = session.getNamedQuery("Perfilporusuario.findByUsuarioId");
         query.setParameter("usuarioId", usuario.getId());
-
         lista = query.list();
         return lista;
     }
 
-    /*
-     * void onPrepareFromformTipoUsuario() {
-     * System.out.println("onPrepareFromformTipoUsuario"); if (tipoUsuario ==
-     * null) { tipoUsuario = ""; }
-     *
-     * if (editando) { tipoUsuario = usuario.getTipo_usuario(); } }
-     */
     StreamResponse onActionFromReporteUsuario(Long userID) {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
-        System.out.println("onActionFromReporteUsuario");
         parametros.put("MandatoryParameter_UsuarioID", userID);
         return rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-    }
-
-    /*
-     * public Object onChangeOfTipoUsuario() {
-     *
-     * tipoUsuario = _request.getParameter("param"); return
-     * entidadZone.getBody(); }
-     */
-    /*
-     * @Log Object onSuccessFromformTipoUsuario() {
-     * System.out.println("onSuccessFromformTipoUsuario"); return new
-     * MultiZoneUpdate("editarUsuarioZone",
-     * editarUsuarioZone.getBody()).add("entidadZone", entidadZone.getBody()); }
-     */
-    Object onSuccessFromformulariobusqueda() {
-        primeraVez++;
-        System.out.println("onSuccessFromformulariobusqueda");
-        return tabla_usuario.getBody();
-    }
-
-    @Log
-    Object onSuccessFromformOrganismo() {
-        System.out.println("onSuccessFromformOrganismo");
-        return editarUsuarioZone.getBody();
     }
 
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("tabla_usuario", tabla_usuario.getBody());
+        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("tabla_usuario", tabla_usuario.getBody()).add("perfilZone", perfilZone.getBody());
         return mu;
     }
 
+    Object onSuccessFromformulariobusqueda() {
+        primeraVez = true;
+        editaUsuario = false;
+        botonPerfil = false;
+        newPerfil = false;
+        return zonasTotal();
+    }
+
     public boolean getMuestroOrganismos() {
-        System.out.println("getMuestroOrganismos");
         return ((tipoUsuario.equals(Usuario.ADMINLOCAL)) && (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)));
     }
 
     public boolean getEsTrabajador() {
-        System.out.println("getEsTrabajador");
         return tipoUsuario.equals(Usuario.TRABAJADOR);
     }
 
     void onPrepareFromFormularioUsuario() {
-        System.out.println("onPrepareFromFormularioUsuario");
         if (loggedUser.getEntidad() != null) {
             entidad = loggedUser.getEntidad();
         }
@@ -308,18 +259,24 @@ public class ABMUsuario extends GeneralPage {
     void onSelectedFromSave() {
     }
 
-    void onSelectedFromPerfil() {
-        asignaPerfilUsuario = true;
-    }
-
     void onSelectedFromCancel() {
         cancelaEditUsuario = true;
+        newPerfil = false;
+    }
+
+    @Log
+    @CommitAfter
+    Object onNewPerfil() {
+        botonPerfil = false;
+        newPerfil = true;
+        permiso = new Perfilusuario();
+        return perfilZone.getBody();
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromFormularioUsuario() {
-        if (!cancelaEditUsuario && !asignaPerfilUsuario) {
+        if (!cancelaEditUsuario) {
             ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
             String password = null;
             if (blanquearIntentosFallidos) {
@@ -355,105 +312,78 @@ public class ABMUsuario extends GeneralPage {
 //        }
 
             session.saveOrUpdate(usuario);
-
             envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-
             usuario = createNewUsuario();
         }
-        if (!asignaPerfilUsuario) {
-            cancelaEditUsuario = false;
-            editaUsuario = false;
-            return zonasTotal();
-        } else {
-            return asignarPerfilZone.getBody();
-        }
+        primeraVez = true;
+        cancelaEditUsuario = false;
+        editaUsuario = false;
+        return zonasTotal();
+    }
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromPerfilInputForm() {
+        PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK();
+        perfilusuariopk.setUsuarioId(usuario.getId());
+        perfilusuariopk.setPerfilId(perfil.getId());
+        permiso.setPerfilusuarioPK(perfilusuariopk);
+        session.save(permiso);
+        botonPerfil = true;
+        editaUsuario = true;
+        newPerfil = false;
+        primeraVez = true;
+        return zonasTotal();
     }
 
     private Usuario createNewUsuario() {
         Usuario usuario_local = new Usuario();
         usuario_local.setIntentos_fallidos(0L);
-        System.out.println("createNewUsuario");
         tipoDocumento = null;
         nroDocumento = null;
         return usuario_local;
     }
 
-//    /*
-//     * reset del formulario
-//     */
-//    void onActionFromReset() {
-//        System.out.println("onActionFromReset");
-//        usuario = createNewUsuario();
-//        tipoUsuario = usuario.getTipo_usuario();
-//        entidad = usuario.getEntidad();
-////        editando = false;
-//    }
+    /*
+     * reset del formulario
+     */
+    @Log
+    @CommitAfter
+    Object onActionFromEliminaPerfil(Perfilporusuario lPermiso) {
+        PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK(lPermiso.getUsuarioId(), lPermiso.getPerfilId());
+        permiso = (Perfilusuario) session.load(Perfilusuario.class, perfilusuariopk);
+        session.delete(permiso);
+        return zonasTotal();
+    }
     /*
      * Cargar desde los parámetros
      */
+
     void onActivate() {
-        System.out.println("onActivate");
-        if (usuario == null) {
-            usuario = createNewUsuario();
-//            trabajador = new Trabajador();
-            rscrol = new RscRol();
-            lkEstadoUsuario = new LkEstadoUsuario();
-//            editando = false;
-            if (loggedUser.getEntidad() != null) //No soy dios
-            {
-                tipoUsuario = Usuario.OPERADORABMLOCAL;
-            } else {
-                tipoUsuario = Usuario.ADMINGRAL;
-            }
-
-        } else {
-            // Editando
-            if (tipoUsuario == null) {
-                if (usuario.getTipo_usuario() != null) {
-                    tipoUsuario = usuario.getTipo_usuario();
-                } else {
-                    tipoUsuario = Usuario.ADMINGRAL;
-                }
-
-            }
-            if (entidad == null) {
-                entidad = usuario.getEntidad();
-            }
-        }
-
-
+        primeraVez = false;
+        editaUsuario = false;
+        botonPerfil = false;
+        newPerfil = false;
     }
 
-    void onActivate(Usuario user) {
-        System.out.println("onActivate(Usuario user)");
-        System.out.println(primeraVez);
-        System.out.println(user);
-        if (user == null) {
-            user = createNewUsuario();
-//            editando = false;
-        } else {
-            System.out.println("onActivate(Usuario user)" + user.getId());
-//            if (user.getTipo_usuario().equals(Usuario.TRABAJADOR)) {
-//                nroDocumento = user.getTrabajador().getNroDocumento();
-//                tipoDocumento = user.getTrabajador().getTipoDocumento();
-//            }
-            trabajador = user.getTrabajador();
-            rscrol = user.getRol();
-            lkEstadoUsuario = Helpers.getEstadoUsuario(user.getEstado(), session);
-            errorBorrar = null;
-//            editando = true;
-            editaUsuario = true;
-        }
-        usuario = user;
+    @Log
+    @CommitAfter
+    Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
+        usuario = (Usuario) session.load(Usuario.class, lusuariotrabajador.getTrabajadorid());
+        rscrol = usuario.getRol();
+        lkEstadoUsuario = Helpers.getEstadoUsuario(usuario.getEstado(), session);
+        editaUsuario = true;
+        botonPerfil = true;
+        primeraVez = true;
+        usuariotrabajador = lusuariotrabajador;
+        return zonasTotal();
     }
 
     Usuario onPassivate() {
-        System.out.println("onPassivate");
         return null;
     }
 
     private boolean usuarioDeOrganismo() {
-        System.out.println("usuarioDeOrganismo");
         return (tipoUsuario.equals(Usuario.ADMINLOCAL)
                 || tipoUsuario.equals(Usuario.OPERADORLECTURALOCAL)
                 || tipoUsuario.equals(Usuario.OPERADORABMLOCAL)
@@ -462,7 +392,6 @@ public class ABMUsuario extends GeneralPage {
     }
 
     public boolean getUsuarioDeOrganismo() {
-        System.out.println("getUsuarioDeOrganismo");
         return this.usuarioDeOrganismo();
     }
 }

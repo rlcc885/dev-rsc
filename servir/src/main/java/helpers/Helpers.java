@@ -21,7 +21,11 @@ import org.hibernate.criterion.Restrictions;
  * @author ale
  */
 public class Helpers {
-
+    public static List<Perfil> getPerfilesSinAsignarPorUsuario(long usuarioId, Session session) {
+        Query query = session.getNamedQuery("callSpPerfilSinAsignarPorUsuario");
+        query.setParameter("in_usuario_id", usuarioId);
+        return query.list();
+    }
     public static List<Menu> getOpcionesDelMenu(long inPerfilId, Session session) {
         Query query = session.getNamedQuery("callSpMenuSinAsignarPorPerfil");
         query.setParameter("in_perfil_id", inPerfilId);
