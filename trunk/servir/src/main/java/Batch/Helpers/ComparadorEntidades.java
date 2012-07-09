@@ -1222,7 +1222,7 @@ public class ComparadorEntidades {
             return lica;
         }
 
-        lica.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipoVinculo(), cdestino.getTipoVinculo()));
+        lica.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipovinculo(), cdestino.getTipovinculo()));
         if (lica.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lica;
         }

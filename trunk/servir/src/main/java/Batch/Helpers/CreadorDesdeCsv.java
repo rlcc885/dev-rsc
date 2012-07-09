@@ -1101,7 +1101,7 @@ public class CreadorDesdeCsv {
         cargoasignado.setFec_fin(CreadorDesdeCsv.stringToDate(_csvCargosAsignado.get(6), errores, helpers.Constantes.CARGOS_ASIGNADOS));
         cargoasignado.setCtd_per_superv(CreadorDesdeCsv.toInteger(_csvCargosAsignado.get(7)));
         cargoasignado.setMotivo_cese(_csvCargosAsignado.get(8));
-        cargoasignado.setTipoVinculo(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoVínculo", _csvCargosAsignado.get(9), errores, session));
+        //cargoasignado.setTipoVinculo(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoVínculo", _csvCargosAsignado.get(9), errores, session));
 
         //si hay una fecha de fin y el estado esta alta, tira un error
         if (!_csvCargosAsignado.get(6).trim().equals("") && _csvCargosAsignado.get(4).trim().equals(helpers.Constantes.ESTADO_ACTIVO)) {

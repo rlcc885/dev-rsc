@@ -1,27 +1,20 @@
 package com.tida.servir.components;
 
 
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
+import com.tida.servir.services.GenericSelectModel;
 import helpers.Constantes;
 import helpers.Helpers;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Session;
 
 
@@ -38,7 +31,7 @@ public class DatosDeCargoEditor {
     private String _zone;
 
     @Property
-    @Parameter
+    @Persist
     private Cargoxunidad actual;
 
     @Property
@@ -65,9 +58,13 @@ public class DatosDeCargoEditor {
     @InjectComponent
     private Zone datosDeCargoZone;
 
+    @Inject
+    private PropertyAccess _access;
 
     @InjectComponent
     private Envelope envelope;
+    
+    private int elemento=0;
     
     public boolean getNoEditable() {
         return !getEditable();
@@ -95,14 +92,23 @@ public class DatosDeCargoEditor {
         else return true;
     }
     
-    @Log
-    public String getVinculoTipo(){
-        return actual_asignado.getTipoVinculo();
-    }
+//    @Log
+//    public String getVinculoTipo(){
+//        return actual_asignado.getTipoVinculo();
+//    }
     
-    public List<String> getVinculos() {
-    	return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
-    }    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoVinculo() {
+        //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
+        //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
+        
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVÍNCULO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+        
+//    public List<String> getVinculos() {
+//    	return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
+//    }    
     
     public List<String> getEstados() {
     	ArrayList<String> estados = new ArrayList<String>();
@@ -122,10 +128,37 @@ public class DatosDeCargoEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariodatosdecargoasignado(){
-        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+        if(elemento==2){
+            envelope.setContents("Primero");
+        }
+        else{
+            envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+        }
+        
         return datosDeCargoZone.getBody();
     }
-
+    
+     void onSelectedFromSave() {        
+         elemento=2;
+    }     
+                 
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormulariobotones(){
+        
+        //envelope.setContents(String.valueOf(actual_asignado.getFec_fin())+String.valueOf(actual_asignado.getFec_inicio()));   
+        return datosDeCargoZone.getBody();
+    }
+    
+    @Log
+    void onValidateFromFormulariobotones() {
+        if(actual_asignado.getFec_fin()!=null){
+            if(actual_asignado.getMotivo_cese()==null)
+                formularioDatosDeCargoAsignado.recordError("Debe ingresar el motivo de Cese");
+        }
+        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+    }
+     
     
 /*	@Log
 	Object onValidateFromformularioDatosDeCargoAsignado()

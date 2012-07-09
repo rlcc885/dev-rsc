@@ -65,14 +65,16 @@ public class CargoAsignado {
 
     private Integer ctd_per_superv;
     private String motivo_cese;
-    private String tipoVinculo;
+    //private String tipoVinculo;
+    private DatoAuxiliar tipovinculo;
 
-    public String getTipoVinculo() {
-        return tipoVinculo;
+    @ManyToOne
+    public DatoAuxiliar getTipovinculo() {
+        return tipovinculo;
     }
 
-    public void setTipoVinculo(String tipoVinculo) {
-        this.tipoVinculo = tipoVinculo;
+    public void setTipovinculo(DatoAuxiliar tipovinculo) {
+        this.tipovinculo = tipovinculo;
     }
 
     @OneToMany(cascade=CascadeType.ALL)
