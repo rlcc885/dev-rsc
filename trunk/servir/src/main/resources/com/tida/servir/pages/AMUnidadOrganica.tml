@@ -82,7 +82,7 @@
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->
         <t:if test="mostrar">
-            <t:form t:id="formularioxx" t:zone="listaUOZone">                
+            <t:form t:id="formularioxx">                
 
                 <t:if test="errorBorrar">
                     <div class="error" id = "errorBorrar">
@@ -97,14 +97,14 @@
                     <p:accionesCell>
                         <t:if test="PuedeEditar">
                             <a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>
-                            <!--
+                            
                             <t:if test="esBorrable">
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
                                      t:zone="listaUOZone" href="#" >Eliminar</a>                      
   
                                 
-                            </t:if>-->
-                            <input t:type="Submit" t:id="eli" value="elimina" t:context="uo.id" t:defer="false" t:mixins="confirm" page="AMUnidadOrganica" class="button"/> 
+                            </t:if>
+                            <!--<input t:type="Submit" t:id="eli" value="elimina" t:context="uo.id" t:defer="false" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>--> 
                         </t:if>
                     </p:accionesCell>
                 </t:grid>

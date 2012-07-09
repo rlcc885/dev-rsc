@@ -36,6 +36,7 @@ public class DatosDeCargoEditor {
 
     @Property
     @Parameter
+    @Persist
     private CargoAsignado actual_asignado;
     
     @Property
@@ -151,7 +152,7 @@ public class DatosDeCargoEditor {
         if(actual_asignado.getFec_fin()==null){
            
                 formulariodatos.recordError("Debe ingresar el motivo de Cese");
-                return muestraZone.getBody();
+                return datosDeCargoZone.getBody();
 
         }
         envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
