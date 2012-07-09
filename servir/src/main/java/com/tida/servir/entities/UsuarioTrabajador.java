@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @author Jurguen Zambrano
  */
 @Entity
-@Table(name = "USUARIOTRABAJADOR")
+@Table(name = "RSC_USUARIOTRABAJADOR")
 
 @NamedQueries({
     @NamedQuery(name = "UsuarioTrabajador.findAll", query = "SELECT u FROM UsuarioTrabajador u"),
