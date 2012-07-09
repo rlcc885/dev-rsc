@@ -103,7 +103,7 @@ public class UnidadOrganica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
-    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "UNIDADORGANICA_ID_SEQ" )
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_UNIDADORGANICA_ID_SEQ" )
     public int getId() {
         return id;
     }
