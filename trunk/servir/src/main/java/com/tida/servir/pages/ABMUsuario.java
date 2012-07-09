@@ -1,6 +1,5 @@
 package com.tida.servir.pages;
 
-//import com.sun.mail.smtp.SMTPMessage;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
@@ -88,9 +87,6 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @Persist
     private String tipoUsuario;
-//    @Property
-//    @Persist
-//    private String errorBorrar;
     @InjectComponent
     private Zone editarUsuarioZone;
     @InjectComponent
