@@ -85,6 +85,9 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean cancelaEditPermiso;
+    @Persist
+    @Property
+    private String errorMessage;
 
     public PagePerfil() {
     }
@@ -94,6 +97,10 @@ public class PagePerfil {
         /*
          * if (!userExists) { return "Index"; } return null;
          */
+        mostrarNew = true;
+        mostrarPermiso = false;
+        mostrarNewPermiso = false;
+        mostrarEditPermiso = false;
         return null;
     }
 
@@ -131,8 +138,22 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPerfil(Perfil lperfil) {
-        session.delete(lperfil);
+        if (lperfil.getUsuarioCollection().size() > 0) {
+            errorMessage = "El Perfil no puede ser eliminado porque existen usuarios asignados al perfill.";
+        } else {
+            if (lperfil.getMenuCollection().size() > 0) {
+                errorMessage = "El Perfil no puede ser eliminado porque existen opciones de menu asociados.";
+            } else {
+                try {
+                    session.delete(lperfil);
+
+                } catch (Exception e) {
+                    errorMessage = "Otro error que pueda suceder :) ";
+                }
+            }
+        }
         return zonasTotal();
+
     }
     // EDITA EL PERFIL
 
@@ -146,6 +167,8 @@ public class PagePerfil {
         mostrarNew = false;
         mostrarEdit = true;
         mostrarPermiso = false;
+        mostrarNewPermiso = false;
+        mostrarNuevoPermiso = false;
         return zonasTotal();
     }
     // CREA PERFIL
@@ -206,13 +229,8 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPermiso(MenuPorPerfil lPermiso) {
-//        Criteria c = session.createCriteria(Menuperfil.class);
-//        c.add(Restrictions.eq("menuId", lPermiso.getMenuId()));
-//        c.add(Restrictions.eq("perfilId", lPermiso.getPerfilId()));
-//        Menuperfil menuperfil = (Menuperfil) c.list().get(0);
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.load(Menuperfil.class, menuperfilpk);
-
         session.delete(permiso);
         mostrarPermiso = true;
         mostrarNewPermiso = true;
@@ -261,7 +279,6 @@ public class PagePerfil {
         menuperfilpk.setMenuId(menu.getId());
         menuperfilpk.setPerfilId(perfil.getId());
         permiso.setMenuperfilPK(menuperfilpk);
-        System.out.println(permiso);
         session.save(permiso);
         mostrarNewPermiso = true;
         mostrarEditPermiso = false;
@@ -292,8 +309,6 @@ public class PagePerfil {
      * System.out.println("onActionFromresetEditPermiso"); mostrarEditPermiso =
      * false; mostrarNuevoPermiso = false; return editPermisoZone.getBody(); }
      */
-    
-    
     void onActionFromresetNuevoPermiso() {
         System.out.println("onActionFromresetNuevoPermiso");
     }

@@ -19,34 +19,45 @@ import javax.persistence.*;
     @NamedQuery(name = "Perfilporusuario.findByUsuarioId", query = "SELECT p FROM Perfilporusuario p WHERE p.usuarioId = :usuarioId"),
     @NamedQuery(name = "Perfilporusuario.findByPerfilId", query = "SELECT p FROM Perfilporusuario p WHERE p.perfilId = :perfilId"),
     @NamedQuery(name = "Perfilporusuario.findByDescperfil", query = "SELECT p FROM Perfilporusuario p WHERE p.descperfil = :descperfil")})
+
 public class Perfilporusuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "ROW_NUM")
+    private long rownum;
     @Column(name = "USUARIO_ID")
-    private Long usuarioId;
+    private long usuarioId;
     @Basic(optional = false)
     @Column(name = "PERFIL_ID")
-    private Long perfilId;
+    private long perfilId;
     @Column(name = "DESCPERFIL")
     private String descperfil;
 
     public Perfilporusuario() {
     }
 
-    public Long getUsuarioId() {
+    public long getRownum() {
+        return rownum;
+    }
+
+    public void setRownum(long rownum) {
+        this.rownum = rownum;
+    }
+
+    public long getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(Long usuarioId) {
+    public void setUsuarioId(long usuarioId) {
         this.usuarioId = usuarioId;
     }
 
-    public Long getPerfilId() {
+    public long getPerfilId() {
         return perfilId;
     }
 
-    public void setPerfilId(Long perfilId) {
+    public void setPerfilId(long perfilId) {
         this.perfilId = perfilId;
     }
 
