@@ -31,7 +31,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 /**
  * Clase que maneja la pagina de modificacion de un Trabajador
  */
-public class TrabajadorModificar  extends GeneralPage
+public class TrabajadorPersonal  extends GeneralPage
 {
     /**
      * Listas necesarias para los modelos.
@@ -91,35 +91,35 @@ public class TrabajadorModificar  extends GeneralPage
      */
 
     // Grilla de Antecedentes laborales
-    @InjectComponent
-    private Zone antecedentesZone;
-
-    @InjectComponent
-    private Zone publicacionesZone;
-
-    @InjectComponent
-    private Zone trabajosZone;
+//    @InjectComponent
+//    private Zone antecedentesZone;
+//
+//    @InjectComponent
+//    private Zone publicacionesZone;
+//
+//    @InjectComponent
+//    private Zone trabajosZone;
 
     // Código generales de la grilla, cada uno tendrá que agregar su código acá
     // Cófigo necesario antes de procesar
-    @InjectComponent
-    private Zone meritosZone;
-
-    @InjectComponent
-    private Zone demeritosZone;
-
-    @InjectComponent
-    private Zone titulosZone;
-
-    @InjectComponent
-    private Zone certificacionesZone;
-
-    @InjectComponent
-    private Zone cursosZone;
-
-    @Property
-    @InjectComponent
-    private Zone instruccionZone;
+//    @InjectComponent
+//    private Zone meritosZone;
+//
+//    @InjectComponent
+//    private Zone demeritosZone;
+//
+//    @InjectComponent
+//    private Zone titulosZone;
+//
+//    @InjectComponent
+//    private Zone certificacionesZone;
+//
+//    @InjectComponent
+//    private Zone cursosZone;
+//
+//    @Property
+//    @InjectComponent
+//    private Zone instruccionZone;
 
     /*
      * Hasta acá código de grillas
@@ -141,7 +141,7 @@ public class TrabajadorModificar  extends GeneralPage
        return Permisos.puedeEscribir(_usuario, _oi);
     }
     
-    public TrabajadorModificar()
+    public TrabajadorPersonal()
     {
     }
 
@@ -165,72 +165,72 @@ public class TrabajadorModificar  extends GeneralPage
         return mensajes != null;
     }
     
-    @Component(id = "instruccion")
-    private Form formInstruccion;
+//    @Component(id = "instruccion")
+//    private Form formInstruccion;
 
-    @Log
-    @SetupRender
-    void loadFormacion() {
-        if (formacionProfesional == null)
-            formacionProfesional = new FormacionProfesional();
-        formacionProfesional.setFormacion(actual.getFormacionprofesional());
-        Criteria c = session.createCriteria(CargoAsignado.class);
-        c.createAlias("trabajador", "trabajador");
-        c.createAlias("legajo", "legajo");
-        c.createAlias("cargo", "cargo");
-        c.add(Restrictions.eq("legajo.entidadUE", _oi));
-        c.add(Restrictions.eq("trabajador", actual));
-        c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
-        if (c.list().size() > 0)
-            _ca = (CargoAsignado) c.list().get(0);
-        else _ca = null;
-    }
+//    @Log
+//    @SetupRender
+//    void loadFormacion() {
+//        if (formacionProfesional == null)
+//            formacionProfesional = new FormacionProfesional();
+//        formacionProfesional.setFormacion(actual.getFormacionprofesional());
+//        Criteria c = session.createCriteria(CargoAsignado.class);
+//        c.createAlias("trabajador", "trabajador");
+//        c.createAlias("legajo", "legajo");
+//        c.createAlias("cargo", "cargo");
+//        c.add(Restrictions.eq("legajo.entidadUE", _oi));
+//        c.add(Restrictions.eq("trabajador", actual));
+//        c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
+//        if (c.list().size() > 0)
+//            _ca = (CargoAsignado) c.list().get(0);
+//        else _ca = null;
+//    }
 
- 
-    @CommitAfter
-    Object onSuccessFromInstruccion(){
-        actual.setTipoDocumento("01");
-        actual.setFormacionprofesional(formacionProfesional.getFormacion());
-        session.saveOrUpdate(actual);
-        return instruccionZone;
-    }
+// 
+//    @CommitAfter
+//    Object onSuccessFromInstruccion(){
+//        actual.setTipoDocumento("01");
+//        actual.setFormacionprofesional(formacionProfesional.getFormacion());
+//        session.saveOrUpdate(actual);
+//        return instruccionZone;
+//    }
 
-    public String getClasePublicacion() {
-        return Publicacion.CLASE_PUBLICACION;
-    }
+//    public String getClasePublicacion() {
+//        return Publicacion.CLASE_PUBLICACION;
+//    }
+//
+//    public String getClaseTrabajo() {
+//        return Publicacion.CLASE_INVESTIGACION;
+//    }
+//
+//
+//    public String getClaseMeritos() {
+//        return MeritoDemerito.CLASE_MERITO;
+//    }
+//
+//
+//    public String getClaseDeMeritos() {
+//        return MeritoDemerito.CLASE_DEMERITO;
+//    }
 
-    public String getClaseTrabajo() {
-        return Publicacion.CLASE_INVESTIGACION;
-    }
-
-
-    public String getClaseMeritos() {
-        return MeritoDemerito.CLASE_MERITO;
-    }
-
-
-    public String getClaseDeMeritos() {
-        return MeritoDemerito.CLASE_DEMERITO;
-    }
-
-    public List<String> getValorTablaAuxiliar(String tabla) 
-    {
-        // TODO: este codigo esta duplicado
-        Criteria c = session.createCriteria(DatoAuxiliar.class);
-        c.add(Restrictions.eq("nombreTabla", tabla));
-        c.setProjection(Projections.property("valor"));
-        return c.list();
-    }
-
-    public List<String> getNivelInstruccion() 
-    {
-        return getValorTablaAuxiliar("NivelInstrucción");
-    }
-
-
-    public boolean getHayCargosAsignados() {
-        return _ca != null;
-    }
+//    public List<String> getValorTablaAuxiliar(String tabla) 
+//    {
+//        // TODO: este codigo esta duplicado
+//        Criteria c = session.createCriteria(DatoAuxiliar.class);
+//        c.add(Restrictions.eq("nombreTabla", tabla));
+//        c.setProjection(Projections.property("valor"));
+//        return c.list();
+//    }
+//
+//    public List<String> getNivelInstruccion() 
+//    {
+//        return getValorTablaAuxiliar("NivelInstrucción");
+//    }
+//
+//
+//    public boolean getHayCargosAsignados() {
+//        return _ca != null;
+//    }
 
 
 }

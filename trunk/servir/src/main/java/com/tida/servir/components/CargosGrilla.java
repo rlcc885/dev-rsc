@@ -18,6 +18,7 @@ import java.util.Map;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -47,6 +48,7 @@ public class CargosGrilla {
     
 
     @Property
+    @Persist
     private CargoAsignado ca;
 
     @Inject

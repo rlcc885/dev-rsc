@@ -22,9 +22,10 @@ public class Evento implements Serializable {
     @Id    
     private long id;
     private String descevento;
-//    private Entidad entidad;
+    @ManyToOne
+    private Entidad entidad;
 //    private Trabajador trabajador;
-//    private Tipoevento tipoevento;
+   // private Tipoevento tipoevento;
     private Boolean estadoevento;
     @Temporal(TemporalType.DATE)
     private Date fechaevento;
@@ -49,14 +50,14 @@ public class Evento implements Serializable {
         this.descevento = descevento;
     }
     
-//    @ManyToOne
-//    public Entidad getEntidad() {
-//        return entidad;
-//    }
-//
-//    public void setEntidad(Entidad entidad) {
-//        this.entidad = entidad;
-//    }
+    @ManyToOne
+    public Entidad getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
     
 //    @ManyToOne
 //    public Trabajador getTrabajador() {

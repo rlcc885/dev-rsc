@@ -115,6 +115,26 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private DatoAuxiliar documentoidentidad;
+    @NonVisual
+    private String telefonocelular;
+    @NonVisual
+    private String telefonofijo;
+    
+    public void setTelefonocelular(String telefonocelular) {
+        this.telefonocelular = telefonocelular;
+    }
+
+    public String getTelefonocelular() {
+        return telefonocelular;
+    }
+    
+    public void setTelefonofijo(String telefonofijo) {
+        this.telefonofijo = telefonofijo;
+    }
+
+    public String getTelefonofijo() {
+        return telefonofijo;
+    }
 
     public DatoAuxiliar getDocumentoidentidad() {
         return documentoidentidad;

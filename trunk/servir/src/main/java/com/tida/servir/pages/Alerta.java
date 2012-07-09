@@ -50,7 +50,7 @@ public class Alerta  extends GeneralPage {
 //    @Property
 //    private Trabajador e;
     @Property
-    @Persist
+    @SessionState
     private Entidad entidadUE;
 //    @Property
 //    private Entidad_BK oi;
@@ -82,11 +82,14 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private boolean mostrarse;
+    @Property
+    @Persist
+    private LkBusquedaEvento le;
         
     @Log
     @SetupRender
     private void inicio() {
-        if(_usuario.getRol().getId()==1){
+        if(_usuario.getRol().getId()==4){
             mostrars=true;
         }
         if(_usuario.getRol().getId()==2){
@@ -121,7 +124,7 @@ public class Alerta  extends GeneralPage {
  
     @Log
     public List<Evento> getEventos() {
-        Criteria c = session.createCriteria(Evento.class);
+        Criteria c = session.createCriteria(LkBusquedaEvento.class);
         c.add(Restrictions.eq("estadoevento", Evento.ESTADO_BAJA));        
         return c.list();
     }
@@ -130,6 +133,7 @@ public class Alerta  extends GeneralPage {
     public List<Evento> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         c.add(Restrictions.eq("validado", true));
+        c.add(Restrictions.eq("identidad",entidadUE.getId()));
         return c.list();
     }
     

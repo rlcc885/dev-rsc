@@ -7,6 +7,7 @@ import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Ubigeo;
 import com.tida.servir.entities.Usuario;
+import com.tida.servir.services.GenericSelectModel;
 
 import helpers.Errores;
 import helpers.Helpers;
@@ -191,12 +192,20 @@ public class DatosPersonalesEditor {
         return Helpers.getValorTablaAuxiliar("Nacionalidades", session);
     }
 
-    public List<String> getEstadoCivil() {
-        return Helpers.getValorTablaAuxiliar("EstadoCivil", session);
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getEstadoCivil() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ESTADOCIVIL", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+        
     public List<String> getSexos() {
-        return Helpers.getValorTablaAuxiliar("Sexo", session);
+        return Helpers.getValorTablaAuxiliar("SEXO", session);
     }
 
     public List<String> getGrupoSanguineo() {
