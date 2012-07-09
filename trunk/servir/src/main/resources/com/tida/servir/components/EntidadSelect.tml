@@ -105,6 +105,10 @@
             </form>
                 </t:if>
            </t:zone>
+            
+          <br class="clear" />
+   
+             <t:zone t:id="UnidadEjecutoraZone" class = "clear">
    
             <div class="f-wrap">  
             <div t:type="zone" t:id="botonesZone" >
@@ -122,76 +126,19 @@
                     </t:form>
 
             </div>
-           </div>
-                 
-            <!--
-
-            <t:zone t:id="SectorZone" class="f-left">
-                <form t:type="form" t:id="formSector" t:zone="PliegoZone">
-                    <t:errors/>
-                    <div class="f-left">
-                        <t:if test= "nivel_gobierno">
-                            <t:if test ="esLocal" negate = "true">
-                                <t:label for="sector">Sector de Gobierno</t:label>
-                                <p:else>
-                                    <label>Departamento</label>
-                                </p:else>
-                            </t:if>
-                            <input t:type="Select" t:id="sector" t:value="sector" model="beanDatoAuxSector"
-                                   onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:blankOption="ALWAYS"
-                                   t:zone="PliegoZone" />
-                        </t:if>
-                    </div>
-                </form>
-            </t:zone>
-            <t:zone t:id="PliegoZone" class="f-left">
-                <form t:type="form" t:id="formPliego" t:zone="PliegoZone">
-
-                    <div class="f-left">
-                        <t:if test= "nivel_gobierno">
-
-                            <t:if test ="esLocal" negate = "true">
-                                <t:label for="pliego">Pliego Presupuestal</t:label>
-                                <p:else>
-                                    <label>Provincia</label>
-                                </p:else>
-                            </t:if>
-                            <input t:type="Select" t:id="pliego" t:value="pliego" model="beanDatoAuxPliego"
-                                   onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:blankOption="ALWAYS"
-                                   t:zone="UnidadEjecutoraZone" />
-                        </t:if>
-                    </div>
-
-                </form>
-            </t:zone>
-            <t:zone t:id="UnidadEjecutoraZone" class = "clear">
-                <form t:type="form" t:id="cambiarEntidadFrm" t:zone ="UnidadEjecutoraZone">
-
-                    <t:errors/>
-
-                    <div class="f-left clear">
-                        <t:label for="unidadEjecutora"/>
-                        <input t:type="Select" t:id="unidadEjecutora" t:value ="entidad_nueva"
-                               model="EntidadesUEjecutoras"
-                               t:validate="required" t:blankOption="ALWAYS"
-                               onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
-                    </div>
-                    <t:if test="vistaCorta" negate = "true">
-                        <div class="f-left clear">
-                            <input id="submit" type="submit" value="Seleccionar" class="button"/>
-                        </div>
-                    </t:if>
-
-                </form>
-
+                
                 <br class="clear" />
                 <t:if test="vistaCorta" negate = "true">
                     <t:envelope t:id="envelope"/>
                 </t:if>
-
+                
+           </div>
+            
             </t:zone>
             
-            -->
+            
+                 
+           
         </div>
     </t:content>
 </html>

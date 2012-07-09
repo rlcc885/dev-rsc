@@ -29,8 +29,22 @@ import org.hibernate.criterion.Restrictions;
  */
 public class EntidadSelect {
 
-    //@InjectComponent
-    //private Envelope envelope;
+    @InjectComponent
+    private Envelope envelope;
+    @Property
+    @Parameter(required = false)
+    private Boolean vistaCorta;
+    @Parameter(required = false)
+    //@Parameter(defaultPrefix = BindingConstants.LITERAL)
+    private Zone _zone;
+    @Parameter(defaultPrefix = BindingConstants.LITERAL, required = false)
+    @Property
+    private String _zoneName;
+       @InjectComponent
+    @Property
+    private Zone UnidadEjecutoraZone; 
+   
+   
     @Inject
     private Session session;
     @Inject
@@ -110,92 +124,7 @@ public class EntidadSelect {
     private boolean bessubentidad;
     
     private int elemento=0;
-    /*
-    
-    @Property
-    @Parameter(required = false)
-    private Boolean vistaCorta;
-    @Parameter(required = false)
-    //@Parameter(defaultPrefix = BindingConstants.LITERAL)
-    private Zone _zone;
-    @Parameter(defaultPrefix = BindingConstants.LITERAL, required = false)
-    @Property
-    private String _zoneName;
-
-    @Property
-    @Persist
-    private String pliego;
-    @Property
-    @Persist
-    private String sector;
-    @InjectComponent
-    @Property
-    private Zone PliegoZone;
-    @InjectComponent
-    @Property
-    private Zone SectorZone;
-    @InjectComponent
-    @Property
-    private Zone UnidadEjecutoraZone;
-    @Property
-    @Persist
-    private Entidad_BK entidad_nueva;
-
-    @Property
-    @Persist
-    private List<String> _beanNivelGobierno;
-
-    
-    
-    //Para inicializar valores
-    @Log
-    @SetupRender
-    void initializeValue() {
-        
-        /*
-        _beanNivelGobierno = Helpers.getValorTablaAuxiliar("NIVELGOBIERNO", session);
-        if (entidad != null) {
-            nivelgobierno = entidad.getNivelgobierno();
-            sector = entidad.getSector_gobierno();
-            pliego = entidad.getPliego();
-            entidad_nueva = entidad;
-        } else {
-            if (!vistaCorta) {
-                //Cargamos alguna entidad
-                Criteria c = session.createCriteria(Entidad_BK.class);
-                c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
-                entidad_nueva = entidad = (Entidad_BK) c.list().get(0);
-                nivelgobierno = entidad.getNivelgobierno();
-                sector = entidad.getSector_gobierno();
-                pliego = entidad.getPliego();
-            }
-        }
-        /*
-         * if (nivel_gobierno == null) { if(_beanNivelGobierno.size() > 0) { //
-         * nivel_gobierno = _beanNivelGobierno.get(0); }
-         *
-         * }
-         * if (sector == null) { List<String> sectores = getBeanDatoAuxSector();
-         * if(sectores.size() > 0) { // sector = sectores.get(0); } } if (pliego
-         * == null) { List<String> pliegos = getBeanDatoAuxPliego();
-         * if(pliegos.size() > 0) { // pliego = pliegos.get(0); } }
-         */
-        /*
-         * if (entidad == null) { List<EntidadUEjecutora> entidades =
-         * searchEntidades(); if (entidades.size() > 0) //entidad =
-         * entidad_nueva = entidades.get(0); else { // tiene que haber al menos
-         * alguna entidad cargada // Criteria c =
-         * session.createCriteria(EntidadUEjecutora.class); //
-         * c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA)); //
-         * entidad = entidad_nueva = (EntidadUEjecutora) c.list().get(0);
-         *
-         * }
-         * }
-         *
-         */
-
-   // }
-    
+      
     
     //Para inicializar valores
     @Log
@@ -211,6 +140,31 @@ public class EntidadSelect {
         sorganizacionestado=null;
         ssectorGobierno=null;
         stipoOrganismo=null;
+        sentidad=null;
+        
+        //Si se requiere que se seteen en los combos los valores de la entidad seleccionada por defecto
+        /*
+        if (entidad != null) {
+            snivelGobierno = entidad.getNivelGobierno();
+            sorganizacionestado= entidad.getOrganizacionEstado();
+            ssectorGobierno = entidad.getSectorGobierno();
+            stipoOrganismo = entidad.getTipoOrganismo();
+            sentidad = entidad;
+        } else {
+            if (!vistaCorta) {
+                //Cargamos alguna entidad
+                Criteria c = session.createCriteria(Entidad.class);
+                c.add(Restrictions.ne("estado", true));
+                sentidad = entidad = (Entidad) c.list().get(0);
+                snivelGobierno = entidad.getNivelGobierno();
+                sorganizacionestado= entidad.getOrganizacionEstado();
+                ssectorGobierno = entidad.getSectorGobierno();
+                stipoOrganismo = entidad.getTipoOrganismo();
+            }
+        }
+        * 
+        */
+        
     }
     
     //para obtener datos del Nivel Gobierno
@@ -282,18 +236,7 @@ public class EntidadSelect {
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("esSubEntidad", true));
         c.addOrder(Order.asc("denominacion"));
-        /*c.add(Restrictions.eq("nivelgobierno", nivelgobierno));
-        if (sector != null) {
-            if (sector.trim().length() > 0) {
-                c.add(Restrictions.eq("sector_gobierno", sector));
-            }
-        }
-        if (pliego != null) {
-            if (pliego.trim().length() > 0) {
-                c.add(Restrictions.eq("pliego", pliego));
-            }
-        }
-        */    
+   
         return c.list();
     } 
     
@@ -359,135 +302,16 @@ public class EntidadSelect {
             return "Alerta";
         }else{    
         entidad = sentidad;
-        //envelope.setContents("Entidad /U. Ejecutora seleccionada");
-        return 
-        new MultiZoneUpdate("NivelZone", NivelZone.getBody())                             
-                    .add("OrganizacionZone", OrganizacionZone.getBody())
-                    .add("SectorZone", SectorZone.getBody())
-                    .add("TipoOrganismoZone", TipoOrganismoZone.getBody())
-                    .add("EntidadZone", EntidadZone.getBody())
-                    .add("TipoSubEntidadZone", TipoSubEntidadZone.getBody())
-                    .add("SubEntidadZone", SubEntidadZone.getBody());
-        }
-        
-    }
-    
-    /*
-    public String getControlName() {
-        return "EntidadSelect";
-    }
-
-    public boolean isRequired() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String getElementName() {
-        return null;
-    }
-
-    @Log
-    public List<String> getBeanDatoAuxSector() {
-        List<String> retList = null;
-        if (!getEsLocal()) {
-            retList = Helpers.getValorTablaAuxiliar("SECTORGOBIERNO", session);
-        } else {
-            retList = Helpers.getValorTablaAuxiliar("UBDEPARTAMENTO", session);
-        }
-
-        if (retList == null) {
-            return new ArrayList<String>();
-        } else {
-            return retList;
-        }
-
-    }
-
-    @Log
-    public List<String> getBeanDatoAuxPliego() {
-        List<String> retList = null;
-
-        if (!getEsLocal()) {
-            retList = Helpers.getValorTablaAuxiliar("PLIEGO", session);
-        } else {
-
-            // Obtenemos el dato auxiliar del depto.
-            DatoAuxiliar depto = Helpers.getDatoAuxiliar("UBDEPARTAMENTO", sector, session);
-            if (depto != null) {
-                retList = Helpers.getValorTablaAuxiliar("UBPROVINCIA", session,
-                        "UBDEPARTAMENTO", depto.getCodigo());
-            }
-        }
-
-        if (retList == null) {
-            return new ArrayList<String>();
-        } else {
-            return retList;
-        }
-    }
-
-    @Log
-    private List<Entidad_BK> searchEntidades() {
-        Criteria c = session.createCriteria(Entidad_BK.class);
-        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA));
-        c.add(Restrictions.eq("nivelgobierno", nivelgobierno));
-        if (sector != null) {
-            if (sector.trim().length() > 0) {
-                c.add(Restrictions.eq("sector_gobierno", sector));
-            }
-        }
-        if (pliego != null) {
-            if (pliego.trim().length() > 0) {
-                c.add(Restrictions.eq("pliego", pliego));
-            }
-        }
-
-        return c.list();
-    }
-
-    @Log
-    public GenericSelectModel<Entidad_BK> getEntidadesUEjecutoras() {
-
-        return new GenericSelectModel<Entidad_BK>(searchEntidades(), Entidad_BK.class, "denominacion", "id", _access);
-
-    }
-    
-    
-
-    
-
-    @Log
-    Object onSuccessFromCambiarEntidadFrm() {
-        entidad = entidad_nueva;
+        System.out.println("Entroooo");
         envelope.setContents("Entidad /U. Ejecutora seleccionada");
         if (_zone != null) {
             return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
         } else {
             return UnidadEjecutoraZone.getBody();
         }
+        }
+        
     }
-
-    Object onSuccessFromformNivel() {
-        sector = null;
-        pliego = null;
-        return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add("SectorZone", SectorZone.getBody()).add("PliegoZone", PliegoZone.getBody());
-
-    }
-
-    Object onSuccessFromformSector() {
-        pliego = null;
-        return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add("PliegoZone", PliegoZone.getBody());
-
-    }
-
-    Object onSuccessFromformPliego() {
-        return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody());
-    }
-
-    @Log
-    public boolean getEsLocal() {
-
-        return nivelgobierno.equals("NIVEL LOCAL");
-    }
-    * 
-    */
+    
+   
 }
