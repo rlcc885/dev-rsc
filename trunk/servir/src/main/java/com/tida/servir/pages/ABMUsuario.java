@@ -23,6 +23,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -42,7 +43,15 @@ public class ABMUsuario extends GeneralPage {
     private UsuarioTrabajador u;
     @Property
     @Persist
+    //private UsuarioTrabajador usuariotrabajador;
     private Trabajador trabajador;
+    @Property
+    @Persist
+    private Perfilporusuario perfilporusuario;
+    @Property
+    private Perfilporusuario rowPerfil;
+    
+    
     @Property
     @Persist
     private RscRol rscrol;
@@ -76,8 +85,8 @@ public class ABMUsuario extends GeneralPage {
     private Form formOrganismo;
     @Property
     private boolean blanquearIntentosFallidos;
-    @Persist
-    private boolean editando;
+//    @Persist
+//    private boolean editando;
     @Property
     @Persist
     private String tipoUsuario;
@@ -90,6 +99,8 @@ public class ABMUsuario extends GeneralPage {
     private Zone editarUsuarioZone;
     @InjectComponent
     private Zone tabla_usuario;
+    @InjectComponent
+    private Zone asignarPerfilZone;
     @Inject
     private Request _request;
     @Property
@@ -113,6 +124,18 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private int primeraVez;
+    @Persist
+    @Property
+    private boolean editaUsuario;
+    @Persist
+    @Property
+    private boolean mostrarPerfilUsuario;
+    @Persist
+    @Property
+    private boolean cancelaEditUsuario;
+    @Persist
+    @Property
+    private boolean asignaPerfilUsuario;
 
     public ABMUsuario() {
         System.out.println("ABMUsuario");
@@ -209,6 +232,16 @@ public class ABMUsuario extends GeneralPage {
         return listaUsuarios;
 
     }
+
+    public List<Perfilporusuario> getAllPerfiles() {
+        List<Perfilporusuario> lista = null;
+        Query query = session.getNamedQuery("Perfilporusuario.findByUsuarioId");
+        query.setParameter("usuarioId", usuario.getId());
+
+        lista = query.list();
+        return lista;
+    }
+
     /*
      * void onPrepareFromformTipoUsuario() {
      * System.out.println("onPrepareFromformTipoUsuario"); if (tipoUsuario ==
@@ -216,7 +249,6 @@ public class ABMUsuario extends GeneralPage {
      *
      * if (editando) { tipoUsuario = usuario.getTipo_usuario(); } }
      */
-
     StreamResponse onActionFromReporteUsuario(Long userID) {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
@@ -252,9 +284,7 @@ public class ABMUsuario extends GeneralPage {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        System.out.println("zonasTotal");
-        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("tabla_usuario", tabla_usuario.getBody()).add("entidadZone", entidadZone.getBody());
-
+        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("tabla_usuario", tabla_usuario.getBody());
         return mu;
     }
 
@@ -275,79 +305,23 @@ public class ABMUsuario extends GeneralPage {
         }
     }
 
+    void onSelectedFromSave() {
+    }
+
+    void onSelectedFromPerfil() {
+        asignaPerfilUsuario = true;
+    }
+
+    void onSelectedFromCancel() {
+        cancelaEditUsuario = true;
+    }
+
     @Log
     @CommitAfter
     Object onSuccessFromFormularioUsuario() {
-        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-        String password = null;
-        System.out.println("onSuccessFromFormularioUsuario");
-        if (!editando) {
-            if (tipoUsuario.equals(Usuario.TRABAJADOR)) {
-                Criteria c = session.createCriteria(Trabajador.class);
-                c.add(Restrictions.eq("tipoDocumento", tipoDocumento));
-                c.add(Restrictions.eq("nroDocumento", nroDocumento));
-                if (c.list().isEmpty()) {
-                    Logger logger = new Logger();
-                    logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
-                            Logger.CODIGO_ERROR_USUARIO_UNICO,
-                            Errores.ERROR_NO_HAY_TRABAJADOR, Logger.TIPO_OBJETO_USUARIO);
-                    formularioUsuario.recordError(Errores.ERROR_NO_HAY_TRABAJADOR);
-                    return this;
-                }
-                Trabajador trabajador = (Trabajador) c.list().get(0);
-//                usuario.setApellidos(trabajador.getApellidoPaterno() + " " + trabajador.getApellidoMaterno());
-//                usuario.setNombres(trabajador.getNombres());
-                usuario.setTrabajador(trabajador);
-            }
-            Criteria c = session.createCriteria(Usuario.class);
-//            c.add(Restrictions.eq("apellidos", usuario.getApellidos()));
-//            c.add(Restrictions.eq("nombres", usuario.getNombres()));
-            if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-                c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
-            }
-            if (c.list().size() > 0) {
-                Logger logger = new Logger();
-                logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
-                        Logger.CODIGO_ERROR_USUARIO_UNICO,
-                        Errores.ERROR_NOMBRE_USUARIO_UNICO, Logger.TIPO_OBJETO_USUARIO);
-                formularioUsuario.recordError(Errores.ERROR_NOMBRE_USUARIO_UNICO);
-                return this;
-            }
-
-//            c = session.createCriteria(Usuario.class);
-//            c.add(Restrictions.eq("login", usuario.getLogin()));
-//            if (c.list().size() > 0) {
-//                Logger logger = new Logger();
-//                logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
-//                        Logger.CODIGO_ERROR_USUARIO_EXISTE,
-//                        Errores.ERROR_LOGIN_USUARIO_UNICO, Logger.TIPO_OBJETO_USUARIO);
-//                formularioUsuario.recordError(Errores.ERROR_LOGIN_USUARIO_UNICO);
-//                return this;
-//            }
-
-            c = session.createCriteria(Usuario.class);
-//            c.add(Restrictions.eq("email", usuario.getEmail()));
-            if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-                c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
-            }
-            // Pedimos únicos mail por entidadUE
-            if (c.list().size() > 0) {
-                Logger logger = new Logger();
-                logger.loguearError(session, loggedUser, loggedUser.getId().toString(),
-                        Logger.CODIGO_ERROR_MAIL_EXISTE,
-                        Errores.ERROR_EMAIL_USUARIO_UNICO, Logger.TIPO_OBJETO_USUARIO);
-                formularioUsuario.recordError(Errores.ERROR_EMAIL_USUARIO_UNICO);
-                return this;
-            }
-
-            // Seteo la password inicial
-            //password = usuario.getLogin()+"123.";
-            SecureRandom random = new SecureRandom();
-            password = new BigInteger(50, random).toString(32);
-            usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
-            usuario.setClave(password);
-
-        } else { // de editando
+        if (!cancelaEditUsuario && !asignaPerfilUsuario) {
+            ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+            String password = null;
             if (blanquearIntentosFallidos) {
                 usuario.setIntentos_fallidos(0L);
             }
@@ -357,10 +331,8 @@ public class ABMUsuario extends GeneralPage {
                 password = new BigInteger(50, random).toString(32);
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 usuario.setClave(password);
-                //sendPasswordByEMail(usuario.getTrabajador().getEmailLaboral(), usuario.getLogin(), password);
                 String subject = "Datos de acceso al sistema Servir";
                 String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getNroDocumento(), password);
-                //SMTPConfig.sendMail(subject,body, usuario.getTrabajador().getEmailLaboral(),ca);
                 if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
                     System.out.println("envío Correcto");
                 } else {
@@ -368,36 +340,33 @@ public class ABMUsuario extends GeneralPage {
                 }
 
             }
-        }
 
-        usuario.setEstado(lkEstadoUsuario.getId());
-        usuario.setRol(rscrol);
-        //usuario.setTipo_usuario(tipoUsuario);
-//        if (usuarioDeOrganismo()) {
-//            usuario.setEntidad(entidad);
+            usuario.setEstado(lkEstadoUsuario.getId());
+            usuario.setRol(rscrol);
+
+//        if (editando) {
+//            Logger logger = new Logger();
+//            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION, loggedUser);
 //        } else {
-//            usuario.setEntidad(null);
+//            Logger logger = new Logger();
+//            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_CREACION, loggedUser);
+//            usuario.setUltimo_cambio_clave(null);
+//            usuario.setIntentos_fallidos(0L);
 //        }
-        if (editando) {
-            Logger logger = new Logger();
-            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION, loggedUser);
-        } else {
-            Logger logger = new Logger();
-            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_CREACION, loggedUser);
-            usuario.setUltimo_cambio_clave(null);
-            usuario.setIntentos_fallidos(0L);
+
+            session.saveOrUpdate(usuario);
+
+            envelope.setContents(helpers.Constantes.USUARIO_EXITO);
+
+            usuario = createNewUsuario();
         }
-
-        session.saveOrUpdate(usuario);
-
-//        if (!editando) {
-////            sendPasswordByEMail(usuario.getEmail(), usuario.getLogin(), password);
-//        }
-        envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-        editando = false;
-        usuario = createNewUsuario();
-
-        return zonasTotal();
+        if (!asignaPerfilUsuario) {
+            cancelaEditUsuario = false;
+            editaUsuario = false;
+            return zonasTotal();
+        } else {
+            return asignarPerfilZone.getBody();
+        }
     }
 
     private Usuario createNewUsuario() {
@@ -409,19 +378,16 @@ public class ABMUsuario extends GeneralPage {
         return usuario_local;
     }
 
-
-    /*
-     * reset del formulario
-     */
-    void onActionFromReset() {
-        System.out.println("onActionFromReset");
-        usuario = createNewUsuario();
-        tipoUsuario = usuario.getTipo_usuario();
-        entidad = usuario.getEntidad();
-        editando = false;
-    }
-
-
+//    /*
+//     * reset del formulario
+//     */
+//    void onActionFromReset() {
+//        System.out.println("onActionFromReset");
+//        usuario = createNewUsuario();
+//        tipoUsuario = usuario.getTipo_usuario();
+//        entidad = usuario.getEntidad();
+////        editando = false;
+//    }
     /*
      * Cargar desde los parámetros
      */
@@ -429,10 +395,10 @@ public class ABMUsuario extends GeneralPage {
         System.out.println("onActivate");
         if (usuario == null) {
             usuario = createNewUsuario();
-            trabajador = new Trabajador();
+//            trabajador = new Trabajador();
             rscrol = new RscRol();
             lkEstadoUsuario = new LkEstadoUsuario();
-            editando = false;
+//            editando = false;
             if (loggedUser.getEntidad() != null) //No soy dios
             {
                 tipoUsuario = Usuario.OPERADORABMLOCAL;
@@ -460,20 +426,23 @@ public class ABMUsuario extends GeneralPage {
 
     void onActivate(Usuario user) {
         System.out.println("onActivate(Usuario user)");
+        System.out.println(primeraVez);
+        System.out.println(user);
         if (user == null) {
             user = createNewUsuario();
-            editando = false;
+//            editando = false;
         } else {
-            System.out.println("onActivate(Usuario user)" + user.getTipo_usuario());
-            if (user.getTipo_usuario().equals(Usuario.TRABAJADOR)) {
-                nroDocumento = user.getTrabajador().getNroDocumento();
-                tipoDocumento = user.getTrabajador().getTipoDocumento();
-            }
+            System.out.println("onActivate(Usuario user)" + user.getId());
+//            if (user.getTipo_usuario().equals(Usuario.TRABAJADOR)) {
+//                nroDocumento = user.getTrabajador().getNroDocumento();
+//                tipoDocumento = user.getTrabajador().getTipoDocumento();
+//            }
             trabajador = user.getTrabajador();
             rscrol = user.getRol();
             lkEstadoUsuario = Helpers.getEstadoUsuario(user.getEstado(), session);
             errorBorrar = null;
-            editando = true;
+//            editando = true;
+            editaUsuario = true;
         }
         usuario = user;
     }
