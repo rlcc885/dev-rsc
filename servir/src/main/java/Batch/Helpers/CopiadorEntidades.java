@@ -141,7 +141,7 @@ public class CopiadorEntidades {
         if(origen.getFamiliares() != null)
             destino.setFamiliares(origen.getFamiliares());
         destino.setFormacionInfAdicional(CopiadorEntidades.verifacionNull(origen.getFormacionInfAdicional()));
-        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
+//        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
         if(origen.getMeritosdemeritos() != null)
             destino.setMeritosdemeritos(origen.getMeritosdemeritos());
         destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
@@ -149,10 +149,10 @@ public class CopiadorEntidades {
         destino.setNombres(CopiadorEntidades.verifacionNull(origen.getNombres()));
         destino.setNroCertificadoCONADIS(CopiadorEntidades.verifacionNull(origen.getNroCertificadoCONADIS()));
         destino.setNroRUC(CopiadorEntidades.verifacionNull(origen.getNroRUC()));
-        destino.setPais(CopiadorEntidades.verifacionNull(origen.getPais()));
+ //       destino.setPais(CopiadorEntidades.verifacionNull(origen.getPais()));
         if(origen.getPublicaciones() != null)
             destino.setPublicaciones(origen.getPublicaciones());
-        destino.setRegimenPensionario(CopiadorEntidades.verifacionNull(origen.getRegimenPensionario()));
+  //      destino.setRegimenPensionario(CopiadorEntidades.verifacionNull(origen.getRegimenPensionario()));
         destino.setSexo(CopiadorEntidades.verifacionNull(origen.getSexo()));
         //destino.setTipodiscapacidad(CopiadorEntidades.verifacionNull(origen.getTipodiscapacidad()));
         if(origen.getTitulos() != null)

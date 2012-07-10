@@ -1086,7 +1086,7 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getGrupoSanguineo(), cdestino.getGrupoSanguineo()));
+        //lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getGrupoSanguineo(), cdestino.getGrupoSanguineo()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
@@ -1118,7 +1118,7 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getRegimenPensionario(), cdestino.getRegimenPensionario()));
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getRegimenPensionario(), cdestino.getRegimenPensionario()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }

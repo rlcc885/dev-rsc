@@ -2074,7 +2074,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(t.getFechaNacimiento()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Paises", InformeXLS.leoCampo(t.getPais()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Paises", InformeXLS.leoCampo(t.getPais()), errores, session));
                 escribir.print("|");
                 escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("UBDistrito", InformeXLS.datoAuxiliarToString(t.getCod_ubi_dist()), errores, session));
                 escribir.print("|");
@@ -2098,7 +2098,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(t.getEsSalud()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GrupoSanguineo", InformeXLS.leoCampo(t.getGrupoSanguineo()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GrupoSanguineo", InformeXLS.leoCampo(t.getGrupoSanguineo()), errores, session));
                 escribir.print("|");
 //                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDiscapacidad", InformeXLS.leoCampo(t.getTipoDiscapacidad()), errores, session));
                 escribir.print("|");
@@ -2114,7 +2114,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(t.getEmergenciaTelefonos()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("RegPensionarios", InformeXLS.leoCampo(t.getRegimenPensionario()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("RegPensionarios", InformeXLS.leoCampo(t.getRegimenPensionario()), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(t.getEmailPersonal()));
                 escribir.print("|");

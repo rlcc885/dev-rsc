@@ -134,6 +134,7 @@ public class DatosPersonalesEditor {
          if(valconadis.equals("null")){
             valconadis="0";
         }
+         validaciones();
              
     }
     
@@ -240,6 +241,7 @@ public class DatosPersonalesEditor {
   
             session.saveOrUpdate(actual);
             formulariodatospersonales.clearErrors();
+            validaciones();
             envelope.setContents(helpers.Constantes.TRABAJADOR_EDIT_EXITO);
         }
         return tresZonas();
@@ -415,6 +417,12 @@ public class DatosPersonalesEditor {
     private boolean vessalud;
     @Property
     @Persist
+    private boolean vruc;
+    @Property
+    @Persist
+    private boolean vgruposanguineo;
+    @Property
+    @Persist
     private boolean vdatospersonales;
     @Property
     @Persist
@@ -425,6 +433,7 @@ public class DatosPersonalesEditor {
     @Property
     @Persist
     private boolean vemergencia;
+
     
     
     void validaciones(){
@@ -440,12 +449,32 @@ public class DatosPersonalesEditor {
         else{
             vconadis=true;            
         }
+        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
+            vconadis=true;   
+        }
+        else{
+            vconadis=false;
+        }
         if(valessalud!=null && !valessalud.equals("")){
             vessalud=true;
         }
         else{
             vessalud=false;
         }
+        if(actual.getNroRUC() != null && !actual.getNroRUC().equals("")){
+            vruc=true;   
+        }
+        else{
+            vruc=false;
+        }
+        if(actual.getGruposanguineo() != null && !actual.getGruposanguineo().equals("")){
+            vgruposanguineo=true;   
+        }
+        else{
+            vgruposanguineo=false;
+        }
+        
+        
         if(_usuario.getRol().getId()==1){
             vdatospersonales=true;
             vdatosubicacion=false;
