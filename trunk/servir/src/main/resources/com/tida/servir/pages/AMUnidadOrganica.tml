@@ -100,7 +100,9 @@
                             
                             <t:if test="esBorrable">
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                     t:zone="listaUOZone" href="#" >Eliminar</a>                      
+                                     t:zone="listaUOZone" href="#" ><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                    Eliminar
+                                    </span> </a>                      
   
                                 
                             </t:if>

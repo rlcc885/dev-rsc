@@ -679,7 +679,7 @@ public class CreadorDesdeCsv {
         trabajador.setNombres(_csvTrabajador.get(5));
         trabajador.setSexo(CreadorDesdeDB.verificacionValorDatoAuxiliar("Sexo", _csvTrabajador.get(6), errores, session));
         trabajador.setFechaNacimiento(CreadorDesdeCsv.stringToDate(_csvTrabajador.get(7), errores, helpers.Constantes.TRABAJADORES));
-        trabajador.setPais(CreadorDesdeDB.verificacionValorDatoAuxiliar("Paises", _csvTrabajador.get(8), errores, session));
+//        trabajador.setPais(CreadorDesdeDB.verificacionValorDatoAuxiliar("Paises", _csvTrabajador.get(8), errores, session));
         trabajador.setCod_ubi_dist(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDistrito", _csvTrabajador.get(9), errores, session));
         trabajador.setCod_ubi_prov(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvTrabajador.get(10), errores, session));
         trabajador.setCod_ubi_dept(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvTrabajador.get(11), errores, session));
@@ -691,7 +691,7 @@ public class CreadorDesdeCsv {
         trabajador.setCod_dom_dept(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvTrabajador.get(17), errores, session));
         trabajador.setDomicilioCodigoPostal(_csvTrabajador.get(18));
         trabajador.setEsSalud(_csvTrabajador.get(19));
-        trabajador.setGrupoSanguineo(CreadorDesdeDB.verificacionValorDatoAuxiliar("GrupoSanguineo", _csvTrabajador.get(20), errores, session));
+        //trabajador.setGrupoSanguineo(CreadorDesdeDB.verificacionValorDatoAuxiliar("GrupoSanguineo", _csvTrabajador.get(20), errores, session));
         //trabajador.setTipoDiscapacidad(CreadorDesdeDB.verificacionValorDatoAuxiliar("TipoDiscapacidad", _csvTrabajador.get(21), errores, session));
         trabajador.setNroCertificadoCONADIS(CreadorDesdeCsv.toInteger(_csvTrabajador.get(22)));
         //trabajador.setNivelInstruccion(CreadorDesdeDB.verificacionValorDatoAuxiliar("NivelInstrucción", _csvTrabajador.get(23), errores, session));
@@ -699,7 +699,7 @@ public class CreadorDesdeCsv {
         trabajador.setEmergenciaNombre(_csvTrabajador.get(25));
         trabajador.setEmergenciaDomicilio(_csvTrabajador.get(26));
         trabajador.setEmergenciaTelefonos(_csvTrabajador.get(27));
-        trabajador.setRegimenPensionario(CreadorDesdeDB.verificacionValorDatoAuxiliar("RegPensionarios", _csvTrabajador.get(28), errores, session));
+//        trabajador.setRegimenPensionario(CreadorDesdeDB.verificacionValorDatoAuxiliar("RegPensionarios", _csvTrabajador.get(28), errores, session));
         trabajador.setEmailPersonal(_csvTrabajador.get(29));
         trabajador.setEmailLaboral(_csvTrabajador.get(30));
         trabajador.setNroRUC(_csvTrabajador.get(31));

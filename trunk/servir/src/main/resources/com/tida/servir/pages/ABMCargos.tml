@@ -93,7 +93,9 @@
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
                                 -->
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="c"
-                                     t:zone="listaCargo" href="#">Eliminar</a>
+                                     t:zone="listaCargo" href="#"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                    Eliminar
+                                    </span> </a>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>

@@ -423,7 +423,7 @@ public class FamiliaresEditor {
         if(t.getPais() == null)
             pais = "PERÚ";
         else
-            pais = t.getPais();
+//            pais = t.getPais();
         ubigeoDomicilio = cargoUbigeoTrabajador(t);
         domicilioCP = t.getDomicilioCodigoPostal();
         domicilioDireccion = t.getDomicilioDireccion();

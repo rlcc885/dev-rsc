@@ -98,6 +98,12 @@ public class Alerta  extends GeneralPage {
         if(_usuario.getRol().getId()==3){
             mostrarse=true;
         }
+        if(_usuario.getRol().getId()==1){
+            mostrars=false;
+            mostrare=false;
+            mostrarse=false;
+        }
+        
     }
     
 //    @Property

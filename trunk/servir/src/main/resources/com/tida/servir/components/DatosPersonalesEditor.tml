@@ -74,7 +74,7 @@
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Nombre</label>
-                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" t:disabled="${vdatospersonales}"/>
+                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" t:disabled="${vemergencia}"/>
                             </div>
                             <div class="f-left">
                                 <label>Dirección</label>
@@ -102,70 +102,70 @@
                         </div>
                         <div class="f-left">
                             <label>Email Laboral</label>
-                            <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="30" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="30" t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <t:label for ="numeroRUC"/>
-                            <input t:type="TextField" t:id="numeroRUC" t:value="actual.nroRUC" size="30" disabled ="noeditable" t:validate="regexp"/>
+                            <input t:type="TextField" t:id="numeroRUC" t:value="actual.nroRUC" size="30" t:disabled="${vruc}" t:validate="regexp"/>
                         </div> 
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Número Teléfono Celular</label>
-                            <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="30" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="30" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>Número Teléfono Fijo</label>
-                            <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="30" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="30" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>RNP - OSCE</label>
-                            <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="30" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="30" t:disabled="${votros}"/>
                         </div>
                     </div>
                     <div class="f-wrap">              
                         <div class="f-left">
                             <label>Nivel de Instrucción</label>
-                            <input t:type="Select" t:id="nivelinstruccion" t:value="actual.nivelinstruccion" model="nivelinstrucciones" />
+                            <input t:type="Select" t:id="nivelinstruccion" t:value="actual.nivelinstruccion" model="nivelinstrucciones" t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <label>Formación Profesional</label>
-                            <input t:type="Select" t:id="formacionprofe" t:value="actual.formacionprofesional" model="formacionprofesionales" />
+                            <input t:type="Select" t:id="formacionprofe" t:value="actual.formacionprofesional" model="formacionprofesionales" t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <label>Otros Especificar</label>
-                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="30" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="30" t:disabled="${votros}"/>
                         </div>
                     </div>
                          <div class="f-wrap">
                             <div class="f-left">
                                 <label>Grupo Sanguíneo</label>
-                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" disabled ="noeditable"/>
+                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
                             </div>
                             <div class="f-left">
                                 <label>Régimen pensionario</label>
-                                <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" disabled ="noeditable"/>
+                                <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" t:disabled="${votros}"/>
                             </div>
                             <div class="f-left">
                                 <label>CUSPP o CÓDIGO ONP</label>
-                                <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" disabled ="noeditable"/>
+                                <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
                             </div>                        
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">                                
                                     <label>Nombre de EPS</label>   
                                     <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
-                                        <label><t:radio t:id="o1" t:value="true" /> Si <t:radio t:id="o2" t:value="false" /> No</label>
+                                        <label><t:radio t:id="o1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${votros}"/> No</label>
                                     </t:radiogroup>                                                          
                             </div>
                             <div class="f-left">
                                 <label>Nombre de EPS</label>
-                                <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" disabled ="noeditable"/>
+                                <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" t:disabled="${votros}"/>
                             </div>
                             <div class="f-left">                                
                                     <label>Recibe Pensión</label>   
                                     <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
-                                        <label><t:radio t:id="r1" t:value="true" /> Si <t:radio t:id="r2" t:value="false" /> No</label>
+                                        <label><t:radio t:id="r1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="r2" t:value="false" t:disabled="${votros}"/> No</label>
                                         <!--<label> </label>-->
                                     </t:radiogroup>                                                          
                             </div>
@@ -215,8 +215,7 @@
                             <label>Nro. Certificado CONADIS</label>
                             <!--<input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>-->
                             <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="30"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>
-                            
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>                            
                         </div>
                         <div class="f-left">
                             <label>ESSALUD:</label>
@@ -235,7 +234,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Tipo de Via</label>
-                            <input t:type="Select" t:id="tipovia" model="tipovias" t:value="valtipovia" t:disabled="${vdatosubicacion}"/>
+                            <input t:type="Select" t:id="tipovia" model="tipovias" t:value="valtipovia" onChange="this.form.fire()" t:zone="ubigeoDomZone" t:disabled="${vdatosubicacion}"/>
                         </div>                        
                         <div class="f-left">
                             <label>Direccion</label>
@@ -246,7 +245,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Tipo de Zona</label>
-                            <input t:type="Select" t:id="tipozona" model="tipozonas" t:value="valtipozona" t:disabled="${vdatosubicacion}"/>
+                            <input t:type="Select" t:id="tipozona" model="tipozonas" t:value="valtipozona" onChange="this.form.fire()" t:zone="ubigeoDomZone" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>Nombre de Zona</label>
