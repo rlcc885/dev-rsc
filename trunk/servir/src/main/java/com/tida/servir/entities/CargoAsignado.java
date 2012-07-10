@@ -56,6 +56,8 @@ public class CargoAsignado {
     private Legajo legajo;
 
     private Boolean estado;
+    
+    private Boolean puestoconfianza;
 
     @Temporal(TemporalType.DATE)
     private Date fec_inicio;
@@ -109,6 +111,14 @@ public class CargoAsignado {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+    
+    public Boolean getPuestoConfianza() {
+        return puestoconfianza;
+    }
+
+    public void setPuestoconfianza(Boolean puestoconfianza) {
+        this.puestoconfianza = puestoconfianza;
     }
 
     @OneToMany(cascade=CascadeType.ALL)
