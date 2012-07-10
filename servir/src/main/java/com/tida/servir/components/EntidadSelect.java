@@ -235,6 +235,12 @@ public class EntidadSelect {
         Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("esSubEntidad", true));
+        if(stipoSubEntidad!=null){
+           c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
+        }
+        if(sentidad!=null){
+           c.add(Restrictions.eq("entidad", sentidad));
+        }
         c.addOrder(Order.asc("denominacion"));
    
         return c.list();
@@ -278,10 +284,28 @@ public class EntidadSelect {
 
     }
     
+    Object onSuccessFromformEntidad() {
+
+        return new MultiZoneUpdate("EsSubEntidadZone", EsSubEntidadZone.getBody())
+                .add("TipoSubEntidadZone", TipoSubEntidadZone.getBody())
+                .add("SubEntidadZone", SubEntidadZone.getBody());    
+    }
+    
+    
     Object onSuccessFromformEsSubEntidad() {
-        bessubentidad=true;
+        if(bessubentidad){
+            bessubentidad=false;
+        }else{
+            bessubentidad=true;
+        }
+      
         return new MultiZoneUpdate("TipoSubEntidadZone", TipoSubEntidadZone.getBody())
                 .add("SubEntidadZone", SubEntidadZone.getBody());
+    }
+    
+      Object onSuccessFromformTipoSubEntidad() {
+
+        return SubEntidadZone.getBody();    
     }
     
     void onSelectedFromCancel() {
@@ -301,7 +325,11 @@ public class EntidadSelect {
         }else if(elemento==2){
             return "Alerta";
         }else{    
-        entidad = sentidad;
+            if(bessubentidad){
+                entidad = ssubentidad;
+            }else{
+                entidad = sentidad;
+            }
         System.out.println("Entroooo");
         envelope.setContents("Entidad /U. Ejecutora seleccionada");
         if (_zone != null) {
