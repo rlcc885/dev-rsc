@@ -5,14 +5,15 @@
     <t:content>
 
         <h3>Datos Personales</h3>
-            <form t:type="form" t:id="formulariodatospersonales">
+            <t:zone t:id="zonaGeneral">
+            <form t:type="form" t:id="formulariodatospersonales" t:zone="zonaGeneral">
                     <t:errors/>
-                    <t:envelope t:id="envelope"/>
+                    <t:envelope t:id="envelope"/>                    
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>*Tipo Documento</label>
                                 <!--<select t:type="Select" t:id="documentoide" t:value="actual.tipoDocumento" model="documentoide" />-->
-                                <input t:type="Select" t:id="documentoide" t:value="actual.documentoidentidad" model="documentoide" />
+                                <input t:type="Select" t:id="documentoide" t:value="actual.documentoidentidad" model="documentoide" t:disabled="${vdatospersonales}"/>
                                 <!--
                                 <t:select t:id="nuevo_tipoDocumento" t:value="actual.tipoDocumento"
                                 model="Documentoide" value="nuevo.tipoDocumento" t:validate="required" disabled ="noeditable"/>-->
@@ -21,39 +22,43 @@
                             <div class="f-left">
                                 <t:label for="nuevo_nroDocumento"/>
                                 <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="actual.nroDocumento"
-                                    size="30" t:validate="required, regexp" disabled ="noeditable"/>
+                                    size="30" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Pais de Nacimiento</label>
+                                <input t:type="Select" t:id="pais" t:value="actual.pais" model="paises" t:disabled="${vdatospersonales}" />
                             </div>
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="nombres"/>
                                 <select t:type="TextField" t:id="nombres" t:value="actual.nombres" 
-                                t:validate="required" size="30" disabled ="noeditable"/>
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
                                 <input t:type="TextField" t:id="apellidoPaterno" t:value="actual.apellidoPaterno" 
-                                t:validate="required" size="30" disabled ="noeditable" />
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>
                                 <select t:type="TextField" t:id="apellidoMaterno" t:value="actual.apellidoMaterno" 
-                                t:validate="required" size="30" disabled ="noeditable"/>
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
-                                <label>Sexo:</label>
-                                <select t:type="Select" t:id="sexo" t:value="actual.sexo" model="sexos" disabled ="noeditable"/>
+                                <label>Sexo</label>
+                                <select t:type="Select" t:id="sexo" t:value="valsexo" model="sexos" t:disabled="${vdatospersonales}" t:validate="required"/>
                             </div>
                             <div class="f-left">
-                                <label>Estado Civil:</label>
-                                <select t:type="Select" t:id="estadocivil" t:value="actual.estadoCivil" model="estadoCivil" disabled ="noeditable"/>
+                                <label>Estado Civil</label>
+                                <select t:type="Select" t:id="estadocivil" t:value="actual.estadoCivil" model="estadoCivil" t:disabled="${vdatospersonales}"/>
                             </div>                            
                             <div class="f-left">
-                                <label>Fecha de Nacimiento:</label>
+                                <label>Fecha de Nacimiento</label>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="actual.fechaNacimiento"
-                                    t:validate="required" size="30" />
+                                    t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                             <!--
                         <div class="f-left">
@@ -64,17 +69,39 @@
                             <!-- <input t:type="Select" model="nacionalidades" t:id="nacionalidad" t:value="actual.nacionalidad" disabled ="noeditable"/> -->
                         
                          </div>
-                        
+                      <div class="clear">
+                        <h3>Ante Emergencia contactar a:</h3>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>Nombre</label>
+                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" t:disabled="${vdatospersonales}"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Dirección</label>
+                                <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="30" t:disabled="${vemergencia}"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>Teléfono Alternativo 1</label>
+                                <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="30" t:disabled="${vemergencia}"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Teléfono Alternativo 2</label>
+                                <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="30" t:disabled="${vemergencia}"/>
+                            </div>
+                        </div>
+                    </div>             
                 
                 <div id = "DatosPersonalesOtrosDatos" class="clear">
                     <h3>Otros datos personales</h3>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <label>Email Personal:</label>
-                            <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="30" disabled ="noeditable"/>
+                            <label>Email Personal</label>
+                            <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="30" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
-                            <label>Email Laboral:</label>
+                            <label>Email Laboral</label>
                             <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="30" disabled ="noeditable"/>
                         </div>
                         <div class="f-left">
@@ -84,128 +111,156 @@
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <label>Número Teléfono Celular:</label>
+                            <label>Número Teléfono Celular</label>
                             <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="30" disabled ="noeditable"/>
                         </div>
                         <div class="f-left">
-                            <label>Número Teléfono Fijo:</label>
+                            <label>Número Teléfono Fijo</label>
                             <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="30" disabled ="noeditable"/>
                         </div>
                         <div class="f-left">
-                            <label>Número RNP - OSCE:</label>
+                            <label>RNP - OSCE</label>
                             <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="30" disabled ="noeditable"/>
                         </div>
                     </div>
-                    <div class="f-wrap">
+                    <div class="f-wrap">              
                         <div class="f-left">
-                            <label>Tipo de Discapacidad</label>
-                            <select t:type="Select" t:id="tipodiscapacidad" t:value="actual.tipoDiscapacidad" model="tipoDiscapacidad" disabled ="noeditable" />
+                            <label>Nivel de Instrucción</label>
+                            <input t:type="Select" t:id="nivelinstruccion" t:value="actual.nivelinstruccion" model="nivelinstrucciones" />
                         </div>
                         <div class="f-left">
-                            <label>Nro. Certificado CONADIS:</label>
-                            <input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>
+                            <label>Formación Profesional</label>
+                            <input t:type="Select" t:id="formacionprofe" t:value="actual.formacionprofesional" model="formacionprofesionales" />
                         </div>
                         <div class="f-left">
-                            <label>ESSALUD:</label>
-                            <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>
-                        </div>
-                    </div>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <label>Grupo Sanguíneo:</label>
-                            <select t:type="Select" t:id="gruposanguineo" t:value="actual.grupoSanguineo" model="gruposanguineo" disabled ="noeditable"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Régimen pensionario:</label>
-                            <select t:type="Select" t:id="regimen" t:value="actual.regimenPensionario" model="regimenPensionario" disabled ="noeditable"/>
+                            <label>Otros Especificar</label>
+                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="30" disabled ="noeditable"/>
                         </div>
                     </div>
-
-                    <div class="clear">
-                        <h3>Ante Emergencia contactar a:</h3>
-                        <div class="f-wrap">
+                         <div class="f-wrap">
                             <div class="f-left">
-                                <label>Nombre:</label>
-                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" disabled ="noeditable"/>
+                                <label>Grupo Sanguíneo</label>
+                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" disabled ="noeditable"/>
                             </div>
                             <div class="f-left">
-                                <label>Dirección:</label>
-                                <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="30" disabled ="noeditable"/>
+                                <label>Régimen pensionario</label>
+                                <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" disabled ="noeditable"/>
                             </div>
                             <div class="f-left">
-                                <label>Teléfono:</label>
-                                <input t:type="TextField" t:id="emergenciatelefono" t:value="actual.emergenciaTelefonos" size="30" disabled ="noeditable"/>
-                            </div>
+                                <label>CUSPP o CÓDIGO ONP</label>
+                                <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" disabled ="noeditable"/>
+                            </div>                        
                         </div>
                         <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Teléfono Alternativo 1:</label>
-                                <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="30" disabled ="noeditable"/>
+                            <div class="f-left">                                
+                                    <label>Nombre de EPS</label>   
+                                    <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
+                                        <label><t:radio t:id="o1" t:value="true" /> Si <t:radio t:id="o2" t:value="false" /> No</label>
+                                    </t:radiogroup>                                                          
                             </div>
                             <div class="f-left">
-                                <label>Teléfono Alternativo 2:</label>
-                                <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="30" disabled ="noeditable"/>
+                                <label>Nombre de EPS</label>
+                                <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" disabled ="noeditable"/>
+                            </div>
+                            <div class="f-left">                                
+                                    <label>Recibe Pensión</label>   
+                                    <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
+                                        <label><t:radio t:id="r1" t:value="true" /> Si <t:radio t:id="r2" t:value="false" /> No</label>
+                                        <!--<label> </label>-->
+                                    </t:radiogroup>                                                          
                             </div>
                         </div>
                     </div>
-                </div>
+                
                 <div class="clear" id="actualizar_dpe">	
                     <t:if test = "editable">
-                       <input id="envio" type="submit" value="Actualizar" class="button f-right"/>
+                        
+                       <!--<input id="envio" type="submit" value="Guardar" class="button"/>-->
+                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>
+                        <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button f-right"/>
                     </t:if>
                </div>    
             </form>
+        </t:zone>
 
         <div class="ubigeosData" id = "ubigeosdata_dpe">
             <t:zone t:id="ubigeoNacZone">
 
-                <form t:type="form" t:id="formUbiNac" id="formUbiNac" t:zone="ubigeoNacZone">
-                    <h3>Lugar de Nacimiento</h3>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <label>Pais</label>
-                            <select t:type="select" t:id="pais" t:model="paises"
-                            t:value="pais" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                            t:blankOption="ALWAYS"  t:zone="ubigeoNacZone" disabled ="noeditable" />
-                        </div>
+                <form t:type="form" t:id="formUbiNac" id="formUbiNac" t:zone="ubigeoNacZone">                    
     <!--
                         <select t:type="select" t:id="pais" t:model="paises"
                                     t:value="pais"  t:mixins="zoneUpdater" 
                                     t:clientEvent="change" t:event="changeOfPais" t:ZoneUpdater.zone="ubigeoNacZone" disabled ="noeditable" />
     -->
 
-                        <t:if test="EsPeru">
+                        <!--<t:if test="EsPeru">
                             <div class="f-left" id="ubigeo_lugar"> 
                                 <input t:type="Ubigeos" t:id="ubigeo_nacimiento" t:ubigeo="ubigeoNacimiento"
                                 t:zone="ubigeoNacZone" t:zoneName="ubigeoNacZone" disabled ="noeditable"/>
                             </div>
-                        </t:if>
+                        </t:if>-->
+    
+    
+                    
+                    <div class="f-wrap">                        
+                        <div class="f-left">
+                            <label>Tipo de Discapacidad</label>
+                            <!--<select t:type="Select" t:id="tipodiscapacidad" t:value="valtipodiscapacidad" model="tipodiscapacidades" disabled ="noeditable" />-->
+                            <input t:type="Select" t:id="tipodiscapacidad"
+                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:value="valtipodiscapacidad" model="tipodiscapacidades" t:zone="ubigeoNacZone" t:disabled="${vtipodiscapacidad}"/>
+                        </div>                        
+                        <div class="f-left">
+                            <label>Nro. Certificado CONADIS</label>
+                            <!--<input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>-->
+                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>
+                            
+                        </div>
+                        <div class="f-left">
+                            <label>ESSALUD:</label>
+                            <!--<input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>-->
+                            <input t:type="TextField" t:id="essalud" t:value="valessalud" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>
+                        </div>
                     </div>
+   
                 </form>
             </t:zone>
 
             <t:zone t:id="ubigeoDomZone">
                 <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
-                    <h3>Domicilio Actual</h3>
+                    <h3>Datos de Ubicación</h3>
                     <div class="f-wrap">
                         <div class="f-left">
+                            <label>Tipo de Via</label>
+                            <input t:type="Select" t:id="tipovia" model="tipovias" t:value="valtipovia" t:disabled="${vdatosubicacion}"/>
+                        </div>                        
+                        <div class="f-left">
                             <label>Direccion</label>
-                            <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="25"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="ubigeoDomZone" disabled ="noeditable"/>
+                            <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="40"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="ubigeoDomZone" t:disabled="${vdatosubicacion}"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Tipo de Zona</label>
+                            <input t:type="Select" t:id="tipozona" model="tipozonas" t:value="valtipozona" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
-                            <label>Código Postal</label>
-                            <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" disabled ="noeditable"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  t:validate ="maxlength=7" size="7"/>
+                            <label>Nombre de Zona</label>
+                            <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" t:disabled="${vdatosubicacion}"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  t:validate ="maxlength=7" size="40"/>
                         </div>
                         <div class="f-left" id="ubigeo_dpe">            
                             <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                            t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" disabled ="noeditable"/>
+                            t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" t:disabled="${vdatosubicacion}"/>
                         </div>
                     </div>
+                    
                 </form>
-            </t:zone>
-            
+            </t:zone>          
         </div>
     </t:content>    
 </html>

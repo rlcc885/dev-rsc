@@ -255,7 +255,7 @@ public class Busqueda extends GeneralPage {
         }
 
         if (nroDocumento != null && !nroDocumento.equals("")) {
-            System.out.println("------------------ empleados nroDocumento " + nroDocumento);
+            //System.out.println("------------------ empleados nroDocumento " + nroDocumento);
             c.add(Restrictions.eq("trabajador.nroDocumento", nroDocumento));
         }
 ////        if (tipoDocumento != null && !tipoDocumento.equals("")) {
@@ -264,8 +264,12 @@ public class Busqueda extends GeneralPage {
 //        
 //        // filtros
         if (sexo != null && !sexo.equals("")) {
-
-            c.add(Restrictions.like("trabajador.sexo", sexo));
+            if(sexo.equals("MASCULINO")){
+                c.add(Restrictions.like("trabajador.sexo", "M"));
+            }
+            else{
+                c.add(Restrictions.like("trabajador.sexo", "F"));
+            }            
         }
 
         if (fechadenacimientomenora != null) {
@@ -298,7 +302,7 @@ public class Busqueda extends GeneralPage {
             c.add(Restrictions.like("trabajador.estadocivil", valestadocivil));
         }
         if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
-            c.add(Restrictions.like("trabajador.nivelinstruccion.", valnivelinstruccion));
+            c.add(Restrictions.like("trabajador.nivelinstruccion", valnivelinstruccion));
         }
         if (valformacionprofe != null && !valformacionprofe.equals("")) {            
             c.add(Restrictions.like("trabajador.formacionprofesional", valformacionprofe));            
