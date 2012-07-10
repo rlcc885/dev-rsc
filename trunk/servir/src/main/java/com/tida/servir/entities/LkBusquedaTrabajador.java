@@ -20,6 +20,11 @@ public class LkBusquedaTrabajador implements Serializable {
     private String nombretrabajador;
     private Boolean validado;
     private long identidad;
+    private String entidad;
+    private String unidadorganica;
+    private String cargo;
+    private String estadocargo;
+    private String nrodocumento;
 
     
     public LkBusquedaTrabajador() {
@@ -55,5 +60,41 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setIdentidad(long identidad) {
         this.identidad = identidad;
     }
-   
+    
+    public String getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(String entidad) {
+        this.entidad = entidad;
+    }
+    public String getUnidadorganica() {
+        return unidadorganica;
+    }
+
+    public void setUnidadorganica(String unidadorganica) {
+        this.unidadorganica = unidadorganica;
+    }
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+    public String getEstadocargo() {
+        return estadocargo;
+    }
+
+    public void setEstadocargo(String estadocargo) {
+        this.estadocargo = estadocargo;
+    }
+    public String getNrodocumento() {
+        return nrodocumento;
+    }
+
+    public void setNrodocumento(String nrodocumento) {
+        this.nrodocumento = nrodocumento;
+    }
+    
 }

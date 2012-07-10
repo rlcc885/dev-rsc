@@ -26,7 +26,7 @@
                     <div class="f-left">
                         <t:label for="fec_actualizacion"/>
                         <input t:type="DateField" t:id="fec_actualizacion"
-                               t:value="ca.fec_actualizacion" t:readonly="readonly" size="30" contenteditable="false" disabled="true" />
+                               t:value="ca.fec_actualizacion" t:readonly="readonly" size="30" t:disabled="true" />
                     </div>
 
                 </div>
