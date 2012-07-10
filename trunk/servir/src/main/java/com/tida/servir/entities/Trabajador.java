@@ -44,8 +44,9 @@ public class Trabajador implements Serializable // extends Persona
     @NonVisual
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
+    @ManyToOne
     @NonVisual
-    private String pais;
+    private DatoAuxiliar pais;
     @ManyToOne
     @NonVisual
     @Validate("required")
@@ -78,8 +79,9 @@ public class Trabajador implements Serializable // extends Persona
     private String domicilioCodigoPostal;
     @NonVisual
     private String esSalud;
+    @ManyToOne
     @NonVisual
-    private String grupoSanguineo;
+    private DatoAuxiliar  gruposanguineo;
     @ManyToOne
     @NonVisual
     private DatoAuxiliar tipodiscapacidad;
@@ -102,8 +104,9 @@ public class Trabajador implements Serializable // extends Persona
     private String emergenciaTelefonoAlternativo1;
     @NonVisual
     private String emergenciaTelefonoAlternativo2;
+    @ManyToOne
     @NonVisual
-    private String regimenPensionario;
+    private DatoAuxiliar regimenpensionario;
     @NonVisual
     private String emailPersonal;
     @NonVisual
@@ -119,6 +122,79 @@ public class Trabajador implements Serializable // extends Persona
     private String telefonocelular;
     @NonVisual
     private String telefonofijo;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar tipovia;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar tipozona;
+    @NonVisual
+    private String numregimenpensionario;
+    @NonVisual
+    private String nombreeps;
+    @NonVisual
+    private Boolean eps;
+    @NonVisual
+    private Boolean recibepension;
+    @ManyToOne
+    @NonVisual
+    private Entidad entidad;
+    
+    public Entidad getEntidad() {
+        return entidad;
+    }
+    
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
+    
+    public Boolean getRecibepension() {
+        return recibepension;
+    }
+
+    public void setRecibepension(Boolean recibepension) {
+        this.recibepension = recibepension;
+    }
+    
+    public Boolean getEps() {
+        return eps;
+    }
+
+    public void setEps(Boolean eps) {
+        this.eps = eps;
+    }
+    
+    public String getNombreeps() {
+        return nombreeps;
+    }
+    
+    public void setNombreeps(String nombreeps) {
+        this.nombreeps = nombreeps;
+    }
+    
+    public String getNumregimenpensionario() {
+        return numregimenpensionario;
+    }
+    
+    public void setNumregimenpensionario(String numregimenpensionario) {
+        this.numregimenpensionario = numregimenpensionario;
+    }
+    
+    public DatoAuxiliar getTipovia() {
+        return tipovia;
+    }
+    
+    public void setTipovia(DatoAuxiliar tipovia) {
+        this.tipovia = tipovia;
+    }
+
+    public DatoAuxiliar getTipozona() {
+        return tipozona;
+    }
+
+    public void setTipozona(DatoAuxiliar tipozona) {
+        this.tipozona = tipozona;
+    }
     
     public void setTelefonocelular(String telefonocelular) {
         this.telefonocelular = telefonocelular;
@@ -220,12 +296,12 @@ public class Trabajador implements Serializable // extends Persona
 //        this.formacionProfesional = formacionProfesional;
 //    }
 
-    public String getGrupoSanguineo() {
-        return grupoSanguineo;
+    public DatoAuxiliar getGruposanguineo() {
+        return gruposanguineo;
     }
 
-    public void setGrupoSanguineo(String grupoSanguineo) {
-        this.grupoSanguineo = grupoSanguineo;
+    public void setGruposanguineo(DatoAuxiliar gruposanguineo) {
+        this.gruposanguineo = gruposanguineo;
     }
 
     //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -279,11 +355,11 @@ public class Trabajador implements Serializable // extends Persona
         this.nroDocumento = nroDocumento;
     }
 
-    public String getPais() {
+    public DatoAuxiliar getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(DatoAuxiliar pais) {
         this.pais = pais;
     }
 
@@ -403,12 +479,12 @@ public class Trabajador implements Serializable // extends Persona
         this.emergenciaTelefonos = emergenciaTelefonos;
     }
 
-    public String getRegimenPensionario() {
-        return regimenPensionario;
+    public DatoAuxiliar getRegimenpensionario() {
+        return regimenpensionario;
     }
 
-    public void setRegimenPensionario(String regimenPensionario) {
-        this.regimenPensionario = regimenPensionario;
+    public void setRegimenpensionario(DatoAuxiliar regimenpensionario) {
+        this.regimenpensionario = regimenpensionario;
     }
 
     public String getEmailPersonal() {
