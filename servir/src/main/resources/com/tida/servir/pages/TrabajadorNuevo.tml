@@ -33,7 +33,7 @@
                          <div class="f-left">
                              <t:label for="fecha_ingreso"/>
                             <input t:type="DateField" t:id="fecha_ingreso"
-                                   t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="fechaIngresoChanged"  t:zone="trabajadorNuevoZone" />
+                                   t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="trabajadorNuevoZone" />
                          </div>
                     </div>
                     <div class="f-wrap">
@@ -157,10 +157,6 @@
                     </t:form>
 
             </div>
-        </div>
-                      
-            
-      
-      
+        </div>                        
       
 </html>
