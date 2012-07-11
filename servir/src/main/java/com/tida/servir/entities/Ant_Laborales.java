@@ -1,20 +1,16 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
  * @author ale
  */
+
 @Entity
+//@Table(name = "RSC_ANT_LABORALES_BK")
 public class Ant_Laborales {
 
     public String getCargo() {
