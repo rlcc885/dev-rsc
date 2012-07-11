@@ -113,7 +113,7 @@ public class CargoAsignado {
         this.estado = estado;
     }
     
-    public Boolean getPuestoConfianza() {
+    public Boolean getPuestoconfianza() {
         return puestoconfianza;
     }
 
