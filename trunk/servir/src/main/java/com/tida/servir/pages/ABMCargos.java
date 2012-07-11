@@ -119,6 +119,20 @@ public class ABMCargos extends GeneralPage {
     @InjectComponent
     @Property
     private Zone nivelcargo;
+    
+    //perfiles
+    @Property
+    @Persist
+    private boolean aselect;
+    @Property
+    @Persist
+    private boolean ainsert;
+    @Property
+    @Persist
+    private boolean aupdate;
+    @Property
+    @Persist
+    private boolean adelete;
      /*@Property
     @Persist
     private Ocupacional ocupacional;*/
@@ -127,10 +141,45 @@ public class ABMCargos extends GeneralPage {
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
-        query.setParameter("in_pagename", _resources.getPageName());
-        List result = query.list();
-
+        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));
+            
+        }
+        else{
+            UsuarioAcceso usu = (UsuarioAcceso) result.get(0);
+            if(usu.getAccesoselect()==1)
+                aselect=false;
+            else
+                aselect=true;
+            if(usu.getAccesoreport()==1)
+                ainsert=false;
+            else
+                ainsert=true;
+            if(usu.getAccesoupdate()==1)
+                aupdate=false;
+            else
+                aupdate=true;
+            if(usu.getAccesodelete()==1)
+                adelete=false;
+            else
+                adelete=true;
+           
+//            aselect=(usu.getAccesoselect()!=0);
+//            ainsert=(usu.getAccesoreport()!=0);
+//            aupdate=(usu.getAccesoupdate()!=0);
+//            adelete=(usu.getAccesodelete()!=0);
+            System.out.println(String.valueOf("Convirtio:"+aselect+ainsert+aupdate+adelete));            
+        }
+        
+        
+    }
+    @Log
+    @CommitAfter
+    Object retorno(){        
+        return Alerta.class;
     }
     
     void onSelectedFromClear() {        
@@ -452,7 +501,8 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     void onValidateFromFormularioaltacargo() {
-
+        
+        
         if(num==2){
             
                       
@@ -460,6 +510,16 @@ public class ABMCargos extends GeneralPage {
         else if(num==3){
         
         }else{
+            if (!editando) {
+                if(ainsert){
+                    _altaForm.recordError("Usted no tiene acceso para registrar datos");
+                }
+            }
+            else{
+                if(aupdate){
+                    _altaForm.recordError("Usted no tiene acceso para actualizar datos"); 
+                }
+            }
             // Seguimos sólo si hay puestos disponibles.
             Criteria c;
             c = session.createCriteria(Cargoxunidad.class);
@@ -475,7 +535,6 @@ public class ABMCargos extends GeneralPage {
             if (editando) {
                     c.add(Restrictions.ne("id", cargo.getId()));
             }
-
             c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
             c.createAlias("unidadorganica", "unidadorganica");
             c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
@@ -542,6 +601,7 @@ public class ABMCargos extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioaltacargo() {
+
         if(num==2){
             
         }
