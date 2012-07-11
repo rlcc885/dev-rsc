@@ -28,8 +28,9 @@
 
         <div>
         <ul id="tabs-Personales" class="tabs">
-            <li><a href="#"> Personales</a></li>
-            <li><a href="#"> Datos</a></li>
+            <li><a href="#"> Datos Personales</a></li>
+            <li><a href="#"> Estudios </a></li>
+            <li><a href="#"> Antecedentes Laborales</a></li> 
             <!--<li><a href="#"> Familia</a></li>
             <li><a href="#"> Formación</a></li>
             <li><a href="#"> Antecedentes Laborales</a></li>            
@@ -51,10 +52,16 @@
                 <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual" />
               
         </div>
-        <div class= "pane" id='familiares' name='familiares'>
+        <div class= "pane" id='estudios' name='estudios'>            
             
-                    sdsd
+                <t:TitulosEditor t:id="titulosEditor" actual= "actual" />
+                
 	</div>
+        <div class= "pane" id='antecedentes' name='antecedentes'>
+            
+                <t:AntecedentesEditor t:id="antecedentesEditor" actual= "actual"/>
+            
+        </div>
 		<!-- FIN / Zona de datosPersonales, correspondientes al TAB -->
        
 
@@ -95,9 +102,7 @@
                 </div>
          </t:zone> 
 
-         <t:zone t:id="titulosZone">
-                    <t:TitulosEditor t:id="titulosEditor" actual= "actual" zone="titulosZone"/>
-         </t:zone>
+         
          <t:zone t:id="certificacionesZone">
                     <t:CertificacionesEditor t:id="certificacionesEditor" actual= "actual" zone="certificacionesZone"/>
          </t:zone>

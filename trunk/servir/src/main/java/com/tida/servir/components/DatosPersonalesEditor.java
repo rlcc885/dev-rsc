@@ -35,6 +35,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -162,6 +164,13 @@ public class DatosPersonalesEditor {
                 formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
             }
         }
+        if(!isEmail(actual.getEmailPersonal())){
+            formulariodatospersonales.recordError("Email Personal Formato incorrecto");
+        }
+        if(!isEmail(actual.getEmailLaboral())){
+            formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
+        }
+        
     }
 
     @Log
@@ -174,6 +183,9 @@ public class DatosPersonalesEditor {
     }
 
     public boolean getEditable() {
+//        if(_usuario.getRol().getId()==1 ||_usuario.getRol().getId()==2 ||_usuario.getRol().getId()==3 ){
+//            
+//        }
         return Permisos.puedeEscribir(_usuario, _oi);
     }
     void onSelectedFromSave() {        
@@ -487,5 +499,17 @@ public class DatosPersonalesEditor {
             votros=false;
             vemergencia=false;            
         }
+    }
+    public boolean isEmail(String correo) {
+        Pattern pat = null;
+        Matcher mat = null;        
+        pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        mat = pat.matcher(correo);
+        if (mat.find()) {
+            System.out.println("[" + mat.group() + "]");
+            return true;
+        }else{
+            return false;
+        }        
     }
 }

@@ -23,6 +23,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -121,6 +122,16 @@ public class ABMCargos extends GeneralPage {
      /*@Property
     @Persist
     private Ocupacional ocupacional;*/
+    
+    @Log
+    @SetupRender
+    private void inicio() {
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName());
+        List result = query.list();
+
+    }
     
     void onSelectedFromClear() {        
         num2=2;
