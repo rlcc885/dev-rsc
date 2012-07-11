@@ -6,7 +6,7 @@
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
-    <h2>Cargos</h2>
+    <h1>Administración de Cargos/Puestos</h1>
 
     <div id="mainfiltros" class="pane">
 
@@ -54,9 +54,12 @@
                         </div> 
                     </div>
                     <div class="actions f-right">
-                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
+                        
                         <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
-                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                        <t:if test="aselect" negate="true">
+                            <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button" t:disabled="${aselect}"/>
+                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" t:disabled="${aselect}"/>
+                        </t:if> 
                         <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                     </div>                                 
                 </form>   
@@ -74,7 +77,8 @@
             
         
     </div> 
-
+    
+    <t:if test="aselect" negate="true">
     <div t:type="zone" t:id="listaCargo" class="selectform" >
         <t:if test="mostrar">  
             <t:form t:id="formlistaunidad">
@@ -88,14 +92,16 @@
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="PuedeEditar">
-                                <t:actionlink t:id="editar" zone="listaCargo" context="c">Editar</t:actionlink>
+                                <t:actionlink t:id="editar" zone="listaCargo" context="c" t:disabled="${aupdate}">Editar</t:actionlink>
                                 <!--
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
                                 -->
+                                <t:if test="adelete" negate="true">
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="c"
-                                     t:zone="listaCargo" href="#"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                     t:zone="listaCargo" href="#" t:disabled="${adelete}"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?" t:disabled="${adelete}">
                                     Eliminar
                                     </span> </a>
+                                </t:if>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>
@@ -103,6 +109,7 @@
             </t:form>
         </t:if>
      </div> <!-- tabla cargos -->
+    </t:if>
     
      <h3> Crear / Editar Cargo </h3>
         <div class="box" id="box-cargos">
@@ -224,7 +231,7 @@
                         <div class="actions f-right">
                             <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/> 
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button"/> 
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button" /> 
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
                         <br style="clear: both;" />
