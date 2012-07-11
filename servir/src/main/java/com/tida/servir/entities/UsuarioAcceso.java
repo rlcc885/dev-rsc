@@ -22,7 +22,13 @@ import javax.persistence.*;
     resultClass = UsuarioAcceso.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")
-    })
+    }),
+    @NamedNativeQuery(name = "callSpUsuarioAccesoPagina",
+    query = "CALL SP_USUARIOACCESOPAGINA(?,:in_nrodocumento,:in_pagename)",
+    resultClass = UsuarioAcceso.class,
+    hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
+    })    
 })
 
 @Entity
