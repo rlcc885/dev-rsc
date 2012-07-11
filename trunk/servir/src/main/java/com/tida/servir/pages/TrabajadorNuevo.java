@@ -9,6 +9,9 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Constantes;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -295,7 +298,18 @@ public class TrabajadorNuevo  extends GeneralPage
         if(nuevo == null) {
             nuevo = new Trabajador();
         }
+          System.out.println("entro y gravo "+fechaingreso);
+        System.out.println("entro y gravo2 "+puestoconfianza);
         //trabajadorTieneCargoOtraEntidad = false;
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariotrabajadornuevo()
+    {
+        System.out.println("entro y gravo "+fechaingreso);
+        System.out.println("entro y gravo2 "+puestoconfianza);
+        return trabajadorNuevoZone.getBody();
     }
          
     public boolean getDNI(){
@@ -323,7 +337,7 @@ public class TrabajadorNuevo  extends GeneralPage
     
     @Log
     @CommitAfter    
-    Object onSuccessFromFormulariobotones() {
+    Object onSuccessFromFormulariobotones() throws ParseException {
         
         if(elemento==1){
             return "TrabajadorNuevo";
@@ -348,13 +362,13 @@ public class TrabajadorNuevo  extends GeneralPage
                   session.saveOrUpdate(nuevoLegajo);
                   //Guardar Cargo Asignado     
                   cargoAsignado = new CargoAsignado();
-                  cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
+                  cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);            
                   cargoAsignado.setFec_inicio(fechaingreso);
                   cargoAsignado.setTipovinculo(tipovinculo);
                   cargoAsignado.setCargoxunidad(cargo);
                   cargoAsignado.setLegajo(nuevoLegajo);
                   cargoAsignado.setTrabajador(nuevo);
-                  //cargoAsignado.setPuestoconfianza(puestoconfianza);
+                  cargoAsignado.setPuestoconfianza(puestoconfianza);
                   session.saveOrUpdate(cargoAsignado);
                   envelope.setContents(helpers.Constantes.EUE_EXITO);
                   envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
@@ -378,12 +392,6 @@ public class TrabajadorNuevo  extends GeneralPage
      void onDNIChanged() {
         nuevo.setNroDocumento(_request.getParameter("param"));
     }
-     void onTipoDNIChanged() {
-        nuevo.setTipoDocumento(_request.getParameter("param"));
-    }
-     void onFechaIngresoChanged() {
-       fechaingreso=new Date(_request.getParameter("param"));
-    }
      
      void onNombreChanged() {
         nuevo.setNombres(_request.getParameter("param"));
@@ -394,7 +402,11 @@ public class TrabajadorNuevo  extends GeneralPage
      void onApeMatChanged() {
        nuevo.setApellidoMaterno(_request.getParameter("param"));
     }
+     void onFechaIngresoChanged() {
+       System.out.println("entro y gravo 333 "+_request.getParameter("param"));
      
+    }
+      
  
      
 }
