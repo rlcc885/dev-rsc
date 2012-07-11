@@ -69,29 +69,7 @@
                             <!-- <input t:type="Select" model="nacionalidades" t:id="nacionalidad" t:value="actual.nacionalidad" disabled ="noeditable"/> -->
                         
                          </div>
-                      <div class="clear">
-                        <h3>Ante Emergencia contactar a:</h3>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Nombre</label>
-                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" t:disabled="${vemergencia}"/>
-                            </div>
-                            <div class="f-left">
-                                <label>Dirección</label>
-                                <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="30" t:disabled="${vemergencia}"/>
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Teléfono Alternativo 1</label>
-                                <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="30" t:disabled="${vemergencia}"/>
-                            </div>
-                            <div class="f-left">
-                                <label>Teléfono Alternativo 2</label>
-                                <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="30" t:disabled="${vemergencia}"/>
-                            </div>
-                        </div>
-                    </div>             
+                           
                 
                 <div id = "DatosPersonalesOtrosDatos" class="clear">
                     <h3>Otros datos personales</h3>
@@ -123,7 +101,7 @@
                             <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="30" t:disabled="${votros}"/>
                         </div>
                     </div>
-                    <div class="f-wrap">              
+                                        <div class="f-wrap">              
                         <div class="f-left">
                             <label>Nivel de Instrucción</label>
                             <input t:type="Select" t:id="nivelinstruccion" t:value="actual.nivelinstruccion" model="nivelinstrucciones" t:disabled="${votros}"/>
@@ -137,20 +115,47 @@
                             <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="30" t:disabled="${votros}"/>
                         </div>
                     </div>
-                         <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Grupo Sanguíneo</label>
-                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
-                            </div>
-                            <div class="f-left">
-                                <label>Régimen pensionario</label>
-                                <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" t:disabled="${votros}"/>
-                            </div>
-                            <div class="f-left">
-                                <label>CUSPP o CÓDIGO ONP</label>
-                                <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
-                            </div>                        
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Grupo Sanguíneo</label>
+                            <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
                         </div>
+                        <div class="f-left">
+                            <label>Régimen pensionario</label>
+                            <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" t:disabled="${votros}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>CUSPP o CÓDIGO ONP</label>
+                            <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="clear">
+                    <h3>Ante Emergencia contactar a:</h3>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Nombre</label>
+                            <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="30" t:disabled="${vemergencia}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Dirección</label>
+                            <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="30" t:disabled="${vemergencia}"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Teléfono Alternativo 1</label>
+                            <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="30" t:disabled="${vemergencia}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Teléfono Alternativo 2</label>
+                            <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="30" t:disabled="${vemergencia}"/>
+                        </div>
+                    </div>
+                </div>  
+                    <div class="clear">
+                    <h3>dsd a:</h3>
+
                         <div class="f-wrap">
                             <div class="f-left">                                
                                     <label>Nombre de EPS</label>   
@@ -171,8 +176,8 @@
                             </div>
                         </div>
                     </div>
-                
-                <div class="clear" id="actualizar_dpe">	
+                <!--id="actualizar_dpe"-->
+                    <div class="clear" id="actualizar_dpe" >	
                     <t:if test = "editable">
                         
                        <!--<input id="envio" type="submit" value="Guardar" class="button"/>-->
@@ -214,13 +219,13 @@
                         <div class="f-left">
                             <label>Nro. Certificado CONADIS</label>
                             <!--<input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>-->
-                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="30"
+                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="20"
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>                            
                         </div>
                         <div class="f-left">
                             <label>ESSALUD:</label>
                             <!--<input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>-->
-                            <input t:type="TextField" t:id="essalud" t:value="valessalud" size="30"
+                            <input t:type="TextField" t:id="essalud" t:value="valessalud" size="20"
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>
                         </div>
                     </div>
