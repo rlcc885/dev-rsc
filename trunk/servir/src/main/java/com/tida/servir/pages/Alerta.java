@@ -33,6 +33,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -65,11 +66,12 @@ public class Alerta  extends GeneralPage {
     private Request _request;
     private GenericSelectModel<Entidad_BK> _beans;
     
-    @InjectComponent
-    private Zone listasistemas;
+//    @InjectComponent
+//    private Zone listasistemas;
         @InjectComponent
     private Zone listaentidad;
     @Property
+    @Persist
     private Evento e;
     @Property
     private LkBusquedaTrabajador lt;
@@ -82,10 +84,16 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private boolean mostrarse;
+//    @Property
+//    @Persist
+//    private LkBusquedaEvento le;
     @Property
     @Persist
-    private LkBusquedaEvento le;
-        
+    private LkBusquedaEvento le;  
+    @Property
+    @Persist
+    private BusquedaEvento la;  
+    
     @Log
     @SetupRender
     private void inicio() {
@@ -129,14 +137,25 @@ public class Alerta  extends GeneralPage {
 //    }
  
     @Log
-    public List<Evento> getEventos() {
-        Criteria c = session.createCriteria(LkBusquedaEvento.class);
-        c.add(Restrictions.eq("estadoevento", Evento.ESTADO_BAJA));        
-        return c.list();
+    public List<BusquedaEvento> getEventos() {
+//        Criteria c = session.createCriteria(BusquedaEvento.class);
+//        c.add(Restrictions.eq("estadoevento",false));        
+//        return c.list();
+        Query query = session.getNamedQuery("callSpEventoAcceso");
+        query.setParameter("in_rol_id",2);
+        query.setParameter("in_tipoevento_id",1);
+        query.setParameter("in_perfil_id","");        
+        List result = query.list();
+
+        for (int i = 0; i < result.size(); i++) {
+            BusquedaEvento usu = (BusquedaEvento) result.get(i);
+//            System.out.println(stock.getDescmenu()+stock.getActivo().toString());
+        }
+        return result;
     }
     
     @Log
-    public List<Evento> getTrabajadores() {
+    public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         c.add(Restrictions.eq("validado", true));
         c.add(Restrictions.eq("identidad",entidadUE.getId()));
@@ -144,8 +163,12 @@ public class Alerta  extends GeneralPage {
     }
     
     @Log
-    Object onActionFromEditar(Cargoxunidad c) {
-        return listasistemas.getBody();
+    @CommitAfter  
+    Object onActionFromEditar(Evento pri) {
+        pri.setEstadoevento(false);
+        session.saveOrUpdate(pri);
+        //session.flush();
+        return listaentidad.getBody();
     }
     
     @Log

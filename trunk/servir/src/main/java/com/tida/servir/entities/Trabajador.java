@@ -107,6 +107,9 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private DatoAuxiliar regimenpensionario;
+    @ManyToOne
+    @NonVisual
+    private DatoAuxiliar sistemapensionario;
     @NonVisual
     private String emailPersonal;
     @NonVisual
@@ -479,6 +482,14 @@ public class Trabajador implements Serializable // extends Persona
         this.emergenciaTelefonos = emergenciaTelefonos;
     }
 
+    public DatoAuxiliar getSistemapensionario() {
+        return sistemapensionario;
+    }
+
+    public void setSistemapensionario(DatoAuxiliar sistemapensionario) {
+        this.sistemapensionario = sistemapensionario;
+    }
+    
     public DatoAuxiliar getRegimenpensionario() {
         return regimenpensionario;
     }

@@ -10,6 +10,7 @@ import helpers.Helpers;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -21,6 +22,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -148,6 +150,8 @@ public class Busqueda extends GeneralPage {
     private Boolean valconfianza;
     @Inject
     private Request request;    
+    @Inject
+    private ComponentResources _resources;
     
     
     @Property
@@ -166,9 +170,33 @@ public class Busqueda extends GeneralPage {
     @Persist
     private DatoAuxiliar valdocumentoide;
     
+    @Property
+    @SessionState
+    private UsuarioAcceso usu;
+    
+    @Property
+    @Persist
+    private Boolean vselect;
     
     @Component(id = "xxx")
     private Form xxx;
+    
+    @Log
+    @SetupRender
+    private void inicio() {
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));            
+        }
+        else{
+            usu = (UsuarioAcceso) result.get(0);            
+            vselect=(usu.getAccesoselect()!=0);                       
+        }
+    }
+    
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getFormacionprofesional() {
@@ -435,44 +463,44 @@ public class Busqueda extends GeneralPage {
     /*
      * Para armar la zona dinámica
      */
-    @InjectComponent
-    private Zone cargosGrillaZone;
+//    @InjectComponent
+//    private Zone cargosGrillaZone;
     @InjectComponent
     private Zone empleadoszone;
     @InjectComponent
     private Zone filtrosZone;
 
-    Object onToCargo(Trabajador persona) {
-        actual = persona;
-        if (!request.isXHR()) {
-            return this;
-        }
+//    Object onToCargo(Trabajador persona) {
+//        actual = persona;
+//        if (!request.isXHR()) {
+//            return this;
+//        }
+//
+//        return cargosGrillaZone.getBody();
+//    }
 
-        return cargosGrillaZone.getBody();
-    }
+//    @XHR
+//    Object onToUpdateCargosGrilla() {
+//        if (actual != null) {
+//            if (!request.isXHR()) {
+//                return this;
+//            }
+//
+//            return cargosGrillaZone.getBody();
+//        }
+//        return null;
+//    }
 
-    @XHR
-    Object onToUpdateCargosGrilla() {
-        if (actual != null) {
-            if (!request.isXHR()) {
-                return this;
-            }
-
-            return cargosGrillaZone.getBody();
-        }
-        return null;
-    }
-
-    private MultiZoneUpdate getZones() {
-        return new MultiZoneUpdate("cargosGrillaZone", cargosGrillaZone.getBody());
-    }
+//    private MultiZoneUpdate getZones() {
+//        return new MultiZoneUpdate("cargosGrillaZone", cargosGrillaZone.getBody());
+//    }
 
     private MultiZoneUpdate getEmpleadosZones() {
-        return new MultiZoneUpdate("cargosGrillaZone", cargosGrillaZone.getBody()).add("empleadoszone", empleadoszone.getBody());
+        return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
     }
 
     private MultiZoneUpdate getTodasZones() {
-        return new MultiZoneUpdate("cargosGrillaZone", cargosGrillaZone.getBody()).add("empleadoszone", empleadoszone.getBody()).add("filtrosZone", filtrosZone.getBody());
+        return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody()).add("filtrosZone", filtrosZone.getBody());
     }
 
     public String getSelectionRow() {

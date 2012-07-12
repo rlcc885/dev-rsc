@@ -49,7 +49,7 @@
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Sexo</label>
-                                <select t:type="Select" t:id="sexo" t:value="valsexo" model="sexos" t:disabled="${vdatospersonales}" t:validate="required"/>
+                                <select t:type="Select" t:id="sexo" t:value="valsexo" model="sexos" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <label>Estado Civil</label>
@@ -58,7 +58,7 @@
                             <div class="f-left">
                                 <label>Fecha de Nacimiento</label>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="actual.fechaNacimiento"
-                                    t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
+                                    t:validate="required" size="30" t:disabled="${vdatospersonales}" t:editable="false"/>
                             </div>
                             <!--
                         <div class="f-left">
@@ -72,7 +72,7 @@
                            
                 
                 <div id = "DatosPersonalesOtrosDatos" class="clear">
-                    <h3>Otros datos personales</h3>
+                    <h3>Otros datos personales:</h3>
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Email Personal</label>
@@ -115,20 +115,7 @@
                             <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="30" t:disabled="${votros}"/>
                         </div>
                     </div>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <label>Grupo Sanguíneo</label>
-                            <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Régimen pensionario</label>
-                            <select t:type="Select" t:id="regimen" t:value="actual.regimenpensionario" model="regimenpensionarios" t:disabled="${votros}"/>
-                        </div>
-                        <div class="f-left">
-                            <label>CUSPP o CÓDIGO ONP</label>
-                            <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
-                        </div>                        
-                    </div>
+                    
                 </div>
                 <div class="clear">
                     <h3>Ante Emergencia contactar a:</h3>
@@ -154,9 +141,12 @@
                     </div>
                 </div>  
                     <div class="clear">
-                    <h3>dsd a:</h3>
-
+                    <h3>Otros datos:</h3>
                         <div class="f-wrap">
+                            <div class="f-left">
+                                <label>Grupo Sanguíneo</label>
+                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
+                            </div>    
                             <div class="f-left">                                
                                     <label>Nombre de EPS</label>   
                                     <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
@@ -177,14 +167,16 @@
                         </div>
                     </div>
                 <!--id="actualizar_dpe"-->
-                    <div class="clear" id="actualizar_dpe" >	
-                    <t:if test = "editable">
-                        
-                       <!--<input id="envio" type="submit" value="Guardar" class="button"/>-->
-                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>
-                        <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button f-right"/>
-                    </t:if>
+                 <div class="clear" id="actualizar_dpe" >
+                     <t:if test="vbotones">                                               
+                        <!--<input id="envio" type="submit" value="Guardar" class="button"/>-->
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button f-right"/>
+                     </t:if>
+                     <t:if test="vbotones" negate="true">
+                            <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
+                     </t:if>
                </div>    
             </form>
         </t:zone>
@@ -229,7 +221,29 @@
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>
                         </div>
                     </div>
-   
+                </form>
+            </t:zone>
+            <t:zone t:id="regimenZone">
+                <form t:type="form" t:id="formregimen" id="formRegimen" t:zone="regimenZone">
+                    <div class="f-wrap"> 
+                        <div class="f-left">
+                            <label>Sistema Pensionario</label>
+                            <input t:type="Select" t:id="sistemapen"
+                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            t:value="valsistemapensionario" model="sistemapensionarios" t:zone="regimenZone" t:disabled="${votros}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Tipo</label>
+                            <input t:type="Select" t:id="regimenpen"
+                            onChange="this.form.fire()"
+                            t:value="valregimenpensionario" model="regimenpensionarios" t:zone="regimenZone" t:disabled="${votros}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>CUSPP o CÓDIGO ONP</label>                            
+                            <input t:type="TextField" t:id="cuspp" t:value="valcuspp" t:disabled="${votros}"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="regimenZone" size="30"/>
+                        </div>  
+                    </div>   
                 </form>
             </t:zone>
 
@@ -255,7 +269,7 @@
                         <div class="f-left">
                             <label>Nombre de Zona</label>
                             <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" t:disabled="${vdatosubicacion}"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  t:validate ="maxlength=7" size="40"/>
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  size="40"/>
                         </div>
                         <div class="f-left" id="ubigeo_dpe">            
                             <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"

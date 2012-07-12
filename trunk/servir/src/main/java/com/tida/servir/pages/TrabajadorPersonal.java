@@ -6,6 +6,7 @@ import com.tida.servir.entities.Entidad;
 import java.util.List;
 
 import com.tida.servir.entities.DatoAuxiliar;
+import com.tida.servir.entities.UsuarioAcceso;
 import com.tida.servir.entities.FormacionProfesional;
 import com.tida.servir.entities.MeritoDemerito;
 import com.tida.servir.entities.Permisos;
@@ -41,7 +42,6 @@ public class TrabajadorPersonal  extends GeneralPage
     private List<String> nacionalidad = new ArrayList<String>();
     private List<String> estadoCivil = new ArrayList<String>();
     private List<String> tipoDiscapacidad = new ArrayList<String>();
-
 
     @Property
      @Persist
