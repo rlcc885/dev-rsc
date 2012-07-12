@@ -1,12 +1,6 @@
 package com.tida.servir.components;
 
-import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Ubigeo;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 
 import helpers.Errores;
@@ -37,6 +31,9 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.hibernate.Query;
+import com.tida.servir.pages.Busqueda;
+import java.util.ArrayList;
 
 /**
  *
@@ -53,7 +50,11 @@ public class DatosPersonalesEditor {
     private Session session;
     @Component(id = "formulariodatospersonales")
     private Form formulariodatospersonales;
-
+    @SuppressWarnings("unused")   
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
+    
     /*
      * @InjectComponent private Zone datosPersonalesZone;
      */
@@ -96,9 +97,21 @@ public class DatosPersonalesEditor {
     @Persist
     @Property
     private String valessalud;
+    @Persist
+    @Property
+    private DatoAuxiliar valsistemapensionario;
+    @Persist
+    @Property
+    private DatoAuxiliar valregimenpensionario;
     @InjectComponent
     @Property
     private Zone zonaGeneral;
+    @Persist
+    @Property
+    private String valcuspp;
+    @InjectComponent
+    @Property
+    private Zone regimenZone;
     private int elemento=0;
     
     
@@ -132,12 +145,14 @@ public class DatosPersonalesEditor {
         valtipozona=actual.getTipozona();
         valtipodiscapacidad=actual.getTipodiscapacidad();
         valconadis=String.valueOf(actual.getNroCertificadoCONADIS());
-        valessalud=actual.getEsSalud();   
+        valessalud=actual.getEsSalud();
+        valsistemapensionario=actual.getSistemapensionario();
+        valregimenpensionario=actual.getRegimenpensionario();
+        valcuspp=actual.getNumregimenpensionario();         
+         validaciones();      
          if(valconadis.equals("null")){
-            valconadis="0";
+            valconadis=null;
         }
-         validaciones();
-             
     }
     
     
@@ -145,6 +160,13 @@ public class DatosPersonalesEditor {
     
     @Log
     void onValidateFromformulariodatospersonales() {
+        if(valconadis!=null){
+                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+            }
+            else{
+                actual.setNroCertificadoCONADIS(0);
+        }
+        System.out.println("validate cayoooooooooooooo");
         if (actual.getFechaNacimiento().after(new Date())) {
             Logger logger = new Logger();
             logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
@@ -164,13 +186,16 @@ public class DatosPersonalesEditor {
                 formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
             }
         }
-        if(!isEmail(actual.getEmailPersonal())){
-            formulariodatospersonales.recordError("Email Personal Formato incorrecto");
+        if(actual.getEmailPersonal()!=null){
+            if(!isEmail(actual.getEmailPersonal())){
+                formulariodatospersonales.recordError("Email Personal Formato incorrecto");
+            }
         }
-        if(!isEmail(actual.getEmailLaboral())){
-            formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
-        }
-        
+        if(actual.getEmailLaboral()!=null){
+            if(!isEmail(actual.getEmailLaboral())){
+                formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
+            }
+        }  
     }
 
     @Log
@@ -198,11 +223,17 @@ public class DatosPersonalesEditor {
     void onSelectedFromCancel() {        
         elemento=3;
     }
+    void onSelectedFromBack(){     
+        elemento=4;
+    }
     
     @Log
     @CommitAfter
     Object onSuccessFromformulariodatospersonales() {
-        if(elemento==3){
+        if(elemento==4){
+            return Busqueda.class;
+        }
+        else if(elemento==3){
             
         }
         else if(elemento==2){
@@ -220,8 +251,10 @@ public class DatosPersonalesEditor {
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
             actual.setTipodiscapacidad(valtipodiscapacidad);
-            actual.setEsSalud(valessalud);
-            actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+            actual.setEsSalud(valessalud);            
+            actual.setSistemapensionario(valsistemapensionario);
+            actual.setRegimenpensionario(valregimenpensionario);
+            actual.setNumregimenpensionario(valcuspp);
             if(valsexo.equals("MASCULINO")){
                 actual.setSexo("M");
             }
@@ -253,6 +286,7 @@ public class DatosPersonalesEditor {
   
             session.saveOrUpdate(actual);
             formulariodatospersonales.clearErrors();
+            System.out.println("guardar cayoooooooooooooo");
             validaciones();
             envelope.setContents(helpers.Constantes.TRABAJADOR_EDIT_EXITO);
         }
@@ -263,7 +297,8 @@ public class DatosPersonalesEditor {
 
     MultiZoneUpdate tresZonas() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("ubigeoNacZone", ubigeoNacZone.getBody()).add("ubigeoDomZone", ubigeoDomZone.getBody()).add("zonaGeneral", zonaGeneral.getBody());
+        mu = new MultiZoneUpdate("ubigeoNacZone", ubigeoNacZone.getBody()).add("ubigeoDomZone", ubigeoDomZone.getBody())
+                .add("zonaGeneral", zonaGeneral.getBody()).add("regimenZone", regimenZone.getBody());
         return mu;
     }
 
@@ -281,10 +316,15 @@ public class DatosPersonalesEditor {
         }
         else{
             vconadis=true;
-            valconadis=null;
         }
         
         return ubigeoNacZone.getBody();
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormregimen() {     
+        return regimenZone.getBody();
     }
     @Inject
     private Request _request;
@@ -313,6 +353,9 @@ public class DatosPersonalesEditor {
     
     void onEssaChanged() {
         valessalud = _request.getParameter("param");
+    }
+    void onCusppChanged() {
+        valcuspp= _request.getParameter("param");
     }
 
     // TODO: poner en common
@@ -388,7 +431,26 @@ public class DatosPersonalesEditor {
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getRegimenpensionarios() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", null, 0, session);
+        //List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", null, 0, session);
+        List<DatoAuxiliar> list=null;
+        if(valsistemapensionario!=null){
+            list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", valsistemapensionario.getCodigo(), session);
+        }
+        else{
+            list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", 0, session);
+        }
+       
+
+//        DatoAuxiliar d;
+//       if (ubigeo.getDepartamento() != null) {
+//            lub = Helpers.getDatoAuxiliar("UBPROVINCIA", "UBDEPARTAMENTO",
+//                    ubigeo.getDepartamento().getCodigo(), session);
+        
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getSistemapensionarios() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SISTEMAPENSIONARIO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
@@ -445,28 +507,44 @@ public class DatosPersonalesEditor {
     @Property
     @Persist
     private boolean vemergencia;
+    @Property
+    @Persist
+    private boolean vbotones;
 
     
     
     void validaciones(){
+        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());        
         if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
             vtipodiscapacidad=true;
+            vconadis=true;
             if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
                 vconadis=true;                
             }        
             else{
+                vconadis=false;                
+            }       
+            if(valconadis.equals("0") || valconadis.equals("null")){
                 vconadis=false;
+                valconadis=null;
+                //valconadis=null;
+                }
+            else{
+                    vconadis=true;
             }
+//            if(valconadis.equals("0")){
+//                vconadis=false;
+//            }
+//            else{
+//                vconadis=true;  
+//            }
         }
         else{
-            vconadis=true;            
+            vconadis=false;  
+            vtipodiscapacidad=false;
         }
-        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
-            vconadis=true;   
-        }
-        else{
-            vconadis=false;
-        }
+        
+
         if(valessalud!=null && !valessalud.equals("")){
             vessalud=true;
         }
@@ -486,20 +564,35 @@ public class DatosPersonalesEditor {
             vgruposanguineo=false;
         }
         
-        
-        if(_usuario.getRol().getId()==1){
-            vdatospersonales=true;
-            vdatosubicacion=false;
-            votros=true;
-            vemergencia=false;            
-        }
-        else if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-            vdatospersonales=true;
-            vdatosubicacion=false;
-            votros=false;
-            vemergencia=false;            
-        }
+            if(usua.getAccesoupdate()==1){
+                if(_usuario.getRol().getId()==1){
+                    vdatospersonales=true;
+                    vdatosubicacion=false;
+                    votros=true;
+                    vemergencia=false;            
+                }
+                else if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+                    vdatospersonales=true;
+                    vdatosubicacion=false;
+                    votros=false;
+                    vemergencia=false;            
+                }   
+                vbotones=true;
+            }
+            else{
+                vdatospersonales=true;
+                vdatosubicacion=true;
+                votros=true;
+                vemergencia=true;
+                vtipodiscapacidad=true;
+                vconadis=true;
+                vessalud=true;
+                vruc=true;
+                vgruposanguineo=true;
+                vbotones=false;
+            }      
     }
+    
     public boolean isEmail(String correo) {
         Pattern pat = null;
         Matcher mat = null;        

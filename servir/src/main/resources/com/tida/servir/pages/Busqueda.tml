@@ -208,11 +208,12 @@
                                   </div>
                     -->
                 </div> <!-- Filtros -->
-
+                <t:if test="vselect">
                 <div class="actions f-right">
                     <input id = "buscarsubmit" type="submit" value="Buscar" class="button"/>
                     <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/>
                 </div>
+                </t:if>
 
             </t:form>
 
@@ -231,7 +232,7 @@
         });
         -->
     </script>
-
+    <t:if test="vselect">
     <div id="grillas-busquedas">
 
         <div id="tablaTrabajador">
@@ -277,8 +278,8 @@
 
         </div>
         <br/>
-
-        <div id="cargoCell">
+    
+        <!--<div id="cargoCell">
             <t:zone t:id="cargosGrillaZone">
                 <t:if test="actual">
                     <h2>Cargos Asignados</h2> 
@@ -290,10 +291,10 @@
                 </t:if>
 
             </t:zone>
-        </div>
+        </div>-->
 
     </div> <!-- Grillas-busqueda -->
-
+</t:if>
 
     <br/><br/>
 
