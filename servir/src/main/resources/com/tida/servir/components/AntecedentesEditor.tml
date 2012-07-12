@@ -3,80 +3,155 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
-        <div name="antecedentes" id="antecedentes" class="pane" style="display:block;">
-            <div class="t-zone" id="antecedentesZone">
-                <h3>Antecedentes Laborales</h3>
+     <h2>Experiencia Laboral</h2>
+        <div id = "tabla_oi">
+            <t:zone t:id="listaAntLoboralZone">   
+                <t:grid source="listadoAntLaborales" rowsPerPage="10" t:add="Revisado,Acciones" pagerPosition="bottom"
+                row="listaantlaborales" include="cargo, empresa, fec_ingreso, fec_egreso" inPlace="true" >
+                    <t:parameter name="empty">
+                    <div class="no-info">No se encontraron registros</div>
+                    </t:parameter>
+                    <p:cargoCell>
+                           <t:if test="${listaantlaborales.validado}">
+                               <label class="datofalse">${listaantlaborales.cargo}</label>  
+                           </t:if>
+                            <t:if test="${listaantlaborales.validado}" negate="true">
+                               <label class="datotrue">${listaantlaborales.cargo}</label>  
+                           </t:if>
+                    </p:cargoCell>
+                    <p:empresaCell>
+                           <t:if test="${listaantlaborales.validado}">
+                               <label class="datofalse">${listaantlaborales.empresa}</label>  
+                           </t:if>
+                            <t:if test="${listaantlaborales.validado}" negate="true">
+                               <label class="datotrue">${listaantlaborales.empresa}</label>  
+                           </t:if>
+                    </p:empresaCell>
+                    <p:fec_ingresoCell>
+                           <t:if test="${listaantlaborales.validado}">
+                               <label class="datofalse">${listaantlaborales.fec_ingreso}</label>  
+                           </t:if>
+                            <t:if test="${listaantlaborales.validado}" negate="true">
+                               <label class="datotrue">${listaantlaborales.fec_ingreso}</label>  
+                           </t:if>
+                    </p:fec_ingresoCell>
+                    <p:fec_egresoCell>
+                           <t:if test="${listaantlaborales.validado}">
+                               <label class="datofalse">${listaantlaborales.fec_egreso}</label>  
+                           </t:if>
+                            <t:if test="${listaantlaborales.validado}" negate="true">
+                               <label class="datotrue">${listaantlaborales.fec_egreso}</label>  
+                           </t:if>
+                    </p:fec_egresoCell>
+                     <p:revisadoCell>
+                         <t:if test="${bvalidausuario}">
+                           <t:if test="${listaantlaborales.validado}">
+                               <label class="datofalse">SI</label>  
+                           </t:if>
+                            <t:if test="${listaantlaborales.validado}" negate="true">
+                               <label class="datotrue">NO</label>  
+                           </t:if>
+                         </t:if>
+                    </p:revisadoCell>
+                    <p:accionesCell>
+                        <t:if test="${listaantlaborales.validado}" negate="true">
+                               <t:actionlink t:id="editar" zone="antLaboralZone" context="listaantlaborales">Editar</t:actionlink> | 
+                            
+                        <t:actionlink t:id="eliminar" zone="listaAntLoboralZone" context="listaantlaborales"> 
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span> 
+                        </t:actionlink> 
+                        </t:if>        
+                    </p:accionesCell>
+                    
+                </t:grid>
+            </t:zone>
+        </div>  
+      
+<div class="f-wrap">
 
-                <form t:type="form" t:id="antLaboralesEdit" t:zone="prop:zone">
-                    <t:errors/>
+
+</div>  
+   
+ <div class="box">
+     <h3>Registro de Experiencia Laboral</h3>
+     
+            <div t:type="zone" t:id="mensajesZone" >
+                <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
                     <t:envelope t:id="envelope"/>
-                    <table class="t-data-grid">
-                        <thead>
-                            <tr>
-                                <th>* Empresa</th>
-                                <th>* Cargo</th>
-                                <th>Función Principal</th>
-                                <th>Motivo de Cese</th>
-                                <th>* Fecha de Inicio</th>
-                                <th>* Fecha de Finalización</th>
-                                <th class="Acciones t-last">Acciones</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr t:type="AjaxFormLoop" t:id = "antecedentes" t:source="actual.ant_Laborales"
-                            t:value="ant_Laborales" t:encoder = "encoder">
-
-                                <t:submitnotifier>
-                                    <td><input t:type="TextField" t:id="empresa" t:value="ant_Laborales.empresa" t:validate="required" disabled ="noeditable" /></td>
-                                    <td><input t:type="TextField" t:id="cargo" t:value="ant_Laborales.cargo" t:validate="required" disabled ="noeditable" /></td>
-                                    <td><input t:type="TextArea" t:id="funcion" value="ant_Laborales.funcion" disabled ="noeditable" /></td>
-                                    <td><input t:type="TextArea" t:id="motivoCese" value="ant_Laborales.motivocese" disabled ="noeditable" /></td> 
-                                    <td><input t:type="DateField" t:id="fec_ingreso" t:value="ant_Laborales.fec_ingreso" t:label="Fecha de ingreso" t:validate="required" size="10" disabled ="noeditable" /></td>
-                                    <td><input t:type="DateField" t:id="fec_egreso" t:value="ant_Laborales.fec_egreso" t:label="Fecha de egreso" t:validate="required" size="10" disabled ="noeditable" /></td>
-                                    <td>
-                                        <t:if test = "editable">
-                                            <t:removerowlink>Eliminar</t:removerowlink>
-                                        </t:if>
-                                    </td>
-                                </t:submitnotifier>
-                                <p:addRow>
-                                    <td colspan="11" style="text-align: right">
-                                        <t:if test = "editable">
-                                            <t:addrowlink>Agregar Nuevo</t:addrowlink>
-                                        </t:if>
-                                    </td>
-                                </p:addRow>
-                            </tr>
-                        </tbody>
-                    </table>
-                  <div class="actions f-right">
-                        <t:if test = "editable">
-                            <input type="submit" value="Guardar" class="button"/>
-                        </t:if>
-                    </div>                                           
-                </form>
+                    <t:errors/>
+                </t:form> 
             </div>
-         </div>
-    </t:content>
+     
+     
           <div class="f-wrap">  
-            <div t:type="zone" t:id="botonesZone" >
-                    <t:form t:id="formulariobotones"  zone="botonesZone">
+            <div t:type="zone" t:id="antLaboralZone" >
+                    <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
 
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                 <label>* Empresa: </label>
+                                <input t:type="TextField" t:id="empresa"
+                                        t:value="ant_Laborales.empresa" t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                 <label>* Cargo: </label>
+                                <input t:type="TextField" t:id="cargo" 
+                                        t:value="ant_Laborales.cargo" t:validate="required" />
+                            </div>
+
+                            <div class="f-left">
+                                <label>* Fecha de Inicio: </label>
+                                <input t:type="DateField" t:id="fec_ingreso" 
+                                        t:value="ant_Laborales.fec_ingreso" t:validate="required" size="10" />
+                            </div>
+                            <div class="f-left">
+                                <label>* Fecha de Finalización</label>
+                                <input t:type="DateField" t:id="fec_egreso" 
+                                        t:value="ant_Laborales.fec_egreso" t:validate="required" size="10" />
+                            </div>
+                           
+                        </div>
+                        
+                        <div class="f-wrap">
+                             <div class="f-left">
+                                <label>Función Principal: </label>
+                                <input t:type="TextArea" t:id="funcion" 
+                                        t:value="ant_Laborales.funcion" />
+                            </div>
+                            <div class="f-left">
+                                 <label>Motivo de Cese: </label>
+                                <input t:type="TextArea" t:id="motivoCese"
+                                        t:value="ant_Laborales.motivoCese"/>
+                           
+                            </div>                     
+                        </div> 
+                    
+                        <div class="f-right">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" />
+                        </div>
+                    </t:form>
+
+            </div>    
+            </div> 
+     
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="antLaboralZone">
+                <div class="f-wrap">
                     <div class="f-right">
                         <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
                     </div>
                     <div class="f-right">
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
                     </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button" t:mixins="confirm" />
-                    </div>
-                    </t:form>
+                </div>
+                </t:form>
+
 
             </div>
-                
-                
-           </div>
+     
+ </div>
+</t:content>
 
 </html>
