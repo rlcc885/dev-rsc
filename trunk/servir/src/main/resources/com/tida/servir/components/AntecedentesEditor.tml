@@ -13,16 +13,12 @@
                     <table class="t-data-grid">
                         <thead>
                             <tr>
-                                <th>* Cargo</th>
                                 <th>* Empresa</th>
-                                <th>* Función</th>
-                                <th>* Area</th>
-                                <th>* Reg. Laboral</th>
-                                <th>* Ent. Pub.</th>
-                                <th>* Fecha de ingreso</th>
-                                <th>* Fecha de egreso</th>
-                                <th>Cargado trabajador</th>
-                                <th>Validado</th>
+                                <th>* Cargo</th>
+                                <th>Función Principal</th>
+                                <th>Motivo de Cese</th>
+                                <th>* Fecha de Inicio</th>
+                                <th>* Fecha de Finalización</th>
                                 <th class="Acciones t-last">Acciones</th>
                             </tr>
                         </thead>
@@ -32,21 +28,12 @@
                             t:value="ant_Laborales" t:encoder = "encoder">
 
                                 <t:submitnotifier>
-                                    <td><input t:type="TextField" t:id="cargo" t:value="ant_Laborales.cargo" t:validate="required, maxlength=10" size="10" disabled ="noeditable"/></td>
-                                    <td><input t:type="TextField" t:id="empresa" t:value="ant_Laborales.empresa" t:validate="required, maxlength=10" size="10" disabled ="noeditable"/></td>
-                                    <td><input t:type="TextField" t:id="funcion" value="ant_Laborales.funcion" t:validate="required" disabled ="noeditable"/></td>
-                                    <td><input t:type="TextField" t:id="area" value="ant_Laborales.area" t:validate="required" disabled ="noeditable"/></td>
-                                    <td><input t:type="TextField" t:id="regLaboral" value="ant_Laborales.regLaboral" t:validate="required" disabled ="noeditable"/></td>
-                                    <td><input t:type="Checkbox" t:id="entidadPublica" value="ant_Laborales.entidadPublica" t:validate="required" disabled ="noeditable"/></td>
-                                    <td><input t:type="DateInput" t:id="fec_ingreso" t:date="ant_Laborales.fec_ingreso"
-                                    t:label="Fecha de ingreso" t:validate="required" size="10" disabled ="noeditable"/></td>
-                                    <td><input t:type="DateInput" t:id="fec_egreso" t:date="ant_Laborales.fec_egreso"
-                                    t:label="Fecha de egreso" t:validate="required" size="10" disabled ="noeditable"/></td>
-                                    <td><input t:type="Checkbox" t:id="agregadoTrabajador" value="ant_Laborales.agregadoTrabajador" t:validate="required" disabled ="true"/></td>
-                                    <td><input t:type="Checkbox" t:id="validado" value="ant_Laborales.validado" t:validate="required" disabled ="esTrabajadorEditable"/></td>
-                                    <!-- If optimistic locking is needed then uncomment this next line.
-                                    <t:hidden value="ant_Laborales.version"/>
-                                    -->
+                                    <td><input t:type="TextField" t:id="empresa" t:value="ant_Laborales.empresa" t:validate="required" disabled ="noeditable" /></td>
+                                    <td><input t:type="TextField" t:id="cargo" t:value="ant_Laborales.cargo" t:validate="required" disabled ="noeditable" /></td>
+                                    <td><input t:type="TextArea" t:id="funcion" value="ant_Laborales.funcion" disabled ="noeditable" /></td>
+                                    <td><input t:type="TextArea" t:id="motivoCese" value="ant_Laborales.motivocese" disabled ="noeditable" /></td> 
+                                    <td><input t:type="DateField" t:id="fec_ingreso" t:value="ant_Laborales.fec_ingreso" t:label="Fecha de ingreso" t:validate="required" size="10" disabled ="noeditable" /></td>
+                                    <td><input t:type="DateField" t:id="fec_egreso" t:value="ant_Laborales.fec_egreso" t:label="Fecha de egreso" t:validate="required" size="10" disabled ="noeditable" /></td>
                                     <td>
                                         <t:if test = "editable">
                                             <t:removerowlink>Eliminar</t:removerowlink>
@@ -63,13 +50,33 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="actions f-right">
+                  <div class="actions f-right">
                         <t:if test = "editable">
                             <input type="submit" value="Guardar" class="button"/>
                         </t:if>
-                    </div>
+                    </div>                                           
                 </form>
             </div>
-        </div>
+         </div>
     </t:content>
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="botonesZone" >
+                    <t:form t:id="formulariobotones"  zone="botonesZone">
+
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button" t:mixins="confirm" />
+                    </div>
+                    </t:form>
+
+            </div>
+                
+                
+           </div>
+
 </html>

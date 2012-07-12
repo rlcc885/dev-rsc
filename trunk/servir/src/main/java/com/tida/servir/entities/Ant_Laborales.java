@@ -10,17 +10,36 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 
 @Entity
-//@Table(name = "RSC_ANT_LABORALES_BK")
+@Table(name = "RSC_ANTECEDENTELABORAL")
 public class Ant_Laborales {
 
-    public String getCargo() {
-        return cargo;
+
+    @NonVisual
+    private Long id;
+    private String empresa;
+    private String cargo;
+    private String funcion;  
+    private String motivocese;
+    @Temporal(TemporalType.DATE)
+    private Date fec_ingreso;
+    @Temporal(TemporalType.DATE)
+    private Date fec_egreso;       
+    private Boolean agregadoTrabajador;    
+    private Boolean validado;        
+    private Trabajador trabajador;
+    private Entidad entidad;
+    
+    
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setId(Long id) {
+        this.id = id;
     }
-
+    
     public String getEmpresa() {
         return empresa;
     }
@@ -29,7 +48,31 @@ public class Ant_Laborales {
         if (empresa != null)
             this.empresa = empresa.trim();
     }
+    
+    public String getCargo() {
+        return cargo;
+    }
 
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getFuncion() {
+        return funcion;
+    }
+
+    public void setFuncion(String funcion) {
+        this.funcion = funcion;
+    }
+    
+    public String getMotivocese() {
+        return motivocese;
+    }
+
+    public void setMotivocese(String motivocese) {
+        this.motivocese = motivocese;
+    }
+    
     public Date getFec_egreso() {
         return fec_egreso;
     }
@@ -46,14 +89,42 @@ public class Ant_Laborales {
         this.fec_ingreso = fec_ingreso;
     }
 
-    public String getFuncion() {
-        return funcion;
+    public Boolean getAgregadoTrabajador() {
+        return agregadoTrabajador;
     }
 
-    public void setFuncion(String funcion) {
-        this.funcion = funcion;
+    public void setAgregadoTrabajador(Boolean agregadoTrabajador) {
+        this.agregadoTrabajador = agregadoTrabajador;
+
+    }
+    
+    public Boolean getValidado() {
+        return validado;
     }
 
+    public void setValidado(Boolean validado) {
+        this.validado = validado;
+    }
+    
+    @ManyToOne(optional = false)
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
+    
+    @ManyToOne(optional = false)
+    public Entidad getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -77,91 +148,5 @@ public class Ant_Laborales {
     }
 
 
-
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-
-//	@Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @NonVisual
-    private Long id;
-
-//    @ManyToOne(optional = false)
-    private Trabajador trabajador;
-    private String cargo;
-    private String empresa;
-    private String funcion;
-    private Boolean entidadPublica;
-    private String area;
-    private String regLaboral;
-    private Boolean agregadoTrabajador;
-    private Boolean validado;
-    
-
-    public Boolean getValidado() {
-        return validado;
-    }
-
-    public void setValidado(Boolean validado) {
-        this.validado = validado;
-    }
-
-    public String getRegLaboral() {
-        return regLaboral;
-    }
-
-    public void setRegLaboral(String regLaboral) {
-        this.regLaboral = regLaboral;
-    }
-        
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-    
-    @ManyToOne(optional = false)
-    public Trabajador getTrabajador() {
-        return trabajador;
-    }
-
-    public void setTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
-    }
-    
-    public Boolean getAgregadoTrabajador() {
-        return agregadoTrabajador;
-    }
-
-    public void setAgregadoTrabajador(Boolean agregadoTrabajador) {
-        this.agregadoTrabajador = agregadoTrabajador;
-    }
-
-    public Boolean getEntidadPublica() {
-        return entidadPublica;
-    }
-
-    public void setEntidadPublica(Boolean entidadPublica) {
-        this.entidadPublica = entidadPublica;
-    }
-    
-   @Temporal(TemporalType.DATE)
-    private Date fec_ingreso;
-
-   @Temporal(TemporalType.DATE)
-    private Date fec_egreso;
-   
 
 }

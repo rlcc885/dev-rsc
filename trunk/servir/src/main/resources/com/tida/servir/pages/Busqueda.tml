@@ -257,10 +257,10 @@
                     </t:parameter>
                     <p:accionesCell>
                         <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="e.id" href="#">Personales</a>
-                        |<a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Familiares</a>
+                        |<a t:type="pagelink" t:page="TrabajadorPersonal" t:context="e.id" href="#">Familiares</a>
                         |<a t:type="pagelink" t:page="Meritos" t:context="e.id" href="#">Laborales</a>
                         <!--|<a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#"> Cargos </a>-->
-                        |<a t:type="pagelink" t:page="TrabajadorModificar" t:context="e.id" href="#">Documentos</a>
+                        |<a t:type="pagelink" t:page="TrabajadorPersonal" t:context="e.id" href="#">Documentos</a>
                     </p:accionesCell>
 
                 </t:grid>
