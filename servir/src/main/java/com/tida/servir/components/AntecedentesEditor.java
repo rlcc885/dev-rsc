@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.PrimaryKeyEncoder;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Log;
@@ -63,6 +64,8 @@ public class AntecedentesEditor {
 
     @Inject
     private Session session;
+    
+    private int elemento=0;
     
     @InjectComponent
     private Envelope envelope;
@@ -112,40 +115,41 @@ public class AntecedentesEditor {
         return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
     }
 
-  @CommitAfter
   @Log
-  public Object onSuccess()
+  @CommitAfter
+  Object onSuccessFromAntLaboralesEdit()
   {
-        for(Ant_Laborales ant : actual.getAnt_Laborales()) {
-            if((ant.getFec_egreso() != null) && (ant.getFec_ingreso() != null )){
-                if (ant.getFec_egreso().before(ant.getFec_ingreso())) {
-      	  		Logger logger = new Logger();
-      	  		logger.loguearError(session, _usuario, ant.getId().toString(), 
-      	  				Logger.CODIGO_ERROR_FECHA_EGRESO_PREVIA_INGRESO, 
-      	  				Errores.ERROR_FECHA_EGRESO_PREVIA_INGRESO, Logger.TIPO_OBJETO_ANT_LABORALES);
-                _form.recordError(Errores.ERROR_FECHA_EGRESO_PREVIA_INGRESO);
-                return this;
-            }
-      	  	if(ant.getFec_egreso().after(new Date())) {
-      	  		Logger logger = new Logger();
-      	  		logger.loguearError(session, _usuario, ant.getId().toString(), 
-      	  				Logger.CODIGO_ERROR_FECHA_EGRESO_PREVIA_ACTUAL, 
-      	  				Errores.ERROR_FECHA_EGRESO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_ANT_LABORALES);
-    			_form.recordError(Errores.ERROR_FECHA_EGRESO_PREVIA_ACTUAL);
-    			return this;
-    		}
-            }
-        }
+      for(Ant_Laborales ant : actual.getAnt_Laborales()) {
+                        if((ant.getFec_egreso() != null) && (ant.getFec_ingreso() != null )){
+                            if (ant.getFec_egreso().before(ant.getFec_ingreso())) {
+                                    Logger logger = new Logger();
+                                    logger.loguearError(session, _usuario, String.valueOf(ant.getId()), 
+                                                    Logger.CODIGO_ERROR_FECHA_EGRESO_PREVIA_INGRESO, 
+                                                    Errores.ERROR_FECHA_EGRESO_PREVIA_INGRESO, Logger.TIPO_OBJETO_ANT_LABORALES);
+                            _form.recordError(Errores.ERROR_FECHA_EGRESO_PREVIA_INGRESO);
+                            return this;
+                        }
+                            if(ant.getFec_egreso().after(new Date())) {
+                                    Logger logger = new Logger();
+                                    logger.loguearError(session, _usuario, String.valueOf(ant.getId()), 
+                                                    Logger.CODIGO_ERROR_FECHA_EGRESO_PREVIA_ACTUAL, 
+                                                    Errores.ERROR_FECHA_EGRESO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_ANT_LABORALES);
+                                    _form.recordError(Errores.ERROR_FECHA_EGRESO_PREVIA_ACTUAL);
+                                    return this;
+                            }
+                        }
+                    }
 
-        _form.clearErrors();
-        envelope.setContents(helpers.Constantes.ANT_LABORAL_EXITO);
-        return this;
+                    _form.clearErrors();
+                    envelope.setContents(helpers.Constantes.ANT_LABORAL_EXITO);
+                    return this;
+        
   }
 
   @Log
   @CommitAfter
   Object onAddRow()
-  {
+  { 
     Ant_Laborales ant = new Ant_Laborales();
     if (actual.getAnt_Laborales() == null) {
         actual.setAnt_Laborales(new ArrayList<Ant_Laborales>());
@@ -157,6 +161,7 @@ public class AntecedentesEditor {
     session.saveOrUpdate(actual);
     new Logger().loguearOperacion(session, _usuario, String.valueOf(ant.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ANT_LABORALES);
     return ant;
+
   }
 
   @Log
@@ -171,4 +176,32 @@ public class AntecedentesEditor {
      Object onFailure() {
           return this;
     }
+     
+     
+    void onSelectedFromCancel() {
+        elemento=2;
+    }
+    
+    void onSelectedFromReset() {
+         elemento=1;
+    }
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormulariobotones() {
+        
+        if(elemento==1){
+            ant_Laborales=null;
+            return this;
+        }else if(elemento==2){
+            return "Busqueda";
+        }else{    
+           return this;
+        }
+        
+    }
+    
 }
+
+
+
