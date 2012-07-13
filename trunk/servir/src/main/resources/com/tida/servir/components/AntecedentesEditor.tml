@@ -60,7 +60,8 @@
                         <t:actionlink t:id="eliminar" zone="listaAntLoboralZone" context="listaantlaborales"> 
                             <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                 Eliminar
-                            </span> 
+                            </span>
+      
                         </t:actionlink> 
                         </t:if>        
                     </p:accionesCell>
@@ -123,8 +124,7 @@
                             <div class="f-left">
                                  <label>Motivo de Cese: </label>
                                 <input t:type="TextArea" t:id="motivoCese"
-                                        t:value="ant_Laborales.motivoCese"/>
-                           
+                                        t:value="ant_Laborales.motivoCese"/>                           
                             </div>                     
                         </div> 
                     
