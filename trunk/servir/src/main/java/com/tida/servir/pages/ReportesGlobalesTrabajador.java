@@ -96,7 +96,7 @@ public class ReportesGlobalesTrabajador  extends GeneralPage
             // busco legajos en este organismo con este trabajador.
             List<Trabajador> trabajadores=  session.createCriteria(Trabajador.class)
                 .add(Restrictions.eq("nroDocumento", nuevo.getNroDocumento()))
-                .add(Restrictions.like("tipoDocumento", nuevo.getTipoDocumento()))
+                .add(Restrictions.like("tipoDocumento", nuevo.getDocumentoidentidad()))
                 .list();
 
 

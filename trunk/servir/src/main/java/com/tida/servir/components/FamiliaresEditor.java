@@ -415,10 +415,10 @@ public class FamiliaresEditor {
     }
 
     public void cargoDatosDefault(Trabajador t) {
-        if(t.getNacionalidad() == null)
-            familiarActual.setNacionalidad("PERÚ");
-        else
-            familiarActual.setNacionalidad(t.getNacionalidad());
+//        if(t.getNacionalidad() == null)
+//            familiarActual.setNacionalidad("PERÚ");
+//        else
+//            familiarActual.setNacionalidad(t.getNacionalidad());
 
         if(t.getPais() == null)
             pais = "PERÚ";

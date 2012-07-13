@@ -153,7 +153,7 @@ public class CreadorDesdeDB {
         Criteria c = session.createCriteria(Legajo.class);
         c.createAlias("trabajador", "trabajador");
         c.createAlias("entidadUE", "entidadUE");
-        c.add(Restrictions.eq("trabajador.tipoDocumento", trabajador.getTipoDocumento()));
+//        c.add(Restrictions.eq("trabajador.tipoDocumento", trabajador.getTipoDocumento()));
         c.add(Restrictions.eq("trabajador.nroDocumento", trabajador.getNroDocumento()));
         c.add(Restrictions.eq("entidadUE.codigoEntidadUE", entidadUE.getCodigoEntidadUE()));
 
@@ -385,7 +385,7 @@ public class CreadorDesdeDB {
                 rpcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
             else
                 rpcsv.setCodigo_cargo("");
-            rpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
+//            rpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
             rpcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
             if(rp.getConceptoRemunerativo() != null)
                 rpcsv.setCodigo_concepto_remunerativo(rp.getConceptoRemunerativo().getCodigo());
@@ -417,7 +417,7 @@ public class CreadorDesdeDB {
             epcsv.setFecha_hasta(ep.getFec_hasta());
             epcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
             epcsv.setTipo(ep.getTipo());
-            epcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
+//            epcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
             lepcsv.add(epcsv);
         }
 
@@ -444,7 +444,7 @@ public class CreadorDesdeDB {
             alpcsv.setMotivo(alp.getMotivo());
             alpcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
             alpcsv.setTipo(alp.getTipo());
-            alpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
+//            alpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
             lalpcsv.add(alpcsv);
         }
 
