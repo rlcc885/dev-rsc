@@ -54,6 +54,7 @@
                          </t:if>
                     </p:revisadoCell>
                     <p:accionesCell>
+                        <t:if test="${bvalidausuario}">
                         <t:if test="${listaantlaborales.validado}" negate="true">
                                <t:actionlink t:id="editar" zone="antLaboralZone" context="listaantlaborales">Editar</t:actionlink> | 
                             
@@ -63,7 +64,8 @@
                             </span>
       
                         </t:actionlink> 
-                        </t:if>        
+                        </t:if> 
+                        </t:if>
                     </p:accionesCell>
                     
                 </t:grid>
@@ -125,7 +127,14 @@
                                  <label>Motivo de Cese: </label>
                                 <input t:type="TextArea" t:id="motivoCese"
                                         t:value="ant_Laborales.motivoCese"/>                           
-                            </div>                     
+                            </div>
+                              <t:if test="${bvalidausuario}">
+                            <div class="f-left">
+                                    <label>Revisado: </label>
+                                    <input t:type="Checkbox" t:id="validado" 
+                                           t:value="ant_Laborales.validado"/>
+                            </div>
+                              </t:if>
                         </div> 
                     
                         <div class="f-right">
