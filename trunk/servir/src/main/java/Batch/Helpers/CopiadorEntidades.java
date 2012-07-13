@@ -121,9 +121,9 @@ public class CopiadorEntidades {
         destino.setCod_dom_dept(origen.getCod_dom_dept());
         destino.setCod_dom_dist(origen.getCod_dom_dist());
         destino.setCod_dom_prov(origen.getCod_dom_prov());
-        destino.setCod_ubi_dept(origen.getCod_ubi_dept());
-        destino.setCod_ubi_dist(origen.getCod_ubi_dist());
-        destino.setCod_ubi_prov(origen.getCod_ubi_prov());
+//        destino.setCod_ubi_dept(origen.getCod_ubi_dept());
+//        destino.setCod_ubi_dist(origen.getCod_ubi_dist());
+//        destino.setCod_ubi_prov(origen.getCod_ubi_prov());
         destino.setCodigoOSCE(CopiadorEntidades.verifacionNull(origen.getCodigoOSCE()));
         destino.setDomicilioCodigoPostal(CopiadorEntidades.verifacionNull(origen.getDomicilioCodigoPostal()));
         destino.setDomicilioDireccion(CopiadorEntidades.verifacionNull(origen.getDomicilioDireccion()));
@@ -131,7 +131,7 @@ public class CopiadorEntidades {
         destino.setEmailPersonal(CopiadorEntidades.verifacionNull(origen.getEmailPersonal()));
         destino.setEmergenciaDomicilio(CopiadorEntidades.verifacionNull(origen.getEmergenciaDomicilio()));
         destino.setEmergenciaNombre(CopiadorEntidades.verifacionNull(origen.getEmergenciaNombre()));
-        destino.setEmergenciaTelefonos(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonos()));
+//        destino.setEmergenciaTelefonos(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonos()));
         destino.setEmergenciaTelefonoAlternativo1(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonoAlternativo1()));
         destino.setEmergenciaTelefonoAlternativo2(CopiadorEntidades.verifacionNull(origen.getEmergenciaTelefonoAlternativo2()));
         destino.setEsSalud(CopiadorEntidades.verifacionNull(origen.getEsSalud()));
@@ -144,7 +144,7 @@ public class CopiadorEntidades {
 //        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
         if(origen.getMeritosdemeritos() != null)
             destino.setMeritosdemeritos(origen.getMeritosdemeritos());
-        destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
+//        destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
         //destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelinstruccion()));
         destino.setNombres(CopiadorEntidades.verifacionNull(origen.getNombres()));
         destino.setNroCertificadoCONADIS(CopiadorEntidades.verifacionNull(origen.getNroCertificadoCONADIS()));
