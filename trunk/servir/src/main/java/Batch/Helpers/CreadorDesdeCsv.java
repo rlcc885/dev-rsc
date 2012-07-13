@@ -1984,9 +1984,9 @@ public class CreadorDesdeCsv {
         ant_laborale.setFuncion(_csvAnt_Laboral.get(5));
         ant_laborale.setFec_ingreso(CreadorDesdeCsv.stringToDate(_csvAnt_Laboral.get(6), errores, helpers.Constantes.ANTECEDENTES_LABORALES));
         ant_laborale.setFec_egreso(CreadorDesdeCsv.stringToDate(_csvAnt_Laboral.get(7), errores, helpers.Constantes.ANTECEDENTES_LABORALES));
-        ant_laborale.setEntidadPublica(CreadorDesdeCsv.toBoolean(_csvAnt_Laboral.get(8)));
-        ant_laborale.setArea(_csvAnt_Laboral.get(9));
-        ant_laborale.setRegLaboral(_csvAnt_Laboral.get(10));
+//        ant_laborale.setEntidadPublica(CreadorDesdeCsv.toBoolean(_csvAnt_Laboral.get(8)));
+//        ant_laborale.setArea(_csvAnt_Laboral.get(9));
+//        ant_laborale.setRegLaboral(_csvAnt_Laboral.get(10));
 
 
         if (ant_laborale.getFec_egreso().before(ant_laborale.getFec_ingreso())) {

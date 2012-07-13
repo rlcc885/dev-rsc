@@ -29,8 +29,8 @@ public class Trabajador implements Serializable // extends Persona
     @GeneratedValue
     @NonVisual
     private Long id;
-    @Validate("required")
-    private String tipoDocumento;
+//    @Validate("required")
+//    private String tipoDocumento;
     @Validate("required")
     private String nroDocumento;
     @Validate("required")
@@ -47,20 +47,8 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private DatoAuxiliar pais;
-    @ManyToOne
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_dist;
-    @ManyToOne
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_prov;
-    @ManyToOne
-    @NonVisual
-    @Validate("required")
-    private DatoAuxiliar cod_ubi_dept;
-    @NonVisual
-    private String nacionalidad;
+//    @NonVisual
+//    private String nacionalidad;
     @ManyToOne
     @NonVisual
     private DatoAuxiliar estadocivil;
@@ -98,8 +86,8 @@ public class Trabajador implements Serializable // extends Persona
     private String emergenciaNombre;
     @NonVisual
     private String emergenciaDomicilio;
-    @NonVisual
-    private String emergenciaTelefonos;
+//    @NonVisual
+//    private String emergenciaTelefonos;
     @NonVisual
     private String emergenciaTelefonoAlternativo1;
     @NonVisual
@@ -316,13 +304,13 @@ public class Trabajador implements Serializable // extends Persona
         this.id = id;
     }
 
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
+//    public String getNacionalidad() {
+//        return nacionalidad;
+//    }
+//
+//    public void setNacionalidad(String nacionalidad) {
+//        this.nacionalidad = nacionalidad;
+//    }
 
     public DatoAuxiliar getNivelinstruccion() {
         return nivelinstruccion;
@@ -382,37 +370,13 @@ public class Trabajador implements Serializable // extends Persona
         this.tipodiscapacidad = tipodiscapacidad;
     }
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
-    public DatoAuxiliar getCod_ubi_dist() {
-        return cod_ubi_dist;
-    }
-
-    public void setCod_ubi_dist(DatoAuxiliar codUbiDist) {
-        cod_ubi_dist = codUbiDist;
-    }
-
-    public DatoAuxiliar getCod_ubi_prov() {
-        return cod_ubi_prov;
-    }
-
-    public void setCod_ubi_prov(DatoAuxiliar codUbiProv) {
-        cod_ubi_prov = codUbiProv;
-    }
-
-    public DatoAuxiliar getCod_ubi_dept() {
-        return cod_ubi_dept;
-    }
-
-    public void setCod_ubi_dept(DatoAuxiliar codUbiDept) {
-        cod_ubi_dept = codUbiDept;
-    }
+//    public String getTipoDocumento() {
+//        return tipoDocumento;
+//    }
+//
+//    public void setTipoDocumento(String tipoDocumento) {
+//        this.tipoDocumento = tipoDocumento;
+//    }
 
     public DatoAuxiliar getCod_dom_dist() {
         return cod_dom_dist;
@@ -474,13 +438,13 @@ public class Trabajador implements Serializable // extends Persona
         this.emergenciaDomicilio = emergenciaDomicilio;
     }
 
-    public String getEmergenciaTelefonos() {
-        return emergenciaTelefonos;
-    }
-
-    public void setEmergenciaTelefonos(String emergenciaTelefonos) {
-        this.emergenciaTelefonos = emergenciaTelefonos;
-    }
+//    public String getEmergenciaTelefonos() {
+//        return emergenciaTelefonos;
+//    }
+//
+//    public void setEmergenciaTelefonos(String emergenciaTelefonos) {
+//        this.emergenciaTelefonos = emergenciaTelefonos;
+//    }
 
     public DatoAuxiliar getSistemapensionario() {
         return sistemapensionario;

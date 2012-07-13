@@ -252,14 +252,14 @@ public class CopiadorEntidades {
     
     public static void ant_laborales(Ant_Laborales origen, Ant_Laborales destino){
         destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
-        destino.setArea(CopiadorEntidades.verifacionNull(origen.getArea()));
+//        destino.setArea(CopiadorEntidades.verifacionNull(origen.getArea()));
         destino.setCargo(CopiadorEntidades.verifacionNull(origen.getCargo()));
         destino.setEmpresa(CopiadorEntidades.verifacionNull(origen.getEmpresa()));
-        destino.setEntidadPublica(CopiadorEntidades.verifacionNull(origen.getEntidadPublica()));
+//        destino.setEntidadPublica(CopiadorEntidades.verifacionNull(origen.getEntidadPublica()));
         destino.setFec_egreso(CopiadorEntidades.verifacionNull(origen.getFec_egreso()));
         destino.setFec_ingreso(CopiadorEntidades.verifacionNull(origen.getFec_ingreso()));
         destino.setFuncion(CopiadorEntidades.verifacionNull(origen.getFuncion()));
-        destino.setRegLaboral(CopiadorEntidades.verifacionNull(origen.getRegLaboral()));
+//        destino.setRegLaboral(CopiadorEntidades.verifacionNull(origen.getRegLaboral()));
         destino.setTrabajador(origen.getTrabajador());
         destino.setValidado(CopiadorEntidades.verifacionNull(origen.getValidado()));
     }
