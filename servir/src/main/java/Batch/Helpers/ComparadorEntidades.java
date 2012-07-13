@@ -1042,19 +1042,19 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dist(), cdestino.getCod_ubi_dist()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_prov(), cdestino.getCod_ubi_prov()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dept(), cdestino.getCod_ubi_dept()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNacionalidad(), cdestino.getNacionalidad()));
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dist(), cdestino.getCod_ubi_dist()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_prov(), cdestino.getCod_ubi_prov()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dept(), cdestino.getCod_ubi_dept()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNacionalidad(), cdestino.getNacionalidad()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
@@ -1114,7 +1114,7 @@ public class ComparadorEntidades {
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEmergenciaTelefonos(), cdestino.getEmergenciaTelefonos()));
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEmergenciaTelefonos(), cdestino.getEmergenciaTelefonos()));
         if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lit;
         }
