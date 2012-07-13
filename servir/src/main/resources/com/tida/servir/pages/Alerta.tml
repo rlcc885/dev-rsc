@@ -25,45 +25,59 @@
             </t:zone>
         </div>-->
 
-        <div t:type="zone" t:id="listaentidad" class="selectform" > 
+        <div t:type="zone" t:id="listaservir" class="selectform" > 
             <t:if test="mostrarse">
-            <h2>Administrador de Entidades</h2>
-                <t:form t:id="formlistaunidad"> 
-                    
+            <h1>Administrador de Servir</h1>
+                <t:form t:id="formlistaservir">
+                    <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">
-                        <t:grid source="eventos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="la">
+                        <t:grid source="trabajadoresservir" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventoservir1" reorder="nombres,entidad,fechaevento" exclude="descripcion">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <t:actionlink t:id="editar" zone="listaentidad" context="la">OK</t:actionlink>
+                                    <t:actionlink t:id="editar" zone="listaservir" context="eventoservir1">Ver</t:actionlink>
+                            </p:accionesCell>
+                        </t:grid>
+                    </div>
+                    <br/><br/>
+                    
+                    <h2>Datos de Entidades Modificadas</h2>
+                    <div id = "tabla_cargo">
+                        <t:grid source="eventos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventoservir2" reorder="nombres,entidad,fechaevento" exclude="descripcion">
+                            <t:parameter name="empty">
+                                <div class="no-info">No se han registrado eventos</div>
+                            </t:parameter>
+                            <p:accionesCell>                           
+                                    <t:actionlink t:id="editars" zone="listaservir" context="eventoservir2">Ver</t:actionlink>
                             </p:accionesCell>
                         </t:grid>
                     </div>
                 </t:form>
             </t:if>
         </div> <!-- tabla eventos -->
-        <!--
+        
         <div t:type="zone" t:id="listaentidad" class="selectform" > 
-            <t:if test="mostrars">
-                <h2>Administrador de Sistemas</h2>
-                <t:form t:id="formlistaenti">              
+            <t:if test="mostrare">
+            <h1>Administrador de Servir</h1>
+                <t:form t:id="formlistaentidad">
+                    <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="lt" >
+                                row="eventoentidad">
                             <t:parameter name="empty">
-                                <div class="no-info">No se han registrado modificaciones de trabajadores</div>
+                                <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <t:actionlink t:id="editarenti" zone="listaentidad" context="lt">Validar</t:actionlink>
+                                    <t:actionlink t:id="seleccionar" zone="listaentidad" context="eventoentidad">OK</t:actionlink>
                             </p:accionesCell>
                         </t:grid>
-                    </div>
-                </t:form>   
+                    </div>                    
+                </t:form>
             </t:if>
-        </div> 
--->
+        </div> <!-- tabla eventos -->
 <!--
         <div id="tablaTrabajador">
             <h2>Trabajadores</h2>

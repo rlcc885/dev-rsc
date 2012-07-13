@@ -20,7 +20,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
      
  @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpEventoAcceso",
-    query = "CALL SP_EVENTOACCESO(?,:in_rol_id,:in_tipoevento_id,:in_perfil_id)",
+    query = "CALL SP_EVENTOACCESO(?,:in_rol_id,:in_tipoevento_id,:in_perfil_id,:in_entidad_id)",
     resultClass = BusquedaEvento.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")

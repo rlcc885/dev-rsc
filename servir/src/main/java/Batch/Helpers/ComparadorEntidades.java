@@ -705,20 +705,20 @@ public class ComparadorEntidades {
             return lial;
         }
 
-        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEntidadPublica(), cdestino.getEntidadPublica()));
-        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lial;
-        }
-
-        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getArea(), cdestino.getArea()));
-        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lial;
-        }
-
-        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getRegLaboral(), cdestino.getRegLaboral()));
-        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lial;
-        }
+//        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEntidadPublica(), cdestino.getEntidadPublica()));
+//        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lial;
+//        }
+//
+//        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getArea(), cdestino.getArea()));
+//        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lial;
+//        }
+//
+//        lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getRegLaboral(), cdestino.getRegLaboral()));
+//        if (lial.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lial;
+//        }
 
         /*
          * lial.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador(),

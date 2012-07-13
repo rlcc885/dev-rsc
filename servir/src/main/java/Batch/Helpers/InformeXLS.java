@@ -2407,11 +2407,11 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(al.getFec_egreso()));
                 escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(al.getEntidadPublica()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(al.getArea()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(al.getRegLaboral()));
+//                escribir.print(InformeXLS.booleanToString(al.getEntidadPublica()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(al.getArea()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(al.getRegLaboral()));
                 escribir.println();
             }
             escribir.close();
