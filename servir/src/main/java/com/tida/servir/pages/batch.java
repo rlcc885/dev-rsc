@@ -165,7 +165,7 @@ public class batch  extends GeneralPage {
         
         //tratamiento
         myTratamiento.setTipoProceso(tipoProceso);
-        errores = myTratamiento.generacionListDesdeCSV();
+       // errores = myTratamiento.generacionListDesdeCSV();
         
         if (errores.size() > 0 ) { // hay errores
             for(String error: errores){
@@ -214,17 +214,17 @@ public class batch  extends GeneralPage {
         }
        
         //System.out.println("-------------------------- Etapa Inicio -------------");
-        try {
-            myTratamiento = new Tratamiento(path, origenArchivos,  session, errores, tipoProceso, _usuario);
-        } catch (IOException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-            formularioprocesobatch.recordError("Error al leer el archivo de Entidades Unidades Ejecutoras (ORGAN1).");
-            return this;
-        } catch (ParseException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades Unidades Ejecutoras (ORGAN1).");
-            return this;
-        }
+//        try {
+//            myTratamiento = new Tratamiento(path, origenArchivos,  session, errores, tipoProceso, _usuario);
+//        } catch (IOException ex) {
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            formularioprocesobatch.recordError("Error al leer el archivo de Entidades Unidades Ejecutoras (ORGAN1).");
+//            return this;
+//        } catch (ParseException ex) {
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades Unidades Ejecutoras (ORGAN1).");
+//            return this;
+//        }
 
         if (errores.size() > 0 ) { // hay errores
             formularioprocesobatch.recordError(helpers.Errores.HAY_ERRORES_PROCESAR_ARCHIVO_ENTIDADUE);

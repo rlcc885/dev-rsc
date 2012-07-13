@@ -617,388 +617,388 @@ public final class Tratamiento {
         return cdc;
     }
 
-    public Tratamiento(String path, String origenArchivo, Session session, List<String> errores, String tipoProceso, Usuario usuario) throws IOException, ParseException {
-        this.path = path;
-        this.origenArchivo = origenArchivo;
-        this.session = session;
-        this.errores = errores;
-        this.tipoProceso = tipoProceso;
-        this.usuario = usuario;
+//    public Tratamiento(String path, String origenArchivo, Session session, List<String> errores, String tipoProceso, Usuario usuario) throws IOException, ParseException {
+//        this.path = path;
+//        this.origenArchivo = origenArchivo;
+//        this.session = session;
+//        this.errores = errores;
+//        this.tipoProceso = tipoProceso;
+//        this.usuario = usuario;
+//
+//        archivos.add("ORGAN1");
+//        archivos.add("BASICO6");
+//        archivos.add("BASICO5");
+//        archivos.add("BASICO4");
+//        archivos.add("BASICO1");
+//        archivos.add("BASICO2");
+//        archivos.add("BASICO3");
+//        archivos.add("PPAL1");
+//        archivos.add("PPAL2");
+//        archivos.add("PPAL3");
+//        archivos.add("COMPTRA1");
+//        archivos.add("COMPTRA2");
+//        archivos.add("COMPTRA3");
+//        archivos.add("COMPTRA4");
+//        archivos.add("COMPTRA5");
+//        archivos.add("COMPTRA6");
+//        archivos.add("COMPTRA7");
+//        archivos.add("COMPCAR1");
+//        archivos.add("COMPCAR2");
+//        archivos.add("COMPCAR3");
+//        archivos.add("COMPLEG1");
+//
+//        //temano de misCSVs = 21 (hay 21 archivos CSV)
+//        for (int k = 0; k < 21; k++) {
+//            misCSVs.add("");
+//        }
+//
+//        //ingresar los archivos en objecto Java
+//        errores = listArchivosDepositorioClassified(path);
+//
+//
+//        if (misCSVs.get(0).equals("")) {
+//            errores.add("Archivo ORGAN1 (Entidad Unidad Ejecutora) no encontrado");
+//            return;
+//        }
+//
+//        try {
+//            ORGAN1 = cargarCSVEntidadUEToArrayList(path.concat(misCSVs.get(0).concat(".csv")));
+//
+//        } catch (FileNotFoundException ex) {
+//            errores.add("No se encuentra el archivo de Entidad Unidad Ejecutora.");
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            return;
+//        } catch (IOException ex) {
+//            errores.add("Error al leer el archivo de Entidad Unidad Ejecutora.");
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            return;
+//        }
+//
+//        cdc = new CreadorDesdeCsv(this);
+//
+//        _entidadesUEjecutora = cdc.csvToListEntidadUEjecutora(ORGAN1, session, errores, origenArchivo);
+//
+//        //verifica si los organismos informantes estan definidos en la base de dato
+//        //si no se trata de una carga inicial
+////        if (!origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
+////            for (Entidad_BK _entidaduejecutora : _entidadesUEjecutora) {
+////                //si no hay en la base de dato el organismo informante, se informa este problema y borra este organismo
+////                if (!CreadorDesdeCsv.presenciaTablaEntidadUEjecutora(_entidaduejecutora, session, errores)) {
+////                    errores.add("Esta entidad unidad ejecutora " + _entidaduejecutora.getCodigoEntidadUE() + " no esta definida en la base de dato!");
+////                    if (!_entidadesUEjecutora.isEmpty()) {
+////                        _entidadesUEjecutora.remove(_entidaduejecutora);
+////                    }
+////                }
+////            }
+////        }
+//    }
 
-        archivos.add("ORGAN1");
-        archivos.add("BASICO6");
-        archivos.add("BASICO5");
-        archivos.add("BASICO4");
-        archivos.add("BASICO1");
-        archivos.add("BASICO2");
-        archivos.add("BASICO3");
-        archivos.add("PPAL1");
-        archivos.add("PPAL2");
-        archivos.add("PPAL3");
-        archivos.add("COMPTRA1");
-        archivos.add("COMPTRA2");
-        archivos.add("COMPTRA3");
-        archivos.add("COMPTRA4");
-        archivos.add("COMPTRA5");
-        archivos.add("COMPTRA6");
-        archivos.add("COMPTRA7");
-        archivos.add("COMPCAR1");
-        archivos.add("COMPCAR2");
-        archivos.add("COMPCAR3");
-        archivos.add("COMPLEG1");
-
-        //temano de misCSVs = 21 (hay 21 archivos CSV)
-        for (int k = 0; k < 21; k++) {
-            misCSVs.add("");
-        }
-
-        //ingresar los archivos en objecto Java
-        errores = listArchivosDepositorioClassified(path);
-
-
-        if (misCSVs.get(0).equals("")) {
-            errores.add("Archivo ORGAN1 (Entidad Unidad Ejecutora) no encontrado");
-            return;
-        }
-
-        try {
-            ORGAN1 = cargarCSVEntidadUEToArrayList(path.concat(misCSVs.get(0).concat(".csv")));
-
-        } catch (FileNotFoundException ex) {
-            errores.add("No se encuentra el archivo de Entidad Unidad Ejecutora.");
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        } catch (IOException ex) {
-            errores.add("Error al leer el archivo de Entidad Unidad Ejecutora.");
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
-        cdc = new CreadorDesdeCsv(this);
-
-        _entidadesUEjecutora = cdc.csvToListEntidadUEjecutora(ORGAN1, session, errores, origenArchivo);
-
-        //verifica si los organismos informantes estan definidos en la base de dato
-        //si no se trata de una carga inicial
-        if (!origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
-            for (Entidad_BK _entidaduejecutora : _entidadesUEjecutora) {
-                //si no hay en la base de dato el organismo informante, se informa este problema y borra este organismo
-                if (!CreadorDesdeCsv.presenciaTablaEntidadUEjecutora(_entidaduejecutora, session, errores)) {
-                    errores.add("Esta entidad unidad ejecutora " + _entidaduejecutora.getCodigoEntidadUE() + " no esta definida en la base de dato!");
-                    if (!_entidadesUEjecutora.isEmpty()) {
-                        _entidadesUEjecutora.remove(_entidaduejecutora);
-                    }
-                }
-            }
-        }
-    }
-
-    public List<String> generacionListDesdeCSV() {
-                
-        if (!misCSVs.get(1).equals("")) {
-            try {
-                BASICO6 = cargarCSVToArrayList(path.concat(misCSVs.get(1).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CONCEPTOS_REMUNERATIVOS, isConcepto.getRechazado());
-                _conceptoRemunerativo = cdc.csvToListConceptoRemunerativo(BASICO6, session, errores, origenArchivo, isConcepto);
-                System.out.println("----------------------- BASICO6 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("No se encontro el archivo BASICO6");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo BASICO6");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(5).equals("")) {
-            try {
-                BASICO2 = cargarCSVToArrayList(path.concat(misCSVs.get(5).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.UNIDADES_ORGANICAS, isUnidadO.getRechazado());
-                _unidadOrganica = cdc.csvToListUnidadOrganica(BASICO2, session, errores, origenArchivo, isUnidadO);
-                System.out.println("----------------------- BASICO2 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo BASICO2 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo BASICO2");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(6).equals("")) {
-            try {
-                BASICO3 = cargarCSVToArrayList(path.concat(misCSVs.get(6).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CARGOS, isCargo.getRechazado());
-                _cargo = cdc.csvToListCargo(BASICO3, session, errores, origenArchivo, isCargo);
-                System.out.println("----------------------- BASICO3 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo BASICO3 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo BASICO3");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        //necesitamos los 3 archivos (Trabajadores y Legajos y CargosAsignados) juntos 
-        if ((!misCSVs.get(7).equals("")) && (!misCSVs.get(8).equals("")) && (!misCSVs.get(9).equals(""))) {
-            try {
-                PPAL1 = cargarCSVToArrayList(path.concat(misCSVs.get(7).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.TRABAJADORES, isTrabajador.getRechazado());
-                PPAL2 = cargarCSVToArrayList(path.concat(misCSVs.get(8).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.LEGAJOS, isLegajo.getRechazado());
-                PPAL3 = cargarCSVToArrayList(path.concat(misCSVs.get(9).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CARGOS_ASIGNADOS, isCargoA.getRechazado());
-
-                _trabajador = cdc.csvToListTrabajador(PPAL1, session, errores, origenArchivo, isTrabajador);
-                _legajo = cdc.csvToListLegajo(PPAL2, session, errores, origenArchivo, isLegajo);
-                _cargoAsignado = cdc.csvToListCargoAsignado(PPAL3, session, errores, origenArchivo, tipoProceso, false, isCargoA);
-                    
-                //verificacion que si existe un trabajador existe tambien en legajo y cargo asignado (codigo EntidadUE, tipo y numero documento)
-                //Tratamiento.ver();
-                
-            } catch (FileNotFoundException ex) {
-                errores.add(ex.toString());
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                errores.add(ex.toString());
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        } else {
-            //ponemos los valores 7 8 9 de la list que contiene el nombre de los archivos a 0 para no hacer el tratamiento
-            for (int i = 7; i < 10; i++) {
-                misCSVs.set(i, "");
-            }
-        }
-
-        if (!misCSVs.get(10).equals("")) {
-            try {
-                COMPTRA1 = cargarCSVToArrayList(path.concat(misCSVs.get(10).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.FAMILIARES, isFamiliar.getRechazado());
-                _familiar = cdc.csvToListFamiliar(COMPTRA1, session, errores, origenArchivo, isFamiliar);
-
-                System.out.println("----------------------- COMPTRA1 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA1 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA1");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA1");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(11).equals("")) {
-            try {
-                COMPTRA2 = cargarCSVToArrayList(path.concat(misCSVs.get(11).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.TITULOS, isTitulo.getRechazado());
-                _titulo = cdc.CsvToListTitulo(COMPTRA2, session, errores, origenArchivo, isTitulo);
-                System.out.println("----------------------- COMPTRA2 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA2 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA2");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA2");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(12).equals("")) {
-            try {
-                COMPTRA3 = cargarCSVToArrayList(path.concat(misCSVs.get(12).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CERTIFICACIONES, isCertificacion.getRechazado());
-                _certificacion = cdc.csvToListCertificacion(COMPTRA3, session, errores, origenArchivo, isCertificacion);
-                System.out.println("----------------------- COMPTRA3 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA3 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA3");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA3");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(13).equals("")) {
-            try {
-                COMPTRA4 = cargarCSVToArrayList(path.concat(misCSVs.get(13).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CURSOS, isCurso.getRechazado());
-                _curso = cdc.csvToListCurso(COMPTRA4, session, errores, origenArchivo, isCurso);
-
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA4 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA4");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA4");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(14).equals("")) {
-            try {
-                COMPTRA5 = cargarCSVToArrayList(path.concat(misCSVs.get(14).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.ANTECEDENTES_LABORALES, isAntecedent.getRechazado());
-                _antLaborale = cdc.csvToListAnt_Laborales(COMPTRA5, session, errores, origenArchivo, isAntecedent);
-
-                System.out.println("----------------------- COMPTRA4 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA5 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA5");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA5");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(15).equals("")) {
-            try {
-                COMPTRA6 = cargarCSVToArrayList(path.concat(misCSVs.get(15).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.MERITOS_DEMERITOS, isMeritoDemerito.getRechazado());
-                _meritoDemerito = cdc.csvToListMeritoDemerito(COMPTRA6, session, errores, origenArchivo, isMeritoDemerito);
-
-                System.out.println("----------------------- COMPTRA6 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA6 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA6");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA6");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(16).equals("")) {
-            try {
-                COMPTRA7 = cargarCSVToArrayList(path.concat(misCSVs.get(16).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.PRODUCIONES_INTELECTUALES, isProduccion.getRechazado());
-                _producionIntelectual = cdc.csvToListProduccionIntelectual(COMPTRA7, session, errores, origenArchivo,isProduccion);
-
-                System.out.println("----------------------- COMPTRA7 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPTRA7 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPTRA7");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPTRA7");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-        
-        if (!misCSVs.get(17).equals("")) {
-            try {
-                COMPCAR1 = cargarCSVToArrayList(path.concat(misCSVs.get(17).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.REMUNERACIONES_PERSONALES, isRemuneracion.getRechazado());
-                cdc.listRemuneracionPersonalVerificacionesErrores(COMPCAR1, session, origenArchivo, errores, isRemuneracion);
-
-                System.out.println("----------------------- COMPCAR1 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPCAR1 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPCAR1 ");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-        }
-    }
-        
-        if (!misCSVs.get(18).equals("")) {
-            try {
-                COMPCAR2 = cargarCSVToArrayList(path.concat(misCSVs.get(18).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.EVALUACIONES, isEvaluacion.getRechazado());
-                cdc.listEvaluacionPersonalVerificacionesErrores(COMPCAR2, session, origenArchivo, errores, isEvaluacion);
-
-                System.out.println("----------------------- COMPTRA2 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPCAR2 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPCAR2 ");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPCAR2");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-        
-        if (!misCSVs.get(19).equals("")) {
-            try {
-                COMPCAR3 = cargarCSVToArrayList(path.concat(misCSVs.get(19).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.AUSENCIAS_LICENCIAS, isAusencia.getRechazado());
-                cdc.csvToListAusLicPersonal(COMPCAR3, session, origenArchivo, errores, isAusencia);
-
-                System.out.println("----------------------- COMPTRA3 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPCAR3 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPCAR3 ");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPCAR3");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-
-        if (!misCSVs.get(20).equals("")) {
-            try {
-                COMPLEG1 = cargarCSVToArrayList(path.concat(misCSVs.get(20).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CONSTANCIAS_DOCUMENTALES, isConstancia.getRechazado());
-                cdc.listConstanciaDocumentalVerificacionesErrores(COMPLEG1, session, origenArchivo, errores, isConstancia);
-
-                System.out.println("----------------------- COMPLEG1 ");
-            } catch (FileNotFoundException ex) {
-                errores.add("Archivo COMPLEG1 no encontrado");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (IOException ex) {
-                errores.add("Error leyendo archivo COMPLEG1");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            } catch (ParseException ex) {
-                errores.add("Error parseando archivo COMPLEG1");
-                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-                return errores;
-            }
-        }
-        return errores;
-    }
+//    public List<String> generacionListDesdeCSV() {
+//                
+//        if (!misCSVs.get(1).equals("")) {
+//            try {
+//                BASICO6 = cargarCSVToArrayList(path.concat(misCSVs.get(1).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CONCEPTOS_REMUNERATIVOS, isConcepto.getRechazado());
+//                _conceptoRemunerativo = cdc.csvToListConceptoRemunerativo(BASICO6, session, errores, origenArchivo, isConcepto);
+//                System.out.println("----------------------- BASICO6 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("No se encontro el archivo BASICO6");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo BASICO6");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(5).equals("")) {
+//            try {
+//                BASICO2 = cargarCSVToArrayList(path.concat(misCSVs.get(5).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.UNIDADES_ORGANICAS, isUnidadO.getRechazado());
+//                _unidadOrganica = cdc.csvToListUnidadOrganica(BASICO2, session, errores, origenArchivo, isUnidadO);
+//                System.out.println("----------------------- BASICO2 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo BASICO2 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo BASICO2");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(6).equals("")) {
+//            try {
+//                BASICO3 = cargarCSVToArrayList(path.concat(misCSVs.get(6).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CARGOS, isCargo.getRechazado());
+//                _cargo = cdc.csvToListCargo(BASICO3, session, errores, origenArchivo, isCargo);
+//                System.out.println("----------------------- BASICO3 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo BASICO3 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo BASICO3");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        //necesitamos los 3 archivos (Trabajadores y Legajos y CargosAsignados) juntos 
+//        if ((!misCSVs.get(7).equals("")) && (!misCSVs.get(8).equals("")) && (!misCSVs.get(9).equals(""))) {
+//            try {
+//                PPAL1 = cargarCSVToArrayList(path.concat(misCSVs.get(7).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.TRABAJADORES, isTrabajador.getRechazado());
+//                PPAL2 = cargarCSVToArrayList(path.concat(misCSVs.get(8).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.LEGAJOS, isLegajo.getRechazado());
+//                PPAL3 = cargarCSVToArrayList(path.concat(misCSVs.get(9).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CARGOS_ASIGNADOS, isCargoA.getRechazado());
+//
+//                _trabajador = cdc.csvToListTrabajador(PPAL1, session, errores, origenArchivo, isTrabajador);
+//                _legajo = cdc.csvToListLegajo(PPAL2, session, errores, origenArchivo, isLegajo);
+//                _cargoAsignado = cdc.csvToListCargoAsignado(PPAL3, session, errores, origenArchivo, tipoProceso, false, isCargoA);
+//                    
+//                //verificacion que si existe un trabajador existe tambien en legajo y cargo asignado (codigo EntidadUE, tipo y numero documento)
+//                //Tratamiento.ver();
+//                
+//            } catch (FileNotFoundException ex) {
+//                errores.add(ex.toString());
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                errores.add(ex.toString());
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (ParseException ex) {
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//        } else {
+//            //ponemos los valores 7 8 9 de la list que contiene el nombre de los archivos a 0 para no hacer el tratamiento
+//            for (int i = 7; i < 10; i++) {
+//                misCSVs.set(i, "");
+//            }
+//        }
+//
+//        if (!misCSVs.get(10).equals("")) {
+//            try {
+//                COMPTRA1 = cargarCSVToArrayList(path.concat(misCSVs.get(10).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.FAMILIARES, isFamiliar.getRechazado());
+//                _familiar = cdc.csvToListFamiliar(COMPTRA1, session, errores, origenArchivo, isFamiliar);
+//
+//                System.out.println("----------------------- COMPTRA1 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA1 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA1");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA1");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(11).equals("")) {
+//            try {
+//                COMPTRA2 = cargarCSVToArrayList(path.concat(misCSVs.get(11).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.TITULOS, isTitulo.getRechazado());
+//                _titulo = cdc.CsvToListTitulo(COMPTRA2, session, errores, origenArchivo, isTitulo);
+//                System.out.println("----------------------- COMPTRA2 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA2 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA2");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA2");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(12).equals("")) {
+//            try {
+//                COMPTRA3 = cargarCSVToArrayList(path.concat(misCSVs.get(12).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CERTIFICACIONES, isCertificacion.getRechazado());
+//                _certificacion = cdc.csvToListCertificacion(COMPTRA3, session, errores, origenArchivo, isCertificacion);
+//                System.out.println("----------------------- COMPTRA3 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA3 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA3");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA3");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(13).equals("")) {
+//            try {
+//                COMPTRA4 = cargarCSVToArrayList(path.concat(misCSVs.get(13).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CURSOS, isCurso.getRechazado());
+//                _curso = cdc.csvToListCurso(COMPTRA4, session, errores, origenArchivo, isCurso);
+//
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA4 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA4");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA4");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(14).equals("")) {
+//            try {
+//                COMPTRA5 = cargarCSVToArrayList(path.concat(misCSVs.get(14).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.ANTECEDENTES_LABORALES, isAntecedent.getRechazado());
+//                _antLaborale = cdc.csvToListAnt_Laborales(COMPTRA5, session, errores, origenArchivo, isAntecedent);
+//
+//                System.out.println("----------------------- COMPTRA4 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA5 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA5");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA5");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(15).equals("")) {
+//            try {
+//                COMPTRA6 = cargarCSVToArrayList(path.concat(misCSVs.get(15).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.MERITOS_DEMERITOS, isMeritoDemerito.getRechazado());
+//                _meritoDemerito = cdc.csvToListMeritoDemerito(COMPTRA6, session, errores, origenArchivo, isMeritoDemerito);
+//
+//                System.out.println("----------------------- COMPTRA6 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA6 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA6");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA6");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(16).equals("")) {
+//            try {
+//                COMPTRA7 = cargarCSVToArrayList(path.concat(misCSVs.get(16).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.PRODUCIONES_INTELECTUALES, isProduccion.getRechazado());
+//                _producionIntelectual = cdc.csvToListProduccionIntelectual(COMPTRA7, session, errores, origenArchivo,isProduccion);
+//
+//                System.out.println("----------------------- COMPTRA7 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPTRA7 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPTRA7");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPTRA7");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//        
+//        if (!misCSVs.get(17).equals("")) {
+//            try {
+//                COMPCAR1 = cargarCSVToArrayList(path.concat(misCSVs.get(17).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.REMUNERACIONES_PERSONALES, isRemuneracion.getRechazado());
+//                cdc.listRemuneracionPersonalVerificacionesErrores(COMPCAR1, session, origenArchivo, errores, isRemuneracion);
+//
+//                System.out.println("----------------------- COMPCAR1 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPCAR1 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPCAR1 ");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//        }
+//    }
+//        
+//        if (!misCSVs.get(18).equals("")) {
+//            try {
+//                COMPCAR2 = cargarCSVToArrayList(path.concat(misCSVs.get(18).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.EVALUACIONES, isEvaluacion.getRechazado());
+//                cdc.listEvaluacionPersonalVerificacionesErrores(COMPCAR2, session, origenArchivo, errores, isEvaluacion);
+//
+//                System.out.println("----------------------- COMPTRA2 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPCAR2 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPCAR2 ");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPCAR2");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//        
+//        if (!misCSVs.get(19).equals("")) {
+//            try {
+//                COMPCAR3 = cargarCSVToArrayList(path.concat(misCSVs.get(19).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.AUSENCIAS_LICENCIAS, isAusencia.getRechazado());
+//                cdc.csvToListAusLicPersonal(COMPCAR3, session, origenArchivo, errores, isAusencia);
+//
+//                System.out.println("----------------------- COMPTRA3 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPCAR3 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPCAR3 ");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPCAR3");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//
+//        if (!misCSVs.get(20).equals("")) {
+//            try {
+//                COMPLEG1 = cargarCSVToArrayList(path.concat(misCSVs.get(20).concat(".csv")), _entidadesUEjecutora, helpers.Constantes.CONSTANCIAS_DOCUMENTALES, isConstancia.getRechazado());
+//                cdc.listConstanciaDocumentalVerificacionesErrores(COMPLEG1, session, origenArchivo, errores, isConstancia);
+//
+//                System.out.println("----------------------- COMPLEG1 ");
+//            } catch (FileNotFoundException ex) {
+//                errores.add("Archivo COMPLEG1 no encontrado");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (IOException ex) {
+//                errores.add("Error leyendo archivo COMPLEG1");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            } catch (ParseException ex) {
+//                errores.add("Error parseando archivo COMPLEG1");
+//                Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//                return errores;
+//            }
+//        }
+//        return errores;
+//    }
 
     //verificacion si existe un registro en el archivo Trabajador existe lo mismo en Legajo y Cargo
     /*public static List<String> claveTrabajadorLegajoCargo(List<List<String>> lltrabajador, List<List<String>> lllegajo, List<List<String>> llcargo) {
