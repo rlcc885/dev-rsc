@@ -1,44 +1,132 @@
 <html t:type="layout" title="Editar Títulos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-      xmlns:p="tapestry:parameter">
+      xmlns:p="tapestry:parameter"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <t:content>
 
-     <h3>Estudios</h3>
-     
-     <div t:type="zone" t:id="listaZone" class="selectform" >            
-        <t:form t:id="formlistaestudios">
-            <div id = "tabla_cargo">
-                <t:grid source="estudios" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="listaestu">
-                    <t:parameter name="empty">
-                        <div class="no-info">No se han registrado estudios</div>
-                    </t:parameter>
-                    <p:accionesCell>                           
-                            <t:actionlink t:id="seleccionar" zone="listaZone" context="listaestu">OK</t:actionlink>
-                    </p:accionesCell>
-                </t:grid>
-            </div>                    
-        </t:form>           
-    </div>
-    <div t:type="zone" t:id="primerZone" class="selectform" > 
-        <t:form t:id="formularioaltaestudio" zone="generalZone">
-            <t:envelope t:id="envelope"/>
-            <t:errors/>
-            <div class="f-wrap">
-                <div class="f-left">
-                    <label>Denominación</label>
-                    <input t:type="TextField" t:id="denominacion" t:value="valdenominacion"
-                        size="30"/>
+     <h2>Estudios</h2>
+     <div id = "tabla_oi">
+        <t:zone t:id="listaZone">  
+            <t:form t:id="formlistaestudios">
+                <div id = "tabla_cargo">
+                    <t:grid source="estudios" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                            row="listaestu">
+                        <t:parameter name="empty">
+                            <div class="no-info">No se han registrado estudios</div>
+                        </t:parameter>
+                        <p:denominacionCell>
+                           <t:if test="${listaestu.validado}">
+                               <label class="datofalse">${listaestu.denominacion}</label>  
+                           </t:if>
+                           <t:if test="${listaestu.validado}" negate="true">
+                               <label class="datotrue">${listaestu.denominacion}</label>  
+                           </t:if>
+                        </p:denominacionCell>                    
+                        <p:accionesCell>                           
+                                <t:actionlink t:id="seleccionar" zone="listaZone" context="listaestu">OK</t:actionlink>
+                        </p:accionesCell>
+                    </t:grid>
                 </div>
-                <!--<div class="f-left">
-                    <label>Tipo Estudio</label>
-                    <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="actual.nroDocumento"
-                        size="30" t:validate="required, regexp" />
-                </div>  -->
+                <t:envelope t:id="envelope"/>
+                <t:errors/>
+            </t:form>           
+        </t:zone>
+     </div>
+     
+    <div class="f-wrap">
+
+
+    </div>  
+   
+    <div class="box">
+     <h3>Registro de Estudios</h3>     
+      <t:zone t:id="primerZone">
+            <t:form t:id="formularioaltaestudio" zone="primerZone">
+                
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Denominación</label>
+                        <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denChanged"  t:zone="primerZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Tipo de Estudios</label>
+                        <input t:type="Select" t:id="tipoestudio" model="tipoestudios" t:value="valtipoestudio" onChange="this.form.fire()" t:zone="segundoZone"/>
+                    </div> 
+                    <div class="f-left">
+                        <label>Centro de Estudios</label>
+                        <input t:type="Select" t:id="centroestudio" model="centroestudios" t:value="valcentroestudio" onChange="this.form.fire()" t:zone="primerZone"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Otro Centro Especificar</label>
+                        <input t:type="TextField" t:id="otrocentro" t:value="valotrocentro" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otroChanged"  t:zone="primerZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Pais</label>
+                         <input t:type="Select" t:id="pais"
+                            onChange="this.form.fire()"
+                            t:value="valpais" model="paises" t:zone="primerZone"/>
+                    </div>                    
+                    <div class="f-left" id="ubigeo_dpe">            
+                            <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
+                            t:zone="primerZone" t:zoneName="primerZone" />
+                    </div>
+                </div>
+         </t:form>
+      </t:zone>
+      <t:zone t:id="segundoZone">
+          <t:form t:id="formulariodos" t:zone="tercerZone">
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Colegio Profesional</label>
+                        <input t:type="TextField" t:id="colegio" t:value="valcolegio" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="coleChanged"  t:zone="segundoZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Número de Colegiatura</label>
+                        <input t:type="TextField" t:id="colegiatura" t:value="valcolegiatura" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="colegChanged"  t:zone="segundoZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Actualmente estudiando</label>
+                        <!--<span t:type="any" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="segundoZone">-->
+                        <input t:type="Checkbox" t:id="estudiando" t:value="valestudiando" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="tercerZone"/><!--</span>-->
+                    </div> 
+                </div>           
+          </t:form>       
+      </t:zone>
+     <t:zone t:id="tercerZone">
+        <t:form t:id="formulariobotones" t:zone="listaZone">
+            <div class="f-wrap">                     
+                    <div class="f-left">
+                        <label>Desde</label>
+                        <div class="f-left">
+                            <input t:type="DateField" t:id="fec_inicio" t:value="valfec_desde"
+                            size="30" />
+                        </div>
+                    </div>
+                    <div class="f-left">
+                        <label>Hasta</label>
+                        <div class="f-left">
+                            <input t:type="DateField" t:id="fec_fin" t:value="valfec_hasta"
+                                    size="30" t:disabled="${vfechahasta}"/>
+                            </div>                        
+                    </div>
+              </div>
+            <div class="actions f-right">
+                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" class="button"/> 
+                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/> 
+                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>
+                <input t:type="Submit" t:id="update" value="Actualizar" t:mixins="confirm" class="button"/> 
             </div>
         </t:form>
+     </t:zone>
     </div>
+     
      
        
      

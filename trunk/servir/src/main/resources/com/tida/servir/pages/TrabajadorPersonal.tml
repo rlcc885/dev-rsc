@@ -31,7 +31,7 @@
             <li><a href="#"> Datos Personales</a></li>
             <li><a href="#"> Estudios </a></li>
             <li><a href="#"> Antecedentes Laborales</a></li> 
-            <li><a href="#"> Producción Intelectual</a></li>
+            <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
             <li><a href="#"> Formación</a></li>
             <li><a href="#"> Antecedentes Laborales</a></li>            
@@ -58,17 +58,16 @@
                 <t:EstudiosEditor t:id="estudiosEditor" actual= "actual" />
                 
 	</div>
-                
+        <!--        
         <div class= "pane" id='antecedentes' name='antecedentes'>
             
                 <t:AntecedentesEditor t:id="antecedentesEditor" actual= "actual"/>
             
-        </div>
-                
+        </div>-->
+        <!--        
         <div class= "pane" id='produccionintelectual' name='produccionintelectual'>
-                <t:PublicacionesEditor t:id="publicacionesEditor" actual= "actual"
-                    clase = "clasePublicacion" zone="publicacionesZone"/>
-        </div>
+                <t:PublicacionesEditor t:id="publicacionesEditor" actual= "actual"/>
+        </div>-->
                 
 		<!-- FIN / Zona de datosPersonales, correspondientes al TAB -->
        
