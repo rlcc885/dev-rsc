@@ -1,12 +1,9 @@
 package com.tida.servir.components;
 
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Estudios;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
+import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
+import helpers.Helpers;
 
 import helpers.Logger;
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
@@ -38,10 +36,6 @@ import org.hibernate.criterion.Restrictions;
  */
 public class EstudiosEditor {
 //Parameters of component
-    @SuppressWarnings("unused")
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    @Property
-    private String _zone;
 
     @Parameter
     @Property
@@ -51,8 +45,8 @@ public class EstudiosEditor {
     @SessionState
     private Entidad _oi;
 
-    @Component(id = "titulosEdit")
-    private Form _form;
+//    @Component(id = "titulosEdit")
+//    private Form _form;
 
     @InjectComponent
     private Envelope envelope;
@@ -60,22 +54,66 @@ public class EstudiosEditor {
     @Property
     private Estudios listaestu;
 
-    @Persist
-    private boolean entradaTituloGrid;
+//    @Persist
+//    private boolean entradaTituloGrid;
 
     @Property
     @SessionState
     private Usuario _usuario;
+    @Inject
+    private PropertyAccess _access;
     
     @InjectComponent
     private Zone listaZone;
     @InjectComponent
-    private Zone primerZone;
+    @Property
+    private Zone primerZone;   
+    @InjectComponent
+    @Property
+    private Zone segundoZone;  
+    @InjectComponent
+    @Property
+    private Zone tercerZone;
+    
     
     //campos
     @Property
-    @SessionState
+    @Persist
     private String valdenominacion;
+    @Persist
+    @Property
+    private DatoAuxiliar valtipoestudio;
+    @Persist
+    @Property
+    private DatoAuxiliar valcentroestudio;
+    @Property
+    @Persist
+    private String valotrocentro;
+    @Persist
+    @Property
+    private DatoAuxiliar valpais;
+    @Property
+    @Persist
+    private Ubigeo ubigeoDomicilio;
+    @Property
+    @Persist
+    private String valcolegio;
+    @Property
+    @Persist
+    private String valcolegiatura;
+    @Persist
+    @Property
+    private Date valfec_desde;
+    @Persist
+    @Property
+    private Date valfec_hasta;
+    @Persist
+    @Property
+    private Boolean valestudiando;
+    @Persist
+    @Property
+    private Boolean vfechahasta;
+    
 //    @Property
 //    @SessionState
 //    private DatoAuxiliar valtipoestudio;
@@ -113,17 +151,53 @@ public class EstudiosEditor {
 //    	return getValorTablaAuxiliar("NivelTitulo");
 //    }
     
-  @Log
+    @Log
     public List<Estudios> getEstudios() {
         Criteria c = session.createCriteria(Estudios.class);
         c.add(Restrictions.eq("trabajador", actual));        
         return c.list();
     }
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoestudios() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOESTUDIO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getCentroestudios() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CENTROESTUDIO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    } 
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getPaises() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("PAISES", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
     
     
 
-  @Inject
-  private Session session;
+    @Inject
+    private Session session;
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariodos(){
+        if(valestudiando){
+            vfechahasta=true;
+        }
+        else{
+            vfechahasta=false;
+        }
+        return tercerZone.getBody();
+    }
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariobotones(){
+        envelope.setContents(String.valueOf(valfec_desde)+String.valueOf(valfec_hasta));
+        return listaZone.getBody();
+    }
 
   
 //  @CommitAfter

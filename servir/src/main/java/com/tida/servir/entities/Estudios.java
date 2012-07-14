@@ -24,27 +24,29 @@ public class Estudios {
 //	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Id
-    @GeneratedValue
+    
     @NonVisual
     private Long id;
 //    @ManyToOne(optional = false)    
-    private String denominacion;   
-    @ManyToOne
-    private DatoAuxiliar tipoestudio;
-    @ManyToOne
+    private String denominacion; 
+    
+    
+    private DatoAuxiliar tipoestudio;    
+    @NonVisual
     private DatoAuxiliar centroestudio;
     private String otrocentroestudio;
-    @ManyToOne    
+    @NonVisual
     private DatoAuxiliar pais;
-    @ManyToOne
+    @NonVisual
     private DatoAuxiliar departamento;
-    @ManyToOne
+    @NonVisual
     private DatoAuxiliar provincia;
-    @ManyToOne
+    @NonVisual
     private DatoAuxiliar distrito;
+    @NonVisual
     private String colegio;
-    private String colegiatura;
+    @NonVisual
+    private String colegiatura;    
     private Boolean estudiando;
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
@@ -52,8 +54,21 @@ public class Estudios {
     private Date fechafin;
     private Boolean agregadotrabajador;
     private Boolean validado;
+    @NonVisual
     private Trabajador trabajador;
+    @NonVisual
     private Entidad entidad;
+    
+    
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public String getDenominacion() {
         return denominacion;
@@ -62,7 +77,7 @@ public class Estudios {
     public void setDenominacion(String denominacion) {
         this.denominacion = denominacion;
     }
-    
+    @ManyToOne
     public DatoAuxiliar getTipoestudio() {
         return tipoestudio;
     }
@@ -71,18 +86,25 @@ public class Estudios {
         this.tipoestudio = tipoestudio;
     }
     
+    @ManyToOne
     public DatoAuxiliar getCentroestudio() {
         return centroestudio;
     }
 
-    public void setOtrocentroestudio(DatoAuxiliar centroestudio) {
+    public void setCentroestudio(DatoAuxiliar centroestudio) {
         this.centroestudio = centroestudio;
     }
     
     public String getOtrocentroestudio() {
         return otrocentroestudio;
     }
-   
+    
+    public void setOtrocentroestudio(String otrocentroestudio) {
+        this.otrocentroestudio = otrocentroestudio;
+    }
+    
+    
+    @ManyToOne
     public DatoAuxiliar getPais() {
         return pais;
     }
@@ -90,7 +112,7 @@ public class Estudios {
     public void setPais(DatoAuxiliar pais) {
         this.pais = pais;
     }
-
+    @ManyToOne
     public DatoAuxiliar getDepartamento() {
         return departamento;
     }
@@ -98,7 +120,7 @@ public class Estudios {
     public void setDepartamento(DatoAuxiliar departamento) {
         this.departamento = departamento;
     }
-    
+    @ManyToOne
     public DatoAuxiliar getProvincia() {
         return provincia;
     }
@@ -106,7 +128,7 @@ public class Estudios {
     public void setProvincia(DatoAuxiliar provincia) {
         this.provincia = provincia;
     }
-    
+    @ManyToOne
     public DatoAuxiliar getDistrito() {
         return distrito;
     }
@@ -188,6 +210,27 @@ public class Estudios {
 
     public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
+    }
+        @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Estudios other = (Estudios) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
     }
     
 }
