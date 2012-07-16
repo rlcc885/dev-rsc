@@ -2219,9 +2219,9 @@ public class InformeXLS {
                 if(f.getTrabajador() != null)
                     escribir.print(InformeXLS.leoCampo(f.getTrabajador().getNroDocumento()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GradoParentesco", InformeXLS.leoCampo(f.getParentesco()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GradoParentesco", InformeXLS.leoCampo(f.getParentesco()), errores, session));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(f.getTipoDocumento()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(f.getTipoDocumento()), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(f.getNroDocumento()));
                 escribir.print("|");
@@ -2230,38 +2230,38 @@ public class InformeXLS {
                 escribir.print(InformeXLS.leoCampo(f.getApellidoMaterno()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(f.getNombres()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Sexo", InformeXLS.leoCampo(f.getSexo()), errores, session));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Sexo", InformeXLS.leoCampo(f.getSexo()), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(f.getFechaNacimiento()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Paises", InformeXLS.leoCampo(f.getPais()), errores, session));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_dist()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_prov()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_dept()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Nacionalidades", InformeXLS.leoCampo(f.getNacionalidad()), errores, session));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("EstadoCivil", InformeXLS.leoCampo(f.getEstadoCivil()), errores, session));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(f.getDomicilioDireccion()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_dist()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_prov()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_dept()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(f.getDomicilioCodigoPostal()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(f.getEsSalud()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GrupoSanguineo", InformeXLS.leoCampo(f.getGrupoSanguineo()), errores, session));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("NivelInstrucción", InformeXLS.leoCampo(f.getNivelInstruccion()), errores, session));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Paises", InformeXLS.leoCampo(f.getPais()), errores, session));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_dist()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_prov()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_ubi_dept()));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("Nacionalidades", InformeXLS.leoCampo(f.getNacionalidad()), errores, session));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("EstadoCivil", InformeXLS.leoCampo(f.getEstadoCivil()), errores, session));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(f.getDomicilioDireccion()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_dist()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_prov()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datoAuxiliarToString(f.getCod_dom_dept()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(f.getDomicilioCodigoPostal()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(f.getEsSalud()));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("GrupoSanguineo", InformeXLS.leoCampo(f.getGrupoSanguineo()), errores, session));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("NivelInstrucción", InformeXLS.leoCampo(f.getNivelInstruccion()), errores, session));
                 escribir.println();
             }
             escribir.close();
@@ -2483,18 +2483,18 @@ public class InformeXLS {
                 escribir.print("|");
                 if(p.getTrabajador() != null)
                     escribir.print(InformeXLS.leoCampo(p.getTrabajador().getNroDocumento()));
-                escribir.print("|");
-                if(p.getClase().trim().equals(Publicacion.CLASE_PUBLICACION)){
-                    clase = "1";
-                    tipo = "TiposPublicacion";
-                }
-                if(p.getClase().trim().equals(Publicacion.CLASE_INVESTIGACION)){
-                    clase = "2";
-                    tipo = "TiposTrabajosInvestigacion";
-                }
+//                escribir.print("|");
+//                if(p.getClase().trim().equals(Publicacion.CLASE_PUBLICACION)){
+//                    clase = "1";
+//                    tipo = "TiposPublicacion";
+//                }
+//                if(p.getClase().trim().equals(Publicacion.CLASE_INVESTIGACION)){
+//                    clase = "2";
+//                    tipo = "TiposTrabajosInvestigacion";
+//                }
                 escribir.print(clase);
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar(tipo, InformeXLS.leoCampo(InformeXLS.leoCampo(p.getTipo())), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar(tipo, InformeXLS.leoCampo(InformeXLS.leoCampo(p.getTipo())), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(p.getTitulo()));
                 escribir.print("|");
@@ -2502,7 +2502,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(p.getDescripcion()));
                 escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(p.getEntidad()));
+//                escribir.print(InformeXLS.booleanToString(p.getEntidad()));
                 escribir.println();
             }
             escribir.close();

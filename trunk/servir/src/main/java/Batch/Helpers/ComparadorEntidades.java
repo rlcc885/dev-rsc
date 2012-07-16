@@ -365,8 +365,8 @@ public class ComparadorEntidades {
         LineaInformeTipoNumeroDocumento lif = new LineaInformeTipoNumeroDocumento();
 
         lif.setCodigoEntidadUE(codigo_organismo);
-        lif.setNumeroDocumento(corigen.getNroDocumento());
-        lif.setTipoDocumento(corigen.getTipoDocumento());
+        //lif.setNumeroDocumento(corigen.getNroDocumento());
+        //lif.setTipoDocumento(corigen.getTipoDocumento());
 
         /*
          * lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador().getTipoDocumento(),
@@ -422,75 +422,75 @@ public class ComparadorEntidades {
             return lif;
         }
 
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getPais(), cdestino.getPais()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dist(), cdestino.getCod_ubi_dist()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_prov(), cdestino.getCod_ubi_prov()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dept(), cdestino.getCod_ubi_dept()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNacionalidad(), cdestino.getNacionalidad()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getPais(), cdestino.getPais()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dist(), cdestino.getCod_ubi_dist()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_prov(), cdestino.getCod_ubi_prov()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_ubi_dept(), cdestino.getCod_ubi_dept()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNacionalidad(), cdestino.getNacionalidad()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
 
         lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEstadoCivil(), cdestino.getEstadoCivil()));
         if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lif;
         }
 
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDomicilioDireccion(), cdestino.getDomicilioDireccion()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_dist(), cdestino.getCod_dom_dist()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_prov(), cdestino.getCod_dom_prov()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_dept(), cdestino.getCod_dom_dept()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDomicilioCodigoPostal(), cdestino.getDomicilioCodigoPostal()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEsSalud(), cdestino.getEsSalud()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getGrupoSanguineo(), cdestino.getGrupoSanguineo()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
-
-        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivelInstruccion(), cdestino.getNivelInstruccion()));
-        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lif;
-        }
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDomicilioDireccion(), cdestino.getDomicilioDireccion()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_dist(), cdestino.getCod_dom_dist()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_prov(), cdestino.getCod_dom_prov()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCod_dom_dept(), cdestino.getCod_dom_dept()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDomicilioCodigoPostal(), cdestino.getDomicilioCodigoPostal()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEsSalud(), cdestino.getEsSalud()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getGrupoSanguineo(), cdestino.getGrupoSanguineo()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
+//
+//        lif.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivelInstruccion(), cdestino.getNivelInstruccion()));
+//        if (lif.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lif;
+//        }
 
         // Si llego hasta aca es que no hubieron cambios
         lif.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
@@ -797,7 +797,7 @@ public class ComparadorEntidades {
         lip.setNumeroDocumento(numeroDocumento);
         lip.setTipoDocumento(tipoDocumento);
 
-        lip.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClase(), cdestino.getClase()));
+//        lip.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClase(), cdestino.getClase()));
         if (lip.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lip;
         }

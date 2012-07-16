@@ -43,10 +43,10 @@ public class PublicacionesEditor {
     private Envelope envelope;
    
     
-    @Component(id = "formulariomensajes")
-    private Form formulariomensajes;
+    @Component(id = "formulariomensajespi")
+    private Form formulariomensajespi;
     @InjectComponent
-    private Zone mensajesZone;  
+    private Zone mensajesPIZone;  
     
     @InjectComponent
     private Zone proIntelectualZone;
@@ -65,7 +65,7 @@ public class PublicacionesEditor {
     @Persist
     private boolean bvalidausuario;
    
-    //Listado de experiencia laboral
+    //Listado de produccion intelectual
     @InjectComponent
     private Zone listaProIntelectualZone;
     @Persist
@@ -95,14 +95,14 @@ public class PublicacionesEditor {
         return c.list();
     }
     
-     //para obtener datatos del Nivel Gobierno
+     //para obtener datos de la clase de publicacion
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanClasePublicacion() {        
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CLASEPRODUCCIONINTELECTUAL", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
-    //para obtener datatos del Sector Gobierno
+    //para obtener datos del tipo de publicacion
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanTipo() {
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", null, 0, session);
@@ -126,10 +126,10 @@ public class PublicacionesEditor {
         publicacion.setEntidad(_oi);
         session.saveOrUpdate(publicacion);
         envelope.setContents(helpers.Constantes.PROD_INTELECTUAL_EXITO);
-
-        //return mensajesZone.getBody();
-        return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())                             
-                .add("listaProIntelectualZone", listaProIntelectualZone.getBody());   
+        publicacion=new Publicacion();
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody())                             
+                .add("listaProIntelectualZone", listaProIntelectualZone.getBody())
+                .add("proIntelectualZone", proIntelectualZone.getBody());   
         
     }
     
@@ -137,7 +137,7 @@ public class PublicacionesEditor {
     @CommitAfter    
     Object onSuccessFromFormulariobotones() {
         if(elemento==1){
-            publicacion=new Publicacion();;
+            publicacion=new Publicacion();
             return  proIntelectualZone.getBody();
         }else if(elemento==2){
             return "Busqueda";

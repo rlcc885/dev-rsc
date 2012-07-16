@@ -73,8 +73,8 @@
  <div class="box">
      <h3>Registro de Producción Intelectual</h3>
      
-            <div t:type="zone" t:id="mensajesZone" >
-                <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+            <div t:type="zone" t:id="mensajesPIZone" >
+                <t:form t:id="formulariomensajespi"  zone="mensajesPIZone"> 
                     <t:envelope t:id="envelope"/>
                     <t:errors/>
                 </t:form> 
