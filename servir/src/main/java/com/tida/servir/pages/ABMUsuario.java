@@ -203,7 +203,7 @@ public class ABMUsuario extends GeneralPage {
             }
             listaUsuarios = c.list();
         }
-
+        System.out.println("Aqui entra.");
         return listaUsuarios;
 
     }
@@ -360,12 +360,16 @@ public class ABMUsuario extends GeneralPage {
      */
 
     void onActivate() {
+        System.out.println("onActivate");
+    }
+
+    void setupRender(){
         primeraVez = false;
         editaUsuario = false;
         botonPerfil = false;
         newPerfil = false;
+        System.out.println("setupRender");
     }
-
     @Log
     @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {

@@ -532,20 +532,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariologoentidad() {
-        blogoentidadi=false;
-        blogoentidadf=true;
+//        blogoentidadi=false;
+//        blogoentidadf=true;
         System.out.println("entroeeeeeeee");
         System.out.println(entidadUE.getLogotipo());
         // Set Path
         //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
-
-        //File copied;
-
-        // Get File
-        //copied = new File("D:/entidad/" + file.getFileName());
-
-        // File Saved
-        //file.write(copied);
+        File copied = new File(file.getFileName());
+        file.write(copied);
         return this;
         
     }

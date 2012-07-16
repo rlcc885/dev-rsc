@@ -41,10 +41,10 @@
     <br />
     <t:zone t:id="tabla_usuario">    
         <t:if test="primeraVez">
-            <div id = "tabla_usuario_grid" >
-                <t:grid source="usuarios" rowsPerPage="15" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral" reorder="nrodocumento,nombres,apellidos,estado">
+<!--            <div id = "tabla_usuario_grid" >-->
+                <t:grid inPlace="true" source="usuarios" rowsPerPage="15" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid" reorder="nrodocumento,nombres,apellidos,estado">
                     <t:parameter name="empty">
-                        <div class="no-info">No hay usuarios generadoS</div>
+                        <div class="no-info">No existen usuarios con los criterios seleccionados.</div>
                     </t:parameter>
                 
                     <p:organismoCell>
@@ -60,7 +60,7 @@
                         <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                     </p:accionesListaUsuarioCell>
                 </t:grid>
-            </div>
+<!--            </div>-->
         </t:if>
     </t:zone>
   
