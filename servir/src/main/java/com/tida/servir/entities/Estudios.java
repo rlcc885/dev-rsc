@@ -194,7 +194,7 @@ public class Estudios {
         this.validado = validado;
     }
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     public Trabajador getTrabajador() {
         return trabajador;
     }
@@ -203,7 +203,7 @@ public class Estudios {
         this.trabajador = trabajador;
     }
     
-    @ManyToOne(optional = false)
+    @ManyToOne
     public Entidad getEntidad() {
         return entidad;
     }
