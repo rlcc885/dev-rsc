@@ -3,6 +3,176 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
+         <h2>Familiares</h2>
+  
+     <div id = "tabla_oi">
+            <t:zone t:id="listaFamiliaresZone">   
+                <t:grid source="listadoFamiliares" rowsPerPage="10" t:add="Parentesco,Revisado,Acciones" pagerPosition="bottom"
+                row="listafamiliar" include="nombres,apellidoPaterno,apellidoMaterno" inPlace="true" >
+                    <t:parameter name="empty">
+                    <div class="no-info">No se encontraron registros</div>
+                    </t:parameter>
+                    <p:parentescoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.parentesco.valor}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.parentesco.valor}</label>  
+                           </t:if>
+                    </p:parentescoCell>
+                    <p:nombresCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.nombres}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.nombres}</label>  
+                           </t:if>
+                    </p:nombresCell>
+                    <p:apellidoPaternoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.apellidoPaterno}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.apellidoPaterno}</label>  
+                           </t:if>
+                    </p:apellidoPaternoCell>
+                    <p:apellidoMaternoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.apellidoMaterno}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.apellidoMaterno}</label>  
+                           </t:if>
+                    </p:apellidoMaternoCell>
+                     <p:revisadoCell>
+                         <t:if test="${bvalidausuario}">
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">SI</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">NO</label>  
+                           </t:if>
+                         </t:if>
+                    </p:revisadoCell>
+                    <p:accionesCell>
+                        <t:if test="${bvalidausuario}">
+                        <t:if test="${listafamiliar.validado}" negate="true">
+                               <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink> | 
+                            
+                        <t:actionlink t:id="eliminar" zone="listaFamiliaresZone" context="listafamiliar"> 
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span>
+      
+                        </t:actionlink> 
+                        </t:if> 
+                        </t:if>
+                    </p:accionesCell>
+                    
+                </t:grid>
+            </t:zone>
+        </div>  
+
+<div class="f-wrap">
+
+
+</div>  
+   
+ <div class="box">
+     <h3>Registro de Familiares</h3>
+     
+            <div t:type="zone" t:id="mensajesFZone" >
+                <t:form t:id="formulariomensajesf"  zone="mensajesFZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+            </div>
+     
+     
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="familiaresZone" >
+                    <t:form t:id="formulariofamiliares"  zone="familiaresZone">
+
+                        <div class="f-wrap">
+                             <div class="f-left" >
+                                <t:label for="parentesco"/>
+                                <input t:type="Select" t:id="parentesco" t:value="familiarActual.parentesco" 
+                                       model="beanParentesco" 
+                                           t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left" >	
+                                <t:label for="sexo"/>
+                                <select t:type="Select" t:id="sexo" value="familiarActual.sexo" 
+                                        model="beanSexo" 
+                                        t:blankOption="ALWAYS" />
+                            </div>
+                             <div class="f-left">	
+                                <t:label for="fechaNacimiento"/>
+                                <input t:type="DateField" t:id="fechaNacimiento" t:value="familiarActual.fechaNacimiento" t:validate="required"
+                                       size="10" t:readonly="readonly" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
+                            </div>
+                        </div>
+                        
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="nombres"/>
+                                <input t:type="TextField" t:id="nombres" t:validate="required" t:value="familiarActual.nombres" maxlength="255" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="apellidoPaterno" />
+                                <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:value="familiarActual.apellidoPaterno" maxlength="255" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="apellidoMaterno" />
+                                <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:value="familiarActual.apellidoMaterno" maxlength="255" />
+                            </div>
+                        </div>
+                        
+                         <div class="f-wrap">
+                           <div class="f-left">
+                                <t:label for="tipoDocumento" />
+                                <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
+                                        model="beanTiposDoc" 
+                                        t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="nroDocumento"/>
+                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" />
+                            </div>
+                            <div class="f-left">
+                                 <t:label for="estadoCivil" />
+                                <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
+                                        model="beanEstadoCivil" 
+                                        t:blankOption="ALWAYS"/>
+                            </div> 
+                        </div> 
+                         <div class="f-wrap">
+                        <div class="f-right">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" />
+                        </div>
+                        </div>
+                    </t:form>  
+            </div> 
+     
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="familiaresZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                    </div>
+                </div>
+                </t:form>
+
+
+            </div>
+     
+        </div>
+        
+</div>      
+        <!--
         <div name="familiares" id="familiares" class="pane" style="display:block;">
             <t:zone t:id="familiaresZone">
                 <h3>Familiares</h3>
@@ -69,7 +239,7 @@
                                 <label>Nacionalidad:</label>
                                 <t:select t:id="nacionalidad" t:value="familiarActual.nacionalidad"
                                     model="nacionalidad" value="familiarActual.nacionalidad" t:validate="required" />
-                                <!-- <input t:type="Select" model="nacionalidad" t:id="nacionalidad" t:value="familiarActual.nacionalidad" disabled ="noeditable"/> -->
+                                
                             </div>
                             <div class="f-left">	
                                 <label>Estado Civil:</label>
@@ -78,14 +248,7 @@
                         </div>
                         <div class="clear" id="datospersonales_fe">
                             <h3>Otros datos personales</h3>
-                            <!-- <div class="f-left">
-                                <label>Tipo Discapacidad</label>
-                                <select t:type="Select" t:id="tipodiscapacidad" t:value="familiarActual.tipoDiscapacidad" model="tipoDiscapacidad" disabled ="noeditable" />
-                            </div>
-                            <div class="f-left">
-                                <label>Nro. Certificado CONADIS:</label>
-                                <input t:type="TextField" t:id="nroconadis" t:value="familiarActual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>
-                            </div> -->
+                          
                             <div class="f-left">
                                 <label>ESSALUD:</label>
                                 <input t:type="TextField" t:id="essalud" t:value="familiarActual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>
@@ -150,12 +313,13 @@
                 </t:zone>
             </div>
 
-             <!-- <t:zone t:id="formacionZone">
+             <t:zone t:id="formacionZone">
                 <form t:type="form" t:id="formFormacion" t:zone="formacionZone">
                     <input t:type="FormacionProfesionalEditor" t:id="formacionprofesional" t:formacionProfesional="formacionProfesional"
                     t:zone="formacionZone" t:zoneName="formacionZone" disabled ="noeditable"/>
                </form>
-            </t:zone> -->
+            </t:zone> 
         </div>
+        -->
     </t:content>
 </html>

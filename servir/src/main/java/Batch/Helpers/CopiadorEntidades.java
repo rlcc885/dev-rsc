@@ -189,26 +189,26 @@ public class CopiadorEntidades {
         destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
         destino.setApellidoMaterno(CopiadorEntidades.verifacionNull(origen.getApellidoMaterno()));
         destino.setApellidoPaterno(CopiadorEntidades.verifacionNull(origen.getApellidoPaterno()));
-        destino.setCod_dom_dept(origen.getCod_dom_dept());
-        destino.setCod_dom_dist(origen.getCod_dom_dist());
-        destino.setCod_dom_prov(origen.getCod_dom_prov());
-        destino.setCod_ubi_dept(origen.getCod_ubi_dept());
-        destino.setCod_ubi_dist(origen.getCod_ubi_dist());
-        destino.setCod_ubi_prov(origen.getCod_ubi_prov());
-        destino.setDomicilioCodigoPostal(CopiadorEntidades.verifacionNull(origen.getDomicilioCodigoPostal()));
-        destino.setDomicilioDireccion(CopiadorEntidades.verifacionNull(origen.getDomicilioDireccion()));
-        destino.setEsSalud(CopiadorEntidades.verifacionNull(origen.getEsSalud()));
-        destino.setEstadoCivil(CopiadorEntidades.verifacionNull(origen.getEstadoCivil()));
-        destino.setFechaNacimiento(CopiadorEntidades.verifacionNull(origen.getFechaNacimiento()));
-        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
-        destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
-        destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelInstruccion()));
+//        destino.setCod_dom_dept(origen.getCod_dom_dept());
+//        destino.setCod_dom_dist(origen.getCod_dom_dist());
+//        destino.setCod_dom_prov(origen.getCod_dom_prov());
+//        destino.setCod_ubi_dept(origen.getCod_ubi_dept());
+//        destino.setCod_ubi_dist(origen.getCod_ubi_dist());
+//        destino.setCod_ubi_prov(origen.getCod_ubi_prov());
+//        destino.setDomicilioCodigoPostal(CopiadorEntidades.verifacionNull(origen.getDomicilioCodigoPostal()));
+//        destino.setDomicilioDireccion(CopiadorEntidades.verifacionNull(origen.getDomicilioDireccion()));
+//        destino.setEsSalud(CopiadorEntidades.verifacionNull(origen.getEsSalud()));
+//        destino.setEstadoCivil(CopiadorEntidades.verifacionNull(origen.getEstadoCivil()));
+//        destino.setFechaNacimiento(CopiadorEntidades.verifacionNull(origen.getFechaNacimiento()));
+//        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
+//        destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
+//        destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelInstruccion()));
         destino.setNombres(CopiadorEntidades.verifacionNull(origen.getNombres()));
-        destino.setNroDocumento(CopiadorEntidades.verifacionNull(origen.getNroDocumento()));
-        destino.setPais(CopiadorEntidades.verifacionNull(origen.getPais()));
-        destino.setParentesco(CopiadorEntidades.verifacionNull(origen.getParentesco()));
-        destino.setSexo(CopiadorEntidades.verifacionNull(origen.getSexo()));
-        destino.setTipoDocumento(CopiadorEntidades.verifacionNull(origen.getTipoDocumento()));
+//        destino.setNroDocumento(CopiadorEntidades.verifacionNull(origen.getNroDocumento()));
+//        destino.setPais(CopiadorEntidades.verifacionNull(origen.getPais()));
+//        destino.setParentesco(CopiadorEntidades.verifacionNull(origen.getParentesco()));
+//        destino.setSexo(CopiadorEntidades.verifacionNull(origen.getSexo()));
+//        destino.setTipoDocumento(CopiadorEntidades.verifacionNull(origen.getTipoDocumento()));
         destino.setTrabajador(origen.getTrabajador());
     }
     
@@ -275,11 +275,11 @@ public class CopiadorEntidades {
     
     public static void produccionIntelectual(Publicacion origen, Publicacion destino){
         destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
-        destino.setClase(CopiadorEntidades.verifacionNull(origen.getClase()));
+//        destino.setClase(CopiadorEntidades.verifacionNull(origen.getClase()));
         destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
-        destino.setEntidad(CopiadorEntidades.verifacionNull(origen.getEntidad()));
+//        destino.setEntidad(CopiadorEntidades.verifacionNull(origen.getEntidad()));
         destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
-        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
+//        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
         destino.setTitulo(CopiadorEntidades.verifacionNull(origen.getTitulo()));
         destino.setTrabajador(origen.getTrabajador());
         destino.setValidado(CopiadorEntidades.verifacionNull(origen.getValidado()));

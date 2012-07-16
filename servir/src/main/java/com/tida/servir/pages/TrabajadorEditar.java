@@ -178,13 +178,13 @@ public class TrabajadorEditar extends GeneralPage{
             _ca = (CargoAsignado) c.list().get(0);
         else _ca = null;
     }
-    public String getClasePublicacion() {
-        return Publicacion.CLASE_PUBLICACION;
-    }
-
-    public String getClaseTrabajo() {
-        return Publicacion.CLASE_INVESTIGACION;
-    }
+//    public String getClasePublicacion() {
+//        return Publicacion.CLASE_PUBLICACION;
+//    }
+//
+//    public String getClaseTrabajo() {
+//        return Publicacion.CLASE_INVESTIGACION;
+//    }
 
     public String getClaseMeritos() {
         return MeritoDemerito.CLASE_MERITO;
