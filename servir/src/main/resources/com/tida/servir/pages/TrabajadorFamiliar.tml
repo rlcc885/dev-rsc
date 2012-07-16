@@ -47,9 +47,9 @@
 
 		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
 		
-        <div class= "pane" id='datosPersonales' name='datosPersonales'>
+        <div class= "pane" id='familiares' name='familiares'>
               
-                <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual"/>
+                <t:FamiliaresEditor t:id="familiaresEditor" actual= "actual"/>
               
         </div>
 
