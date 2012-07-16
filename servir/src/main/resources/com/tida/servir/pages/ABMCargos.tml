@@ -6,7 +6,7 @@
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
-    <h1>Administración de Cargos/Puestos</h1>
+    <h2>Administración de Cargos / Puestos</h2>
 
     <div id="mainfiltros" class="pane">
 
@@ -56,12 +56,10 @@
                     <div class="actions f-right">
                         
                         <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
-                        <t:if test="aselect" negate="true">
-                            <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button" t:disabled="${aselect}"/>
-                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" t:disabled="${aselect}"/>
-                        </t:if> 
-                        <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
-                    </div>                                 
+                       <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
+                       <input id="buscarsubmit" type="submit" value="Buscar" class="button"/>
+                       <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
+                    </div>   
                 </form>   
             </t:zone>
           </div>
@@ -69,20 +67,18 @@
                 <t:zone t:id="BOcupacionalesZone" >            
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
-                               t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone" disabled ="noeditable"/>
+                               t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone"/>
                     </form>                 
                 </t:zone>    
-            </div>
+        </div>
   
             
         
     </div> 
     
-    <t:if test="aselect" negate="true">
-    <div t:type="zone" t:id="listaCargo" class="selectform" >
+   <div t:type="zone" t:id="listaCargo" class="selectform" >
         <t:if test="mostrar">  
-            <t:form t:id="formlistaunidad">
-                
+            <t:form t:id="formlistaunidad">                
                 ${errorBorrar}
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
@@ -91,17 +87,20 @@
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
                         <p:accionesCell>
-                            <t:if test="PuedeEditar">
-                                <t:actionlink t:id="editar" zone="listaCargo" context="c" t:disabled="${aupdate}">Editar</t:actionlink>
+                            <t:if test="${veditar}">
+                                <t:actionlink t:id="editar" zone="listaCargo" context="c">Editar</t:actionlink>
+                            </t:if>
+                            <t:if test="${veditar}" negate="true">
+                                <t:actionlink t:id="detalle" zone="listaCargo" context="c">Ver Detalle</t:actionlink>
+                            </t:if>
                                 <!--
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
-                                -->
-                                <t:if test="adelete" negate="true">
+                                --> 
+                            <t:if test="${veliminar}">    
                                 | <a t:type="eventLink" t:event="borrarDato" t:context="c"
-                                     t:zone="listaCargo" href="#" t:disabled="${adelete}"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?" t:disabled="${adelete}">
+                                     t:zone="listaCargo" href="#"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
                                     Eliminar
                                     </span> </a>
-                                </t:if>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>
@@ -109,16 +108,18 @@
             </t:form>
         </t:if>
      </div> <!-- tabla cargos -->
-    </t:if>
-    
+    <div class="f-wrap">
+
+
+    </div> 
+     
      <h3> Crear / Editar Cargo </h3>
         <div class="box" id="box-cargos">
           <div t:type="zone" t:id="abmZone" class="abmform">
+            <t:if test="${vformulario}">
             <t:form t:id="formularioaltacargo" zone="abmZone">
                 <t:envelope t:id="envelope"/>
-                <t:errors/>
-                    <t:if test="PuedeEditar">
-                    
+                <t:errors/>                   
                     
                         
                         <!-- <div id="cargos_izq" class="cargosAM">-->
@@ -131,17 +132,17 @@
 
                             <div class="f-left">
                                 <label>* Unidad Orgánica</label>
-                                <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica"/>
+                                <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">
                                 <label>* Código</label>
                                 <input t:type="TextField" t:id="cargo_cod_cargo"
-                                       t:value="cargo.cod_cargo" size="4" t:validate="required"/>
+                                       t:value="cargo.cod_cargo" size="30" t:validate="required" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">
                                 <label>* Denominación</label>
                                 <input t:type="TextField" t:id="cargo_den_cargo"
-                                       t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30"/>
+                                       t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30" t:disabled="${vdetalle}"/>
                             </div>                            
 
 
@@ -156,16 +157,13 @@
 
                         <div class ="f-wrap">
                             <div class="f-left">
-                                <fieldset>
-                                <label><input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal"/> Supervisa Personal</label>
-                                </fieldset>
-                            </div>  
-                            <div class="f-left">
-                                Situación CAP
-                                <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" />
+                                <label>Situación CAP</label>
+                                <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" t:disabled="${vdetalle}"/>
                             </div>
-
-
+                            <div class="f-left">                            
+                                <label>Supervisa Personal</label>
+                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
+                            </div>  
                         </div> 
 
                         <!-- <div class="f-wrap">
@@ -180,7 +178,7 @@
 
                         <div class="f-wrap">
                             <div class="f-left">
-                                <fieldset>
+                                <fieldset >
                                     <legend>* Presenta Declaración Jurada de Bienes y Rentas</legend>
                                     <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr" t:validate="required">
                                         <label><t:radio t:id="de1" t:value="true" /> Si</label>
@@ -192,8 +190,8 @@
                                 <fieldset>
                                 <label>* Presupuestado en PAP</label>
                                 <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
-                                    <label><t:radio t:id="pa1" t:value="true" /> Si</label>
-                                    <label><t:radio t:id="pa2" t:value="false" /> No</label>
+                                    <label><t:radio t:id="pa1" t:value="true" t:disabled="${vdetalle}"/> Si</label>
+                                    <label><t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No</label>
                                 </t:radiogroup>
                                 </fieldset>
                             </div>
@@ -201,8 +199,8 @@
                                 <fieldset>
                                 <label>* Es Organico</label>   
                                 <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
-                                    <label><t:radio t:id="o1" t:value="true" /> Si</label>
-                                    <label><t:radio t:id="o2" t:value="false" /> No</label>
+                                    <label><t:radio t:id="o1" t:value="true" t:disabled="${vdetalle}"/> Si</label>
+                                    <label><t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No</label>
                                 </t:radiogroup>
                                 </fieldset>
                             </div>
@@ -228,32 +226,35 @@
                         </div>-->
                         <!--</div>--> <!-- div f-wrap -->
                         <!-- </div> --><!-- div der -->
+                     <t:if test="${vbotones}">
                         <div class="actions f-right">
                             <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/> 
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button" /> 
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
+                     </t:if>
                         <br style="clear: both;" />
-                        </t:if>
-                </t:form>  
+                </t:form> 
+            </t:if>
             </div> <!-- div box -->
                  <!-- puedeEditar -->
                   
     </div> <!-- abmZone -->
 
     <div id = "ocupacionalescargo">
-        <t:zone t:id="OcupacionalesZone">            
-                <t:if test="PuedeEditar">                
+        <t:zone t:id="OcupacionalesZone"> 
+            <t:if test="${vformulario}">
                     <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="regimengruponivel" t:regimengruponivel="regimengruponivel"
-                               t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
+                               t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" t:disabled="${vdetalle}"/>
                     </form>
+            </t:if>
                     <!-- <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
                         t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
                     </form> -->
-                </t:if> <!-- puedeEditar -->   
+ 
         </t:zone>
     </div>
 

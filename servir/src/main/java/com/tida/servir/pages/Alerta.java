@@ -95,6 +95,9 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private BusquedaEvento eventoentidad;
+        @Property
+    @SessionState
+    private UsuarioAcceso usu;
     
     @Log
     @SetupRender
@@ -112,6 +115,16 @@ public class Alerta  extends GeneralPage {
             mostrars=false;
             mostrare=false;
             mostrarse=false;
+        }
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", "BUSQUEDA");
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));            
+        }
+        else{
+            usu = (UsuarioAcceso) result.get(0);                                  
         }
         
     }
@@ -181,17 +194,8 @@ public class Alerta  extends GeneralPage {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
         return result;
-    }
-    
-    @Log
-    @CommitAfter  
-    Object onActionFromEditar(Evento ev1) {
-        ev1.setEstadoevento(true);
-        session.saveOrUpdate(ev1);
-        //session.flush();
-        return listaservir.getBody();
-    }
-    
+    }    
+   
     @Log
     @CommitAfter  
     Object onActionFromEditars(Evento ev2) {
@@ -199,22 +203,23 @@ public class Alerta  extends GeneralPage {
         session.saveOrUpdate(ev2);
         //session.flush();
         return listaservir.getBody();
-    }
-    
-    @Log
-    @CommitAfter  
-    Object onActionFromSeleccionar(Evento eve) {
-        eve.setEstadoevento(true);
-        session.saveOrUpdate(eve);
-        //session.flush();
-        return listaentidad.getBody();
-    }
-    
+    }    
+   
     @Log
     Object onActionFromEditarenti(Cargoxunidad c) {
         return listaservir.getBody();
     }
     
+    public String getSelectionRow() {
+        if (actual != null) {
+            if (eventoentidad.getTrabajadorid() == actual.getId()) {
+                return "selected";
+            }
+            return "normal";
+        }
+        return "";
+
+    }
     
     /*
     @Log
