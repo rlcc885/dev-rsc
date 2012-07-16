@@ -555,12 +555,23 @@ public class Trabajador implements Serializable // extends Persona
     @NonVisual
 //  @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Curso> cursos = new ArrayList<Curso>();
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+//    @NonVisual
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+//    public List<LkBusquedaEstudios> lkbusquedaestudios = new ArrayList<LkBusquedaEstudios>();
 
     /*
      * A los legajos se acceden según los cargos @NonVisual @OneToMany(mappedBy
      * = "trabajador", cascade = CascadeType.ALL) public List<Legajo> legajos =
      * new ArrayList<Legajo>();
      */
+//    public List<LkBusquedaEstudios> getLkbusquedaestudios() {
+//        return lkbusquedaestudios;
+//    }
+//    public void setLkbusquedaestudios(List<LkBusquedaEstudios> lkbusquedaestudios) {
+//        this.lkbusquedaestudios = lkbusquedaestudios;
+//    }
+    
     public List<CargoAsignado> getCargosAsignados() {
         return cargosAsignados;
     }

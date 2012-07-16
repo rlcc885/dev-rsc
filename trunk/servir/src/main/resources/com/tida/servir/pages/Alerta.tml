@@ -61,7 +61,7 @@
         
         <div t:type="zone" t:id="listaentidad" class="selectform" > 
             <t:if test="mostrare">
-            <h1>Administrador de Servir</h1>
+            <h1>Administrador de Entidad</h1>
                 <t:form t:id="formlistaentidad">
                     <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">

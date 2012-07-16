@@ -12,18 +12,14 @@ import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.PrimaryKeyEncoder;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
@@ -52,7 +48,11 @@ public class EstudiosEditor {
     private Envelope envelope;
         
     @Property
-    private Estudios listaestu;
+    @Persist
+    private Estudios estudio;
+    @Property
+    @Persist
+    private LkBusquedaEstudios listaestu;
 
 //    @Persist
 //    private boolean entradaTituloGrid;
@@ -62,7 +62,11 @@ public class EstudiosEditor {
     private Usuario _usuario;
     @Inject
     private PropertyAccess _access;
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
     
+    //zonas
     @InjectComponent
     private Zone listaZone;
     @InjectComponent
@@ -74,8 +78,11 @@ public class EstudiosEditor {
     @InjectComponent
     @Property
     private Zone tercerZone;
-    
-    
+    @Component(id = "formlistaestudios")
+    private Form formlistaestudios;
+    @Inject
+    private Request _request;
+        
     //campos
     @Property
     @Persist
@@ -109,10 +116,34 @@ public class EstudiosEditor {
     private Date valfec_hasta;
     @Persist
     @Property
-    private Boolean valestudiando;
+    private Boolean valestudiando;       
+    
+    //validaciones
+    @Persist
+    @Property
+    private Boolean vdetalle;
     @Persist
     @Property
     private Boolean vfechahasta;
+    @Persist
+    @Property
+    private Boolean votro;
+    @Persist
+    @Property
+    private Boolean editando;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Persist
+    @Property
+    private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    
     
 //    @Property
 //    @SessionState
@@ -152,9 +183,9 @@ public class EstudiosEditor {
 //    }
     
     @Log
-    public List<Estudios> getEstudios() {
-        Criteria c = session.createCriteria(Estudios.class);
-        c.add(Restrictions.eq("trabajador", actual));        
+    public List<LkBusquedaEstudios> getEstudios() {
+        Criteria c = session.createCriteria(LkBusquedaEstudios.class);
+        c.add(Restrictions.eq("trabajador", actual.getId()));        
         return c.list();
     }
     @Log
@@ -175,29 +206,280 @@ public class EstudiosEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+    void onDenChanged() {
+        valdenominacion = _request.getParameter("param");
+    }
+
+    void onOtroChanged() {
+        valotrocentro = _request.getParameter("param");
+    }
     
+    void onColeChanged() {
+        valcolegio = _request.getParameter("param");
+    }
+    
+    void onColegChanged() {
+        valcolegiatura = _request.getParameter("param");
+    }
 
     @Inject
     private Session session;
-
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformularioaltaestudio(){
+        if(valcentroestudio!=null){
+            if(valcentroestudio.getCodigo()==9999999){
+                votro=false;                
+            }
+            else{
+                votro=true;
+                valotrocentro=null;
+            }
+        }
+        else{
+            votro=true;
+        }
+        return primerZone.getBody();
+    }
+        
     @Log
     @CommitAfter
     Object onSuccessFromformulariodos(){
         if(valestudiando){
             vfechahasta=true;
+            valfec_hasta=null;
         }
         else{
             vfechahasta=false;
         }
         return tercerZone.getBody();
     }
-
+    
+//    @Log
+//    void onValidateFromformulariobotones() {
+//        //formlistaestudios.recordError("Debe ingresar la Denominación");
+//        
+//        
+//        
+//    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones(){
-        envelope.setContents(String.valueOf(valfec_desde)+String.valueOf(valfec_hasta));
-        return listaZone.getBody();
+        //envelope.setContents(String.valueOf(valfec_desde)+String.valueOf(valfec_hasta));
+        if(valdenominacion==null){
+            formlistaestudios.recordError("Debe ingresar la Denominación");
+            return listaZone.getBody();
+        }
+        if(valtipoestudio==null){
+            formlistaestudios.recordError("Debe seleccionar el Tipo de Estudio");
+            return listaZone.getBody();
+        }
+        if(valcentroestudio==null){
+            formlistaestudios.recordError("Debe seleccionar el Centro de Estudio");
+            return listaZone.getBody();
+        }
+        if(valfec_desde==null){
+            formlistaestudios.recordError("Debe ingresar Fecha de Inicio");
+            return listaZone.getBody();
+        }
+        if(valestudiando!=null){
+            System.out.println("Editooooooooo");
+            if(valestudiando==false){
+                if(valfec_hasta==null){
+                    formlistaestudios.recordError("Debe ingresar Fecha de Fin");
+                    return listaZone.getBody();
+                }
+                if (valfec_desde.after(valfec_hasta)) {
+                    formlistaestudios.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                    return listaZone.getBody();
+                }  
+            }
+        }
+        else{
+           
+           if(valfec_hasta==null){
+                formlistaestudios.recordError("Debe ingresar Fecha de Fin");
+                return listaZone.getBody();
+            }
+           System.out.println("Guardooooooooo"+valfec_hasta+valfec_desde);
+           if (valfec_desde.after(valfec_hasta)) {
+                formlistaestudios.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                return listaZone.getBody();
+           } 
+        }
+        
+        if(editando){
+            //editando
+            if(usua.getAccesoreport()==0){
+                 vformulario=false;
+            } 
+        }
+        else{//guardando
+            estudio = new Estudios();
+            System.out.println("Trabajadorrr"+actual);
+            estudio.setTrabajador(actual);        
+            estudio.setEntidad(_usuario.getTrabajador().getEntidad());
+            estudio.setValidado(false);
+            if(valestudiando==null){
+                estudio.setEstudiando(false);
+            }
+            if(_usuario.getRol().getId()==1){
+                estudio.setAgregadotrabajador(true);
+            }
+            else{
+                estudio.setAgregadotrabajador(false);
+            }
+        }
+        seteo();
+        session.saveOrUpdate(estudio); 
+        editando = false; 
+        limpiar();
+        formlistaestudios.clearErrors();
+        envelope.setContents("Estudios del Trabajador Modificados Exitosamente");
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
+                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
     }
+    
+    void mostrar(){        
+        valdenominacion=estudio.getDenominacion();
+        valtipoestudio=estudio.getTipoestudio();
+        valcentroestudio=estudio.getCentroestudio();
+        valotrocentro=estudio.getOtrocentroestudio();
+        valpais=estudio.getPais();
+        if (ubigeoDomicilio == null) {
+            ubigeoDomicilio = new Ubigeo();
+        }
+        ubigeoDomicilio.setDepartamento(estudio.getDepartamento());
+        ubigeoDomicilio.setProvincia(estudio.getProvincia());
+        ubigeoDomicilio.setDistrito(estudio.getDistrito());
+        valcolegio=estudio.getColegio();
+        valcolegiatura=estudio.getColegiatura();
+        valfec_desde=estudio.getFechainicio();
+        valfec_hasta=estudio.getFechafin();
+        valestudiando=estudio.getEstudiando();        
+    }
+    
+    @Log
+    Object onActionFromEditar(Estudios estu) {
+        estudio=estu;
+        vformulario=true;
+        editando=true;
+        vdetalle=false;
+        vbotones=true;
+        mostrar();
+        if(valestudiando!=null){
+            if(valestudiando){
+            vfechahasta=true;
+            }
+            else{
+                vfechahasta=false;
+            }
+        }
+        else{
+            vfechahasta=false;
+        }
+        if(valcentroestudio!=null){
+            if(valcentroestudio.getCodigo()==9999999){
+                votro=false;
+            }
+            else{
+                votro=true;
+            }
+        }
+        else{
+            votro=true;
+        }
+
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
+                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+    }
+    
+    @Log
+    Object onActionFromDetalle(Estudios estu) {
+        estudio=estu;
+        mostrar();        
+        vdetalle=true;
+        vfechahasta=true;
+        votro=true;
+        vbotones=false;
+        vformulario=true;
+        return new MultiZoneUpdate("primerZone", primerZone.getBody())                             
+                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+    }
+    
+    @Log
+    Object onActionFromDetalles(Estudios estu) {
+        estudio=estu;
+        mostrar();        
+        vdetalle=true;
+        vfechahasta=true;
+        votro=true;
+        vbotones=false;
+        vformulario=true;
+        return new MultiZoneUpdate("primerZone", primerZone.getBody())                             
+                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+    }
+    
+    @Log
+    @CommitAfter
+    Object onBorrarDato(Estudios dato) {
+        return new MultiZoneUpdate("primerZone", primerZone.getBody())                             
+                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+    }
+    
+    @Log
+    @SetupRender
+    private void inicio() {
+        if(usua.getAccesoupdate()==1){
+            veditar=true;
+            vbotones=true;
+        }
+        if(usua.getAccesodelete()==1){
+            veliminar=true;            
+        }
+        if(usua.getAccesoreport()==1){
+            vformulario=true;
+            vbotones=true;
+        }
+        votro=true;
+        editando=false;
+    }
+    
+    void seteo(){
+        estudio.setDenominacion(valdenominacion);
+        estudio.setTipoestudio(valtipoestudio);
+        estudio.setCentroestudio(valcentroestudio);
+        estudio.setOtrocentroestudio(valotrocentro);
+        estudio.setPais(valpais);
+        estudio.setDepartamento(ubigeoDomicilio.getDepartamento());
+        estudio.setProvincia(ubigeoDomicilio.getProvincia());
+        estudio.setDistrito(ubigeoDomicilio.getDistrito());
+        estudio.setColegio(valcolegio);
+        estudio.setColegiatura(valcolegiatura);
+        estudio.setFechainicio(valfec_desde);
+        estudio.setFechafin(valfec_hasta);
+        estudio.setEstudiando(valestudiando);
+    }
+    
+    void limpiar(){
+        estudio=new Estudios();
+        valdenominacion=null;
+        valtipoestudio=null;
+        valcentroestudio=null;
+        valotrocentro=null;
+        valpais=null;
+        ubigeoDomicilio=null;
+        valcolegio=null;
+        valcolegiatura=null;
+        valfec_desde=null;
+        valfec_hasta=null;
+        valestudiando=null;    
+    }
+    
+
+    
 
   
 //  @CommitAfter

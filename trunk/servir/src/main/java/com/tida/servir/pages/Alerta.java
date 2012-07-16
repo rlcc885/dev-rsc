@@ -2,7 +2,6 @@ package com.tida.servir.pages;
 
 import annotations.XHR;
 import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.LkBusquedaEvento;
 import com.tida.servir.entities.LkBusquedaTrabajador;
 import com.tida.servir.entities.Evento;
 import com.tida.servir.entities.Usuario;
@@ -87,9 +86,6 @@ public class Alerta  extends GeneralPage {
 //    @Property
 //    @Persist
 //    private LkBusquedaEvento le;
-    @Property
-    @Persist
-    private LkBusquedaEvento le;  
     @Property
     @Persist
     private BusquedaEvento eventoservir1; 
