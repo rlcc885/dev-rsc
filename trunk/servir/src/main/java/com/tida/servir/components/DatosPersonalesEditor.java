@@ -149,7 +149,7 @@ public class DatosPersonalesEditor {
         valsistemapensionario=actual.getSistemapensionario();
         valregimenpensionario=actual.getRegimenpensionario();
         valcuspp=actual.getNumregimenpensionario();         
-         validaciones();      
+        validaciones();      
          if(valconadis.equals("null")){
             valconadis=null;
         }
@@ -514,36 +514,22 @@ public class DatosPersonalesEditor {
     
     
     void validaciones(){
-        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());        
+//        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());  
+        vconadis=false;
         if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
             vtipodiscapacidad=true;
-            vconadis=true;
             if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
                 vconadis=true;                
             }        
             else{
-                vconadis=false;                
-            }       
-            if(valconadis.equals("0") || valconadis.equals("null")){
-                vconadis=false;
-                valconadis=null;
-                //valconadis=null;
-                }
-            else{
+                if(valconadis!=null){
                     vconadis=true;
-            }
-//            if(valconadis.equals("0")){
-//                vconadis=false;
-//            }
-//            else{
-//                vconadis=true;  
-//            }
+                }               
+            }       
         }
         else{
-            vconadis=false;  
             vtipodiscapacidad=false;
-        }
-        
+        }        
 
         if(valessalud!=null && !valessalud.equals("")){
             vessalud=true;

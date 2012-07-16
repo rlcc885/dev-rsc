@@ -16,71 +16,30 @@ public class Curso implements Serializable {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
-    @Id
-    @GeneratedValue
     @NonVisual
     private Long id;
-//    @ManyToOne(optional = false)
-    @ManyToOne(optional = false)
-    private Trabajador trabajador;
-    private String denominacion;
-    private String centro_estudios;
-    private Float horas;
-    private Boolean financiadoEntidad;
-    private String lugar_dictado;
+//    @ManyToOne(optional = false)    
+    private String denominacion;     
+    @NonVisual
+    private DatoAuxiliar tipoestudio;    
+    @NonVisual
+    private DatoAuxiliar centroestudio;
+    private String otrocentroestudio;
+    private Boolean estudiando;
     @Temporal(TemporalType.DATE)
-    private Date fec_emision;
-    private Boolean agregadoTrabajador;
+    private Date fechainicio;
+    @Temporal(TemporalType.DATE)
+    private Date fechafin;
+    private Boolean agregadotrabajador;
     private Boolean validado;
-
-    public Boolean getValidado() {
-        return validado;
-    }
-
-    public void setValidado(Boolean validado) {
-        this.validado = validado;
-    }
-
-    public Boolean getAgregadoTrabajador() {
-        return agregadoTrabajador;
-    }
-
-    public void setAgregadoTrabajador(Boolean agregadoTrabajador) {
-        this.agregadoTrabajador = agregadoTrabajador;
-    }
-
-    public String getCentro_estudios() {
-        return centro_estudios;
-    }
-
-    public void setCentro_estudios(String centro_estudios) {
-        this.centro_estudios = centro_estudios;
-    }
-
-    public String getDenominacion() {
-        return denominacion;
-    }
-
-    public void setDenominacion(String denominacion) {
-        this.denominacion = denominacion;
-    }
-
-    public Date getFec_emision() {
-        return fec_emision;
-    }
-
-    public void setFec_emision(Date fec_emision) {
-        this.fec_emision = fec_emision;
-    }
-
-    public Float getHoras() {
-        return horas;
-    }
-
-    public void setHoras(Float horas) {
-        this.horas = horas;
-    }
-
+    private Boolean fueradelpais;
+    @NonVisual
+    private Trabajador trabajador;
+    @NonVisual
+    private Entidad entidad;
+    
+    @Id
+    @GeneratedValue
     public Long getId() {
         return id;
     }
@@ -88,23 +47,90 @@ public class Curso implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Boolean getFinanciadoEntidad() {
-        return financiadoEntidad;
+    
+    public String getDenominacion() {
+        return denominacion;
     }
 
-    public void setFinanciadoEntidad(Boolean financiadoEntidad) {
-        this.financiadoEntidad = financiadoEntidad;
+    public void setDenominacion(String denominacion) {
+        this.denominacion = denominacion;
+    }
+    @ManyToOne
+    public DatoAuxiliar getTipoestudio() {
+        return tipoestudio;
     }
 
-    public String getLugar_dictado() {
-        return lugar_dictado;
+    public void setTipoestudio(DatoAuxiliar tipoestudio) {
+        this.tipoestudio = tipoestudio;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getCentroestudio() {
+        return centroestudio;
     }
 
-    public void setLugar_dictado(String lugar_dictado) {
-        this.lugar_dictado = lugar_dictado;
+    public void setCentroestudio(DatoAuxiliar centroestudio) {
+        this.centroestudio = centroestudio;
+    }
+    
+    public String getOtrocentroestudio() {
+        return otrocentroestudio;
+    }
+    
+    public void setOtrocentroestudio(String otrocentroestudio) {
+        this.otrocentroestudio = otrocentroestudio;
+    }
+    
+    public Boolean getEstudiando() {
+        return estudiando;
     }
 
+    public void setEstudiando(Boolean estudiando) {
+        this.estudiando = estudiando;
+    }   
+    
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }   
+    
+    public Date getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
+    }     
+    
+    public Boolean getAgregadotrabajador() {
+        return agregadotrabajador;
+    }
+
+    public void setAgregadotrabajador(Boolean agregadotrabajador) {
+        this.agregadotrabajador = agregadotrabajador;
+
+    }
+    
+    public Boolean getValidado() {
+        return validado;
+    }
+
+    public void setValidado(Boolean validado) {
+        this.validado = validado;
+    }
+    
+    public Boolean getFueradelpais() {
+        return fueradelpais;
+    }
+
+    public void setFueradelpais(Boolean fueradelpais) {
+        this.fueradelpais = fueradelpais;
+    }
+
+    @ManyToOne
     public Trabajador getTrabajador() {
         return trabajador;
     }
@@ -112,8 +138,16 @@ public class Curso implements Serializable {
     public void setTrabajador(Trabajador trabajador) {
         this.trabajador = trabajador;
     }
+    
+    @ManyToOne
+    public Entidad getEntidad() {
+        return entidad;
+    }
 
-    @Override
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
+    }
+        @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -122,25 +156,7 @@ public class Curso implements Serializable {
             return false;
         }
         final Curso other = (Curso) obj;
-        if (this.trabajador != other.trabajador && (this.trabajador == null || !this.trabajador.equals(other.trabajador))) {
-            return false;
-        }
-        if ((this.denominacion == null) ? (other.denominacion != null) : !this.denominacion.equals(other.denominacion)) {
-            return false;
-        }
-        if ((this.centro_estudios == null) ? (other.centro_estudios != null) : !this.centro_estudios.equals(other.centro_estudios)) {
-            return false;
-        }
-        if (this.horas != other.horas && (this.horas == null || !this.horas.equals(other.horas))) {
-            return false;
-        }
-        if (this.financiadoEntidad != other.financiadoEntidad && (this.financiadoEntidad == null || !this.financiadoEntidad.equals(other.financiadoEntidad))) {
-            return false;
-        }
-        if ((this.lugar_dictado == null) ? (other.lugar_dictado != null) : !this.lugar_dictado.equals(other.lugar_dictado)) {
-            return false;
-        }
-        if (this.fec_emision != other.fec_emision && (this.fec_emision == null || !this.fec_emision.equals(other.fec_emision))) {
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -148,14 +164,11 @@ public class Curso implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + (this.trabajador != null ? this.trabajador.hashCode() : 0);
-        hash = 47 * hash + (this.denominacion != null ? this.denominacion.hashCode() : 0);
-        hash = 47 * hash + (this.centro_estudios != null ? this.centro_estudios.hashCode() : 0);
-        hash = 47 * hash + (this.horas != null ? this.horas.hashCode() : 0);
-        hash = 47 * hash + (this.financiadoEntidad != null ? this.financiadoEntidad.hashCode() : 0);
-        hash = 47 * hash + (this.lugar_dictado != null ? this.lugar_dictado.hashCode() : 0);
-        hash = 47 * hash + (this.fec_emision != null ? this.fec_emision.hashCode() : 0);
+        int hash = 7;
+        hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
+    
 }
+
+    

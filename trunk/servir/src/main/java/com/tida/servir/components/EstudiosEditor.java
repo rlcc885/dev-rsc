@@ -344,7 +344,8 @@ public class EstudiosEditor {
                 //editando
                 if(usua.getAccesoreport()==0){
                     vformulario=false;
-                } 
+                }
+                estudio.setEstudiando(valestudiando);
             }
             else{//guardando
                 estudio = new Estudios();
@@ -355,6 +356,9 @@ public class EstudiosEditor {
                 if(valestudiando==null){
                     estudio.setEstudiando(false);
                 }
+                else{
+                    estudio.setEstudiando(valestudiando);
+                }
                 if(_usuario.getRol().getId()==1){
                     estudio.setAgregadotrabajador(true);
                 }
@@ -363,7 +367,7 @@ public class EstudiosEditor {
                 }
             }
             if(vrevisado==true){
-                if(valestudiando==null){
+                if(valrevisado==null){
                     estudio.setValidado(false);
                 }
                 else{
@@ -401,7 +405,8 @@ public class EstudiosEditor {
         valcolegiatura=estudio.getColegiatura();
         valfec_desde=estudio.getFechainicio();
         valfec_hasta=estudio.getFechafin();
-        valestudiando=estudio.getEstudiando();        
+        valestudiando=estudio.getEstudiando();  
+        valrevisado=estudio.getValidado(); 
     }
     
     @Log
@@ -517,8 +522,7 @@ public class EstudiosEditor {
         estudio.setColegiatura(valcolegiatura);
         estudio.setFechainicio(valfec_desde);
         estudio.setFechafin(valfec_hasta);
-        estudio.setEstudiando(valestudiando);
-        estudio.setValidado(valrevisado);
+        //estudio.setEstudiando(valestudiando);
     }
     
     void limpiar(){
@@ -535,6 +539,7 @@ public class EstudiosEditor {
         valfec_hasta=null;
         valestudiando=null;  
         valrevisado=null;
+        vfechahasta=false;
     }
     
 

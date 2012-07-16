@@ -111,7 +111,7 @@
     <div class="box">          
       <t:zone t:id="primerZone">         
          <t:if test="${vformulario}">
-          <h3>Registro/Actualización de Estudios</h3>
+          <h3>Crear / Editar Estudios</h3>
             <t:form t:id="formularioaltaestudio" zone="primerZone">                
                 <div class="f-wrap">
                     <div class="f-left">
@@ -176,14 +176,14 @@
         <t:form t:id="formulariobotones" t:zone="listaZone">
             <div class="f-wrap">                     
                     <div class="f-left">
-                        <label>Desde</label>
+                        <label>* Desde</label>
                         <div class="f-left">
                             <input t:type="DateField" t:id="fec_inicio" t:value="valfec_desde"
                             size="30" t:disabled="${vdetalle}" t:readonly="readlony"/>
                         </div>
                     </div>
                     <div class="f-left">
-                        <label>Hasta</label>
+                        <label>(*) Hasta</label>
                         <div class="f-left">
                             <input t:type="DateField" t:id="fec_fin" t:value="valfec_hasta"
                                     size="30" t:disabled="${vfechahasta}" t:readonly="readlony"/>
