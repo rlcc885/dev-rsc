@@ -58,7 +58,7 @@
                             <div class="f-left">
                                 <label>Fecha de Nacimiento</label>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="actual.fechaNacimiento"
-                                    t:validate="required" size="30" t:disabled="${vdatospersonales}" t:editable="false"/>
+                                    t:validate="required" size="30" t:disabled="${vdatospersonales}" t:readonly="readlony"/>
                             </div>
                             <!--
                         <div class="f-left">

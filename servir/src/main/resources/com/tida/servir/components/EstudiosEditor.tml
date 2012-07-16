@@ -58,6 +58,17 @@
                                </label>  
                            </t:if>
                         </p:estadoCell>
+                        
+                        <p:validadoCell>
+                            <t:if test="${vrevisado}"> 
+                                <t:if test="${listaestu.validado}">
+                                    <label class="datofalse">SI</label>  
+                                </t:if>
+                                <t:if test="${listaestu.validado}" negate="true">
+                                    <label class="datotrue">NO</label>  
+                                </t:if>
+                             </t:if>
+                        </p:validadoCell>                       
  
                         <t:parameter name="empty">
                                 <div class="no-info">No existen registros ingresados</div>
@@ -168,16 +179,22 @@
                         <label>Desde</label>
                         <div class="f-left">
                             <input t:type="DateField" t:id="fec_inicio" t:value="valfec_desde"
-                            size="30" t:disabled="${vdetalle}"/>
+                            size="30" t:disabled="${vdetalle}" t:readonly="readlony"/>
                         </div>
                     </div>
                     <div class="f-left">
                         <label>Hasta</label>
                         <div class="f-left">
                             <input t:type="DateField" t:id="fec_fin" t:value="valfec_hasta"
-                                    size="30" t:disabled="${vfechahasta}"/>
+                                    size="30" t:disabled="${vfechahasta}" t:readonly="readlony"/>
                             </div>                        
                     </div>
+                    <t:if test="${vrevisado}">
+                        <div class="f-left">
+                            <label>Revisado</label>                            
+                                <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}"/>     
+                        </div>
+                    </t:if>
               </div>
             <t:if test="${vbotones}">
                 <div class="actions f-right">

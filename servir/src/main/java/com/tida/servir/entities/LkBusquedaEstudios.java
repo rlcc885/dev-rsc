@@ -22,7 +22,6 @@ public class LkBusquedaEstudios implements Serializable {
     private String tipo_estudio;
     private String centro_estudio;
     private Boolean estado;
-    @NonVisual
     private Boolean validado;
     @NonVisual
     private long trabajador; 
