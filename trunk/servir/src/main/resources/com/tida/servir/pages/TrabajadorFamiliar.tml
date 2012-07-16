@@ -28,9 +28,7 @@
 
         <div>
         <ul id="tabs-Personales" class="tabs">
-            <li><a href="#"> Datos Personales</a></li>
-            <li><a href="#"> Estudios </a></li>
-            <li><a href="#"> Cursos y Otros</a></li>
+            <li><a href="#"> Familiares</a></li>
             <!--<li><a href="#"> Antecedentes Laborales</a></li>--> 
             <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
@@ -53,14 +51,6 @@
               
                 <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual"/>
               
-        </div>
-        <div class= "pane" id='estudios' name='estudios'>            
-            
-                <t:EstudiosEditor t:id="estudiosEditor" actual= "actual" />
-                
-	</div>
-        <div class= "pane" id='cursos' name='cursos'> 
-                <t:CursosEditor t:id="cursosEditor" actual= "actual"/>
         </div>
 
         <!--        
