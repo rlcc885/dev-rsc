@@ -130,7 +130,6 @@ public class ABMUsuario extends GeneralPage {
     private boolean newPerfil;
 
     public ABMUsuario() {
-
     }
 
     public List<String> getTiposDoc() {
@@ -363,13 +362,14 @@ public class ABMUsuario extends GeneralPage {
         System.out.println("onActivate");
     }
 
-    void setupRender(){
+    void setupRender() {
         primeraVez = false;
         editaUsuario = false;
         botonPerfil = false;
         newPerfil = false;
         System.out.println("setupRender");
     }
+
     @Log
     @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
