@@ -119,6 +119,9 @@ public class ABMCargos extends GeneralPage {
     @InjectComponent
     @Property
     private Zone nivelcargo;
+    @Property
+    @Persist
+    private UsuarioAcceso usua;
     
     //validaciones
         //validaciones
@@ -154,15 +157,15 @@ public class ABMCargos extends GeneralPage {
             
         }
         else{
-            UsuarioAcceso usu = (UsuarioAcceso) result.get(0);
-            if(usu.getAccesoupdate()==1){
+            usua = (UsuarioAcceso) result.get(0);
+            if(usua.getAccesoupdate()==1){
                 veditar=true;
                 vbotones=true;
             }
-            if(usu.getAccesodelete()==1){
+            if(usua.getAccesodelete()==1){
                 veliminar=true; 
             }
-            if(usu.getAccesoreport()==1){
+            if(usua.getAccesoreport()==1){
                 vformulario=true;
                 vbotones=true; 
             }
@@ -606,10 +609,14 @@ public class ABMCargos extends GeneralPage {
         errorBorrar = null;
         if (!editando) {
             //cargo.setUnidadorganica(uo);
-            cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);
+            cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);            
         }
-
-
+        else{
+            if(usua.getAccesoreport()==0){
+                    vformulario=false;
+            }
+        }
+        
         cargo.setNivelRemunerativo(regimengruponivel.getNivelRemunerativo());
         cargo.setGrupoOcupacional(regimengruponivel.getGrupo());
         cargo.setRegimenlaboral(regimengruponivel.getRegimen());

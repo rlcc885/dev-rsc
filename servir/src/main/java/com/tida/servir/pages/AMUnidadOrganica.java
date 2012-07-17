@@ -2,19 +2,15 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Cargoxunidad;
+import com.tida.servir.entities.*;
 import helpers.Errores;
 import helpers.Logger;
 
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Ubigeo;
-import com.tida.servir.entities.UnidadOrganica;
-import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 
 import org.hibernate.Session;
 
@@ -26,10 +22,10 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.collection.PersistentList;
-import com.tida.servir.entities.DatoAuxiliar;
 
 /**
  * Clase que maneja las unidades organicas
@@ -114,7 +110,9 @@ public class AMUnidadOrganica extends GeneralPage {
     @InjectComponent
     @Property
     private Zone filtrosZone;
-    
+    @Property
+    @Persist
+    private UsuarioAcceso usua;
 //    @Property
 //    @Persist
 //    private boolean siuno;
@@ -127,17 +125,65 @@ public class AMUnidadOrganica extends GeneralPage {
 //    @Component(id = "formlistaunidad")
 //    private Form formlistaunidad;
     private int num,mostra,num2;
-    @Persist
-    @Property
-    private String bescon;
     @InjectComponent
     @Property
     private Zone nivelOrga;
+    
+     //validaciones
+    @Persist
+    @Property
+    private Boolean vdetalle;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Persist
+    @Property
+    private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Inject
+    private ComponentResources _resources;
+
 
     @Log
     @SetupRender
     private void inicio() {
-        ubicacion();        
+        unidadOrganica = new UnidadOrganica();
+        ubigeoDomicilio = new Ubigeo();
+        nivelUO = 1;
+        uoAntecesora = null;
+        mostrar=false;
+        vbotones=false;
+        vformulario=false;
+        vdetalle=false;
+        ubicacion();
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));
+            
+        }
+        else{
+            usua = (UsuarioAcceso) result.get(0);
+            if(usua.getAccesoupdate()==1){
+                veditar=true;
+                vbotones=true;
+            }
+            if(usua.getAccesodelete()==1){
+                veliminar=true; 
+            }
+            if(usua.getAccesoreport()==1){
+                vformulario=true;
+                vbotones=true; 
+            }
+        
+        }
     }
     
     
@@ -540,7 +586,14 @@ public class AMUnidadOrganica extends GeneralPage {
                         return zonas();
                     }
 
-                }        
+                }      
+                if (!editando) {                          
+                }
+                else{
+                    if(usua.getAccesoreport()==0){
+                            vformulario=false;
+                    }
+                }
                 unidadOrganica.setNivel(nivelUO);
                 unidadOrganica.setCod_ubi_dept(ubigeoDomicilio.getDepartamento());
                 unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
@@ -593,7 +646,14 @@ public class AMUnidadOrganica extends GeneralPage {
                     return zonas();
                 }
 
-            }        
+            }   
+            if (!editando) {                          
+            }
+            else{
+                if(usua.getAccesoreport()==0){
+                        vformulario=false;
+                }
+            }
             unidadOrganica.setNivel(nivelUO);
             unidadOrganica.setCod_ubi_dept(ubigeoDomicilio.getDepartamento());
             unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
@@ -611,7 +671,9 @@ public class AMUnidadOrganica extends GeneralPage {
         }
         
         }
+        mostrar=true;
         ubicacion();
+
         return zonas();
     }
     
@@ -741,8 +803,22 @@ public class AMUnidadOrganica extends GeneralPage {
             unidadOrganica = uo;
             editando = true;
             cargoDatos();
-        }
-        
+//            vformulario=true;
+//            vdetalle=false;
+//            vbotones=true;
+//            mostrar
+        }        
+    }
+    
+    @Log
+    Object onActionFromDetalle(UnidadOrganica uo) {
+        unidadOrganica = uo;
+        editando = false;
+        cargoDatos();
+        vdetalle=true;
+        vbotones=false;
+        vformulario=true;
+        return zonas(); 
     }
     
     
@@ -788,5 +864,18 @@ public class AMUnidadOrganica extends GeneralPage {
 //        
 //        return zonas();
 //    }
+    @Log
+    Object onActionFromEditar(UnidadOrganica uo) {
+        unidadOrganica = uo;
+        editando = true;
+        cargoDatos();
+        vformulario=true;
+        vdetalle=false;
+        vbotones=true;
 
+        //envelope.setContents(String.valueOf(uo)+String.valueOf(cargo.getUnidadorganica()));
+        //uo=cargo.getUnidadorganica();
+        //System.out.println("uo en actionfromeditar "+uo+" getpuedeeditar "+getPuedeEditar() );
+        return zonas();
+    }
 }
