@@ -228,6 +228,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private DatoAuxiliar btipoOrganismo;
     @Property
     @Persist
+    private DatoAuxiliar btipoOrganismo2;
+    @Property
+    @Persist
     private Ubigeo ubigeobusEntidadUE;
     @InjectComponent
     @Property
@@ -316,6 +319,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         subEntidadUE = new Entidad();
         entio = new Entidad();
         blogoentidadi = true;
+            bessubentidad=false;
     }
 
     //para obtener datatos del Nivel Gobierno
@@ -401,16 +405,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     void onSelectedFromBusreset() {
-        bnivelGobierno = null;
-        bsectorGobierno = null;
-        borganizacionEstado = null;
-        btipoOrganismo = null;
-        busdenominacion = "";
-        ubigeobusEntidadUE = null;
-        btiposubentidad = null;
-        bussubdenominacion = "";
-        ubigeobusSubEntidadUE = null;
-        elemento = 3;
+            bnivelGobierno=null;
+            bsectorGobierno=null;
+            borganizacionEstado=null;
+            btipoOrganismo=null;
+            btipoOrganismo2=null;
+            busdenominacion="";
+            ubigeobusEntidadUE=null;
+            btiposubentidad=null;
+            bussubdenominacion="";
+            ubigeobusSubEntidadUE=null;
+            elemento=3;
     }
 
     void onSelectedFromBusenviar() {
@@ -418,16 +423,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     void onSelectedFromBussubreset() {
-        bnivelGobierno = null;
-        bsectorGobierno = null;
-        borganizacionEstado = null;
-        btipoOrganismo = null;
-        busdenominacion = "";
-        ubigeobusEntidadUE = null;
-        btiposubentidad = null;
-        bussubdenominacion = "";
-        ubigeobusSubEntidadUE = null;
-        elemento = 3;
+            bnivelGobierno=null;
+            bsectorGobierno=null;
+            borganizacionEstado=null;
+            btipoOrganismo=null;
+            btipoOrganismo2=null;
+            busdenominacion="";
+            ubigeobusEntidadUE=null;
+            btiposubentidad=null;
+            bussubdenominacion="";
+            ubigeobusSubEntidadUE=null;
+            elemento=3;
     }
 
     void onSelectedFromCancel() {
@@ -616,9 +622,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Organizacion Estado " + borganizacionEstado.getValor());
             c.add(Restrictions.eq("organizacionestado", borganizacionEstado.getValor()));
         }
-        if (btipoOrganismo != null) {
-            System.out.println("------------------ Tipo Organismo " + btipoOrganismo.getValor());
-            c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
+        if (btipoOrganismo2 != null) {
+            System.out.println("------------------ Tipo Organismo " + btipoOrganismo2.getValor());
+            c.add(Restrictions.eq("tipoorganismo", btipoOrganismo2.getValor()));
         }
         if (busdenominacion != null) {
             System.out.println("------------------ Enitidad " + busdenominacion);
@@ -658,11 +664,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusSubEntidadUE.getDistrito().getValor()));
         }
-        if (bessubentidad) {
+        /*
+        if(bessubentidad){
             c.add(Restrictions.eq("essubentidad", bessubentidad));
         }
-
-
+        */
+        
         return c.list();
     }
 

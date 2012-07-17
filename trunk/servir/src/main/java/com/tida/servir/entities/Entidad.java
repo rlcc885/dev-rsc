@@ -32,7 +32,7 @@ public class Entidad implements Serializable {
     private DatoAuxiliar sectorGobierno;    
 
     private DatoAuxiliar tipoOrganismo;    
-    @Validate("required")
+
     private String denominacion;
     private String sigla;
 
