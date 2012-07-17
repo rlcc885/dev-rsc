@@ -604,7 +604,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 editando = false;
                 session.flush();
                 onSelectedFromReset();
-                setupUbigeos();
+//                setupUbigeos();
                 formularioaltaunidadorganica.clearErrors();
                 envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
             }
@@ -664,7 +664,7 @@ public class AMUnidadOrganica extends GeneralPage {
             editando = false;
             session.flush();
             onSelectedFromReset();
-            setupUbigeos();
+//            setupUbigeos();
             formularioaltaunidadorganica.clearErrors();
             envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
             
@@ -707,55 +707,56 @@ public class AMUnidadOrganica extends GeneralPage {
         return zonas();// La/a zona a actualizar
     }
 
-    @Log
-    @SetupRender
-    private void setupUbigeos() {
-        if (nivelUO == null) {
-            nivelUO = 1;
-        }
-
-//        if (unidadOrganica != null) {
-//            if (ubigeoDomicilio == null) {
-//                ubigeoDomicilio = new Ubigeo();
-//            }
-//            ubigeoDomicilio.setDepartamento(entidadUE.getCod_ubi_dept());
-//            ubigeoDomicilio.setProvincia(entidadUE.getCod_ubi_prov());
-//            ubigeoDomicilio.setDistrito(entidadUE.getCod_ubi_dist());
+//    @Log
+//    @SetupRender
+//    private void setupUbigeos() {
+//        if (nivelUO == null) {
+//            nivelUO = 1;
 //        }
-
-        if (editando != false) {
-            onUbigeoEntidadUOAntecesora();
-        }
-    }
+//
+////        if (unidadOrganica != null) {
+////            if (ubigeoDomicilio == null) {
+////                ubigeoDomicilio = new Ubigeo();
+////            }
+////            ubigeoDomicilio.setDepartamento(entidadUE.getCod_ubi_dept());
+////            ubigeoDomicilio.setProvincia(entidadUE.getCod_ubi_prov());
+////            ubigeoDomicilio.setDistrito(entidadUE.getCod_ubi_dist());
+////        }
+//
+//        if (editando != false) {
+//           // onUbigeoEntidadUOAntecesora();
+//        }
+//        //ubicacion();
+//    }
 
     @Log
     void onPrepareFromformularioaltaunidadorganica() {
         errorBorrar = null;
     }
 
-    @Log
-    void onUbigeoEntidadUOAntecesora() {
-        if (unidadOrganica != null) {
-            // cargamos el ubigeo de la entidad
-            ubigeoDomicilio.setDepartamento(unidadOrganica.getCod_ubi_dept());
-            ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
-            ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());            
-        } else {
-            if (uoAntecesora != null) {
-                System.out.println("----------- antecesora pas null "+uoAntecesora);
-                ubigeoDomicilio.setDepartamento(uoAntecesora.getCod_ubi_dept());
-                ubigeoDomicilio.setDistrito(uoAntecesora.getCod_ubi_dist());
-                ubigeoDomicilio.setProvincia(uoAntecesora.getCod_ubi_prov());                
-            }else{
-                System.out.println("----------- antecesora null "+uoAntecesora);
-                ubigeoDomicilio.setDepartamento(entidadUE.getDepartamento());
-                ubigeoDomicilio.setDistrito(entidadUE.getDistrito());
-                ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
-            }
-
-        }
-        
-    }
+//    @Log
+//    void onUbigeoEntidadUOAntecesora() {
+//        if (unidadOrganica != null) {
+//            // cargamos el ubigeo de la entidad
+//            ubigeoDomicilio.setDepartamento(unidadOrganica.getCod_ubi_dept());
+//            ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
+//            ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());            
+//        } else {
+//            if (uoAntecesora != null) {
+//                System.out.println("----------- antecesora pas null "+uoAntecesora);
+//                ubigeoDomicilio.setDepartamento(uoAntecesora.getCod_ubi_dept());
+//                ubigeoDomicilio.setDistrito(uoAntecesora.getCod_ubi_dist());
+//                ubigeoDomicilio.setProvincia(uoAntecesora.getCod_ubi_prov());                
+//            }else{
+//                System.out.println("----------- antecesora null "+uoAntecesora);
+//                ubigeoDomicilio.setDepartamento(entidadUE.getDepartamento());
+//                ubigeoDomicilio.setDistrito(entidadUE.getDistrito());
+//                ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
+//            }
+//
+//        }
+//        
+//    }
 
     /*
      * reset del formulario (borrar  objeto)
@@ -803,11 +804,8 @@ public class AMUnidadOrganica extends GeneralPage {
             unidadOrganica = uo;
             editando = true;
             cargoDatos();
-//            vformulario=true;
-//            vdetalle=false;
-//            vbotones=true;
-//            mostrar
-        }        
+        }
+        ubicacion();
     }
     
     @Log
