@@ -630,29 +630,29 @@ public class ComparadorEntidades {
         }
 
 //        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCentro_estudios(), cdestino.getCentro_estudios()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
-
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
+//
 //        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getHoras(), cdestino.getHoras()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
-
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
+//
 //        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getFinanciadoEntidad(), cdestino.getFinanciadoEntidad()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
 
 //        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getLugar_dictado(), cdestino.getLugar_dictado()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
-
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
+//
 //        lic.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_emision(), cdestino.getFec_emision()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
 
         /*
          * lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador(),

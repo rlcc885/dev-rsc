@@ -155,8 +155,8 @@ public class CopiadorEntidades {
   //      destino.setRegimenPensionario(CopiadorEntidades.verifacionNull(origen.getRegimenPensionario()));
         destino.setSexo(CopiadorEntidades.verifacionNull(origen.getSexo()));
         //destino.setTipodiscapacidad(CopiadorEntidades.verifacionNull(origen.getTipodiscapacidad()));
-        if(origen.getTitulos() != null)
-            destino.setTitulos(origen.getTitulos());
+//        if(origen.getTitulos() != null)
+//            destino.setTitulos(origen.getTitulos());
     }
     
     public static void legajo(Legajo origen, Legajo destino){
@@ -241,7 +241,7 @@ public class CopiadorEntidades {
     public static void curso(Curso origen, Curso destino){
 //        destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
 //        destino.setCentro_estudios(CopiadorEntidades.verifacionNull(origen.getCentro_estudios()));
-        destino.setDenominacion(CopiadorEntidades.verifacionNull(origen.getDenominacion()));
+//        destino.setDenominacion(CopiadorEntidades.verifacionNull(origen.getDenominacion()));
 //        destino.setFec_emision(CopiadorEntidades.verifacionNull(origen.getFec_emision()));
 //        destino.setFinanciadoEntidad(CopiadorEntidades.verifacionNull(origen.getFinanciadoEntidad()));
 //        destino.setHoras((Float) CopiadorEntidades.verifacionNull(origen.getHoras()));
@@ -276,9 +276,9 @@ public class CopiadorEntidades {
     public static void produccionIntelectual(Publicacion origen, Publicacion destino){
         destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
 //        destino.setClase(CopiadorEntidades.verifacionNull(origen.getClase()));
-        destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
+//        destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
 //        destino.setEntidad(CopiadorEntidades.verifacionNull(origen.getEntidad()));
-        destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
+//        destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
 //        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
         destino.setTitulo(CopiadorEntidades.verifacionNull(origen.getTitulo()));
         destino.setTrabajador(origen.getTrabajador());
