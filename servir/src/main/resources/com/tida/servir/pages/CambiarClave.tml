@@ -23,12 +23,14 @@
                     <t:envelope t:id="envelope"/>
                     <t:errors/>
                     <t:if test= "FormDisplay">
-                        <div class="f-wrap" id="div_cambiarclave">
+                        <div class="f-wrap">
+                            <div class="f-left">
                             <t:label for="clave_vieja"/>
                             <input t:type="PasswordField" t:id="clave_vieja"
                                    t:value="oldPass" size="20" t:validate="required" />
+                            </div>
                         </div>
-                        <div class="f-wrap" id="cambiarclave">
+                        <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="clave_nueva_1"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_1"
@@ -37,15 +39,13 @@
                             <div class="f-left">
                                 <t:label for="clave_nueva_2"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_2"
-                                       t:value="newPass2" size="20" t:validate="required" onclick="javascript: verificar();" />
+                                       t:value="newPass2" size="20" t:validate="required" onkeypress="javascript: verificar();" />
                             </div>
                         </div>
-                        <div class="f-wrap" id="complejidadclave">                                 
-                            <input type="text" id="verificacion" size="12" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
-                        </div>
+                       
                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
+                                <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button"/>
                             </div>
                             <div class="f-right">
                                 <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Grabar" class="button" />
@@ -54,6 +54,14 @@
                     </t:if>
                 </t:form>
             </t:zone>
+             <t:zone t:id="zone2">
+             <div class="f-wrap">
+                <div class="f-left">
+                    <input type="text" id="verificacion" t:value="verificacion" size="25" readonly="readonly" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
+
+                </div>
+             </div>
+             </t:zone>
         </div>
     </div>
 
@@ -68,6 +76,7 @@
         function verificar(){
  
             porcentaje=0;
+            
             var texto = document.getElementById("clave_nueva_1").value;
             if(tiene_letras(texto)) porcentaje++;   
             if(tiene_numeros(texto)) porcentaje++;  
