@@ -617,81 +617,81 @@ public final class Tratamiento {
         return cdc;
     }
 
-//    public Tratamiento(String path, String origenArchivo, Session session, List<String> errores, String tipoProceso, Usuario usuario) throws IOException, ParseException {
-//        this.path = path;
-//        this.origenArchivo = origenArchivo;
-//        this.session = session;
-//        this.errores = errores;
-//        this.tipoProceso = tipoProceso;
-//        this.usuario = usuario;
-//
-//        archivos.add("ORGAN1");
-//        archivos.add("BASICO6");
-//        archivos.add("BASICO5");
-//        archivos.add("BASICO4");
-//        archivos.add("BASICO1");
-//        archivos.add("BASICO2");
-//        archivos.add("BASICO3");
-//        archivos.add("PPAL1");
-//        archivos.add("PPAL2");
-//        archivos.add("PPAL3");
-//        archivos.add("COMPTRA1");
-//        archivos.add("COMPTRA2");
-//        archivos.add("COMPTRA3");
-//        archivos.add("COMPTRA4");
-//        archivos.add("COMPTRA5");
-//        archivos.add("COMPTRA6");
-//        archivos.add("COMPTRA7");
-//        archivos.add("COMPCAR1");
-//        archivos.add("COMPCAR2");
-//        archivos.add("COMPCAR3");
-//        archivos.add("COMPLEG1");
-//
-//        //temano de misCSVs = 21 (hay 21 archivos CSV)
-//        for (int k = 0; k < 21; k++) {
-//            misCSVs.add("");
+    public Tratamiento(String path, String origenArchivo, Session session, List<String> errores, String tipoProceso, Usuario usuario) throws IOException, ParseException {
+        this.path = path;
+        this.origenArchivo = origenArchivo;
+        this.session = session;
+        this.errores = errores;
+        this.tipoProceso = tipoProceso;
+        this.usuario = usuario;
+
+        archivos.add("ORGAN1");
+        archivos.add("BASICO6");
+        archivos.add("BASICO5");
+        archivos.add("BASICO4");
+        archivos.add("BASICO1");
+        archivos.add("BASICO2");
+        archivos.add("BASICO3");
+        archivos.add("PPAL1");
+        archivos.add("PPAL2");
+        archivos.add("PPAL3");
+        archivos.add("COMPTRA1");
+        archivos.add("COMPTRA2");
+        archivos.add("COMPTRA3");
+        archivos.add("COMPTRA4");
+        archivos.add("COMPTRA5");
+        archivos.add("COMPTRA6");
+        archivos.add("COMPTRA7");
+        archivos.add("COMPCAR1");
+        archivos.add("COMPCAR2");
+        archivos.add("COMPCAR3");
+        archivos.add("COMPLEG1");
+
+        //temano de misCSVs = 21 (hay 21 archivos CSV)
+        for (int k = 0; k < 21; k++) {
+            misCSVs.add("");
+        }
+
+        //ingresar los archivos en objecto Java
+        errores = listArchivosDepositorioClassified(path);
+
+
+        if (misCSVs.get(0).equals("")) {
+            errores.add("Archivo ORGAN1 (Entidad Unidad Ejecutora) no encontrado");
+            return;
+        }
+
+        try {
+            ORGAN1 = cargarCSVEntidadUEToArrayList(path.concat(misCSVs.get(0).concat(".csv")));
+
+        } catch (FileNotFoundException ex) {
+            errores.add("No se encuentra el archivo de Entidad Unidad Ejecutora.");
+            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        } catch (IOException ex) {
+            errores.add("Error al leer el archivo de Entidad Unidad Ejecutora.");
+            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+
+        cdc = new CreadorDesdeCsv(this);
+
+        _entidadesUEjecutora = cdc.csvToListEntidadUEjecutora(ORGAN1, session, errores, origenArchivo);
+
+        //verifica si los organismos informantes estan definidos en la base de dato
+        //si no se trata de una carga inicial
+//        if (!origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
+//            for (Entidad_BK _entidaduejecutora : _entidadesUEjecutora) {
+//                //si no hay en la base de dato el organismo informante, se informa este problema y borra este organismo
+//                if (!CreadorDesdeCsv.presenciaTablaEntidadUEjecutora(_entidaduejecutora, session, errores)) {
+//                    errores.add("Esta entidad unidad ejecutora " + _entidaduejecutora.getCodigoEntidadUE() + " no esta definida en la base de dato!");
+//                    if (!_entidadesUEjecutora.isEmpty()) {
+//                        _entidadesUEjecutora.remove(_entidaduejecutora);
+//                    }
+//                }
+//            }
 //        }
-//
-//        //ingresar los archivos en objecto Java
-//        errores = listArchivosDepositorioClassified(path);
-//
-//
-//        if (misCSVs.get(0).equals("")) {
-//            errores.add("Archivo ORGAN1 (Entidad Unidad Ejecutora) no encontrado");
-//            return;
-//        }
-//
-//        try {
-//            ORGAN1 = cargarCSVEntidadUEToArrayList(path.concat(misCSVs.get(0).concat(".csv")));
-//
-//        } catch (FileNotFoundException ex) {
-//            errores.add("No se encuentra el archivo de Entidad Unidad Ejecutora.");
-//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-//            return;
-//        } catch (IOException ex) {
-//            errores.add("Error al leer el archivo de Entidad Unidad Ejecutora.");
-//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-//            return;
-//        }
-//
-//        cdc = new CreadorDesdeCsv(this);
-//
-//        _entidadesUEjecutora = cdc.csvToListEntidadUEjecutora(ORGAN1, session, errores, origenArchivo);
-//
-//        //verifica si los organismos informantes estan definidos en la base de dato
-//        //si no se trata de una carga inicial
-////        if (!origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
-////            for (Entidad_BK _entidaduejecutora : _entidadesUEjecutora) {
-////                //si no hay en la base de dato el organismo informante, se informa este problema y borra este organismo
-////                if (!CreadorDesdeCsv.presenciaTablaEntidadUEjecutora(_entidaduejecutora, session, errores)) {
-////                    errores.add("Esta entidad unidad ejecutora " + _entidaduejecutora.getCodigoEntidadUE() + " no esta definida en la base de dato!");
-////                    if (!_entidadesUEjecutora.isEmpty()) {
-////                        _entidadesUEjecutora.remove(_entidaduejecutora);
-////                    }
-////                }
-////            }
-////        }
-//    }
+    }
 
 //    public List<String> generacionListDesdeCSV() {
 //                
