@@ -90,7 +90,7 @@
                     </div>
                 </t:if>
                 <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="uo" >
+                        row="uo" exclude="estado,nivel,sigla,cue,desczona">
                     <t:parameter name="empty">
                         <div class="no-info">No hay unidades orgánicas generadas</div>
                     </t:parameter>

@@ -179,11 +179,11 @@ public class TrabajadorEditar extends GeneralPage{
         else _ca = null;
     }
 //    public String getClasePublicacion() {
-//        return Publicacion.CLASE_PUBLICACION;
+////        return Publicacion.CLASE_PUBLICACION;
 //    }
 //
 //    public String getClaseTrabajo() {
-//        return Publicacion.CLASE_INVESTIGACION;
+////      return Publicacion.CLASE_INVESTIGACION;
 //    }
 
     public String getClaseMeritos() {

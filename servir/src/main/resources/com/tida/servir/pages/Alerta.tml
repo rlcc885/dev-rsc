@@ -78,26 +78,26 @@
                 </t:form>
             </t:if>
         </div> <!-- tabla eventos -->
-<!--
-        <div id="tablaTrabajador">
-            <h2>Trabajadores</h2>
-            <t:zone t:id="empleadoszone">
-               
-                <t:grid source="empleados" rowsPerPage="10" row="e" t:add="Acciones" 
-                    pagerPosition="bottom" exclude="tipoDocumento,formacionInfAdicional" 
-                    reorder="nroDocumento,apellidoPaterno,apellidoMaterno,nombres" 
-                    t:context="e" t:rowclass="prop:selectionrow" 
-                    include="tipoDocumento,nroDocumento,apellidoPaterno,apellidoMaterno,nombres">
-                    <t:parameter name="empty">
-                        <div class="no-info">
-                            No se encontraron trabajadores que hayan modificado su legajo.
-                        </div>
-                    </t:parameter>
-                    <p:accionesCell>
-                        <a t:type="pagelink" t:page="LegajosModificar" t:context="e.id" href="#"> Ver Detalle </a>
-                    </p:accionesCell>
-                </t:grid>                
-            </t:zone>      
-        </div>-->
+
+        <div t:type="zone" t:id="listaentidad" class="selectform" > 
+            <t:if test="mostrare">     
+            <h1>Administrador de Entidad</h1>
+                <t:form t:id="formlistaentidad">
+                    <h2>Datos de Trabajadores Modificados</h2>
+                    <div id = "tabla_cargo">
+                        <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventoentidad" reorder="nombres,entidad,fechaevento">
+                            <t:parameter name="empty">
+                                <div class="no-info">No se han registrado eventos</div>
+                            </t:parameter>
+                            <p:accionesCell>                           
+                                    <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="eventoentidad.trabajadorid" href="#">Ver</a>
+                            </p:accionesCell>
+                        </t:grid>
+                    </div>                    
+                </t:form>
+            </t:if>
+        </div> <!-- tabla eventos -->
+
        
 </html>

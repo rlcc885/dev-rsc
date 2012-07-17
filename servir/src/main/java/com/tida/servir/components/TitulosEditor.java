@@ -130,18 +130,18 @@ public class TitulosEditor {
   @CommitAfter
   public Object onSuccess()
   {
-      for(Titulo tit : actual.titulos) {
-    	  
-          if(tit.getFec_emision().after(new Date())) {
-            Logger logger = new Logger();
-            logger.loguearError(session, _usuario, tit.getId().toString(),
-                            Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
-                            Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
-
-            _form.recordError(Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL);
-            return this;
-          }
-    }
+//      for(Titulo tit : actual.titulos) {
+//    	  
+//          if(tit.getFec_emision().after(new Date())) {
+//            Logger logger = new Logger();
+//            logger.loguearError(session, _usuario, tit.getId().toString(),
+//                            Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
+//                            Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
+//
+//            _form.recordError(Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL);
+//            return this;
+//          }
+//    }
       
       //es el usuario trabajador o no
       /*if(_usuario.getTipo_usuario().equals("")){
@@ -176,13 +176,13 @@ public class TitulosEditor {
   Object onAddRow()
   {
     Titulo tit = new Titulo();
-    if(actual.getTitulos() == null){
-        actual.setTitulos(new ArrayList<Titulo>());
-    }
+//    if(actual.getTitulos() == null){
+//        actual.setTitulos(new ArrayList<Titulo>());
+//    }
     tit.setTrabajador(actual);
     if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
         titulo.setAgregadoTrabajador(Boolean.TRUE);
-    actual.getTitulos().add(tit);
+//    actual.getTitulos().add(tit);
     session.saveOrUpdate(actual);
 	new Logger().loguearOperacion(session, _usuario, String.valueOf(tit.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TITULO);
     return tit;
@@ -191,7 +191,7 @@ public class TitulosEditor {
   @CommitAfter
   void onRemoveRow(Titulo tit)
   {
-    actual.getTitulos().remove(tit);
+//    actual.getTitulos().remove(tit);
     session.delete(tit);
     new Logger().loguearOperacion(session, _usuario, String.valueOf(tit.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TITULO);
   }

@@ -95,7 +95,10 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private BusquedaEvento eventoentidad;
-        @Property
+    @Property
+    @Persist
+    private BusquedaEvento eventosistemas;
+    @Property
     @SessionState
     private UsuarioAcceso usu;
     
