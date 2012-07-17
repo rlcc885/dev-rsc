@@ -4,6 +4,7 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
+import helpers.Encriptacion;
 import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
@@ -38,25 +39,20 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AMEntidadUEjecutora extends GeneralPage {
 
-      
     @Inject
     private Session session;
-
     @Property
     @Persist
     private Entidad entidadUE;
     @Property
     @Persist
     private Entidad subEntidadUE;
-    
     @Property
     private Entidad oi;
-    
     @Component(id = "formulariomensajes")
     private Form formulariomensajes;
     @InjectComponent
-    private Zone mensajesZone;    
-        
+    private Zone mensajesZone;
     @Component(id = "formularionivelgobierno")
     private Form formularionivelgobierno;
     @Component(id = "formularioorganizacion")
@@ -74,7 +70,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Usuario _usuario;
     @Persist
     private String nombreArchivo;
-   @Property
+    @Property
     @Persist
     private Ubigeo ubigeoEntidadUE;
     @InjectComponent
@@ -90,11 +86,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formularioubigeo;
     @Component(id = "formulariosububigeo")
     private Form formulariosububigeo;
+    /*
     @Component(id = "formulariologoentidad")
     private Form formulariologoentidad;
     @InjectComponent
     private Zone logoentidadZone;   
-    
+     */
     //Entidad Origen
     @InjectComponent
     private Zone EOrigenZone;
@@ -104,7 +101,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formularioentidadorigen;
     @Persist
     @Property
-    private String bdenoentidad; 
+    private String bdenoentidad;
     @Property
     @Persist
     private boolean mostrar;
@@ -116,8 +113,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String entidad_origen;
-    
-    
     //Trabajador
     @Component(id = "formulariosubtitular")
     private Form formulariosubtitular;
@@ -139,7 +134,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Zone busZone2;
     @Persist
     @Property
-    private String apeTrabajador; 
+    private String apeTrabajador;
     @InjectComponent
     private Zone trabajadorZone;
     @Property
@@ -189,7 +184,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private boolean btitular;
     @Property
     @Persist
-    private boolean bjefeOGA;    
+    private boolean bjefeOGA;
     @Property
     @Persist
     private boolean bjefeRRHH;
@@ -198,7 +193,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private boolean btitulari;
     @Property
     @Persist
-    private boolean bjefeOGAi;    
+    private boolean bjefeOGAi;
     @Property
     @Persist
     private boolean bjefeRRHHi;
@@ -208,16 +203,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private boolean blogoentidadi;
-    
-    
     //Listado de entidades
     @InjectComponent
     private Zone listaentidadZone;
     @Persist
     @Property
     private LkBusquedaEntidad listaentidad;
-    
-    
     //Busqueda Entidad Zone
     @InjectComponent
     private Zone busquedacombosZone;
@@ -245,8 +236,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formulariobusubigeo;
     @Persist
     @Property
-    private String busdenominacion; 
-    
+    private String busdenominacion;
     //Busqueda SubEntidad Zone
     @InjectComponent
     private Zone busquedasubcombosZone;
@@ -265,18 +255,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Form formulariobussububigeo;
     @Persist
     @Property
-    private String bussubdenominacion;  
+    private String bussubdenominacion;
     @Property
     @Persist
     private boolean bessubentidad;
-    
     @Property
     @Persist
     private Ubigeo ubigeoSubEntidadUE;
     @InjectComponent
     @Property
     private Zone ubigeoSubEntidadZone;
-   
     @Inject
     private PropertyAccess _access;
     @Persist
@@ -285,25 +273,23 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String mostrarEsconder;
- 
     @InjectComponent
     @Property
-     private Zone nivelOrganizacionSectorZone;
+    private Zone nivelOrganizacionSectorZone;
     @InjectComponent
     @Property
     private Zone principalZone;
     @InjectComponent
     @Property
-     private Zone botonesZone;
+    private Zone botonesZone;
     @InjectComponent
     @Property
     private Zone subprincipalZone;
     @InjectComponent
     @Property
-     private Zone subbotonesZone;
+    private Zone subbotonesZone;
     @InjectComponent
     private Envelope envelope;
-   
     //Logotipo    
     @Property
     @Persist
@@ -316,51 +302,48 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private String uploadmessage;
     @Inject
     private ApplicationGlobals globals;
-    
-
     //Edicion
     @Property
     @Persist
     private boolean badmentidad;
-    
-    private int elemento=0;
+    private int elemento = 0;
 
-   //Inicio de lac carga de la pagina
+    //Inicio de lac carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
-            entidadUE = new Entidad();
-            subEntidadUE = new Entidad();
-            entio = new Entidad();
-            blogoentidadi=true;
+        entidadUE = new Entidad();
+        subEntidadUE = new Entidad();
+        entio = new Entidad();
+        blogoentidadi = true;
     }
 
     //para obtener datatos del Nivel Gobierno
     @Log
-    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     //para obtener datatos del Sector Gobierno
     @Log
     public GenericSelectModel<DatoAuxiliar> getSectorGobierno() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     //para obtener datatos de la Organizacion
     @Log
     public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
-             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     //para obtener datatos del Tipo Organismo
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos del Tipo Via
@@ -369,23 +352,23 @@ public class AMEntidadUEjecutora extends GeneralPage {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     //para obtener datatos del Tipo Zona
-     @Log
+    @Log
     public GenericSelectModel<DatoAuxiliar> getTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
-     //para obtener datatos del Tipo Via Sub Entidad
+
+    //para obtener datatos del Tipo Via Sub Entidad
     @Log
     public GenericSelectModel<DatoAuxiliar> getSubTipoVia() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     //para obtener datatos del Tipo Zona Sub Entidad
-     @Log
+    @Log
     public GenericSelectModel<DatoAuxiliar> getSubTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
@@ -394,178 +377,168 @@ public class AMEntidadUEjecutora extends GeneralPage {
     //para obtener datatos del Tipo Entidad
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoSubEntidad() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-     
-     //reset del formulario (borrar objeto)
-     
 
+    //reset del formulario (borrar objeto)
     void onSelectedFromSubreset() {
-           elemento=1;
-           bessubentidad=false;
-           badmentidad=false;
+        elemento = 1;
+        bessubentidad = false;
+        badmentidad = false;
     }
-    
+
     void onSelectedFromSubcancel() {
-        elemento=2;
-         bessubentidad=false;
-         badmentidad=false;
+        elemento = 2;
+        bessubentidad = false;
+        badmentidad = false;
     }
-    
+
     void onSelectedFromReset() {
-           elemento=1;
-           bessubentidad=false;
-           badmentidad=false;
+        elemento = 1;
+        bessubentidad = false;
+        badmentidad = false;
     }
-    
 
     void onSelectedFromBusreset() {
-            bnivelGobierno=null;
-            bsectorGobierno=null;
-            borganizacionEstado=null;
-            btipoOrganismo=null;
-            busdenominacion="";
-            ubigeobusEntidadUE=null;
-            btiposubentidad=null;
-            bussubdenominacion="";
-            ubigeobusSubEntidadUE=null;
-            elemento=3;
+        bnivelGobierno = null;
+        bsectorGobierno = null;
+        borganizacionEstado = null;
+        btipoOrganismo = null;
+        busdenominacion = "";
+        ubigeobusEntidadUE = null;
+        btiposubentidad = null;
+        bussubdenominacion = "";
+        ubigeobusSubEntidadUE = null;
+        elemento = 3;
     }
-    
+
     void onSelectedFromBusenviar() {
-          bessubentidad=true;
+        bessubentidad = true;
     }
-        
+
     void onSelectedFromBussubreset() {
-            bnivelGobierno=null;
-            bsectorGobierno=null;
-            borganizacionEstado=null;
-            btipoOrganismo=null;
-            busdenominacion="";
-            ubigeobusEntidadUE=null;
-            btiposubentidad=null;
-            bussubdenominacion="";
-            ubigeobusSubEntidadUE=null;
-            elemento=3;
+        bnivelGobierno = null;
+        bsectorGobierno = null;
+        borganizacionEstado = null;
+        btipoOrganismo = null;
+        busdenominacion = "";
+        ubigeobusEntidadUE = null;
+        btiposubentidad = null;
+        bussubdenominacion = "";
+        ubigeobusSubEntidadUE = null;
+        elemento = 3;
     }
-    
 
     void onSelectedFromCancel() {
-        elemento=2;
-         bessubentidad=false;
-         badmentidad=false;
+        elemento = 2;
+        bessubentidad = false;
+        badmentidad = false;
     }
     
+    void onSelectedFromFile(){
+        System.out.println("onSelectedFile");
+    }
     
-
     @Log
-    @CommitAfter    
+    @CommitAfter
     Object onSuccessFromFormulariobotones() {
-        
-        if(elemento==1){
+
+        if (elemento == 1) {
             return "AMEntidadUEjecutora";
-        }else if(elemento==2){
+        } else if (elemento == 2) {
             return "AMEntidadUEjecutora";
-        }else{    
-        entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
-        entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
-        entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-        //nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-        //nombreArchivo = file.getFileName() ;
-        //System.out.println(nombreArchivo);
-        //entidadUE.setLogotipo(nombreArchivo);
-        session.saveOrUpdate(entidadUE);
-        new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-        envelope.setContents(helpers.Constantes.EUE_EXITO);
-        return 
-        new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody())                             
-                    .add("principalZone", principalZone.getBody())
-                    .add("ubigeoEntidadZone", ubigeoEntidadZone.getBody())
-                    .add("TitularZone", TitularZone.getBody())
-                    .add("JefeRRHHZone", JefeRRHHZone.getBody())
-                    .add("JefeOGAZone", JefeOGAZone.getBody())
-                    .add("logoentidadZone", logoentidadZone.getBody())
+        } else {
+            blogoentidadi = false;
+            blogoentidadf = true;
+            // Set Path
+            //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
+            String nombreArchivo = Encriptacion.encriptaEnMD5(file.getFileName().substring(0, file.getFileName().length() - 4))+file.getFileName().substring(file.getFileName().length() - 4);
+            File nuevo = new File("ArchivosCSV/" + nombreArchivo);
+            file.write(nuevo);
+            System.out.println("==========================================================================");
+            System.out.println(nombreArchivo);
+            entidadUE.setLogotipo(nombreArchivo);
+            entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
+            entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
+            entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+            //nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
+            //nombreArchivo = file.getFileName() ;
+            //System.out.println(nombreArchivo);
+            //entidadUE.setLogotipo(nombreArchivo);
+            session.saveOrUpdate(entidadUE);
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
+            envelope.setContents(helpers.Constantes.EUE_EXITO);
+            return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
-        
     }
 
     @Log
-    @CommitAfter    
+    @CommitAfter
     Object onSuccessFromFormulariosubbotones() {
-        
-        if(elemento==1){
+
+        if (elemento == 1) {
             return "AMEntidadUEjecutora";
-        }else if(elemento==2){
+        } else if (elemento == 2) {
             return "AMEntidadUEjecutora";
-        }else{    
-        subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
-        subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
-        subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
-        subEntidadUE.setEntidad(entio);
-       // nombreArchivo = file.getFileName();
-        //System.out.println(nombreArchivo);
-        //entidadUE.setLogotipo(nombreArchivo);
-        session.saveOrUpdate(subEntidadUE);
-        new Logger().loguearOperacion(session, _usuario, String.valueOf(subEntidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-        envelope.setContents(helpers.Constantes.EUE_EXITO);
-         envelope.setContents("Clave modificada con éxito.");
-        return   new MultiZoneUpdate("subprincipalZone", subprincipalZone.getBody())                             
-                    .add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody())
-                    .add("subTitularZone", subTitularZone.getBody())
-                    .add("subJefeRRHHZone", subJefeRRHHZone.getBody())
-                    .add("subJefeOGAZone", subJefeOGAZone.getBody())
-                    .add("mensajesZone", mensajesZone.getBody());
+        } else {
+            subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
+            subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
+            subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
+            subEntidadUE.setEntidad(entio);
+            // nombreArchivo = file.getFileName();
+            //System.out.println(nombreArchivo);
+            //entidadUE.setLogotipo(nombreArchivo);
+            session.saveOrUpdate(subEntidadUE);
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(subEntidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
+            envelope.setContents(helpers.Constantes.EUE_EXITO);
+            envelope.setContents("Clave modificada con éxito.");
+            return new MultiZoneUpdate("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody()).add("subTitularZone", subTitularZone.getBody()).add("subJefeRRHHZone", subJefeRRHHZone.getBody()).add("subJefeOGAZone", subJefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
         }
-        
+
     }
-    
+
     @Log
-    @CommitAfter    
+    @CommitAfter
     Object onSuccessFromFormularioorganizacion() {
-        bsector=true;    
+        bsector = true;
         return nivelOrganizacionSectorZone.getBody();
-        
+
     }
-    
-    @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariologoentidad() {
+
+//    @CommitAfter
+//    Object onSuccessFromFormulariologoentidad() {
 //        blogoentidadi=false;
 //        blogoentidadf=true;
-        System.out.println("entroeeeeeeee");
-        System.out.println(entidadUE.getLogotipo());
-        // Set Path
-        //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
-        File copied = new File(file.getFileName());
-        file.write(copied);
-        return this;
-        
-    }
-    
-    public String getUploadError(){
-        
+//        System.out.println("entroeeeeeeee");
+//        System.out.println(entidadUE.getLogotipo());
+//        // Set Path
+//        //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
+//        File nuevo = new File("ArchivosCSV/"+file.getFileName());
+//        file.write(nuevo);
+//        return this;
+//        
+//    }
+    public String getUploadError() {
+
         return uploadmessage;
     }
-    
-    public Object onUploadException(FileUploadException ex)
-    {
+
+    public Object onUploadException(FileUploadException ex) {
         uploadmessage = "Upload exception: " + ex.getMessage() + " You can only upload file less than or equal to 500kb.";
 
         return this;
     }
-    
-    
+
     @Log
-    @CommitAfter    
+    @CommitAfter
     Object onSuccessFromFormulariosector() {
-        btipoorganismo=true;    
+        btipoorganismo = true;
         return nivelOrganizacionSectorZone.getBody();
-        
+
     }
-    
- 
+
     AMEntidadUEjecutora onActionFromToggle_filtros() {
         if (mostrarFiltros) {
             mostrarFiltros = false;
@@ -576,68 +549,60 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         return this;
     }
-   
- 
+
     @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
         mostrarEsconder = "Ocultar";
         mostrarFiltros = true;
     }
-    
+
     @Log
-    Object onActionFromEditarSeleccion(Entidad enti1) {        
-        entidadUE=enti1;
+    Object onActionFromEditarSeleccion(Entidad enti1) {
+        entidadUE = enti1;
         ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
         ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
         ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
-        titular=entidadUE.getTitular().getApellidoPaterno();
-        jefeRRHH=entidadUE.getJefeRRHH().getApellidoPaterno();
-        jefeOGA=entidadUE.getJefeOga().getApellidoPaterno();
-        bsector=true;
-        btipoorganismo=true;
-        if(_usuario.getRol().getId()==2)badmentidad=true;
+        titular = entidadUE.getTitular().getApellidoPaterno();
+        jefeRRHH = entidadUE.getJefeRRHH().getApellidoPaterno();
+        jefeOGA = entidadUE.getJefeOga().getApellidoPaterno();
+        bsector = true;
+        btipoorganismo = true;
+        if (_usuario.getRol().getId() == 2) {
+            badmentidad = true;
+        }
 
-           return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody())                             
-                    .add("principalZone", principalZone.getBody())
-                    .add("ubigeoEntidadZone", ubigeoEntidadZone.getBody())
-                    .add("TitularZone", TitularZone.getBody())
-                    .add("JefeRRHHZone", JefeRRHHZone.getBody())
-                    .add("JefeOGAZone", JefeOGAZone.getBody())
-                    .add("logoentidadZone", logoentidadZone.getBody()); 
+        return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
+//                    .add("logoentidadZone", logoentidadZone.getBody()); 
     }
-    
+
     @Log
-    @CommitAfter        
+    @CommitAfter
     Object onActionFromEliminarSeleccion(Entidad enti1) {
         enti1.setEstado(false);
         session.saveOrUpdate(enti1);
-           return listaentidadZone.getBody();
+        return listaentidadZone.getBody();
     }
 
-
-    
     //Metodos de Busqueda de Entidades origenes para la subentidad   
-    
     @Log
     @CommitAfter
-    Object onSuccessFromformularioentidadorigen(){
-        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
-                    .add("entiZone", entiZone.getBody());
+    Object onSuccessFromformularioentidadorigen() {
+        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("entiZone", entiZone.getBody());
     }
-    
+
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         return c.list();
     }
-    
+
     @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
-        c.add(Restrictions.eq("estado",true));
-        
+        c.add(Restrictions.eq("estado", true));
+
         //Entidad
         if (bnivelGobierno != null) {
             System.out.println("------------------ Nivel Gobierno " + bnivelGobierno.getValor());
@@ -657,9 +622,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         if (busdenominacion != null) {
             System.out.println("------------------ Enitidad " + busdenominacion);
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", busdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", busdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-        if (ubigeobusEntidadUE.getDepartamento() != null ) {
+        if (ubigeobusEntidadUE.getDepartamento() != null) {
             System.out.println("------------------ Departamento " + ubigeobusEntidadUE.getDepartamento().getValor());
             c.add(Restrictions.eq("departamento", ubigeobusEntidadUE.getDepartamento().getValor()));
         }
@@ -671,7 +636,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Distrito" + ubigeobusEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusEntidadUE.getDistrito().getValor()));
         }
-        
+
         //Sub Entidad
         if (btiposubentidad != null) {
             System.out.println("------------------ Tipo Sub Entidad " + btiposubentidad.getValor());
@@ -679,7 +644,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         if (bussubdenominacion != null) {
             System.out.println("------------------ Enitidad " + bussubdenominacion);
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));      
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (ubigeobusSubEntidadUE.getDepartamento() != null) {
             System.out.println("------------------ Departamento " + ubigeobusSubEntidadUE.getDepartamento().getValor());
@@ -693,57 +658,54 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusSubEntidadUE.getDistrito().getValor()));
         }
-        if(bessubentidad){
+        if (bessubentidad) {
             c.add(Restrictions.eq("essubentidad", bessubentidad));
         }
-        
-        
+
+
         return c.list();
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariocombosbusqueda(){
+    Object onSuccessFromformulariocombosbusqueda() {
         System.out.println("ellll" + elemento);
-        if(elemento==3){
+        if (elemento == 3) {
             System.out.println("entroeeeeeeee al elemento" + elemento);
-            return new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody())                             
-                    .add("ubigeobusEntidadZone", ubigeobusEntidadZone.getBody());
-                    
-        }else{
+            return new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody()).add("ubigeobusEntidadZone", ubigeobusEntidadZone.getBody());
+
+        } else {
             return listaentidadZone.getBody();
         }
-        
+
 
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariosubcombosbusqueda(){
-         System.out.println("ellll" + elemento);
-         if(elemento==3){
-            return new MultiZoneUpdate("busquedasubcombosZone", busquedasubcombosZone.getBody())                             
-                    .add("ubigeobusSubEntidadZone", ubigeobusSubEntidadZone.getBody());                    
-        }else{
+    Object onSuccessFromformulariosubcombosbusqueda() {
+        System.out.println("ellll" + elemento);
+        if (elemento == 3) {
+            return new MultiZoneUpdate("busquedasubcombosZone", busquedasubcombosZone.getBody()).add("ubigeobusSubEntidadZone", ubigeobusSubEntidadZone.getBody());
+        } else {
             return listaentidadZone.getBody();
         }
     }
-    
+
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
-        mostrar=true;        
-        return new MultiZoneUpdate("busZone", busZone.getBody())                             
-                    .add("entiZone", entiZone.getBody());
+        mostrar = true;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
     }
-    
+
     @Log
-    Object onActionFromEditar(Entidad entix) {        
+    Object onActionFromEditar(Entidad entix) {
         entio = entix;
-        entidad_origen=entio.getDenominacion(); 
-        
+        entidad_origen = entio.getDenominacion();
+
         subEntidadUE.setEntidad(entio);
-        
+
         subEntidadUE.setTipoVia(entio.getTipoVia());
         subEntidadUE.setTipoZona(entio.getTipoZona());
         subEntidadUE.setDireccion(entio.getDireccion());
@@ -751,137 +713,126 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeoSubEntidadUE.setDepartamento(entio.getDepartamento());
         ubigeoSubEntidadUE.setProvincia(entio.getProvincia());
         ubigeoSubEntidadUE.setDistrito(entio.getDistrito());
-        
-        subEntidadUE.setEsSubEntidad(true); 
-        mostrar=false;
-             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
-                    .add("subprincipalZone", subprincipalZone.getBody())
-                     .add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody());
+
+        subEntidadUE.setEsSubEntidad(true);
+        mostrar = false;
+        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody());
     }
-    
+
     //Metodos de Busqueda de Trabajadores
-    
     @Log
     @CommitAfter
-    Object onSuccessFromformulariosubtitular() { 
-        btitular=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariosubtitular() {
+        btitular = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariosubjeferrhh() { 
-        bjefeRRHH=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariosubjeferrhh() {
+        bjefeRRHH = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-     
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariosubjefeoga() { 
-        bjefeOGA=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariosubjefeoga() {
+        bjefeOGA = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-    
-     @Log
-    @CommitAfter
-    Object onSuccessFromformulariotitular() { 
-        btitulari=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
-    }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariojeferrhh() { 
-        bjefeRRHHi=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariotitular() {
+        btitulari = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-     
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariojefeoga() { 
-        bjefeOGAi=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariojeferrhh() {
+        bjefeRRHHi = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromFormularioTrabajador() { 
-        mostrar=true;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody())                             
-                    .add("trabajadorZone", trabajadorZone.getBody());
+    Object onSuccessFromformulariojefeoga() {
+        bjefeOGAi = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-     
-   @Log
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioTrabajador() {
+        mostrar = true;
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
+    }
+
+    @Log
     public List<Trabajador> getTrabajadores() {
         Criteria c = session.createCriteria(Trabajador.class);
-        c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apeTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));      
+        c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apeTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         return c.list();
     }
-   
-   @Log
-    Object onActionFromeditarsubTitular(Trabajador traba) {        
+
+    @Log
+    Object onActionFromeditarsubTitular(Trabajador traba) {
         subtitulart = traba;
-        subtitular=subtitulart.getApellidoPaterno();
+        subtitular = subtitulart.getApellidoPaterno();
         subEntidadUE.setTitular(subtitulart);
-        btitular=false;
-        mostrar=false;
-        return subTitularZone.getBody();  
+        btitular = false;
+        mostrar = false;
+        return subTitularZone.getBody();
     }
-   
+
     @Log
-    Object onActionFromeditarsubJefeRRHH(Trabajador traba) {        
-        subjeferrhht = traba;   
-        subjefeRRHH=subjeferrhht.getApellidoPaterno();
+    Object onActionFromeditarsubJefeRRHH(Trabajador traba) {
+        subjeferrhht = traba;
+        subjefeRRHH = subjeferrhht.getApellidoPaterno();
         subEntidadUE.setJefeRRHH(subjeferrhht);
-        bjefeRRHH=false;
-        mostrar=false;
-        return subJefeRRHHZone.getBody();  
+        bjefeRRHH = false;
+        mostrar = false;
+        return subJefeRRHHZone.getBody();
     }
-    
-     @Log
-    Object onActionFromeditarsubJefeOGA(Trabajador traba) {        
-        subjefeogat = traba;
-        subjefeOGA=subjefeogat.getApellidoPaterno();
-        subEntidadUE.setJefeOga(subjefeogat);
-        bjefeOGA=false;
-        mostrar=false;
-        return subJefeOGAZone.getBody();  
-    }
-   
-   @Log
-    Object onActionFromeditarTitular(Trabajador traba) {        
-        titulart = traba;
-        titular=titulart.getApellidoPaterno();
-        entidadUE.setTitular(titulart);
-        btitulari=false;
-        mostrar=false;
-        return TitularZone.getBody();  
-    }
-   
+
     @Log
-    Object onActionFromeditarJefeRRHH(Trabajador traba) {        
-        jeferrhht = traba;     
-        jefeRRHH=jeferrhht.getApellidoPaterno();
+    Object onActionFromeditarsubJefeOGA(Trabajador traba) {
+        subjefeogat = traba;
+        subjefeOGA = subjefeogat.getApellidoPaterno();
+        subEntidadUE.setJefeOga(subjefeogat);
+        bjefeOGA = false;
+        mostrar = false;
+        return subJefeOGAZone.getBody();
+    }
+
+    @Log
+    Object onActionFromeditarTitular(Trabajador traba) {
+        titulart = traba;
+        titular = titulart.getApellidoPaterno();
+        entidadUE.setTitular(titulart);
+        btitulari = false;
+        mostrar = false;
+        return TitularZone.getBody();
+    }
+
+    @Log
+    Object onActionFromeditarJefeRRHH(Trabajador traba) {
+        jeferrhht = traba;
+        jefeRRHH = jeferrhht.getApellidoPaterno();
         entidadUE.setJefeRRHH(jeferrhht);
-        bjefeRRHHi=false;    
-        mostrar=false;
-        return JefeRRHHZone.getBody();  
+        bjefeRRHHi = false;
+        mostrar = false;
+        return JefeRRHHZone.getBody();
     }
-    
-     @Log
-    Object onActionFromeditarJefeOGA(Trabajador traba) {        
+
+    @Log
+    Object onActionFromeditarJefeOGA(Trabajador traba) {
         jefeogat = traba;
-        jefeOGA=jefeogat.getApellidoPaterno();
+        jefeOGA = jefeogat.getApellidoPaterno();
         entidadUE.setJefeOga(jefeogat);
-        bjefeOGAi=false;
-        mostrar=false;
-        return JefeOGAZone.getBody();  
+        bjefeOGAi = false;
+        mostrar = false;
+        return JefeOGAZone.getBody();
     }
-    
 }
