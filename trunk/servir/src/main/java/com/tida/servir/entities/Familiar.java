@@ -15,7 +15,6 @@ public class Familiar // extends Persona
     private Long id;
     @Validate("required")
     private DatoAuxiliar parentesco;
-    @Validate("required")
     private DatoAuxiliar sexo;
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;

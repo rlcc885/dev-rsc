@@ -94,11 +94,16 @@
                     <t:form t:id="formulariofamiliares"  zone="familiaresZone">
 
                         <div class="f-wrap">
-                             <div class="f-left" >
+                            <div class="f-left">	
+                                <t:label for="fechaNacimiento"/>
+                                <input t:type="DateField" t:id="fechaNacimiento" t:value="familiarActual.fechaNacimiento" t:validate="required"
+                                       size="10" />
+                            </div> 
+                            <div class="f-left" >
                                 <t:label for="parentesco"/>
                                 <input t:type="Select" t:id="parentesco" t:value="familiarActual.parentesco" 
-                                       model="beanParentesco" 
-                                           t:validate="required" t:blankOption="ALWAYS" />
+                                       model="beanParentesco" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       t:validate="required" t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left" >	
                                 <t:label for="sexo"/>
@@ -106,11 +111,7 @@
                                         model="beanSexo" 
                                         t:blankOption="ALWAYS" />
                             </div>
-                             <div class="f-left">	
-                                <t:label for="fechaNacimiento"/>
-                                <input t:type="DateField" t:id="fechaNacimiento" t:value="familiarActual.fechaNacimiento" t:validate="required"
-                                       size="10" t:readonly="readonly" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
-                            </div>
+                             
                         </div>
                         
                         <div class="f-wrap">
@@ -132,19 +133,26 @@
                            <div class="f-left">
                                 <t:label for="tipoDocumento" />
                                 <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
-                                        model="beanTiposDoc" 
+                                        model="beanTiposDoc" disabled="${bdni}"
                                         t:validate="required" t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left">
                                 <t:label for="nroDocumento"/>
-                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" />
+                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" disabled="${bdni}" />
                             </div>
                             <div class="f-left">
                                  <t:label for="estadoCivil" />
                                 <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
                                         model="beanEstadoCivil" 
                                         t:blankOption="ALWAYS"/>
-                            </div> 
+                            </div>
+                             <t:if test="${bvalidausuario}">
+                            <div class="f-left">
+                                    <label>Revisado: </label>
+                                    <input t:type="Checkbox" t:id="validado" 
+                                           t:value="familiarActual.validado"/>
+                            </div>
+                              </t:if>
                         </div> 
                          <div class="f-wrap">
                         <div class="f-right">
@@ -172,154 +180,6 @@
         </div>
         
 </div>      
-        <!--
-        <div name="familiares" id="familiares" class="pane" style="display:block;">
-            <t:zone t:id="familiaresZone">
-                <h3>Familiares</h3>
-                <div id="tabla_familiares">
-                    <t:grid source="familiares" rowsPerPage="10" inPlace="true" pagerPosition="bottom"
-                        reorder="parentesco,apellidoPaterno, apellidoMaterno, tipoDocumento, nroDocumento"
-                        row="f" t:add="Acciones">
-                        <t:parameter name="empty">
-                            <div class="no-info">
-                                No hay familiares definidos
-                            </div>
-                        </t:parameter>
-                        <p:accionesCell>    
-                            <t:if test = "editable">
-                                <t:actionlink t:id="editar" zone="familiaresZone" context="f">Editar</t:actionlink>
-                                <t:actionlink t:id="eliminar" zone="familiaresZone" context="f"> | Eliminar</t:actionlink>
-                            </t:if>
-                        </p:accionesCell>
-                    </t:grid>
-                </div>
 
-                <form t:type="form" t:id="formulariofamiliares" t:zone="familiaresZone">
-                    <t:errors/>
-                    <t:envelope t:id="envelope"/>
-                    <div class="datos_familia">
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="parentesco"/>
-                                <input t:type="Select" t:id="parentesco" model="parentesco" t:validate="required" t:value="familiarActual.parentesco" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="nombres"/>
-                                <input t:type="TextField" t:id="nombres" t:validate="required" t:value="familiarActual.nombres" size="30" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoPaterno" />
-                                <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:value="familiarActual.apellidoPaterno" size="30" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoMaterno" />
-                                <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:value="familiarActual.apellidoMaterno" size="30" disabled ="noeditable"/>
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="tipoDocumento" />
-                                <t:select t:id="tipoDocumento" t:value="familiarActual.tipoDocumento" t:validate="required"
-                                model="tiposDoc" value="nuevo.tipoDocumento" disabled ="noeditable" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="nroDocumento"/>
-                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" disabled ="noeditable"/><br/>
-                            </div>
-                            <div class="f-left">	
-                                <label>* Sexo:</label>
-                                <select t:type="Select" t:id="sexo" t:value="familiarActual.sexo" model="sexo" disabled ="noeditable" t:validate="required"/>
-                            </div>
-                            <div class="f-left">	
-                                <label>* Fecha de Nacimiento:</label>
-                                <input t:type="DateInput" t:id="fechaNacimiento" t:date="familiarActual.fechaNacimiento" t:validate="required"
-                                    t:label="Fecha de Nacimiento" size="10" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">	
-                                <label>Nacionalidad:</label>
-                                <t:select t:id="nacionalidad" t:value="familiarActual.nacionalidad"
-                                    model="nacionalidad" value="familiarActual.nacionalidad" t:validate="required" />
-                                
-                            </div>
-                            <div class="f-left">	
-                                <label>Estado Civil:</label>
-                                <select t:type="Select" t:id="estadocivil" t:value="familiarActual.estadoCivil" model="estadoCivil" disabled ="noeditable" />
-                            </div>
-                        </div>
-                        <div class="clear" id="datospersonales_fe">
-                            <h3>Otros datos personales</h3>
-                          
-                            <div class="f-left">
-                                <label>ESSALUD:</label>
-                                <input t:type="TextField" t:id="essalud" t:value="familiarActual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">
-                                <label>Grupo Sanguíneo:</label>
-                                <select t:type="Select" t:id="gruposanguineo" t:value="familiarActual.grupoSanguineo" model="gruposanguineo" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">	                
-                                <label>Nivel Instrucción:</label>
-                                <select t:type="Select" t:id="nivelinstruccion" t:value="familiarActual.nivelInstruccion" model="nivelInstruccion" disabled ="noeditable"/>
-                            </div>
-                        </div>
-                        <div id="submitFamiliar" class="actions f-right">
-                            <t:if test = "editable">
-                                <input type="submit" value="Actualizar" class="button f-right"/>
-                                <t:actionlink t:id="reset" zone="familiaresZone">
-                                    Cancelar/Nuevo
-                                </t:actionlink>
-                            </t:if>
-                        </div>
-                    </div>
-                </form>
-             </t:zone>
-
-            <div id = "ubigeosDataFam">
-               <t:zone t:id="ubigeoNacZoneFam">
-                   <form t:type="form" t:id="formUbiNac" id="formUbiNac" t:zone="ubigeoNacZoneFam">
-                        <h3>Lugar de Nacimiento</h3>
-                        <t:label for="pais" />
-                        <select t:type="select" t:id="pais" t:model="paises"
-                                t:value="pais" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                               t:blankOption="ALWAYS" t:zone="ubigeoNacZoneFam" disabled ="noeditable" />
-
-                         <t:if test="EsPeru">
-                            <input t:type="Ubigeos" t:id="ubigeo_nacimiento" t:ubigeo="ubigeoNacimiento"
-                                 t:zone="ubigeoNacZoneFam" t:zoneName="ubigeoNacZoneFam" disabled ="noeditable"/>
-                        </t:if>
-                   </form>
-               </t:zone>
-
-                <t:zone t:id="ubigeoDomZoneFam">
-                    <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZoneFam">
-                        <h3>Domicilio Actual</h3>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Dirección</label>
-                                <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="25"
-                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="ubigeoDomZoneFam" disabled ="noeditable"/>
-                            </div>
-                            <div class="f-left">
-                                <label>Código Postal:</label>
-                                <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" disabled ="noeditable"
-                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZoneFam"  t:validate ="maxlength=7" size="7"/>
-                            </div>
-                            <div class="f-left" id="ubigeo_fe">
-                                <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                t:zone="ubigeoDomZoneFam" t:zoneName="ubigeoDomZoneFam" disabled ="noeditable"/>
-                            </div>
-                        </div>
-                    </form>
-                </t:zone>
-            </div>
-
-             <t:zone t:id="formacionZone">
-                <form t:type="form" t:id="formFormacion" t:zone="formacionZone">
-                    <input t:type="FormacionProfesionalEditor" t:id="formacionprofesional" t:formacionProfesional="formacionProfesional"
-                    t:zone="formacionZone" t:zoneName="formacionZone" disabled ="noeditable"/>
-               </form>
-            </t:zone> 
-        </div>
-        -->
     </t:content>
 </html>

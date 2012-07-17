@@ -12,7 +12,7 @@
                 <t:errors/>
 
                 <div class="f-wrap">
-                    <div class="f-left margintop11">
+                    <div class="f-left">
                         <t:label for="duracion_clave"/>
                         <input t:type="TextField" t:id="duracion_clave"
                                t:value="ca.duracion_clave" size="3" t:validate="required" />
