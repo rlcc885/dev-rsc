@@ -2363,15 +2363,15 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(c.getDenominacion()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(c.getCentro_estudios()));
+//                escribir.print(InformeXLS.leoCampo(c.getCentro_estudios()));
                 escribir.print("|");
-                escribir.print(InformeXLS.numberToString(c.getHoras()));
+//                escribir.print(InformeXLS.numberToString(c.getHoras()));
                 escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(c.getFinanciadoEntidad()));
+//                escribir.print(InformeXLS.booleanToString(c.getFinanciadoEntidad()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(c.getLugar_dictado()));
+//                escribir.print(InformeXLS.leoCampo(c.getLugar_dictado()));
                 escribir.print("|");
-                escribir.print(InformeXLS.datetoString(c.getFec_emision()));
+//                escribir.print(InformeXLS.datetoString(c.getFec_emision()));
                 escribir.println();
             }
             escribir.close();

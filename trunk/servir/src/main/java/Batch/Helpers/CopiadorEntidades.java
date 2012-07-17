@@ -239,13 +239,13 @@ public class CopiadorEntidades {
     }
     
     public static void curso(Curso origen, Curso destino){
-        destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
-        destino.setCentro_estudios(CopiadorEntidades.verifacionNull(origen.getCentro_estudios()));
+//        destino.setAgregadoTrabajador(CopiadorEntidades.verifacionNull(origen.getAgregadoTrabajador()));
+//        destino.setCentro_estudios(CopiadorEntidades.verifacionNull(origen.getCentro_estudios()));
         destino.setDenominacion(CopiadorEntidades.verifacionNull(origen.getDenominacion()));
-        destino.setFec_emision(CopiadorEntidades.verifacionNull(origen.getFec_emision()));
-        destino.setFinanciadoEntidad(CopiadorEntidades.verifacionNull(origen.getFinanciadoEntidad()));
-        destino.setHoras((Float) CopiadorEntidades.verifacionNull(origen.getHoras()));
-        destino.setLugar_dictado(CopiadorEntidades.verifacionNull(origen.getLugar_dictado()));
+//        destino.setFec_emision(CopiadorEntidades.verifacionNull(origen.getFec_emision()));
+//        destino.setFinanciadoEntidad(CopiadorEntidades.verifacionNull(origen.getFinanciadoEntidad()));
+//        destino.setHoras((Float) CopiadorEntidades.verifacionNull(origen.getHoras()));
+//        destino.setLugar_dictado(CopiadorEntidades.verifacionNull(origen.getLugar_dictado()));
         destino.setTrabajador(origen.getTrabajador());
         destino.setValidado(CopiadorEntidades.verifacionNull(origen.getValidado()));
     }
