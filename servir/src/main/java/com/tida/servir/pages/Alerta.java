@@ -69,6 +69,8 @@ public class Alerta  extends GeneralPage {
     private Zone listaentidad;
     @InjectComponent
     private Zone listaservir;
+    @InjectComponent
+    private Zone listasistemas;
     @Property
     @Persist
     private Evento e;
@@ -198,21 +200,31 @@ public class Alerta  extends GeneralPage {
         }
         return result;
     }    
+    
+    @Log
+    public List<BusquedaEvento> getEventossistemas() {
+        Query query = session.getNamedQuery("callSpEventoAcceso");
+        query.setParameter("in_rol_id",_usuario.getRol().getId());
+        query.setParameter("in_tipoevento_id",5);
+        query.setParameter("in_perfil_id",343736); 
+        query.setParameter("in_entidad_id","");  
+        List result = query.list();
+        
+        for (int i = 0; i < result.size(); i++) {
+            BusquedaEvento usu = (BusquedaEvento) result.get(i);
+        }
+        return result;
+    }
    
     @Log
     @CommitAfter  
-    Object onActionFromEditars(Evento ev2) {
+    Object onActionFromEditar(Evento ev2) {
         ev2.setEstadoevento(true);
         session.saveOrUpdate(ev2);
         //session.flush();
-        return listaservir.getBody();
-    }    
-   
-    @Log
-    Object onActionFromEditarenti(Cargoxunidad c) {
-        return listaservir.getBody();
-    }
-    
+        return listasistemas.getBody();
+    }  
+
     public String getSelectionRow() {
         if (actual != null) {
             if (eventoentidad.getTrabajadorid() == actual.getId()) {

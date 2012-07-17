@@ -79,19 +79,19 @@
             </t:if>
         </div> <!-- tabla eventos -->
 
-        <div t:type="zone" t:id="listaentidad" class="selectform" > 
-            <t:if test="mostrare">     
-            <h1>Administrador de Entidad</h1>
-                <t:form t:id="formlistaentidad">
-                    <h2>Datos de Trabajadores Modificados</h2>
+        <div t:type="zone" t:id="listasistemas" class="selectform" > 
+            <t:if test="mostrars">     
+            <h1>Administrador de Sistemas</h1>
+                <t:form t:id="formlistasistemas" t:zone="listasistemas">
+                    <h2>Ultimos Eventos</h2>
                     <div id = "tabla_cargo">
-                        <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoentidad" reorder="nombres,entidad,fechaevento">
+                        <t:grid source="eventossistemas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventosistemas" reorder="nombres,entidad,fechaevento">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="eventoentidad.trabajadorid" href="#">Ver</a>
+                                    <t:actionlink t:id="editar" zone="listasistemas" context="eventosistemas">OK</t:actionlink>
                             </p:accionesCell>
                         </t:grid>
                     </div>                    
