@@ -303,14 +303,15 @@
                 </div>
                         
                         
-                <div t:type="zone" t:id="logoentidadZone" >
-                    <t:form t:id="formulariologoentidad"  zone="logoentidadZone">
+<!--                <div t:type="zone" t:id="logoentidadZone" > -->
+                
+                    <t:form t:id="formulariologoentidad" >
                         <t:errors/>
                         <div class="f-wrap">
                             <div class="f-left  input_grande">
                                 <label>Logo </label>
                                 <t:if test="blogoentidadi">
-                                    <input t:type="upload" t:id="file" t:value="file" style="width: 550px;" />
+                                    <input t:type="upload" t:id="file" style="width: 550px;" />
                                     <input type="submit" value="Upload" class="button f-left"/>
                                 </t:if>
                                 <t:if test="blogoentidadf">
@@ -320,7 +321,7 @@
                             </div>
                         </div>
                     </t:form>
-                </div>
+<!--                </div> -->
                         
                 <t:zone t:id="ubigeoEntidadZone">
                     <t:form t:id="formularioubigeo"  zone="ubigeoEntidadZone">  
