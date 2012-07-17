@@ -105,6 +105,7 @@
                         </p:accionesCell>
                     </t:grid>
                 </div>
+                <t:envelope t:id="envelope"/>
             </t:form>
         </t:if>
      </div> <!-- tabla cargos -->
@@ -113,12 +114,12 @@
 
     </div> 
      
-     <h3> Crear / Editar Cargo </h3>
+    
         <div class="box" id="box-cargos">
           <div t:type="zone" t:id="abmZone" class="abmform">
             <t:if test="${vformulario}">
-            <t:form t:id="formularioaltacargo" zone="abmZone">
-                <t:envelope t:id="envelope"/>
+            <h3> Crear / Editar Cargo </h3>
+            <t:form t:id="formularioaltacargo" zone="abmZone">                
                 <t:errors/>                   
                     
                         
@@ -178,31 +179,22 @@
 
                         <div class="f-wrap">
                             <div class="f-left">
-                                <fieldset >
-                                    <legend>* Presenta Declaración Jurada de Bienes y Rentas</legend>
+                                    <label>* Presenta Declaración Jurada de Bienes y Rentas</label>
                                     <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr" t:validate="required">
-                                        <label><t:radio t:id="de1" t:value="true" /> Si</label>
-                                        <label><t:radio t:id="de2" t:value="false" /> No</label>
-                                    </t:radiogroup>  
-                                </fieldset>                                                                 
+                                        <label><t:radio t:id="de1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="de2" t:value="false" t:disabled="${vdetalle}"/> No</label>
+                                    </t:radiogroup>                                                               
                             </div>
-                            <div class="f-left">
-                                <fieldset>
+                            <div class="f-left">                                
                                 <label>* Presupuestado en PAP</label>
                                 <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
-                                    <label><t:radio t:id="pa1" t:value="true" t:disabled="${vdetalle}"/> Si</label>
-                                    <label><t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No</label>
+                                    <label><t:radio t:id="pa1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No</label>
                                 </t:radiogroup>
-                                </fieldset>
                             </div>
-                            <div class="f-left">
-                                <fieldset>
+                            <div class="f-left">                                
                                 <label>* Es Organico</label>   
                                 <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
-                                    <label><t:radio t:id="o1" t:value="true" t:disabled="${vdetalle}"/> Si</label>
-                                    <label><t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No</label>
+                                    <label><t:radio t:id="o1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No</label>
                                 </t:radiogroup>
-                                </fieldset>
                             </div>
                             <!--<div class="f-left">
                                 <label>Clasificación funcional</label>

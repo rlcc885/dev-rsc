@@ -3,29 +3,7 @@
       xmlns:p="tapestry:parameter">
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
          
-<!-- Listado de Entidades -->    
-  
-        <!--                                      
-        <div id = "tabla_oi">
-            <h2>Entidades/U. Ejecutoras</h2>
-            <t:zone t:id="admsistemasZone">
-                <t:form 
-                <t:envelope t:id="envelope"/>   
-                <t:grid source="EntidadesUEjecutoras" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                    row="oi" exclude= "sector_rep, pliego_rep, proc_batch, def_servir, cue_entidad, cue_elemento, def_servir, TEMovilJefeRRHH, TEJefeRRHH, correoElectronicoJefeRRHH,
-                    jefeRRHHEntidad, correoElectronicoTitular, titularEntidad, direcion, ruc, cod_mef_ue, correoElectronicoInstitucional, localidad, estado, clas_funcional, trabajadorAgregaDatos, nivel_gobierno, pliego, sector_gobierno" 
-                    reorder="codigoEntidadUE,denominacion" >
-                    <t:parameter name="empty">
-                        <div class="no-info">No hay Entidades /U. Ejecutoras que hayan sido modificadas</div><br/>
-                    </t:parameter>
-                    <p:accionesCell>
-                        <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="oi.id" href="#">Ver Detalle</a>
-                    </p:accionesCell>
-                </t:grid>
-            </t:zone>
-        </div>-->
-
-        <div t:type="zone" t:id="listaservir" class="selectform" > 
+       <div t:type="zone" t:id="listaservir" class="selectform" > 
             <t:if test="mostrarse">
             <h1>Administrador de Servir</h1>
                 <t:form t:id="formlistaservir">
@@ -86,7 +64,7 @@
                     <h2>Ultimos Eventos</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="eventossistemas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventosistemas" reorder="nombres,entidad,fechaevento">
+                                row="eventosistemas" reorder="descripcion,nombres,entidad,fechaevento">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
