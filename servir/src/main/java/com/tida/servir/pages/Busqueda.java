@@ -193,7 +193,8 @@ public class Busqueda extends GeneralPage {
         }
         else{
             usu = (UsuarioAcceso) result.get(0);            
-            vselect=(usu.getAccesoselect()!=0);                       
+            vselect=(usu.getAccesoselect()!=0);
+            System.out.println("Eliminar1"+usu.getAccesodelete()+usu.getAccesoreport()+usu.getAccesoupdate());
         }
     }
     

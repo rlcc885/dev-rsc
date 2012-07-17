@@ -71,7 +71,7 @@ public class CursosEditor {
     
     @Property
     @SessionState
-    private UsuarioAcceso usua;
+    private UsuarioAcceso usu;
     
     @Inject
     private PropertyAccess _access;
@@ -156,20 +156,20 @@ public class CursosEditor {
     @SetupRender
     private void inicio() {
         vrevisado=false;
-        if(usua.getAccesoupdate()==1){
+        if(usu.getAccesoupdate()==1){
             veditar=true;
             vbotones=true;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
                 vrevisado=true;
             }
         }
-        if(usua.getAccesodelete()==1){
+        if(usu.getAccesodelete()==1){
             veliminar=true; 
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
                 vrevisado=true;
             }
         }
-        if(usua.getAccesoreport()==1){
+        if(usu.getAccesoreport()==1){
             vformulario=true;
             vbotones=true;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
@@ -179,6 +179,7 @@ public class CursosEditor {
         cursos=new Curso();
         votro=true;
         editando=false;
+        System.out.println("Eliminar2"+usu.getAccesodelete()+usu.getAccesoreport()+usu.getAccesoupdate());
         //limpiar();
     }
     
@@ -319,7 +320,7 @@ public class CursosEditor {
         limpiar();
         editando=false;
         cursos=new Curso();
-        if(usua.getAccesoreport()==0){
+        if(usu.getAccesoreport()==0){
             vformulario=false;
         } 
         elemento=2;
@@ -372,7 +373,7 @@ public class CursosEditor {
             }
             if(editando){
                 //editando
-                if(usua.getAccesoreport()==0){
+                if(usu.getAccesoreport()==0){
                     vformulario=false;
                 } 
                 System.out.println("fuerae"+valfuera);
