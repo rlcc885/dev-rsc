@@ -7,51 +7,47 @@
     
     <h1> Búsqueda de Entidades y Sub-Entidades </h1>
     <div class="wrap" id="selectors">
-        <ul id="tabs-topb" class="tabs">
-            <li>
-                <a href="#"> Entidad</a>
-            </li>
-            <li>
-                <a href="#"> Subentidad</a>
-            </li>
-        </ul>
-        <div id="busquedasenti" class="pane" style="display:block;">
-            <div class="box">
-                <div t:type="zone" t:id="busquedacombosZone" >
-                    <t:form t:id="formulariocombosbusqueda" t:zone="listaentidadZone"> 
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="bnivelgobierno"/>
-                                <input t:type="Select" t:id="bnivelgobierno" t:value="bnivelGobierno" 
-                       model="NivelGobierno"
-                       t:blankOption="ALWAYS" />
-                            </div>
-                            <div class="f-left"> 
-                                <t:label for="borganizacionestado"/>
-                                <input t:type="Select" t:id="borganizacionestado" t:value="borganizacionEstado" 
-                       model="OrganizacionEstado"
-                       t:blankOption="ALWAYS"/>
-                            </div>        
-                            <div class="f-left"> 
-                                <t:label for="bsectorgobierno"/>
-                                <input t:type="Select" t:id="bsectorgobierno" t:value="bsectorGobierno" 
-                       model="SectorGobierno"
-                       t:blankOption="ALWAYS"/>
-                            </div>  
-                            <div class="f-left"> 
-                                <t:label for="btipoorganismo"/>
-                                <input t:type="Select" t:id="btipoorganismo" t:value="btipoOrganismo" 
-                       model="TipoOrganismo" 
-                       t:blankOption="ALWAYS"/>
-                            </div> 
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for ="busdenominacion"/>
-                                <input t:type="TextField" t:id="busdenominacion"
-                       t:value="busdenominacion" t:validate="maxlength=60" size="75"/>
-                            </div>
-                        </div> 
+         <ul id="tabs-topb" class="tabs">
+                    <li><a href="#"> Entidad</a></li>
+                    <li><a href="#"> Subentidad</a></li>
+                </ul>
+     <div id="busquedasenti" class="pane" style="display:block;">
+         <div class="box">
+    <div t:type="zone" t:id="busquedacombosZone" >
+      <t:form t:id="formulariocombosbusqueda" t:zone="listaentidadZone"> 
+        <div class="f-wrap">
+            <div class="f-left">
+                <t:label for="bnivelgobierno"/>
+                <input t:type="Select" t:id="bnivelgobierno" t:value="bnivelGobierno" 
+                        model="NivelGobierno"
+                        t:blankOption="ALWAYS" />
+            </div>
+            <div class="f-left"> 
+                <t:label for="borganizacionestado"/>
+                <input t:type="Select" t:id="borganizacionestado" t:value="borganizacionEstado" 
+                        model="OrganizacionEstado"
+                        t:blankOption="ALWAYS"/>
+            </div>        
+            <div class="f-left"> 
+                <t:label for="bsectorgobierno"/>
+                <input t:type="Select" t:id="bsectorgobierno" t:value="bsectorGobierno" 
+                        model="SectorGobierno"
+                        t:blankOption="ALWAYS"/>
+            </div>  
+            <div class="f-left"> 
+                <t:label for="btipoorganismo"/>
+                <input t:type="Select" t:id="btipoorganismo" t:value="btipoOrganismo2" 
+                        model="TipoOrganismo" 
+                        t:blankOption="ALWAYS"/>
+            </div> 
+        </div>
+         <div class="f-wrap">
+            <div class="f-left">
+                <t:label for ="busdenominacion"/>
+                <input t:type="TextField" t:id="busdenominacion"
+                        t:value="busdenominacion" t:validate="maxlength=60" size="75"/>
+            </div>
+        </div> 
         
             
                         <div class="f-wrap">
@@ -138,11 +134,15 @@
 
                     <t:actionlink t:id="editarSeleccion" zone="nivelOrganizacionSectorZone" context="listaentidad">Editar</t:actionlink> | 
 
-                    <t:actionlink t:id="eliminarSeleccion" zone="listaentidadZone" context="listaentidad">Eliminar</t:actionlink>           
-                </p:accionesCell>
-            </t:grid>  
-        </t:zone>
-    </div>  
+        <t:actionlink t:id="eliminarSeleccion" zone="listaentidadZone" context="listaentidad"> 
+            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span>
+        </t:actionlink>           
+</p:accionesCell>
+</t:grid>  
+</t:zone>
+</div>  
 
 
  
@@ -450,8 +450,6 @@
                                     <input t:type="TextField" t:id="Subcue_entidad"
                                            t:value="subEntidadUE.cue_entidad" t:validate="maxlength=12" size="12" />
                                 </div>
-
-
 
                             </div>
 

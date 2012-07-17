@@ -146,37 +146,41 @@ public class FamiliaresEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariofamiliares() {
-        if(familiarActual.getParentesco().getValor().equalsIgnoreCase("PROGENITOR")){
+        //Codigo de Progenitor = 4
+        if(familiarActual.getParentesco().getCodigo()==4){
             Criteria c1 = session.createCriteria(Familiar.class);
             c1.add(Restrictions.eq("trabajador",actual)); 
             c1.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoP=c1.list();
         }
-        if(familiarActual.getParentesco().getValor().equalsIgnoreCase("CONVIVIENTE")){
+        //Codigo de Conviviente = 2
+        if(familiarActual.getParentesco().getCodigo()==2){
             Criteria c2 = session.createCriteria(Familiar.class);
             c2.add(Restrictions.eq("trabajador",actual)); 
             c2.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoC=c2.list();
          }
-            if(familiarActual.getParentesco().getValor().equalsIgnoreCase("CÓNYUGE")){
+        //Codigo de Conyugue = 1
+         if(familiarActual.getParentesco().getCodigo()==1){
             Criteria c3 = session.createCriteria(Familiar.class);
             c3.add(Restrictions.eq("trabajador",actual)); 
             c3.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoCY=c3.list();
         }
-        if(listaParentescoP.size()>0 && familiarActual.getParentesco().getValor().equalsIgnoreCase("PROGENITOR")){
-            envelope.setContents("No es posible registrar mas de un Progenitor");
+        if(listaParentescoP!=null && listaParentescoP.size()>0 && familiarActual.getParentesco().getCodigo()==4){
+            envelope.setContents("No es posible regstrar mas de un Progenitor");
             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("familiaresZone", familiaresZone.getBody());
-        }else if(listaParentescoC.size()>0 && familiarActual.getParentesco().getValor().equalsIgnoreCase("CONVIVIENTE")) {
+        }else if(listaParentescoC!=null && listaParentescoC.size()>0 && familiarActual.getParentesco().getCodigo()==2) {
              envelope.setContents("No es posible registrar mas de un Conviviente");
              return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("familiaresZone", familiaresZone.getBody());
-        }else if(listaParentescoCY.size()>0 && !familiarActual.getParentesco().getValor().equalsIgnoreCase("CÓNYUGE")) {
+        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
              envelope.setContents("No es posible registrar mas de un Cónyugue");
              return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("familiaresZone", familiaresZone.getBody());
         }else{
+            System.out.println("Entro aka FINAL");
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
             session.saveOrUpdate(familiarActual);
