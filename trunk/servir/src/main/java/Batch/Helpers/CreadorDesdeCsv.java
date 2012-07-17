@@ -26,161 +26,161 @@ import org.hibernate.criterion.Restrictions;
 public class CreadorDesdeCsv {
 
     Tratamiento myTratamiento;
-//
-//    public Tratamiento getMyTratamiento() {
-//        return myTratamiento;
-//    }
-//
-//    public CreadorDesdeCsv(Tratamiento myTratamiento) {
-//        this.myTratamiento = myTratamiento;
-//    }
-//
-//    //entidadUEs
-//    public List<Entidad_BK> csvToListEntidadUEjecutora(List<List<String>> leues, Session session, List<String> errores, String origenArchivo) {
-//        List<Entidad_BK> leue = new LinkedList<Entidad_BK>();
-//        Entidad_BK eue;
-//        for (List<String> eues : leues) {
-//            eue = entidadUEjecutoraFromCsv(eues, errores, session, origenArchivo);
-//            if (eue == null) {
-//                continue;
-//            }
-//            leue.add(eue);
-//        }
-//        return leue;
-//    }
-//
-//    public Entidad_BK entidadUEjecutoraFromCsv(List<String> _csvOrganismo, List<String> errores, Session session, String origenArchivo) {
-//        Entidad_BK eue = new Entidad_BK();
-//        Entidad eueO = new Entidad();
-//        Entidad eueD = new Entidad();
-//        //verificacion numero campos archivo
-//        if (_csvOrganismo.size() != helpers.Constantes.CAMPOS_ENTIDADES_UNIDADES_EJECUTORAS) {
-//            errores.add(helpers.Errores.TAMANO_CAMPOS_ARCHIVO_DIFFERENTE + helpers.Constantes.ENTIDADES_UE);
-//            return null;
-//        }
-//
-//        //verificacion campos AZUL obligatorios
-//        if ((_csvOrganismo.get(0).trim().equals("")) || (_csvOrganismo.get(1).trim().equals("")) || (_csvOrganismo.get(16).trim().equals(""))
-//                || (_csvOrganismo.get(17).trim().equals("")) || (_csvOrganismo.get(18).trim().equals(""))) {
-//            errores.add(helpers.Errores.FALTA_CAMPOS_OBLIGATORIOS + helpers.Constantes.ENTIDADES_UE);
-//            return null;
-//        }
-//
-//        eue.setCodigoEntidadUE(_csvOrganismo.get(0));
-//        eue.setDenominacion(_csvOrganismo.get(1));
-//        eue.setClas_funcional(CreadorDesdeDB.verificacionValorDatoAuxiliar("ClasFuncOrg", _csvOrganismo.get(2), errores, session));
-//        eue.setCue_entidad(_csvOrganismo.get(3));
-//        eue.setCue_elemento(_csvOrganismo.get(4));
-//        eue.setCod_mef_ue(CreadorDesdeCsv.toInteger(_csvOrganismo.get(5)));
-//        eue.setRuc(_csvOrganismo.get(6));
-//        eue.setDirecion(_csvOrganismo.get(7));
-//        eue.setLocalidad(_csvOrganismo.get(8));
-//        eue.setCod_ubi_dept(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvOrganismo.get(9), errores, session));
-//        eue.setCod_ubi_dist(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDistrito", _csvOrganismo.get(10), errores, session));
-//        eue.setCod_ubi_prov(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvOrganismo.get(11), errores, session));
-//        eue.setTitularEntidad(_csvOrganismo.get(12));
-//        eue.setCorreoElectronicoTitular(_csvOrganismo.get(13));
-//        eue.setJefeRRHHEntidad(_csvOrganismo.get(14));
-//        eue.setCorreoElectronicoJefeRRHH(_csvOrganismo.get(15));
-//        eue.setNivel_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("NivelGobierno", _csvOrganismo.get(16), errores, session));
-//        
-//        if(eue.getNivel_gobierno().equals("NIVEL LOCAL")) {
-//            DatoAuxiliar depto = CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvOrganismo.get(17), errores, session);
-//            DatoAuxiliar provincia = CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvOrganismo.get(18), errores, session);
-//            if (depto != eue.getCod_ubi_dept() || provincia != eue.getCod_ubi_prov()){
-//                errores.add(Errores.ERROR_UBIGEO_SECTOR_PLIEGO + " Entidad :" + eue.getCodigoEntidadUE());
-//            }
-//
-//            eue.setSector_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("UBDepartamento", _csvOrganismo.get(17), errores, session));
-//            eue.setPliego(CreadorDesdeDB.verificacionValorDatoAuxiliar("UBProvincia", _csvOrganismo.get(18), errores, session));
-//        } else {
-//            eue.setSector_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("SectorGobierno", _csvOrganismo.get(17), errores, session));
-//            eue.setPliego(CreadorDesdeDB.verificacionValorDatoAuxiliar("Pliego", _csvOrganismo.get(18), errores, session));
-//        }
-//
-//        eue.setCorreoElectronicoInstitucional(_csvOrganismo.get(19));
-//        eue.setTEJefeRRHH(_csvOrganismo.get(20));
-//        eue.setTEMovilJefeRRHH(_csvOrganismo.get(21));
-//        eue.setEstado(Entidad_BK.ESTADO_ALTA);
-//
-//        // Chequeo cascada de ubigeo
-//        if(!Helpers.isUbigeoValido(eue.getCod_ubi_dept(), eue.getCod_ubi_prov(), eue.getCod_ubi_dist(), session)) {
-//            errores.add(Errores.ERROR_CASCADA_UBIGEO + " Entidad :" + eue.getCodigoEntidadUE());
-//
-//        }
-//
-//
-//        if (errores.size() > 0) {
-//            return null;
-//        }
-//
-//        Entidad_BK eueOrigen = eue;
-//
-//        //verificar si ya existe la entidad UE (modificacion o alta) y guardarla en una lista
-//        Criteria c;
-//        c = session.createCriteria(Entidad_BK.class);
-//        c.add(Restrictions.eq("codigoEntidadUE", eue.getCodigoEntidadUE()));
-//
-//        if (c.list() != null) {
-//            if (!c.list().isEmpty()) {
-//                //modificacion
-//                Entidad_BK eueDestino = (Entidad_BK) c.list().get(0);
-//                if (myTratamiento.getUsuario().getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
-//                    //verificar si puede ingresar informacion
-//                    if (!eueDestino.getDef_servir()) {
-//                        errores.add(helpers.Errores.NO_SE_PUEDE_INGRESAR_INFORMACION_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
-//                        return null;
-//                    }
-//
-//                    //verificar si puede procesar el batch
-//                    if (!eueDestino.getProc_batch()) {
-//                        errores.add(helpers.Errores.NO_SE_PUEDE_PROCESAR_BATCH_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
-//                        return null;
-//                    }
-//                }
-//                    // revisar
-//                if (ComparadorEntidades.entidadUEs(eueO, eueD).equals(ResultadoOperacionCSV.MODIFICADO)) {
-//                    CopiadorEntidades.entidadUE(eueOrigen, eueDestino);
-//                }
-//
-//                return eueDestino;
-//            }
-//        }
-//
-//        //nueva entidadUE
-//        if (origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
-//            eue.setEstado(Entidad_BK.ESTADO_ALTA);
-//
-//            UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
-//            nuevaUnidadOrganica.setEntidad(eueO); // revisar
-//            nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
-//            nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
-//            nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
-//            nuevaUnidadOrganica.setCue(UnidadOrganica.CUE_DEFAULT);
-//            nuevaUnidadOrganica.setNivel(UnidadOrganica.NIVEL_DEFAULT);
-//            nuevaUnidadOrganica.setSigla(UnidadOrganica.SIGLA_DEFAULT);
-//            myTratamiento.getUnidadOrganica().add(nuevaUnidadOrganica);
-//
-//            Cargoxunidad nuevoCargo = new Cargoxunidad();
-//            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
-//            // TODO revisar linea comentada JZM
-//            //nuevoCargo.setClasificacion_funcional(list.get(0));
-//            nuevoCargo.setUnidadorganica(nuevaUnidadOrganica);
-//            nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
-//            nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
-//            nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
-//            nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
-//            myTratamiento.getCargo().add(nuevoCargo);
-//
-//            //se guarda sola aca para no cambiar si los campos son true si alguien modifica estos campos despues de la primera cargada
-//            eue.setDef_servir(Boolean.TRUE);
-//            eue.setProc_batch(Boolean.TRUE);
-//            return eue;
-//        }
-//
-//        return eueOrigen;
-//    }
-//
+
+    public Tratamiento getMyTratamiento() {
+        return myTratamiento;
+    }
+
+    public CreadorDesdeCsv(Tratamiento myTratamiento) {
+        this.myTratamiento = myTratamiento;
+    }
+
+    //entidadUEs
+    public List<Entidad_BK> csvToListEntidadUEjecutora(List<List<String>> leues, Session session, List<String> errores, String origenArchivo) {
+        List<Entidad_BK> leue = new LinkedList<Entidad_BK>();
+        Entidad_BK eue;
+        for (List<String> eues : leues) {
+            eue = entidadUEjecutoraFromCsv(eues, errores, session, origenArchivo);
+            if (eue == null) {
+                continue;
+            }
+            leue.add(eue);
+        }
+        return leue;
+    }
+
+    public Entidad_BK entidadUEjecutoraFromCsv(List<String> _csvOrganismo, List<String> errores, Session session, String origenArchivo) {
+        Entidad_BK eue = new Entidad_BK();
+        Entidad eueO = new Entidad();
+        Entidad eueD = new Entidad();
+        //verificacion numero campos archivo
+        if (_csvOrganismo.size() != helpers.Constantes.CAMPOS_ENTIDADES_UNIDADES_EJECUTORAS) {
+            errores.add(helpers.Errores.TAMANO_CAMPOS_ARCHIVO_DIFFERENTE + helpers.Constantes.ENTIDADES_UE);
+            return null;
+        }
+
+        //verificacion campos AZUL obligatorios
+        if ((_csvOrganismo.get(0).trim().equals("")) || (_csvOrganismo.get(1).trim().equals("")) || (_csvOrganismo.get(16).trim().equals(""))
+                || (_csvOrganismo.get(17).trim().equals("")) || (_csvOrganismo.get(18).trim().equals(""))) {
+            errores.add(helpers.Errores.FALTA_CAMPOS_OBLIGATORIOS + helpers.Constantes.ENTIDADES_UE);
+            return null;
+        }
+
+        eue.setCodigoEntidadUE(_csvOrganismo.get(0));
+        eue.setDenominacion(_csvOrganismo.get(1));
+        eue.setClas_funcional(CreadorDesdeDB.verificacionValorDatoAuxiliar("ClasFuncOrg", _csvOrganismo.get(2), errores, session));
+        eue.setCue_entidad(_csvOrganismo.get(3));
+        eue.setCue_elemento(_csvOrganismo.get(4));
+        //eue.setCod_mef_ue(CreadorDesdeCsv.toInteger(_csvOrganismo.get(5)));
+        eue.setRuc(_csvOrganismo.get(6));
+        eue.setDirecion(_csvOrganismo.get(7));
+        eue.setLocalidad(_csvOrganismo.get(8));
+        eue.setCod_ubi_dept(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvOrganismo.get(9), errores, session));
+        eue.setCod_ubi_dist(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDistrito", _csvOrganismo.get(10), errores, session));
+        eue.setCod_ubi_prov(CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvOrganismo.get(11), errores, session));
+        eue.setTitularEntidad(_csvOrganismo.get(12));
+        eue.setCorreoElectronicoTitular(_csvOrganismo.get(13));
+        eue.setJefeRRHHEntidad(_csvOrganismo.get(14));
+        eue.setCorreoElectronicoJefeRRHH(_csvOrganismo.get(15));
+        eue.setNivel_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("NivelGobierno", _csvOrganismo.get(16), errores, session));
+        
+        if(eue.getNivel_gobierno().equals("NIVEL LOCAL")) {
+            DatoAuxiliar depto = CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBDepartamento", _csvOrganismo.get(17), errores, session);
+            DatoAuxiliar provincia = CreadorDesdeDB.verificacionCodigoDatoAuxiliar("UBProvincia", _csvOrganismo.get(18), errores, session);
+            if (depto != eue.getCod_ubi_dept() || provincia != eue.getCod_ubi_prov()){
+                errores.add(Errores.ERROR_UBIGEO_SECTOR_PLIEGO + " Entidad :" + eue.getCodigoEntidadUE());
+            }
+
+            eue.setSector_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("UBDepartamento", _csvOrganismo.get(17), errores, session));
+            eue.setPliego(CreadorDesdeDB.verificacionValorDatoAuxiliar("UBProvincia", _csvOrganismo.get(18), errores, session));
+        } else {
+            eue.setSector_gobierno(CreadorDesdeDB.verificacionValorDatoAuxiliar("SectorGobierno", _csvOrganismo.get(17), errores, session));
+            eue.setPliego(CreadorDesdeDB.verificacionValorDatoAuxiliar("Pliego", _csvOrganismo.get(18), errores, session));
+        }
+
+        eue.setCorreoElectronicoInstitucional(_csvOrganismo.get(19));
+        eue.setTEJefeRRHH(_csvOrganismo.get(20));
+        eue.setTEMovilJefeRRHH(_csvOrganismo.get(21));
+        eue.setEstado(Entidad_BK.ESTADO_ALTA);
+
+        // Chequeo cascada de ubigeo
+        if(!Helpers.isUbigeoValido(eue.getCod_ubi_dept(), eue.getCod_ubi_prov(), eue.getCod_ubi_dist(), session)) {
+            errores.add(Errores.ERROR_CASCADA_UBIGEO + " Entidad :" + eue.getCodigoEntidadUE());
+
+        }
+
+
+        if (errores.size() > 0) {
+            return null;
+        }
+
+        Entidad_BK eueOrigen = eue;
+
+        //verificar si ya existe la entidad UE (modificacion o alta) y guardarla en una lista
+        Criteria c;
+        c = session.createCriteria(Entidad_BK.class);
+        c.add(Restrictions.eq("codigoEntidadUE", eue.getCodigoEntidadUE()));
+
+        if (c.list() != null) {
+            if (!c.list().isEmpty()) {
+                //modificacion
+                Entidad_BK eueDestino = (Entidad_BK) c.list().get(0);
+                if (myTratamiento.getUsuario().getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
+                    //verificar si puede ingresar informacion
+                    if (!eueDestino.getDef_servir()) {
+                        errores.add(helpers.Errores.NO_SE_PUEDE_INGRESAR_INFORMACION_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
+                        return null;
+                    }
+
+                    //verificar si puede procesar el batch
+                    if (!eueDestino.getProc_batch()) {
+                        errores.add(helpers.Errores.NO_SE_PUEDE_PROCESAR_BATCH_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
+                        return null;
+                    }
+                }
+                    // revisar
+                if (ComparadorEntidades.entidadUEs(eueO, eueD).equals(ResultadoOperacionCSV.MODIFICADO)) {
+                    CopiadorEntidades.entidadUE(eueOrigen, eueDestino);
+                }
+
+                return eueDestino;
+            }
+        }
+
+        //nueva entidadUE
+        if (origenArchivo.equals(OrigenArchivos.CARGA_INICIAL_ORGANISMOS)) {
+            eue.setEstado(Entidad_BK.ESTADO_ALTA);
+
+            UnidadOrganica nuevaUnidadOrganica = new UnidadOrganica();
+            nuevaUnidadOrganica.setEntidad(eueO); // revisar
+            nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
+            nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
+            nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
+            nuevaUnidadOrganica.setCue(UnidadOrganica.CUE_DEFAULT);
+            nuevaUnidadOrganica.setNivel(UnidadOrganica.NIVEL_DEFAULT);
+            nuevaUnidadOrganica.setSigla(UnidadOrganica.SIGLA_DEFAULT);
+            myTratamiento.getUnidadOrganica().add(nuevaUnidadOrganica);
+
+            Cargoxunidad nuevoCargo = new Cargoxunidad();
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
+            // TODO revisar linea comentada JZM
+            //nuevoCargo.setClasificacion_funcional(list.get(0));
+            nuevoCargo.setUnidadorganica(nuevaUnidadOrganica);
+            nuevoCargo.setCod_cargo(Cargoxunidad.CODIGO_DEFAULT);
+            nuevoCargo.setDen_cargo(Cargoxunidad.DEN_DEFAULT);
+            nuevoCargo.setEstado(Cargoxunidad.ESTADO_ALTA);
+            nuevoCargo.setCtd_puestos_total(Cargoxunidad.CANT_MAX);
+            myTratamiento.getCargo().add(nuevoCargo);
+
+            //se guarda sola aca para no cambiar si los campos son true si alguien modifica estos campos despues de la primera cargada
+            eue.setDef_servir(Boolean.TRUE);
+            eue.setProc_batch(Boolean.TRUE);
+            return eue;
+        }
+
+        return eueOrigen;
+    }
+
 //    //conceptos Remunerativos
 //    public List<ConceptoRemunerativo> csvToListConceptoRemunerativo(List<List<String>> csvConceptos, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeCodigo> is) {
 //        List<ConceptoRemunerativo> lconcepto = new LinkedList<ConceptoRemunerativo>();
@@ -620,7 +620,7 @@ public class CreadorDesdeCsv {
 //        }
 //        return ltrabajador;
 //    }
-//
+
 //    public Trabajador trabajadorFromCsv(List<String> _csvTrabajador, Session session, List<String> errores, String origenArchivo, InformeSalida<LineaInformeTipoNumeroDocumento> is) throws ParseException {
 //        Trabajador trabajador = new Trabajador();
 //        Entidad_BK eue = getEntidadUEDesdeListEntidadUECSV(myTratamiento.getEntidadesUE(), _csvTrabajador.get(0));
@@ -3720,5 +3720,5 @@ public class CreadorDesdeCsv {
 //                return -1;
 //        }
 //    }
-//    
+    
 }
