@@ -45,7 +45,7 @@
             <div class="f-left">
                 <t:label for ="busdenominacion"/>
                 <input t:type="TextField" t:id="busdenominacion"
-                        t:value="busdenominacion" t:validate="maxlength=60" size="75"/>
+                        t:value="busdenominacion" t:validate="maxlength=255" size="75"/>
             </div>
         </div> 
         
@@ -91,7 +91,7 @@
                             <div class="f-left">
                                 <t:label for ="bussubdenominacion"/>
                                 <input t:type="TextField" t:id="bussubdenominacion"
-                   t:value="bussubdenominacion" t:validate="maxlength=60" size="75"/>
+                        t:value="bussubdenominacion" t:validate="maxlength=255" size="75"/>
                             </div>
                         </div> 
         
@@ -219,12 +219,12 @@
                             <div class="f-left">
                                 <t:label for ="denominacion"/>
                                 <input t:type="TextField" t:id="denominacion"
-                                           t:value="entidadUE.denominacion" t:validate="required, maxlength=60" size="85" disabled="${badmentidad}"/>
+                                           t:value="entidadUE.denominacion" t:validate="required, maxlength=255" size="85" disabled="${badmentidad}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="sigla"/>
                                 <input t:type="TextField" t:id="sigla" 
-                                           t:value="entidadUE.sigla" t:validate="maxlength=12" size="12" />
+                                           t:value="entidadUE.sigla" t:validate="maxlength=20" size="12" />
                             </div>
 
 
@@ -277,7 +277,8 @@
                             <div class="f-left">
                                 <t:label for="desczona"/>
                                 <input t:type="TextField" t:id="desczona"
-                                           t:value="entidadUE.desczona"/>
+                                           t:value="desczonaentidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descZonaEntChanged"  t:zone="principalZone" />
                             </div>
                         </div>
                               
@@ -285,17 +286,20 @@
                             <div class="f-left">
                                 <t:label for="emailinstitucional"/>
                                 <input t:type="TextField" t:id="emailinstitucional"
-                                           t:value="entidadUE.emailinstitucional"/>
+                                           t:value="emailentidad"
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="emailEntChanged"  t:zone="principalZone" />
                             </div>
                             <div class="f-left">
                                 <t:label for="urlentidad"/>
                                 <input t:type="TextField" t:id="urlentidad"
-                                           t:value="entidadUE.urlEntidad"/>
+                                           t:value="urlsEntidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urlEntChanged"  t:zone="principalZone" />
                             </div>
                             <div class="f-left">
                                 <t:label for="telefonoEntidad"/>
                                 <input t:type="TextField" t:id="telefonoEntidad"
-                                           t:value="entidadUE.telefonoEntidad"/>
+                                           t:value="telefEntidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="telfEntChanged"  t:zone="principalZone" />
                             </div>
                         </div>
                         
@@ -304,7 +308,7 @@
                         
                         
 <!--                <div t:type="zone" t:id="logoentidadZone" > -->
-                
+<!--                  
                     <t:form t:id="formulariologoentidad" >
                         <t:errors/>
                         <div class="f-wrap">
@@ -321,6 +325,7 @@
                             </div>
                         </div>
                     </t:form>
+-->
 <!--                </div> -->
                         
                 <t:zone t:id="ubigeoEntidadZone">
@@ -428,8 +433,9 @@
 
                                 <div class="f-left">
                                     <t:label for ="SubDenominacion"/>
-                                    <input t:type="TextField" t:id="SubDenominacion"
-                                           t:value="subEntidadUE.denominacion"/>
+                                    <input t:type="TextField" t:id="SubDenominacion" t:validate="maxlength=255"
+                                           t:value="denoSubEntidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div>
 
                             </div>
@@ -438,17 +444,20 @@
                                 <div class="f-left">
                                     <t:label for="Subsigla"/>
                                     <input t:type="TextField" t:id="Subsigla" 
-                                           t:value="subEntidadUE.sigla" t:validate="maxlength=12" size="12" />
+                                           t:value="siglaSubEntidad" t:validate="maxlength=20" size="12" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div> 
                                 <div class="f-left">
                                     <t:label for="SubRUC"/>
                                     <input t:type="TextField" t:id="SubRUC"
-                                           t:value="subEntidadUE.ruc" t:validate="regexp"/>
+                                           t:value="rucSubEntidad" t:validate="regexp" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucSubEntidadChanged"  t:zone="subprincipalZone"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="Subcue_entidad"/>
                                     <input t:type="TextField" t:id="Subcue_entidad"
-                                           t:value="subEntidadUE.cue_entidad" t:validate="maxlength=12" size="12" />
+                                           t:value="cueSubEntidad" t:validate="maxlength=12" size="12" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div>
 
                             </div>
@@ -459,10 +468,12 @@
                                     <input t:type="Checkbox" t:id="Subproc_batch" 
                                            t:value="subEntidadUE.proc_batch" />
                                 </div>
+                                <!--
                                 <div class="f-left">
                                     <label>Logo </label>
                                     <input t:type="upload" t:id="file2" style="width: 350px;"/> 
                                 </div>
+                                -->
                             </div>
 
                             <div class="f-wrap">
@@ -488,18 +499,20 @@
                                     <t:label for="subtipozona"/>
                                     <input t:type="Select" t:id="subtipozona" t:value="subEntidadUE.tipozona" 
                                            model="SubTipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                           t:blankOption="ALWAYS"/>
+                                           t:blankOption="ALWAYS" />
                                 </div> 
 
                                 <div class="f-left">
                                     <t:label for="Subdesczona"/>
                                     <input t:type="TextField" t:id="Subdesczona"
-                                           t:value="subEntidadUE.desczona"/>
+                                           t:value="desczonasubentidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="desczonasubentidadChanged"  t:zone="subprincipalZone" />
                                 </div>
                                 <div class="f-left">
                                     <t:label for="SubtelefonoEntidad"/>
                                     <input t:type="TextField" t:id="SubtelefonoEntidad"
-                                           t:value="subEntidadUE.telefonoEntidad"/>
+                                           t:value="telefSubEntidad"
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="telefSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div>
                             </div> 
 
@@ -509,12 +522,14 @@
                                 <div class="f-left">
                                     <t:label for="Subemailinstitucional"/>
                                     <input t:type="TextField" t:id="Subemailinstitucional"
-                                           t:value="subEntidadUE.emailinstitucional"/>
+                                           t:value="emailSubEntidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="emailSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div>
                                 <div class="f-left">
                                     <t:label for="Suburlentidad"/>
                                     <input t:type="TextField" t:id="Suburlentidad"
-                                           t:value="subEntidadUE.urlentidad"/>
+                                           t:value="urslSubEntidad" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urslSubEntidadChanged"  t:zone="subprincipalZone" />
                                 </div>
 
 
@@ -537,42 +552,41 @@
                     </t:zone>    
                             
                             
-                    <div class="f-wrap">                             
-                             
-                             
+                    <div class="f-wrap">                                   
                         <t:zone t:id="subTitularZone">
                             <t:form t:id="formulariosubtitular"  zone="subTitularZone">
                                 <div class="f-left">
                                     <t:label for ="Subtitular"/>
-                                    <input t:type="TextField" t:id="Subtitular"
+                                    <input t:type="TextField" t:id="Subtitular" t:style="width:600px;"
                                                t:value="subtitular" t:readonly="readonly" /> 
                                     <input t:id="buscarTitular" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar2();" />             
                                 </div>
                             </t:form>
                         </t:zone>
-                            
+                        </div>
+                    <div class="f-wrap">         
                         <t:zone t:id="subJefeRRHHZone">
                             <t:form t:id="formulariosubjeferrhh"  zone="subJefeRRHHZone">
                                 <div class="f-left">
                                     <t:label for ="SubjefeRRHH"/>
-                                    <input t:type="TextField" t:id="SubjefeRRHH"
+                                    <input t:type="TextField" t:id="SubjefeRRHH" t:style="width:600px;"
                                                t:value="subjefeRRHH" t:readonly="readonly" />
                                     <input t:type="submit" t:id="buscarjeferrhh" value="..." class="button f-right" onClick="javascript: mostrar2();" />
                                 </div>
                             </t:form>
                         </t:zone>
-                             
+                        </div>
+                     <div class="f-wrap">         
                         <t:zone t:id="subJefeOGAZone">
                             <t:form t:id="formulariosubjefeoga"  zone="subJefeOGAZone">
                                 <div class="f-left">
                                     <t:label for ="SubjefeOGA"/>
-                                    <input t:type="TextField" t:id="SubjefeOGA"
+                                    <input t:type="TextField" t:id="SubjefeOGA" t:style="width:600px;"
                                                t:value="subjefeOGA" t:readonly="readonly" />
                                     <input t:type="submit" t:id="buscarjefeoga" value="..." class="button f-right" onClick="javascript: mostrar2();" />
                                 </div>
                             </t:form>
-                        </t:zone>
-                            
+                        </t:zone>      
                     </div>
                     <div t:type="zone" t:id="subbotonesZone" >
                         <t:form t:id="formulariosubbotones"  zone="nivelOrganizacionSectorZone">
@@ -638,7 +652,8 @@
                         </div>                   
                     </div>
                     <div class="actions f-right">
-                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />                    
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                         <input t:type="Submit" t:id="cancel2" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                     </div>  
                 </form>
             </t:zone>
@@ -678,12 +693,13 @@
                 <form t:type="form" t:id="formularioTrabajador" t:zone ="busZone2">
                     <div class="f-wrap">
                         <div class="f-left">
-                            Apellidos
-                            <input t:type="TextField" t:id="trabajador_ape" t:value="apeTrabajador" style="width: 300px;"/> 
+                            Nombre completo: 
+                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
                         </div>                   
                     </div>
                     <div class="actions f-right">
-                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />                    
+                        <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
+                         <input t:type="Submit" t:id="cancel3" value="Cancelar" class="button" onClick="javascript: ocultar2();"/>
                     </div>  
                 </form>
             </t:zone>
@@ -695,7 +711,7 @@
                 <t:if test="btitulari">
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="titulart" include="apellidoPaterno" inPlace="true">
+                            row="titulart" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -707,7 +723,7 @@
                 <t:if test="bjefeRRHHi">
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="jeferrhht" include="apellidoPaterno" inPlace="true">
+                            row="jeferrhht" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -721,7 +737,7 @@
                 <t:if test="bjefeOGAi">    
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="jefeogat" include="apellidoPaterno" inPlace="true">
+                            row="jefeogat" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -733,7 +749,7 @@
                 <t:if test="btitular">
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="subtitulart" include="apellidoPaterno" inPlace="true">
+                            row="subtitulart" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -745,7 +761,7 @@
                 <t:if test="bjefeRRHH">
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="subjeferrhht" include="apellidoPaterno" inPlace="true">
+                            row="subjeferrhht" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -759,7 +775,7 @@
                 <t:if test="bjefeOGA">    
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="subjefeogat" include="apellidoPaterno" inPlace="true">
+                            row="subjefeogat" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>

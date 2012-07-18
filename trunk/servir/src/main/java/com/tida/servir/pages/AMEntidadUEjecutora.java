@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.services.Request;
 
 import org.hibernate.Session;
 
@@ -41,6 +42,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Inject
     private Session session;
+    @Inject
+    private Request _request;
     @Property
     @Persist
     private Entidad entidadUE;
@@ -68,8 +71,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @SessionState
     private Usuario _usuario;
-    @Persist
-    private String nombreArchivo;
+    //@Persist
+    //private String nombreArchivo;
     @Property
     @Persist
     private Ubigeo ubigeoEntidadUE;
@@ -134,21 +137,21 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Zone busZone2;
     @Persist
     @Property
-    private String apeTrabajador;
+    private String nombreTrabajador;
     @InjectComponent
     private Zone trabajadorZone;
     @Property
-    private Trabajador subtitulart;
+    private LkBusquedaTrabajador subtitulart;
     @Property
-    private Trabajador subjeferrhht;
+    private LkBusquedaTrabajador subjeferrhht;
     @Property
-    private Trabajador subjefeogat;
+    private LkBusquedaTrabajador subjefeogat;
     @Property
-    private Trabajador titulart;
+    private LkBusquedaTrabajador titulart;
     @Property
-    private Trabajador jeferrhht;
+    private LkBusquedaTrabajador jeferrhht;
     @Property
-    private Trabajador jefeogat;
+    private LkBusquedaTrabajador jefeogat;
     @Persist
     @Property
     private String subtitular;
@@ -310,6 +313,46 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     private boolean badmentidad;
     private int elemento = 0;
+    
+    
+    @Persist
+    @Property
+    private String desczonaentidad;
+    @Persist
+    @Property
+    private String emailentidad;
+    @Persist
+    @Property
+    private String urlsEntidad;
+    @Persist
+    @Property
+    private String telefEntidad;
+    
+    @Persist
+    @Property
+    private String denoSubEntidad;
+    @Persist
+    @Property
+    private String siglaSubEntidad;
+    @Persist
+    @Property
+    private String rucSubEntidad;
+    @Persist
+    @Property
+    private String cueSubEntidad;
+    @Persist
+    @Property
+    private String telefSubEntidad;
+    @Persist
+    @Property
+    private String emailSubEntidad;
+    @Persist
+    @Property
+    private String urslSubEntidad;    
+    @Persist
+    @Property
+    private String desczonasubentidad;    
+    
 
     //Inicio de lac carga de la pagina
     @Log
@@ -463,8 +506,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
 //            File nuevo = new File("ArchivosCSV/" + nombreArchivo);
 //            file.write(nuevo);
             System.out.println("==========================================================================");
-            System.out.println(nombreArchivo);
-            entidadUE.setLogotipo(nombreArchivo);
+            //System.out.println(nombreArchivo);
+            //entidadUE.setLogotipo(nombreArchivo);
+            entidadUE.setEstado(true);
+            entidadUE.setEsSubEntidad(false);
+            entidadUE.setEmailInstitucional(emailentidad);
+            entidadUE.setDescZona(desczonaentidad);
+            entidadUE.setUrlEntidad(urlsEntidad);
+            entidadUE.setTelefonoEntidad(telefEntidad);
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
@@ -474,7 +523,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             //entidadUE.setLogotipo(nombreArchivo);
             session.saveOrUpdate(entidadUE);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-            envelope.setContents(helpers.Constantes.EUE_EXITO);
+            envelope.setContents("Entidad creada exitosamente");
             return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
@@ -489,6 +538,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
         } else if (elemento == 2) {
             return "AMEntidadUEjecutora";
         } else {
+            subEntidadUE.setEstado(true);
+            subEntidadUE.setEsSubEntidad(true);
+            subEntidadUE.setDenominacion(denoSubEntidad);
+            subEntidadUE.setSigla(siglaSubEntidad);
+            subEntidadUE.setRuc(rucSubEntidad);
+            subEntidadUE.setCue_entidad(cueSubEntidad);
+            subEntidadUE.setTelefonoEntidad(telefSubEntidad);
+            subEntidadUE.setEmailInstitucional(emailSubEntidad);
+            subEntidadUE.setUrlEntidad(urslSubEntidad);
+            subEntidadUE.setDescZona(desczonasubentidad);
             subEntidadUE.setDepartamento(ubigeoSubEntidadUE.getDepartamento());
             subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
             subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
@@ -498,8 +557,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             //entidadUE.setLogotipo(nombreArchivo);
             session.saveOrUpdate(subEntidadUE);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(subEntidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-            envelope.setContents(helpers.Constantes.EUE_EXITO);
-            envelope.setContents("Clave modificada con éxito.");
+            envelope.setContents("Sub-Entidad creada exitosamente");
             return new MultiZoneUpdate("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody()).add("subTitularZone", subTitularZone.getBody()).add("subJefeRRHHZone", subJefeRRHHZone.getBody()).add("subJefeOGAZone", subJefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
         }
 
@@ -777,17 +835,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     @Log
-    public List<Trabajador> getTrabajadores() {
-        Criteria c = session.createCriteria(Trabajador.class);
-        c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apeTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apeTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+    public List<LkBusquedaTrabajador> getTrabajadores() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        System.out.println("nombress: "+ nombreTrabajador);
+        c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         return c.list();
     }
 
     @Log
     Object onActionFromeditarsubTitular(Trabajador traba) {
-        subtitulart = traba;
-        subtitular = subtitulart.getApellidoPaterno();
-        subEntidadUE.setTitular(subtitulart);
+        //subtitulart = traba;
+        subtitular = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        subEntidadUE.setTitular(traba);
         btitular = false;
         mostrar = false;
         return subTitularZone.getBody();
@@ -795,9 +854,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromeditarsubJefeRRHH(Trabajador traba) {
-        subjeferrhht = traba;
-        subjefeRRHH = subjeferrhht.getApellidoPaterno();
-        subEntidadUE.setJefeRRHH(subjeferrhht);
+        //subjeferrhht = traba;
+        subjefeRRHH = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        subEntidadUE.setJefeRRHH(traba);
         bjefeRRHH = false;
         mostrar = false;
         return subJefeRRHHZone.getBody();
@@ -805,9 +864,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromeditarsubJefeOGA(Trabajador traba) {
-        subjefeogat = traba;
-        subjefeOGA = subjefeogat.getApellidoPaterno();
-        subEntidadUE.setJefeOga(subjefeogat);
+        //subjefeogat = traba;
+        subjefeOGA = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        subEntidadUE.setJefeOga(traba);
         bjefeOGA = false;
         mostrar = false;
         return subJefeOGAZone.getBody();
@@ -815,9 +874,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromeditarTitular(Trabajador traba) {
-        titulart = traba;
-        titular = titulart.getApellidoPaterno();
-        entidadUE.setTitular(titulart);
+        //titulart = traba;
+        titular = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        entidadUE.setTitular(traba);
         btitulari = false;
         mostrar = false;
         return TitularZone.getBody();
@@ -825,9 +884,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromeditarJefeRRHH(Trabajador traba) {
-        jeferrhht = traba;
-        jefeRRHH = jeferrhht.getApellidoPaterno();
-        entidadUE.setJefeRRHH(jeferrhht);
+        //jeferrhht = traba;
+        jefeRRHH = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        entidadUE.setJefeRRHH(traba);
         bjefeRRHHi = false;
         mostrar = false;
         return JefeRRHHZone.getBody();
@@ -835,11 +894,59 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromeditarJefeOGA(Trabajador traba) {
-        jefeogat = traba;
-        jefeOGA = jefeogat.getApellidoPaterno();
-        entidadUE.setJefeOga(jefeogat);
+        //jefeogat = traba;
+        jefeOGA = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
+        entidadUE.setJefeOga(traba);
         bjefeOGAi = false;
         mostrar = false;
         return JefeOGAZone.getBody();
     }
+    
+    void onEmailEntChanged() {
+        emailentidad = _request.getParameter("param");
+    }
+    
+    void onUrlEntChanged() {
+        urlsEntidad = _request.getParameter("param");
+    }
+    
+    void onTelfEntChanged() {
+        telefEntidad = _request.getParameter("param");
+    }
+    
+    void onDescZonaEntChanged() {
+        desczonaentidad = _request.getParameter("param");
+    }
+    
+    void onDenoSubEntidadChanged() {
+        denoSubEntidad = _request.getParameter("param");
+    }
+    
+    void onSiglaSubEntidadChanged() {
+        siglaSubEntidad = _request.getParameter("param");
+    }
+    
+    void onRucSubEntidadChanged() {
+        rucSubEntidad = _request.getParameter("param");
+    }
+    
+    void onCueSubEntidadChanged() {
+        cueSubEntidad = _request.getParameter("param");
+    }
+    
+    void onEmailSubEntidadChanged() {
+        emailSubEntidad = _request.getParameter("param");
+    }
+    
+    void onUrslSubEntidadChanged() {
+        urslSubEntidad = _request.getParameter("param");
+    }
+    
+    void ontelefSubEntidadChanged() {
+        telefSubEntidad = _request.getParameter("param");
+    }
+    
+    void desczonasubentidadChanged() {
+        desczonasubentidad = _request.getParameter("param");
+    }    
 }

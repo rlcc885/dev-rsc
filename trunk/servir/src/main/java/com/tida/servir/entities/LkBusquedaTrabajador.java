@@ -19,7 +19,6 @@ public class LkBusquedaTrabajador implements Serializable {
     private long id;
     private String nombretrabajador;
     private Boolean validado;
-    private long identidad;
     private String entidad;
     private String unidadorganica;
     private String cargo;
@@ -51,14 +50,6 @@ public class LkBusquedaTrabajador implements Serializable {
 
     public void setValidado(Boolean validado) {
         this.validado = validado;
-    }
-    
-    public long getIdentidad() {
-        return identidad;
-    }
-
-    public void setIdentidad(long identidad) {
-        this.identidad = identidad;
     }
     
     public String getEntidad() {
