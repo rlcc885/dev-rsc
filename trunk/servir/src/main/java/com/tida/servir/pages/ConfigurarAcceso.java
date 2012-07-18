@@ -77,7 +77,7 @@ public class ConfigurarAcceso extends GeneralPage {
         if(num==2){     
             
         }else if(num==3){
-            return "Inicio";
+            return "Alerta";
         } 
         else{
             Date fechaactual=new Date();
