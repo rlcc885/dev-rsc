@@ -12,6 +12,7 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -43,7 +44,7 @@ public class Helpers {
         return query.list();
     }
 
-    public static List<RscRol> getRolUSuario(long rolid, Session session) {
+    public static List<Rol> getRolUSuario(long rolid, Session session) {
         Query query = session.getNamedQuery("RscRol.findByIdLow");
         query.setParameter("id", rolid);
         return query.list();
@@ -108,6 +109,7 @@ public class Helpers {
 
             }
         }
+        c.addOrder( Order.asc("valor") );
         return c.list();
     }
 

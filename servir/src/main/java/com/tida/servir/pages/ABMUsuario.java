@@ -59,12 +59,12 @@ public class ABMUsuario extends GeneralPage {
     private Perfilusuario permiso;
     @Property
     @Persist
-    private RscRol rscrol;
+    private Rol rscrol;
     @Property
     @Persist
     private LkEstadoUsuario lkEstadoUsuario;
     @Persist
-    private GenericSelectModel<RscRol> _RscRol;
+    private GenericSelectModel<Rol> _RscRol;
     @Persist
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
@@ -136,14 +136,14 @@ public class ABMUsuario extends GeneralPage {
         return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
     }
 
-    public GenericSelectModel<RscRol> getRolUsuario() {
-        List<RscRol> list;
+    public GenericSelectModel<Rol> getRolUsuario() {
+        List<Rol> list;
         if (usuario.getRol() == null) {
             list = Helpers.getRolUSuario(1, session);
         } else {
             list = Helpers.getRolUSuario(loggedUser.getRol().getId(), session);
         }
-        _RscRol = new GenericSelectModel<RscRol>(list, RscRol.class, "descrol", "id", _access);
+        _RscRol = new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
         return _RscRol;
     }
 

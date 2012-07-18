@@ -232,11 +232,19 @@ Fin de librerias pentaho -->
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- TapesTry - jQuery -->
+<!--        <dependency>
+            <groupId>org.got5</groupId>
+            <artifactId>tapestry5-jquery</artifactId>
+            <version>2.6.0</version>
+        </dependency>-->
+    
     </dependencies>
 
     <build>
         <finalName>servir</finalName>
-         <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -254,7 +262,7 @@ Fin de librerias pentaho -->
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
             </plugin>
-         </plugins>
+        </plugins>
     </build>
 
     <reporting>
@@ -301,6 +309,27 @@ Hasta aca repositorio de pentaho -->
             <layout>default</layout>
             <name>Repository for library Library[eclipselink]</name>
         </repository>
+        
+        
+<!--        <repository>
+            <id>devlab722-repo</id>
+            <url>http://nexus.devlab722.net/nexus/content/repositories/releases
+            </url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>devlab722-snapshot-repo</id>
+            <url>http://nexus.devlab722.net/nexus/content/repositories/snapshots
+            </url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>-->
+    
+    
     </repositories>
 
     <pluginRepositories>

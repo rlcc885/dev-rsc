@@ -7,7 +7,6 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Entidad_BK;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.annotations.SetupRender;

@@ -106,7 +106,7 @@ public class ComponenteMenu {
     }
     
     public String getNombreUsuario(){
-        return _usuario.getTrabajador().getApellidoPaterno()+" "+_usuario.getTrabajador().getApellidoMaterno()+", "+_usuario.getTrabajador().getNombres()+" - "+entidad.getDenominacion();
+        return _usuario.getTrabajador().getApellidoPaterno()+" "+_usuario.getTrabajador().getApellidoMaterno()+", "+_usuario.getTrabajador().getNombres()+" - "+_usuario.getTrabajador().getEntidad().getDenominacion();
     }
 /*
     public Set<Accesos.MENUPADRE> getPagesMenuPadre() {
