@@ -70,7 +70,8 @@
                             <div class="f-left">
                                 <t:label for="sigla"/>
                                 <input t:type="TextField" t:id="sigla" 
-                                           t:value="entidadUE.sigla" t:validate="maxlength=20" size="12" />
+                                           t:value="siglaEntidad" t:validate="maxlength=20" size="12" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="principalZone" />
                             </div>
 
 
@@ -85,7 +86,8 @@
                             <div class="f-left">
                                 <t:label for="cue_entidad"/>
                                 <input t:type="TextField" t:id="cue_entidad"
-                                           t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" disabled="${badmentidad}" />
+                                           t:value="cueEntidad" t:validate="maxlength=12" size="12" disabled="${badmentidad}" 
+                                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="principalZone" />
                             </div>
 
                             <div class="f-left">
