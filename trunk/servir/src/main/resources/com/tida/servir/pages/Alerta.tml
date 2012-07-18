@@ -29,7 +29,7 @@
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <t:actionlink t:id="editars" zone="listaservir" t:context="eventoservir2.trabajadorid">Ver</t:actionlink>
+                                    <!--<a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidadid" href="#">Ver</a>-->
                             </p:accionesCell>
                         </t:grid>
                     </div>

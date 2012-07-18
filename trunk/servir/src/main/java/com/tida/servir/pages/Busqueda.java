@@ -141,6 +141,9 @@ public class Busqueda extends GeneralPage {
     private DatoAuxiliar valcodigofuncionaldelcargo;
     @Property
     @Persist
+    private DatoAuxiliar valregimenlaboral;
+    @Property
+    @Persist
     private Boolean valhabilitacionprofesional;
     @Property
     @Persist
@@ -184,6 +187,7 @@ public class Busqueda extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
+        limpiar();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -245,11 +249,9 @@ public class Busqueda extends GeneralPage {
 //        return estadosCargo;
 //    }
 
-    public GenericSelectModel<DatoAuxiliar> getRegimenContratacion() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("RegimenLaboralContractual", null, 0, session);
-
+    public GenericSelectModel<DatoAuxiliar> getRegimenlaborales() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGIMENLABORAL", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
-
     }
 
     public GenericSelectModel<DatoAuxiliar> getCodFunCargo() {
@@ -339,6 +341,9 @@ public class Busqueda extends GeneralPage {
         if (valdocumentoide != null && !valdocumentoide.equals("")) {            
             c.add(Restrictions.like("trabajador.documentoidentidad", valdocumentoide));            
         }
+        if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
+            c.add(Restrictions.like("cargoxunidad.regimenlaboral", valregimenlaboral));
+        }
 
 //        if (valRegimenContratacion != null) {
 //            c.add(Restrictions.eq("cargo.reg_lab_con", valRegimenContratacion));
@@ -396,31 +401,7 @@ public class Busqueda extends GeneralPage {
 
     public Object onSuccess() {
         if (resetBusquedas) {
-
-            apellidoPaterno = null;
-            apellidoMaterno = null;
-            nombres = null;
-            nroDocumento = null;
-//            tipoDocumento = null;
-            sexo = null;
-            fechadenacimientomenora = null;
-            fechadenacimientomayora = null;
-            valTipoDiscapacidad = null;
-            valestadocivil = null;
-            valcodigofuncionaldelcargo = null;
-            valRegimenContratacion = null;
-            valhorassemanalesmayora = null;
-            valhorassemanalesmenora = null;
-            checkfechadenacimientomayora = false;
-            checkfechadenacimientomenora = false;
-            checkhabilitacionprofesional = false;
-            checkdeclaracion = false;
-            checkconfianza = false;
-            valhabilitacionprofesional = false;
-            valdeclaracion = false;
-            valconfianza = false;
-            fechadeingresodesdea=null;
-            fechadeingresohastaa=null;
+            limpiar();            
         }
         formulariobusquedasfiltros.clearErrors();
         if (resetBusquedas) {
@@ -530,4 +511,31 @@ public class Busqueda extends GeneralPage {
      * Fin para armar la zona dinámica
      *
      */
+    void limpiar(){
+        apellidoPaterno = null;
+        apellidoMaterno = null;
+        nombres = null;
+        nroDocumento = null;
+//            tipoDocumento = null;
+        sexo = null;
+        fechadenacimientomenora = null;
+        fechadenacimientomayora = null;
+        valTipoDiscapacidad = null;
+        valestadocivil = null;
+        valcodigofuncionaldelcargo = null;
+        valRegimenContratacion = null;
+        valhorassemanalesmayora = null;
+        valhorassemanalesmenora = null;
+        checkfechadenacimientomayora = false;
+        checkfechadenacimientomenora = false;
+        checkhabilitacionprofesional = false;
+        checkdeclaracion = false;
+        checkconfianza = false;
+        valhabilitacionprofesional = false;
+        valdeclaracion = false;
+        valconfianza = false;
+        fechadeingresodesdea=null;
+        fechadeingresohastaa=null;
+        valregimenlaboral=null;
+    }
 }

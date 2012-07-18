@@ -26,6 +26,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.collection.PersistentList;
+import org.hibernate.criterion.Order;
 
 /**
  * Clase que maneja las unidades organicas
@@ -347,7 +348,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 c.add(Restrictions.like("categoriauo", valcategoria));
             }
         }
-        
+        c.addOrder(Order.asc("den_und_organica"));
         /*if(!c.list().isEmpty())
             unidadOrganica = (UnidadOrganica) c.list().get(0);*/
         return c.list();

@@ -147,6 +147,10 @@
                                 <t:label for="filtroformacionprofe"/>
                                 <input t:type="Select" t:id="filtroformacionprofe" t:value="valformacionprofe" model="formacionprofesional" />
                             </div>
+                            <div class="filtros">
+                                <label>Regimen Laboral</label>
+                                <input t:type="Select" t:id="filtroregimenlaboral" t:value="valregimenlaboral" model="regimenlaborales" />
+                            </div>
                             
                             <!--
                             <div class="filtros">

@@ -1,9 +1,6 @@
 package com.tida.servir.pages;
 
-import com.tida.servir.entities.ConfiguracionAcceso;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UsuarioTrabajador;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
 import helpers.Logger;
@@ -101,6 +98,8 @@ public class RecuperarClave {
             return "index";
         } else {
         Logger logger = new Logger();
+        Tipoevento tipoeve=new Tipoevento();
+        tipoeve.setId(9);
         configuracionAcceso = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
 
         Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
@@ -116,13 +115,13 @@ public class RecuperarClave {
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
 
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
             return this;
         }
 
         if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW);
             formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
             return this;
         }
@@ -148,7 +147,8 @@ public class RecuperarClave {
             //formulariologin.recordError("La nueva contraseña ha sido enviado a su correo electrónico laboral. Verifique su bandeja de entrada.");
         } else {
             System.out.println("envío Fallido");
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_ERROR_RECUPERAR_CLAVE);
+//            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
             formulariologin.recordError("Hubo un problema al enviar la nueva contraseña a su correo electrónico. Intente más tarde.");
         }
         

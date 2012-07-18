@@ -59,6 +59,8 @@
                     </div>
                 </div>-->
                 <div class="centerClave">
+                    <a t:type="pagelink" page="RecuperarClave">Transparencia</a>
+                    <br />
                     <a t:type="pagelink" page="RecuperarClave">Olvido su clave?</a>
                     <br />
                     <!-- <input onclick="javascript:popup('textoIndexClave');">Olvido su clave?</input><br/> -->

@@ -4,19 +4,11 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Encriptacion;
-import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.services.Request;
 
 import org.hibernate.Session;
 
@@ -27,8 +19,6 @@ import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.ApplicationGlobals;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.Response;
-import org.apache.tapestry5.upload.internal.services.UploadedFileItem;
 import org.apache.tapestry5.upload.services.UploadedFile;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -39,7 +29,10 @@ import org.hibernate.criterion.Restrictions;
  * @author LFL
  */
 public class AMEntidadUEjecutora extends GeneralPage {
-
+    
+    //@Persist
+//    @PageActivationContext
+//    private Entidad enti;
     @Inject
     private Session session;
     @Inject
@@ -363,11 +356,74 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
-        entidadUE = new Entidad();
-        subEntidadUE = new Entidad();
+//        System.out.println("Entidaddddd"+enti);
+        entidadUE=new Entidad();
+        subEntidadUE = new Entidad();     
         entio = new Entidad();
+//        if(enti!=null){
+//            if(enti.getEsSubEntidad()){
+//                subEntidadUE=enti;
+//                ubigeoEntidadUE=new Ubigeo();
+//                obtener(2);
+//            }
+//            else{
+//                entidadUE=enti;
+//                ubigeoEntidadUE=new Ubigeo();
+//                obtener(1);
+//            }
+////            obtener();
+//            //entidadUE=enti;
+//        }
+      
+        
         blogoentidadi = true;
-            bessubentidad=false;
+        bessubentidad=false;
+    }
+    
+//    public Entidad getEnti() {
+//            return enti;
+//    }
+//
+//    public void setEnti(Entidad enti) {
+//            this.enti = enti;
+//    }
+//    void obtener(int a){
+//        if(a==1){
+//            if(enti.getCue_entidad()!=null)cueEntidad=enti.getCue_entidad();
+//            if(enti.getSigla()!=null)siglaEntidad=enti.getSigla();
+//            if(enti.getEmailInstitucional()!=null)emailentidad=enti.getEmailInstitucional();
+//            if(enti.getUrlEntidad()!=null)urlsEntidad=enti.getUrlEntidad();
+//            if(enti.getTelefonoEntidad()!=null)telefEntidad=enti.getTelefonoEntidad();
+//            if(enti.getDescZona()!=null)desczonaentidad=enti.getDescZona();
+//            if(enti.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(enti.getDepartamento());
+//            if(enti.getProvincia()!=null)ubigeoEntidadUE.setProvincia(enti.getProvincia());
+//            if(enti.getDistrito()!=null)ubigeoEntidadUE.setDistrito(enti.getDistrito());
+//            if(enti.getTitular()!=null)titular = enti.getTitular().getApellidoPaterno()+" "+enti.getTitular().getApellidoMaterno()+", "+enti.getTitular().getNombres();
+//            if(enti.getJefeRRHH()!=null)jefeRRHH = enti.getJefeRRHH().getApellidoPaterno()+" "+enti.getJefeRRHH().getApellidoMaterno()+", "+enti.getJefeRRHH().getNombres();
+//            if(enti.getJefeOga()!=null)jefeOGA = enti.getJefeOga().getApellidoPaterno()+" "+enti.getJefeOga().getApellidoMaterno()+", "+enti.getJefeOga().getNombres();
+//        
+//        }
+//        else{
+//            
+//        }
+////         if(enti.getEmailInstitucional()!=null)emailentidad=enti.getEmailInstitucional();
+////        if(enti.getUrlEntidad()!=null)urlsEntidad=enti.getUrlEntidad();
+////        if(enti.getTelefonoEntidad()!=null)telefEntidad=enti.getTelefonoEntidad();
+////        if(enti.getDescZona()!=null)desczonaentidad=enti.getDescZona();
+////        if(enti.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(enti.getDepartamento());
+////        if(enti.getProvincia()!=null)ubigeoEntidadUE.setProvincia(enti.getProvincia());
+////        if(enti.getDistrito()!=null)ubigeoEntidadUE.setDistrito(enti.getDistrito());
+////        if(enti.getTitular()!=null)titular = enti.getTitular().getApellidoPaterno()+" "+enti.getTitular().getApellidoMaterno()+", "+enti.getTitular().getNombres();
+////        if(enti.getJefeRRHH()!=null)jefeRRHH = enti.getJefeRRHH().getApellidoPaterno()+" "+enti.getJefeRRHH().getApellidoMaterno()+", "+enti.getJefeRRHH().getNombres();
+////        if(enti.getJefeOga()!=null)jefeOGA = enti.getJefeOga().getApellidoPaterno()+" "+enti.getJefeOga().getApellidoMaterno()+", "+enti.getJefeOga().getNombres();
+//    }
+    
+    void onSiglaEntidadChanged() {
+        siglaEntidad = _request.getParameter("param");
+    }
+    
+    void onCueEntidadChanged() {
+        cueEntidad = _request.getParameter("param");
     }
 
     //para obtener datatos del Nivel Gobierno
@@ -524,13 +580,20 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+            entidadUE.setCue_entidad(cueEntidad);
+            entidadUE.setSigla(siglaEntidad);
             //nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
             //nombreArchivo = file.getFileName() ;
             //System.out.println(nombreArchivo);
             //entidadUE.setLogotipo(nombreArchivo);
             session.saveOrUpdate(entidadUE);
+            //enti=new Entidad();
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Entidad creada exitosamente");
+//            enti=new Entidad();
+//            entidadUE=new Entidad();
+//            return "AMEntidadUEjecutora";
+            
             return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
@@ -559,10 +622,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
             subEntidadUE.setProvincia(ubigeoSubEntidadUE.getProvincia());
             subEntidadUE.setDistrito(ubigeoSubEntidadUE.getDistrito());
             subEntidadUE.setEntidad(entio);
+            entidadUE.setCue_entidad(cueEntidad);
+            entidadUE.setSigla(siglaEntidad);
             // nombreArchivo = file.getFileName();
             //System.out.println(nombreArchivo);
             //entidadUE.setLogotipo(nombreArchivo);
             session.saveOrUpdate(subEntidadUE);
+//            enti=new Entidad();
             new Logger().loguearOperacion(session, _usuario, String.valueOf(subEntidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Sub-Entidad creada exitosamente");
             return new MultiZoneUpdate("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody()).add("subTitularZone", subTitularZone.getBody()).add("subJefeRRHHZone", subJefeRRHHZone.getBody()).add("subJefeOGAZone", subJefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
@@ -630,7 +696,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromEditarSeleccion(Entidad enti1) {
-        entidadUE = enti1;
+//        enti=new Entidad();
+//        entidadUE= new Entidad();
+        entidadUE = enti1;        
         if(enti1.getCue_entidad()!=null)cueEntidad=enti1.getCue_entidad();
         if(enti1.getSigla()!=null)siglaEntidad=enti1.getSigla();
         if(enti1.getEmailInstitucional()!=null)emailentidad=enti1.getEmailInstitucional();
@@ -644,6 +712,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if(enti1.getJefeRRHH()!=null)jefeRRHH = enti1.getJefeRRHH().getApellidoPaterno()+" "+enti1.getJefeRRHH().getApellidoMaterno()+", "+enti1.getJefeRRHH().getNombres();
         if(enti1.getJefeOga()!=null)jefeOGA = enti1.getJefeOga().getApellidoPaterno()+" "+enti1.getJefeOga().getApellidoMaterno()+", "+enti1.getJefeOga().getNombres();
    
+        cueEntidad=entidadUE.getCue_entidad();
+        siglaEntidad=entidadUE.getSigla();
         bsector = true;
         btipoorganismo = true;
         if (_usuario.getRol().getId() == 2) {
@@ -792,7 +862,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeoSubEntidadUE.setDepartamento(entio.getDepartamento());
         ubigeoSubEntidadUE.setProvincia(entio.getProvincia());
         ubigeoSubEntidadUE.setDistrito(entio.getDistrito());
-
+        
         subEntidadUE.setEsSubEntidad(true);
         mostrar = false;
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody());
@@ -964,11 +1034,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
         desczonasubentidad = _request.getParameter("param");
     }
     
-    void onSiglaEntidadChanged() {
-        siglaEntidad = _request.getParameter("param");
-    }
-    
-    void onCueEntidadChanged() {
-        cueEntidad = _request.getParameter("param");
-    }
+//    void onSiglaEntidadChanged() {
+//        siglaEntidad = _request.getParameter("param");
+//    }
+//    
+//    void onCueEntidadChanged() {
+//        cueEntidad = _request.getParameter("param");
+//    }
 }

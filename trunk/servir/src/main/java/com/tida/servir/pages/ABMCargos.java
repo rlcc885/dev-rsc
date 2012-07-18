@@ -26,6 +26,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
 
 /**
  *
@@ -313,6 +314,7 @@ public class ABMCargos extends GeneralPage {
                 c.add(Restrictions.like("nivelRemunerativo", bregimengruponivel.getNivelRemunerativo()));
             } 
         }
+        c.addOrder(Order.asc("den_cargo"));
         return c.list();
     }
 
