@@ -459,9 +459,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
             blogoentidadf = true;
             // Set Path
             //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
-            String nombreArchivo = Encriptacion.encriptaEnMD5(file.getFileName().substring(0, file.getFileName().length() - 4))+file.getFileName().substring(file.getFileName().length() - 4);
-            File nuevo = new File("ArchivosCSV/" + nombreArchivo);
-            file.write(nuevo);
+//            String nombreArchivo = Encriptacion.encriptaEnMD5(file.getFileName().substring(0, file.getFileName().length() - 4))+file.getFileName().substring(file.getFileName().length() - 4);
+//            File nuevo = new File("ArchivosCSV/" + nombreArchivo);
+//            file.write(nuevo);
             System.out.println("==========================================================================");
             System.out.println(nombreArchivo);
             entidadUE.setLogotipo(nombreArchivo);

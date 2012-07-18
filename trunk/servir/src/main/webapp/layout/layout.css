@@ -13,7 +13,7 @@ body {
     font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Sans-Serif; 
     font-family: Tahoma, Geneva, sans-serif;
     text-align:left;
-    background: url("images/page-bg.png") repeat-x #FFFFFF;
+    background: url("images/page-bg.png") repeat-x;
     color: #333333;
 }
 a, a:visited, a:link { font-size:11px; color:#e10827; text-decoration:none;}
@@ -33,7 +33,7 @@ input, select, textarea {
     font-size:11px;
 }
 select { width:195px;  padding: 3px 4px;}
-label { display:block; margin-bottom:5px; width:auto;}
+label { display:block; margin-bottom:5px; width:auto; background-color: transparent;}
 .check { float:left;}
 .check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
 

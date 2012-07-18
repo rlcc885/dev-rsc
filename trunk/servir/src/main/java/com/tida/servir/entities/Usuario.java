@@ -1,9 +1,6 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
@@ -54,7 +51,7 @@ public class Usuario implements Serializable {
     private Trabajador trabajador;
     private String clave;
     @ManyToOne
-    private RscRol rol;
+    private Rol rol;
 
     public String getClave() {
         return clave;
@@ -152,11 +149,11 @@ public class Usuario implements Serializable {
 //        this.rolid = rolid;
 //    }
 
-    public RscRol getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(RscRol rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 

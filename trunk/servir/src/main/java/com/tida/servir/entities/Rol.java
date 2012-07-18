@@ -14,12 +14,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "RSC_ROL")
 @NamedQueries({
-    @NamedQuery(name = "RscRol.findAll", query = "SELECT r FROM RscRol r"),
-    @NamedQuery(name = "RscRol.findById", query = "SELECT r FROM RscRol r WHERE r.id = :id"),
-    @NamedQuery(name = "RscRol.findByIdLow", query = "SELECT r FROM RscRol r WHERE r.id <= :id"),
-    @NamedQuery(name = "RscRol.findByCodrol", query = "SELECT r FROM RscRol r WHERE r.codrol = :codrol"),
-    @NamedQuery(name = "RscRol.findByDescrol", query = "SELECT r FROM RscRol r WHERE r.descrol = :descrol")})
-public class RscRol implements Serializable {
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
+    @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+    @NamedQuery(name = "Rol.findByIdLow", query = "SELECT r FROM Rol r WHERE r.id <= :id"),
+    @NamedQuery(name = "Rol.findByCodrol", query = "SELECT r FROM Rol r WHERE r.codrol = :codrol"),
+    @NamedQuery(name = "Rol.findByDescrol", query = "SELECT r FROM Rol r WHERE r.descrol = :descrol")})
+public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -31,10 +31,10 @@ public class RscRol implements Serializable {
     @Column(name = "DESCROL")
     private String descrol;
 
-    public RscRol() {
+    public Rol() {
     }
 
-    public RscRol(long id) {
+    public Rol(long id) {
         this.id = id;
     }
 
@@ -64,7 +64,7 @@ public class RscRol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tida.servir.entities.RscRol[ id=" + id + " ]";
+        return "com.tida.servir.entities.Rol[ id=" + id + " ]";
     }
     
 }
