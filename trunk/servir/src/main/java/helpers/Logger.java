@@ -7,6 +7,10 @@ import com.tida.servir.entities.Log_Accesos;
 import com.tida.servir.entities.Log_Operaciones;
 import com.tida.servir.entities.Log_Tab_Usuario;
 import com.tida.servir.entities.Log_Errores;
+import com.tida.servir.entities.Evento;
+import com.tida.servir.entities.Tipoevento;
+import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.Trabajador;
 
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -70,6 +74,7 @@ public class Logger
 	public static final String TIPO_OBJETO_UNIDAD_ORGANICA = "Unidad Organica";
 	public static final String TIPO_OBJETO_UNIDAD_EJECUTORA = "Unidad Ejecutora";
 	public static final String TIPO_OBJETO_ENTIDAD_UNIDAD_EJECUTORA = "Entidad Unidad Ejecutora";
+        
 	
 	public static final String CODIGO_OPERACION_ALTA         = "1";
 	public static final String CODIGO_OPERACION_MODIFICACION = "2";
@@ -77,6 +82,8 @@ public class Logger
 
 	public static final String RESULTADO_OPERACION_OK    = "OK";
 	public static final String RESULTADO_OPERACION_ERROR = "ERROR";
+        
+
     
 	
 	@Inject
@@ -149,4 +156,19 @@ public class Logger
 		session.persist(l);
 		//session.flush();
 	}
+    @Log
+    @CommitAfter
+    public void loguearEvento(Session session, Tipoevento tipoevento, Entidad entidad, long trabajador,
+                                                        String descripcion) {
+            Evento e = new Evento();
+            
+            e.setTipoevento(tipoevento);
+            e.setEntidad(entidad);
+            e.setTrabajador_id(trabajador);
+            e.setDescevento(descripcion);
+            e.setFechaevento(new Date());
+            e.setEstadoevento(Boolean.FALSE);
+            session.persist(e);
+            //session.flush();
+    }
 }
