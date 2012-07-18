@@ -844,12 +844,5 @@
         }
     </script>
     
-    <script type="text/javascript">
-        function prueba() {
-        alert(document.getElementById('file').value);
-        document.getElementById('logotipo').value=document.getElementById('file').value;
-        };
-
-    </script>
 
 </html>
