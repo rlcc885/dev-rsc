@@ -48,7 +48,8 @@ public class EntidadEditor extends GeneralPage {
     @Persist
     private Entidad entidadUE;
     @Property
-    private Entidad oi;
+    @SessionState
+    private Entidad _oi;
     @Component(id = "formulariomensajes")
     private Form formulariomensajes;
     @InjectComponent
@@ -66,8 +67,6 @@ public class EntidadEditor extends GeneralPage {
     @Property
     @SessionState
     private Usuario _usuario;
-    //@Persist
-    //private String nombreArchivo;
     @Property
     @Persist
     private Ubigeo ubigeoEntidadUE;
@@ -83,35 +82,8 @@ public class EntidadEditor extends GeneralPage {
     @Component(id = "formularioubigeo")
     private Form formularioubigeo;
 
-    /*
-    @Component(id = "formulariologoentidad")
-    private Form formulariologoentidad;
-    @InjectComponent
-    private Zone logoentidadZone;   
-     */
-    //Entidad Origen
-    @InjectComponent
-    private Zone EOrigenZone;
-    @InjectComponent
-    private Zone entiZone;
-    @Component(id = "formularioentidadorigen")
-    private Form formularioentidadorigen;
-    @Persist
-    @Property
-    private String bdenoentidad;
-    @Property
-    @Persist
-    private boolean mostrar;
-    @Persist
-    @Property
-    private Entidad entio;
-    @InjectComponent
-    private Zone busZone;
-    @Persist
-    @Property
-    private String entidad_origen;
-    //Trabajador
    
+    //Trabajador
     @Component(id = "formulariotitular")
     private Form formulariotitular;
     @Component(id = "formulariojeferrhh")
@@ -149,6 +121,7 @@ public class EntidadEditor extends GeneralPage {
     private Zone JefeRRHHZone;
     @InjectComponent
     private Zone JefeOGAZone;
+    
     @Property
     @Persist
     private boolean btitulari;
@@ -158,58 +131,12 @@ public class EntidadEditor extends GeneralPage {
     @Property
     @Persist
     private boolean bjefeRRHHi;
-    @Property
-    @Persist
-    private boolean blogoentidadf;
-    @Property
-    @Persist
-    private boolean blogoentidadi;
-    //Listado de entidades
-    @InjectComponent
-    private Zone listaentidadZone;
-    @Persist
-    @Property
-    private LkBusquedaEntidad listaentidad;
-    //Busqueda Entidad Zone
-    @InjectComponent
-    private Zone busquedacombosZone;
-    @Component(id = "formulariocombosbusqueda")
-    private Form formulariocombosbusqueda;
-    @Property
-    @Persist
-    private DatoAuxiliar bnivelGobierno;
-    @Property
-    @Persist
-    private DatoAuxiliar borganizacionEstado;
-    @Property
-    @Persist
-    private DatoAuxiliar bsectorGobierno;
-    @Property
-    @Persist
-    private DatoAuxiliar btipoOrganismo;
-    @Property
-    @Persist
-    private DatoAuxiliar btipoOrganismo2;
-    @Property
-    @Persist
-    private Ubigeo ubigeobusEntidadUE;
-    @InjectComponent
-    @Property
-    private Zone ubigeobusEntidadZone;
-    @Component(id = "formulariobusubigeo")
-    private Form formulariobusubigeo;
-    @Persist
-    @Property
-    private String busdenominacion;
+    
     
     @Inject
     private PropertyAccess _access;
-    @Persist
-    @Property
-    private boolean mostrarFiltros;
-    @Persist
-    @Property
-    private String mostrarEsconder;
+
+
     @InjectComponent
     @Property
     private Zone nivelOrganizacionSectorZone;
@@ -219,12 +146,7 @@ public class EntidadEditor extends GeneralPage {
     @InjectComponent
     @Property
     private Zone botonesZone;
-    @InjectComponent
-    @Property
-    private Zone subprincipalZone;
-    @InjectComponent
-    @Property
-    private Zone subbotonesZone;
+  
     @InjectComponent
     private Envelope envelope;
 
@@ -250,14 +172,37 @@ public class EntidadEditor extends GeneralPage {
     @Persist
     @Property
     private String telefEntidad;
+    @Persist
+    @Property
+    private String siglaEntidad;
+     @Persist
+    @Property
+    private String cueEntidad;   
     
+    @Property
+    @Persist
+    private boolean mostrar;
 
     //Inicio de lac carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
         entidadUE = new Entidad();
-        entio = new Entidad();
+        ubigeoEntidadUE = new Ubigeo();
+        entidadUE=_oi;
+        if(_oi.getCue_entidad()!=null)cueEntidad=_oi.getCue_entidad();
+        if(_oi.getSigla()!=null)siglaEntidad=_oi.getSigla();
+        if(_oi.getEmailInstitucional()!=null)emailentidad=_oi.getEmailInstitucional();
+        if(_oi.getUrlEntidad()!=null)urlsEntidad=_oi.getUrlEntidad();
+        if(_oi.getTelefonoEntidad()!=null)telefEntidad=_oi.getTelefonoEntidad();
+        if(_oi.getDescZona()!=null)desczonaentidad=_oi.getDescZona();
+        if(_oi.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(_oi.getDepartamento());
+        if(_oi.getProvincia()!=null)ubigeoEntidadUE.setProvincia(_oi.getProvincia());
+        if(_oi.getDistrito()!=null)ubigeoEntidadUE.setDistrito(_oi.getDistrito());
+        if(_oi.getTitular()!=null)titular = _oi.getTitular().getApellidoPaterno()+" "+_oi.getTitular().getApellidoMaterno()+", "+_oi.getTitular().getNombres();
+        if(_oi.getJefeRRHH()!=null)jefeRRHH = _oi.getJefeRRHH().getApellidoPaterno()+" "+_oi.getJefeRRHH().getApellidoMaterno()+", "+_oi.getJefeRRHH().getNombres();
+        if(_oi.getJefeOga()!=null)jefeOGA = _oi.getJefeOga().getApellidoPaterno()+" "+_oi.getJefeOga().getApellidoMaterno()+", "+_oi.getJefeOga().getNombres();
+        
 
     }
 
@@ -303,64 +248,10 @@ public class EntidadEditor extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    //para obtener datatos del Tipo Via Sub Entidad
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getSubTipoVia() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-
-    //para obtener datatos del Tipo Zona Sub Entidad
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getSubTipoZona() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-
-
-
-    //reset del formulario (borrar objeto)
-    void onSelectedFromSubreset() {
-        elemento = 1;
-
-        badmentidad = false;
-    }
-
-    void onSelectedFromSubcancel() {
-        elemento = 2;
-
-        badmentidad = false;
-    }
-
     void onSelectedFromReset() {
         elemento = 1;
 
         badmentidad = false;
-    }
-
-    void onSelectedFromBusreset() {
-            bnivelGobierno=null;
-            bsectorGobierno=null;
-            borganizacionEstado=null;
-            btipoOrganismo=null;
-            btipoOrganismo2=null;
-            busdenominacion="";
-            ubigeobusEntidadUE=null;
-            elemento=3;
-    }
-
-
-
-    void onSelectedFromBussubreset() {
-            bnivelGobierno=null;
-            bsectorGobierno=null;
-            borganizacionEstado=null;
-            btipoOrganismo=null;
-            btipoOrganismo2=null;
-            busdenominacion="";
-            ubigeobusEntidadUE=null;
-
-            elemento=3;
     }
 
     void onSelectedFromCancel() {
@@ -375,22 +266,12 @@ public class EntidadEditor extends GeneralPage {
     Object onSuccessFromFormulariobotones() {
 
         if (elemento == 1) {
-            return "AMEntidadUEjecutora";
+            return "EntidadEditor";
         } else if (elemento == 2) {
-            return "AMEntidadUEjecutora";
+            return "Alerta";
         } else {
-            blogoentidadi = false;
-            blogoentidadf = true;
-            // Set Path
-            //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
-//            String nombreArchivo = Encriptacion.encriptaEnMD5(file.getFileName().substring(0, file.getFileName().length() - 4))+file.getFileName().substring(file.getFileName().length() - 4);
-//            File nuevo = new File("ArchivosCSV/" + nombreArchivo);
-//            file.write(nuevo);
-            System.out.println("==========================================================================");
-            //System.out.println(nombreArchivo);
-            //entidadUE.setLogotipo(nombreArchivo);
-            entidadUE.setEstado(true);
-            entidadUE.setEsSubEntidad(false);
+            entidadUE.setCue_entidad(cueEntidad);
+            entidadUE.setSigla(siglaEntidad);
             entidadUE.setEmailInstitucional(emailentidad);
             entidadUE.setDescZona(desczonaentidad);
             entidadUE.setUrlEntidad(urlsEntidad);
@@ -398,14 +279,11 @@ public class EntidadEditor extends GeneralPage {
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-            //nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-            //nombreArchivo = file.getFileName() ;
-            //System.out.println(nombreArchivo);
-            //entidadUE.setLogotipo(nombreArchivo);
+            //_oi=entidadUE;
             session.saveOrUpdate(entidadUE);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-            envelope.setContents("Entidad creada exitosamente");
-            return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+            envelope.setContents("Entidad modificada exitosamente");
+            return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) 
                     .add("mensajesZone", mensajesZone.getBody());
         }
     }
@@ -419,20 +297,6 @@ public class EntidadEditor extends GeneralPage {
         return nivelOrganizacionSectorZone.getBody();
 
     }
-
-//    @CommitAfter
-//    Object onSuccessFromFormulariologoentidad() {
-//        blogoentidadi=false;
-//        blogoentidadf=true;
-//        System.out.println("entroeeeeeeee");
-//        System.out.println(entidadUE.getLogotipo());
-//        // Set Path
-//        //String path = globals.getServletContext().getRealPath("/layout/images") + "/";
-//        File nuevo = new File("ArchivosCSV/"+file.getFileName());
-//        file.write(nuevo);
-//        return this;
-//        
-//    }
     
 
     @Log
@@ -443,84 +307,10 @@ public class EntidadEditor extends GeneralPage {
 
     }
 
-    EntidadEditor onActionFromToggle_filtros() {
-        if (mostrarFiltros) {
-            mostrarFiltros = false;
-            mostrarEsconder = "Mostrar";
-        } else {
-            mostrarFiltros = true;
-            mostrarEsconder = "Oscultar";
-        }
-        return this;
-    }
-
     @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
-        mostrarEsconder = "Ocultar";
-        mostrarFiltros = true;
     }
-
-    @Log
-    Object onActionFromEditarSeleccion(Entidad enti1) {
-        entidadUE = enti1;
-        ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
-        ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
-        ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
-        titular = entidadUE.getTitular().getApellidoPaterno();
-        jefeRRHH = entidadUE.getJefeRRHH().getApellidoPaterno();
-        jefeOGA = entidadUE.getJefeOga().getApellidoPaterno();
-        bsector = true;
-        btipoorganismo = true;
-        if (_usuario.getRol().getId() == 2) {
-            badmentidad = true;
-        }
-
-        return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
-//                    .add("logoentidadZone", logoentidadZone.getBody()); 
-    }
-
-    @Log
-    @CommitAfter
-    Object onActionFromEliminarSeleccion(Entidad enti1) {
-        enti1.setEstado(false);
-        session.saveOrUpdate(enti1);
-        return listaentidadZone.getBody();
-    }
-
-    //Metodos de Busqueda de Entidades origenes para la subentidad   
-    @Log
-    @CommitAfter
-    Object onSuccessFromformularioentidadorigen() {
-        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("entiZone", entiZone.getBody());
-    }
-
-   
-
-    @Log
-    @CommitAfter
-    Object onSuccessFromformulariocombosbusqueda() {
-        System.out.println("ellll" + elemento);
-        if (elemento == 3) {
-            System.out.println("entroeeeeeeee al elemento" + elemento);
-            return new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody()).add("ubigeobusEntidadZone", ubigeobusEntidadZone.getBody());
-
-        } else {
-            return listaentidadZone.getBody();
-        }
-
-
-    }
-
-   
-
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormulariobusqueda() {
-        mostrar = true;
-        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
-    }
-
    
     //Metodos de Busqueda de Trabajadores
    
@@ -608,6 +398,14 @@ public class EntidadEditor extends GeneralPage {
     
     void onDescZonaEntChanged() {
         desczonaentidad = _request.getParameter("param");
+    }
+    
+    void onSiglaEntidadChanged() {
+        siglaEntidad = _request.getParameter("param");
+    }
+    
+    void onCueEntidadChanged() {
+        cueEntidad = _request.getParameter("param");
     }
    
 }
