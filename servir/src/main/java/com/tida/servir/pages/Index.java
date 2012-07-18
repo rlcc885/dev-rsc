@@ -120,7 +120,7 @@ public class Index {
     Object onSuccessFromFormulariologin() {
         Logger logger = new Logger();
         Tipoevento tipoeve=new Tipoevento();
-        
+        tipoeve.setId(9);
         configuracionAcceso = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
 
         Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
@@ -129,6 +129,7 @@ public class Index {
 
         if (c.isEmpty()) {
             logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
+            //logger.loguearEvento(session, tipoeve, null, 0, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST);
             formulariologin.recordError("Usuario no existe. Contacte a un administrador");
             return this;
         }
@@ -136,15 +137,15 @@ public class Index {
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
 
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
-            //logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
-            tipoeve.setId(9);
+            //logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());            
             logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
             return this;
         }
 
         if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
+//            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW);
             formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
             return this;
         }
@@ -157,10 +158,12 @@ public class Index {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
             if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
                 usuario.setEstado(2);
-                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+//                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+                logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
                 formulariologin.recordError("Demasiados Intentos Fallidos. el Usuario ha sido bloqueado.");
             } else {
-                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, getIp_Adress());
+//                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, getIp_Adress());
+                logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL);
                 formulariologin.recordError("Clave incorrecta.");
             }
             session.saveOrUpdate(usuario);
@@ -172,12 +175,14 @@ public class Index {
             c1.setTime(usuario.getUltimo_cambio_clave());
             c1.add(Calendar.DATE, configuracionAcceso.getDuracion_clave().intValue());
             if (c1.getTime().before(new Date())) {
-                logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED, getIp_Adress());
+//                logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED, getIp_Adress());
+                logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED);
                 cambioClave.flagCambioForzado("Su clave ha expirado");
                 return cambioClave;
             }
         } else {
-            logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST, getIp_Adress());
+//            logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST, getIp_Adress());
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST);
             cambioClave.flagCambioForzado("Usted nunca ha cambiado su clave, debe hacerlo ahora.");
             return cambioClave;
         }
@@ -195,7 +200,8 @@ public class Index {
          */
         eue = usuarioTrabajador.getEntidad();
 
-        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
+//        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
+        logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_OK);
         return Permisos.paginaInicial(usuario);
     }
 

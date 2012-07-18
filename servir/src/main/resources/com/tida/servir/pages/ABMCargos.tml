@@ -23,7 +23,7 @@
                     </div>
                 </form>
             </t:zone>
-            <t:zone t:id="nivelUOZone">
+            <t:zone t:id="nivelUOZone" >
                 <form t:type="form" t:id="xxx" t:zone="listaCargo">
                    <!-- <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
@@ -41,7 +41,7 @@
         </div>
           
           <div t:type="zone"  id="form_unidad_organica" class="abmform">  
-            <t:zone t:id="filtrosZone" >            
+            <t:zone t:id="filtrosZone" t:update="show">           
                 <form t:type="form" t:id="formulariofiltrocargo" zone="listaCargo">
                     <div class="f-wrap">
                         <div class="f-left">
@@ -64,7 +64,7 @@
             </t:zone>
           </div>
         <div id = "ocupacionalescargoxx">
-                <t:zone t:id="BOcupacionalesZone" >            
+                <t:zone t:id="BOcupacionalesZone" t:update="show">          
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
                                t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone"/>
@@ -76,7 +76,7 @@
         
     </div> 
     
-   <div t:type="zone" t:id="listaCargo" class="selectform" >
+   <div t:type="zone" t:id="listaCargo" class="selectform" t:update="show">
         <t:if test="mostrar">  
             <t:form t:id="formlistaunidad">                
                 ${errorBorrar}
@@ -105,7 +105,7 @@
                         </p:accionesCell>
                     </t:grid>
                 </div>
-                <t:envelope t:id="envelope"/>
+                
             </t:form>
         </t:if>
      </div> <!-- tabla cargos -->
@@ -116,10 +116,11 @@
      
     
         <div class="box" id="box-cargos">
-          <div t:type="zone" t:id="abmZone" class="abmform">
+          <div t:type="zone" t:id="abmZone" class="abmform" t:update="show">
             <t:if test="${vformulario}">
             <h3> Crear / Editar Cargo </h3>
-            <t:form t:id="formularioaltacargo" zone="abmZone">                
+            <t:form t:id="formularioaltacargo" zone="abmZone">     
+              <t:envelope t:id="envelope"/>
                 <t:errors/>                   
                     
                         
@@ -138,12 +139,12 @@
                             <div class="f-left">
                                 <label>* Código</label>
                                 <input t:type="TextField" t:id="cargo_cod_cargo"
-                                       t:value="cargo.cod_cargo" size="30" t:validate="required" t:disabled="${vdetalle}"/>
+                                       t:value="cargo.cod_cargo" size="30" t:validate="required, maxlength=15" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">
                                 <label>* Denominación</label>
                                 <input t:type="TextField" t:id="cargo_den_cargo"
-                                       t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=30" t:disabled="${vdetalle}"/>
+                                       t:value="cargo.den_cargo" size="30" t:validate="required, maxlength=255" t:disabled="${vdetalle}"/>
                             </div>                            
 
 
@@ -158,7 +159,7 @@
 
                         <div class ="f-wrap">
                             <div class="f-left">
-                                <label>Situación CAP</label>
+                                <label>* Situación CAP</label>
                                 <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">                            
@@ -235,11 +236,11 @@
     </div> <!-- abmZone -->
 
     <div id = "ocupacionalescargo">
-        <t:zone t:id="OcupacionalesZone"> 
+        <t:zone t:id="OcupacionalesZone" t:update="show"> 
             <t:if test="${vformulario}">
                     <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="regimengruponivel" t:regimengruponivel="regimengruponivel"
-                               t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" t:disabled="${vdetalle}"/>
+                               t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" t:validate="required" t:disabled="${vdetalle}"/>
                     </form>
             </t:if>
                     <!-- <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">

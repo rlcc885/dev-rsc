@@ -68,6 +68,7 @@ public class Cargoxunidad implements Serializable {
     private Integer ctd_puestos_total;
     private DatoAuxiliar grupoOcupacional;
     private DatoAuxiliar nivelRemunerativo;
+    @Validate("required")
     private DatoAuxiliar situacioncap;
 
     public Boolean getSupervisapersonal() {

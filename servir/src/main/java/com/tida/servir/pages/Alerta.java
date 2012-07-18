@@ -209,7 +209,7 @@ public class Alerta  extends GeneralPage {
         query.setParameter("in_tipoevento_id","");
         query.setParameter("in_perfil_id",""); 
         query.setParameter("in_entidad_id","");  
-        List result = query.list();
+        List result = query.list(); 
         
         for (int i = 0; i < result.size(); i++) {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);

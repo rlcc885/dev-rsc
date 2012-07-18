@@ -9,36 +9,39 @@
             Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
        
+       <h2>Migración / Fusión de Registros</h2>
        
         <div id= "datosOrigen" class="box">
             <h3> Opciones / Fuente de Origen</h3>
            <div class="f-wrap">                  
                     
                               
-                    <t:zone t:id="EOrigenZone">
+                    <t:zone t:id="EOrigenZone" t:update="show">
                         <form t:type="form" t:id="formUOO" t:zone="EOrigenZone">
-                            <div class="f-left">
-                            Opciones
-                            <input t:type="Select" t:id="cambio_opciones"
-                            t:value="opcion" model="bopciones"
-                            onChange="this.form.fire()" t:zone="EOrigenZone"/>
-                            </div>                                                      
-                            <div class="f-left">
-                            Unidad Orgánica Origen
-                            <select t:type="select" t:id="select_unidadOrganicaOrigen"
-                            model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
-                            onChange="this.form.fire()" t:zone="EOrigenZone"/>    
-                            </div>
-                            <t:if test="mostrarUO">
-                                <div class="f-left">    
-                                Entidad Origen
-                                <input t:type="TextField" t:id="entidad_den"
-                                        t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                <label>Opciones</label>
+                                    <input t:type="Select" t:id="cambio_opciones"
+                                    t:value="opcion" model="bopciones"
+                                    onChange="this.form.fire()" t:zone="EOrigenZone"/>
+                                </div>                                                      
+                                <div class="f-left">
+                                    <label>Unidad Orgánica Origen</label>
+                                    <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                                    model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                                    onChange="this.form.fire()" t:zone="EOrigenZone"/>    
                                 </div>
-                            </t:if>
-                            
-                        </form>
-                             
+                            </div>
+                            <div class="f-wrap">
+                                <t:if test="mostrarUO">
+                                    <div class="f-left">    
+                                    <label>Entidad Origen</label>
+                                    <input t:type="TextField" t:id="entidad_den"
+                                            t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
+                                    </div>                                
+                                </t:if>
+                            </div>                            
+                        </form>                             
                         <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">  
                         <t:if test="mostrarUO"> 
                             <div class="actions f-right">  
@@ -75,12 +78,12 @@
         <div id= "datosDestinox" class="box">
             <h3> Seleccione destino</h3>
             <div class="f-wrap">
-            <t:zone t:id="EDestiZone">            
+            <t:zone t:id="EDestiZone" t:update="show">            
                   <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">                    
                     <div class="f-wrap">
                     <div class="f-left">
                     <if test="mostrarUOD">                        
-                        Unidad Orgánica Destino
+                        <label>Unidad Orgánica Destino</label>
                         <!--<select t:type="select" t:id="select_unidadOrganicaDestino"
                         model="beanUOrganicasDestino"  value="uoDestino"/>-->
                          <input t:type="Select" t:id="select_unidadOrganicaDestino"                         
@@ -89,7 +92,7 @@
                     </if>
                     </div>                    
                     <div class="f-left">    
-                        Entidad Destino
+                        <label>Entidad Destino</label>
                         <input t:type="TextField" t:id="entidad_den_des"
                             t:value="entidad_destino" t:readonly="readonly" style="width: 400px;"/>                            
                     </div>
@@ -154,7 +157,7 @@
         </div> 
             
             
-        <div t:type="zone" t:id="botonZone"> 
+        <div t:type="zone" t:id="botonZone" > 
             <form t:type="form" t:id="formBotones" t:zone ="botonZone">
                 <t:errors/>
                 <t:envelope t:id="envelope"/>                
@@ -233,11 +236,11 @@ function datos(val1,val2){
         <div id="modal">           
             <h1>Selección de entidad</h1>
             <div class="pane">
-                <t:zone t:id="busZone">
+                <t:zone t:id="busZone" t:update="show">
                 <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
-                            Denominación
+                                <label>Denominación</label>
                             <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 300px;"/> 
                             </div>                   
                         </div>
@@ -252,7 +255,7 @@ function datos(val1,val2){
              
              <!-- Edestino-->
                  
-                <div t:type="zone" t:id="entiZone">
+                <div t:type="zone" t:id="entiZone" t:update="show">
                     <t:if test="mostrar">
                     <t:if test="entixo">
                         <h2>Entidad Origen</h2>

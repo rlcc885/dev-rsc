@@ -36,6 +36,7 @@ public class Logger
     public static final String LOGIN_MOTIVO_RECHAZO_PASSWORDCHANGE = "CAMBIO DE CLAVE";
     public static final String LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED = "EXPIRACIÓN DE CLAVE";
     public static final String LOGIN_MOTIVO_RECHAZO_PASSWORFIRST = "PRIMER INGRESO";
+    public static final String LOGIN_MOTIVO_ERROR_RECUPERAR_CLAVE = "ERROR RECUPERAR CLAVE";
 	
 	public static final String CODIGO_ERROR_USUARIO_UNICO = "1";
 	public static final String CODIGO_ERROR_USUARIO_EXISTE = "2";
