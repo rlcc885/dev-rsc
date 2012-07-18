@@ -336,35 +336,35 @@
                          
                             
                 <div class="f-wrap">                             
-                             
-                             
                     <t:zone t:id="TitularZone">
                         <t:form t:id="formulariotitular"  zone="TitularZone">
                             <div class="f-left">
                                 <t:label for ="titular"/>
-                                <input t:type="TextField" t:id="titular"
+                                <input t:type="TextField" t:id="titular" t:style="width:600px;"
                                                t:value="titular" t:readonly="readonly" /> 
                                 <input t:id="buscarTitulari" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar2();" />             
                             </div>
                         </t:form>
                     </t:zone>
-                            
+                </div>
+                <div class="f-wrap">
                     <t:zone t:id="JefeRRHHZone">
                         <t:form t:id="formulariojeferrhh"  zone="JefeRRHHZone">
                             <div class="f-left">
                                 <t:label for ="jefeRRHH"/>
-                                <input t:type="TextField" t:id="jefeRRHH"
+                                <input t:type="TextField" t:id="jefeRRHH" t:style="width:600px;"
                                                t:value="jefeRRHH" t:readonly="readonly" />
                                 <input t:type="submit" t:id="buscarjeferrhhi" value="..." class="button f-right" onClick="javascript: mostrar2();" />
                             </div>
                         </t:form>
                     </t:zone>
-                            
+                 </div>
+                <div class="f-wrap">
                     <t:zone t:id="JefeOGAZone">
                         <t:form t:id="formulariojefeoga"  zone="JefeOGAZone">
                             <div class="f-left">
                                 <t:label for ="jefeOGA"/>
-                                <input t:type="TextField" t:id="jefeOGA"
+                                <input t:type="TextField" t:id="jefeOGA" t:style="width:600px;"
                                                t:value="jefeOGA" t:readonly="readonly" />
                                 <input t:type="submit" t:id="buscarjefeogai" value="..." class="button f-right" onClick="javascript: mostrar2();" />
                             </div>
