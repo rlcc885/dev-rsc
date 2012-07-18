@@ -352,7 +352,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String desczonasubentidad;    
-    
+    @Persist
+    @Property
+    private String siglaEntidad;
+     @Persist
+    @Property
+    private String cueEntidad;   
 
     //Inicio de lac carga de la pagina
     @Log
@@ -510,6 +515,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
             //entidadUE.setLogotipo(nombreArchivo);
             entidadUE.setEstado(true);
             entidadUE.setEsSubEntidad(false);
+            entidadUE.setCue_entidad(cueEntidad);
+            entidadUE.setSigla(siglaEntidad);
             entidadUE.setEmailInstitucional(emailentidad);
             entidadUE.setDescZona(desczonaentidad);
             entidadUE.setUrlEntidad(urlsEntidad);
@@ -624,12 +631,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromEditarSeleccion(Entidad enti1) {
         entidadUE = enti1;
-        ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
-        ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
-        ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
-        titular = entidadUE.getTitular().getApellidoPaterno();
-        jefeRRHH = entidadUE.getJefeRRHH().getApellidoPaterno();
-        jefeOGA = entidadUE.getJefeOga().getApellidoPaterno();
+        if(enti1.getCue_entidad()!=null)cueEntidad=enti1.getCue_entidad();
+        if(enti1.getSigla()!=null)siglaEntidad=enti1.getSigla();
+        if(enti1.getEmailInstitucional()!=null)emailentidad=enti1.getEmailInstitucional();
+        if(enti1.getUrlEntidad()!=null)urlsEntidad=enti1.getUrlEntidad();
+        if(enti1.getTelefonoEntidad()!=null)telefEntidad=enti1.getTelefonoEntidad();
+        if(enti1.getDescZona()!=null)desczonaentidad=enti1.getDescZona();
+        if(enti1.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(enti1.getDepartamento());
+        if(enti1.getProvincia()!=null)ubigeoEntidadUE.setProvincia(enti1.getProvincia());
+        if(enti1.getDistrito()!=null)ubigeoEntidadUE.setDistrito(enti1.getDistrito());
+        if(enti1.getTitular()!=null)titular = enti1.getTitular().getApellidoPaterno()+" "+enti1.getTitular().getApellidoMaterno()+", "+enti1.getTitular().getNombres();
+        if(enti1.getJefeRRHH()!=null)jefeRRHH = enti1.getJefeRRHH().getApellidoPaterno()+" "+enti1.getJefeRRHH().getApellidoMaterno()+", "+enti1.getJefeRRHH().getNombres();
+        if(enti1.getJefeOga()!=null)jefeOGA = enti1.getJefeOga().getApellidoPaterno()+" "+enti1.getJefeOga().getApellidoMaterno()+", "+enti1.getJefeOga().getNombres();
+   
         bsector = true;
         btipoorganismo = true;
         if (_usuario.getRol().getId() == 2) {
@@ -948,5 +962,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     void desczonasubentidadChanged() {
         desczonasubentidad = _request.getParameter("param");
-    }    
+    }
+    
+    void onSiglaEntidadChanged() {
+        siglaEntidad = _request.getParameter("param");
+    }
+    
+    void onCueEntidadChanged() {
+        cueEntidad = _request.getParameter("param");
+    }
 }
