@@ -19,29 +19,20 @@ public class Evento implements Serializable {
 
     public static boolean ESTADO_BAJA = false;
     public static boolean ESTADO_ALTA = true;
-    @Id    
+    public static Integer CANT_DEFAULT = 1;
+        
     private long id;
     private String descevento;
     @ManyToOne
     private Entidad entidad;
-//    private Trabajador trabajador;
-   // private Tipoevento tipoevento;
+    private long trabajador_id;
+    
+    private Tipoevento tipoevento;
     private Boolean estadoevento;
     @Temporal(TemporalType.DATE)
     private Date fechaevento;
 
-    
-    public Evento() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-    
+      
     public String getDescevento() {
         return descevento;
     }
@@ -59,7 +50,6 @@ public class Evento implements Serializable {
         this.entidad = entidad;
     }
     
-//    @ManyToOne
 //    public Trabajador getTrabajador() {
 //        return trabajador;
 //    }
@@ -67,15 +57,22 @@ public class Evento implements Serializable {
 //    public void setTrabajador(Trabajador trabajador) {
 //        this.trabajador = trabajador;
 //    }
+    public long getTrabajador_id() {
+        return trabajador_id;
+    }
+
+    public void setTrabajador_id(long trabajador_id) {
+        this.trabajador_id = trabajador_id;
+    }
     
-//    @ManyToOne
-//    public Tipoevento getTipoevento() {
-//        return tipoevento;
-//    }
-//
-//    public void setTipoevento(Tipoevento tipoevento) {
-//        this.tipoevento = tipoevento;
-//    }
+    @ManyToOne
+    public Tipoevento getTipoevento() {
+        return tipoevento;
+    }
+
+    public void setTipoevento(Tipoevento tipoevento) {
+        this.tipoevento = tipoevento;
+    }
     
     public Boolean getEstadoevento() {
         return estadoevento;
@@ -93,5 +90,37 @@ public class Evento implements Serializable {
         this.fechaevento = fechaevento;
     }   
    
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Evento other = (Evento) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
    
 }

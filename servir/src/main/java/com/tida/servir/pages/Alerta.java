@@ -34,6 +34,7 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -87,7 +88,7 @@ public class Alerta  extends GeneralPage {
     private boolean mostrarse;
 //    @Property
 //    @Persist
-//    private LkBusquedaEvento le;
+//    private Evento le;
     @Property
     @Persist
     private BusquedaEvento eventoservir1; 
@@ -215,6 +216,12 @@ public class Alerta  extends GeneralPage {
         }
         return result;
     }
+    
+//    @Log
+//    public List<Evento> getCargos() {
+//        Criteria c = session.createCriteria(Evento.class);  
+//        return c.list();
+//    }
    
     @Log
     @CommitAfter  

@@ -3,7 +3,7 @@
       xmlns:p="tapestry:parameter">
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
          
-       <div t:type="zone" t:id="listaservir" class="selectform" > 
+       <div t:type="zone" t:id="listaservir" class="selectform" t:update="show"> 
             <t:if test="mostrarse">
             <h1>Administrador de Servir</h1>
                 <t:form t:id="formlistaservir">
@@ -37,7 +37,7 @@
             </t:if>
         </div> <!-- tabla eventos -->
         
-        <div t:type="zone" t:id="listaentidad" class="selectform" > 
+        <div t:type="zone" t:id="listaentidad" class="selectform" t:update="show"> 
             <t:if test="mostrare">     
             <h1>Administrador de Entidad</h1>
                 <t:form t:id="formlistaentidad">
@@ -57,7 +57,7 @@
             </t:if>
         </div> <!-- tabla eventos -->
 
-        <div t:type="zone" t:id="listasistemas" class="selectform" > 
+        <div t:type="zone" t:id="listasistemas" class="selectform" t:update="show"> 
             <t:if test="mostrars">     
             <h1>Administrador de Sistemas</h1>
                 <t:form t:id="formlistasistemas" t:zone="listasistemas">
@@ -76,4 +76,16 @@
                 </t:form>
             </t:if>
         </div> <!-- tabla eventos -->
+        <!--
+        <div id = "tabla_cargo">
+                        <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="le" >
+                            <t:parameter name="empty">
+                                <div class="no-info">No se han registrado eventos</div>
+                            </t:parameter>
+                            <p:accionesCell>                           
+                                   
+                            </p:accionesCell>
+                        </t:grid>
+                    </div>-->
 </html>

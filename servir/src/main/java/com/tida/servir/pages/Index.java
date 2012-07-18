@@ -119,6 +119,8 @@ public class Index {
     @CommitAfter
     Object onSuccessFromFormulariologin() {
         Logger logger = new Logger();
+        Tipoevento tipoeve=new Tipoevento();
+        
         configuracionAcceso = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
 
         Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
@@ -134,7 +136,9 @@ public class Index {
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
 
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+            //logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
+            tipoeve.setId(9);
+            logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
             return this;
         }
