@@ -45,7 +45,7 @@ public class Helpers {
     }
 
     public static List<Rol> getRolUSuario(long rolid, Session session) {
-        Query query = session.getNamedQuery("RscRol.findByIdLow");
+        Query query = session.getNamedQuery("Rol.findByIdLow");
         query.setParameter("id", rolid);
         return query.list();
     }
