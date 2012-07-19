@@ -360,6 +360,26 @@ public class AMEntidadUEjecutora extends GeneralPage {
         entidadUE=new Entidad();
         subEntidadUE = new Entidad();     
         entio = new Entidad();
+        desczonaentidad=null;
+        emailentidad=null;
+        urlsEntidad=null;
+        telefEntidad=null;
+        denoSubEntidad=null;
+        siglaSubEntidad=null;
+        rucSubEntidad=null;
+        cueSubEntidad=null;
+        telefSubEntidad=null;
+        emailSubEntidad=null;
+        urslSubEntidad=null;    
+        desczonasubentidad=null;    
+        siglaEntidad=null;
+        cueEntidad=null;   
+        ubigeoEntidadUE=new Ubigeo();
+        ubigeoSubEntidadUE=new Ubigeo();
+        titular=null;
+        jefeRRHH=null;
+        jefeOGA=null;
+
 //        if(enti!=null){
 //            if(enti.getEsSubEntidad()){
 //                subEntidadUE=enti;
