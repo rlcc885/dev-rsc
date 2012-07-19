@@ -749,6 +749,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromEliminarSeleccion(Entidad enti1) {
         enti1.setEstado(false);
         session.saveOrUpdate(enti1);
+        envelope.setContents("Entidad/Sub Entidad Eliminada");
         return listaentidadZone.getBody();
     }
 
