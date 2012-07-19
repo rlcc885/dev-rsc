@@ -15,6 +15,7 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.services.ApplicationGlobals;
 import org.slf4j.Logger;
 
 /**
@@ -22,7 +23,7 @@ import org.slf4j.Logger;
  * configure and extend Tapestry, or to place your own service definitions.
  */
 public class AppModule {
-
+private ApplicationGlobals globals;
     public static void bind(ServiceBinder binder) {
         // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
         binder.bind(IBusinessServicesLocator.class, BusinessServicesLocator.class);
@@ -63,7 +64,10 @@ public class AppModule {
         // assets. Web browsers will cache assets because of the far future expires
         // header. If existing assets are changed, the version number should also
         // change, to force the browser to download new versions.
-        configuration.add(SymbolConstants.APPLICATION_VERSION, "2.5.0");
+        configuration.add(SymbolConstants.APPLICATION_VERSION, "3.0.0");
+        
+        //configuration.add("upload.repository-location", "C:\Users\arson\Documents\NetBeansProjects\servir\target\servir\" );
+        
 
     }
 
