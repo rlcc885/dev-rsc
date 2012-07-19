@@ -370,6 +370,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         subEntidadUE = new Entidad();     
         entio = new Entidad();
         desczonaentidad=null;
+        denoEntidad=null;
         emailentidad=null;
         urlsEntidad=null;
         telefEntidad=null;
@@ -1145,6 +1146,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         desczonaentidad = _request.getParameter("param");
     }
     
+     void onDesczonasubentidadChanged() {
+        desczonasubentidad = _request.getParameter("param");
+    }
+    
     void onDenoSubEntidadChanged() {
         denoSubEntidad = _request.getParameter("param");
     }
@@ -1171,11 +1176,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     
     void ontelefSubEntidadChanged() {
         telefSubEntidad = _request.getParameter("param");
-    }
-    
-    void desczonasubentidadChanged() {
-        desczonasubentidad = _request.getParameter("param");
-    }
+    }   
     
     void onDenoEntidadChanged() {
         denoEntidad = _request.getParameter("param");
