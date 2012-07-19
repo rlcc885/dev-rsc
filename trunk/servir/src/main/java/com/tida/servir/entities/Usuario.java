@@ -52,6 +52,9 @@ public class Usuario implements Serializable {
     private String clave;
     @ManyToOne
     private Rol rol;
+    @NonVisual
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha_bloqueo;
 
     public String getClave() {
         return clave;
@@ -157,7 +160,13 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
-    
+    public Date getFecha_bloqueo() {
+        return fecha_bloqueo;
+    }
+
+    public void setFecha_bloqueo(Date fecha_bloqueo) {
+        this.fecha_bloqueo = fecha_bloqueo;
+    }
     
 //    public String getApellidos() {
 //        return apellidos;

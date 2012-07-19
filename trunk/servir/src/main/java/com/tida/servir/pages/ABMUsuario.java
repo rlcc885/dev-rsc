@@ -202,9 +202,7 @@ public class ABMUsuario extends GeneralPage {
             }
             listaUsuarios = c.list();
         }
-        System.out.println("Aqui entra.");
         return listaUsuarios;
-
     }
 
     public List<Perfilporusuario> getAllPerfiles() {

@@ -158,9 +158,13 @@ public class Index {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
             if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
                 usuario.setEstado(2);
+                usuario.setFecha_bloqueo(new Date());
+                System.out.println("=============================================================================");
+                System.out.println(new Date());
+                System.out.println("=============================================================================");
 //                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
                 logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
-                formulariologin.recordError("Demasiados Intentos Fallidos. el Usuario ha sido bloqueado.");
+                formulariologin.recordError("Demasiados Intentos Fallidos. El Usuario ha sido bloqueado.");
             } else {
 //                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, getIp_Adress());
                 logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL);
