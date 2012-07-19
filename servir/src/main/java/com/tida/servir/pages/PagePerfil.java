@@ -21,6 +21,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -87,6 +88,9 @@ public class PagePerfil {
     private boolean cancelaEditPermiso;
     @Persist
     @Property
+    private boolean cancelaNewPermiso;
+    @Persist
+    @Property
     private String errorMessage;
 
     public PagePerfil() {
@@ -102,6 +106,14 @@ public class PagePerfil {
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
         return null;
+    }
+
+    public boolean isEliminaPerfil() {
+        if (rowPerfil.getId() > 8) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public GenericSelectModel<Menu> getBeanOpcionesTodo() {
@@ -122,6 +134,7 @@ public class PagePerfil {
         Criteria criterios;
         List<Perfil> lista = null;
         criterios = session.createCriteria(Perfil.class);
+        criterios.addOrder(Order.asc("descperfil"));
         lista = criterios.list();
         return lista;
     }
@@ -272,21 +285,29 @@ public class PagePerfil {
         return "PagePerfil";
     }
 
+    void onSelectedFromResetNewPermiso() {
+        cancelaNewPermiso = true;
+    }
+
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
-        MenuperfilPK menuperfilpk = new MenuperfilPK();
-        menuperfilpk.setMenuId(menu.getId());
-        menuperfilpk.setPerfilId(perfil.getId());
-        permiso.setMenuperfilPK(menuperfilpk);
-        session.save(permiso);
+        if (!cancelaNewPermiso) {
+            MenuperfilPK menuperfilpk = new MenuperfilPK();
+            menuperfilpk.setMenuId(menu.getId());
+            menuperfilpk.setPerfilId(perfil.getId());
+            permiso.setMenuperfilPK(menuperfilpk);
+            session.save(permiso);
+        }
+        mostrarPermiso = true;
         mostrarNewPermiso = true;
         mostrarEditPermiso = false;
         mostrarNuevoPermiso = false;
-        return "PagePerfil";
+        cancelaNewPermiso = false;
+        return zonasPermiso();
     }
 
-    void onSelectedFromCancel() {
+    void onSelectedFromResetEditPermiso() {
         cancelaEditPermiso = true;
     }
 
@@ -304,11 +325,6 @@ public class PagePerfil {
         return zonasPermiso();
     }
 
-    /*
-     * Object onActionFromresetEditPermiso() {
-     * System.out.println("onActionFromresetEditPermiso"); mostrarEditPermiso =
-     * false; mostrarNuevoPermiso = false; return editPermisoZone.getBody(); }
-     */
     void onActionFromresetNuevoPermiso() {
         System.out.println("onActionFromresetNuevoPermiso");
     }
@@ -327,7 +343,6 @@ public class PagePerfil {
         MultiZoneUpdate mu;
         //add("listaZone", listaZone.getBody()).
         mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody()).add("newPermisoZone", newPermisoZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
-
         return mu;
     }
 }

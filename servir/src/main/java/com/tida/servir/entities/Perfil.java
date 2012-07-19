@@ -51,7 +51,8 @@ public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PERFIL_ID_SEQ", allocationSize=1 )
     @Column(name = "ID")
     private long id;
     @Column(name = "DESCPERFIL")

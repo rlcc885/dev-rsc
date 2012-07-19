@@ -5,14 +5,14 @@
 
     <h2>Administración de Perfiles</h2>
      
-    <t:zone t:id="listaZone" id="listaZone">
+    <t:zone t:id="listaZone" id="listaZone" t:update="show">
         <t:if test="errorMessage">
             <script>
                 setTimeout(function(){ jQuery(".mensajes").fadeOut(1000);}, 4000);
             </script>
             <div class="error mensajes">${errorMessage}</div>
-		</t:if>
-        <t:grid t:source="allPerfiles" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
+        </t:if>
+        <t:grid t:source="allPerfiles" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
             <t:parameter name="descperfilCell">
                 <t:eventLink t:event="editaPerfil" t:context="rowPerfil" href="#" page="PagePerfil" t:zone="editZone">
                     ${rowPerfil.descperfil}
@@ -21,16 +21,18 @@
             <p:accionesCell>
                 <!--<a t:type="pagelink" t:page="PagePerfilPermiso" t:context="rowPerfil.id" href="#">Permisos</a>-->
                 <a t:type="eventLink" t:event="permisoPerfil" t:context="rowPerfil" href="#" t:zone="listaPermisoZone">Derechos</a>
-                |
-                <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">
-                    <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
-                        Eliminar
-                    </span> 
-                </a>
+                <t:if test="eliminaPerfil">
+                    |
+                    <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                            Eliminar
+                        </span> 
+                    </a>
+                </t:if>
             </p:accionesCell>
         </t:grid>
     </t:zone>
-    <t:zone t:id="newZone" id="newZone">
+    <t:zone t:id="newZone" id="newZone" t:update="show">
         <t:if test = "mostrarNew">
             <div id="bouttons" class="f-right">
                 <t:eventLink t:event="nuevoPerfil" href="#" page="PagePerfil" t:zone="editZone" class="button f-right">
@@ -41,7 +43,7 @@
         </t:if>
     </t:zone>
     <br />
-    <t:zone t:id="editZone" id="editZone">
+    <t:zone t:id="editZone" id="editZone" t:update="show">
         <t:if test = "mostrarEdit">
             <h3>Crear/Editar Perfiles de Usuarios</h3>
             <div id="box-cargos" class="box" t:zone="editZone">
@@ -57,9 +59,9 @@
 <!--                        <a t:type="eventLink" t:event="guardaPerfil" t:context="perfil" t:mixins="confirm" href="#" t:zone="listaPermisoZone" class="button f-right">Guardar Perfil</a>-->
                         <a t:type="eventLink" t:event="cancelaPerfil" href="#" t:zone="listaPermisoZone" class="button f-right">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea cancelar los cambios?">
-                        Cancelar
-                    </span>
-                    </a>
+                                Cancelar
+                            </span>
+                        </a>
                         <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
                         <!--
                         <input type="submit" t:type="submit" t:id="submit" value="Guardar"  class="button"/>
@@ -73,7 +75,7 @@
     </t:zone>
 
 
-    <t:zone t:id="listaPermisoZone" id="listaPermisoZone">
+    <t:zone t:id="listaPermisoZone" id="listaPermisoZone" t:update="show">
         <t:if test = "mostrarPermiso">
             <h3>Permisos del Perfil ${perfil.descperfil}</h3>
             <t:grid t:source="allPermisos" t:add="Acciones" pagerPosition="bottom" row="rowPermiso" exclude="rownum,menuId,perfilId,id" reorder="descmenu,accesoselect,accesoupdate,accesoinsert,accesodelete" >
@@ -85,15 +87,15 @@
                 <p:accionesCell>
                     <a t:type="eventLink" t:event="eliminaPermiso" t:context="rowPermiso" href="#" t:zone="listaPermisoZone">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el permiso del perfil?">
-                        Eliminar
-                    </span>
+                            Eliminar
+                        </span>
                     </a>
                 </p:accionesCell>
             </t:grid>
         </t:if>
     </t:zone>
 
-    <t:zone t:id="newPermisoZone" id="newPermisoZone">
+    <t:zone t:id="newPermisoZone" id="newPermisoZone" t:update="show">
         <t:if test = "mostrarNewPermiso">
             <br />
             <div id="bouttons" class="f-right">
@@ -105,7 +107,7 @@
         </t:if>
     </t:zone>
 
-    <t:zone t:id="editPermisoZone" id="editPermisoZone">
+    <t:zone t:id="editPermisoZone" id="editPermisoZone" t:update="show">
         <br />
         <t:if test = "mostrarNuevoPermiso">
             <h3>Asignar derecho a un determinado Perfil de Usuario</h3>
@@ -152,10 +154,12 @@
                         </div>
                     </div>
                     <div id="bouttons" class="f-right">
-                        <input type="submit" value="Grabar Permiso" class="button f-right"/>
-                        <t:actionlink t:id="resetNuevoPermiso" t:mixins="confirm" class="button f-right">
+<!--                        <t:actionlink t:id="resetNuevoPermiso" t:mixins="confirm" class="button f-right">
                             Cancelar
                         </t:actionlink>
+                        <input type="submit" value="Grabar Permiso" class="button f-right"/>-->
+                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
+                        <input t:type="Submit" t:id="saveNewPermiso" value="Grabar Permiso" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
                     </div>
                     <br class="clear"/>
                 </t:form>
@@ -206,12 +210,8 @@
                         </div>
                     </div>
                     <div id="bouttons" class="f-right">
-<!--                        <input type="submit" value="Grabar Permiso" class="button f-right"/>-->
-                        <input t:type="Submit" t:id="save" value="Grabar Permiso" t:mixins="confirm" class="button f-right"/>
-                        <input t:type="Submit" t:id="reset" value="Cancelar" t:mixins="confirm" class="button f-right"/>
-<!--                        <t:actionlink t:id="resetEditPermiso" t:mixins="confirm" class="button f-right">
-                            Cancelar
-                        </t:actionlink>-->
+                        <input t:type="Submit" t:id="resetEditPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
+                        <input t:type="Submit" t:id="saveEditPermiso" value="Grabar Permiso" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
                     </div>
                     <br class="clear"/>
                 </t:form>
