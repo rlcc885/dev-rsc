@@ -488,9 +488,15 @@ public class ABMCargos extends GeneralPage {
     
     void onSelectedFromCancel() {        
         num=3;     
-        cargo = new Cargoxunidad();
-        editando = false;
-        regimengruponivel = new RegimenGrupoNivel();
+        if(!vbotones){
+            vformulario=false;
+        }
+        else{
+            cargo = new Cargoxunidad();
+            editando = false;
+            regimengruponivel = new RegimenGrupoNivel();
+        }
+        
     }
 
     @Log

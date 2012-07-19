@@ -219,14 +219,17 @@
                         </div>-->
                         <!--</div>--> <!-- div f-wrap -->
                         <!-- </div> --><!-- div der -->
-                     <t:if test="${vbotones}">
+                     
                         <div class="actions f-right">
+                            <t:if test="${vbotones}">
                             <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/> 
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/>                            
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/> 
+                            
+                            </t:if>
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button" /> 
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>  
                         </div>
-                     </t:if>
+                     
                         <br style="clear: both;" />
                 </t:form> 
             </t:if>
