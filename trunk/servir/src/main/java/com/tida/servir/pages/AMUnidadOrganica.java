@@ -267,11 +267,16 @@ public class AMUnidadOrganica extends GeneralPage {
     
     void onSelectedFromCancel() {        
         num=3;
-        unidadOrganica = new UnidadOrganica();
-        ubigeoDomicilio = new Ubigeo();
-        nivelUO = 1;
-        editando = false;
-        uoAntecesora = null;
+        if(!vbotones){
+            vformulario=false;
+        }else{
+            unidadOrganica = new UnidadOrganica();
+            ubigeoDomicilio = new Ubigeo();
+            nivelUO = 1;
+            editando = false;
+            uoAntecesora = null;
+        }
+        
     }
     
 

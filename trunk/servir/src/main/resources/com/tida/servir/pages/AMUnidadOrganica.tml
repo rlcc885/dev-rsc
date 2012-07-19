@@ -213,16 +213,19 @@
                             </div>
 
                         </div>
-                     <t:if test="${vbotones}">
+                     
                         <div id="bouttons_uo" class="actions f-right clear">
                             <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
+                          <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
+                          </t:if>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
+                            
 
                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>
-                     </t:if>
+                     
                         <br style="clear: both;"/>
                     </t:form>
 
