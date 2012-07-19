@@ -388,6 +388,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
         titular=null;
         jefeRRHH=null;
         jefeOGA=null;
+        subtitulart = new LkBusquedaTrabajador();
+        subjeferrhht= new LkBusquedaTrabajador();
+        subjefeogat= new LkBusquedaTrabajador();
+        titulart= new LkBusquedaTrabajador();
+        jeferrhht= new LkBusquedaTrabajador();
+        jefeogat= new LkBusquedaTrabajador();
 
 //        if(enti!=null){
 //            if(enti.getEsSubEntidad()){
@@ -820,9 +826,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @CommitAfter
     Object onActionFromEliminarSeleccion(Entidad enti1) {
-        enti1.setEstado(false);
-        session.saveOrUpdate(enti1);
-        envelope.setContents("Entidad/Sub Entidad Eliminada");
+        if(enti1.getEstado()){
+            enti1.setEstado(false);
+            session.saveOrUpdate(enti1);
+            envelope.setContents("Entidad/Sub Entidad Eliminada");
+        }else{
+            enti1.setEstado(true);
+            session.saveOrUpdate(enti1);
+            envelope.setContents("Entidad/Sub Entidad Revertida");
+        }
+       
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaentidadZone", listaentidadZone.getBody());
 
     }
@@ -837,8 +850,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
+        if(bdenoentidad!=null){
         c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
         return c.list();
+        
     }
 
     @Log
@@ -960,6 +976,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     Object onActionFromEditar(Entidad entix) {
+        if(entix!=null){
         entio = entix;
         entidad_origen = entio.getDenominacion();
 
@@ -974,6 +991,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeoSubEntidadUE.setDistrito(entio.getDistrito());
         
         subEntidadUE.setEsSubEntidad(true);
+        }
         mostrar = false;
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody());
     }
@@ -1030,17 +1048,22 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
+        
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        if(nombreTrabajador!=null){
         System.out.println("nombress: "+ nombreTrabajador);
         c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
         return c.list();
     }
 
     @Log
     Object onActionFromeditarsubTitular(Trabajador traba) {
         //subtitulart = traba;
+        if(traba!=null){
         subtitular = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         subEntidadUE.setTitular(traba);
+        }
         btitular = false;
         mostrar = false;
         return subTitularZone.getBody();
@@ -1049,8 +1072,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromeditarsubJefeRRHH(Trabajador traba) {
         //subjeferrhht = traba;
+        if(traba!=null){
         subjefeRRHH = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         subEntidadUE.setJefeRRHH(traba);
+        }
         bjefeRRHH = false;
         mostrar = false;
         return subJefeRRHHZone.getBody();
@@ -1059,8 +1084,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromeditarsubJefeOGA(Trabajador traba) {
         //subjefeogat = traba;
+        if(traba!=null){
         subjefeOGA = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         subEntidadUE.setJefeOga(traba);
+        }
         bjefeOGA = false;
         mostrar = false;
         return subJefeOGAZone.getBody();
@@ -1069,8 +1096,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromeditarTitular(Trabajador traba) {
         //titulart = traba;
+        if(traba!=null){
         titular = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         entidadUE.setTitular(traba);
+        }
         btitulari = false;
         mostrar = false;
         return TitularZone.getBody();
@@ -1079,8 +1108,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromeditarJefeRRHH(Trabajador traba) {
         //jeferrhht = traba;
+        if(traba!=null){
         jefeRRHH = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         entidadUE.setJefeRRHH(traba);
+        }
         bjefeRRHHi = false;
         mostrar = false;
         return JefeRRHHZone.getBody();
@@ -1089,8 +1120,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onActionFromeditarJefeOGA(Trabajador traba) {
         //jefeogat = traba;
+        if(traba!=null){
         jefeOGA = traba.getApellidoPaterno()+" "+traba.getApellidoMaterno()+", "+traba.getNombres();
         entidadUE.setJefeOga(traba);
+        }
         bjefeOGAi = false;
         mostrar = false;
         return JefeOGAZone.getBody();
