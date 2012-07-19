@@ -219,7 +219,8 @@
                             <div class="f-left">
                                 <t:label for ="denominacion"/>
                                 <input t:type="TextField" t:id="denominacion"
-                                           t:value="entidadUE.denominacion" t:validate="required, maxlength=255" size="85" disabled="${badmentidad}"/>
+                                       t:value="denoEntidad" t:validate="required, maxlength=255" size="85" disabled="${badmentidad}" 
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoEntidadChanged"  t:zone="principalZone" />
                             </div>
                             <div class="f-left">
                                 <t:label for="sigla"/>
