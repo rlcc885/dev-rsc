@@ -22,7 +22,8 @@ public class LkBusquedaEntidad implements Serializable {
     private String sectorgobierno;
     private String organizacionestado;
     private String tipoorganismo;
-    private boolean estado;
+    private Boolean estado;
+    private Boolean essubentidad;
     private String departamento;
     private String provincia;
     private String distrito;
@@ -89,11 +90,11 @@ public class LkBusquedaEntidad implements Serializable {
     public void setTipoorganismo(String tipoorganismo) {
         this.tipoorganismo = tipoorganismo;
     }
-      public boolean getEstado() {
+      public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
       public String getDepartamento() {
@@ -141,5 +142,14 @@ public class LkBusquedaEntidad implements Serializable {
     public void setSubentidad(String subentidad) {
         this.subentidad = subentidad;
     }
+    
+    public Boolean getEssubentidad() {
+        return essubentidad;
+    }
+
+    public void setEssubentidad(Boolean essubentidad) {
+        this.essubentidad = essubentidad;
+    }
+      
    
 }

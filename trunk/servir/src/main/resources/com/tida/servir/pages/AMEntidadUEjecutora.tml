@@ -47,6 +47,11 @@
                 <input t:type="TextField" t:id="busdenominacion"
                         t:value="busdenominacion" t:validate="maxlength=255" size="75"/>
             </div>
+             <div class="f-left">
+                <t:label for ="busestado"/>
+                <input t:type="Select" t:id="busestado"
+                        t:value="busestado"  model="literal:Activo,Inactivo" />
+            </div>
         </div> 
         
             
@@ -93,15 +98,20 @@
                                 <input t:type="TextField" t:id="bussubdenominacion"
                         t:value="bussubdenominacion" t:validate="maxlength=255" size="75"/>
                             </div>
+                             <div class="f-left">
+                                <t:label for ="bussubestado"/>
+                                <input t:type="Select" t:id="bussubestado"
+                                        t:value="bussubestado"  model="literal:Activo,Inactivo" />
+                            </div>
                         </div> 
         
             
                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                                <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?" />  
                             </div>
                             <div class="f-right">
-                                <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button" t:mixins="confirm" />
+                                <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
                             </div>
                         </div>  
           
@@ -125,11 +135,15 @@
     
     <div id = "tabla_oi">
         <t:zone t:id="listaentidadZone">
-            <t:grid source="listadoEntidades" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-        row="listaentidad" include="denominacion, nivelGobierno, subentidad, SIGLA" inPlace="true" >
+            <t:grid source="listadoEntidades" rowsPerPage="10" t:add="Denominacion_, NivelGobierno_, Entidad_, Sigla_, Acciones" pagerPosition="bottom"
+        row="listaentidad" exclude="id,denominacion,cue_entidad,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,departamento,provincia,distrito,subentidad,SIGLA,tiposubentidad,essubentidad" inPlace="true" >
                 <t:parameter name="empty">
                     <div class="no-info">No hay entidades generadas</div>
                 </t:parameter>
+                <p:denominacion_Cell>${listaentidad.denominacion}</p:denominacion_Cell>
+                <p:nivelGobierno_Cell>${listaentidad.nivelgobierno}</p:nivelGobierno_Cell>
+                <p:entidad_Cell>${listaentidad.subentidad}</p:entidad_Cell>
+                <p:sigla_Cell>${listaentidad.SIGLA}</p:sigla_Cell>
                 <p:accionesCell>
 
                     <t:actionlink t:id="editarSeleccion" zone="nivelOrganizacionSectorZone" context="listaentidad">Editar</t:actionlink> | 
