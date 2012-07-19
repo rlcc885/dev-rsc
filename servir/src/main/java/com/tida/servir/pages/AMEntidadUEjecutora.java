@@ -236,6 +236,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String busdenominacion;
+    @Persist
+    @Property
+    private String busestado;
     //Busqueda SubEntidad Zone
     @InjectComponent
     private Zone busquedasubcombosZone;
@@ -255,6 +258,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     @Property
     private String bussubdenominacion;
+    @Persist
+    @Property
+    private String bussubestado;
     @Property
     @Persist
     private boolean bessubentidad;
@@ -545,8 +551,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
             elemento=3;
     }
 
-    void onSelectedFromBusenviar() {
+    
+    void onSelectedFromBussubenviar() {
         bessubentidad = true;
+    }
+    
+     void onSelectedFromBusenviar() {
+        bessubentidad = false;
     }
 
     void onSelectedFromBussubreset() {
@@ -754,30 +765,56 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromEditarSeleccion(Entidad enti1) {
 //        enti=new Entidad();
 //        entidadUE= new Entidad();
-        entidadUE = enti1;        
-        if(enti1.getCue_entidad()!=null)cueEntidad=enti1.getCue_entidad();
-        if(enti1.getSigla()!=null)siglaEntidad=enti1.getSigla();
-        if(enti1.getEmailInstitucional()!=null)emailentidad=enti1.getEmailInstitucional();
-        if(enti1.getUrlEntidad()!=null)urlsEntidad=enti1.getUrlEntidad();
-        if(enti1.getTelefonoEntidad()!=null)telefEntidad=enti1.getTelefonoEntidad();
-        if(enti1.getDescZona()!=null)desczonaentidad=enti1.getDescZona();
-        if(enti1.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(enti1.getDepartamento());
-        if(enti1.getProvincia()!=null)ubigeoEntidadUE.setProvincia(enti1.getProvincia());
-        if(enti1.getDistrito()!=null)ubigeoEntidadUE.setDistrito(enti1.getDistrito());
-        if(enti1.getTitular()!=null)titular = enti1.getTitular().getApellidoPaterno()+" "+enti1.getTitular().getApellidoMaterno()+", "+enti1.getTitular().getNombres();
-        if(enti1.getJefeRRHH()!=null)jefeRRHH = enti1.getJefeRRHH().getApellidoPaterno()+" "+enti1.getJefeRRHH().getApellidoMaterno()+", "+enti1.getJefeRRHH().getNombres();
-        if(enti1.getJefeOga()!=null)jefeOGA = enti1.getJefeOga().getApellidoPaterno()+" "+enti1.getJefeOga().getApellidoMaterno()+", "+enti1.getJefeOga().getNombres();
-   
-        cueEntidad=entidadUE.getCue_entidad();
-        siglaEntidad=entidadUE.getSigla();
+        
         bsector = true;
         btipoorganismo = true;
         if (_usuario.getRol().getId() == 2) {
             badmentidad = true;
         }
-
-        return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
+        
+        if(bessubentidad){
+            subEntidadUE= enti1; 
+            if(enti1.getDenominacion()!=null)denoSubEntidad=enti1.getDenominacion();
+            if(enti1.getSigla()!=null)siglaSubEntidad=enti1.getSigla();
+            if(enti1.getRuc()!=null)rucSubEntidad=enti1.getRuc();          
+            if(enti1.getCue_entidad()!=null)cueSubEntidad=enti1.getCue_entidad();
+            if(enti1.getDescZona()!=null)desczonasubentidad=enti1.getDescZona();          
+            if(enti1.getTelefonoEntidad()!=null)telefSubEntidad=enti1.getTelefonoEntidad();         
+            if(enti1.getEmailInstitucional()!=null)emailSubEntidad=enti1.getEmailInstitucional();
+            if(enti1.getUrlEntidad()!=null)urslSubEntidad=enti1.getUrlEntidad();
+            if(enti1.getDepartamento()!=null)ubigeoSubEntidadUE.setDepartamento(enti1.getDepartamento());
+            if(enti1.getProvincia()!=null)ubigeoSubEntidadUE.setProvincia(enti1.getProvincia());
+            if(enti1.getDistrito()!=null)ubigeoSubEntidadUE.setDistrito(enti1.getDistrito());
+            
+            if(enti1.getTitular()!=null)subtitular = enti1.getTitular().getApellidoPaterno()+" "+enti1.getTitular().getApellidoMaterno()+", "+enti1.getTitular().getNombres();
+            if(enti1.getJefeRRHH()!=null)subjefeRRHH = enti1.getJefeRRHH().getApellidoPaterno()+" "+enti1.getJefeRRHH().getApellidoMaterno()+", "+enti1.getJefeRRHH().getNombres();
+            if(enti1.getJefeOga()!=null)subjefeOGA = enti1.getJefeOga().getApellidoPaterno()+" "+enti1.getJefeOga().getApellidoMaterno()+", "+enti1.getJefeOga().getNombres();
+            
+            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("subprincipalZone", subprincipalZone.getBody()).add("ubigeoSubEntidadZone", ubigeoSubEntidadZone.getBody()).add("subTitularZone", subTitularZone.getBody()).add("subJefeRRHHZone", subJefeRRHHZone.getBody()).add("subJefeOGAZone", subJefeOGAZone.getBody());
 //                    .add("logoentidadZone", logoentidadZone.getBody()); 
+                    
+        }else{
+            entidadUE = enti1;        
+            if(enti1.getCue_entidad()!=null)cueEntidad=enti1.getCue_entidad();
+            if(enti1.getSigla()!=null)siglaEntidad=enti1.getSigla();
+            if(enti1.getEmailInstitucional()!=null)emailentidad=enti1.getEmailInstitucional();
+            if(enti1.getUrlEntidad()!=null)urlsEntidad=enti1.getUrlEntidad();
+            if(enti1.getTelefonoEntidad()!=null)telefEntidad=enti1.getTelefonoEntidad();
+            if(enti1.getDescZona()!=null)desczonaentidad=enti1.getDescZona();
+            if(enti1.getDepartamento()!=null)ubigeoEntidadUE.setDepartamento(enti1.getDepartamento());
+            if(enti1.getProvincia()!=null)ubigeoEntidadUE.setProvincia(enti1.getProvincia());
+            if(enti1.getDistrito()!=null)ubigeoEntidadUE.setDistrito(enti1.getDistrito());
+            if(enti1.getTitular()!=null)titular = enti1.getTitular().getApellidoPaterno()+" "+enti1.getTitular().getApellidoMaterno()+", "+enti1.getTitular().getNombres();
+            if(enti1.getJefeRRHH()!=null)jefeRRHH = enti1.getJefeRRHH().getApellidoPaterno()+" "+enti1.getJefeRRHH().getApellidoMaterno()+", "+enti1.getJefeRRHH().getNombres();
+            if(enti1.getJefeOga()!=null)jefeOGA = enti1.getJefeOga().getApellidoPaterno()+" "+enti1.getJefeOga().getApellidoMaterno()+", "+enti1.getJefeOga().getNombres();
+            
+            return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
+//                    .add("logoentidadZone", logoentidadZone.getBody()); 
+        }
+
+        
+
+
     }
 
     @Log
@@ -786,7 +823,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         enti1.setEstado(false);
         session.saveOrUpdate(enti1);
         envelope.setContents("Entidad/Sub Entidad Eliminada");
-        return listaentidadZone.getBody();
+        return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaentidadZone", listaentidadZone.getBody());
+
     }
 
     //Metodos de Busqueda de Entidades origenes para la subentidad   
@@ -806,7 +844,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
-        c.add(Restrictions.eq("estado", true));
 
         //Entidad
         if (bnivelGobierno != null) {
@@ -841,6 +878,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("------------------ Distrito" + ubigeobusEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusEntidadUE.getDistrito().getValor()));
         }
+        if (busestado != null) {
+            System.out.println("------------------ Estado" + busestado);
+            if(busestado.equalsIgnoreCase("Activo")){
+                c.add(Restrictions.eq("estado", true));
+            }else{
+                c.add(Restrictions.eq("estado", false));
+            }
+        }
 
         //Sub Entidad
         if (btiposubentidad != null) {
@@ -848,26 +893,34 @@ public class AMEntidadUEjecutora extends GeneralPage {
             c.add(Restrictions.eq("tiposubentidad", btiposubentidad.getValor()));
         }
         if (bussubdenominacion != null) {
-            System.out.println("------------------ Enitidad " + bussubdenominacion);
+            System.out.println("------------------ Sub Enitidad " + bussubdenominacion);
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (ubigeobusSubEntidadUE.getDepartamento() != null) {
-            System.out.println("------------------ Departamento " + ubigeobusSubEntidadUE.getDepartamento().getValor());
+            System.out.println("------------------ Sub Departamento " + ubigeobusSubEntidadUE.getDepartamento().getValor());
             c.add(Restrictions.eq("departamento", ubigeobusSubEntidadUE.getDepartamento().getValor()));
         }
         if (ubigeobusSubEntidadUE.getProvincia() != null) {
-            System.out.println("------------------ Provincia " + ubigeobusSubEntidadUE.getProvincia().getValor());
+            System.out.println("------------------ Sub Provincia " + ubigeobusSubEntidadUE.getProvincia().getValor());
             c.add(Restrictions.eq("provincia", ubigeobusSubEntidadUE.getProvincia().getValor()));
         }
         if (ubigeobusSubEntidadUE.getDistrito() != null) {
-            System.out.println("------------------ Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
+            System.out.println("------------------ Sub Distrito" + ubigeobusSubEntidadUE.getDistrito().getValor());
             c.add(Restrictions.eq("distrito", ubigeobusSubEntidadUE.getDistrito().getValor()));
         }
-        /*
+        if (bussubestado != null) {
+            System.out.println("------------------ Sub Estado" + bussubestado);
+            if(bussubestado.equalsIgnoreCase("Activo")){
+                c.add(Restrictions.eq("estado", true));
+            }else{
+                c.add(Restrictions.eq("estado", false));
+            }
+        }
+        
         if(bessubentidad){
             c.add(Restrictions.eq("essubentidad", bessubentidad));
         }
-        */
+        
         
         return c.list();
     }
