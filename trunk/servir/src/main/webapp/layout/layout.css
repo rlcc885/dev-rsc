@@ -1219,14 +1219,14 @@ form th {
 }
 */
 #timeout {
-    left:200px;
-    top: 100px;
-    background-color: #76EE00;
     font-weight: bold;
     font-size: 14px;
     padding: 20px;
     width: 250px;
     text-align: center;
+    background-color:#fff; 
+    margin:auto;
+    margin-top: 60px;
 }
 
 /* Para tablas auxiliares */
@@ -1446,7 +1446,13 @@ DIV.t-available-values UL LI
 
 
 
-.box { border:1px solid #707070; background-color:#fff; padding:20px; clear:both;}
+.box { 
+    border:1px solid #707070; 
+    background-color:#fff; 
+    padding:20px; 
+    clear:both;
+    position: relative;
+}
 .box .actions { overflow:auto;zoom:1; margin-top: 50px;}
 .box h3, h3 { 
     background-color:#d72522; 
@@ -1630,13 +1636,6 @@ div.t-data-grid-pager span.current { background-color:#DF0130;}
 
 #tamanosArchivos ul { float:left;}
 #formularioconfirmacion { float:right; margin-top:15px;}
-
-
-/*TIME OUT*/
-#timeout { background-color:#fff; margin:60px auto;}
-
-
-
 
 
 /* The console is used to show debugging messages. */
