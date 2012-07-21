@@ -278,42 +278,42 @@ public class batch_dev extends GeneralPage {
 
         System.out.println("-------------------------- Etapa Inicio -------------");
 
-        try {
-            myTratamiento = new Tratamiento(lugarArchivo, origenArchivos,  session, errores, tipoProceso, _usuario);
-        } catch (IOException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-            formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
-            return this;
-        } catch (ParseException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades / U.Ejecutoras.");
-            return this;
-        }
-
-        //verificacion tipo usuario y carga massiva
-        if (!_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) {
-            if (myTratamiento.getOrigenArchivo().equals(OrigenArchivos.CARGA_MASIVA_ORGANISMO)) {
-                //errores = CreadorDesdeCsv.verificacionEntidadPuedeProcesarEstaArchivo(myTratamiento.getEntidadesUE(), _entidadUE);
-                if (errores.size() > 0) { // hay errores
-                    formularioprocesobatch.recordError("Hay errores al procesar el archivo csv de Entidades / U.Ejecutoras.");
-                    for (String error : errores) {
-                        formularioprocesobatch.recordError(error);
-                        return this;
-                    }
-                }
-            }
-        } else {
-            if (myTratamiento.getOrigenArchivo().equals(OrigenArchivos.CARGA_MASIVA_ORGANISMO)) {
-                //errores = CreadorDesdeCsv.verificacionProcesarCargaMassiva(myTratamiento.getEntidadesUE());
-                if (errores.size() > 0) { // hay errores
-                    formularioprocesobatch.recordError("Hay errores al procesar el archivo csv de Entidades / U.Ejecutoras.");
-                    for (String error : errores) {
-                        formularioprocesobatch.recordError(error);
-                        return this;
-                    }
-                }
-            }
-        }
+//        try {
+//            myTratamiento = new Tratamiento(lugarArchivo, origenArchivos,  session, errores, tipoProceso, _usuario);
+//        } catch (IOException ex) {
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
+//            return this;
+//        } catch (ParseException ex) {
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades / U.Ejecutoras.");
+//            return this;
+//        }
+//
+//        //verificacion tipo usuario y carga massiva
+//        if (!_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) {
+//            if (myTratamiento.getOrigenArchivo().equals(OrigenArchivos.CARGA_MASIVA_ORGANISMO)) {
+//                //errores = CreadorDesdeCsv.verificacionEntidadPuedeProcesarEstaArchivo(myTratamiento.getEntidadesUE(), _entidadUE);
+//                if (errores.size() > 0) { // hay errores
+//                    formularioprocesobatch.recordError("Hay errores al procesar el archivo csv de Entidades / U.Ejecutoras.");
+//                    for (String error : errores) {
+//                        formularioprocesobatch.recordError(error);
+//                        return this;
+//                    }
+//                }
+//            }
+//        } else {
+//            if (myTratamiento.getOrigenArchivo().equals(OrigenArchivos.CARGA_MASIVA_ORGANISMO)) {
+//                //errores = CreadorDesdeCsv.verificacionProcesarCargaMassiva(myTratamiento.getEntidadesUE());
+//                if (errores.size() > 0) { // hay errores
+//                    formularioprocesobatch.recordError("Hay errores al procesar el archivo csv de Entidades / U.Ejecutoras.");
+//                    for (String error : errores) {
+//                        formularioprocesobatch.recordError(error);
+//                        return this;
+//                    }
+//                }
+//            }
+//        }
 
         /*
          * Los csv son consistentes entre ellos�

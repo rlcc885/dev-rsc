@@ -66,7 +66,7 @@ private ApplicationGlobals globals;
         // change, to force the browser to download new versions.
         configuration.add(SymbolConstants.APPLICATION_VERSION, "3.0.0");
         
-        //configuration.add("upload.repository-location", "C:\Users\arson\Documents\NetBeansProjects\servir\target\servir\" );
+        configuration.add("upload.repository-location", "C:\\apache-tomcat-6.0.35\\webapps\\servir\\" );
         
 
     }
