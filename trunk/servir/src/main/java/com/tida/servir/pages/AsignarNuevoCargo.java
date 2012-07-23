@@ -147,7 +147,7 @@ public class AsignarNuevoCargo extends GeneralPage {
 
         cargoAsignado.setLegajo((Legajo) crit.list().get(0)); //tomo el primer
         cargoAsignado.setFec_inicio(fec_inicio);
-        cargoAsignado.setCtd_per_superv(ctd_per_superv);
+//        cargoAsignado.setCtd_per_superv(ctd_per_superv);
         cargoAsignado.setTrabajador(trabajador);
         cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
         //cargoAsignado.setTipoVinculo(tipoVinculo);

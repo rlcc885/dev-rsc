@@ -65,7 +65,7 @@ public class CargoAsignado {
     @Temporal(TemporalType.DATE)
     private Date fec_fin;
 
-    private Integer ctd_per_superv;
+//    private Integer ctd_per_superv;
     private String motivo_cese;
     //private String tipoVinculo;
     private DatoAuxiliar tipovinculo;
@@ -97,13 +97,13 @@ public class CargoAsignado {
         this.cargoxunidad = cargoxunidad;
     }
 
-    public Integer getCtd_per_superv() {
-        return ctd_per_superv;
-    }
-
-    public void setCtd_per_superv(Integer ctd_per_superv) {
-        this.ctd_per_superv = ctd_per_superv;
-    }
+//    public Integer getCtd_per_superv() {
+//        return ctd_per_superv;
+//    }
+//
+//    public void setCtd_per_superv(Integer ctd_per_superv) {
+//        this.ctd_per_superv = ctd_per_superv;
+//    }
 
     public Boolean getEstado() {
         return estado;
