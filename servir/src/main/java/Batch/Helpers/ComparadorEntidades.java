@@ -1212,10 +1212,10 @@ public class ComparadorEntidades {
             return lica;
         }
 
-        lica.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCtd_per_superv(), cdestino.getCtd_per_superv()));
-        if (lica.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lica;
-        }
+//        lica.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCtd_per_superv(), cdestino.getCtd_per_superv()));
+//        if (lica.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lica;
+//        }
 
         lica.setResultado(ComparadorEntidades.comparadorDatos(corigen.getMotivo_cese(), cdestino.getMotivo_cese()));
         if (lica.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {

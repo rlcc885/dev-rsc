@@ -2188,7 +2188,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(ca.getFec_fin()));
                 escribir.print("|");
-                escribir.print(InformeXLS.numberToString(ca.getCtd_per_superv()));
+//                escribir.print(InformeXLS.numberToString(ca.getCtd_per_superv()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(ca.getMotivo_cese()));
                 escribir.print("|");

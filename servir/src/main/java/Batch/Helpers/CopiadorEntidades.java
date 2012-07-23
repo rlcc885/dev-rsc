@@ -171,7 +171,7 @@ public class CopiadorEntidades {
         if(origen.getAusLicPersonales() != null)
             destino.setAusLicPersonales(origen.getAusLicPersonales());
         destino.setCargoxunidad(origen.getCargoxunidad());
-        destino.setCtd_per_superv(CopiadorEntidades.verifacionNull(origen.getCtd_per_superv()));
+//        destino.setCtd_per_superv(CopiadorEntidades.verifacionNull(origen.getCtd_per_superv()));
         destino.setEstado(CopiadorEntidades.verifacionNull(origen.getEstado()));
         if(origen.getEvaluacionesPersonales() != null)
             destino.setEvaluacionesPersonales(origen.getEvaluacionesPersonales());

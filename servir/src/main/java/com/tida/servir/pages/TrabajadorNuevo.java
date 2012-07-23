@@ -133,11 +133,13 @@ public class TrabajadorNuevo  extends GeneralPage
     @Property
     private CargoAsignado cargoAsignado;
     @Property
+    @Persist
     private Legajo nuevoLegajo;
     
     
     private CargosSelectModel<Cargoxunidad> _beans;
     @Property
+    @Persist
     private Date fechaingreso;
 
     
@@ -165,8 +167,18 @@ public class TrabajadorNuevo  extends GeneralPage
     @Property
     private LkBusquedaTrabajador listaentidad;
 
+    @PageActivationContext
+//    @Persist
+    private CargoAsignado ca;
     
- 
+    public CargoAsignado getCa() {
+        return ca;
+    }
+
+    public void setCa(CargoAsignado ca) {
+        this.ca = ca;
+    }
+
  
     @Log
     @SetupRender
@@ -182,6 +194,18 @@ public class TrabajadorNuevo  extends GeneralPage
         nuevoCargo=null;
         tipovinculo=null;
         bTrabajadorRegistrado=false;
+        if(ca!=null){
+            nuevo=ca.getTrabajador();
+            unidadorganica=ca.getCargoxunidad().getUnidadorganica();
+            cargo=ca.getCargoxunidad();
+            tipovinculo=ca.getTipovinculo();
+            fechaingreso=ca.getFec_inicio();
+            nuevoLegajo=ca.getLegajo();
+            if(ca.getPuestoconfianza()!=null){
+                puestoconfianza=ca.getPuestoconfianza(); 
+            }
+            
+        }
         
       
     }
@@ -348,42 +372,44 @@ public class TrabajadorNuevo  extends GeneralPage
             return "TrabajadorNuevo";
         }else if(elemento==2){
             return "Alerta";
-        }else{    
-            if(getListadoEntidades().size()>0){
+        }else{
+            if(getListadoEntidades().size()>0 && ca==null){
                  envelope.setContents(helpers.Constantes.EUE_EXITO);
                  envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
                  bTrabajadorRegistrado=true;
                  return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                 .add("mensajesZone", mensajesZone.getBody());
             }else{
-                 //Guardar Trabajador 
-                  nuevo.setEntidad(oi);  
-                  session.saveOrUpdate(nuevo);
-                  //Guardar Legajo
-                  nuevoLegajo = new Legajo();
-                  nuevoLegajo.setEntidad(oi);
-                  nuevoLegajo.setTrabajador(nuevo);
-                  nuevoLegajo.setCod_legajo("L9999");
-                  session.saveOrUpdate(nuevoLegajo);
-                  //Guardar Cargo Asignado     
-                  cargoAsignado = new CargoAsignado();
+                //Guardar Cargo Asignado 
+                cargoAsignado = new CargoAsignado();                 
+                if(ca!=null){
+                    cargoAsignado.setTrabajador(nuevo);
+                    cargoAsignado.setLegajo(nuevoLegajo);
+                }else{
+                    //Guardar Trabajador
+                    nuevo.setEntidad(oi);  
+                    session.saveOrUpdate(nuevo);
+                    //Guardar Legajo
+                    nuevoLegajo = new Legajo();
+                    nuevoLegajo.setEntidad(oi);
+                    nuevoLegajo.setTrabajador(nuevo);
+                    nuevoLegajo.setCod_legajo("L9999");
+                    session.saveOrUpdate(nuevoLegajo);
+                    cargoAsignado.setTrabajador(nuevo);
+                    cargoAsignado.setLegajo(nuevoLegajo);
+                }                            
                   cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);            
                   cargoAsignado.setFec_inicio(fechaingreso);
                   cargoAsignado.setTipovinculo(tipovinculo);
-                  cargoAsignado.setCargoxunidad(cargo);
-                  cargoAsignado.setLegajo(nuevoLegajo);
-                  cargoAsignado.setTrabajador(nuevo);
+                  cargoAsignado.setCargoxunidad(cargo);                
                   cargoAsignado.setPuestoconfianza(puestoconfianza);
                   session.saveOrUpdate(cargoAsignado);
                   envelope.setContents(helpers.Constantes.EUE_EXITO);
                   envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
-                  
-                  return mensajesZone.getBody();
- 
+                  ca=null;
+                  return Busqueda.class;
             }
-
-        }
-        
+        }        
     }
     
     
