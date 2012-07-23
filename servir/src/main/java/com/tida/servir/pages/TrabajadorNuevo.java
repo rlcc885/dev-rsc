@@ -186,12 +186,17 @@ public class TrabajadorNuevo  extends GeneralPage
       
     }
     
-    public List<String> getTiposDoc() {
-    	Criteria c = session.createCriteria(DatoAuxiliar.class);
-    	c.add(Restrictions.eq("nombreTabla", "DOCUMENTOIDENTIDAD"));
-        c.add(Restrictions.ne("valor", "Partida de nacimiento (solo a menores)"));
-    	c.setProjection(Projections.property("valor"));
-        return c.list();
+//    public List<String> getTiposDoc() {
+//    	Criteria c = session.createCriteria(DatoAuxiliar.class);
+//    	c.add(Restrictions.eq("nombreTabla", "DOCUMENTOIDENTIDAD"));
+//        c.add(Restrictions.ne("valor", "Partida de nacimiento (solo a menores)"));
+//    	c.setProjection(Projections.property("valor"));
+//        return c.list();
+//    }
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
     @Log

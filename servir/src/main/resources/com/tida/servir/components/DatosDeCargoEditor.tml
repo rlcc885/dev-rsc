@@ -4,12 +4,12 @@
 
     <t:content>
 
-    <div class="box f-wrap">
-        <div id = "DatosDeCargo">
-        <h3> Datos del cargo </h3>
+    <!--<div class="box f-wrap">-->
+       <!-- <div id = "DatosDeCargo">-->
+        <!--<h3> Datos del cargo </h3>-->
                 <!-- <table > -->
                  
-    
+                <!--
 		    <div class="datosdecargoeditor">
                             <label><b>Código del Cargo:</b></label>
                             <div class="f-left">
@@ -24,29 +24,29 @@
                                 <label>${actual.den_cargo}</label>
                             </div>
                         </div>
-                <!--
+                
                         <div class="datosdecargoeditor">
                             <label><b>Régimen Laboral /Contractual:</b></label>
                             <div class="f-left">
                                 <label>${actual.regimenlaboral.getValor()}</label>
                             </div>
-                        </div>-->
+                        </div>
                           <div class="datosdecargoeditor">
                             <label><b>Estado:</b></label>
                             <div class="f-left">
                                 <label>${actual.estado}</label>
                             </div>
                         </div>
-                <!--
+                
                         <div class="datosdecargoeditor">
                             <label><b>Clasificación Funcional:</b> </label>
                             <div class="f-left">
                                 <label>{actual.clasificacion_funcional?.valor}</label>
                             </div>
                         </div>
-                -->
+                
                         <form t:type="form" t:id="formulariodatosdecargo" >
-                            <!--<div class="datosdecargoeditor">
+                            <div class="datosdecargoeditor">
                                 <label><b>Habilitación Profesional:</b></label>
                                 <div class="datoperso_req_hab_profesional">
                                     <t:checkbox t:id="req_hab_profesional" value="actual.req_hab_profesional" size="30" disabled = "true"/>
@@ -57,28 +57,26 @@
                                 <div class="datoperso_req_hab_profesional">
                                     <t:checkbox t:id="dec_jurada_byr" value="actual.dec_jurada_byr" size="30" disabled = "true"/>
                                 </div>
-                            </div>-->
+                            </div>
                         </form>
-                <!-- </table> -->
-             </div> <!-- Datos del cargo -->
+                </table> 
+             </div> -->
              
               
-                <div id = "DatosDeCargoAsignado">
+                <!--<div id = "DatosDeCargoAsignado">-->
                     <h3> Datos del Cargo Asignado</h3>
+                    <!--<div class="f-wrap">
+                        
+                    </div>-->
                      <t:zone t:id="datosDeCargoZone">
                     <form t:type="form" t:id="formulariodatosdecargoasignado" t:zone="datosDeCargoZone">
                         <t:errors/>
-                        <t:envelope t:id="envelope"/>                        
+                        <t:envelope t:id="envelope"/>
+                         <div class="f-wrap">
                             <div class="f-left">
                                 <label><b>Tipo de Vinculo:</b></label>
                                 <div class="f-left">
                                     <input t:type="Select" t:id="tipovinculo" t:value="valtipovinculo" model="tipoVinculo" />
-                                </div>
-                            </div>
-                            <div class="f-left">
-                                <label><b></b></label>
-                                <div class="f-left">
-                                    
                                 </div>
                             </div>
                             <div class="f-left">
@@ -94,7 +92,9 @@
                                     <input t:type="DateField" t:id="fec_fin" t:value="valfec_fin"
                                             size="30"/>
                                    </div>
-                            </div>                  
+                            </div>
+                         </div>
+                        <div class="f-wrap">
                             <div class="f-left">
                                 <label><b>Motivo de Cese:</b></label>
                                 <div class="f-left">
@@ -111,6 +111,7 @@
                                     </t:radiogroup>  
                                 </div>
                             </div>
+                        </div>
                             <div class="actions f-right">
                                 <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/> 
                                 <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>                                    
@@ -169,8 +170,8 @@
                             </t:if>
                     </form>-->
                    </t:zone>
-                </div>
+               <!-- </div>-->
             
-        </div>
+        <!--</div>-->
     </t:content>
 </html>

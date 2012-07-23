@@ -6,6 +6,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.CargoAsignado;
+import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
@@ -64,6 +65,7 @@ public class CargosGrilla {
 
     @Inject
    private Context context;
+   
 
     public boolean getNoEditable() {
         return !getEditable();
@@ -79,11 +81,11 @@ public class CargosGrilla {
     }
     
     void setupRender() {
-
         if (actual == null) {
             actual = new Trabajador();
-        }
+        } 
     }
+ 
 //
 //    StreamResponse onActionFromReportetrabajos(Long idLegajo) {
 //        Reportes rep = new Reportes();
@@ -98,9 +100,10 @@ public class CargosGrilla {
           c.createAlias("legajo", "legajo");
           c.add(Restrictions.eq("trabajador", actual));
           c.add(Restrictions.eq("legajo.entidad", _oi));
-          c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
+          //c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           return c.list();
+          
     }
 /*
     void onActionFromReportetrabajos() {
