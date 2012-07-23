@@ -345,7 +345,7 @@ public class EntidadSelect {
                 entidad = sentidad;
             }
             System.out.println("Entroooo");
-            envelope.setContents("Entidad /U. Ejecutora seleccionada");
+            envelope.setContents("Entidad /U. Ejecutora Seleccionada"+String.valueOf(entidad));
             if (_zone != null) {
                 return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
             } else {

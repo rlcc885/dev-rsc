@@ -22,7 +22,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="nuevo_tipoDocumento"/> 
-                            <input t:type="Select" t:id="nuevo_tipoDocumento" t:value="nuevo.tipoDocumento" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                            <input t:type="Select" t:id="nuevo_tipoDocumento" t:value="nuevo.documentoidentidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                    model="tiposDoc" t:blankOption="ALWAYS" t:validate="required" />
                         </div>
                         <div class="f-left">

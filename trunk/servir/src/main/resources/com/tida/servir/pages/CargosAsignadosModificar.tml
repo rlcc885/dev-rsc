@@ -10,7 +10,7 @@
       <div id = "Datos_Generales">
            <h2> Cargo - Cargo Asignado </h2>
            <div id= "basicosTrabajador">
-               <h3>${trabajador.tipoDocumento}: ${trabajador.nroDocumento}
+               <h3><!--${trabajador.tipoDocumento}: ${trabajador.nroDocumento}-->
                ${trabajador.apellidoPaterno}  ${trabajador.apellidoMaterno} ${trabajador.nombres}</h3>
            </div>
       </div>
@@ -18,17 +18,12 @@
     <div class="wrap">
 
     <!-- the tabs -->
-        <ul id="tabs-top" class="tabs">
-       <li><a href="#"> Cargo</a></li>
-     
-        </ul>
 
-        <div class="pane">
+    <div>    
             <ul id="tabs-cargo" class="tabs">
-                <li><a href="#"> Datos de cargo</a></li>
+                <li><a href="#"> Datos del Cargo/Puesto</a></li>
                 <li><a href="#"> Remuneraciones</a></li>
-                <li><a href="#"> Evaluaciones</a></li>
-                <li><a href="#"> Ausencias y Licencias</a></li>
+                <li><a href="#"> Evaluaciones</a></li>                
             </ul>
             
             
@@ -61,10 +56,11 @@
         </div>-->
 
 
-        </div> <!-- pane Cargo -->
+       <!-- pane Cargo -->
 
-    </div> <!-- wrapper -->
-
+     <!-- wrapper -->
+    </div>
+    </div>
      <script>
         <!--
 

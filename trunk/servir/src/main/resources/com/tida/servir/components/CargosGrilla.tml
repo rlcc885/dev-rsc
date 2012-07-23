@@ -15,8 +15,8 @@
 
         <p:accionesCell>
         <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
-        <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> |Desasignar</a>
-        <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> |Asignar</a>
+         |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Desasignar</a>
+         |<a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar</a>
        <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
         
 

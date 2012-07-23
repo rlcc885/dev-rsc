@@ -28,7 +28,7 @@
 
         <div>
         <ul id="tabs-Personales" class="tabs">
-            <li><a href="#"> Familiares</a></li>
+            <li><a href="#"> Documentos</a></li>
             <!--<li><a href="#"> Antecedentes Laborales</a></li>--> 
             <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
@@ -47,9 +47,9 @@
 
 		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
 		
-        <div class= "pane" id='familiares' name='familiares'>
+        <div class= "pane" id='documentos' name='documentos'>
               
-                <t:FamiliaresEditor t:id="familiaresEditor" actual= "actual"/>
+                <t:ConstanciasDocumentalesEditor t:id="constanciasDocumentalesEditor" actual= "actual"/>
               
         </div>
 
