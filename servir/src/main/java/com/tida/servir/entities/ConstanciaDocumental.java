@@ -17,37 +17,49 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
- * @author ale
+ * @author LFL
  */
 @Entity
 @Table(name = "RSC_CONSTANCIADOCUMENTAL")
 public class ConstanciaDocumental {
 
-//	@Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
     private Long id;
-
-//    @ManyToOne(optional = false)
-    private Legajo legajo;
-
-    private String cat_constancia;
-
-    private String tip_constancia;
-
-
+    private DatoAuxiliar categoriaconstancia;
+    private DatoAuxiliar tipoconstancia;    
     @Temporal(TemporalType.DATE)
-    private Date fecha;
-    private String num_resolucion;
-    private String txt_descriptivo;
-
-    public String getCat_constancia() {
-        return cat_constancia;
+    private Date fecha;   
+    private Legajo legajo;    
+    private Boolean obligatorio;
+    private Boolean entrego;
+    private CargoAsignado cargoasignado;
+    
+    @Id
+    @GeneratedValue
+    public Long getId() {
+        return id;
     }
 
-    public void setCat_constancia(String cat_constancia) {
-        this.cat_constancia = cat_constancia;
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getCategoriaconstancia() {
+        return categoriaconstancia;
+    }
+
+    public void setCategoriaconstancia(DatoAuxiliar categoriaconstancia) {
+        this.categoriaconstancia = categoriaconstancia;
+    }
+ 
+    @ManyToOne
+    public DatoAuxiliar getTipoconstancia() {
+        return tipoconstancia;
+    }
+
+    public void setTipoconstancia(DatoAuxiliar tipoconstancia) {
+        this.tipoconstancia = tipoconstancia;
     }
 
     public Date getFecha() {
@@ -58,15 +70,6 @@ public class ConstanciaDocumental {
         this.fecha = fecha;
     }
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @ManyToOne(optional = false)
     public Legajo getLegajo() {
@@ -77,30 +80,32 @@ public class ConstanciaDocumental {
         this.legajo = legajo;
     }
 
-    public String getNum_resolucion() {
-        return num_resolucion;
+    
+    public Boolean getObligatorio() {
+        return obligatorio;
     }
 
-    public void setNum_resolucion(String num_resolucion) {
-        this.num_resolucion = num_resolucion;
+    public void setObligatorio(Boolean obligatorio) {
+        this.obligatorio = obligatorio;
+    }
+    
+    public Boolean getEntrego() {
+        return entrego;
     }
 
-    public String getTip_constancia() {
-        return tip_constancia;
+    public void setEntrego(Boolean entrego) {
+        this.entrego = entrego;
     }
 
-    public void setTip_constancia(String tip_constancia) {
-        this.tip_constancia = tip_constancia;
+    @ManyToOne(optional = false)
+    public CargoAsignado getCargoasignado() {
+        return cargoasignado;
     }
 
-    public String getTxt_descriptivo() {
-        return txt_descriptivo;
+    public void setCargoasignado(CargoAsignado cargoasignado) {
+        this.cargoasignado = cargoasignado;
     }
-
-    public void setTxt_descriptivo(String txt_descriptivo) {
-        this.txt_descriptivo = txt_descriptivo;
-    }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

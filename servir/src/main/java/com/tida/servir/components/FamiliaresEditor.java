@@ -27,7 +27,7 @@ import org.hibernate.criterion.Restrictions;
 
 public class FamiliaresEditor {
 
-     @Property
+    @Property
     @SessionState
     private Usuario _usuario;
     @Property

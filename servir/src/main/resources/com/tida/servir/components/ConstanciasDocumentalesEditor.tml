@@ -1,59 +1,113 @@
-<html t:type="layout" title="Editar Constancias Documentales"
+<html t:type="layout" title="Documentos del Trabajador"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
     <t:content>
-        <div class = "box f-wrap">
-        <h3>${titulo}</h3>
-        <form t:type="form" t:id="constanciasDocumentalesForm" t:zone="prop:zone">
-            <t:errors/>
-            <t:envelope t:id="envelope"/>
-            <table class="t-data-grid">
-                <thead>
-                    <tr>
-                        <th>* Tipo de Constancia</th>
-                        <th>* Fecha</th>
-                        <th>Nº de Resolución</th>
-                        <th>* Texto descriptivo</th>
-                        <th class="Acciones t-last">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr t:type="AjaxFormLoop" t:id = "constancias"
-                    t:source="constanciasdocumentales"
-                    t:value="constancia" t:encoder = "encoder">
-                    <t:submitnotifier>
-                        <td><input t:type="Select" t:id="tipoconstancia" t:value="constancia.tip_constancia" model = "tiposConstancia" t:validate="required"/></td>
-                        <td><input t:type="DateInput" t:id="fecha" t:date="constancia.fecha"
-                        t:label="Fecha" t:validate="required" size="10" disabled ="noeditable"/></td>
-                        <td><input t:type="TextField" t:id="nroresolucion" class="input_corto" t:value="constancia.num_resolucion" maxlength="30" size="15" disabled ="noeditable"/></td>
-                        <td><input t:type="TextArea" t:id="txt_descriptivo" value="constancia.txt_descriptivo" t:validate="required" disabled ="noeditable"/></td>
+         <h2>Documentos del Trabajador</h2>
+  
+     <div id = "tabla_oi">
+            <t:zone t:id="listaDocumentosZone">   
+                <t:grid source="listadoDocumentos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                row="listaDocumentos" inPlace="true" >
+                    <t:parameter name="empty">
+                    <div class="no-info">No se encontraron registros</div>
+                    </t:parameter>
+                    
+                      <p:accionesCell>
+                               <t:actionlink t:id="editar" zone="documentosZone" context="listaDocumentos">Editar</t:actionlink> 
+                    </p:accionesCell>
+                </t:grid>
+            </t:zone>
+        </div>  
 
-                        <!-- If optimistic locking is needed then uncomment this next line.
-                        <t:hidden value="constancia.version"/>
-                        -->
-                        <td>
-                            <t:if test = "editable">
-                                <t:removerowlink>Eliminar</t:removerowlink>
-                            </t:if>
-                        </td>
-                    </t:submitnotifier>
-                        <p:addRow>
-                            <td colspan="5" style="text-align: right">
-                                <t:if test = "editable">
-                                    <t:addrowlink>Agregar Nueva</t:addrowlink>
-                                </t:if>
-                            </td>
-                        </p:addRow>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="actions f-right">
-                <t:if test = "editable">
-                    <input type="submit" value="Guardar" class="button"/>
-                </t:if>
+<div class="f-wrap">
+
+
+</div>  
+   
+ <div class="box">
+     <h3>Registro de Documentos Trabajador</h3>
+     
+            <div t:type="zone" t:id="mensajesDTZone" >
+                <t:form t:id="formulariomensajesDT"  zone="mensajesDTZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
             </div>
-        </form>
+     
+     
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="documentosZone" >
+                    <t:form t:id="formularioDocumentos"  zone="documentosZone">
+
+                        <div class="f-wrap">
+                            <!--
+                            <div class="f-left">
+                                 <label>Cargo Asignado</label>
+                                <select t:type="Select" t:id="cagoasignado" t:value="constancia.cargoasignado"
+                                        model="cargosAsignados" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:blankOption="ALWAYS" />
+                            </div>
+                            -->
+                            <div class="f-left" >
+                                <label>Categoría</label>
+                                <input t:type="Select" t:id="categoria" t:value="constancia.categoriaconstancia" 
+                                       model="beanCategoria" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left" >
+                                <label>Tipo Documento</label>
+                                <input t:type="Select" t:id="tipoDocumento" t:value="constancia.tipoconstancia" 
+                                       model="beanTipoDocumento" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                      t:blankOption="ALWAYS" />
+                            </div>   
+                             
+                        </div>
+                         <div class="f-wrap">
+                           
+                            <div class="f-left">
+                                <label>¿Obligatorio?</label>
+                                <input t:type="Select" t:id="bobligatorio"
+                                        t:value="bobligatorio"  model="literal:NO,SI" />
+                            </div>
+                            <div class="f-left">
+                                <label>* ¿Entrego?</label>
+                                <input t:type="Select" t:id="bentrego"
+                                        t:value="bentrego"  model="literal:NO,SI" />
+                            </div>
+                             <div class="f-left">	
+                                <label>* Fecha Entrega</label>
+                                <input t:type="DateField" t:id="fecha" t:value="constancia.fecha" t:validate="required"
+                                       size="10" />
+                            </div> 
+                             
+                        </div>
+                 <div class="f-wrap">
+                        <div class="f-right">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" />
+                        </div>
+                        </div>
+                    </t:form>  
+            </div> 
+     
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="documentosZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                    </div>
+                </div>
+                </t:form>
+
+
+            </div>
+     
         </div>
+        
+</div>      
+
     </t:content>
 </html>
