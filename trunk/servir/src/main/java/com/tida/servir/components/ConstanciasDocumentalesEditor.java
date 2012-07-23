@@ -5,13 +5,9 @@
 
 package com.tida.servir.components;
 
+import com.tida.servir.entities.*;
+import com.tida.servir.services.GenericSelectModel;
 import java.util.Date;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Usuario;
 
 import helpers.Errores;
 import helpers.Helpers;
@@ -21,180 +17,201 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.PrimaryKeyEncoder;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 
 
 
 import org.hibernate.*;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author ale
+ * @author LFL
  */
 public class ConstanciasDocumentalesEditor {
-    @SuppressWarnings("unused")
-    @Parameter(defaultPrefix = BindingConstants.LITERAL)
-    @Property
-    private String zone;
-
-    @Parameter
-    @Property
-    private Legajo legajo;
-
-    @Parameter
-    @Property
-    private String titulo;
-
     @Property
     @SessionState
     private Usuario _usuario;
-
     @Property
     @SessionState
     private Entidad _oi;
-
-    @Parameter
-    @Property
-    private String categoria;
-    //legajo= "_ca.legajo" titulo="Identificación Personal/Familiar" categoria="IDFAMILIARPERSONAL"
-
-    @Component(id = "constanciasDocumentalesForm")
-    private Form _form;
-
     @Inject
     private Session session;
-
-    @Property
-    private ConstanciaDocumental constancia;
-    
     @InjectComponent
     private Envelope envelope;
+   
+    
+    @Component(id = "formulariomensajesDT")
+    private Form formulariomensajesDT;
+    @InjectComponent
+    private Zone mensajesDTZone;  
+       
+    @InjectComponent
+    private Zone documentosZone;
+    
+    private int elemento=0;
+     
+    @Parameter
+    @Property
+    private Trabajador actual;
 
-
-    public List<ConstanciaDocumental> getConstanciasDocumentales () {
-        // Obtengo las constancias para la categoría indicada y del legajo indicado
-        Criteria c = session.createCriteria(ConstanciaDocumental.class);
-            c.add(Restrictions.like("cat_constancia", categoria));
-            c.add(Restrictions.eq("legajo", legajo));
-
-   	return c.list();
-
-    }
+    @Property
+    @Persist
+    private ConstanciaDocumental constancia;
+    
 
     @Persist
-    private List<String> tiposConstancia;
-
-    public List<String>  getTiposConstancia(){
-        return tiposConstancia;
+    private GenericSelectModel<CargoAsignado> _cargoasignado;
+    
+   
+    //Listado de familiares
+    @InjectComponent
+    private Zone listaDocumentosZone;
+    @Persist
+    @Property
+    private ConstanciaDocumental listadocumentos;
+    
+    private Legajo lega;
+    @Persist
+    @Property
+    private String bobligatorio;
+    @Persist
+    @Property
+    private String bentrego;
+ 
+    @Inject
+    private PropertyAccess _access;
+    
+    //Inicio de lac carga de la pagina
+    @Log
+    @SetupRender
+    private void inicio() {
+            constancia=new ConstanciaDocumental();
+            bentrego="";
+            bobligatorio="";
+           
     }
-
-
-    public boolean getNoEditable() {
-        return !getEditable();
+    
+    public Legajo buscarlegajo(){
+         Criteria c = session.createCriteria(Legajo.class);  
+         c.add(Restrictions.eq("trabajador", actual));
+         c.add(Restrictions.eq("entidad", _oi));
+         c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+         List result = c.list();
+         lega=(Legajo) result.get(0);
+         return lega;
+         
+   }
+    
+    
+    @Log
+    public List<ConstanciaDocumental> getListadoDocumentos() {
+        System.out.println("aaa "+buscarlegajo().getCod_legajo());
+        Criteria c = session.createCriteria(ConstanciaDocumental.class);
+        //c.add(Restrictions.eq("legajo",buscarlegajo()));  
+        return c.list();
     }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
+   
+    /*
+   @Log
+   public GenericSelectModel<CargoAsignado> getCargosAsignados() {
+       List<CargoAsignado> list;
+       Criteria c = session.createCriteria(CargoAsignado.class);
+         c.createAlias("legajo", "legajo");
+         c.add(Restrictions.eq("trabajador", actual));
+         c.add(Restrictions.eq("legajo.entidad", _oi));
+         c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+       list = c.list();
+       return new GenericSelectModel<CargoAsignado>(list, CargoAsignado.class, "cargoxunidad.den_cargo", "id", _access);
+   }
+    */
+     //para obtener datos de la Categoria
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanCategoria() {        
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORÍACONSTANCIA", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-
-
-  public PrimaryKeyEncoder<Long, ConstanciaDocumental> getEncoder()
-  {
-    return new PrimaryKeyEncoder<Long, ConstanciaDocumental>()
-    {
-      public Long toKey(ConstanciaDocumental value)
-      {
-        return value.getId();
-      }
-
-      public void prepareForKeys(List<Long> keys)
-      {
-      }
-
-      public ConstanciaDocumental toValue(Long key)
-      {
-        return (ConstanciaDocumental) session.get(ConstanciaDocumental.class, key);
-      }
-
-            public Class<Long> getKeyType() {
-                return Long.class;
+    
+    //para obtener datos del TipoDocumento
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    
+    void onSelectedFromCancel() {
+        elemento=2;
+    }
+    
+    void onSelectedFromReset() {
+         elemento=1;
+    }
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormulariodocumentos() {
+            System.out.println("aaa "+buscarlegajo().getCod_legajo());
+            constancia.setLegajo(buscarlegajo());
+            if(bentrego.equalsIgnoreCase("SI")){
+                constancia.setEntrego(Boolean.TRUE);
+            }else{
+                constancia.setEntrego(Boolean.FALSE);
             }
-    };
-  }
-
-  public void onPrepare() {
-  // cargo los tipos de las constancias
-
-      DatoAuxiliar d = Helpers.getDatoAuxiliar("CategoríaConstancia", categoria, session);
-      if (d!= null){
-        tiposConstancia = Helpers.getValorTablaAuxiliar("DatoConstancia", session,
-            "CategoríaConstancia",
-            d.getCodigo());
-      } else {
-          tiposConstancia = new ArrayList<String>();
-      }
-  }
-
-  @CommitAfter
-  public Object onSuccess()
-  {
-	  for(ConstanciaDocumental e : getConstanciasDocumentales()) {
-              if(e.getFecha() != null){
-		  if (e.getFecha().after(new Date())) {
-			  Logger logger = new Logger();
-			  logger.loguearError(session, _usuario, e.getId().toString(),
-					  Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-					  Errores.ERROR_FECHA_PREVIA_ACTUAL,
-					  Logger.TIPO_OBJETO_CONSTANCIA_DOCUMENTAL);
-
-			  _form.recordError(Errores.ERROR_FECHA_PREVIA_ACTUAL);
-			  return this;
-		  }
-              }
-	  }
-
-          envelope.setContents(helpers.Constantes.CONSTANCIAS_DOCUMENTALES_EXITO);
-	  _form.clearErrors();
-	  return this;
-  }
-
-  @CommitAfter
-  Object onAddRow()
-  {
-    ConstanciaDocumental constancia = new ConstanciaDocumental();
-    constancia.setLegajo(legajo);
-    constancia.setCat_constancia(categoria);
-    session.saveOrUpdate(constancia);
-    //legajo.getConstanciasDocumentales().add(constancia);
-	//session.saveOrUpdate(legajo);
-	new Logger().loguearOperacion(session, _usuario, String.valueOf(constancia.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONSTANCIA_DOCUMENTAL);
-    session.saveOrUpdate(legajo);
-	new Logger().loguearOperacion(session, _usuario, String.valueOf(constancia.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONSTANCIA_DOCUMENTAL);
-    return constancia;
-  }
-
-  @Log
-  @CommitAfter
-  void onRemoveRow(ConstanciaDocumental constancia)
-  {
-    legajo.getConstanciasDocumentales().remove(constancia);
-    session.merge(legajo);
-    session.delete(constancia);
-    new Logger().loguearOperacion(session, _usuario, String.valueOf(constancia.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONSTANCIA_DOCUMENTAL);
-  }
-
-     Object onFailure() {
-          return this;
+            if(bobligatorio.equalsIgnoreCase("SI")){
+                constancia.setObligatorio(Boolean.TRUE);
+            }else{
+                constancia.setObligatorio(Boolean.FALSE);
+            }
+            session.saveOrUpdate(constancia);
+            envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
+            constancia=new ConstanciaDocumental();
+            bentrego="";
+            bobligatorio="";
+            return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
+                    .add("listaDocumentosZone", listaDocumentosZone.getBody())
+                    .add("documentosZone", documentosZone.getBody());  
+  
     }
-
+    
+    @Log
+    @CommitAfter    
+    Object onSuccessFromFormulariobotones() {
+        if(elemento==1){
+            constancia=new ConstanciaDocumental();
+            bentrego="";
+            bobligatorio="";
+            return  documentosZone.getBody();
+        }else if(elemento==2){
+            return "Busqueda";
+        }else{    
+           return this;
+        }
+        
+    }
+    
+    @Log
+    Object onActionFromEditar(ConstanciaDocumental consta) {        
+        constancia=consta;
+           return documentosZone.getBody(); 
+    }
+    
+    @Log
+    @CommitAfter        
+    Object onActionFromEliminar(ConstanciaDocumental consta) {
+        session.delete(consta);
+        return listaDocumentosZone.getBody();
+    }
+    
+    
+    
+    
+   
 }
