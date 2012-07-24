@@ -30,6 +30,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.CriteriaSpecification;
 
 
 @IncludeStylesheet({"context:layout/trabajadornuevo.css"})
@@ -169,14 +170,17 @@ public class TrabajadorNuevo  extends GeneralPage
 
     @PageActivationContext
 //    @Persist
-    private CargoAsignado ca;
+    private Trabajador actual;
+    @Property
+    @Persist
+    private Boolean mostrar;
     
-    public CargoAsignado getCa() {
-        return ca;
+    public Trabajador getActual() {
+        return actual;
     }
 
-    public void setCa(CargoAsignado ca) {
-        this.ca = ca;
+    public void setActual(Trabajador actual) {
+        this.actual = actual;
     }
 
  
@@ -194,21 +198,23 @@ public class TrabajadorNuevo  extends GeneralPage
         nuevoCargo=null;
         tipovinculo=null;
         bTrabajadorRegistrado=false;
-        if(ca!=null){
-            nuevo=ca.getTrabajador();
-            unidadorganica=ca.getCargoxunidad().getUnidadorganica();
-            cargo=ca.getCargoxunidad();
-            tipovinculo=ca.getTipovinculo();
-            fechaingreso=ca.getFec_inicio();
-            nuevoLegajo=ca.getLegajo();
-            if(ca.getPuestoconfianza()!=null){
-                puestoconfianza=ca.getPuestoconfianza(); 
-            }
-            
-        }
-        
-      
+        nuevoLegajo=null;
+        mostrar=true;
+        if(actual!=null){
+            nuevo=actual;            
+            buscarlegajo();
+            mostrar=false;            
+        }      
     }
+    void buscarlegajo(){
+        Criteria c = session.createCriteria(Legajo.class);
+        c.add(Restrictions.eq("trabajador", actual));
+        c.add(Restrictions.eq("entidad", oi));
+        c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        List result = c.list();
+        nuevoLegajo=(Legajo) result.get(0);
+    }
+
     
 //    public List<String> getTiposDoc() {
 //    	Criteria c = session.createCriteria(DatoAuxiliar.class);
@@ -373,7 +379,7 @@ public class TrabajadorNuevo  extends GeneralPage
         }else if(elemento==2){
             return "Alerta";
         }else{
-            if(getListadoEntidades().size()>0 && ca==null){
+            if(getListadoEntidades().size()>0 && actual==null){
                  envelope.setContents(helpers.Constantes.EUE_EXITO);
                  envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
                  bTrabajadorRegistrado=true;
@@ -382,7 +388,7 @@ public class TrabajadorNuevo  extends GeneralPage
             }else{
                 //Guardar Cargo Asignado 
                 cargoAsignado = new CargoAsignado();                 
-                if(ca!=null){
+                if(actual!=null){
                     cargoAsignado.setTrabajador(nuevo);
                     cargoAsignado.setLegajo(nuevoLegajo);
                 }else{
@@ -406,7 +412,7 @@ public class TrabajadorNuevo  extends GeneralPage
                   session.saveOrUpdate(cargoAsignado);
                   envelope.setContents(helpers.Constantes.EUE_EXITO);
                   envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
-                  ca=null;
+                  actual=null;
                   return Busqueda.class;
             }
         }        

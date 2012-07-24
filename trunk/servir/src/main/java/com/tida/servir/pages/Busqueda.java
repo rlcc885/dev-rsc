@@ -174,7 +174,7 @@ public class Busqueda extends GeneralPage {
     private DatoAuxiliar valdocumentoide;
     
     @Property
-    @SessionState
+    @Persist
     private UsuarioAcceso usu;
     
     @Property

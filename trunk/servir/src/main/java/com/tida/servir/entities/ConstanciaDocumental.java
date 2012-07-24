@@ -24,7 +24,8 @@ public class ConstanciaDocumental {
     private DatoAuxiliar tipoconstancia;
     @Validate("required")
     @Temporal(TemporalType.DATE)
-    private Date fecha;   
+    private Date fecha; 
+    @ManyToOne
     private Legajo legajo;    
     private Boolean obligatorio;
     @Validate("required")

@@ -13,9 +13,10 @@
                     <t:errors/>
                 </t:form> 
        </div>
-       <div class="box">
-            <h3> Crear nuevo trabajador </h3>
+       <div class="box">    
+           <t:if test="mostrar">
             <t:zone t:id="trabajadorNuevoZone">
+                <h3> Crear nuevo trabajador </h3>
                 <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
                 <t:errors/>
 
@@ -29,12 +30,7 @@
                             <t:label for="nuevo_nroDocumento"/>
                             <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="DNIChanged"  t:zone="trabajadorNuevoZone"
                                 size="8" t:validate="required, regexp"/>
-                        </div>
-                         <div class="f-left">
-                             <t:label for="fecha_ingreso"/>
-                            <input t:type="DateField" t:id="fecha_ingreso"
-                                   t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="trabajadorNuevoZone" />
-                         </div>
+                        </div>                         
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
@@ -49,16 +45,10 @@
                             <t:label for="nuevo_apellidoMaterno" />
                             <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="30" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
                         </div>
-                    </div>
-                    <div class="f-wrap">
-                         <div class="f-left">
-                            <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
-                            <input t:type="Checkbox" t:id="puestoconfianza" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:value="puestoconfianza" t:zone="trabajadorNuevoZone" />
-                        </div>
-                    </div>
+                    </div>                    
                 </t:form>
-            </t:zone>
+             </t:zone>
+           </t:if>
             
         <div class = "f-wrap">
             <t:zone t:id="unidadOrganicaZone">
@@ -119,6 +109,16 @@
                          t:validate="required" t:zone="tipoVinculoZone" t:blankOption="ALWAYS"/>
                        
                     </div>
+                    <div class="f-left">
+                            <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
+                            <input t:type="Checkbox" t:id="puestoconfianza" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:value="puestoconfianza" t:zone="tipoVinculoZone" />
+                        </div>
+                        <div class="f-left">
+                             <t:label for="fecha_ingreso"/>
+                            <input t:type="DateField" t:id="fecha_ingreso"
+                                   t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="tipoVinculoZone" />
+                         </div>
                </t:form>
             </t:zone>
         </div> 
