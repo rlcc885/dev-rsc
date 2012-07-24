@@ -50,7 +50,7 @@ public class DatosPersonalesEditor {
     private Session session;
     @Component(id = "formulariodatospersonales")
     private Form formulariodatospersonales;
-    @SuppressWarnings("unused")   
+    //@SuppressWarnings("unused")   
     @Property
     @SessionState
     private UsuarioAcceso usua;

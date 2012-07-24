@@ -101,9 +101,6 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private BusquedaEvento eventosistemas;
-    @Property
-    @SessionState
-    private UsuarioAcceso usu;
     
     @Log
     @SetupRender
@@ -121,18 +118,7 @@ public class Alerta  extends GeneralPage {
             mostrars=false;
             mostrare=false;
             mostrarse=false;
-        }
-        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
-        query.setParameter("in_pagename", "BUSQUEDA");
-        List result = query.list();        
-        if(result.isEmpty()){
-            System.out.println(String.valueOf("Vacio:"));            
-        }
-        else{
-            usu = (UsuarioAcceso) result.get(0);                                  
-        }
-        
+        }        
     }
     
 //    @Property

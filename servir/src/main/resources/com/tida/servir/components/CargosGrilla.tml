@@ -3,6 +3,7 @@
       xmlns:p="tapestry:parameter">
 
 <t:content>
+    
      <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Acciones, Den_Cargo"            
             reorder="Den_Cargo,fec_inicio,fec_fin,Acciones" exclude="tipoVinculo,ctd_per_superv,motivo_cese,estado,puestoconfianza">
             <t:parameter name="empty">
@@ -17,9 +18,6 @@
         <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
          |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Desasignar</a>         
        <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
-        
-
-
         </p:accionesCell>
 
      </t:grid>

@@ -205,7 +205,7 @@ public class Index {
         eue = usuarioTrabajador.getEntidad();
 
 //        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
-        logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_OK);
+        //logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_OK);
         return Permisos.paginaInicial(usuario);
     }
 

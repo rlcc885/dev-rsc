@@ -294,7 +294,10 @@ public class EstudiosEditor {
     Object onSuccessFromformulariobotones(){
         
         if(elemento==3){
-            return Busqueda.class;
+            if(_usuario.getRol().getId()==1)
+                return "Alerta";
+            else
+                return Busqueda.class;
         }
         else if(elemento==2){
             
