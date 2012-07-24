@@ -158,7 +158,7 @@ public class Index {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
             if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
                 usuario.setEstado(2);
-                usuario.setFecha_bloqueo(new Date());
+                //usuario.setFecha_bloqueo(new Date());
                 System.out.println("=============================================================================");
                 System.out.println(new Date());
                 System.out.println("=============================================================================");

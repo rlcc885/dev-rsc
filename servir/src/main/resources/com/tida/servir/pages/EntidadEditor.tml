@@ -163,16 +163,22 @@
             </t:form>
         </div>
 
-        <div class="logoentidad" style="position:absolute; top:20px; left:600px; width: 300px; border:1px; border-color: #000000;
+        <div class="logoentidad" style="position:absolute; top:90px; left:660px; width: 250px; border:1px; border-color: #cccccc;
    border-width: 1px;
-   border-style: solid; ">
+   border-style: solid; 
+   padding: 5px;
+   text-align: center;">
             <t:form t:id="formulariologoentidad" >
                 <t:errors/>
-                    <div>
-                        <label>Logo </label>
-                        <input t:type="upload" t:id="file" style="width: 550px;" />
-                        <input type="submit" value="Subir Archivo" class="button f-left"/>
-                    </div>
+                <div>
+                    <img src="images/logotipo/${entidadUE.logotipo}" />
+                </div>
+                <div>
+                    <label>Logotipo de la Entidad:</label>
+                    <input t:type="upload" t:id="file" style="width: 200px;" />
+                    <br style="clear" />
+                    <input type="submit" value="Subir Archivo" class="button"/>
+                </div>
             </t:form>
         </div>
                     
@@ -238,16 +244,35 @@
                     </div>
                 </div>
             </t:form>
-                            
         </div>
     </div>
 
     <style type="text/css">
         body { margin: 0; }
         #shade2, #modal2 { display: none; }
-        #shade2 { position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; }
-        #modal2 { position: absolute; z-index:1002; top: 20%; left: 20%; width: 50%; height: 55%; padding: 16px; background: #fff; overflow: auto; color: #333;}
-        #shade2 { background: silver; opacity: 0.8; filter: alpha(opacity=80); }
+        #shade2 { 
+        position: fixed; 
+        z-index: 100; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        opacity: .75;
+        filter: alpha(opacity=75);
+        background: #000;
+        }
+        #modal2 { 
+        position: fixed; 
+        z-index:1002; 
+        top: 50%; 
+        left: 50%; 
+        width: 800px; 
+        height: 400px; 
+        margin-top:-200px; 
+        margin-left:-400px;
+        padding: 10px; 
+        background: #fff; 
+        color: #333;}
     </style>
 
     <div id="shade2"></div>
@@ -264,7 +289,7 @@
                     </div>
                     <div class="actions f-right">
                         <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
-                        <input t:type="Submit" t:id="cancel3" value="Cancelar" class="button" onClick="javascript: ocultar2();"/>
+                        <input t:type="Submit" t:id="cancelBuscador" value="Cancelar" class="button" onClick="javascript: ocultar2();"/>
                     </div>  
                 </form>
             </t:zone>
@@ -297,7 +322,6 @@
                         </p:accionesCell>
                     </t:grid> 
                 </t:if>
-
                 <t:if test="bjefeOGAi">    
                     <h2>Trabajador</h2>
                     <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
@@ -310,11 +334,8 @@
                         </p:accionesCell>
                     </t:grid> 
                 </t:if>
-                
             </t:if>
         </div>
-
-
     </div>
     
     <script type="text/javascript">
@@ -326,22 +347,6 @@
         function ocultar2() {
         modal2.style.display=shade2.style.display= 'none';
         };
-
-        // This code is a workaround for IE6's lack of support for the
-        // position: fixed style.
-        //
-        if (!('maxHeight' in document.body.style)) {
-        function modalsize2() {
-        var top= document.documentElement.scrollTop;
-        var winsize= document.documentElement.offsetHeight;
-        var docsize= document.documentElement.scrollHeight;
-        shade2.style.height= Math.max(winsize, docsize)+'px';
-        modal2.style.top= top+Math.floor(winsize/3)+'px';
-        };
-        modal2.style.position=shade2.style.position= 'absolute';
-        window.onscroll=window.onresize= modalsize2;
-        modalsize2();
-        }
     </script>
     
 </html>

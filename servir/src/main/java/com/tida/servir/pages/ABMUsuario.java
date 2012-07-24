@@ -10,10 +10,7 @@ import helpers.Reportes;
 import helpers.SMTPConfig;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -366,6 +363,11 @@ public class ABMUsuario extends GeneralPage {
         botonPerfil = false;
         newPerfil = false;
         System.out.println("setupRender");
+        Calendar c = Calendar.getInstance(); 
+        int dia = c.get(Calendar.DAY_OF_MONTH); 
+        int mes = c.get(Calendar.MONTH)+1; 
+        int anyo = c.get(Calendar.YEAR); 
+        System.out.println("hoy es:  "+dia+"/"+mes+"/"+anyo);
     }
 
     @Log

@@ -5,32 +5,22 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
-import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
 import java.util.List;
-import java.util.logging.Level;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.services.Request;
-
-import org.hibernate.Session;
-
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.ApplicationGlobals;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.Response;
-import org.apache.tapestry5.upload.internal.services.UploadedFileItem;
 import org.apache.tapestry5.upload.services.UploadedFile;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -168,15 +158,14 @@ public class EntidadEditor extends GeneralPage {
     @Property
     @Persist
     private boolean mostrar;
+    
     @Property
     @Persist
     private UploadedFile file;
-    @Persist
-    @Property
-    private String uploadmessage;
+    @Component(id = "formulariologoentidad")
+    private Form formulariologoentidad;
 
     //Inicio de lac carga de la pagina
-    @Log
     @SetupRender
     private void inicio() {
         entidadUE = new Entidad();
@@ -222,57 +211,55 @@ public class EntidadEditor extends GeneralPage {
 
     @CommitAfter
     Object onSuccessFromFormulariologoentidad() {
-//        blogoentidadi=false;
-//        blogoentidadf=true;
-        System.out.println("entroeeeeeeee");
-        
-        // Set Path
-        String path = globals.getServletContext().getRealPath("/");
-        String tempdir = System.getProperty("java.io.tmpdir");
-        System.out.println(path);
-        System.out.println(tempdir);
-        File nuevo = new File(file.getFileName());
+        File copied;
+        if (file == null){
+            formulariologoentidad.recordError("Seleccione imagen a subir.");
+            return this;
+        }
+        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
+        String nombreArchivo = Encriptacion.encriptaEnMD5(_oi.getId().toString())+file.getFileName().substring(file.getFileName().length() - 4);
+        File nuevo = new File(path + nombreArchivo);
+        copied = new File(path);
+        if (!copied.exists()) {
+            copied.mkdirs();
+        }
         file.write(nuevo);
+        _oi.setLogotipo(nombreArchivo);
+        session.saveOrUpdate(_oi);
         return this;
     }
-    
+
     //para obtener datatos del Nivel Gobierno
-    @Log
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos del Sector Gobierno
-    @Log
     public GenericSelectModel<DatoAuxiliar> getSectorGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos de la Organizacion
-    @Log
     public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos del Tipo Organismo
-    @Log
     public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos del Tipo Via
-    @Log
     public GenericSelectModel<DatoAuxiliar> getTipoVia() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     //para obtener datatos del Tipo Zona
-    @Log
     public GenericSelectModel<DatoAuxiliar> getTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
@@ -280,17 +267,21 @@ public class EntidadEditor extends GeneralPage {
 
     void onSelectedFromReset() {
         elemento = 1;
-
         badmentidad = false;
     }
 
     void onSelectedFromCancel() {
         elemento = 2;
-
         badmentidad = false;
     }
+    
+    void onSelectedFromCancelBuscador() {
+        btitulari = false;
+        bjefeOGAi = false;
+        bjefeRRHHi = false;
+        System.out.println("onSelectedFromCancelBuscador");
+    }
 
-    @Log
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
 
@@ -316,57 +307,52 @@ public class EntidadEditor extends GeneralPage {
         }
     }
 
-    @Log
     @CommitAfter
     Object onSuccessFromFormularioorganizacion() {
         bsector = true;
         return nivelOrganizacionSectorZone.getBody();
-
     }
 
-    @Log
     @CommitAfter
     Object onSuccessFromFormulariosector() {
         btipoorganismo = true;
         return nivelOrganizacionSectorZone.getBody();
-
     }
 
-    @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
     }
 
     //Metodos de Busqueda de Trabajadores
-    @Log
     @CommitAfter
     Object onSuccessFromformulariotitular() {
         btitulari = true;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
 
-    @Log
     @CommitAfter
     Object onSuccessFromformulariojeferrhh() {
         bjefeRRHHi = true;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
 
-    @Log
     @CommitAfter
     Object onSuccessFromformulariojefeoga() {
         bjefeOGAi = true;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
 
-    @Log
     @CommitAfter
     Object onSuccessFromFormularioTrabajador() {
+        if (bjefeOGAi || bjefeRRHHi || btitulari){
         mostrar = true;
+        }else{
+            mostrar = false;
+        }
+        System.out.println("onSuccessFromFormularioTrabajador");
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
 
-    @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         System.out.println("nombress: " + nombreTrabajador);
@@ -375,8 +361,22 @@ public class EntidadEditor extends GeneralPage {
         }
         return c.list();
     }
-
-    @Log
+    public List<LkBusquedaTrabajador> getTrabajadores1() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        System.out.println("nombres1: " + nombreTrabajador);
+        if (nombreTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+        public List<LkBusquedaTrabajador> getTrabajadores2() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        System.out.println("nombres2: " + nombreTrabajador);
+        if (nombreTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
     Object onActionFromeditarTitular(Trabajador traba) {
         //titulart = traba;
         titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -386,7 +386,6 @@ public class EntidadEditor extends GeneralPage {
         return TitularZone.getBody();
     }
 
-    @Log
     Object onActionFromeditarJefeRRHH(Trabajador traba) {
         //jeferrhht = traba;
         jefeRRHH = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -396,7 +395,6 @@ public class EntidadEditor extends GeneralPage {
         return JefeRRHHZone.getBody();
     }
 
-    @Log
     Object onActionFromeditarJefeOGA(Trabajador traba) {
         //jefeogat = traba;
         jefeOGA = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
