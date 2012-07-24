@@ -115,6 +115,7 @@ public class AntecedentesEditor {
             ant_Laborales.setEntidad(_oi);
             session.saveOrUpdate(ant_Laborales);
             envelope.setContents(helpers.Constantes.ANT_LABORAL_EXITO);
+            ant_Laborales=new Ant_Laborales();
         }
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())                             
                     .add("listaAntLoboralZone", listaAntLoboralZone.getBody());   
@@ -126,7 +127,7 @@ public class AntecedentesEditor {
     Object onSuccessFromFormulariobotones() {
          System.out.println("1: "+elemento );
         if(elemento==1){
-            ant_Laborales=new Ant_Laborales();;
+            ant_Laborales=new Ant_Laborales();
             return  antLaboralZone.getBody();
         }else if(elemento==2){
             return "Busqueda";
