@@ -122,6 +122,16 @@ public class ConstanciasDocumentalesEditor {
         return c.list();
     }
    
+//    public List<CargoAsignado> getCargosAsignados() {
+//          Criteria c = session.createCriteria(CargoAsignado.class);
+//          c.createAlias("legajo", "legajo");
+//          c.add(Restrictions.eq("trabajador", actual));
+//          c.add(Restrictions.eq("legajo.entidad", _oi));
+//          //c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
+//          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+//          return c.list();
+//          
+//    }
     /*
    @Log
    public GenericSelectModel<CargoAsignado> getCargosAsignados() {

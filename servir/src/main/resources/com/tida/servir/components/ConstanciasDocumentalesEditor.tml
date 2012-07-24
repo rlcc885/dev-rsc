@@ -10,7 +10,7 @@
                 <t:grid source="listadoDocumentos" rowsPerPage="10" t:add="Categoria,TipoDocumento,Obligatorio,Entrego,Acciones" pagerPosition="bottom"
                 row="listaDocumentos" include="fecha" inPlace="true" >
                     <t:parameter name="empty">
-                    <div class="no-info">No se encontraron registros</div>
+                    <div class="no-info">No se encontraron registrosxxxxxxxxxxx</div>
                     </t:parameter>
                     <p:categoriaCell>
                                <label class="datofalse">${listaDocumentos.categoriaconstancia.valor}</label>  

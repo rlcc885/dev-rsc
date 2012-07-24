@@ -112,7 +112,7 @@
       <t:zone t:id="primerZone">         
          <t:if test="${vformulario}">
           <h3>Crear / Editar Estudios</h3>
-            <t:form t:id="formularioaltaestudio" zone="primerZone">                
+            <t:form t:id="formularioaltaestudio" t:zone="primerZone">                
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Denominación</label>
