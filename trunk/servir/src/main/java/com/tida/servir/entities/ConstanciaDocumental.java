@@ -18,23 +18,26 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Table(name = "RSC_CONSTANCIADOCUMENTAL")
 public class ConstanciaDocumental {
 
+    @Id
+    @GeneratedValue
     @NonVisual
     private Long id;
+    @ManyToOne
     private DatoAuxiliar categoriaconstancia;
+    @ManyToOne
     private DatoAuxiliar tipoconstancia;
     @Validate("required")
     @Temporal(TemporalType.DATE)
     private Date fecha; 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Legajo legajo;    
     private Boolean obligatorio;
     @Validate("required")
     private Boolean entrego;
+    @ManyToOne(optional = false)
     private CargoAsignado cargoasignado;
     
-    @Id
-    @GeneratedValue
-    public Long getId() {
+        public Long getId() {
         return id;
     }
 
@@ -42,8 +45,7 @@ public class ConstanciaDocumental {
         this.id = id;
     }
     
-    @ManyToOne
-    public DatoAuxiliar getCategoriaconstancia() {
+        public DatoAuxiliar getCategoriaconstancia() {
         return categoriaconstancia;
     }
 
@@ -51,8 +53,7 @@ public class ConstanciaDocumental {
         this.categoriaconstancia = categoriaconstancia;
     }
  
-    @ManyToOne
-    public DatoAuxiliar getTipoconstancia() {
+        public DatoAuxiliar getTipoconstancia() {
         return tipoconstancia;
     }
 
@@ -69,8 +70,7 @@ public class ConstanciaDocumental {
     }
 
 
-    @ManyToOne(optional = false)
-    public Legajo getLegajo() {
+        public Legajo getLegajo() {
         return legajo;
     }
 
@@ -95,8 +95,7 @@ public class ConstanciaDocumental {
         this.entrego = entrego;
     }
 
-    @ManyToOne(optional = false)
-    public CargoAsignado getCargoasignado() {
+        public CargoAsignado getCargoasignado() {
         return cargoasignado;
     }
 
