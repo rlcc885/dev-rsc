@@ -4,15 +4,36 @@
 
     <t:content>
          <h2>Documentos del Trabajador</h2>
-  
+
      <div id = "tabla_oi">
             <t:zone t:id="listaDocumentosZone">   
-                <t:grid source="listadoDocumentos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                row="listaDocumentos" inPlace="true" >
+                <t:grid source="listadoDocumentos" rowsPerPage="10" t:add="Categoria,TipoDocumento,Obligatorio,Entrego,Acciones" pagerPosition="bottom"
+                row="listaDocumentos" include="fecha" inPlace="true" >
                     <t:parameter name="empty">
                     <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    
+                    <p:categoriaCell>
+                               <label class="datofalse">${listaDocumentos.categoriaconstancia.valor}</label>  
+                    </p:categoriaCell>
+                    <p:tipoDocumentoCell>
+                               <label class="datofalse">${listaDocumentos.tipoconstancia.valor}</label>  
+                    </p:tipoDocumentoCell>
+                    <p:obligatorioCell>
+                           <t:if test="${listaDocumentos.obligatorio}">
+                               <label class="datofalse">SI</label>  
+                           </t:if>
+                            <t:if test="${listaDocumentos.obligatorio}" negate="true">
+                               <label class="datotrue">NO</label>  
+                           </t:if> 
+                    </p:obligatorioCell>
+                    <p:entregoCell>
+                           <t:if test="${listaDocumentos.entrego}">
+                               <label class="datofalse">SI</label>  
+                           </t:if>
+                            <t:if test="${listaDocumentos.entrego}" negate="true">
+                               <label class="datotrue">NO</label>  
+                           </t:if> 
+                    </p:entregoCell>
                       <p:accionesCell>
                                <t:actionlink t:id="editar" zone="documentosZone" context="listaDocumentos">Editar</t:actionlink> 
                     </p:accionesCell>

@@ -76,7 +76,9 @@ public class ConstanciasDocumentalesEditor {
     private Zone listaDocumentosZone;
     @Persist
     @Property
-    private ConstanciaDocumental listadocumentos;
+    private ConstanciaDocumental listaDocumentos;
+    
+    
     
     private Legajo lega;
     @Persist
@@ -116,6 +118,7 @@ public class ConstanciasDocumentalesEditor {
         System.out.println("aaa "+buscarlegajo().getCod_legajo());
         Criteria c = session.createCriteria(ConstanciaDocumental.class);
         //c.add(Restrictions.eq("legajo",buscarlegajo()));  
+         System.out.println("aaa "+c.list().size());
         return c.list();
     }
    

@@ -6,14 +6,9 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.*;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.apache.tapestry5.beaneditor.NonVisual;
+import org.apache.tapestry5.beaneditor.Validate;
 
 /**
  *
@@ -26,11 +21,13 @@ public class ConstanciaDocumental {
     @NonVisual
     private Long id;
     private DatoAuxiliar categoriaconstancia;
-    private DatoAuxiliar tipoconstancia;    
+    private DatoAuxiliar tipoconstancia;
+    @Validate("required")
     @Temporal(TemporalType.DATE)
     private Date fecha;   
     private Legajo legajo;    
     private Boolean obligatorio;
+    @Validate("required")
     private Boolean entrego;
     private CargoAsignado cargoasignado;
     
@@ -123,8 +120,8 @@ public class ConstanciaDocumental {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 5;
+        hash = 61 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
