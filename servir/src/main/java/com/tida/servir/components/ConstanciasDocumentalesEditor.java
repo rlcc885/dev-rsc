@@ -61,9 +61,9 @@ public class ConstanciasDocumentalesEditor {
     @Parameter
     @Property
     private Trabajador actual;
-
-    @Property
+    
     @Persist
+    @Property
     private ConstanciaDocumental constancia;
     
 
@@ -117,21 +117,11 @@ public class ConstanciasDocumentalesEditor {
     public List<ConstanciaDocumental> getListadoDocumentos() {
         System.out.println("aaa "+buscarlegajo().getCod_legajo());
         Criteria c = session.createCriteria(ConstanciaDocumental.class);
-        //c.add(Restrictions.eq("legajo",buscarlegajo()));  
+        c.add(Restrictions.eq("entrego",true));  
          System.out.println("aaa "+c.list().size());
         return c.list();
     }
    
-//    public List<CargoAsignado> getCargosAsignados() {
-//          Criteria c = session.createCriteria(CargoAsignado.class);
-//          c.createAlias("legajo", "legajo");
-//          c.add(Restrictions.eq("trabajador", actual));
-//          c.add(Restrictions.eq("legajo.entidad", _oi));
-//          //c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
-//          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-//          return c.list();
-//          
-//    }
     /*
    @Log
    public GenericSelectModel<CargoAsignado> getCargosAsignados() {
