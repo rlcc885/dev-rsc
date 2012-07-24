@@ -13,6 +13,8 @@
     </div>
 <!--    <h3>Crear/Editar Entidades /U. Ejecutoras</h3>-->
     <div class="box">
+        <fieldset>
+            <legend> Datos </legend>
         <div t:type="zone" t:id="nivelOrganizacionSectorZone" >
             <div class="f-wrap">
                 <t:form t:id="formularionivelgobierno"  zone="nivelOrganizacionSectorZone"> 
@@ -52,13 +54,7 @@
                     </t:if>  
                 </t:if>    
             </div>
-        </div>
-                         
-        <div t:type="zone" t:id="principalZone" >
-            <t:form t:id="formularioentidad"  zone="principalZone">  
                 <div class="f-wrap">
-
-                                
                     <div class="f-left">
                         <t:label for ="denominacion"/>
                         <input t:type="TextField" t:id="denominacion"
@@ -68,10 +64,9 @@
                         <t:label for="sigla"/>
                         <input t:type="TextField" t:id="sigla" 
                                t:value="siglaEntidad" t:validate="maxlength=20" size="12" 
-                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="principalZone" />
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="nivelOrganizacionSectorZone" />
                     </div>
                 </div>
-
                 <div class="f-wrap">
                     <div class="f-left">
                         <t:label for="RUC"/>
@@ -82,7 +77,7 @@
                         <t:label for="cue_entidad"/>
                         <input t:type="TextField" t:id="cue_entidad"
                                t:value="cueEntidad" t:validate="maxlength=12" size="12" disabled="${badmentidad}" 
-                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="principalZone" />
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="nivelOrganizacionSectorZone" />
                     </div>
 
                     <div class="f-left">
@@ -91,7 +86,11 @@
                                t:value="entidadUE.proc_batch" disabled="${badmentidad}" />
                     </div>
                 </div>
-
+        </div>
+        </fieldset>
+        
+        <div t:type="zone" t:id="principalZone" >
+            <t:form t:id="formularioentidad"  zone="principalZone">
                 <div class="f-wrap">
                     <div class="f-left">
                         <t:label for="tipovia"/>
