@@ -125,25 +125,37 @@
     <div id="box-cargos" class="box">
         <div id="form_unidad_organica" class="abmform">
             <t:zone t:id="nivelZone">
-              <t:if test="${vformulario}">  
+              <t:if test="${vformulario}">
+                
                 <h3>Crear/Editar Unidad Orgánica</h3>
+                <fieldset>
+                <legend><h3>Datos</h3></legend>
                 <form t:type="form" t:id="formNivelUO" t:zone="nivelZone">                    
                    <t:envelope t:id="envelope"/>
+                   
+                   
                     <div class="f-wrap">
+                        
+                    </div>
+                    
+                   
+                </form>
+                </fieldset>
+              </t:if>
+            </t:zone>
+            <t:zone t:id="unidadesOrganicasZone">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
+                       <t:errors/>
+                       <div class="f-wrap">
                         <div class="f-left">
                             <label>* Nivel Organizacional</label>
                             <input t:type="Select" t:id="unidadorganica_nivel"
-                                   onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:zone="unidadesOrganicasZone" 
                                    t:value="nivelUO" model="nivel" t:validate="required" t:disabled="${vdetalle}"/>
                         </div>
                         <t:if test="nivelUno" negate= "true">
-                            <!-- <div class="f-left">
-                                * Entidad /U.Ejecutora
-                                <input t:type="Select" t:id="unidadOrganica_entidadUE"
-                                t:value="entidadUE" model="beansEUE" t:validate="required"
-                                t:zone="nivelZone"/>
-                            </div> -->
-                            <div class="f-left">
+                           <div class="f-left">
                                 <label>* Unidad Orgánica Antecesora</label>
                                 <input t:type="Select" t:id="unidadOrganica_uoa"
                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
@@ -151,15 +163,13 @@
                                        t:zone="ubigeoDomZone" t:disabled="${vdetalle}"/>
                             </div>
                         </t:if>
-                    </div>
-                </form>
-              </t:if>
-            </t:zone>
-            <t:zone t:id="unidadesOrganicasZone">
-                <t:if test="${vformulario}">
-                    <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                       <t:errors/>
-                        
+                        <div class="f-left">
+                                <label>Categoría</label>
+                                <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
+                                       t:value="unidadorganica.categoriauo" t:disabled="${vdetalle}"/>
+                        </div>
+                    </div>                      
+                       
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Código</label>
@@ -169,7 +179,7 @@
                             <div class="f-left">
                                 <label>* Denominación</label>
                                 <input t:type="TextField" t:id="unidadOrganica_den_und_organica"
-                                       t:value="unidadorganica.den_und_organica" size="30" t:validate="required, maxlength=255" t:disabled="${vdetalle}"/>
+                                       t:value="unidadorganica.den_und_organica" size="30" t:validate="maxlength=255" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">
                                 <label>Sigla</label>
@@ -206,11 +216,7 @@
                                 <input t:type="TextField" t:id="unidadOrganica_localidad"
                                        t:value="unidadorganica.localidad" size="30" t:validate="maxlength=255" t:disabled="${vdetalle}"/>
                             </div>
-                            <div class="f-left">
-                                <label>Categoría</label>
-                                <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
-                                       t:value="unidadorganica.categoriauo" t:disabled="${vdetalle}"/>
-                            </div>
+                            
 
                         </div>
                      
@@ -228,7 +234,7 @@
                      
                         <br style="clear: both;"/>
                     </t:form>
-
+                  
                     <!-- </t:if> -->
                 </t:if>
             </t:zone>

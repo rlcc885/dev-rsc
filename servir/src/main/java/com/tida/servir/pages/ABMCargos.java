@@ -696,4 +696,7 @@ public class ABMCargos extends GeneralPage {
     }
     }
      */
+    void onDenoChanged() {
+        bdcargo = _request.getParameter("param");
+    }
 }
