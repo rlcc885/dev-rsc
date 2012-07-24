@@ -305,12 +305,12 @@ public class CopiadorEntidades {
     }
     
     public static void constanciaDocumental(ConstanciaDocumental origen, ConstanciaDocumental destino){
-        destino.setCat_constancia(CopiadorEntidades.verifacionNull(origen.getCat_constancia()));
+//        destino.setCat_constancia(CopiadorEntidades.verifacionNull(origen.getCat_constancia()));
         destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
         destino.setLegajo(origen.getLegajo());
-        destino.setNum_resolucion(CopiadorEntidades.verifacionNull(origen.getNum_resolucion()));
-        destino.setTip_constancia(CopiadorEntidades.verifacionNull(origen.getTip_constancia()));
-        destino.setTxt_descriptivo(CopiadorEntidades.verifacionNull(origen.getTxt_descriptivo()));
+//        destino.setNum_resolucion(CopiadorEntidades.verifacionNull(origen.getNum_resolucion()));
+//        destino.setTip_constancia(CopiadorEntidades.verifacionNull(origen.getTip_constancia()));
+//        destino.setTxt_descriptivo(CopiadorEntidades.verifacionNull(origen.getTxt_descriptivo()));
     }
     
     public static String verifacionNull(String dato){
