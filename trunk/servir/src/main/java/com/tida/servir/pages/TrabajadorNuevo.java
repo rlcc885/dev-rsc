@@ -194,12 +194,14 @@ public class TrabajadorNuevo  extends GeneralPage
         nuevaunidadorganica=null;
         cargo=null;
         ncargo=null;
-        nuevaUOrganica=null;
-        nuevoCargo=null;
+        nuevaUOrganica="";
+        nuevoCargo="";
         tipovinculo=null;
         bTrabajadorRegistrado=false;
         nuevoLegajo=null;
         mostrar=true;
+        puestoconfianza=false;
+        fechaingreso=null;
         if(actual!=null){
             nuevo=actual;            
             buscarlegajo();
@@ -261,8 +263,16 @@ public class TrabajadorNuevo  extends GeneralPage
     @CommitAfter    
     Object onSuccessFromFormularionuevaunidadorganica() {
           if(elemento==5){
+              System.out.println("entroo aaa");
+              System.out.println("entroo aaa"+nuevaUOrganica);
+               if(nuevaUOrganica==null){  
+                   System.out.println("entroo bbbb");
+                envelope.setContents("No puede agregar una Unidad Organica vacia");   
+                elemento=0;
+                bUOrganica=false;
+                }else{
+                   System.out.println("entroo ccc");
                 nuevaunidadorganica=new UnidadOrganica();
-   
                 nuevaunidadorganica.setDen_und_organica(nuevaUOrganica);
                 nuevaunidadorganica.setNivel(1);
                 nuevaunidadorganica.setEntidad(oi);
@@ -272,6 +282,7 @@ public class TrabajadorNuevo  extends GeneralPage
                 envelope.setContents("Se creo la Unidad Organica con éxito.");
                 elemento=0;
                 bUOrganica=false;
+               }
           }else{
             if(bUOrganica){
                 bUOrganica=false;
@@ -302,6 +313,7 @@ public class TrabajadorNuevo  extends GeneralPage
     @CommitAfter    
     Object onSuccessFromFormularionuevocargo() {
         if(elemento==6){
+               if(nuevoCargo!=null){  
                 ncargo=new Cargoxunidad();
                 ncargo.setDen_cargo(nuevoCargo);
                 ncargo.setCod_cargo("C9999");
@@ -313,6 +325,11 @@ public class TrabajadorNuevo  extends GeneralPage
                 envelope.setContents("Se creo el Cargo con éxito.");
                 elemento=0;
                 bCargo=false;
+               }else{
+                 envelope.setContents("No puede agregar un cargo vacio");
+                 elemento=0;
+                 bCargo=false;
+               }
           }else{    
                 if(bCargo){
                     bCargo=false;
@@ -386,6 +403,43 @@ public class TrabajadorNuevo  extends GeneralPage
                  return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                 .add("mensajesZone", mensajesZone.getBody());
             }else{
+                if(nuevo.getDocumentoidentidad()==null){
+                   envelope.setContents("Debe ingresar el Tipo de Documento.");
+                  return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(nuevo.getNroDocumento()==null){
+                    envelope.setContents("Debe ingresar el Nro. de Documento.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(nuevo.getNombres()==null){
+                    envelope.setContents("Debe ingresar el Nombre del Trabajador.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(nuevo.getApellidoMaterno()==null){
+                    envelope.setContents("Debe ingresar el Apellido Materno del Trabajador");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(nuevo.getApellidoPaterno()==null){
+                    envelope.setContents("Debe ingresar el Apellido Paterno del Trabajador.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(unidadorganica==null){
+                    envelope.setContents("Debe ingresar la Unidad Organiza.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(cargo==null){
+                    envelope.setContents("Debe ingresar el Cargo.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(tipovinculo==null){
+                    envelope.setContents("Debe ingresar el Tipo de Vinculo.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else if(fechaingreso==null){
+                    envelope.setContents("Debe ingresar la fecha de Ingreso.");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                .add("mensajesZone", mensajesZone.getBody());
+                }else{
                 //Guardar Cargo Asignado 
                 cargoAsignado = new CargoAsignado();                 
                 if(actual!=null){
@@ -414,6 +468,7 @@ public class TrabajadorNuevo  extends GeneralPage
                   envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
                   actual=null;
                   return Busqueda.class;
+                }
             }
         }        
     }
