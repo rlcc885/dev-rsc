@@ -320,16 +320,16 @@ public class batch_dev extends GeneralPage {
          * Ahora buscamos que sean consistentes con la base de datos.
          */
 
-        lla = myTratamiento.getCantLineasArchivos(errores);
-
-        if (errores.size() > 0) { // hay errores
-            formularioprocesobatch.recordError("Error procesando csv.");
-            for (String error : errores) {
-                formularioprocesobatch.recordError(error);
-            }
-            return this;
-
-        }
+//        lla = myTratamiento.getCantLineasArchivos(errores);
+//
+//        if (errores.size() > 0) { // hay errores
+//            formularioprocesobatch.recordError("Error procesando csv.");
+//            for (String error : errores) {
+//                formularioprocesobatch.recordError(error);
+//            }
+//            return this;
+//
+//        }
         etapaInicio = false;
         etapaConfirmacion = true;
         return this;

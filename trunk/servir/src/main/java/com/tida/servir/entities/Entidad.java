@@ -22,7 +22,7 @@ public class Entidad implements Serializable {
 
     //antes datos de organismo informante
     @NonVisual
-    private long id;
+    private Long id;
     String cue_entidad;
     @Validate("required")
     private DatoAuxiliar nivelGobierno;   
@@ -55,6 +55,7 @@ public class Entidad implements Serializable {
     String emailInstitucional;
     String urlEntidad;
     String telefonoEntidad;
+    @NonVisual
     String logotipo;
     //@NonVisual
     private Trabajador titular;
@@ -157,11 +158,11 @@ public class Entidad implements Serializable {
 
     @Id
     @GeneratedValue
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

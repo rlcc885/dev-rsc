@@ -53,6 +53,7 @@ public class Usuario implements Serializable {
     @ManyToOne
     private Rol rol;
     @NonVisual
+    @Column(name = "FECHA_BLOQUEO", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_bloqueo;
 
