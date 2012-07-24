@@ -170,8 +170,7 @@
             <div class="actions f-right">
                 <t:if test="vbotones">             
                     <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/>
-                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>
-                    <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button"/>
+                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>                    
                  </t:if>
                  <t:if test="vbotones" negate="true">
                     <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button"/>

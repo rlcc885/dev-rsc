@@ -49,7 +49,7 @@ public class EntidadSelect {
     @Inject
     private PropertyAccess _access;
     @Property
-    @Parameter(required = false)
+    @SessionState
     private Entidad entidad;
     @Property
     @Persist
@@ -132,6 +132,21 @@ public class EntidadSelect {
         ssectorGobierno = null;
         stipoOrganismo = null;
         sentidad = null;
+        ssubentidad=null;
+        if(entidad.getEntidad()==null){
+            sentidad=entidad;
+//            ssubentidad=null;
+            bessubentidad=false;
+            sessubentidad=false;
+            System.out.println("entiii"+sentidad);
+        }
+        else{
+            ssubentidad=entidad;
+            sentidad=null;
+            bessubentidad=true;
+            sessubentidad=true;
+            System.out.println("sentiii"+ssubentidad+"-"+sentidad);
+        }
 
         //Si se requiere que se seteen en los combos los valores de la entidad seleccionada por defecto
         /*
@@ -223,9 +238,9 @@ public class EntidadSelect {
         if (stipoSubEntidad != null) {
             c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
         }
-        if (sentidad != null) {
-            c.add(Restrictions.eq("entidad", sentidad));
-        }
+//        if (sentidad != null) {
+//            c.add(Restrictions.eq("entidad", sentidad));
+//        }
         //c.addOrder(Order.asc("denominacion"));
         //c.add(Restrictions.eq("essubentidad", 1));
         return c.list();
@@ -345,7 +360,7 @@ public class EntidadSelect {
                 entidad = sentidad;
             }
             System.out.println("Entroooo");
-            envelope.setContents("Entidad /U. Ejecutora Seleccionada"+String.valueOf(entidad));
+            envelope.setContents("Entidad /U. Ejecutora Seleccionada");
             if (_zone != null) {
                 return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
             } else {
