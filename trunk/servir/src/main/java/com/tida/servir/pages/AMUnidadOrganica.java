@@ -125,6 +125,7 @@ public class AMUnidadOrganica extends GeneralPage {
     private boolean mostrar;    
 //    @Component(id = "formlistaunidad")
 //    private Form formlistaunidad;
+    //@Persist
     private int num,mostra,num2;
     @InjectComponent
     @Property
@@ -289,7 +290,7 @@ public class AMUnidadOrganica extends GeneralPage {
         }
         else if(num2==2){
             return zonasfiltros();
-        }
+        }        
         else{        
         mostrar=true;        
         editando = false;
@@ -543,10 +544,16 @@ public class AMUnidadOrganica extends GeneralPage {
      @Log
     @CommitAfter
     Object onSuccessFromformularioaltaunidadorganica() {
+         System.out.println("altaaa"+num);
         if(num==2){
             
         }   
         else if(num==3){
+            
+        }
+        else if(num==4){
+            System.out.println("altassss"+num);
+            return unidadesOrganicasZone.getBody();
             
         }
         else if(num==1){
@@ -679,7 +686,7 @@ public class AMUnidadOrganica extends GeneralPage {
         }
         mostrar=true;
         ubicacion();
-
+         System.out.println("plopp");
         return zonas();
     }
     
@@ -882,4 +889,13 @@ public class AMUnidadOrganica extends GeneralPage {
         //System.out.println("uo en actionfromeditar "+uo+" getpuedeeditar "+getPuedeEditar() );
         return zonas();
     }
+    
+    Object onValueChangedFromUnidadorganica_nivel(Integer dato) {
+        nivelUO=dato;
+        num=4;
+        System.out.println("nivellll"+nivelUO+"-"+num);
+        
+        return unidadesOrganicasZone.getBody();
+    }
+    
 }
