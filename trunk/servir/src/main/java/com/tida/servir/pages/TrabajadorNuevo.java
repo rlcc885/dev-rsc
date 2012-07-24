@@ -358,7 +358,7 @@ public class TrabajadorNuevo  extends GeneralPage
     //para obtener datos del tipo de vinculo
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanTipoVinculo() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVÍNCULO", null, 0, session);
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVINCULO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -379,7 +379,7 @@ public class TrabajadorNuevo  extends GeneralPage
         }else if(elemento==2){
             return "Alerta";
         }else{
-            if(getListadoEntidades().size()>0 && actual==null){
+            if(getListadoEntidades().size()>0){
                  envelope.setContents(helpers.Constantes.EUE_EXITO);
                  envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
                  bTrabajadorRegistrado=true;
