@@ -57,7 +57,7 @@
                         <t:label for="unidadorganica" />
                         <input t:type="Select" t:id="unidadorganica" t:value="unidadorganica"   
                         model="beanUOrganicas" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                         t:validate="required" t:zone="nuevaUnidadOrganicaZone" t:blankOption="ALWAYS" disabled="${bUOrganica}"/>
+                        t:zone="nuevaUnidadOrganicaZone" t:blankOption="ALWAYS" disabled="${bUOrganica}"/>
                        
                     </div>
                </t:form>
@@ -82,7 +82,7 @@
                         <t:label for="cargo"/>
                         <input t:type="Select" t:id="cargo" t:value="cargo" 
                                model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
-                               t:validate="required"  t:zone="nuevoCargosZone" t:blankOption="ALWAYS"  disabled="${bCargo}"/>
+                               t:zone="nuevoCargosZone" t:blankOption="ALWAYS"  disabled="${bCargo}"/>
                     </div>
                 </t:form>
             </t:zone>
