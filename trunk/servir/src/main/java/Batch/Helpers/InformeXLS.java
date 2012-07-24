@@ -2620,15 +2620,15 @@ public class InformeXLS {
                 if(cd.getLegajo() != null)
                     escribir.print(InformeXLS.leoCampo(cd.getLegajo().getCod_legajo()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("CategoríaConstancia", InformeXLS.leoCampo(InformeXLS.leoCampo(cd.getCat_constancia())), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("CategoríaConstancia", InformeXLS.leoCampo(InformeXLS.leoCampo(cd.getCat_constancia())), errores, session));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("DatoConstancia", InformeXLS.leoCampo(InformeXLS.leoCampo(cd.getTip_constancia())), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("DatoConstancia", InformeXLS.leoCampo(InformeXLS.leoCampo(cd.getTip_constancia())), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(cd.getFecha()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(cd.getNum_resolucion()));
+//                escribir.print(InformeXLS.leoCampo(cd.getNum_resolucion()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(cd.getTxt_descriptivo()));
+//                escribir.print(InformeXLS.leoCampo(cd.getTxt_descriptivo()));
                 escribir.println();
             }
             escribir.close();

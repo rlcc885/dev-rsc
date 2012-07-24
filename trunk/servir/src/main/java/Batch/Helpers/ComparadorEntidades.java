@@ -969,30 +969,30 @@ public class ComparadorEntidades {
         licd.setNumeroDocumento(numeroDocumento);
         licd.setTipoDocumento(tipoDocumento);
 
-        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCat_constancia(), cdestino.getCat_constancia()));
-        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return licd;
-        }
-
-        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTip_constancia(), cdestino.getTip_constancia()));
-        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return licd;
-        }
+//        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCat_constancia(), cdestino.getCat_constancia()));
+//        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return licd;
+//        }
+//
+//        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTip_constancia(), cdestino.getTip_constancia()));
+//        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return licd;
+//        }
 
         licd.setResultado(ComparadorEntidades.comparadorDate(corigen.getFecha(), cdestino.getFecha()));
         if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return licd;
         }
 
-        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNum_resolucion(), cdestino.getNum_resolucion()));
-        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return licd;
-        }
-
-        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTxt_descriptivo(), cdestino.getTxt_descriptivo()));
-        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return licd;
-        }
+//        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNum_resolucion(), cdestino.getNum_resolucion()));
+//        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return licd;
+//        }
+//
+//        licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTxt_descriptivo(), cdestino.getTxt_descriptivo()));
+//        if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return licd;
+//        }
 
         licd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getLegajo(), cdestino.getLegajo()));
         if (licd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
