@@ -21,6 +21,7 @@
         </p:accionesCell>
 
      </t:grid>
+    <br/>    
     <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar Nuevo Cargo</a>
     <!--
     <t:if test="busqueda">

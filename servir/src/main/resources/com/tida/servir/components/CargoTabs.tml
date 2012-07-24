@@ -1,0 +1,25 @@
+<html t:type="layout" title="Editar Cargos Asignados"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+<t:content>
+    
+     <ul id="tabs-Personales" class="tabs">
+            <li><a href="#"> Datos del Cargo/Puesto</a></li>
+            <li><a href="#"> Remuneraciones</a></li>
+            <li><a href="#"> Evaluaciones</a></li>
+        </ul>
+        <div class= "pane" id='datoscargo' name='datoscargo'>             
+                <t:CargosGrilla t:id="cargosGrilla" actual= "actual" />           
+        </div>
+
+        <div class= "pane" id='datosremuneraciones' name='remuneraciones'>    
+              Remuneraciones                
+        </div>
+        
+        <div class= "pane" id='datosevaluaciones' name='evaluaciones'>             
+               Evaluaciones <!--<t:EvaluacionesPersonalesEditor t:id="evaluacionesPersonalesEditor" actual= "actual" /> -->          
+        </div>
+
+</t:content>
+</html>

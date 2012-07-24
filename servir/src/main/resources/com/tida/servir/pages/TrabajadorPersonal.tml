@@ -31,6 +31,8 @@
             <li><a href="#"> Datos Personales</a></li>
             <li><a href="#"> Estudios </a></li>
             <li><a href="#"> Cursos y Otros</a></li>
+            <li><a href="#"> Experiencia Laboral</a></li>
+            <li><a href="#"> Producción Intelectual</a></li>
             <!--<li><a href="#"> Antecedentes Laborales</a></li>--> 
             <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
@@ -61,6 +63,14 @@
 	</div>
         <div class= "pane" id='cursos' name='cursos'> 
                 <t:CursosEditor t:id="cursosEditor" actual= "actual"/>
+        </div>
+                
+        <div class= "pane" id='experiencia' name='experiencia'> 
+                <t:AntecedentesEditor t:id="antecedentesEditor" actual= "actual"/>
+        </div>
+                
+        <div class= "pane" id='publicacion' name='publicacion'> 
+                <t:PublicacionesEditor t:id="publicacionesEditor" actual= "actual"/>
         </div>
 
         <!--        
