@@ -34,12 +34,12 @@ public class EntidadEditor extends GeneralPage {
     private Session session;
     @Inject
     private Request _request;
-    @Property
-    @Persist
-    private Entidad entidadUE;
+    //@Property
+    //@Persist
+    //private Entidad entidadUE;
     @Property
     @SessionState
-    private Entidad _oi;
+    private Entidad entidadUE;
     @Component(id = "formulariomensajes")
     private Form formulariomensajes;
     @InjectComponent
@@ -168,44 +168,44 @@ public class EntidadEditor extends GeneralPage {
     //Inicio de lac carga de la pagina
     @SetupRender
     private void inicio() {
-        entidadUE = new Entidad();
+//        entidadUE = new Entidad();
         ubigeoEntidadUE = new Ubigeo();
-        entidadUE = _oi;
-        if (_oi.getCue_entidad() != null) {
-            cueEntidad = _oi.getCue_entidad();
+//        entidadUE = entidadUE;
+        if (entidadUE.getCue_entidad() != null) {
+            cueEntidad = entidadUE.getCue_entidad();
         }
-        if (_oi.getSigla() != null) {
-            siglaEntidad = _oi.getSigla();
+        if (entidadUE.getSigla() != null) {
+            siglaEntidad = entidadUE.getSigla();
         }
-        if (_oi.getEmailInstitucional() != null) {
-            emailentidad = _oi.getEmailInstitucional();
+        if (entidadUE.getEmailInstitucional() != null) {
+            emailentidad = entidadUE.getEmailInstitucional();
         }
-        if (_oi.getUrlEntidad() != null) {
-            urlsEntidad = _oi.getUrlEntidad();
+        if (entidadUE.getUrlEntidad() != null) {
+            urlsEntidad = entidadUE.getUrlEntidad();
         }
-        if (_oi.getTelefonoEntidad() != null) {
-            telefEntidad = _oi.getTelefonoEntidad();
+        if (entidadUE.getTelefonoEntidad() != null) {
+            telefEntidad = entidadUE.getTelefonoEntidad();
         }
-        if (_oi.getDescZona() != null) {
-            desczonaentidad = _oi.getDescZona();
+        if (entidadUE.getDescZona() != null) {
+            desczonaentidad = entidadUE.getDescZona();
         }
-        if (_oi.getDepartamento() != null) {
-            ubigeoEntidadUE.setDepartamento(_oi.getDepartamento());
+        if (entidadUE.getDepartamento() != null) {
+            ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
         }
-        if (_oi.getProvincia() != null) {
-            ubigeoEntidadUE.setProvincia(_oi.getProvincia());
+        if (entidadUE.getProvincia() != null) {
+            ubigeoEntidadUE.setProvincia(entidadUE.getProvincia());
         }
-        if (_oi.getDistrito() != null) {
-            ubigeoEntidadUE.setDistrito(_oi.getDistrito());
+        if (entidadUE.getDistrito() != null) {
+            ubigeoEntidadUE.setDistrito(entidadUE.getDistrito());
         }
-        if (_oi.getTitular() != null) {
-            titular = _oi.getTitular().getApellidoPaterno() + " " + _oi.getTitular().getApellidoMaterno() + ", " + _oi.getTitular().getNombres();
+        if (entidadUE.getTitular() != null) {
+            titular = entidadUE.getTitular().getApellidoPaterno() + " " + entidadUE.getTitular().getApellidoMaterno() + ", " + entidadUE.getTitular().getNombres();
         }
-        if (_oi.getJefeRRHH() != null) {
-            jefeRRHH = _oi.getJefeRRHH().getApellidoPaterno() + " " + _oi.getJefeRRHH().getApellidoMaterno() + ", " + _oi.getJefeRRHH().getNombres();
+        if (entidadUE.getJefeRRHH() != null) {
+            jefeRRHH = entidadUE.getJefeRRHH().getApellidoPaterno() + " " + entidadUE.getJefeRRHH().getApellidoMaterno() + ", " + entidadUE.getJefeRRHH().getNombres();
         }
-        if (_oi.getJefeOga() != null) {
-            jefeOGA = _oi.getJefeOga().getApellidoPaterno() + " " + _oi.getJefeOga().getApellidoMaterno() + ", " + _oi.getJefeOga().getNombres();
+        if (entidadUE.getJefeOga() != null) {
+            jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
     }
 
@@ -217,15 +217,15 @@ public class EntidadEditor extends GeneralPage {
             return this;
         }
         String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-        String nombreArchivo = Encriptacion.encriptaEnMD5(_oi.getId().toString())+file.getFileName().substring(file.getFileName().length() - 4);
+        String nombreArchivo = Encriptacion.encriptaEnMD5(entidadUE.getId().toString())+file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivo);
         copied = new File(path);
         if (!copied.exists()) {
             copied.mkdirs();
         }
         file.write(nuevo);
-        _oi.setLogotipo(nombreArchivo);
-        session.saveOrUpdate(_oi);
+        entidadUE.setLogotipo(nombreArchivo);
+        session.saveOrUpdate(entidadUE);
         return this;
     }
 
@@ -276,10 +276,10 @@ public class EntidadEditor extends GeneralPage {
     }
     
     void onSelectedFromCancelBuscador() {
-        btitulari = false;
-        bjefeOGAi = false;
-        bjefeRRHHi = false;
-        System.out.println("onSelectedFromCancelBuscador");
+//        btitulari = false;
+//        bjefeOGAi = false;
+//        bjefeRRHHi = false;
+//        System.out.println("onSelectedFromCancelBuscador");
     }
 
     @CommitAfter
@@ -299,7 +299,7 @@ public class EntidadEditor extends GeneralPage {
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-            //_oi=entidadUE;
+            //entidadUE=entidadUE;
             session.saveOrUpdate(entidadUE);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Entidad modificada exitosamente");
@@ -320,7 +320,7 @@ public class EntidadEditor extends GeneralPage {
     }
 
     public void onActivate(Entidad eue) {
-        entidadUE = eue;
+        //entidadUE = eue;
     }
 
     //Metodos de Busqueda de Trabajadores

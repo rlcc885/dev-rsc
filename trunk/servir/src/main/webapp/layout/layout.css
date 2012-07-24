@@ -108,7 +108,17 @@ a {
 a:hover {
     text-decoration: none;
 }
+fieldset {
+  border: 1px dotted #999;
+  /*margin-top: 16px;*/
+  padding: 10px;
+}
 
+legend {
+  /*font: 0.8em Arial, Helvetica, sans-serif;*/
+  color: #339933;
+  background-color: #FFFFFF;
+}
 
 
 /* Tapestry styles all start with "t-" */
@@ -1471,7 +1481,7 @@ DIV.t-available-values UL LI
 .f-wrap { 
     overflow:auto; 
     zoom:1;
-    margin-top:10px;
+    /*margin-top:10px;*/
 }
 .f-left{ float:left; margin-right: 10px;}
 .f-right { float:right;}

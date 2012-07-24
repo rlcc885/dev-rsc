@@ -6,10 +6,8 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -21,7 +19,6 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -36,7 +33,6 @@ public class EntidadSelect {
     @Parameter(required = false)
     private Boolean vistaCorta;
     @Parameter(required = false)
-    //@Parameter(defaultPrefix = BindingConstants.LITERAL)
     private Zone _zone;
     @Parameter(defaultPrefix = BindingConstants.LITERAL, required = false)
     @Property
@@ -75,9 +71,7 @@ public class EntidadSelect {
     @Property
     @Persist
     private boolean sessubentidad;
-//    @InjectComponent
-//    @Property
-//    private Zone NivelZone;
+
     @InjectComponent
     @Property
     private Zone OrganizacionZone;
@@ -135,7 +129,6 @@ public class EntidadSelect {
         ssubentidad=null;
         if(entidad.getEntidad()==null){
             sentidad=entidad;
-//            ssubentidad=null;
             bessubentidad=false;
             sessubentidad=false;
             System.out.println("entiii"+sentidad);
@@ -291,35 +284,6 @@ public class EntidadSelect {
     Object onValueChangedStipoOrganismo(DatoAuxiliar dato){
         return EntidadZone.getBody();
     }
-//    Object onSuccessFromformNivelGobierno() {
-//        borganizacionestado = true;
-//        if (snivelGobierno == null) {
-//            borganizacionestado = false;
-//        }
-//        return new MultiZoneUpdate("OrganizacionZone", OrganizacionZone.getBody()).add("EntidadZone", EntidadZone.getBody());
-//    }
-
-//    Object onSuccessFromformOrganizacionEstado() {
-//        if (sorganizacionestado.getValor().equalsIgnoreCase("PODER EJECUTIVO")) {
-//            bsectorgobierno = true;
-//        } else {
-//            bsectorgobierno = false;
-//            btipoorganismo = false;
-//        }
-//        return new MultiZoneUpdate("SectorZone", SectorZone.getBody()).add("EntidadZone", EntidadZone.getBody());
-//    }
-
-//    Object onSuccessFromformSectorGobierno() {
-//        if (bsectorgobierno) {
-//            btipoorganismo = true;
-//        }
-//        return new MultiZoneUpdate("TipoOrganismoZone", TipoOrganismoZone.getBody()).add("EntidadZone", EntidadZone.getBody());
-//
-//    }
-
-//    Object onSuccessFromformTipoOrganismo() {
-//        return EntidadZone.getBody();
-//    }
 
     Object onSuccessFromformEntidad() {
         return new MultiZoneUpdate("EsSubEntidadZone", EsSubEntidadZone.getBody()).add("TipoSubEntidadZone", TipoSubEntidadZone.getBody()).add("SubEntidadZone", SubEntidadZone.getBody());
