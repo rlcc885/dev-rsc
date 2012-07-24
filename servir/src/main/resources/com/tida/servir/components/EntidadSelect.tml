@@ -1,4 +1,3 @@
-
 <html title="Editar Ubigeos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -6,33 +5,26 @@
     <t:content>
         <form t:type="form" t:id="formNivelGobierno" >
             <div class="f-wrap">
-<!--            <t:zone t:id="NivelZone" class="f-left" t:update="show">-->
                 <script>
                     sortAllSelects();
                 </script>
-<!--                <form t:type="form" t:id="formNivelGobierno" t:zone="OrganizacionZone" class="f-left">-->
                 <div class="f-left">
                     <t:label for="snivelGobierno">Nivel de Gobierno</t:label>
                     <select t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno"
                             model="NivelGobierno" 
                             t:zone="OrganizacionZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS" />
                 </div>
-<!--                </form>-->
-<!--            </t:zone>-->
-                 
                 <t:zone t:id="OrganizacionZone" class="f-left" t:update="show">
                     <t:if test="borganizacionestado">
                         <script>
                             sortAllSelects();
                         </script>
-<!--                    <form t:type="form" t:id="formOrganizacionEstado" t:zone="SectorZone" class="f-left">-->
                         <div class="f-left">
                             <t:label for="sorganizacionestado">Organización Estado</t:label>
                             <select t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado"
                                     model="OrganizacionEstado" 
                                     t:zone="SectorZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                         </div>
-<!--                    </form>-->
                     </t:if>
                 </t:zone> 
     
@@ -41,14 +33,12 @@
                         <script>
                             sortAllSelects();
                         </script>
-<!--                    <form t:type="form" t:id="formSectorGobierno" t:zone="TipoOrganismoZone" class="f-left">-->
                         <div class="f-left">
                             <t:label for="ssectorgobierno">Sector</t:label>
                             <select t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno"
                                     model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                     t:zone="TipoOrganismoZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                         </div>
-<!--                    </form>-->
                     </t:if>    
                 </t:zone>
                 
@@ -57,14 +47,12 @@
                         <script>
                             sortAllSelects();
                         </script>
-<!--                    <form t:type="form" t:id="formTipoOrganismo" t:zone="EntidadZone" class="f-left">-->
                         <div class="f-left">
                             <t:label for="stipoOrganismo">Tipo Organismo</t:label>
                             <select t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo"
                                     model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                     t:zone="EntidadZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                         </div>
-<!--                    </form>-->
                     </t:if>
                 </t:zone>
             </div>
@@ -73,17 +61,12 @@
                     <script>
                         sortAllSelects();
                     </script>
-                    
-                        
-<!--                <form t:type="form" t:id="formEntidad" t:zone="EsSubEntidadZone" class="f-left">-->
                         <div class="f-left">
                             <t:label for="sentidad">Entidad</t:label>
                             <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
                                     model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                     t:validate="required" t:zone="EntidadZone" t:blankOption="ALWAYS" />
                         </div>
-                    
-<!--                </form>            -->
                 </t:zone>
             </div>
         </form>
@@ -159,6 +142,5 @@
                 </div>
             </t:zone>
         </div>
-
     </t:content>
 </html>
