@@ -160,20 +160,20 @@ public class CursosEditor {
             veditar=true;
             vbotones=true;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+                vrevisado=true;                
             }
         }
         if(usu.getAccesodelete()==1){
             veliminar=true; 
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+                vrevisado=true;                
             }
         }
         if(usu.getAccesoreport()==1){
             vformulario=true;
             vbotones=true;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+                vrevisado=true;                
             }
         }
         cursos=new Curso();
@@ -333,94 +333,105 @@ public class CursosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariotercero(){
-        if(valdenominacion==null){
-                formlistacursos.recordError("Debe ingresar la Denominación");
-                return listadoZone.getBody();
-            }
-            if(valtipoestudio==null){
-                formlistacursos.recordError("Debe seleccionar el Tipo de Estudio");
-                return listadoZone.getBody();
-            }
-            if(valcentroestudio==null){
-                formlistacursos.recordError("Debe seleccionar el Centro de Estudio");
-                return listadoZone.getBody();
-            }
-            if(valfec_desde==null){
-                formlistacursos.recordError("Debe ingresar Fecha de Inicio");
-                return listadoZone.getBody();
-            }
-            if(valestudiando!=null){     
-                if(valestudiando==false){
-                    if(valfec_hasta==null){
-                        formlistacursos.recordError("Debe ingresar Fecha de Fin");
-                        return listadoZone.getBody();
-                    }
-                    if (valfec_desde.after(valfec_hasta)) {
-                        formlistacursos.recordError("Las fechas de fin no pueden ser menores a las de inicio");
-                        return listadoZone.getBody();
-                    }  
-                }
-            }
-            else{
-                if(valfec_hasta==null){
-                        formlistacursos.recordError("Debe ingresar Fecha de Fin");
-                        return listadoZone.getBody();
-                    }
-                if (valfec_desde.after(valfec_hasta)) {
-                        formlistacursos.recordError("Las fechas de fin no pueden ser menores a las de inicio");
-                        return listadoZone.getBody();
-                    } 
-            }
-            if(editando){
-                //editando
-                if(usu.getAccesoreport()==0){
-                    vformulario=false;
-                } 
-                System.out.println("fuerae"+valfuera);
-                cursos.setEstudiando(valestudiando);
-                cursos.setFueradelpais(valfuera);
-                
-            }
-            else{//guardando
-                //System.out.println("Trabajadorrr"+actual);
-                cursos.setTrabajador(actual);        
-                cursos.setEntidad(_usuario.getTrabajador().getEntidad());
-                cursos.setValidado(false);
-                if(valestudiando==null){
-                    cursos.setEstudiando(false);
-                }
-                else{
-                    cursos.setEstudiando(valestudiando);
-                }
-                if(valfuera==null){
-                    cursos.setFueradelpais(false);
-                }
-                else{
-                    cursos.setFueradelpais(valfuera);
-                }
-                if(_usuario.getRol().getId()==1){
-                    cursos.setAgregadotrabajador(true);
-                }
-                else{
-                    cursos.setAgregadotrabajador(false);
-                }
-            }
-            if(vrevisado==true){
-                if(valrevisado==null){
-                    cursos.setValidado(false);
-                }
-                else{
-                    cursos.setValidado(valrevisado);
-                }
-                
-            }
-            seteo();
-            session.saveOrUpdate(cursos); 
-            editando = false; 
-            limpiar();
-            formlistacursos.clearErrors();
-            envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
+        if(elemento==3){
+            if(_usuario.getRol().getId()==1)
+                return "Alerta";
+            else
+                return Busqueda.class;
+        }
+        else if(elemento==2){
+            
+        }
+        else if(elemento==1){            
         
+            if(valdenominacion==null){
+                    formlistacursos.recordError("Debe ingresar la Denominación");
+                    return listadoZone.getBody();
+                }
+                if(valtipoestudio==null){
+                    formlistacursos.recordError("Debe seleccionar el Tipo de Estudio");
+                    return listadoZone.getBody();
+                }
+                if(valcentroestudio==null){
+                    formlistacursos.recordError("Debe seleccionar el Centro de Estudio");
+                    return listadoZone.getBody();
+                }
+                if(valfec_desde==null){
+                    formlistacursos.recordError("Debe ingresar Fecha de Inicio");
+                    return listadoZone.getBody();
+                }
+                if(valestudiando!=null){     
+                    if(valestudiando==false){
+                        if(valfec_hasta==null){
+                            formlistacursos.recordError("Debe ingresar Fecha de Fin");
+                            return listadoZone.getBody();
+                        }
+                        if (valfec_desde.after(valfec_hasta)) {
+                            formlistacursos.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                            return listadoZone.getBody();
+                        }  
+                    }
+                }
+                else{
+                    if(valfec_hasta==null){
+                            formlistacursos.recordError("Debe ingresar Fecha de Fin");
+                            return listadoZone.getBody();
+                        }
+                    if (valfec_desde.after(valfec_hasta)) {
+                            formlistacursos.recordError("Las fechas de fin no pueden ser menores a las de inicio");
+                            return listadoZone.getBody();
+                        } 
+                }
+                if(editando){
+                    //editando
+                    if(usu.getAccesoreport()==0){
+                        vformulario=false;
+                    } 
+                    System.out.println("fuerae"+valfuera);
+                    cursos.setEstudiando(valestudiando);
+                    cursos.setFueradelpais(valfuera);
+
+                }
+                else{//guardando
+                    //System.out.println("Trabajadorrr"+actual);
+                    cursos.setTrabajador(actual);        
+                    cursos.setEntidad(_usuario.getTrabajador().getEntidad());
+                    cursos.setValidado(false);
+                    if(valestudiando==null){
+                        cursos.setEstudiando(false);
+                    }
+                    else{
+                        cursos.setEstudiando(valestudiando);
+                    }
+                    if(valfuera==null){
+                        cursos.setFueradelpais(false);
+                    }
+                    else{
+                        cursos.setFueradelpais(valfuera);
+                    }
+                    if(_usuario.getRol().getId()==1){
+                        cursos.setAgregadotrabajador(true);
+                    }
+                    else{
+                        cursos.setAgregadotrabajador(false);
+                    }
+                }
+                if(vrevisado==true){
+                    if(valrevisado==null){
+                        cursos.setValidado(false);
+                    }
+                    else{
+                        cursos.setValidado(valrevisado);
+                    }
+
+                }
+                seteo();
+                session.saveOrUpdate(cursos); 
+                editando = false; 
+                limpiar();
+                formlistacursos.clearErrors();
+                envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
+        }
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
                     .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
     }
