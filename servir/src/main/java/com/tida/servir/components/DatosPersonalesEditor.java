@@ -216,9 +216,6 @@ public class DatosPersonalesEditor {
     void onSelectedFromSave() {        
         elemento=1;   
     }
-    void onSelectedFromReset(){     
-        elemento=2;
-    }
     
     void onSelectedFromCancel() {        
         elemento=3;
@@ -234,10 +231,7 @@ public class DatosPersonalesEditor {
             return Busqueda.class;
         }
         else if(elemento==3){
-            
-        }
-        else if(elemento==2){
-            
+            return Busqueda.class;
         }
         else if(elemento==1){
     //        actual.setCod_ubi_dept(ubigeoNacimiento.getDepartamento());
@@ -576,6 +570,7 @@ public class DatosPersonalesEditor {
                 vruc=true;
                 vgruposanguineo=true;
                 vbotones=false;
+                //titulo=false;
             }      
     }
     

@@ -4,7 +4,7 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
-        <form t:type="form" t:id="formNivelGobierno" t:zone="OrganizacionZone">
+        <form t:type="form" t:id="formNivelGobierno" >
             <div class="f-wrap">
 <!--            <t:zone t:id="NivelZone" class="f-left" t:update="show">-->
                 <script>
@@ -73,13 +73,16 @@
                     <script>
                         sortAllSelects();
                     </script>
+                    
+                        
 <!--                <form t:type="form" t:id="formEntidad" t:zone="EsSubEntidadZone" class="f-left">-->
-                    <div class="f-left">
-                        <t:label for="sentidad">Entidad</t:label>
-                        <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
-                                model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                t:validate="required" t:zone="EsSubEntidadZone" t:blankOption="ALWAYS" />
-                    </div>
+                        <div class="f-left">
+                            <t:label for="sentidad">Entidad</t:label>
+                            <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
+                                    model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:validate="required" t:zone="EntidadZone" t:blankOption="ALWAYS" />
+                        </div>
+                    
 <!--                </form>            -->
                 </t:zone>
             </div>
