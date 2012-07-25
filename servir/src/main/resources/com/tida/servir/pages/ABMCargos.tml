@@ -11,22 +11,23 @@
     <div id="mainfiltros" class="pane">
 
         <!-- t:validate="required,minlength=1" -->
-
-        <div id="cargosSelects">
-            <t:zone t:id="nivelcargo">
+            
+        <!--<div id="cargosSelects">-->
+            <!--<t:zone t:id="nivelcargo">
                 <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelUOZone">
-                    <div class="f-left">
-                        <label>Nivel Organizacional</label>
-                        <input t:type="Select" t:id="unidadorganica_nivel"
-                               onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                               t:value="nivel" model="beanNivel" t:zone="nivelUOZone"/>
-                    </div>
+                    
                 </form>
-            </t:zone>
-            <t:zone t:id="nivelUOZone" >
+            </t:zone>-->
+            <t:zone t:id="nivelUOZone" t:update="show">
                 <form t:type="form" t:id="xxx" t:zone="listaCargo">
                    <!-- <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
+                   <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Nivel Organizacional</label>
+                            <input t:type="Select" t:id="unidadorganica_nivel"                                
+                                t:value="nivel" model="beanNivel" t:zone="nivelUOZone"/>
+                        </div>
                         <div class="f-left">
                           <label>Unidad Orgánica</label>
                             <select t:type="select" t:id="select_unidadOrganica"
@@ -39,13 +40,16 @@
                                 <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="30"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoChanged"  t:zone="nivelUOZone"/>
                             </div>
+                   </div>
                         
                         <!--</t:if>-->
                     <!--</div>-->
                 </form>
             </t:zone>
-        </div>
-        <div id = "ocupacionalescargoxx">
+        <!--</div>-->      
+          
+          
+        <div id = "busquedaocupacionalescargoxx">
                 <t:zone t:id="BOcupacionalesZone" t:update="show">          
                     <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                         <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
@@ -53,12 +57,10 @@
                     </form>                 
                 </t:zone>    
         </div>
-          
-          <div t:type="zone"  id="form_unidad_organica" class="abmform">  
+        <div t:type="zone"  id="form_unidad_organica" class="abmform">  
             <t:zone t:id="filtrosZone" t:update="show">           
                 <form t:type="form" t:id="formulariofiltrocargo" zone="listaCargo">
-                    <div class="f-wrap">
-                        
+                    <div class="f-wrap">                        
                         <div class="f-left">
                             <label>Situación CAP</label>
                             <input t:type="Select" t:id="bsituacioncap" t:value="valsituacioncap" model="beanDatoSituacionCAP" />
@@ -74,12 +76,11 @@
                 </form>   
             </t:zone>
           </div>
-        
   
-            
+           <br/> 
         
     </div> 
-    
+                   
    <div t:type="zone" t:id="listaCargo" class="selectform" t:update="show">
         <t:if test="mostrar">  
             <t:form t:id="formlistaunidad">                
@@ -112,23 +113,21 @@
                 
             </t:form>
         </t:if>
-     </div> <!-- tabla cargos -->
-    <div class="f-wrap">
-
-
-    </div> 
+     </div> <!-- tabla cargos --> 
+     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">    
+            <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
+             <t:envelope t:id="envelope"/>
+                <t:errors/> 
+            </form>
+     </div>      
      
-    
-        <div class="box" id="box-cargos">
+        <div class="box" id="box-cargos">           
           <div t:type="zone" t:id="abmZone" class="abmform" t:update="show">
             <t:if test="${vformulario}">
             <h3> Crear / Editar Cargo </h3>
             <br/>
-            <t:form t:id="formularioaltacargo" zone="abmZone">     
-              <t:envelope t:id="envelope"/>
-                <t:errors/>                   
-                    
-                        
+            <t:form t:id="formularioaltacargo" t:zone="abmZone">                           
+         
                         <!-- <div id="cargos_izq" class="cargosAM">-->
                         <!--<div id="cargos_izq" class="cargosAM">-->
                         <div class="f-wrap">
@@ -183,27 +182,28 @@
                        <legend>* Condiciones</legend>
                             <div class="f-wrap">                             
                                 ¿Es Orgánico?   
-                                <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico" t:validate="required">
+                                <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico">
                                     <t:radio t:id="o1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>
                             </div>
                             <div class="f-wrap">                         
                                 ¿Presupuestado en PAP?
-                                <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP" t:validate="required">
+                                <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP">
                                    <t:radio t:id="pa1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>
                             </div>
                             <div class="f-wrap">
                                 ¿Presenta Declaración Jurada de Bienes y Rentas?
-                                <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr" t:validate="required">
+                                <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr">
                                     <t:radio t:id="de1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="de2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>                                                               
                             </div>
                        </fieldset>
                          <br/>
-                         <div class="f-wrap">                        
-                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
+                         <div class="f-wrap">
                                 ¿Supervisa Personal?
+                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal"/>                              
+                                
                          </div>  
                        </div>
                      
@@ -245,18 +245,21 @@
                 <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                     <input t:type="RegimenesGruposNiveles" t:id="regimengruponivel" t:regimengruponivel="regimengruponivel"
                             t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" t:validate="required" t:disabled="${vdetalle}"/>
-                </form>              
-            </t:if>
+                </form>
+              </t:if>
                     <!-- <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
                         <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
                         t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
                     </form> -->
  
         </t:zone>
-        <br/>
-        <div class="f-wrap">                        
-            (*) Campos Obligatorios
-        </div>
+         <t:if test="${vformulario}">
+            <br/>
+            <div class="f-wrap">                        
+                (*) Campos Obligatorios
+            </div>
+        </t:if>
+        
         
     </div>
 
