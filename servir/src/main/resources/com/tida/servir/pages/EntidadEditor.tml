@@ -1,4 +1,3 @@
-
 <html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -13,9 +12,6 @@
     </div>
 <!--    <h3>Crear/Editar Entidades /U. Ejecutoras</h3>-->
     <div class="box">
-        
-        
-        
         <fieldset>
             <legend> Datos </legend>
             <t:zone t:id="principalZone" t:update="show">
@@ -69,7 +65,7 @@
                             <t:label for="sigla"/>
                             <input t:type="TextField" t:id="sigla" 
                                    t:value="siglaEntidad" t:validate="maxlength=20" size="12" 
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="nivelOrganizacionSectorZone" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="principalZone" />
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -82,7 +78,7 @@
                             <t:label for="cue_entidad"/>
                             <input t:type="TextField" t:id="cue_entidad"
                                    t:value="cueEntidad" t:validate="maxlength=12" size="12" t:disabled="true"  
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="nivelOrganizacionSectorZone" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="principalZone" />
                         </div>
                         <div class="f-left">
                             <t:label for ="proc_batch"/>
