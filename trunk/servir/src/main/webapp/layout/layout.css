@@ -1456,3 +1456,14 @@ DIV.t-console DIV.t-debug {
 DIV.t-data-grid {
     margin-top: 15px;
 }
+
+.box-background-title{
+    
+}
+.box-title{
+    background-color:#D72522; 
+    display: inline-block; 
+    padding:5px;
+    /*font-size: 14px;*/
+    color:#FFFFFF;
+}
