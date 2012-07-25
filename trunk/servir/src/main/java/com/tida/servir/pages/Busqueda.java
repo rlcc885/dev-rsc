@@ -214,7 +214,7 @@ public class Busqueda extends GeneralPage {
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getNivelinstruccion() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELINSTRUCCIÓN", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELINSTRUCCION", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }    
 
