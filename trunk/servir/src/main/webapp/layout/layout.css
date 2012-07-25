@@ -1442,3 +1442,7 @@ DIV.t-console DIV.t-debug {
     margin: 0px;
     border: 0px;
 }
+
+DIV.t-data-grid {
+    margin-top: 15px;
+}
