@@ -235,8 +235,6 @@
                 <div t:type="zone" t:id="principalZone" >
                     <t:form t:id="formularioentidad"  zone="principalZone">  
                         <div class="f-wrap">
-
-                                
                             <div class="f-left">
                                 <t:label for ="denominacion"/>
                                 <input t:type="TextField" t:id="denominacion"
@@ -249,8 +247,6 @@
                                            t:value="siglaEntidad" t:validate="maxlength=20" size="12" 
                                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaEntidadChanged"  t:zone="principalZone" />
                             </div>
-
-
                         </div>
 
                         <div class="f-wrap">
@@ -271,10 +267,7 @@
                                 <input t:type="Checkbox" t:id="proc_batch" 
                                            t:value="entidadUE.proc_batch" disabled="${badmentidad}" />
                             </div>
-
                         </div>
-
-
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="tipovia"/>
@@ -287,11 +280,8 @@
                                 <input t:type="TextField" t:id="direccion"
                                            t:value="entidadUE.direccion"/>
                             </div>
-
-                        </div> 
-
+                        </div>
                         <div class="f-wrap">
-
                             <div class="f-left">
                                 <t:label for="tipozona"/>
                                 <input t:type="Select" t:id="tipozona" t:value="entidadUE.tipozona" 
@@ -305,7 +295,6 @@
                                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descZonaEntChanged"  t:zone="principalZone" />
                             </div>
                         </div>
-                              
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="emailinstitucional"/>
@@ -326,44 +315,18 @@
                                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="telfEntChanged"  t:zone="principalZone" />
                             </div>
                         </div>
-                        
                     </t:form>
                 </div>
-                        
-                        
-<!--                <div t:type="zone" t:id="logoentidadZone" > -->
-<!--                  
-                    <t:form t:id="formulariologoentidad" >
-                        <t:errors/>
-                        <div class="f-wrap">
-                            <div class="f-left  input_grande">
-                                <label>Logo </label>
-                                <t:if test="blogoentidadi">
-                                    <input t:type="upload" t:id="file" style="width: 550px;" />
-                                    <input type="submit" value="Upload" class="button f-left"/>
-                                </t:if>
-                                <t:if test="blogoentidadf">
-                                    <input t:type="TextField" t:id="logotipo"
-                                           t:value="entidadUE.logotipo"/>
-                                </t:if>
-                            </div>
-                        </div>
-                    </t:form>
--->
-<!--                </div> -->
-                        
+                                       
                 <t:zone t:id="ubigeoEntidadZone">
                     <t:form t:id="formularioubigeo"  zone="ubigeoEntidadZone">  
                         <div class="f-wrap">
                             <div class="f-left" id="ubigeo_entidadUE"> 
-                                <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE"
-                                               t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />         
+                                <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />
                             </div>
                         </div>
                     </t:form>    
                 </t:zone>     
-                         
-                            
                 <div class="f-wrap">                             
                     <t:zone t:id="TitularZone">
                         <t:form t:id="formulariotitular"  zone="TitularZone">
@@ -399,7 +362,6 @@
                             </div>
                         </t:form>
                     </t:zone>
-                            
                 </div>
                          
                 <div t:type="zone" t:id="botonesZone" >
@@ -416,10 +378,7 @@
                             </div>
                         </div>
                     </t:form>
-                            
                 </div>
-                   
-
             </div>
 
         </div> 

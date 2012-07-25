@@ -44,6 +44,7 @@ public class EntidadEditor extends GeneralPage {
     private Form formulariomensajes;
     @InjectComponent
     private Zone mensajesZone;
+    /*
     @Component(id = "formularionivelgobierno")
     private Form formularionivelgobierno;
     @Component(id = "formularioorganizacion")
@@ -52,6 +53,7 @@ public class EntidadEditor extends GeneralPage {
     private Form formulariosector;
     @Component(id = "formularioorganismo")
     private Form formularioorganismo;
+    */
     @Component(id = "formularioentidad")
     private Form formularioentidad;
     @Property
@@ -119,9 +121,9 @@ public class EntidadEditor extends GeneralPage {
     private boolean bjefeRRHHi;
     @Inject
     private PropertyAccess _access;
-    @InjectComponent
-    @Property
-    private Zone nivelOrganizacionSectorZone;
+//    @InjectComponent
+//    @Property
+//    private Zone nivelOrganizacionSectorZone;
     @InjectComponent
     @Property
     private Zone principalZone;
@@ -276,10 +278,10 @@ public class EntidadEditor extends GeneralPage {
     }
     
     void onSelectedFromCancelBuscador() {
-//        btitulari = false;
-//        bjefeOGAi = false;
-//        bjefeRRHHi = false;
-//        System.out.println("onSelectedFromCancelBuscador");
+        btitulari = false;
+        bjefeOGAi = false;
+        bjefeRRHHi = false;
+        System.out.println("onSelectedFromCancelBuscador");
     }
 
     @CommitAfter
@@ -303,21 +305,21 @@ public class EntidadEditor extends GeneralPage {
             session.saveOrUpdate(entidadUE);
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Entidad modificada exitosamente");
-            return new MultiZoneUpdate("nivelOrganizacionSectorZone", nivelOrganizacionSectorZone.getBody()).add("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+            return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
         }
     }
 
-    @CommitAfter
-    Object onSuccessFromFormularioorganizacion() {
-        bsector = true;
-        return nivelOrganizacionSectorZone.getBody();
-    }
+//    @CommitAfter
+//    Object onSuccessFromFormularioorganizacion() {
+//        bsector = true;
+//        return nivelOrganizacionSectorZone.getBody();
+//    }
 
-    @CommitAfter
-    Object onSuccessFromFormulariosector() {
-        btipoorganismo = true;
-        return nivelOrganizacionSectorZone.getBody();
-    }
+//    @CommitAfter
+//    Object onSuccessFromFormulariosector() {
+//        btipoorganismo = true;
+//        return nivelOrganizacionSectorZone.getBody();
+//    }
 
     public void onActivate(Entidad eue) {
         //entidadUE = eue;
@@ -352,7 +354,6 @@ public class EntidadEditor extends GeneralPage {
         System.out.println("onSuccessFromFormularioTrabajador");
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
-
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         System.out.println("nombress: " + nombreTrabajador);

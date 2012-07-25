@@ -109,15 +109,18 @@ a:hover {
     text-decoration: none;
 }
 fieldset {
-  border: 1px dotted #999;
-  /*margin-top: 16px;*/
+  border: 1px solid #999;
+  margin-bottom: 10px;
   padding: 10px;
 }
 
 legend {
   /*font: 0.8em Arial, Helvetica, sans-serif;*/
-  color: #339933;
+  color: #000000;
   background-color: #FFFFFF;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 11px;
 }
 
 
@@ -1463,7 +1466,7 @@ DIV.t-available-values UL LI
     background-color:#fff; 
     padding:20px; 
     clear:both;
-    position: relative;
+    /*position: relative;*/
 }
 .box .actions { overflow:auto;zoom:1; margin-top: 50px;}
 .box h3, h3 { 
