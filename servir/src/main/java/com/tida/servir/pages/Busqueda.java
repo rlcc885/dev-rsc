@@ -310,9 +310,9 @@ public class Busqueda extends GeneralPage {
             if(sexo.equals("MASCULINO")){
                 c.add(Restrictions.like("trabajador.sexo", "M"));
             }
-            else{
+            else if(sexo.equals("FEMENINO")){
                 c.add(Restrictions.like("trabajador.sexo", "F"));
-            }            
+            } 
         }
 
         if (fechadenacimientomenora != null) {
@@ -355,6 +355,9 @@ public class Busqueda extends GeneralPage {
         }
         if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
             c.add(Restrictions.like("cargoxunidad.regimenlaboral", valregimenlaboral));
+        }
+        if (valunidadorganica != null && !valunidadorganica.equals("")) {
+            c.add(Restrictions.like("cargoxunidad.unidadorganica", valunidadorganica));
         }
 
 //        if (valRegimenContratacion != null) {
