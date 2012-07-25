@@ -186,13 +186,13 @@ public class TrabajadorEditar extends GeneralPage{
 ////      return Publicacion.CLASE_INVESTIGACION;
 //    }
 
-    public String getClaseMeritos() {
-        return MeritoDemerito.CLASE_MERITO;
-    }
-
-    public String getClaseDeMeritos() {
-        return MeritoDemerito.CLASE_DEMERITO;
-    }
+//    public String getClaseMeritos() {
+//        return MeritoDemerito.CLASE_MERITO;
+//    }
+//
+//    public String getClaseDeMeritos() {
+//        return MeritoDemerito.CLASE_DEMERITO;
+//    }
 
     public List<String> getValorTablaAuxiliar(String tabla) 
     {

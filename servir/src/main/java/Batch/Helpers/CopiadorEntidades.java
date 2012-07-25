@@ -265,11 +265,11 @@ public class CopiadorEntidades {
     }
     
     public static void meritoDemerito(MeritoDemerito origen, MeritoDemerito destino){
-        destino.setClase(CopiadorEntidades.verifacionNull(origen.getClase()));
-        destino.setDetalle(CopiadorEntidades.verifacionNull(origen.getDetalle()));
+//        destino.setClase(CopiadorEntidades.verifacionNull(origen.getClase()));
+//        destino.setDetalle(CopiadorEntidades.verifacionNull(origen.getDetalle()));
         destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
         destino.setMotivo(CopiadorEntidades.verifacionNull(origen.getMotivo()));
-        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
+//        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
         destino.setTrabajador(origen.getTrabajador());
     }
     
