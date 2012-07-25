@@ -91,7 +91,23 @@
                                 <input t:type="Select" t:id="filtroestadocivil" t:value="valestadocivil" model="estadocivil" />
                             </div>
                         </div>
-
+                        
+                        <div class="seccionfiltros f-wrap">
+                            <div class="filtros">
+                                <label>Regimen Laboral</label>
+                                <input t:type="Select" t:id="filtroregimenlaboral" t:value="valregimenlaboral" model="regimenlaborales" />
+                            </div>
+                            <div class="filtros">
+                                <label>Unidad Orgánica</label>
+                                <select t:type="select" t:id="select_unidadOrganica"
+                                    model="beanUOrganicas" encoder="beanUOrganicas" value="valunidadorganica"
+                                    onChange="this.form.fire()" t:zone="listaCargo"/>
+                            </div>
+                            <div class="filtros">
+                                <t:label for="filtronivelinstruccion"/>
+                                <input t:type="Select" t:id="filtronivelinstruccion" t:value="valnivelinstruccion" model="nivelinstruccion" />
+                            </div>
+                        </div>
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
                                 <!--div class="checkbox">
@@ -118,11 +134,7 @@
                                     <input t:type="DateField" t:id="fechadenacimientomenora"
                                t:date="fechadenacimientomenora" size="30" />
                                 </div>
-                            </div>
-                            <div class="filtros">
-                                <t:label for="filtronivelinstruccion"/>
-                                <input t:type="Select" t:id="filtronivelinstruccion" t:value="valnivelinstruccion" model="nivelinstruccion" />
-                            </div>
+                            </div>                            
                             <div class="filtros">
 
                                 <div class="hssemfecha">
@@ -147,10 +159,7 @@
                                 <t:label for="filtroformacionprofe"/>
                                 <input t:type="Select" t:id="filtroformacionprofe" t:value="valformacionprofe" model="formacionprofesional" />
                             </div>
-                            <div class="filtros">
-                                <label>Regimen Laboral</label>
-                                <input t:type="Select" t:id="filtroregimenlaboral" t:value="valregimenlaboral" model="regimenlaborales" />
-                            </div>
+                            
                             
                             <!--
                             <div class="filtros">
@@ -215,13 +224,15 @@
                 <t:if test="vselect">
                 <div class="actions f-right">
                     <input id = "buscarsubmit" type="submit" value="Buscar" class="button"/>
-                    <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/>
+                    <input t:id = "borrarbusquedas" t:type="submit" value="Limpiar Formulario" class="button"/>
                 </div>
                 </t:if>
+                
 
             </t:form>
 
         </div> <!-- Wrap Selectors-->
+        <br/> 
     </div> <!-- Zona filtros -->
 
 
@@ -248,7 +259,7 @@
                 <t:grid source="empleados" rowsPerPage="15" row="e" t:add="Acciones"
                         pagerPosition="bottom" reorder="nroDocumento,apellidoPaterno,
                         apellidoMaterno,nombres" t:context="e" 
-                        include="nroDocumento,apellidoPaterno,apellidoMaterno,nombres">
+                        include="nroDocumento,nombres,apellidoPaterno,apellidoMaterno">
                     <!-- t:rowclass="prop:selectionrow" <t:parameter name="nroDocumentoCell">
                             <a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#">${e.nroDocumento}</a>
                     </t:parameter> -->
