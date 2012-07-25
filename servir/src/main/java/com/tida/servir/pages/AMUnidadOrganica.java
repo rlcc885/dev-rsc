@@ -150,9 +150,6 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private Boolean veditar;
-    @Persist
-    @Property
-    private int vtamaño;
     @Inject
     private ComponentResources _resources;
 
@@ -168,7 +165,6 @@ public class AMUnidadOrganica extends GeneralPage {
         vbotones=false;
         vformulario=false;
         vdetalle=false;
-        vtamaño=0;
         ubicacion();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
@@ -189,7 +185,6 @@ public class AMUnidadOrganica extends GeneralPage {
             }
             if(usua.getAccesoreport()==1){
                 vformulario=true;
-                vtamaño=330;
                 vbotones=true; 
             }
         
@@ -278,7 +273,6 @@ public class AMUnidadOrganica extends GeneralPage {
         num=3;
         if(!vbotones){
             vformulario=false;
-            vtamaño=0;
         }else{
             unidadOrganica = new UnidadOrganica();
             ubigeoDomicilio = new Ubigeo();
@@ -614,7 +608,6 @@ public class AMUnidadOrganica extends GeneralPage {
                 else{
                     if(usua.getAccesoreport()==0){
                             vformulario=false;
-                            vtamaño=0;
                     }
                 }
                 unidadOrganica.setNivel(nivelUO);
@@ -675,7 +668,6 @@ public class AMUnidadOrganica extends GeneralPage {
             else{
                 if(usua.getAccesoreport()==0){
                         vformulario=false;
-                        vtamaño=0;
                 }
             }
             unidadOrganica.setNivel(nivelUO);
@@ -840,7 +832,6 @@ public class AMUnidadOrganica extends GeneralPage {
         vdetalle=true;
         vbotones=false;
         vformulario=true;
-        vtamaño=330;
         return zonas(); 
     }
     
@@ -893,7 +884,6 @@ public class AMUnidadOrganica extends GeneralPage {
         editando = true;
         cargoDatos();
         vformulario=true;
-        vtamaño=330;
         vdetalle=false;
         vbotones=true;
 
