@@ -111,41 +111,50 @@
                                 <t:label for="filtroformacionprofe"/>
                                 <input t:type="Select" t:id="filtroformacionprofe" t:value="valformacionprofe" model="formacionprofesional" />
                             </div>
-                        </div>
-                        <div class="seccionfiltros f-wrap">
                             <div class="filtros">
-                                <!--div class="checkbox">
-                                    <t:label for="checkfechadenacimientomayora" /> 
-                                    <t:checkbox t:id="checkfechadenacimientomayora" value="checkfechadenacimientomayora"/>
-                                </div>-->
-                                <div class="hssemfecha">
-                                    <t:label for="fechadenacimientomayora"> Fec. de nac. mayor o igual a</t:label>
+                                <fieldset>
+                                <legend>Ingreso a la Institución</legend>
+                                <div class="f-wrap">
+                                    <label>Desde</label>
                                     <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
                                                  t:label="Fecha de nacimiento mayor a" size="10"/>-->
-                                    <input t:type="DateField" t:id="fechadenacimientomayora"
-                               t:date="fechadenacimientomayora" size="30" />
+                                    <input t:type="DateField" t:id="fechaingresodesde"
+                                    t:value="fechadeingresodesdea" size="30" />
+                                </div>                                            
+                                <div class="f-wrap">
+                                    <label>Hasta</label>
+                                    <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
+                                                 t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
+                                    <input t:type="DateField" t:id="fechaingresohasta"
+                                    t:value="fechadeingresohastaa" size="30" />
                                 </div>
+                                </fieldset>
                             </div>
-                            
-                            <div class="filtros" id="fechamenora">
-                                <!--<div class="checkbox">
-                                    <t:label for="checkfechadenacimientomenora" />
-                                    <t:checkbox t:id="checkfechadenacimientomenora" value="checkfechadenacimientomenora"/>
-                                </div>-->
-                                <div class="hssemfecha">
-                                    <t:label for="fechadenacimientomenora"> Fec. de nac. menor o igual a </t:label>
+                            <div class="filtros">
+                                <fieldset>
+                                <legend>Fecha de Nacimiento</legend>
+                                    <div class="f-wrap">
+                                        <label> Mayor o igual a</label>
+                                        <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
+                                                    t:label="Fecha de nacimiento mayor a" size="10"/>-->
+                                        <input t:type="DateField" t:id="fechadenacimientomayora"
+                                        t:date="fechadenacimientomayora" size="30" />
+                                    </div>
+                                    <div class="f-wrap">
+                                        <label> Menor o igual a </label>
                                     <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
                                                  t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
                                     <input t:type="DateField" t:id="fechadenacimientomenora"
                                t:date="fechadenacimientomenora" size="30" />
-                                </div>
-                            </div>                            
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>                        
+                            <!--
                             <div class="filtros">
 
                                 <div class="hssemfecha">
-                                 Fec. de Ingreso a la Institu. (desde)
-                                    <!--<t:dateInput t:id="fechadenacimientomayora" t:date="fechadenacimientomayora"
-                                                 t:label="Fecha de nacimiento mayor a" size="10"/>-->
+                                 Fec. de Ingreso a la Institu. (desde)                                    
                                     <input t:type="DateField" t:id="fechaingresodesde"
                                t:value="fechadeingresodesdea" size="30" />
 
@@ -153,13 +162,11 @@
                             </div>                           
                             <div class="filtros" id="fechamenora">                                
                                 <div class="hssemfecha">
-                                   Fec. de Ingreso a la Institu. (hasta)
-                                    <!--<t:dateInput t:id="fechadenacimientomenora" t:date="fechadenacimientomenora"
-                                                 t:label="Fecha de nacimiento menor a" size="10"/><br/>-->
+                                   Fec. de Ingreso a la Institu. (hasta)                                   
                                     <input t:type="DateField" t:id="fechaingresohasta"
                                t:value="fechadeingresohastaa" size="30" />
                                 </div>
-                            </div>
+                            </div>-->
                             
                             
                             
@@ -177,7 +184,7 @@
                                 <t:label for="horassemanalesmenora"/>
                                 <input t:type="TextField" t:id="horassemanalesmenora" value="valhorassemanalesmenora" size="15"/>
                             </div>-->
-                        </div>
+                        <!--</div>-->
                             <!--
                             <fieldset>
                             <legend>Ingreso a la Institución</legend>
