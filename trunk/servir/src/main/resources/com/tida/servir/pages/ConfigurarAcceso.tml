@@ -60,7 +60,7 @@
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>  
                     </div>
                     <div class="f-right">
-                        <input id="submit" type="submit" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
+                        <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
                     </div>
                 </div>
             </t:form>
