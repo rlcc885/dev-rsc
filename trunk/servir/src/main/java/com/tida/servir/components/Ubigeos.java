@@ -88,6 +88,7 @@ public class Ubigeos {
     @Log
     @SetupRender
     void initializeValue() {
+        System.out.println("==================== initializeValue");
         if (ubigeo == null) {
             ubigeo = new Ubigeo();
         }
@@ -99,7 +100,7 @@ public class Ubigeos {
             ubigeo.setProvincia(null);
             ubigeo.setDistrito(null);
         }
-        
+
         List<DatoAuxiliar> lub = new ArrayList<DatoAuxiliar>();
 
         //DatoAuxiliar d;
@@ -124,6 +125,7 @@ public class Ubigeos {
     @Log
     public Object onValueChanged(Object dato) {
         // es una tabla auxiliar (ubigeo)
+        System.out.println("=================== onValueChanged");
         DatoAuxiliar ub = (DatoAuxiliar) dato;
         if (ub != null) {
             if (ub.getNombreTabla().equals("UBDEPARTAMENTO")) {

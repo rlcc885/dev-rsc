@@ -2,6 +2,8 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
      <h2> Selección de Entidad /U. Ejecutora </h2>
-
+     <div class="box_background_title"><span class="box_title">Selección de Entidad /U. Ejecutora</span></div>
+     <div class="box">
      <t:EntidadSelect  t:id="entidad" t:entidad="eue"/>
+     </div>
 </html>
