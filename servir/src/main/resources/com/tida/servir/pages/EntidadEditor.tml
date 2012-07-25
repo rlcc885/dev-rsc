@@ -233,18 +233,17 @@
                 </t:zone>
             </div>
         </fieldset>
-        
         <div t:type="zone" t:id="botonesZone" t:update="show">
             <t:form t:id="formulariobotones"  zone="botonesZone">
                 <div class="f-wrap">
                     <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" />
+                        <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
                     </div>
                 </div>
             </t:form>
@@ -283,29 +282,28 @@
     <div id="modal2">           
         <h1>Selección de Trabajador</h1>
         <div class="pane">
-            <t:zone t:id="busZone2">
+            <t:zone t:id="busZone2" t:update="show">
                 <form t:type="form" t:id="formularioTrabajador" t:zone ="busZone2">
                     <div class="f-wrap">
                         <div class="f-left">
                             Nombre completo: 
                             <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
                         </div>                   
-                    </div>
+                    
                     <div class="actions f-right">
                         <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="cancelBuscador" value="Cancelar" class="button" onClick="javascript: ocultar2();"/>
-                    </div>  
+                    </div>
+                    </div>
                 </form>
             </t:zone>
         </div>
         <!-- Trabajador-->
         
-        <div t:type="zone" t:id="trabajadorZone">
+        <div t:type="zone" t:id="trabajadorZone" t:update="show">
             <t:if test="mostrar">
                 <t:if test="btitulari">
-                    <h2>Trabajador</h2>
-                    <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="titulart" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -315,9 +313,7 @@
                     </t:grid>
                 </t:if>
                 <t:if test="bjefeRRHHi">
-                    <h2>Trabajador</h2>
-                    <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="jeferrhht" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jeferrhht" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -327,9 +323,7 @@
                     </t:grid> 
                 </t:if>
                 <t:if test="bjefeOGAi">    
-                    <h2>Trabajador</h2>
-                    <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                            row="jefeogat" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jefeogat" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>

@@ -362,22 +362,7 @@ public class EntidadEditor extends GeneralPage {
         }
         return c.list();
     }
-    public List<LkBusquedaTrabajador> getTrabajadores1() {
-        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
-        System.out.println("nombres1: " + nombreTrabajador);
-        if (nombreTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
-        return c.list();
-    }
-        public List<LkBusquedaTrabajador> getTrabajadores2() {
-        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
-        System.out.println("nombres2: " + nombreTrabajador);
-        if (nombreTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
-        return c.list();
-    }
+
     Object onActionFromeditarTitular(Trabajador traba) {
         //titulart = traba;
         titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
