@@ -8,22 +8,19 @@
                 <label>Departamentos</label>
                 <select t:type="Select" t:id="cod_ubi_dept" t:value="ubigeo.departamento"
                 model="beanDatoAuxDepto" encoder="beanDatoAuxDepto" t:disabled="disabled"
-                 t:zone="prop:zoneName"
-                t:blankOption="NEVER"/>
+                 t:zone="prop:zoneName"/>
             </div>
             <div class="f-left">
                 <label>Provincia</label>
                 <select t:type="Select" t:id="cod_ubi_prov" t:value="ubigeo.provincia"
                 model="beanDatoAuxProv" encoder="beanDatoAuxProv" t:disabled="disabled"
-                
-                t:blankOption="NEVER" t:zone="prop:zoneName"/>
+                t:zone="prop:zoneName"/>
             </div>
             <div class="f-left">
                 <label>Distrito</label>
                 <select t:type="Select" t:id="cod_ubi_dist" t:value="ubigeo.distrito"
                 model="beanDatoAuxDist" encoder="beanDatoAuxDist" t:disabled="disabled"
-                
-                t:blankOption="NEVER" t:zone="prop:zoneName"/>
+                t:zone="prop:zoneName"/>
             </div>         
         </div>
     </t:content>
