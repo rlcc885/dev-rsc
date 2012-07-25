@@ -658,6 +658,7 @@ form th {
     position: relative;
     top: -90px;
     width: 630px;
+    padding: 5px;
 }
 /*
 #ocupacionalescargo {
@@ -863,6 +864,7 @@ DIV.t-available-values UL LI
 }
 .box .actions { overflow:auto;zoom:1; margin-top: 50px;}
 .box .actionunidad { overflow:auto;zoom:1;}
+.box .actioncargo { overflow:auto;zoom:1;margin-top: 110px;}
 .box h3, h3 { 
     background-color:#d72522; 
     color:#fff; 
@@ -1163,12 +1165,12 @@ DIV.t-console DIV.t-debug {
 }
 
 #box-cargos{
-    height: 310px;
+    /*height: 310px;*/
     position: relative;
 }
 
 #box-unidades{
-    height: 350px;
+    /*height: 350px;*/
     position: relative;
 }
 

@@ -172,6 +172,9 @@ public class Busqueda extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar valdocumentoide;
+    @Property
+    @Persist
+    private UnidadOrganica valunidadorganica;
     
     @Property
     @Persist
@@ -248,6 +251,15 @@ public class Busqueda extends GeneralPage {
 //
 //        return estadosCargo;
 //    }
+        @Log
+    public GenericSelectModel<UnidadOrganica> getBeanUOrganicas() {
+        List<UnidadOrganica> list;
+        Criteria c = session.createCriteria(UnidadOrganica.class);
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));        
+        c.add(Restrictions.eq("entidad", _entidadUE));        
+        list = c.list();
+        return new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
+    }
 
     public GenericSelectModel<DatoAuxiliar> getRegimenlaborales() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGIMENLABORAL", null, 0, session);
