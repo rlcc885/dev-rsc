@@ -746,15 +746,15 @@ public class ComparadorEntidades {
         limd.setNumeroDocumento(numeroDocumento);
         limd.setTipoDocumento(tipoDocumento);
 
-        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClase(), cdestino.getClase()));
-        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return limd;
-        }
-
-        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
-        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return limd;
-        }
+//        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClase(), cdestino.getClase()));
+//        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return limd;
+//        }
+//
+//        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
+//        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return limd;
+//        }
 
         limd.setResultado(ComparadorEntidades.comparadorDate(corigen.getFecha(), cdestino.getFecha()));
         if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
@@ -766,10 +766,10 @@ public class ComparadorEntidades {
             return limd;
         }
 
-        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDetalle(), cdestino.getDetalle()));
-        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return limd;
-        }
+//        limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDetalle(), cdestino.getDetalle()));
+//        if (limd.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return limd;
+//        }
 
         /*
          * limd.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador(),

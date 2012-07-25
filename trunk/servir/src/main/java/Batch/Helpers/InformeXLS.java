@@ -2439,24 +2439,24 @@ public class InformeXLS {
                 if(md.getTrabajador() != null)
                     escribir.print(InformeXLS.leoCampo(md.getTrabajador().getNroDocumento()));
                 escribir.print("|");
-                if(md.getClase().trim().equals(MeritoDemerito.CLASE_MERITO)){
-                    clase = "1";
-                    tipo = "TiposMerito";
-                }
-                if(md.getClase().trim().equals(MeritoDemerito.CLASE_DEMERITO)){
-                    clase = "2";
-                    tipo = "TiposDemerito";
-                }
+//                if(md.getClase().trim().equals(MeritoDemerito.CLASE_MERITO)){
+//                    clase = "1";
+//                    tipo = "TiposMerito";
+//                }
+//                if(md.getClase().trim().equals(MeritoDemerito.CLASE_DEMERITO)){
+//                    clase = "2";
+//                    tipo = "TiposDemerito";
+//                }
                 escribir.print(clase);
                 escribir.print("|");
-                if(tipo != null)
-                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar(tipo, InformeXLS.leoCampo(InformeXLS.leoCampo(md.getTipo())), errores, session));
+//                if(tipo != null)
+//                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar(tipo, InformeXLS.leoCampo(InformeXLS.leoCampo(md.getTipo())), errores, session));
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(md.getFecha()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(md.getMotivo()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(md.getDetalle()));
+//                escribir.print(InformeXLS.leoCampo(md.getDetalle()));
                 escribir.println();
             }
             escribir.close();
