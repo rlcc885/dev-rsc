@@ -903,7 +903,7 @@ public class AMUnidadOrganica extends GeneralPage {
     
     Object onValueChangedFromBunidadorganica_nivel(Integer dato) {
         bnivelUO=dato;        
-        return unidadesOrganicasZone.getBody();
+        return nivelUOZone.getBody();
     }
     
 }
