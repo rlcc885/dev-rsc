@@ -18,7 +18,9 @@
         </div>
         
         <div class= "pane" id='datosevaluaciones' name='evaluaciones'>             
-               Evaluaciones <!--<t:EvaluacionesPersonalesEditor t:id="evaluacionesPersonalesEditor" actual= "actual" /> -->          
+              <t:EvaluacionesPersonalesEditor t:id="evaluacionesPersonalesEditor" actual= "actual" />   
+              <br/>
+              <br/>
         </div>
 
 </t:content>

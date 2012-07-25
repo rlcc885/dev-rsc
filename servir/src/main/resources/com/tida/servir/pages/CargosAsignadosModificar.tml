@@ -30,6 +30,8 @@
             <!-- TAB - Datos General del Cargo -->
             <div class="pane"  id='datosdecargo' name='datosdecargo'>
                 <t:DatosDeCargoEditor  t:id="datosDeCargoEditor" actual="ca.cargoxunidad" actual_asignado="ca"/>
+                <br/>
+                <br/>
             </div>			
             
             <!-- TAB - Remuneraciones del Cargo -->

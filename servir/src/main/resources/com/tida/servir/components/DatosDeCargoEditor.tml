@@ -64,7 +64,7 @@
              
               
                 <!--<div id = "DatosDeCargoAsignado">-->
-                    <h3> Datos del Cargo Asignado</h3>
+                    <h3> Cargo/Puesto: ${actual.den_cargo}</h3>
                     <!--<div class="f-wrap">
                         
                     </div>-->
@@ -72,15 +72,16 @@
                     <form t:type="form" t:id="formulariodatosdecargoasignado" t:zone="datosDeCargoZone">
                         <t:errors/>
                         <t:envelope t:id="envelope"/>
+                        <br/>
                          <div class="f-wrap">
                             <div class="f-left">
-                                <label><b>Tipo de Vinculo:</b></label>
+                                <label><b>* Tipo de Vinculo:</b></label>
                                 <div class="f-left">
                                     <input t:type="Select" t:id="tipovinculo" t:value="valtipovinculo" model="tipoVinculo" />
                                 </div>
                             </div>
                             <div class="f-left">
-                                <label><b>Fecha de Inicio:</b></label>
+                                <label><b>* Fecha de Inicio:</b></label>
                                 <div class="f-left">
                                     <input t:type="DateField" t:id="fec_inicio" t:value="valfec_inicio"
                                     t:validate="required" size="30" />
@@ -94,6 +95,7 @@
                                    </div>
                             </div>
                          </div>
+                        <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label><b>Motivo de Cese:</b></label>
@@ -103,13 +105,11 @@
                                 </div>
                             </div>
                             <div class="f-left">
-                                <label><b>Cargo/Puesto de Confianza</b></label>
-                                <div class="f-left">
+                                <b>Cargo/Puesto de Confianza</b>                                
                                     <t:radiogroup t:id="puesto_confianza" t:value="actual_asignado.puestoconfianza">
-                                        <label><t:radio t:id="r1" t:value="true"/> Si <t:radio t:id="r2" t:value="false"/> No</label>
+                                        <t:radio t:id="r1" t:value="true"/> Si <t:radio t:id="r2" t:value="false"/> No
                                         <!--<label> </label>-->
-                                    </t:radiogroup>  
-                                </div>
+                                    </t:radiogroup>                                  
                             </div>
                         </div>
                             <div class="actions f-right">

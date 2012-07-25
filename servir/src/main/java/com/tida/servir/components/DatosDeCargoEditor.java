@@ -129,7 +129,7 @@ public class DatosDeCargoEditor {
         //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
         //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
         
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVÍNCULO", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVINCULO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
         
@@ -166,7 +166,11 @@ public class DatosDeCargoEditor {
         if(elemento==2){
             return Busqueda.class;
         }
-        else{         
+        else{   
+            if(valtipovinculo==null){
+                formulariodatosdecargoasignado.recordError("Tiene que seleccionar Tipo de Vinculo.");
+                return datosDeCargoZone.getBody();
+            }
             if(valfec_fin!=null){
                 if(valmotivo != null && !valmotivo.equals("")){
                     if (valfec_fin.before(valfec_inicio)) {
@@ -199,7 +203,7 @@ public class DatosDeCargoEditor {
                     return datosDeCargoZone.getBody();
                 }
                 else{
-                    formulariodatosdecargoasignado.recordError("Debe seleccionar Fecha Finalización");
+                    formulariodatosdecargoasignado.recordError("Tiene que ingresar Fecha de Finalización");
                     return datosDeCargoZone.getBody();
                 }       
             }
