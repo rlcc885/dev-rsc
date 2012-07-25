@@ -42,6 +42,7 @@ public class ConfigurarAcceso extends GeneralPage {
     private Form formularioconfiguraracceso;
 
     @Property
+    @Persist
     private ConfiguracionAcceso ca;
     
     
@@ -51,7 +52,7 @@ public class ConfigurarAcceso extends GeneralPage {
     @CommitAfter
     void onPrepareFromFormularioconfiguraracceso()
     {
-        if(num==2){   
+        if(num==2 || num==3){   
         }
         else{
             ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
@@ -67,6 +68,12 @@ public class ConfigurarAcceso extends GeneralPage {
     void onSelectedFromCancel() {
         
         num=3;
+         ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+    }
+    
+       void onSelectedFromSave() {
+        
+        num=1;
 
     }
 
@@ -77,15 +84,18 @@ public class ConfigurarAcceso extends GeneralPage {
         if(num==2){     
             return zone;
         }else if(num==3){
-            return "ConfigurarAcceso";
+            System.out.println("cancelarrr");
+            return zone;
         } 
-        else{
+        else if(num==1){
             Date fechaactual=new Date();
             ca.setFec_actualizacion(fechaactual);
             session.saveOrUpdate(ca);
             envelope.setContents(helpers.Constantes.CONFIGURAR_ACCESO_EXITO);
+            System.out.println("guardarrr");
              return zone;
         }
+        return zone;
        
     }
 
