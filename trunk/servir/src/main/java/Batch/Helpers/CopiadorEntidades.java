@@ -294,7 +294,7 @@ public class CopiadorEntidades {
         destino.setCalificacion(CopiadorEntidades.verifacionNull(origen.getCalificacion()));
         destino.setFec_desde(CopiadorEntidades.verifacionNull(origen.getFec_desde()));
         destino.setFec_hasta(CopiadorEntidades.verifacionNull(origen.getFec_hasta()));
-        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
+//        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
     }
     
     public static void ausLicPersonal(AusLicPersonal origen, AusLicPersonal destino){

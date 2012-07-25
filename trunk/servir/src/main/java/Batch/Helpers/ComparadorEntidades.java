@@ -859,7 +859,7 @@ public class ComparadorEntidades {
         lip.setNumeroDocumento(numeroDocumento);
         lip.setTipoDocumento(tipoDocumento);
 
-        lip.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
+//        lip.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
         if (lip.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lip;
         }

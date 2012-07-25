@@ -407,7 +407,7 @@ public class CreadorDesdeDB {
 
         for (EvaluacionPersonal ep : ca.getEvaluacionesPersonales()) {
             EvaluacionPersonalCSV epcsv = new EvaluacionPersonalCSV();
-            epcsv.setCalificacion_procentaje(ep.getCalificacion());
+//            epcsv.setCalificacion_procentaje(ep.getCalificacion());
             if(ca.getCargoxunidad() != null)
                 epcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
             else
@@ -416,7 +416,7 @@ public class CreadorDesdeDB {
             epcsv.setFecha_desde(ep.getFec_desde());
             epcsv.setFecha_hasta(ep.getFec_hasta());
             epcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
-            epcsv.setTipo(ep.getTipo());
+//           epcsv.setTipo(ep.getTipo());
 //            epcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
             lepcsv.add(epcsv);
         }

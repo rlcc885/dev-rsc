@@ -75,14 +75,14 @@ th {
 }
 
 h1 {
-    letter-spacing: -1px;
+    /*letter-spacing: -1px;*/
     font-size: 2.2em;
     /*font-family: Verdana, Arial, Helvetica, sans-serif;*/
     margin-bottom:10px;
 }
 
 h2 {
-    letter-spacing: -1px;
+    /*letter-spacing: -1px;*/
     font-size: 2em;
 }
 

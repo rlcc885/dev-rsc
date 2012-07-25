@@ -23,7 +23,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 public class Confirm {
 
-    @Parameter(value = "¿Está seguro de ejecutar esta acción?", defaultPrefix = BindingConstants.LITERAL)
+    @Parameter(value = "¿Est&aacute; seguro de ejecutar esta acción?", defaultPrefix = BindingConstants.LITERAL)
     private String message;
 
     @Inject
