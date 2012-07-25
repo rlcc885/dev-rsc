@@ -69,23 +69,24 @@ public class ConfigurarAcceso extends GeneralPage {
         num=3;
 
     }
-    
+
     @Log
     @CommitAfter
     Object onSuccessFromFormularioconfiguraracceso()
     {
         if(num==2){     
-            
+            return zone;
         }else if(num==3){
-            return "Alerta";
+            return "ConfigurarAcceso";
         } 
         else{
             Date fechaactual=new Date();
             ca.setFec_actualizacion(fechaactual);
             session.saveOrUpdate(ca);
             envelope.setContents(helpers.Constantes.CONFIGURAR_ACCESO_EXITO);
+             return zone;
         }
-        return zone;
+       
     }
 
 }

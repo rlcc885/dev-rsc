@@ -54,13 +54,13 @@
                 </div>
                 <div class="f-wrap">
                     <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button"/> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>  
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>  
                     </div>
                     <div class="f-right">
-                        <input id="submit" type="submit" value="Guardar" class="button"/>
+                        <input id="submit" type="submit" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
                     </div>
                 </div>
             </t:form>

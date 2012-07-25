@@ -147,11 +147,11 @@ public class AntecedentesEditor {
     @CommitAfter        
     Object onActionFromEliminar(Ant_Laborales antLab) {
         session.delete(antLab);
-           return listaAntLoboralZone.getBody();
+        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())                             
+                    .add("listaAntLoboralZone", listaAntLoboralZone.getBody());
     }
-    
- 
-    
+   
 }
 
 
