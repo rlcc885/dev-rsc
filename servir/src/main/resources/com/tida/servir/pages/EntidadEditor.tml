@@ -90,7 +90,7 @@
             </t:zone>
         </fieldset>
         <fieldset>
-            <legend> Datos </legend>
+            <legend> Ubicación </legend>
             <t:zone t:id="ubigeoEntidadZone" t:update="show">
                 <t:form t:id="formularioubigeo" zone="ubigeoEntidadZone"> 
                     <div class="f-wrap">
@@ -181,15 +181,17 @@
                         <t:label for="file"/>
                         <input t:type="upload" t:id="file" t:size="50" />
                     </div>
-                    <div class="f-left" style="margin-top:15px;">
+                    <div class="f-left" style="margin-top:17px;">
                         <input type="submit" value="Subir Archivo" class="button"/>
                     </div>
                     <div class="f-left">
                         <t:errors/>
                     </div>
+                    <t:if test="${entidadUE.tienelogotipo}">
                     <div class="clear" style="margin-top:5px;">
                         <img src="images/logotipo/${entidadUE.logotipo}" />
                     </div>
+                    </t:if>
                 </t:form>
             </div>
         </fieldset>
@@ -287,7 +289,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             Nombre completo: 
-                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px; text-transform: uppercase;"/> 
+                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
                         </div>                   
                     
                     <div class="actions f-right">

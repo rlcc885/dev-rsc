@@ -162,7 +162,6 @@ public class EntidadEditor extends GeneralPage {
     private boolean mostrar;
     
     @Property
-    @Persist
     private UploadedFile file;
     @Component(id = "formulariologoentidad")
     private Form formulariologoentidad;
@@ -170,7 +169,7 @@ public class EntidadEditor extends GeneralPage {
     //Inicio de lac carga de la pagina
     @SetupRender
     private void inicio() {
-//        entidadUE = new Entidad();
+        //file = new UploadedFile();
         ubigeoEntidadUE = new Ubigeo();
 //        entidadUE = entidadUE;
         if (entidadUE.getCue_entidad() != null) {

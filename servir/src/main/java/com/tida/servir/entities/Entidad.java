@@ -71,7 +71,6 @@ public class Entidad implements Serializable {
     @NonVisual
     private String validado;
     Boolean estado;
-
    
     public String getCue_entidad() {
         return cue_entidad;
@@ -342,5 +341,13 @@ public class Entidad implements Serializable {
     public void setUrlEntidad(String urlEntidad) {
         this.urlEntidad = urlEntidad;
     }
-
+    
+    @Transient
+    public Boolean getTienelogotipo() {
+        if (this.logotipo == null){
+            return false;
+        }
+        return true;
+    }
+  
 }

@@ -255,6 +255,7 @@ Fin de librerias pentaho -->
                     <source>1.5</source>
                     <target>1.5</target>
                     <optimize>true</optimize>
+                    <debug>false</debug>
                 </configuration>
             </plugin>
             <plugin>
