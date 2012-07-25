@@ -88,7 +88,6 @@ public class Ubigeos {
     @Log
     @SetupRender
     void initializeValue() {
-        System.out.println("Esto carga cada vez que se cambia initializeValue");
         if (ubigeo == null) {
             ubigeo = new Ubigeo();
         }

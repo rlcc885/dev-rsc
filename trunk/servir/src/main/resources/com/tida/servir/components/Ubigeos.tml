@@ -8,21 +8,21 @@
                 <label>Departamentos</label>
                 <select t:type="Select" t:id="cod_ubi_dept" t:value="ubigeo.departamento"
                 model="beanDatoAuxDepto" encoder="beanDatoAuxDepto" t:disabled="disabled"
-                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="prop:zoneName"
+                 t:zone="prop:zoneName"
                 t:blankOption="NEVER"/>
             </div>
             <div class="f-left">
                 <label>Provincia</label>
                 <select t:type="Select" t:id="cod_ubi_prov" t:value="ubigeo.provincia"
                 model="beanDatoAuxProv" encoder="beanDatoAuxProv" t:disabled="disabled"
-                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                
                 t:blankOption="NEVER" t:zone="prop:zoneName"/>
             </div>
             <div class="f-left">
                 <label>Distrito</label>
                 <select t:type="Select" t:id="cod_ubi_dist" t:value="ubigeo.distrito"
                 model="beanDatoAuxDist" encoder="beanDatoAuxDist" t:disabled="disabled"
-                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                
                 t:blankOption="NEVER" t:zone="prop:zoneName"/>
             </div>         
         </div>
