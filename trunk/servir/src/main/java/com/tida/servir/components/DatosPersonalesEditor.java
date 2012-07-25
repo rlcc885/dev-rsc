@@ -118,12 +118,21 @@ public class DatosPersonalesEditor {
     @Log
     @SetupRender
     private void inicio() {
-        if(actual.getSexo().equals("M")){
-            valsexo="MASCULINO";            
+        if(actual.getSexo()!=null){
+            if(actual.getSexo().equals("M")){
+                valsexo="MASCULINO";            
+            }
+            else if(actual.getSexo().equals("F")){
+                valsexo="FEMENINO";
+            }
+            else{
+                valsexo=null;
+            }
         }
-        else if(actual.getSexo().equals("F")){
-            valsexo="FEMENINO";
+        else{
+            valsexo=null;
         }
+        
 
         domicilioCP = actual.getDomicilioCodigoPostal();
         domicilioDireccion = actual.getDomicilioDireccion();

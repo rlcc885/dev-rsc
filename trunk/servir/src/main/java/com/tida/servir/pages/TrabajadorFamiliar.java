@@ -174,7 +174,7 @@ public class TrabajadorFamiliar  extends GeneralPage
         return mensajes != null;
     }
     
-        @Log
+    @Log
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");

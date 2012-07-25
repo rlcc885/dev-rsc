@@ -15,6 +15,7 @@ import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 import helpers.Constantes;
 import java.util.ArrayList;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 
 import org.hibernate.Criteria;
@@ -27,6 +28,7 @@ import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.hibernate.Query;
 
 
 /**
@@ -124,7 +126,13 @@ public class TrabajadorDocumento  extends GeneralPage
     /*
      * Hasta acá código de grillas
      */
-
+    @Inject
+    private ComponentResources _resources;
+    
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
+    
     @Property
     @Persist
     private FormacionProfesional formacionProfesional;
@@ -132,7 +140,25 @@ public class TrabajadorDocumento  extends GeneralPage
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
 
-
+        @Log
+    @SetupRender
+    private void inicio() {
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));
+            
+        }
+        else{
+            usua = (UsuarioAcceso) result.get(0);        
+        }
+        if(actual==null){
+            actual=_usuario.getTrabajador();
+        }        
+    }
+    
     public boolean getNoEditable() {
         return !getEditable();
     }

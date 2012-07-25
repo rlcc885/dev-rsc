@@ -183,26 +183,26 @@
                             <div class="f-wrap">                             
                                 ¿Es Orgánico?   
                                 <t:radiogroup t:id="cargo_esorganico" t:value="cargo.esorganico">
-                                    <t:radio t:id="o1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No
+                                    <t:radio t:id="o1" t:value="true" t:validate="required" t:disabled="${vdetalle}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>
                             </div>
                             <div class="f-wrap">                         
                                 ¿Presupuestado en PAP?
                                 <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="cargo.presupuestado_PAP">
-                                   <t:radio t:id="pa1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No
+                                   <t:radio t:id="pa1" t:value="true" t:validate="required" t:disabled="${vdetalle}"/> Si <t:radio t:id="pa2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>
                             </div>
                             <div class="f-wrap">
                                 ¿Presenta Declaración Jurada de Bienes y Rentas?
                                 <t:radiogroup t:id="cargo_dec_jurada_byr" t:value="cargo.dec_jurada_byr">
-                                    <t:radio t:id="de1" t:value="true" t:disabled="${vdetalle}"/> Si <t:radio t:id="de2" t:value="false" t:disabled="${vdetalle}"/> No
+                                    <t:radio t:id="de1" t:value="true" t:validate="required" t:disabled="${vdetalle}"/> Si <t:radio t:id="de2" t:value="false" t:disabled="${vdetalle}"/> No
                                 </t:radiogroup>                                                               
                             </div>
                        </fieldset>
                          <br/>
                          <div class="f-wrap">
                                 ¿Supervisa Personal?
-                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal"/>                              
+                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
                                 
                          </div>  
                        </div>
@@ -219,7 +219,7 @@
                         <!--</div>--> <!-- div f-wrap -->
                         <!-- </div> --><!-- div der -->
                         
-                        <div class="actions f-right">
+                        <div class="actioncargo f-right">
                             <br/>
                             <br/>
                             <t:if test="${vbotones}">

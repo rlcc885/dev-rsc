@@ -130,9 +130,9 @@
             </form>
      </div>   
 
-    
-    <div id="box-unidades" class="box">
-        <div id="form_unidad_organica" class="abmform">
+
+    <div id="box-unidades" class="box" >
+        <!--<div id="form_unidad_organica" class="abmform">-->
             <!--<t:zone t:id="nivelZone">
               <t:if test="${vformulario}">
                 
@@ -198,11 +198,11 @@
                                 <input t:type="TextField" t:id="unidadOrganica_sigla"
                                        t:value="unidadorganica.sigla" size="25" t:validate="maxlength=20" t:disabled="${vdetalle}"/>
                             </div>
-                            <div class="f-left">
+                            <!--<div class="f-left">
                                 <label>CUE</label>
                                 <input t:type="TextField" t:id="unidadOrganica_cue"
                                        t:value="unidadorganica.cue" size="25" t:validate="maxlength=15" t:disabled="${vdetalle}"/>
-                            </div> 
+                            </div>--> 
                         </div>
                       </fieldset>
                       <fieldset>
@@ -243,17 +243,14 @@
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
                           </t:if>
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
-                            
-
-                            <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
+                             <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                         </div>                     
-                        <!--<br style="clear: both;"/>-->
                     </t:form>
                   
                     <!-- </t:if> -->
                 </t:if>
             </t:zone>
-        </div>
+        <!--</div>-->
 
         <div id="unidad_organica_ubi_geo">                    
             <t:zone t:id="ubigeoDomZone">
@@ -262,16 +259,16 @@
                     <!-- INICIO - Componente para las ubicaciones geograficas -->
 
                     <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
-                        <table>
+                        <!--<table>
                             <tr>
-                                <td colspan="3">
+                                <td colspan="3">-->
                                     <div id="tamano-ubigeo-wrap">
                                         <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
                                                t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" t:disabled="${vdetalle}"/>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
+                                <!--</td>
+                                </tr>
+                        </table>-->
                     </form>
                     
 
@@ -279,14 +276,13 @@
                     <!-- </t:if> -->
                 </t:if>
             </t:zone>
-        <t:if test="${vformulario}">
+         <t:if test="${vformulario}">
             <br/>
             <br/>
             <div class="f-wrap">                        
                 (*) Campos Obligatorios
             </div>
-        </t:if>
-            
+         </t:if>            
         </div>
  
     </div> <!--  fin box -->

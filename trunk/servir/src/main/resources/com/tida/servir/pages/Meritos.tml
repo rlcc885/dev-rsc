@@ -29,7 +29,9 @@
             <!--<li><a href="#"> Remuneraciones</a></li>-->
         </ul>
         <div class= "pane" id='datosdemetiro' name='datosdemerito'>             
-               Meritos / Demeritos           
+              <t:MeritosDemeritosEditor t:id="meritosDemeritosEditor" actual= "actual" />   
+              <br/>
+              <br/>
         </div>
 
         <div class= "pane" id='datosPersonales' name='cargos'>    
