@@ -287,7 +287,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             Nombre completo: 
-                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px; text-transform: uppercase;"/> 
                         </div>                   
                     
                     <div class="actions f-right">
