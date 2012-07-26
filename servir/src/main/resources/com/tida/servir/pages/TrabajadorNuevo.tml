@@ -6,9 +6,6 @@
             Entidad /U. Ejecutora: ${oi.denominacion}
       </div>
 
-     <div class="box-background-title">
-        <span class="box-title">Alta de Trabajador</span>
-    </div>
     
       <div t:type="zone" t:id="mensajesZone" >
                 <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
@@ -17,6 +14,10 @@
                 </t:form> 
       </div>
       <t:if test="${vformulario}">
+          
+     <div class="box-background-title">
+        <span class="box-title">Alta de Trabajador</span>
+    </div>
        <div class="box">
            <fieldset>
             <legend> Datos Personales</legend> 

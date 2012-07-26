@@ -3,7 +3,106 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
-     <h2>Experiencia Laboral</h2>
+
+     
+     
+            <div t:type="zone" t:id="mensajesZone" >
+                <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+            </div>
+     
+         <fieldset>
+            
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="antLaboralZone" >
+                    <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
+
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                 <label>* Empresa: </label>
+                                <input t:type="TextField" t:id="empresa"
+                                       t:value="ant_Laborales.empresa" t:validate="required" size="60"/>
+                            </div>
+                            <div class="f-left">
+                                 <label>* Cargo: </label>
+                                <input t:type="TextField" t:id="cargo" 
+                                        t:value="ant_Laborales.cargo" t:validate="required" size="60" />
+                            </div>
+
+                        </div>
+                        
+                        <div class="f-wrap">
+                             <div class="f-left">
+                                <label>Función Principal: </label>
+                                <input t:type="TextArea" t:id="funcion" 
+                                        t:value="ant_Laborales.funcion" size="150" />
+                                <label>(Máximo 250 caracteres)</label>
+                            </div>
+                            <div class="f-left">
+                                 <label>Motivo de Cese: </label>
+                                <input t:type="TextArea" t:id="motivoCese"
+                                        t:value="ant_Laborales.motivoCese" size="150" /> 
+                                <label>(Máximo 250 caracteres)</label>
+                            </div>
+                             
+                        </div> 
+                        <div class="f-wrap">
+
+                            <div class="f-left">
+                                <label>* Fecha de Inicio: </label>
+                                <input t:type="DateField" t:id="fec_ingreso" 
+                                        t:value="ant_Laborales.fec_ingreso" t:validate="required" size="10" />                                   
+                                                     
+                            </div>
+                            <div class="f-left">
+                                <label>* Fecha de Finalización</label>
+                                <input t:type="DateField" t:id="fec_egreso" 
+                                        t:value="ant_Laborales.fec_egreso" t:validate="required" size="10" />
+                            </div>
+                           
+                        </div>
+                        <div class="f-wrap">
+                            <t:if test="${bvalidausuario}">
+                            <div class="f-left">
+                                    <label>Revisado: </label>
+                                    <input t:type="Checkbox" t:id="validado" 
+                                           t:value="ant_Laborales.validado"/>
+                            </div>
+                              </t:if>          
+                        </div>
+                        <div class="f-right">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  />
+                        </div>
+                    </t:form>
+
+            </div>    
+            </div> 
+     
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="antLaboralZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                    </div>
+                </div>
+                </t:form>
+
+
+            </div>
+     </fieldset>
+            <div class="f-wrap">                        
+                (*) Campos Obligatorios
+            </div>
+ 
+     
+     <br/>
+     <br/>
+     <br/>
         <div id = "tabla_oi">
             <t:zone t:id="listaAntLoboralZone">   
                 <t:grid source="listadoAntLaborales" rowsPerPage="10" t:add="Revisado,Acciones" pagerPosition="bottom"
@@ -72,95 +171,9 @@
             </t:zone>
         </div>  
       
-<div class="f-wrap">
 
-
-</div>  
    
- <div class="box">
-     <h3>Registro de Experiencia Laboral</h3>
-     
-            <div t:type="zone" t:id="mensajesZone" >
-                <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
-                    <t:envelope t:id="envelope"/>
-                    <t:errors/>
-                </t:form> 
-            </div>
-     
-     
-          <div class="f-wrap">  
-            <div t:type="zone" t:id="antLaboralZone" >
-                    <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
-
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                 <label>* Empresa: </label>
-                                <input t:type="TextField" t:id="empresa"
-                                        t:value="ant_Laborales.empresa" t:validate="required"/>
-                            </div>
-                            <div class="f-left">
-                                 <label>* Cargo: </label>
-                                <input t:type="TextField" t:id="cargo" 
-                                        t:value="ant_Laborales.cargo" t:validate="required" />
-                            </div>
-
-                            <div class="f-left">
-                                <label>* Fecha de Inicio: </label>
-                                <input t:type="DateField" t:id="fec_ingreso" 
-                                        t:value="ant_Laborales.fec_ingreso" t:validate="required" size="10" />
-                            </div>
-                            <div class="f-left">
-                                <label>* Fecha de Finalización</label>
-                                <input t:type="DateField" t:id="fec_egreso" 
-                                        t:value="ant_Laborales.fec_egreso" t:validate="required" size="10" />
-                            </div>
-                           
-                        </div>
-                        
-                        <div class="f-wrap">
-                             <div class="f-left">
-                                <label>Función Principal: </label>
-                                <input t:type="TextArea" t:id="funcion" 
-                                        t:value="ant_Laborales.funcion" />
-                            </div>
-                            <div class="f-left">
-                                 <label>Motivo de Cese: </label>
-                                <input t:type="TextArea" t:id="motivoCese"
-                                        t:value="ant_Laborales.motivoCese"/>                           
-                            </div>
-                              <t:if test="${bvalidausuario}">
-                            <div class="f-left">
-                                    <label>Revisado: </label>
-                                    <input t:type="Checkbox" t:id="validado" 
-                                           t:value="ant_Laborales.validado"/>
-                            </div>
-                              </t:if>
-                        </div> 
-                    
-                        <div class="f-right">
-                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  />
-                        </div>
-                    </t:form>
-
-            </div>    
-            </div> 
-     
-            <div t:type="zone" t:id="botonesZone" >
-                <t:form t:id="formulariobotones"  zone="antLaboralZone">
-                <div class="f-wrap">
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                    </div>
-                </div>
-                </t:form>
-
-
-            </div>
-     
- </div>
+ 
 </t:content>
 
 </html>
