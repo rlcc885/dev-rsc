@@ -47,25 +47,34 @@
      
      
           <div class="f-wrap">  
-            <div t:type="zone" t:id="meritosZone" >
-                    <t:form t:id="formularioMeritos"  zone="meritosZone">
-
-                        <div class="f-wrap">
-                           
-                            <div class="f-left" >
-                                <label>* Clase Merito</label>
-                                <input t:type="Select" t:id="categoria" t:value="merito.clasemeritodemerito" 
+            <div t:type="zone" t:id="claseZone" >               
+                    <t:form t:id="formularioclase"  zone="claseZone">                         
+                           <div class="f-left" >
+                                <label>* Clase</label>
+                                <input t:type="Select" t:id="clase" t:value="merito.clasemeritodemerito" 
                                        model="beanClaseMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS" />
+                                       t:blankOption="ALWAYS" t:zone="claseZone"/>
                             </div>
                             <div class="f-left" >
-                                <label>* Tipo Merito</label>
-                                <input t:type="Select" t:id="tipoDocumento" t:value="merito.tipomeritodemerito" 
+                                <label>* Tipo</label>
+                                <t:if test="btipo" negate="true">
+                                <input t:type="Select" t:id="tipoMerito" t:value="merito.tipomeritodemerito" 
                                        model="beanTipoMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                       t:blankOption="ALWAYS" />
-                            </div>   
-                             
-                        </div>
+                                </t:if>
+                                <t:if test="btipo" >
+                                <input t:type="Select" t:id="tipoDemerito" t:value="merito.tipomeritodemerito" 
+                                       model="beanTipoDemerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                      t:blankOption="ALWAYS" />
+                                </t:if>
+                            </div>             
+                    </t:form> 
+            </div>
+           </div>
+
+              <div t:type="zone" t:id="meritosZone" >  
+                    <t:form t:id="formulariomeritos"  zone="meritosZone">
+          
                          <div class="f-wrap">
                            
                             <div class="f-left">
@@ -86,7 +95,7 @@
                         </div>
                     </t:form>  
             </div> 
-     
+
             <div t:type="zone" t:id="botonesMEZone" >
                 <t:form t:id="formulariobotonesME"  zone="meritosZone">
                 <div class="f-wrap">
@@ -102,9 +111,7 @@
 
             </div>
      
-        </div>
-        
-</div>      
+        </div>    
 
     </t:content>
 </html>

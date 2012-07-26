@@ -28,10 +28,8 @@ public class MeritoDemerito {
     @GeneratedValue
     @NonVisual
     private Long id;
-    @Validate("required")
     @ManyToOne
     private DatoAuxiliar clasemeritodemerito;
-    @Validate("required")
     @ManyToOne
     private DatoAuxiliar tipomeritodemerito;
     @Validate("required")

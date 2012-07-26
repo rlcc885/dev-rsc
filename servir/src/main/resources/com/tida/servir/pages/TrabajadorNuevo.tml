@@ -6,17 +6,23 @@
             Entidad /U. Ejecutora: ${oi.denominacion}
       </div>
 
-      <h2> Alta de trabajador </h2>
+     <div class="box-background-title">
+        <span class="box-title">Alta de Trabajador</span>
+    </div>
+    
       <div t:type="zone" t:id="mensajesZone" >
                 <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
                     <t:envelope t:id="envelope"/>
                     <t:errors/>
                 </t:form> 
-       </div>
-       <div class="box">    
+      </div>
+      <t:if test="${vformulario}">
+       <div class="box">
+           <fieldset>
+            <legend> Datos Personales</legend> 
            <t:if test="mostrar">
             <t:zone t:id="trabajadorNuevoZone">
-                <h3> Crear nuevo trabajador </h3>
+
                 <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
                 <t:errors/>
 
@@ -49,81 +55,90 @@
                 </t:form>
              </t:zone>
            </t:if>
-            
-        <div class = "f-wrap">
-            <t:zone t:id="unidadOrganicaZone">
-                <t:form t:id="formulariounidadorganica" zone="nuevaUnidadOrganicaZone">
-                    <div class ="f-left">
-                        <t:label for="unidadorganica" />
-                        <input t:type="Select" t:id="unidadorganica" t:value="unidadorganica"   
-                        model="beanUOrganicas" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                        t:zone="nuevaUnidadOrganicaZone" t:blankOption="ALWAYS" disabled="${bUOrganica}"/>
-                       
-                    </div>
-               </t:form>
-            </t:zone>
-            <t:zone t:id="nuevaUnidadOrganicaZone">
-                <t:form t:id="formularionuevaunidadorganica" zone="nuevaUnidadOrganicaZone">
-                     <input t:type="Submit" t:id="nuevaUO" value="|+|" class="button" /> 
-                    <t:if test="bUOrganica">
-                         <div class="f-left">
-                            <t:label for="unidadorganica2"/>
-                            <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="60"/>
-                            <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button" />
-                        </div>
-                     </t:if>                        
-                </t:form>
-            </t:zone>
-        </div>
-         <div class = "f-wrap">
-            <t:zone t:id="cargosZone">
-                <t:form t:id="formulariocargo" zone="nuevoCargosZone">
-                    <div class ="f-left">
-                        <t:label for="cargo"/>
-                        <input t:type="Select" t:id="cargo" t:value="cargo" 
-                               model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
-                               t:zone="nuevoCargosZone" t:blankOption="ALWAYS"  disabled="${bCargo}"/>
-                    </div>
-                </t:form>
-            </t:zone>
-            <t:zone t:id="nuevoCargosZone">
-                <t:form t:id="formularionuevocargo" zone="nuevoCargosZone">
-                     <input t:type="Submit" t:id="nuevaCargo" value="|+|" class="button" /> 
-                     <t:if test="bCargo">
-                     <div class ="f-left">
-                        <t:label for="cargo2"/>
-                            <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="60"/>
-                            <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button" />
-                    </div>
-                     </t:if> 
-                </t:form>
-            </t:zone>
-        </div>    
-        <div class = "f-wrap">
-            <t:zone t:id="tipoVinculoZone">
-                <t:form t:id="formulariotipovinculo" zone="tipoVinculoZone">
-                    <div class ="f-left">
-                        <t:label for="tipovinculo" />
-                        <input t:type="Select" t:id="tipovinculo" t:value="tipovinculo"   
-                        model="beanTipoVinculo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                         t:validate="required" t:zone="tipoVinculoZone" t:blankOption="ALWAYS"/>
-                       
-                    </div>
-                    <div class="f-left">
-                            <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
-                            <input t:type="Checkbox" t:id="puestoconfianza" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:value="puestoconfianza" t:zone="tipoVinculoZone" />
-                        </div>
-                        <div class="f-left">
-                             <t:label for="fecha_ingreso"/>
-                            <input t:type="DateField" t:id="fecha_ingreso"
-                                   t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="tipoVinculoZone" />
-                         </div>
-               </t:form>
-            </t:zone>
-        </div> 
-            
-            
+           </fieldset>
+           <fieldset>
+            <legend> Asignación de Cargo</legend>
+                <div class = "f-wrap">
+                    <t:zone t:id="unidadOrganicaZone">
+                        <t:form t:id="formulariounidadorganica" zone="nuevaUnidadOrganicaZone">
+                            <div class ="f-left">
+                                <t:label for="unidadorganica" />
+                                <input t:type="Select" t:id="unidadorganica" t:value="unidadorganica"   
+                                model="beanUOrganicas" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                t:zone="nuevaUnidadOrganicaZone" t:blankOption="ALWAYS" disabled="${bUOrganica}"/>
+
+                            </div>
+                    </t:form>
+                    </t:zone>
+                    <t:zone t:id="nuevaUnidadOrganicaZone">
+                        <t:form t:id="formularionuevaunidadorganica" zone="nuevaUnidadOrganicaZone">
+                            <input t:type="Submit" t:id="nuevaUO" value="|+|" class="button" /> 
+                            <t:if test="bUOrganica">
+                                <div class="f-left">
+                                    <t:label for="unidadorganica2"/>
+                                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="60"/>
+                                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button" />
+                                </div>
+                            </t:if>                        
+                        </t:form>
+                    </t:zone>
+                    
+                     <t:zone t:id="cargosZone">
+                        <t:form t:id="formulariocargo" zone="nuevoCargosZone">
+                            <div class ="f-left">
+                                <t:label for="cargo"/>
+                                <input t:type="Select" t:id="cargo" t:value="cargo" 
+                                    model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
+                                    t:zone="nuevoCargosZone" t:blankOption="ALWAYS"  disabled="${bCargo}"/>
+                            </div>
+                        </t:form>
+                    </t:zone>
+                    <t:zone t:id="nuevoCargosZone">
+                        <t:form t:id="formularionuevocargo" zone="nuevoCargosZone">
+                            <input t:type="Submit" t:id="nuevaCargo" value="|+|" class="button" /> 
+                            <t:if test="bCargo">
+                            <div class ="f-left">
+                                <t:label for="cargo2"/>
+                                    <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="60"/>
+                                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button" />
+                            </div>
+                            </t:if> 
+                        </t:form>
+                    </t:zone>
+                    
+                </div>
+               
+                <div class = "f-wrap">
+                    <t:zone t:id="tipoVinculoZone">
+                        <t:form t:id="formulariotipovinculo" zone="tipoVinculoZone">
+                            <div class ="f-left">
+                                <t:label for="tipovinculo" />
+                                <input t:type="Select" t:id="tipovinculo" t:value="tipovinculo"   
+                                model="beanTipoVinculo"
+                                t:validate="required" t:zone="tipoVinculoZone" t:blankOption="ALWAYS"/>
+
+                            </div>
+                            <div class="f-left">
+                                    <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
+                                    <input t:type="Checkbox" t:id="puestoconfianza"
+                                            t:value="puestoconfianza" t:zone="tipoVinculoZone" />
+                              </div>
+                                <div class="f-left">
+                                    <t:label for="fecha_ingreso"/>
+                                    <input t:type="DateField" t:id="fecha_ingreso"
+                                        t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="tipoVinculoZone" />
+                                </div>
+                            <div class="f-right">
+                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
+                            </div>
+                    </t:form>
+                    </t:zone>
+                </div> 
+           </fieldset>
+           <br/>
+            <div class="f-wrap">                        
+                (*) Campos Obligatorios
+            </div>
        </div>
         
         <div class="box">
@@ -146,17 +161,18 @@
                     <t:form t:id="formulariobotones"  t:zone="listaentidadZone">
 
                     <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" /> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/> 
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>  
                     </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" />
-                    </div>
+                   
                     </t:form>
 
             </div>
-        </div>                        
-      
+        </div>  
+      </t:if>
+      <t:if test="${vformulario}" negate="true" >
+      <div class="no-info">No tiene permisos suficientes</div>
+      </t:if>
 </html>

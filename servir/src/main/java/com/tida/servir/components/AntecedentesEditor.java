@@ -118,7 +118,8 @@ public class AntecedentesEditor {
             ant_Laborales=new Ant_Laborales();
         }
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())                             
-                    .add("listaAntLoboralZone", listaAntLoboralZone.getBody());   
+                    .add("listaAntLoboralZone", listaAntLoboralZone.getBody())
+                    .add("antLaboralZone", antLaboralZone.getBody());   
         
     }
     
