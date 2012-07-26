@@ -30,6 +30,8 @@ public class Ubigeos {
     private Ubigeo ubigeo;
     @Parameter
     private Zone _zone;
+    @Parameter
+    private boolean disabled;
     @Parameter(defaultPrefix = BindingConstants.LITERAL)
     @Property
     private String _zoneName;
@@ -39,8 +41,6 @@ public class Ubigeos {
     private ComponentResources resources;
     @Inject
     private ComponentDefaultProvider defaultProvider;
-//    @Environmental
-//    private ValidationTracker tracker;
     @Inject
     private Session session;
     @Property
@@ -54,8 +54,6 @@ public class Ubigeos {
     private GenericSelectModel<DatoAuxiliar> _beanDatoAuxDepto;
     @Inject
     private PropertyAccess _access;
-    @Parameter
-    private boolean disabled;
 
     public String getControlName() {
         return "Ubigeos";
@@ -88,7 +86,6 @@ public class Ubigeos {
     @Log
     @SetupRender
     void initializeValue() {
-        System.out.println("==================== initializeValue");
         if (ubigeo == null) {
             ubigeo = new Ubigeo();
         }
@@ -124,8 +121,6 @@ public class Ubigeos {
 
     @Log
     public Object onValueChanged(Object dato) {
-        // es una tabla auxiliar (ubigeo)
-        System.out.println("=================== onValueChanged");
         DatoAuxiliar ub = (DatoAuxiliar) dato;
         if (ub != null) {
             if (ub.getNombreTabla().equals("UBDEPARTAMENTO")) {

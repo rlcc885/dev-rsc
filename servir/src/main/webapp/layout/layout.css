@@ -24,7 +24,7 @@ input, select, textarea {
     color:#555454;
     font-size:11px;
 }
-select { width:195px;  padding: 3px 4px;}
+select { width:200px;  padding: 3px 4px; height: 22px;}
 label { display:block; margin-bottom:5px; width:auto; background-color: transparent;}
 .check { float:left;}
 .check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
@@ -96,17 +96,17 @@ a:hover {
     text-decoration: none;
 }
 fieldset {
-  border: 1px solid #999;
-  margin-bottom: 10px;
-  padding: 10px;
+    border: 1px solid #999;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 legend {
-  color: #000000;
-  background-color: #FFFFFF;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 11px;
+    color: #000000;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
 }
 
 #mainsection {
@@ -383,9 +383,10 @@ legend {
 #selectors {
     border: 1px solid #a60e0b;
     padding:10px;
-    height: 285px;
-    width: 820px;
+    /*height: 285px;*/
+    /*width: 820px;*/
     margin-bottom: 10px;
+    /*height:auto;*/
 }
 
 .seccionfiltros {
@@ -843,14 +844,10 @@ DIV.t-available-values UL LI
     margin-left: 0px;
 }
 
-
-
-
-
 .box { 
     border:1px solid #707070; 
     background-color:#fff; 
-    padding:20px; 
+    padding:10px; 
     clear:both;
     /*position: relative;*/
 }
@@ -927,7 +924,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
 
 /*BUSQUEDA*/
 .wrap .pane { padding:20px;}
-#selectors { border:none; height:auto; padding:0; width:100%;}
+/*#selectors { border:none; padding:0; width:100%;}*/
 .actions { overflow:auto;zoom:1; margin-bottom: 5px;}
 .actions a { 
     display:-moz-inline-stack;
@@ -1000,9 +997,8 @@ input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#5
     color: #fff;
     font-weight: bold;
     padding: 10px;
-    /*
-    margin: 20px;
-    width: 200px;*/
+    margin-bottom: 10px;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -1454,11 +1450,11 @@ DIV.t-console DIV.t-debug {
 }
 
 DIV.t-data-grid {
-    margin-top: 15px;
+    /*margin-top: 15px;*/
 }
 
 .box-background-title{
-    
+    margin-top: 10px;
 }
 .box-title{
     background-color:#D72522; 
@@ -1466,4 +1462,32 @@ DIV.t-data-grid {
     padding:5px;
     /*font-size: 14px;*/
     color:#FFFFFF;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+#shade, #modal { display: none; }
+#shade { 
+    position: fixed; 
+    z-index: 100; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    opacity: .75;
+    filter: alpha(opacity=75);
+    background: #000;
+}
+#modal { 
+    position: fixed; 
+    z-index:1002; 
+    top: 50%; 
+    left: 50%; 
+    width: 800px; 
+    height: 400px; 
+    margin-top:-200px; 
+    margin-left:-400px;
+    padding: 10px; 
+    background: #fff; 
+    color: #333;
 }
