@@ -10,7 +10,10 @@
     <h2> Unidades Orgánicas </h2>
 
 
-    <div id="mainfiltros" class="pane">
+    <div class="box-background-title">
+        <span class="box-title">Buscar UO</span>
+    </div>
+    <div id="box-unidades" class="box" >
         <!-- t:validate="required,minlength=1" -->
 
 
@@ -53,11 +56,11 @@
                     <div class="f-wrap">                        
                         <div class="f-left">
                             <label>Denominación</label>
-                            <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="30"/>                                
+                            <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="33"/>                                
                         </div>
                         <div class="f-left">
                             <label>Sigla</label>
-                            <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="30"/>
+                            <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="33"/>
                         </div>
                         <!--First name: <input t:type="TextField" t:id="firstName" t:value="bescon"/>-->
                         
@@ -68,10 +71,10 @@
                         <!--<t:actionlink t:id="muestra" zone="listaUOZone">Mostrar Todo</t:actionlink>-->
                         <!--<a t:type="eventLink" t:event="toMostrar" t:context="literal:1" t:zone="listaUOZone" href="#"> Mostrar </a>-->
                         
-                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/> 
+                        
                         <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/> 
-                        
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/> 
                     </div>                         
 
                 </form> 
@@ -80,19 +83,18 @@
         </div>
          <br/> 
          <br/>
+         <br/>
     </div>
 
-
+    
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
-        <!-- <t:if test = "hayOrgano"> -->
+        <!-- <t:if test = "hayOrgano"> -->        
         <t:if test="mostrar">
-            <t:form t:id="formularioxx">                
-
-                <t:if test="errorBorrar">
-                    <div class="error" id = "errorBorrar">
-                        ${errorBorrar}
-                    </div>
-                </t:if>
+            <div class="box-background-title">
+                <span class="box-title">Listado de UO</span>
+            </div>
+            <div id="box-unidades" class="box" >
+            <t:form t:id="formularioxx">      
                 <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
                         row="uo" exclude="estado,nivel,sigla,cue,desczona">
                     <t:parameter name="empty">
@@ -117,12 +119,19 @@
                       </t:if> 
                     </p:accionesCell>
                 </t:grid>
+                <t:if test="errorBorrar">
+                    <div class="error" id = "errorBorrar">
+                        ${errorBorrar}
+                    </div>
+                </t:if>
                 <!-- </t:if> -->
                 
             </t:form>
+          </div>
         </t:if>
 
     </div> <!-- listaUOZone -->
+    
      <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">    
             <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
              <t:envelope t:id="envelope"/>
@@ -130,7 +139,9 @@
             </form>
      </div>   
 
-
+    <div class="box-background-title">
+        <span class="box-title">Crear/Editar Unidades Orgánicas</span>
+    </div>
     <div id="box-unidades" class="box" >
         <!--<div id="form_unidad_organica" class="abmform">-->
             <!--<t:zone t:id="nivelZone">
@@ -152,8 +163,6 @@
               </t:if>
             </t:zone>-->
             <t:zone t:id="unidadesOrganicasZone">
-                <h3>Crear/Editar Unidad Orgánica</h3>
-                <br/>
                 <t:if test="${vformulario}">    
                     <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
                       <fieldset>

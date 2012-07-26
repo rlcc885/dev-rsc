@@ -64,9 +64,9 @@ public class DatosPersonalesEditor {
     @Property
     @SessionState
     private Entidad _oi;
-    @InjectComponent
-    @Property
-    private Zone ubigeoNacZone;
+//    @InjectComponent
+//    @Property
+//    private Zone ubigeoNacZone;
     @InjectComponent
     @Property
     private Zone ubigeoDomZone;
@@ -88,30 +88,30 @@ public class DatosPersonalesEditor {
     @Persist
     @Property
     private DatoAuxiliar valtipozona;
-    @Persist
-    @Property
-    private DatoAuxiliar valtipodiscapacidad;
-    @Persist
-    @Property
-    private String valconadis;
-    @Persist
-    @Property
-    private String valessalud;
-    @Persist
-    @Property
-    private DatoAuxiliar valsistemapensionario;
-    @Persist
-    @Property
-    private DatoAuxiliar valregimenpensionario;
+//    @Persist
+//    @Property
+//    private DatoAuxiliar valtipodiscapacidad;
+//    @Persist
+//    @Property
+//    private String valconadis;
+//    @Persist
+//    @Property
+//    private String valessalud;
+//    @Persist
+//    @Property
+//    private DatoAuxiliar valsistemapensionario;
+//    @Persist
+//    @Property
+//    private DatoAuxiliar valregimenpensionario;
     @InjectComponent
     @Property
     private Zone zonaGeneral;
-    @Persist
-    @Property
-    private String valcuspp;
-    @InjectComponent
-    @Property
-    private Zone regimenZone;
+//    @Persist
+//    @Property
+//    private String valcuspp;
+//    @InjectComponent
+//    @Property
+//    private Zone regimenZone;
     private int elemento=0;
     
     
@@ -152,16 +152,16 @@ public class DatosPersonalesEditor {
 //        ubigeoNacimiento.setDistrito(actual.getCod_ubi_dist());
         valtipovia=actual.getTipovia();
         valtipozona=actual.getTipozona();
-        valtipodiscapacidad=actual.getTipodiscapacidad();
-        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());
-        valessalud=actual.getEsSalud();
-        valsistemapensionario=actual.getSistemapensionario();
-        valregimenpensionario=actual.getRegimenpensionario();
-        valcuspp=actual.getNumregimenpensionario();         
+//        valtipodiscapacidad=actual.getTipodiscapacidad();
+//        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());
+//        valessalud=actual.getEsSalud();
+//        valsistemapensionario=actual.getSistemapensionario();
+//        valregimenpensionario=actual.getRegimenpensionario();
+//        valcuspp=actual.getNumregimenpensionario();         
         validaciones();      
-         if(valconadis.equals("null")){
-            valconadis=null;
-        }
+//         if(valconadis.equals("null")){
+//            valconadis=null;
+//        }
     }
     
     
@@ -169,12 +169,12 @@ public class DatosPersonalesEditor {
     
     @Log
     void onValidateFromformulariodatospersonales() {
-        if(valconadis!=null){
-                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
-            }
-            else{
-                actual.setNroCertificadoCONADIS(0);
-        }
+//        if(valconadis!=null){
+//                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+//            }
+//            else{
+//                actual.setNroCertificadoCONADIS(0);
+//        }
         System.out.println("validate cayoooooooooooooo");
         if (actual.getFechaNacimiento().after(new Date())) {
             Logger logger = new Logger();
@@ -253,11 +253,11 @@ public class DatosPersonalesEditor {
             actual.setDomicilioDireccion(domicilioDireccion);
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
-            actual.setTipodiscapacidad(valtipodiscapacidad);
-            actual.setEsSalud(valessalud);            
-            actual.setSistemapensionario(valsistemapensionario);
-            actual.setRegimenpensionario(valregimenpensionario);
-            actual.setNumregimenpensionario(valcuspp);
+//            actual.setTipodiscapacidad(valtipodiscapacidad);
+//            actual.setEsSalud(valessalud);            
+//            actual.setSistemapensionario(valsistemapensionario);
+//            actual.setRegimenpensionario(valregimenpensionario);
+//            actual.setNumregimenpensionario(valcuspp);
             if(valsexo.equals("MASCULINO")){
                 actual.setSexo("M");
             }
@@ -300,35 +300,36 @@ public class DatosPersonalesEditor {
 
     MultiZoneUpdate tresZonas() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("ubigeoNacZone", ubigeoNacZone.getBody()).add("ubigeoDomZone", ubigeoDomZone.getBody())
-                .add("zonaGeneral", zonaGeneral.getBody()).add("regimenZone", regimenZone.getBody());
+        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody())
+                .add("zonaGeneral", zonaGeneral.getBody());
+                //.add("regimenZone", regimenZone.getBody()); "ubigeoNacZone", ubigeoNacZone.getBody()).add(
         return mu;
     }
 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormUbiNac() {
-        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
-            if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
-                vconadis=true;
-                valconadis=null;
-            }        
-            else{
-                vconadis=false;
-            }
-        }
-        else{
-            vconadis=true;
-        }
-        
-        return ubigeoNacZone.getBody();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormUbiNac() {
+//        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
+//            if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
+//                vconadis=true;
+//                valconadis=null;
+//            }        
+//            else{
+//                vconadis=false;
+//            }
+//        }
+//        else{
+//            vconadis=true;
+//        }
+//        
+//        return ubigeoNacZone.getBody();
+//    }
     
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormregimen() {     
-        return regimenZone.getBody();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormregimen() {     
+//        return regimenZone.getBody();
+//    }
     @Inject
     private Request _request;
     @Property
@@ -350,16 +351,16 @@ public class DatosPersonalesEditor {
         domicilioDireccion = _request.getParameter("param");
     }
     
-    void onConaChanged() {
-        valconadis = _request.getParameter("param");
-    }
+//    void onConaChanged() {
+//        valconadis = _request.getParameter("param");
+//    }
     
-    void onEssaChanged() {
-        valessalud = _request.getParameter("param");
-    }
-    void onCusppChanged() {
-        valcuspp= _request.getParameter("param");
-    }
+//    void onEssaChanged() {
+//        valessalud = _request.getParameter("param");
+//    }
+//    void onCusppChanged() {
+//        valcuspp= _request.getParameter("param");
+//    }
 
     // TODO: poner en common
     private static int getAge(Date bDay, Date now) {
@@ -436,8 +437,8 @@ public class DatosPersonalesEditor {
     public GenericSelectModel<DatoAuxiliar> getRegimenpensionarios() {
         //List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", null, 0, session);
         List<DatoAuxiliar> list=null;
-        if(valsistemapensionario!=null){
-            list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", valsistemapensionario.getCodigo(), session);
+        if(actual.getSistemapensionario()!=null){
+            list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", actual.getSistemapensionario().getCodigo(), session);
         }
         else{
             list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", 0, session);
@@ -519,13 +520,13 @@ public class DatosPersonalesEditor {
     void validaciones(){
 //        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());  
         vconadis=false;
-        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
+        if(actual.getTipodiscapacidad() != null && !actual.getTipodiscapacidad().equals("")){
             vtipodiscapacidad=true;
-            if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
+            if(actual.getTipodiscapacidad().getValor().equals("NO TIENE") || actual.getTipodiscapacidad().getValor().equals("")){
                 vconadis=true;                
             }        
             else{
-                if(valconadis!=null){
+                if(actual.getNroCertificadoCONADIS()!=null){
                     vconadis=true;
                 }               
             }       
@@ -534,7 +535,7 @@ public class DatosPersonalesEditor {
             vtipodiscapacidad=false;
         }        
 
-        if(valessalud!=null && !valessalud.equals("")){
+        if(actual.getEsSalud()!=null && !actual.getEsSalud().equals("")){
             vessalud=true;
         }
         else{
@@ -595,4 +596,24 @@ public class DatosPersonalesEditor {
             return false;
         }        
     }
+    
+    Object onValueChangedFromTipodiscapacidad(DatoAuxiliar dato) {
+        if(dato != null && !dato.equals("")){
+            if(dato.getValor().equals("NO TIENE") || dato.getValor().equals("")){
+                vconadis=true;
+                actual.setNroCertificadoCONADIS(null);
+            }        
+            else{
+                vconadis=false;
+            }
+        }
+        else{
+            vconadis=true;
+        }        
+        return zonaGeneral.getBody();
+    }
+    Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
+        return zonaGeneral.getBody();
+    }
+    
 }

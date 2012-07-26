@@ -37,7 +37,7 @@
                         <div class="f-left">
                             <label>Denominación</label>
                                 <!--<input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="30"/>--> 
-                                <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="33"
+                                <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="35"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoChanged"  t:zone="nivelUOZone"/>
                             </div>
                    </div>
@@ -120,11 +120,13 @@
                 <t:errors/> 
             </form>
      </div>      
-     
+     <div class="box-background-title">
+        <span class="box-title">Crear/Editar Cargo</span>
+    </div>
         <div class="box" id="box-cargos">           
           <div t:type="zone" t:id="abmZone" class="abmform" t:update="show">
             <t:if test="${vformulario}">
-            <h3> Crear / Editar Cargo </h3>
+            <!--<h3> Crear / Editar Cargo </h3>-->
             <br/>
             <t:form t:id="formularioaltacargo" t:zone="abmZone">                           
          
