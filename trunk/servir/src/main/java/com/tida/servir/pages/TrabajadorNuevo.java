@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 
@@ -28,6 +29,7 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -49,6 +51,16 @@ public class TrabajadorNuevo  extends GeneralPage
     private PropertyAccess _access;
     @Inject
     private Request _request;
+    
+    //Seguridad
+    @Property
+    @Persist
+    private UsuarioAcceso usua;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Inject
+    private ComponentResources _resources;
     
     //Zonas
     @InjectComponent
@@ -106,7 +118,10 @@ public class TrabajadorNuevo  extends GeneralPage
     
     @Property
     @Persist
-    private Cargoxunidad cargo;
+    private LkCargosDisponibles cargo;
+    @Property
+    @Persist
+    private Cargoxunidad cargo2;
     @Property
     @Persist
     private Cargoxunidad ncargo;
@@ -189,16 +204,17 @@ public class TrabajadorNuevo  extends GeneralPage
     void initializeValue() {   
         bUOrganica=false;
         bCargo=false;
-        nuevo=null;
+        //nuevo=new Trabajador();
         unidadorganica=null;
-        nuevaunidadorganica=null;
-        cargo=null;
-        ncargo=null;
+        nuevaunidadorganica=new UnidadOrganica();
+        cargo=new LkCargosDisponibles();
+        ncargo=new Cargoxunidad();
+        cargo2=new Cargoxunidad();
         nuevaUOrganica="";
         nuevoCargo="";
         tipovinculo=null;
         bTrabajadorRegistrado=false;
-        nuevoLegajo=null;
+        nuevoLegajo=new Legajo();
         mostrar=true;
         puestoconfianza=false;
         fechaingreso=null;
@@ -206,7 +222,26 @@ public class TrabajadorNuevo  extends GeneralPage
             nuevo=actual;            
             buscarlegajo();
             mostrar=false;            
-        }      
+        }else{
+            nuevo=new Trabajador();
+        }
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));
+            
+        }
+        else{
+            usua = (UsuarioAcceso) result.get(0);
+   
+            if(usua.getAccesoreport()==1){
+                vformulario=true;
+       
+            }
+        
+        }
     }
     void buscarlegajo(){
         Criteria c = session.createCriteria(Legajo.class);
@@ -243,16 +278,15 @@ public class TrabajadorNuevo  extends GeneralPage
     }
     
     @Log
-    public GenericSelectModel<Cargoxunidad> getBeanCargo(){
-        List<Cargoxunidad> list;
-        Criteria c = session.createCriteria(Cargoxunidad.class);
+    public GenericSelectModel<LkCargosDisponibles> getBeanCargo(){
+        List<LkCargosDisponibles> list;
+        Criteria c = session.createCriteria(LkCargosDisponibles.class);
         
-        //c.createAlias("unidadorganica", "unidadorganica"); 
-        //c.add(Restrictions.eq("unidadorganica.entidad", oi ));
-        if(unidadorganica!=null)c.add(Restrictions.eq("unidadorganica", unidadorganica));
-        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
+        if(unidadorganica!=null)c.add(Restrictions.eq("uoid",unidadorganica.getId()));
+        c.add(Restrictions.eq("estado", true));
+        c.add(Restrictions.eq("resultado", true));
         list = c.list();        
-        return new GenericSelectModel<Cargoxunidad>(list,Cargoxunidad.class,"den_cargo","id",_access);
+        return new GenericSelectModel<LkCargosDisponibles>(list,LkCargosDisponibles.class,"den_cargo","id",_access);
     }
     
     void onSelectedFromAgregarUO() {
@@ -389,7 +423,7 @@ public class TrabajadorNuevo  extends GeneralPage
     
     @Log
     @CommitAfter    
-    Object onSuccessFromFormulariobotones() throws ParseException {
+    Object onSuccessFromFormulariotipovinculo() throws ParseException {
         
         if(elemento==1){
             return "TrabajadorNuevo";
@@ -461,7 +495,8 @@ public class TrabajadorNuevo  extends GeneralPage
                   cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);            
                   cargoAsignado.setFec_inicio(fechaingreso);
                   cargoAsignado.setTipovinculo(tipovinculo);
-                  cargoAsignado.setCargoxunidad(cargo);                
+                  cargo2.setId(cargo.getId());
+                  cargoAsignado.setCargoxunidad(cargo2);                
                   cargoAsignado.setPuestoconfianza(puestoconfianza);
                   session.saveOrUpdate(cargoAsignado);
                   envelope.setContents(helpers.Constantes.EUE_EXITO);
@@ -494,11 +529,6 @@ public class TrabajadorNuevo  extends GeneralPage
      void onApeMatChanged() {
        nuevo.setApellidoMaterno(_request.getParameter("param"));
     }
-     void onFechaIngresoChanged() {
-       System.out.println("entro y gravo 333 "+_request.getParameter("param"));
-     
-    }
-      
  
      
 }

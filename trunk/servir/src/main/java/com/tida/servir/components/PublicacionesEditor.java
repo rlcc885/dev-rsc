@@ -157,7 +157,10 @@ public class PublicacionesEditor {
     @CommitAfter        
     Object onActionFromEliminar(Publicacion publi) {
         session.delete(publi);
-           return listaProIntelectualZone.getBody();
+         envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody())                             
+                    .add("listaProIntelectualZone", listaProIntelectualZone.getBody());
+          
     }
     
     

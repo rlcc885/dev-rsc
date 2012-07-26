@@ -58,9 +58,18 @@ public class MeritosDemeritosEditor {
        
     @InjectComponent
     private Zone meritosZone;
+    @InjectComponent
+    private Zone claseZone;
     
     private int elemento=0;
-     
+    
+    @Component(id = "formularioclase")
+    private Form formularioclase;
+        
+    @Component(id = "formulariomeritos")
+    private Form formulariomeritos;
+    
+    
     @Parameter
     @Property
     private Trabajador actual;
@@ -69,6 +78,9 @@ public class MeritosDemeritosEditor {
     @Property
     private MeritoDemerito merito;
     
+    @Property
+    @Persist
+    private boolean btipo;
     
     //Listado de Meritos
     @InjectComponent
@@ -86,6 +98,8 @@ public class MeritosDemeritosEditor {
     @SetupRender
     private void inicio() {
             merito=new MeritoDemerito();
+            listaMeritos=new MeritoDemerito();
+            btipo=false;
            
     }
     
@@ -110,6 +124,13 @@ public class MeritosDemeritosEditor {
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+        //para obtener datos del Tipo de DMerito
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSDEMERITO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
     
     void onSelectedFromCancelME() {
         elemento=2;
@@ -121,16 +142,42 @@ public class MeritosDemeritosEditor {
     
     @Log
     @CommitAfter    
+    Object onSuccessFromFormularioclase() {
+        System.out.println("aaaaa"+ merito.getClasemeritodemerito().getId());
+        if(merito.getClasemeritodemerito().getCodigo()==1){
+                btipo=false;             
+        }else if(merito.getClasemeritodemerito().getCodigo()==2){
+                btipo=true;
+        }
+         return claseZone.getBody();
+
+    }
+    
+        @Log
+    @CommitAfter    
     Object onSuccessFromFormulariomeritos() {
-           
-            merito.setTrabajador(actual);
-            merito.setEntidad(_oi);
-            session.saveOrUpdate(merito);
-            envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
-            merito=new MeritoDemerito();
-            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                    .add("listaMeritosZone",listaMeritosZone.getBody())
-                    .add("meritosZone", meritosZone.getBody());  
+        
+        if(merito.getClasemeritodemerito()==null){
+            envelope.setContents("Debe ingresar la Clase");
+             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
+        }else if(merito.getTipomeritodemerito()==null){
+            envelope.setContents("Debe ingresar el Tipo");
+             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
+        }else{    
+        merito.setTrabajador(actual);
+        merito.setEntidad(_oi);
+        session.saveOrUpdate(merito);
+        envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
+        merito=new MeritoDemerito();
+        return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("listaMeritosZone",listaMeritosZone.getBody())
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
+        }
   
     }
     
@@ -139,7 +186,9 @@ public class MeritosDemeritosEditor {
     Object onSuccessFromFormulariobotonesME() {
         if(elemento==1){
             merito=new MeritoDemerito();
-            return  meritosZone.getBody();
+            return  new MultiZoneUpdate("meritosZone", meritosZone.getBody())
+                 .add("mensajesMEZone", mensajesMEZone.getBody())
+                .add("claseZone", claseZone.getBody());   
         }else if(elemento==2){
             return "Busqueda";
         }else{    
@@ -151,7 +200,13 @@ public class MeritosDemeritosEditor {
     @Log
     Object onActionFromEditarME(MeritoDemerito meri) {        
         merito=meri;
-           return meritosZone.getBody(); 
+        if(merito.getClasemeritodemerito().getCodigo()==1){
+                btipo=false;             
+        }else if(merito.getClasemeritodemerito().getCodigo()==2){
+                btipo=true;
+        }
+           return new MultiZoneUpdate("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody()); 
     }
     
     @Log
