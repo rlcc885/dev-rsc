@@ -14,17 +14,17 @@
                             <div class="f-left">
                                 <t:label for="nombres"/>
                                 <select t:type="TextField" t:id="nombres" t:value="actual.nombres" 
-                                t:validate="required" size="33" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
                                 <input t:type="TextField" t:id="apellidoPaterno" t:value="actual.apellidoPaterno" 
-                                t:validate="required" size="33" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>
                                 <select t:type="TextField" t:id="apellidoMaterno" t:value="actual.apellidoMaterno" 
-                                t:validate="required" size="33" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                             </div>
                         </div>
                         <br/>
@@ -41,7 +41,7 @@
                             <div class="f-left">
                                 <t:label for="nuevo_nroDocumento"/>
                                 <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="actual.nroDocumento"
-                                    size="33" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
+                                    size="34" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <label>Sexo</label>
@@ -61,7 +61,7 @@
                             <div class="f-left">
                                 <label>* Fecha de Nacimiento</label>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="actual.fechaNacimiento"
-                                    t:validate="required" size="33" t:disabled="${vdatospersonales}" t:readonly="readlony"/>
+                                    t:validate="required" size="34" t:disabled="${vdatospersonales}" t:readonly="readlony"/>
                             </div>
                             <!--
                         <div class="f-left">
@@ -81,30 +81,30 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Email Personal</label>
-                            <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="33" t:disabled="${vdatosubicacion}"/>
+                            <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="34" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>Email Laboral</label>
-                            <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="33" t:disabled="${votros}"/>
+                            <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="34" t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <label>RUC</label>
-                            <input t:type="TextField" t:id="numeroRUC" t:value="actual.nroRUC" size="33" t:disabled="${vruc}" t:validate="regexp"/>
+                            <input t:type="TextField" t:id="numeroRUC" t:value="actual.nroRUC" size="34" t:disabled="${vruc}" t:validate="regexp"/>
                         </div> 
                     </div>
                         <br/>
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Teléfono Celular</label>
-                            <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="33" t:disabled="${vdatosubicacion}"/>
+                            <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="34" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>Teléfono Fijo</label>
-                            <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="33" t:disabled="${vdatosubicacion}"/>
+                            <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="34" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>RNP - OSCE</label>
-                            <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="33" t:disabled="${votros}"/>
+                            <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="34" t:disabled="${votros}"/>
                         </div>
                     </div>
                   </fieldset>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="f-left">
                             <label>Otros Especificar</label>
-                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="33" t:disabled="${votros}"/>
+                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="34" t:disabled="${votros}"/>
                         </div>
                     </div>
                   </fieldset>
@@ -132,22 +132,22 @@
                        <div class="f-wrap">
                             <div class="f-left">
                                 <label>Contactar a</label>
-                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="33" t:disabled="${vemergencia}"/>
+                                <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="34" t:disabled="${vemergencia}"/>
                             </div>
                             <div class="f-left">
                                 <label>Dirección</label>
-                                <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="33" t:disabled="${vemergencia}"/>
+                                <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="34" t:disabled="${vemergencia}"/>
                             </div>
                             <div class="f-left">
                                 <label>Teléfono Alternativo 1</label>
-                                <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="33" t:disabled="${vemergencia}"/>
+                                <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="34" t:disabled="${vemergencia}"/>
                             </div>
                         </div>
                     <br/>
                     <div class="f-wrap">                        
                             <div class="f-left">
                                 <label>Teléfono Alternativo 2</label>
-                                <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="33" t:disabled="${vemergencia}"/>
+                                <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="34" t:disabled="${vemergencia}"/>
                             </div>
                         </div>
                   </fieldset>
@@ -165,17 +165,18 @@
                         </div>                        
                         <div class="f-left">
                             <label>Número CONADIS</label>
-                            <input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="33" t:disabled="${vconadis}"/>
-                            <!--<input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="33"
+                            <input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="34" t:disabled="${vconadis}"/>
+                            <!--<input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="34"
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>-->                            
                         </div>
                         <div class="f-left">
                             <label>Código ESSALUD</label>
-                            <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="33" t:disabled="${vessalud}"/>
+                            <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="34" t:disabled="${vessalud}"/>
                             <!--<input t:type="TextField" t:id="essalud" t:value="valessalud" size="33"
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>-->
                         </div>
                     </div>
+                   <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Grupo Sanguíneo</label>
@@ -199,6 +200,7 @@
                                     </t:radiogroup>                                                          
                             </div>
                         </div>
+                      <br/>
                        <div class="f-wrap"> 
                         <div class="f-left">
                             <label>Sistema Pensionario</label>
@@ -243,7 +245,6 @@
                             <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
                      </t:if>
                </div>
-                
             </form>
         </t:zone>
 

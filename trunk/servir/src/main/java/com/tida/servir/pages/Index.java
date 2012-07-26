@@ -40,6 +40,9 @@ public class Index {
     @Property
     @SessionState
     private Entidad eue;
+    @Property
+    @SessionState
+    private Trabajador traba;
     /*
      * @Property @SessionState private UsuarioAcceso usuarioAcceso;
      *
@@ -153,6 +156,7 @@ public class Index {
         Criteria cq = session.createCriteria(Usuario.class);
         cq.add(Restrictions.eq("id", usuarioTrabajador.getId()));
         usuario = (Usuario) cq.list().get(0); // Guardamos la sesión
+        
 
         if (!usuarioTrabajador.getMd5clave().equals(Encriptacion.encriptaEnMD5(clave))) {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
@@ -203,6 +207,7 @@ public class Index {
          *
          */
         eue = usuarioTrabajador.getEntidad();
+        traba=usuario.getTrabajador();
 
 //        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
         //logger.loguearEvento(session, tipoeve, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_OK);

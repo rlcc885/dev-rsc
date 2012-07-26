@@ -141,6 +141,9 @@ public class TrabajadorPersonal  extends GeneralPage
     @Property
     @SessionState
     private UsuarioAcceso usua;
+    @Property
+    @SessionState
+    private Trabajador trabax;
 
     public boolean getNoEditable() {
         return !getEditable();
@@ -174,6 +177,15 @@ public class TrabajadorPersonal  extends GeneralPage
         return mensajes != null;
     }
     
+//    public void onActivate() {
+//        if(actual==null){
+//            actual=_usuario.getTrabajador();
+//        }
+//    }
+//    public void onActivate(Trabajador eue) {
+//        actual = eue;
+//    }
+//        
     @Log
     @SetupRender
     private void inicio() {
@@ -188,9 +200,12 @@ public class TrabajadorPersonal  extends GeneralPage
         else{
             usua = (UsuarioAcceso) result.get(0);        
         }
-        if(actual==null){
-            actual=_usuario.getTrabajador();
-        }        
+        if(actual==null){            
+            actual=new Trabajador();
+            actual=trabax;
+            System.out.println("trabajaaaa");
+        }     
+        System.out.println("trabajaaaanulo");
     }
     
     

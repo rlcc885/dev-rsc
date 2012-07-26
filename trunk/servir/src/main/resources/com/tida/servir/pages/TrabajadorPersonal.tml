@@ -16,7 +16,7 @@
       <div id = "Datos_Generales">
            <h2> Modificar trabajador </h2>
            <div id= "basicosTrabajador">
-               <h3><!--${actual.documentoidentidad.valor}:-->  ${actual.nroDocumento}-
+               <h3><!--${actual.documentoidentidad.valor}:-->  ${actual.nroDocumento}
                ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
            </div>
       </div>
@@ -54,7 +54,9 @@
         <div class= "pane" id='datosPersonales' name='datosPersonales'>
               
                 <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual"/>
-              
+                <br/>
+                <br/>
+                <br/>
         </div>
         <div class= "pane" id='estudios' name='estudios'>            
             

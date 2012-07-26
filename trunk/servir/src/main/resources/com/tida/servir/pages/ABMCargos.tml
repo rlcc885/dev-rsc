@@ -8,7 +8,10 @@
 
     <h2>Administración de Cargos / Puestos</h2>
 
-    <div id="mainfiltros" class="pane">
+    <div class="box-background-title">
+        <span class="box-title">Buscar Cargo/Puesto</span>
+    </div>
+    <div id="box-unidades" class="box" >
 
         <!-- t:validate="required,minlength=1" -->
             
@@ -78,13 +81,19 @@
           </div>
   
            <br/> 
+           <br/>
+           <br/>
         
     </div> 
                    
    <div t:type="zone" t:id="listaCargo" class="selectform" t:update="show">
         <t:if test="mostrar">  
+            <div class="box-background-title">
+                <span class="box-title">Listar Cargo/Puesto</span>
+            </div>
+            <div id="box-unidades" class="box" >
             <t:form t:id="formlistaunidad">                
-                ${errorBorrar}
+                
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
                             row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, estado, nivel_unidad_organica,ctd_puestos_total,presupuestado_PAP">
@@ -110,8 +119,9 @@
                         </p:accionesCell>
                     </t:grid>
                 </div>
-                
-            </t:form>
+                <p>${errorBorrar}</p>
+             </t:form>
+            </div>
         </t:if>
      </div> <!-- tabla cargos --> 
      <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">    
