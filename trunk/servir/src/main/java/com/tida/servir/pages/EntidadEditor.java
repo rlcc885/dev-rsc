@@ -34,26 +34,16 @@ public class EntidadEditor extends GeneralPage {
     private Session session;
     @Inject
     private Request _request;
-    //@Property
-    //@Persist
-    //private Entidad entidadUE;
     @Property
     @SessionState
+    private Entidad entidadSession;
+    @Property
+    @Persist
     private Entidad entidadUE;
     @Component(id = "formulariomensajes")
     private Form formulariomensajes;
     @InjectComponent
     private Zone mensajesZone;
-    /*
-    @Component(id = "formularionivelgobierno")
-    private Form formularionivelgobierno;
-    @Component(id = "formularioorganizacion")
-    private Form formularioorganizacion;
-    @Component(id = "formulariosector")
-    private Form formulariosector;
-    @Component(id = "formularioorganismo")
-    private Form formularioorganismo;
-    */
     @Component(id = "formularioentidad")
     private Form formularioentidad;
     @Property
@@ -121,9 +111,6 @@ public class EntidadEditor extends GeneralPage {
     private boolean bjefeRRHHi;
     @Inject
     private PropertyAccess _access;
-//    @InjectComponent
-//    @Property
-//    private Zone nivelOrganizacionSectorZone;
     @InjectComponent
     @Property
     private Zone principalZone;
@@ -135,61 +122,41 @@ public class EntidadEditor extends GeneralPage {
     @Inject
     private ApplicationGlobals globals;
     //Edicion
-    @Property
-    @Persist
-    private boolean badmentidad;
-    private int elemento = 0;
-    @Persist
-    @Property
-    private String desczonaentidad;
-    @Persist
-    @Property
-    private String emailentidad;
-    @Persist
-    @Property
-    private String urlsEntidad;
-    @Persist
-    @Property
-    private String telefEntidad;
-    @Persist
-    @Property
-    private String siglaEntidad;
-    @Persist
-    @Property
-    private String cueEntidad;
+//    @Property
+//    @Persist
+//    private boolean badmentidad;
     @Property
     @Persist
     private boolean mostrar;
-    
     @Property
     private UploadedFile file;
     @Component(id = "formulariologoentidad")
     private Form formulariologoentidad;
+    @Property
+    private boolean bMuestraSectorEdicion;
 
+    public void onActivate() {
+        entidadUE = entidadSession;
+    }
+
+    public void onActivate(Entidad eue) {
+        entidadUE = eue;
+    }
     //Inicio de lac carga de la pagina
+
     @SetupRender
     private void inicio() {
         //file = new UploadedFile();
+        if (entidadUE.getOrganizacionEstado() != null) {
+            if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
+                bMuestraSectorEdicion = true;
+            } else {
+                bMuestraSectorEdicion = false;
+            }
+        } else {
+            bMuestraSectorEdicion = false;
+        }
         ubigeoEntidadUE = new Ubigeo();
-//        entidadUE = entidadUE;
-        if (entidadUE.getCue_entidad() != null) {
-            cueEntidad = entidadUE.getCue_entidad();
-        }
-        if (entidadUE.getSigla() != null) {
-            siglaEntidad = entidadUE.getSigla();
-        }
-        if (entidadUE.getEmailInstitucional() != null) {
-            emailentidad = entidadUE.getEmailInstitucional();
-        }
-        if (entidadUE.getUrlEntidad() != null) {
-            urlsEntidad = entidadUE.getUrlEntidad();
-        }
-        if (entidadUE.getTelefonoEntidad() != null) {
-            telefEntidad = entidadUE.getTelefonoEntidad();
-        }
-        if (entidadUE.getDescZona() != null) {
-            desczonaentidad = entidadUE.getDescZona();
-        }
         if (entidadUE.getDepartamento() != null) {
             ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
         }
@@ -213,12 +180,12 @@ public class EntidadEditor extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormulariologoentidad() {
         File copied;
-        if (file == null){
+        if (file == null) {
             formulariologoentidad.recordError("Seleccione imagen a subir.");
             return this;
         }
         String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-        String nombreArchivo = Encriptacion.encriptaEnMD5(entidadUE.getId().toString())+file.getFileName().substring(file.getFileName().length() - 4);
+        String nombreArchivo = Encriptacion.encriptaEnMD5(entidadUE.getId().toString()) + file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivo);
         copied = new File(path);
         if (!copied.exists()) {
@@ -266,16 +233,15 @@ public class EntidadEditor extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    void onSelectedFromReset() {
-        elemento = 1;
-        badmentidad = false;
-    }
-
-    void onSelectedFromCancel() {
-        elemento = 2;
-        badmentidad = false;
-    }
-    
+//    void onSelectedFromReset() {
+//        elemento = 1;
+//        badmentidad = false;
+//    }
+//
+//    void onSelectedFromCancel() {
+//        elemento = 2;
+//        badmentidad = false;
+//    }
     void onSelectedFromCancelBuscador() {
         btitulari = false;
         bjefeOGAi = false;
@@ -285,43 +251,14 @@ public class EntidadEditor extends GeneralPage {
 
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
-
-        if (elemento == 1) {
-            return "EntidadEditor";
-        } else if (elemento == 2) {
-            return "Alerta";
-        } else {
-            entidadUE.setCue_entidad(cueEntidad);
-            entidadUE.setSigla(siglaEntidad);
-            entidadUE.setEmailInstitucional(emailentidad);
-            entidadUE.setDescZona(desczonaentidad);
-            entidadUE.setUrlEntidad(urlsEntidad);
-            entidadUE.setTelefonoEntidad(telefEntidad);
-            entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
-            entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
-            entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-            //entidadUE=entidadUE;
-            session.saveOrUpdate(entidadUE);
-            new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
-            envelope.setContents("Entidad modificada exitosamente");
-            return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-        }
-    }
-
-//    @CommitAfter
-//    Object onSuccessFromFormularioorganizacion() {
-//        bsector = true;
-//        return nivelOrganizacionSectorZone.getBody();
-//    }
-
-//    @CommitAfter
-//    Object onSuccessFromFormulariosector() {
-//        btipoorganismo = true;
-//        return nivelOrganizacionSectorZone.getBody();
-//    }
-
-    public void onActivate(Entidad eue) {
-        //entidadUE = eue;
+        entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
+        entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
+        entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+        //entidadUE=entidadUE;
+        session.saveOrUpdate(entidadUE);
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
+        envelope.setContents("Entidad modificada exitosamente");
+        return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
     //Metodos de Busqueda de Trabajadores
@@ -345,14 +282,15 @@ public class EntidadEditor extends GeneralPage {
 
     @CommitAfter
     Object onSuccessFromFormularioTrabajador() {
-        if (bjefeOGAi || bjefeRRHHi || btitulari){
-        mostrar = true;
-        }else{
+        if (bjefeOGAi || bjefeRRHHi || btitulari) {
+            mostrar = true;
+        } else {
             mostrar = false;
         }
         System.out.println("onSuccessFromFormularioTrabajador");
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
     }
+
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         System.out.println("nombress: " + nombreTrabajador);
@@ -363,7 +301,6 @@ public class EntidadEditor extends GeneralPage {
     }
 
     Object onActionFromeditarTitular(Trabajador traba) {
-        //titulart = traba;
         titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
         entidadUE.setTitular(traba);
         btitulari = false;
@@ -389,27 +326,27 @@ public class EntidadEditor extends GeneralPage {
         return JefeOGAZone.getBody();
     }
 
-    void onEmailEntChanged() {
-        emailentidad = _request.getParameter("param");
+    void onSiglaChanged() {
+        entidadUE.setSigla(_request.getParameter("param"));
     }
 
-    void onUrlEntChanged() {
-        urlsEntidad = _request.getParameter("param");
-    }
-
-    void onTelfEntChanged() {
-        telefEntidad = _request.getParameter("param");
+    void onDireccionEntChanged() {
+        entidadUE.setDireccion(_request.getParameter("param"));
     }
 
     void onDescZonaEntChanged() {
-        desczonaentidad = _request.getParameter("param");
+        entidadUE.setDescZona(_request.getParameter("param"));
     }
 
-    void onSiglaEntidadChanged() {
-        siglaEntidad = _request.getParameter("param");
+    void onEmailInstitucionalChanged() {
+        entidadUE.setEmailInstitucional(_request.getParameter("param"));
     }
 
-    void onCueEntidadChanged() {
-        cueEntidad = _request.getParameter("param");
+    void onUrlEntidadChanged() {
+        entidadUE.setUrlEntidad(_request.getParameter("param"));
+    }
+
+    void onTelefonoEntidadChanged() {
+        entidadUE.setTelefonoEntidad(_request.getParameter("param"));
     }
 }
