@@ -37,7 +37,7 @@
                         <div class="f-left">
                             <label>Denominación</label>
                                 <!--<input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="30"/>--> 
-                                <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="30"
+                                <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="33"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoChanged"  t:zone="nivelUOZone"/>
                             </div>
                    </div>
@@ -201,9 +201,20 @@
                        </fieldset>
                          <br/>
                          <div class="f-wrap">
+                             <div class="f-left">
                                 ¿Supervisa Personal?
                                 <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
-                                
+                             </div>
+                             <div class="f-left">
+                                 <label>      </label>
+                             </div>
+                             
+                             <div class="f-left">
+                                <label>* Cantidad de Puestos</label>
+                                <input t:type="TextField" t:id="cargo_ctd_puestos_total"
+                                       t:value="cargo.ctd_puestos_total" size="20" t:validate="required" t:disabled="${vdetalle}"/>
+                            </div>
+                             
                          </div>  
                        </div>
                      

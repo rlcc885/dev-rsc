@@ -588,6 +588,7 @@ public class ABMCargos extends GeneralPage {
         else if(num==3){
         
         }else if(num==1){
+            formmensaje.clearErrors();
             //validaciones           
             
             Criteria c;
@@ -649,7 +650,7 @@ public class ABMCargos extends GeneralPage {
         errorBorrar = null;
         if (!editando) {
             //cargo.setUnidadorganica(uo);
-            cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);            
+            //cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);            
         }
         else{
             if(usua.getAccesoreport()==0){
