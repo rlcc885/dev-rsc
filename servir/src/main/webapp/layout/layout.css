@@ -657,7 +657,7 @@ form th {
     margin-left:0;
     margin-top: 0;
     position: relative;
-    top: -70px;
+    top: -125px;
     padding: 5px;
     left: 6px;
 }
@@ -731,7 +731,7 @@ form th {
     top: -160px;
     position: relative;
     width: 300px;
-    left: 20px;
+    left: 10px;
     padding: 5px;
 }
 

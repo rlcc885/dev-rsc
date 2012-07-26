@@ -277,7 +277,7 @@
                         </div>                        
                         <div class="f-left">
                             <label>Direccion</label>
-                            <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="33"
+                            <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="30"
                             t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="ubigeoDomZone" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
@@ -287,7 +287,7 @@
                         <div class="f-left">
                             <label>Nombre de Zona</label>
                             <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" t:disabled="${vdatosubicacion}"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  size="25"/>
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="ubigeoDomZone"  size="20"/>
                         </div>
                     </div>
                    <br/>
