@@ -45,6 +45,7 @@ public class DatosPersonalesEditor {
     @SuppressWarnings("unused")
     @Property
     @Parameter(required = true, principal = true, autoconnect = true)
+//    @Persist
     private Trabajador actual;
     @Inject
     private Session session;
@@ -114,7 +115,8 @@ public class DatosPersonalesEditor {
 //    private Zone regimenZone;
     private int elemento=0;
     
-    
+
+        
     @Log
     @SetupRender
     private void inicio() {
@@ -158,7 +160,8 @@ public class DatosPersonalesEditor {
 //        valsistemapensionario=actual.getSistemapensionario();
 //        valregimenpensionario=actual.getRegimenpensionario();
 //        valcuspp=actual.getNumregimenpensionario();         
-        validaciones();      
+        validaciones();    
+        System.out.println("personallll");
 //         if(valconadis.equals("null")){
 //            valconadis=null;
 //        }
@@ -166,46 +169,18 @@ public class DatosPersonalesEditor {
     
     
     
-    
-    @Log
-    void onValidateFromformulariodatospersonales() {
-//        if(valconadis!=null){
-//                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
-//            }
-//            else{
-//                actual.setNroCertificadoCONADIS(0);
-//        }
-        System.out.println("validate cayoooooooooooooo");
-        if (actual.getFechaNacimiento().after(new Date())) {
-            Logger logger = new Logger();
-            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                    Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-                    Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
-
-            formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
-        } else {
-            ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-            if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
-
-                Logger logger = new Logger();
-                logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                        Logger.CODIGO_ERROR_EDAD_MAYOR_18,
-                        Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
-
-                formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
-            }
-        }
-        if(actual.getEmailPersonal()!=null){
-            if(!isEmail(actual.getEmailPersonal())){
-                formulariodatospersonales.recordError("Email Personal Formato incorrecto");
-            }
-        }
-        if(actual.getEmailLaboral()!=null){
-            if(!isEmail(actual.getEmailLaboral())){
-                formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
-            }
-        }  
-    }
+//    
+//    @Log
+//    void onValidateFromformulariodatospersonales() {
+////        if(valconadis!=null){
+////                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+////            }
+////            else{
+////                actual.setNroCertificadoCONADIS(0);
+////        }
+//        System.out.println("validate cayoooooooooooooo");
+//        
+//    }
 
     @Log
     Object onFailureFromformulariodatospersonales() {
@@ -243,16 +218,47 @@ public class DatosPersonalesEditor {
             return Busqueda.class;
         }
         else if(elemento==1){
+            //validaciones
+            
+            if (actual.getFechaNacimiento().after(new Date())) {
+            Logger logger = new Logger();
+            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+                    Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
+                    Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
+
+            formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
+            return zonaGeneral.getBody();
+            } else {
+                ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+                if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
+
+                    Logger logger = new Logger();
+                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+                            Logger.CODIGO_ERROR_EDAD_MAYOR_18,
+                            Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
+
+                    formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
+                    return zonaGeneral.getBody();
+                }
+            }
+            if(actual.getEmailPersonal()!=null){
+                if(!isEmail(actual.getEmailPersonal())){
+                    formulariodatospersonales.recordError("Email Personal Formato incorrecto");
+                    return zonaGeneral.getBody();
+                }
+            }
+            if(actual.getEmailLaboral()!=null){
+                if(!isEmail(actual.getEmailLaboral())){
+                    formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
+                    return zonaGeneral.getBody();
+                }
+            }  
+            
+            
     //        actual.setCod_ubi_dept(ubigeoNacimiento.getDepartamento());
     //        actual.setCod_ubi_dist(ubigeoNacimiento.getDistrito());
     //        actual.setCod_ubi_prov(ubigeoNacimiento.getProvincia());
-            actual.setCod_dom_dept(ubigeoDomicilio.getDepartamento());
-            actual.setCod_dom_dist(ubigeoDomicilio.getDistrito());
-            actual.setCod_dom_prov(ubigeoDomicilio.getProvincia());
-            actual.setDomicilioCodigoPostal(domicilioCP);
-            actual.setDomicilioDireccion(domicilioDireccion);
-            actual.setTipovia(valtipovia);
-            actual.setTipozona(valtipozona);
+
 //            actual.setTipodiscapacidad(valtipodiscapacidad);
 //            actual.setEsSalud(valessalud);            
 //            actual.setSistemapensionario(valsistemapensionario);
@@ -286,12 +292,22 @@ public class DatosPersonalesEditor {
                 formulariodatospersonales.recordError("Email Laboral ya registrado");   
                 return zonaGeneral.getBody();
             }
-  
+            
+            actual.setCod_dom_dept(ubigeoDomicilio.getDepartamento());
+            actual.setCod_dom_dist(ubigeoDomicilio.getDistrito());
+            actual.setCod_dom_prov(ubigeoDomicilio.getProvincia());
+            actual.setDomicilioCodigoPostal(domicilioCP);
+            actual.setDomicilioDireccion(domicilioDireccion);
+            actual.setTipovia(valtipovia);
+            actual.setTipozona(valtipozona);
+            
             session.saveOrUpdate(actual);
+            session.flush();
             formulariodatospersonales.clearErrors();
             System.out.println("guardar cayoooooooooooooo");
-            validaciones();
             envelope.setContents(helpers.Constantes.TRABAJADOR_EDIT_EXITO);
+            validaciones();
+            
         }
         return tresZonas();
         //return datosPersonalesZone.getBody();
