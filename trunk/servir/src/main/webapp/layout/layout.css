@@ -618,7 +618,7 @@ form th {
 /* Datos de personales */
 #ubigeosData {
     position: relative;
-    top: -450px;
+    top: -420px;
     width: 290px;
 }
 
@@ -657,7 +657,7 @@ form th {
     margin-left:0;
     margin-top: 0;
     position: relative;
-    top: -125px;
+    top: -70px;
     padding: 5px;
     left: 6px;
 }
@@ -731,7 +731,7 @@ form th {
     top: -160px;
     position: relative;
     width: 300px;
-    left: 10px;
+    left: 8px;
     padding: 5px;
 }
 
@@ -851,7 +851,7 @@ DIV.t-available-values UL LI
     clear:both;
     /*position: relative;*/
 }
-.box .actions { overflow:auto;zoom:1; margin-top: 50px;}
+.box .actions { overflow:auto;zoom:1; margin-top: 10px;}
 .box .actioncargo { overflow:auto;zoom:1;margin-top: 110px;}
 .box .actionunidad { overflow:auto;zoom:1;margin-bottom: 30px;}
 .box h3, h3 { 
@@ -926,6 +926,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
 .wrap .pane { padding:20px;}
 /*#selectors { border:none; padding:0; width:100%;}*/
 .actions { overflow:auto;zoom:1; margin-bottom: 5px;}
+.actionpersonal { overflow:auto;zoom:1; margin-top: 10px;}
 .actions a { 
     display:-moz-inline-stack;
     display:inline-block;
@@ -1128,7 +1129,7 @@ DIV.t-console DIV.t-debug {
 
 #actualizar_dpe{
     position: relative;
-    top:230px;
+    top:180px;
 }
 
 #certificacionesZone {

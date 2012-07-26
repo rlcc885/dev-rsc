@@ -152,12 +152,34 @@
                         </div>
                   </fieldset>
                 </div>  
-                    <div class="clear">
-                    <h3>Otros datos:</h3>
+                    
+                <div class="clear">
+                   <fieldset>
+                   <legend> Salud </legend>
+                      <div class="f-wrap">                        
+                        <div class="f-left">
+                            <label>Tipo de Discapacidad</label>
+                            <!--<select t:type="Select" t:id="tipodiscapacidad" t:value="valtipodiscapacidad" model="tipodiscapacidades" disabled ="noeditable" />-->
+                            <input t:type="Select" t:id="tipodiscapacidad"                            
+                            t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="zonaGeneral" t:disabled="${vtipodiscapacidad}"/>
+                        </div>                        
+                        <div class="f-left">
+                            <label>Número CONADIS</label>
+                            <input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="33" t:disabled="${vconadis}"/>
+                            <!--<input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="33"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>-->                            
+                        </div>
+                        <div class="f-left">
+                            <label>Código ESSALUD</label>
+                            <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="33" t:disabled="${vessalud}"/>
+                            <!--<input t:type="TextField" t:id="essalud" t:value="valessalud" size="33"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>-->
+                        </div>
+                    </div>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Grupo Sanguíneo</label>
-                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}"/>
+                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}" t:style="width:100px;"/>
                             </div>    
                             <div class="f-left">                                
                                     <label>Nombre de EPS</label>   
@@ -177,9 +199,30 @@
                                     </t:radiogroup>                                                          
                             </div>
                         </div>
-                    </div>
+                       <div class="f-wrap"> 
+                        <div class="f-left">
+                            <label>Sistema Pensionario</label>
+                            <input t:type="Select" t:id="sistemapen"                            
+                            t:value="actual.sistemapensionario" model="sistemapensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Tipo</label>
+                            <input t:type="Select" t:id="regimenpen"
+                            onChange="this.form.fire()"
+                            t:value="actual.regimenpensionario" model="regimenpensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
+                        </div>
+                        <div class="f-left">
+                            <label>CUSPP o CÓDIGO ONP</label>     
+                            <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
+                            <!--
+                            <input t:type="TextField" t:id="cuspp" t:value="valcuspp" t:disabled="${votros}"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="regimenZone" size="30"/>-->
+                        </div>  
+                    </div>   
+                     </fieldset>
+                   </div>
                 <!--id="actualizar_dpe"-->
-            <div class="actions f-right">
+            <!--<div class="actionpersonal f-right">
                 <t:if test="vbotones">             
                     <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/>
                     <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>                    
@@ -188,7 +231,8 @@
                     <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button"/>
                  </t:if>
             </div>
-                <!--
+            <br style="clear: both;" /> -->
+                
                <div class="clear" id="actualizar_dpe" >
                      <t:if test="vbotones">             
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
@@ -198,75 +242,39 @@
                      <t:if test="vbotones" negate="true">
                             <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
                      </t:if>
-               </div>-->
-                <br style="clear: both;" />
+               </div>
+                
             </form>
         </t:zone>
 
-        <div class="ubigeosData" id = "ubigeosdata_dpe">
-            <t:zone t:id="ubigeoNacZone">             
+        <!--<div class="ubigeosData" id = "ubigeosdata_dpe">
+            <t:zone t:id="ubigeoNacZone" t:update="show">             
 
                 <form t:type="form" t:id="formUbiNac" id="formUbiNac" t:zone="ubigeoNacZone">                    
-    <!--
+    
                         <select t:type="select" t:id="pais" t:model="paises"
                                     t:value="pais"  t:mixins="zoneUpdater" 
                                     t:clientEvent="change" t:event="changeOfPais" t:ZoneUpdater.zone="ubigeoNacZone" disabled ="noeditable" />
-    -->
 
-                        <!--<t:if test="EsPeru">
+
+                        <t:if test="EsPeru">
                             <div class="f-left" id="ubigeo_lugar"> 
                                 <input t:type="Ubigeos" t:id="ubigeo_nacimiento" t:ubigeo="ubigeoNacimiento"
                                 t:zone="ubigeoNacZone" t:zoneName="ubigeoNacZone" disabled ="noeditable"/>
                             </div>
-                        </t:if>-->
-                    <div class="f-wrap">                        
-                        <div class="f-left">
-                            <label>Tipo de Discapacidad</label>
-                            <!--<select t:type="Select" t:id="tipodiscapacidad" t:value="valtipodiscapacidad" model="tipodiscapacidades" disabled ="noeditable" />-->
-                            <input t:type="Select" t:id="tipodiscapacidad"
-                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                            t:value="valtipodiscapacidad" model="tipodiscapacidades" t:zone="ubigeoNacZone" t:disabled="${vtipodiscapacidad}"/>
-                        </div>                        
-                        <div class="f-left">
-                            <label>Nro. Certificado CONADIS</label>
-                            <!--<input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" disabled ="noeditable"/>-->
-                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="20"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>                            
-                        </div>
-                        <div class="f-left">
-                            <label>ESSALUD:</label>
-                            <!--<input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="15" disabled ="noeditable"/>-->
-                            <input t:type="TextField" t:id="essalud" t:value="valessalud" size="20"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>
-                        </div>
-                    </div>
+                        </t:if
+                    
                 </form>
-            </t:zone>
-            <t:zone t:id="regimenZone">
+            </t:zone> 
+            <t:zone t:id="regimenZone" t:update="show">
                 <form t:type="form" t:id="formregimen" id="formRegimen" t:zone="regimenZone">
-                    <div class="f-wrap"> 
-                        <div class="f-left">
-                            <label>Sistema Pensionario</label>
-                            <input t:type="Select" t:id="sistemapen"
-                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                            t:value="valsistemapensionario" model="sistemapensionarios" t:zone="regimenZone" t:disabled="${votros}"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Tipo</label>
-                            <input t:type="Select" t:id="regimenpen"
-                            onChange="this.form.fire()"
-                            t:value="valregimenpensionario" model="regimenpensionarios" t:zone="regimenZone" t:disabled="${votros}"/>
-                        </div>
-                        <div class="f-left">
-                            <label>CUSPP o CÓDIGO ONP</label>                            
-                            <input t:type="TextField" t:id="cuspp" t:value="valcuspp" t:disabled="${votros}"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="regimenZone" size="30"/>
-                        </div>  
-                    </div>   
+                    
                 </form>
             </t:zone>
-
-            <t:zone t:id="ubigeoDomZone">
+        </div>-->
+        
+    <div class="ubigeosData" id = "ubigeosdata_dpe">
+            <t:zone t:id="ubigeoDomZone" t:update="show">
                 <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
                   <fieldset>
                    <legend> Ubicación </legend> 
@@ -300,7 +308,8 @@
                   </fieldset>
                     
                 </form>
-            </t:zone>          
-        </div>
+            </t:zone> 
+    </div>
+
     </t:content>    
 </html>
