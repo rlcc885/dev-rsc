@@ -56,20 +56,23 @@
                             <t:label for="sigla"/>
                             <input t:type="TextField" t:id="sigla" 
                                    t:value="entidadUE.sigla" t:validate="maxlength=20" size="12" 
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaChanged"  t:zone="principalZone" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaChanged"  
+                                   t:disabled="${veditar}" t:zone="principalZone" />
                         </div>
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="RUC"/>
                             <input t:type="TextField" t:id="RUC"
-                                   t:value="entidadUE.ruc" t:validate="regexp"/>
+                                   t:value="entidadUE.ruc" t:validate="regexp"
+                                   t:disabled="${veditar}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="cue_entidad"/>
                             <input t:type="TextField" t:id="cue_entidad"
                                    t:value="entidadUE.cue_Entidad" t:validate="maxlength=12" size="12" t:disabled="true"  
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged"  t:zone="principalZone" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged" 
+                                   t:zone="principalZone" />
                         </div>
 <!--                        <div class="f-left">
                             <t:label for ="proc_batch"/>
@@ -89,13 +92,13 @@
                             <t:label for="tipovia"/>
                             <input t:type="Select" t:id="tipovia" t:value="entidadUE.tipovia"
                                    model="TipoVia" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                   t:blankOption="ALWAYS"/>
+                                   t:blankOption="ALWAYS" t:disabled="${veditar}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="direccion"/>
                             <input t:type="TextField" t:id="direccion" t:style="width: 500px;" 
                                     t:value="entidadUE.direccion" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
-                                    t:zone="ubigeoEntidadZone"/>
+                                    t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
                         </div>
                     </div> 
                     <div class="f-wrap">
@@ -103,21 +106,24 @@
                             <t:label for="tipozona"/>
                             <input t:type="Select" t:id="tipozona" t:value="entidadUE.tipozona" 
                                    model="TipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                   t:blankOption="ALWAYS"/>
+                                   t:blankOption="ALWAYS" t:disabled="${veditar}"/>
                         </div> 
                         <div class="f-left">
                             <t:label for="desczona"/>
                             <input t:type="TextField" t:id="desczona" t:style="width: 500px;"
                                    t:value="entidadUE.descZona" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descZonaChanged" 
-                                   t:zone="ubigeoEntidadZone"/>
+                                   t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
                         </div>
+                        
                     </div>
                     <div class="f-wrap">
                         <div class="f-left" id="ubigeo_entidadUE"> 
-                            <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" />         
+                            <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" 
+                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" t:disabled="${veditar}" />         
                         </div>
                     </div>
-                </t:form>    
+                </t:form>
+                
             </t:zone>
         </fieldset>
         <fieldset>
@@ -133,7 +139,8 @@
                                    t:clientEvent="keyup" 
                                    t:event="emailInstitucionalChanged"  
                                    t:zone="zoneOtrosDatos" 
-                                   t:style="width: 195px;"/>
+                                   t:style="width: 195px;"
+                                   t:disabled="${veditar}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="urlentidad"/>
@@ -143,7 +150,8 @@
                                    t:clientEvent="keyup" 
                                    t:event="urlentidadChanged"  
                                    t:zone="zoneOtrosDatos" 
-                                   t:style="width: 195px;"/>
+                                   t:style="width: 195px;"
+                                   t:disabled="${veditar}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="telefonoEntidad"/>
@@ -153,7 +161,8 @@
                                    t:clientEvent="keyup" 
                                    t:event="telefonoEntidadChanged"  
                                    t:zone="zoneOtrosDatos" 
-                                   t:style="width: 195px;"/>
+                                   t:style="width: 195px;"
+                                   t:disabled="${veditar}"/>
                         </div>
                     </div>
                 </t:form>
@@ -161,6 +170,7 @@
             
             <div class="logoentidad">
                 <t:form t:id="formulariologoentidad" >
+                    <t:if test="${veditar}" negate="true" >
                     <div class="f-left">
                         <t:label for="file"/>
                         <input t:type="upload" t:id="file" t:size="50" />
@@ -171,6 +181,7 @@
                     <div class="f-left">
                         <t:errors/>
                     </div>
+                    </t:if>
                     <t:if test="${entidadUE.tienelogotipo}">
                         <div class="clear" style="margin-top:5px;">
                             <img src="images/logotipo/${entidadUE.logotipo}" />
@@ -187,7 +198,9 @@
                         <div class="f-left">
                             <t:label for ="titular"/>
                             <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
-                            <input t:id="buscarTitulari" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                            <input t:id="buscarTitulari" t:type="submit" value="..." 
+                            class="button f-right" onClick="javascript: mostrar();"
+                            t:disabled="${veditar}"/>             
                         </div>
                     </t:form>
                 </t:zone>
@@ -198,7 +211,9 @@
                         <div class="f-left">
                             <t:label for ="jefeRRHH"/>
                             <input t:type="TextField" t:id="jefeRRHH" t:style="width:600px;" t:value="jefeRRHH" t:readonly="readonly" />
-                            <input t:type="submit" t:id="buscarjeferrhhi" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                            <input t:type="submit" t:id="buscarjeferrhhi" value="..." 
+                            class="button f-right" onClick="javascript: mostrar();" 
+                            t:disabled="${veditar}"/>
                         </div>
                     </t:form>
                 </t:zone>
@@ -209,13 +224,16 @@
                         <div class="f-left">
                             <t:label for ="jefeOGA"/>
                             <input t:type="TextField" t:id="jefeOGA" t:style="width:600px;" t:value="jefeOGA" t:readonly="readonly" />
-                            <input t:type="submit" t:id="buscarjefeogai" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                            <input t:type="submit" t:id="buscarjefeogai" value="..." 
+                            class="button f-right" onClick="javascript: mostrar();" 
+                            t:disabled="${veditar}"/>
                         </div>
                     </t:form>
                 </t:zone>
             </div>
         </fieldset>
         <div t:type="zone" t:id="botonesZone" t:update="show">
+            <t:if test="${veditar}" negate="true" >
             <t:form t:id="formulariobotones"  zone="botonesZone">
                 <div class="f-wrap">
                     <div class="f-right">
@@ -229,6 +247,7 @@
                     </div>
                 </div>
             </t:form>
+            </t:if>
         </div>
     </div>
 
