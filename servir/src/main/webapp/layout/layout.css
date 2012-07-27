@@ -1158,10 +1158,10 @@ DIV.t-console DIV.t-debug {
     position: relative;
 }
 
-#box-unidades{
-    /*height: 350px;*/
+/*#box-unidades{
+    height: 350px;
     position: relative;
-}
+}*/
 
 #cambiarclave{
     margin: 5px;
@@ -1456,6 +1456,11 @@ DIV.t-data-grid {
 
 .box-background-title{
     margin-top: 10px;
+}
+.box-title-icon{
+    background: url("images/plus.gif");
+    width:10px;
+    height: 10px;
 }
 .box-title{
     background-color:#D72522; 
