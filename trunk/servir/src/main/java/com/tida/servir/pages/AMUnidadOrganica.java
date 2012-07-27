@@ -23,9 +23,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.collection.PersistentList;
 import org.hibernate.criterion.Order;
 
 /**
@@ -155,8 +153,8 @@ public class AMUnidadOrganica extends GeneralPage {
 
 
     @Log
-    @SetupRender
-    private void inicio() {
+    //@SetupRender
+    void SetupRender() {
         unidadOrganica = new UnidadOrganica();
         ubigeoDomicilio = new Ubigeo();
         nivelUO = 1;
@@ -172,7 +170,7 @@ public class AMUnidadOrganica extends GeneralPage {
         List result = query.list();        
         if(result.isEmpty()){
             System.out.println(String.valueOf("Vacio:"));
-            
+            //return"alerta";
         }
         else{
             usua = (UsuarioAcceso) result.get(0);
@@ -187,7 +185,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 vformulario=true;
                 vbotones=true; 
             }
-        
+        //return null;
         }
     }
     

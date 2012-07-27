@@ -12,9 +12,7 @@
 
     <script>
         jQuery(document).ready(function(){
-            //slide up and down when click over heading 2
             jQuery(".box-title").click(function(){
-                // slide toggle effect set to slow you can set it to fast too.
                 jQuery("#panel-01").slideToggle("slow");
                 return true;
             });

@@ -9,6 +9,7 @@ import helpers.Helpers;
 import helpers.Logger;
 import java.io.File;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -20,6 +21,7 @@ import org.apache.tapestry5.services.ApplicationGlobals;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.upload.services.UploadedFile;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -32,6 +34,9 @@ public class EntidadEditor extends GeneralPage {
 
     @Inject
     private Session session;
+    @Property
+    @SessionState
+    private Usuario loggedUser;
     @Inject
     private Request _request;
     @Property
@@ -134,6 +139,23 @@ public class EntidadEditor extends GeneralPage {
     private Form formulariologoentidad;
     @Property
     private boolean bMuestraSectorEdicion;
+    
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Persist
+    @Property
+    private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Inject
+    private ComponentResources _resources;
+    @Persist
+    private UsuarioAcceso usua;
 
     public void onActivate() {
         entidadUE = entidadSession;
@@ -142,11 +164,37 @@ public class EntidadEditor extends GeneralPage {
     public void onActivate(Entidad eue) {
         entidadUE = eue;
     }
-    //Inicio de lac carga de la pagina
-
+    
+    /*
+     * inicio de la carga de pagina
+     * veditar : empieza en true, es utilizado en el .tml para controlar el acceso de edicion a los campos.
+     */
     @SetupRender
     private void inicio() {
-        //file = new UploadedFile();
+        veditar=true;
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();        
+        if(result.isEmpty()){
+            System.out.println(String.valueOf("Vacio:"));
+            //return"alerta";
+        }
+        else{
+            usua = (UsuarioAcceso) result.get(0);
+            if(usua.getAccesoupdate()==1){
+                veditar=false;
+                vbotones=true;
+            }
+            if(usua.getAccesodelete()==1){
+                veliminar=true; 
+            }
+            if(usua.getAccesoreport()==1){
+                vformulario=true;
+                vbotones=true; 
+            }
+        //return null;
+        }
         if (entidadUE.getOrganizacionEstado() != null) {
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
                 bMuestraSectorEdicion = true;
