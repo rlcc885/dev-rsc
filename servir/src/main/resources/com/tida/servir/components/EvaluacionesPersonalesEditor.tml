@@ -3,9 +3,93 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
-         <h2>Evaluciones</h2>
-  
-     <div id = "tabla_oi">
+
+     
+            <div t:type="zone" t:id="mensajesEZone" >
+                <t:form t:id="formulariomensajese"  zone="mensajesEZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+            </div>
+     
+      <fieldset>
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="evaluacionesZone" >
+                    <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
+
+                        <div class="f-wrap">    
+                            <div class="f-left" >
+                                <label>* Tipo: </label>
+                                <input t:type="Select" t:id="tipo" t:value="evaluacion.tipoevaluacion" 
+                                       model="beanTipoevalucion" 
+                                       t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left" >
+                                <label>* Motivo: </label>
+                                <input t:type="Select" t:id="motivo" t:value="evaluacion.motivoevaluacion" 
+                                       model="beanMotivoevaluacion" 
+                                       t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                             <div class="f-left" >
+                            <fieldset>
+                       <legend>Periodo</legend>
+                        
+                         <div class="f-wrap">
+                                <label>* Desde: </label>
+                                <input t:type="DateField" t:id="fechaDesde" t:value="evaluacion.fec_desde" t:validate="required"
+                                       size="10" />
+                           </div>
+                          <div class="f-wrap">	
+                                <label>* Hasta: </label>
+                                <input t:type="DateField" t:id="fechaHasta" t:value="evaluacion.fec_hasta" t:validate="required"
+                                       size="10" />
+                            </div>                                                
+                        </fieldset>
+                            
+                            </div>
+                             <div class="f-left">
+                                <label>* Resultado: </label>
+                                <input t:type="TextField" t:id="resultado" t:validate="required, regexp" t:value="evaluacion.calificacion" maxlength="255" size="34"/>
+                            </div>
+                        </div>
+                        
+                        
+
+                       
+                    
+                         <div class="f-wrap">
+                        <div class="f-right">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                        </div>
+                        </div>
+                    </t:form>  
+            </div> 
+     
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="evaluacionesZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                    </div>
+                </div>
+                </t:form>
+
+
+            </div>
+               </div>
+   </fieldset>
+            <div class="f-wrap">                        
+                (*) Campos Obligatorios
+            </div>
+ 
+     
+     <br/>
+     <br/>
+     <br/>       
+<div id = "tabla_oi">
             <t:zone t:id="listaEvaluacionZone">   
                 <t:grid source="listadoEvaluciones" rowsPerPage="10" t:add="Tipo,Motivo,Acciones" pagerPosition="bottom"
                 row="listaEvaluacion" include="fec_desde,fec_hasta" inPlace="true" >
@@ -32,86 +116,6 @@
                     
                 </t:grid>
             </t:zone>
-        </div>  
-
-<div class="f-wrap">
-
-
-</div>  
-   
- <div class="box">
-     <h3>Registro de Evaluaciones</h3>
-     
-            <div t:type="zone" t:id="mensajesEZone" >
-                <t:form t:id="formulariomensajese"  zone="mensajesEZone"> 
-                    <t:envelope t:id="envelope"/>
-                    <t:errors/>
-                </t:form> 
-            </div>
-     
-     
-          <div class="f-wrap">  
-            <div t:type="zone" t:id="evaluacionesZone" >
-                    <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
-
-                        <div class="f-wrap">    
-                            <div class="f-left" >
-                                <label>* Tipo: </label>
-                                <input t:type="Select" t:id="tipo" t:value="evaluacion.tipoevaluacion" 
-                                       model="beanTipoevalucion" 
-                                       t:validate="required" t:blankOption="ALWAYS" />
-                            </div>
-                            <div class="f-left" >
-                                <label>* Motivo: </label>
-                                <input t:type="Select" t:id="motivo" t:value="evaluacion.motivoevaluacion" 
-                                       model="beanMotivoevaluacion" 
-                                       t:validate="required" t:blankOption="ALWAYS" />
-                            </div>
-                             <div class="f-left">
-                                <label>* Resultado: </label>
-                                <input t:type="TextField" t:id="resultado" t:validate="required, regexp" t:value="evaluacion.calificacion" maxlength="255" />
-                            </div>
-                             
-                        </div>
-                        
-                         <div class="f-wrap">
-                            <div class="f-left">	
-                                <label>* Fecha Desde: </label>
-                                <input t:type="DateField" t:id="fechaDesde" t:value="evaluacion.fec_desde" t:validate="required"
-                                       size="10" />
-                            </div>
-                            <div class="f-left">	
-                                <label>* Fecha Hasta: </label>
-                                <input t:type="DateField" t:id="fechaHasta" t:value="evaluacion.fec_hasta" t:validate="required"
-                                       size="10" />
-                            </div>                                                
-                        </div>
-                         <div class="f-wrap">
-                        <div class="f-right">
-                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                        </div>
-                        </div>
-                    </t:form>  
-            </div> 
-     
-            <div t:type="zone" t:id="botonesZone" >
-                <t:form t:id="formulariobotones"  zone="evaluacionesZone">
-                <div class="f-wrap">
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                    </div>
-                </div>
-                </t:form>
-
-
-            </div>
-     
-        </div>
-        
-</div>      
-
+        </div> 
     </t:content>
 </html>

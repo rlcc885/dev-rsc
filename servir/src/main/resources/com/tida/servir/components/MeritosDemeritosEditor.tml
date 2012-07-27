@@ -18,19 +18,19 @@
                     <t:form t:id="formularioclase"  zone="claseZone">                         
                            <div class="f-left" >
                                 <label>* Tipo</label>
-                                <input t:type="Select" t:id="clase" t:value="merito.clasemeritodemerito" size="50"
+                                <input t:type="Select" t:id="clase" t:value="merito.clasemeritodemerito"
                                        model="beanClaseMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                        t:blankOption="ALWAYS" t:zone="claseZone"/>
                             </div>
                             <div class="f-left" >
                                 <label>* Tipo de Documento</label>
                                 <t:if test="btipo" negate="true">
-                                <input t:type="Select" t:id="tipoMerito" t:value="merito.tipomeritodemerito" size="50"
+                                <input t:type="Select" t:id="tipoMerito" t:value="merito.tipomeritodemerito" 
                                        model="beanTipoMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                       t:blankOption="ALWAYS" />
                                 </t:if>
                                 <t:if test="btipo" >
-                                <input t:type="Select" t:id="tipoDemerito" t:value="merito.tipomeritodemerito" size="50"
+                                <input t:type="Select" t:id="tipoDemerito" t:value="merito.tipomeritodemerito"
                                        model="beanTipoDemerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                       t:blankOption="ALWAYS" />
                                 </t:if>
@@ -47,7 +47,7 @@
                             <div class="f-left">
                                 <label>* Motivo</label>
                                 <input t:type="TextArea" t:id="motivo" 
-                                         t:validate="required" t:value="merito.motivo" maxlength="255" cols="45" />
+                                         t:validate="required" t:value="merito.motivo" maxlength="255" cols="30" />
                                 <label>(Máximo 250 caracteres)</label>
                                 
                             </div>
