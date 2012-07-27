@@ -24,7 +24,7 @@
                     <h2>Datos de Entidades Modificadas</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="eventos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoservir2" reorder="nombres,entidad,fechaevento" exclude="descripcion">
+                                row="eventoservir2" reorder="entidad,fechaevento" exclude="descripcion,nombres">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
