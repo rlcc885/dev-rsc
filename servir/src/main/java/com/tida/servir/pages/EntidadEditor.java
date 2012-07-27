@@ -297,6 +297,8 @@ public class EntidadEditor extends GeneralPage {
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
+        c.add(Restrictions.eq("entidad", entidadUE.getEntidad().getId()));
+  
         return c.list();
     }
 
