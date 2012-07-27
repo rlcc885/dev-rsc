@@ -851,7 +851,7 @@ DIV.t-available-values UL LI
     clear:both;
     /*position: relative;*/
 }
-.box .actions { overflow:auto;zoom:1; margin-top: 10px;}
+.box .actions { overflow:auto;zoom:1; margin-top: 50px;}
 .box .actioncargo { overflow:auto;zoom:1;margin-top: 110px;}
 .box .actionunidad { overflow:auto;zoom:1;margin-bottom: 30px;}
 .box h3, h3 { 
