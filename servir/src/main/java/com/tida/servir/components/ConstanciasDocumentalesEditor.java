@@ -78,7 +78,9 @@ public class ConstanciasDocumentalesEditor {
     @Property
     private ConstanciaDocumental listaDocumentos;
     
-    
+    @Persist
+    @Property
+    private CargoAsignado cargoasignado;
     
     private Legajo lega;
     @Persist
@@ -122,23 +124,22 @@ public class ConstanciasDocumentalesEditor {
         return c.list();
     }
    
-    /*
-   @Log
-   public GenericSelectModel<CargoAsignado> getCargosAsignados() {
-       List<CargoAsignado> list;
+    @Log
+   public CargoAsignado getCargosAsignados() {
        Criteria c = session.createCriteria(CargoAsignado.class);
          c.createAlias("legajo", "legajo");
          c.add(Restrictions.eq("trabajador", actual));
          c.add(Restrictions.eq("legajo.entidad", _oi));
          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-       list = c.list();
-       return new GenericSelectModel<CargoAsignado>(list, CargoAsignado.class, "cargoxunidad.den_cargo", "id", _access);
+         List result = c.list();
+         cargoasignado=(CargoAsignado) result.get(0);
+         
+       return cargoasignado;
    }
-    */
      //para obtener datos de la Categoria
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanCategoria() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORÍACONSTANCIA", null, 0, session);
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIACONSTANCIA", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -163,6 +164,7 @@ public class ConstanciasDocumentalesEditor {
     Object onSuccessFromFormulariodocumentos() {
             System.out.println("aaa "+buscarlegajo().getCod_legajo());
             constancia.setLegajo(buscarlegajo());
+            constancia.setCargoasignado(getCargosAsignados());
             if(bentrego.equalsIgnoreCase("SI")){
                 constancia.setEntrego(Boolean.TRUE);
             }else{
@@ -210,7 +212,10 @@ public class ConstanciasDocumentalesEditor {
     @CommitAfter        
     Object onActionFromEliminar(ConstanciaDocumental consta) {
         session.delete(consta);
-        return listaDocumentosZone.getBody();
+         envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
+                    .add("listaDocumentosZone", listaDocumentosZone.getBody());
+
     }
     
     

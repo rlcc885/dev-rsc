@@ -91,7 +91,7 @@ public class FamiliaresEditor {
     @SetupRender
     private void inicio() {
             familiarActual = new Familiar();
-            bdni=true;
+            bdni=false;
             bfechanacimiento=false;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
                 bvalidausuario=true;
@@ -236,7 +236,10 @@ public class FamiliaresEditor {
     @CommitAfter        
     Object onActionFromEliminar(Familiar fami) {
         session.delete(fami);
-        return listaFamiliaresZone.getBody();
+        
+        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+        .add("listaFamiliaresZone", listaFamiliaresZone.getBody());
     }
     
     
