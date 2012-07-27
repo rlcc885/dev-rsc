@@ -37,13 +37,13 @@
                              <div class="f-left">
                                 <label>Función Principal: </label>
                                 <input t:type="TextArea" t:id="funcion" 
-                                        t:value="ant_Laborales.funcion" size="150" />
+                                        t:value="ant_Laborales.funcion" cols="43" />
                                 <label>(Máximo 250 caracteres)</label>
                             </div>
                             <div class="f-left">
                                  <label>Motivo de Cese: </label>
                                 <input t:type="TextArea" t:id="motivoCese"
-                                        t:value="ant_Laborales.motivoCese" size="150" /> 
+                                        t:value="ant_Laborales.motivoCese" cols="43" /> 
                                 <label>(Máximo 250 caracteres)</label>
                             </div>
                              

@@ -174,7 +174,10 @@ public class EvaluacionesPersonalesEditor {
     @CommitAfter        
     Object onActionFromEliminar(EvaluacionPersonal evalu) {
         session.delete(evalu);
-        return listaEvaluacionZone.getBody();
+        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
+        .add("listaEvaluacionZone", listaEvaluacionZone.getBody());
+       
     }
     
 }

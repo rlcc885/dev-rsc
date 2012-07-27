@@ -45,10 +45,10 @@
                        
                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button"/>
+                                <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button" t:message="Desea ejecutar esta acción?" />
                             </div>
                             <div class="f-right">
-                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Grabar" class="button" />
+                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Grabar" class="button" t:message="Desea ejecutar esta acción?" />
                             </div>
                         </div>
                     </t:if>
@@ -73,7 +73,7 @@
         var cantidad =  /[a-zA-Z0-9]{6,100}/;
         var porcentaje=0;
 
-        function verificar(){
+        function verificar(){   
  
             porcentaje=0;
             
@@ -96,9 +96,9 @@
         function tiene_caracteres(texto){
     
             if ((texto.match(caracteres))) {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             } 
         }
 
