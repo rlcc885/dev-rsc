@@ -87,6 +87,10 @@ public class TrabajadorPersonal  extends GeneralPage
     @PageActivationContext
     private Trabajador actual;
     
+    @Property
+    @Persist
+    private Trabajador menu;
+    
         
         /*
      * Código de grillas
@@ -142,8 +146,8 @@ public class TrabajadorPersonal  extends GeneralPage
     @SessionState
     private UsuarioAcceso usua;
     @Property
-    @SessionState
-    private Trabajador trabax;
+    @Persist
+    private Boolean valida;
 
     public boolean getNoEditable() {
         return !getEditable();
@@ -200,11 +204,17 @@ public class TrabajadorPersonal  extends GeneralPage
         else{
             usua = (UsuarioAcceso) result.get(0);        
         }
-        if(actual==null){            
-            actual=new Trabajador();
-            actual=trabax;
-            System.out.println("trabajaaaa");
-        }     
+        if(actual==null){
+            valida=false;
+            //menu=new Trabajador();
+            menu=_usuario.getTrabajador();
+            System.out.println("menuuu");
+        }
+        else{
+            valida=true;
+            System.out.println("actualll");
+        }
+        
         System.out.println("trabajaaaanulo");
     }
     

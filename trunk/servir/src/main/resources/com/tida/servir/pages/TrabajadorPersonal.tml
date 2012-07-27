@@ -15,10 +15,10 @@
 
       <div id = "Datos_Generales">
            <h2> Modificar trabajador </h2>
-           <div id= "basicosTrabajador">
-               <h3><!--${actual.documentoidentidad.valor}:-->  ${actual.nroDocumento}
-               ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
-           </div>
+           <!--<div id= "basicosTrabajador">
+               <h3>${menu.documentoidentidad.valor}: ${menu.nroDocumento}
+               ${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres}</h3>
+           </div>-->
       </div>
 
     <div class="wrap">
@@ -50,14 +50,23 @@
 
 
 		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
-		
+	
         <div class= "pane" id='datosPersonales' name='datosPersonales'>
-              
+            <t:if test="${valida}">
                 <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "actual"/>
+            </t:if>
+            <t:if test="${valida}" negate="true">
+                <t:DatosPersonalesEditor t:id="datos" actual= "menu"/>
+            </t:if>
+                
                 <br/>
                 <br/>
                 <br/>
         </div>
+  
+ 
+                
+                <!--
         <div class= "pane" id='estudios' name='estudios'>            
             
                 <t:EstudiosEditor t:id="estudiosEditor" actual= "actual" />
@@ -73,7 +82,7 @@
                 
         <div class= "pane" id='publicacion' name='publicacion'> 
                 <t:PublicacionesEditor t:id="publicacionesEditor" actual= "actual"/>
-        </div>
+        </div>-->
 
         <!--        
         <div class= "pane" id='antecedentes' name='antecedentes'>
