@@ -19,8 +19,9 @@
             <script>
                 sortAllSelects();
             </script>
-            <fieldset>
-                <t:form t:id="formBusqueda"> 
+            
+                <t:form t:id="formBusqueda" t:zone="listaentidadZone"> 
+                <fieldset>
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="bnivelGobierno">Nivel de Gobierno</t:label>
@@ -57,9 +58,9 @@
                                    t:zone="busquedacombosZone" t:zoneName="busquedacombosZone" />         
                         </div>
                     </div>
-                </t:form>
+<!--                </t:form>-->
             </fieldset>
-            <t:form t:id="formulariocombosbusqueda" t:zone="listaentidadZone"> 
+<!--            <t:form t:id="formulariocombosbusqueda" t:zone="listaentidadZone"> -->
                 <div class="f-wrap">
                     <div class="f-right">
                         <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
@@ -151,13 +152,7 @@
         </t:zone>
     </div>
 
-    <div t:type="zone" t:id="mensajesZone" >
-        <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
-            <t:envelope t:id="envelope"/>
-            <t:errors/>
-        </t:form> 
-    </div>
-         
+             
     <div class="box-background-title">
         <span class="box-title">Crear / Editar Registro de Entidad</span>
     </div>
@@ -369,191 +364,13 @@
                 </div>
             </t:form>
         </div>
+        <div t:type="zone" t:id="mensajesZone" >
+        <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+            <t:envelope t:id="envelope"/>
+            <t:errors/>
+        </t:form>
     </div>
-<!--    </div> -->
-<!--
-    <div id="subentidad" >
-        <div class="box">
-            <h3>Crear/Editar Sub Entidades /U. Ejecutoras</h3>
-            <div class="f-wrap">
-                <t:zone t:id="EOrigenZone">
-                    <t:form t:id="formularioentidadorigen"  zone="EOrigenZone">
-                        <div class="f-left">
-                            <t:label for ="Denominacion2"/>
-                            <input t:type="TextField" t:id="Denominacion2"
-                                   t:value="entidad_origen" t:readonly="readonly" />
-                            <input id="BuscarentidadSUB" type="submit" value="..." class="button f-right" onClick="javascript: mostrar();" />
-                        </div>
-                    </t:form>
-                </t:zone>
-                           
-                <div t:type="zone" t:id="subprincipalZone" >
-                    <t:form t:id="formulariosubentidad"  zone="subprincipalZone">
-                       <div class="f-wrap">
-                            <div class="f-left"> 
-                                <t:label for="tiposubentidad"/>
-                                <input t:type="Select" t:id="tiposubentidad" t:value="subEntidadUE.tiposubentidad" 
-                                       model="TipoSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for ="SubDenominacion"/>
-                                <input t:type="TextField" t:id="SubDenominacion" t:validate="maxlength=255"
-                                       t:value="denoSubEntidad" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="Subsigla"/>
-                                <input t:type="TextField" t:id="Subsigla" 
-                                       t:value="siglaSubEntidad" t:validate="maxlength=20" size="12" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div> 
-                            <div class="f-left">
-                                <t:label for="SubRUC"/>
-                                <input t:type="TextField" t:id="SubRUC"
-                                       t:value="rucSubEntidad" t:validate="regexp" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucSubEntidadChanged"  t:zone="subprincipalZone"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="Subcue_entidad"/>
-                                <input t:type="TextField" t:id="Subcue_entidad"
-                                       t:value="cueSubEntidad" t:validate="maxlength=12" size="12" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for ="Subproc_batch"/>
-                                <input t:type="Checkbox" t:id="Subproc_batch" 
-                                       t:value="subEntidadUE.proc_batch" />
-                            </div>
-                        </div>
-
-                        <div class="f-wrap">
-
-                            <div class="f-left">
-                                <t:label for="subtipovia"/>
-                                <input t:type="Select" t:id="subtipovia" t:value="subEntidadUE.tipovia" 
-                                       model="SubTipoVia" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS"/>
-                            </div>
-
-                            <div class="f-left">
-                                <t:label for="Subdireccion"/>
-                                <input t:type="TextField" t:id="Subdireccion"
-                                       t:value="subEntidadUE.direccion"/>
-                            </div>
-                        </div>   
-
-                        <div class="f-wrap">
-
-
-                            <div class="f-left">
-                                <t:label for="subtipozona"/>
-                                <input t:type="Select" t:id="subtipozona" t:value="subEntidadUE.tipozona" 
-                                       model="SubTipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS" />
-                            </div> 
-
-                            <div class="f-left">
-                                <t:label for="Subdesczona"/>
-                                <input t:type="TextField" t:id="Subdesczona"
-                                       t:value="desczonasubentidad" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="desczonasubentidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="SubtelefonoEntidad"/>
-                                <input t:type="TextField" t:id="SubtelefonoEntidad"
-                                       t:value="telefSubEntidad"
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="telefSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-                        </div> 
-
-                            
-
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="Subemailinstitucional"/>
-                                <input t:type="TextField" t:id="Subemailinstitucional"
-                                       t:value="emailSubEntidad" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="emailSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="Suburlentidad"/>
-                                <input t:type="TextField" t:id="Suburlentidad"
-                                       t:value="urslSubEntidad" 
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urslSubEntidadChanged"  t:zone="subprincipalZone" />
-                            </div>
-
-
-                        </div>
-                                
-                      
-                                
-                    </t:form> 
-                </div>    
-                <div class="f-wrap">                                   
-                    <t:zone t:id="subTitularZone">
-                        <t:form t:id="formulariosubtitular"  zone="subTitularZone">
-                            <div class="f-left">
-                                <t:label for ="Subtitular"/>
-                                <input t:type="TextField" t:id="Subtitular" t:style="width:600px;"
-                                       t:value="subtitular" t:readonly="readonly" /> 
-                                <input t:id="buscarSubTitular" t:type="submit" value="..." class="button f-right" onClick="javascript: mostrar2();" />             
-                            </div>
-                        </t:form>
-                    </t:zone>
-                </div>
-                <div class="f-wrap">         
-                    <t:zone t:id="subJefeRRHHZone">
-                        <t:form t:id="formulariosubjeferrhh"  zone="subJefeRRHHZone">
-                            <div class="f-left">
-                                <t:label for ="SubjefeRRHH"/>
-                                <input t:type="TextField" t:id="SubjefeRRHH" t:style="width:600px;"
-                                       t:value="subjefeRRHH" t:readonly="readonly" />
-                                <input t:type="submit" t:id="buscarSubjeferrhh" value="..." class="button f-right" onClick="javascript: mostrar2();" />
-                            </div>
-                        </t:form>
-                    </t:zone>
-                </div>
-                <div class="f-wrap">         
-                    <t:zone t:id="subJefeOGAZone">
-                        <t:form t:id="formulariosubjefeoga"  zone="subJefeOGAZone">
-                            <div class="f-left">
-                                <t:label for ="SubjefeOGA"/>
-                                <input t:type="TextField" t:id="SubjefeOGA" t:style="width:600px;"
-                                       t:value="subjefeOGA" t:readonly="readonly" />
-                                <input t:type="submit" t:id="buscarSubjefeoga" value="..." class="button f-right" onClick="javascript: mostrar2();" />
-                            </div>
-                        </t:form>
-                    </t:zone>      
-                </div>
-                <div t:type="zone" t:id="subbotonesZone" >
-                    <t:form t:id="formulariosubbotones"  zone="subbotonesZone">
-                        <div class="f-wrap">
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="subcancel" value="Cancelar" class="button" t:mixins="confirm" /> 
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="subreset" value="Limpiar Formulario" class="button" t:mixins="confirm" />  
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="subguardarentidad" value="Guardar" class="button" t:mixins="confirm" />
-                            </div>
-                        </div>
-                    </t:form>
-                            
-                            
-                </div>
-                   
-            </div>
-
-        </div>
-
-    </div>-->
-
+    </div>
 
 <!--    <SCRIPT LANGUAGE="JavaScript"> 
         function mostrarEsconder() { 
@@ -577,7 +394,7 @@
             <t:if test="bSeleccionaPersonal">
                 <h1>Selección de Trabajador</h1>
                 <div class="pane">
-                    <form t:type="form" t:id="formularioTrabajador" t:zone ="busZone2">
+                    <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone2">
                         <div class="f-wrap">
                             <div class="f-left">
                                 Nombre completo: 
@@ -585,7 +402,7 @@
                             </div>                   
                             <div class="actions f-right">
                                 <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
-                                <input t:type="Submit" t:id="cancelFormularioTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                                <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                             </div>
                         </div>
                     </form>
@@ -633,7 +450,7 @@
             <t:if test="bSeleccionaEntidad">
                 <h1>Selección de entidad</h1>
                 <div class="pane">
-                    <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">
+                    <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
                                 Denominación
@@ -642,7 +459,7 @@
                         
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                <input t:type="Submit" t:id="cancel2" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                             </div>
                         </div>
                     </form>
