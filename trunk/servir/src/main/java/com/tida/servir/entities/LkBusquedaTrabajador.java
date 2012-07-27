@@ -24,6 +24,15 @@ public class LkBusquedaTrabajador implements Serializable {
     private String cargo;
     private String estadocargo;
     private String nrodocumento;
+    private long entidad_id;
+
+    public long getEntidad_id() {
+        return entidad_id;
+    }
+
+    public void setEntidad_id(long entidad_id) {
+        this.entidad_id = entidad_id;
+    }
 
     
     public LkBusquedaTrabajador() {
