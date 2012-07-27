@@ -1,3 +1,4 @@
+
 <html t:type="layout" title="Servir Unidades Orgánicas"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -9,11 +10,20 @@
 
     <h2> Unidades Orgánicas </h2>
 
-
+    <script>
+        jQuery(document).ready(function(){
+            //slide up and down when click over heading 2
+            jQuery(".box-title").click(function(){
+                // slide toggle effect set to slow you can set it to fast too.
+                jQuery("#panel-01").slideToggle("slow");
+                return true;
+            });
+        });
+    </script>
     <div class="box-background-title">
-        <span class="box-title">Buscar UO</span>
+        <span class="box-title"><span class="box-title-icon"></span>Buscar UO</span>
     </div>
-    <div id="box-unidades" class="box" >
+    <div id="panel-01" class="box" >
         <!-- t:validate="required,minlength=1" -->
 
 
@@ -23,31 +33,31 @@
                                                        
                 </form>
             </t:zone>-->
-            <t:zone t:id="nivelUOZone">
-                <form t:type="form" t:id="xxx" t:zone="listaUOZone">
+        <t:zone t:id="nivelUOZone">
+            <form t:type="form" t:id="xxx" t:zone="listaUOZone">
                     <!--<div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
-                   <div class="f-wrap">
-                        <div class="f-left">
-                            <label>Nivel Organizacional</label>
-                            <input t:type="Select" t:id="bunidadorganica_nivel"                                
-                                t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
-                        </div> 
-                        <div class="f-left">
-                            <label>Unidad Orgánica Antecesora</label>
-                            <select t:type="select" t:id="bunidadOrganica_uoa"
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Nivel Organizacional</label>
+                        <input t:type="Select" t:id="bunidadorganica_nivel"                                
+                                   t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
+                    </div> 
+                    <div class="f-left">
+                        <label>Unidad Orgánica Antecesora</label>
+                        <select t:type="select" t:id="bunidadOrganica_uoa"
                                     model="bbeansUO" encoder="bbeansUO" value="buoAntece"
                                     onChange="this.form.fire()" t:zone="listaUOZone"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Categoría</label>                                
-                            <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
-                        </div>
-                   </div>
+                    </div>
+                    <div class="f-left">
+                        <label>Categoría</label>                                
+                        <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
+                    </div>
+                </div>
                         <!--</t:if>-->
                     <!--</div> -->
-                </form>
-            </t:zone>
+            </form>
+        </t:zone>
 
         <!--</div>-->                    
         <div t:type="zone"  id="form_unidad_organica" class="abmform">
@@ -79,11 +89,10 @@
 
                 </form> 
             </t:zone>
-
         </div>
-         <br/> 
-         <br/>
-         <br/>
+        <br/> 
+        <br/>
+        <br/>
     </div>
 
     
@@ -94,50 +103,53 @@
                 <span class="box-title">Listado de UO</span>
             </div>
             <div id="box-unidades" class="box" >
-            <t:form t:id="formularioxx">      
-                <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                <t:form t:id="formularioxx">      
+                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
                         row="uo" exclude="estado,nivel,sigla,cue,desczona">
-                    <t:parameter name="empty">
-                        <div class="no-info">No se han encontrado coincidencias</div>
-                    </t:parameter>
-                    <p:accionesCell>    
-                      <t:if test="${veditar}">
+                        <t:parameter name="empty">
+                            <div class="no-info">No se han encontrado coincidencias</div>
+                        </t:parameter>
+                        <p:accionesCell>    
+                            <t:if test="${veditar}">
                         <!--<a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>-->
-                        <t:actionlink t:id="editar" zone="listaUOZone" context="uo">Editar</t:actionlink>
-                      </t:if>
-                      <t:if test="${veditar}" negate="true">
-                            <t:actionlink t:id="detalle" zone="listaUOZone" context="uo">Ver Detalle</t:actionlink>
+                                <t:actionlink t:id="editar" zone="listaUOZone" context="uo">Editar</t:actionlink>
+                            </t:if>
+                            <t:if test="${veditar}" negate="true">
+                                <t:actionlink t:id="detalle" zone="listaUOZone" context="uo">Ver Detalle</t:actionlink>
                             
-                      </t:if>
-                      <t:if test="${veliminar}">  
-                        <t:if test="esBorrable">
-                            | <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                    t:zone="listaUOZone" href="#" ><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
-                                Eliminar
-                                </span> </a>                      
-                        </t:if>  
-                      </t:if> 
-                    </p:accionesCell>
-                </t:grid>
-                <t:if test="errorBorrar">
-                    <div class="error" id = "errorBorrar">
-                        ${errorBorrar}
-                    </div>
-                </t:if>
+                            </t:if>
+                            <t:if test="${veliminar}">  
+                                <t:if test="esBorrable">
+                                    | 
+                                    <a t:type="eventLink" t:event="borrarDato" t:context="uo"
+                                 t:zone="listaUOZone" href="#" >
+                                        <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                            Eliminar
+                                        </span> 
+                                    </a>                      
+                                </t:if>  
+                            </t:if> 
+                        </p:accionesCell>
+                    </t:grid>
+                    <t:if test="errorBorrar">
+                        <div class="error" id = "errorBorrar">
+                            ${errorBorrar}
+                        </div>
+                    </t:if>
                 <!-- </t:if> -->
                 
-            </t:form>
-          </div>
+                </t:form>
+            </div>
         </t:if>
 
     </div> <!-- listaUOZone -->
     
-     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">    
-            <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
-             <t:envelope t:id="envelope"/>
-                <t:errors/> 
-            </form>
-     </div>   
+    <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">    
+        <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
+            <t:envelope t:id="envelope"/>
+            <t:errors/> 
+        </form>
+    </div>   
 
     <div class="box-background-title">
         <span class="box-title">Crear/Editar Unidades Orgánicas</span>
@@ -162,35 +174,35 @@
                 </fieldset>
               </t:if>
             </t:zone>-->
-            <t:zone t:id="unidadesOrganicasZone">
-                <t:if test="${vformulario}">    
-                    <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
-                      <fieldset>
-                       <legend> Datos </legend>
+        <t:zone t:id="unidadesOrganicasZone">
+            <t:if test="${vformulario}">    
+                <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
+                    <fieldset>
+                        <legend> Datos </legend>
                                             
-                       <div class="f-wrap">
-                        <div class="f-left">
-                            <label>* Nivel Organizacional</label>
-                            <input t:type="Select" t:id="unidadorganica_nivel"
-                                    t:zone="unidadesOrganicasZone" 
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>* Nivel Organizacional</label>
+                                <input t:type="Select" t:id="unidadorganica_nivel"
+                                   t:zone="unidadesOrganicasZone" 
                                    t:value="nivelUO" model="nivel" t:validate="required" t:disabled="${vdetalle}"/>
-                        </div>
-                        <t:if test="nivelUno" negate= "true">
-                           <div class="f-left">
-                                <label>* Unidad Orgánica Antecesora</label>
-                                <input t:type="Select" t:id="unidadOrganica_uoa"
+                            </div>
+                            <t:if test="nivelUno" negate= "true">
+                                <div class="f-left">
+                                    <label>* Unidad Orgánica Antecesora</label>
+                                    <input t:type="Select" t:id="unidadOrganica_uoa"
                                        onChange="this.form.fire()" 
                                        t:value="uoAntecesora" model="beansUO"
                                        t:zone="ubigeoDomZone" t:disabled="${vdetalle}"/>
-                            </div>
-                        </t:if>
-                        <div class="f-left">
+                                </div>
+                            </t:if>
+                            <div class="f-left">
                                 <label>Categoría</label>
                                 <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
                                        t:value="unidadorganica.categoriauo" t:disabled="${vdetalle}"/>
-                        </div>
-                      </div>                      
-                       <br/>
+                            </div>
+                        </div>                      
+                        <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Código</label>
@@ -213,9 +225,9 @@
                                        t:value="unidadorganica.cue" size="25" t:validate="maxlength=15" t:disabled="${vdetalle}"/>
                             </div>--> 
                         </div>
-                      </fieldset>
-                      <fieldset>
-                       <legend> Ubicación </legend>
+                    </fieldset>
+                    <fieldset>
+                        <legend> Ubicación </legend>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>Avenida/Jirón/Calle</label>
@@ -238,27 +250,27 @@
                                        t:value="unidadorganica.desczona" size="30" t:validate="maxlength=200" t:disabled="${vdetalle}"/>
                             </div>                                                     
                         </div>
-                           <br/>
-                            <br/>
-                            <br/>
-                            <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
 
-                      </fieldset>
+                    </fieldset>
                         
-                        <div class="actionunidad f-right">
+                    <div class="actionunidad f-right">
                             <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
-                          <t:if test="${vbotones}">
+                        <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                             <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
-                          </t:if>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
+                        </t:if>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
                              <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
-                        </div>                     
-                    </t:form>
+                    </div>                     
+                </t:form>
                   
                     <!-- </t:if> -->
-                </t:if>
-            </t:zone>
+            </t:if>
+        </t:zone>
         <!--</div>-->
 
         <div id="unidad_organica_ubi_geo">                    
@@ -271,10 +283,10 @@
                         <!--<table>
                             <tr>
                                 <td colspan="3">-->
-                                    <div id="tamano-ubigeo-wrap">
-                                        <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
+                        <div id="tamano-ubigeo-wrap">
+                            <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
                                                t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" t:disabled="${vdetalle}"/>
-                                    </div>
+                        </div>
                                 <!--</td>
                                 </tr>
                         </table>-->
@@ -285,13 +297,13 @@
                     <!-- </t:if> -->
                 </t:if>
             </t:zone>
-         <t:if test="${vformulario}">
-            <br/>
-            <br/>
-            <div class="f-wrap">                        
-                (*) Campos Obligatorios
-            </div>
-         </t:if>            
+            <t:if test="${vformulario}">
+                <br/>
+                <br/>
+                <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                </div>
+            </t:if>            
         </div>
         <br/>
         <br/>
