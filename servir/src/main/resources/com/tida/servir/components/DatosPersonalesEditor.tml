@@ -4,8 +4,9 @@
 
     <t:content>
         
-            <t:zone t:id="zonaGeneral">
-            <form t:type="form" t:id="formulariodatospersonales" t:zone="zonaGeneral">
+                  
+           <t:zone t:id="zonaGeneral">
+               <t:form t:type="form" t:id="formulariodatospersonales" t:zone="zonaGeneral">
                     <t:errors/>
                     <t:envelope t:id="envelope"/>
                     <fieldset>
@@ -14,17 +15,17 @@
                             <div class="f-left">
                                 <t:label for="nombres"/>
                                 <select t:type="TextField" t:id="nombres" t:value="actual.nombres" 
-                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
                                 <input t:type="TextField" t:id="apellidoPaterno" t:value="actual.apellidoPaterno" 
-                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>
                                 <select t:type="TextField" t:id="apellidoMaterno" t:value="actual.apellidoMaterno" 
-                                t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
                             </div>
                         </div>
                         <br/>
@@ -41,7 +42,7 @@
                             <div class="f-left">
                                 <t:label for="nuevo_nroDocumento"/>
                                 <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="actual.nroDocumento"
-                                    size="34" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
+                                    size="30" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
                             </div>
                             <div class="f-left">
                                 <label>Sexo</label>
@@ -61,7 +62,7 @@
                             <div class="f-left">
                                 <label>* Fecha de Nacimiento</label>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="actual.fechaNacimiento"
-                                    t:validate="required" size="34" t:disabled="${vdatospersonales}" t:readonly="readlony"/>
+                                    t:validate="required" size="30" t:disabled="${vdatospersonales}" t:readonly="readlony"/>
                             </div>
                             <!--
                         <div class="f-left">
@@ -151,78 +152,111 @@
                             </div>
                         </div>
                   </fieldset>
-                </div>  
+                </div>   
                     
-                <div class="clear">
-                   <fieldset>
-                   <legend> Salud </legend>
-                      <div class="f-wrap">                        
+                <div class="f-wrap" id="eps">
+                    <div class="f-left">
+                        <label>Grupo Sanguíneo</label>
+                        <select t:type="Select" t:id="gruposanguineo" 
+                                t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}" t:style="width:100px;"/>
+                    </div>    
+                    <div class="f-left">                                
+                            <label>Nombre de EPS</label>   
+                            <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
+                                <label><t:radio t:id="o1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${votros}"/> No</label>
+                            </t:radiogroup>                                                          
+                    </div>
+                    <div class="f-left">
+                        <label>Nombre de EPS</label>
+                        <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" t:disabled="${votros}"/>
+                            <!--<input t:type="TextField" t:id="nombreeps" t:value="valnombreeps" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreepsChanged"  t:zone="zonaSegunda" t:disabled="${votros}"/>-->      
+                    </div>
+                    <div class="f-left">                                
+                            <label>Recibe Pensión</label>   
+                            <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
+                                <label><t:radio t:id="r1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="r2" t:value="false" t:disabled="${votros}" /> No</label>
+                                <!--<label> </label>-->
+                            </t:radiogroup>                                                          
+                    </div>
+                </div>
+                
+                    <t:if test="vbotones">    
+                        <div class="clear" id="actualizar_dpe" >
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button f-right"/>
+                        </div>
+                    </t:if>
+                    <t:if test="vbotones" negate="true">
+                        <div class="clear" id="regresar_dpe" >
+                          <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
+                        </div>
+                    </t:if>
+               
+            </t:form>
+        </t:zone>  
+  
+  
+  <div class="ubigeosData" id = "ubigeosdata_dpe">
+      <fieldset>
+      <legend> Salud </legend> 
+        <t:zone t:id="zonaSegunda">
+            <t:form t:type="form" t:id="formulariosalud" t:zone="zonaSegunda">
+            <div class="clear">  
+                <div class="f-wrap">
                         <div class="f-left">
                             <label>Tipo de Discapacidad</label>
                             <!--<select t:type="Select" t:id="tipodiscapacidad" t:value="valtipodiscapacidad" model="tipodiscapacidades" disabled ="noeditable" />-->
-                            <input t:type="Select" t:id="tipodiscapacidad"                            
-                            t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="zonaGeneral" t:disabled="${vtipodiscapacidad}"/>
+                            <input t:type="Select" t:id="tipodiscapacidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zonaSegunda"                           
+                            t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:disabled="${vtipodiscapacidad}"/>
                         </div>                        
                         <div class="f-left">
                             <label>Número CONADIS</label>
-                            <input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="34" t:disabled="${vconadis}"/>
-                            <!--<input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="34"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="ubigeoNacZone" t:disabled="${vconadis}"/>-->                            
+                            <!--<input t:type="TextField" t:id="nroconadis" t:value="actual.nroCertificadoCONADIS" size="30" t:disabled="${vconadis}"/>-->
+                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="zonaSegunda" t:disabled="${vconadis}"/>                            
                         </div>
                         <div class="f-left">
                             <label>Código ESSALUD</label>
-                            <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" validate="maxlength=15" size="34" t:disabled="${vessalud}"/>
-                            <!--<input t:type="TextField" t:id="essalud" t:value="valessalud" size="33"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="ubigeoNacZone" t:disabled="${vessalud}"/>-->
+                            <!--<input t:type="TextField" t:id="essalud" t:value="actual.esSalud" size="30" t:disabled="${vessalud}"/>-->
+                            <input t:type="TextField" t:id="essalud" t:value="valessalud" size="30"
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="zonaSegunda" t:disabled="${vessalud}"/>
                         </div>
-                    </div>
-                   <br/>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <label>Grupo Sanguíneo</label>
-                                <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}" t:style="width:100px;"/>
-                            </div>    
-                            <div class="f-left">                                
-                                    <label>Nombre de EPS</label>   
-                                    <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
-                                        <label><t:radio t:id="o1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="o2" t:value="false" t:disabled="${votros}"/> No</label>
-                                    </t:radiogroup>                                                          
-                            </div>
-                            <div class="f-left">
-                                <label>Nombre de EPS</label>
-                                <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" t:disabled="${votros}"/>
-                            </div>
-                            <div class="f-left">                                
-                                    <label>Recibe Pensión</label>   
-                                    <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
-                                        <label><t:radio t:id="r1" t:value="true" t:disabled="${votros}"/> Si <t:radio t:id="r2" t:value="false" t:disabled="${votros}"/> No</label>
-                                        <!--<label> </label>-->
-                                    </t:radiogroup>                                                          
-                            </div>
-                        </div>
+                        
+                </div>
+                <br/>
+<br/>
+<br/>
                       <br/>
-                       <div class="f-wrap"> 
+            </div>
+            </t:form>
+        </t:zone>
+        <t:zone t:id="zonaTercera">
+            <t:form t:type="form" t:id="formulariosaludes" t:zone="zonaTercera">
+                    <div class="f-wrap"> 
                         <div class="f-left">
                             <label>Sistema Pensionario</label>
                             <input t:type="Select" t:id="sistemapen"                            
-                            t:value="actual.sistemapensionario" model="sistemapensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
+                            t:value="actual.sistemapensionario" model="sistemapensionarios" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zonaTercera" t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <label>Tipo</label>
-                            <input t:type="Select" t:id="regimenpen"
-                            onChange="this.form.fire()"
-                            t:value="actual.regimenpensionario" model="regimenpensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
+                            <input t:type="Select" t:id="regimenpen" t:zone="zonaTercera"       
+                            t:value="valregimenpensionario" model="regimenpensionarios"  t:disabled="${votros}"/>
                         </div>
                         <div class="f-left">
                             <label>CUSPP o CÓDIGO ONP</label>     
-                            <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>
-                            <!--
+                            <!--<input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" size="30" t:disabled="${votros}"/>-->
+                            
                             <input t:type="TextField" t:id="cuspp" t:value="valcuspp" t:disabled="${votros}"
-                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="regimenZone" size="30"/>-->
+                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="zonaTercera" size="30"/>
                         </div>  
-                    </div>   
-                     </fieldset>
-                   </div>
+                   </div> 
+            </t:form>
+        </t:zone>
+      </fieldset>
+                   
                 <!--id="actualizar_dpe"-->
             <!--<div class="actionpersonal f-right">
                 <t:if test="vbotones">             
@@ -235,18 +269,7 @@
             </div>
             <br style="clear: both;" /> -->
                 
-               <div class="clear" id="actualizar_dpe" >
-                     <t:if test="vbotones">             
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" class="button f-right"/>
-                     </t:if>
-                     <t:if test="vbotones" negate="true">
-                            <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
-                     </t:if>
-               </div>
-            </form>
-        </t:zone>
+               
 
         <!--<div class="ubigeosData" id = "ubigeosdata_dpe">
             <t:zone t:id="ubigeoNacZone" t:update="show">             
@@ -274,7 +297,6 @@
             </t:zone>
         </div>-->
         
-    <div class="ubigeosData" id = "ubigeosdata_dpe">
             <t:zone t:id="ubigeoDomZone" t:update="show">
                 <form t:type="form" t:id="formUbiDom" t:zone="ubigeoDomZone">
                   <fieldset>

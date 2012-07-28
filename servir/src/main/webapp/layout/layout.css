@@ -618,7 +618,7 @@ form th {
 /* Datos de personales */
 #ubigeosData {
     position: relative;
-    top: -420px;
+    top: -120px;
     width: 290px;
 }
 
@@ -1129,9 +1129,27 @@ DIV.t-console DIV.t-debug {
 
 #actualizar_dpe{
     position: relative;
-    top:180px;
+    top:380px;
+    width:300px;
+    left:500px;  
+    margin-top: 0px;
 }
 
+#regresar_dpe{
+    position: relative;
+    top:380px;  
+    width:100px;
+    left:700px;
+    margin-top: 0px;
+}
+
+#eps{
+    position: relative;
+    top:150px; 
+    left:10px;
+    margin-top: 0px;
+    
+}
 #certificacionesZone {
     padding-bottom: 40px;
 }
