@@ -433,7 +433,7 @@ public class DatosPersonalesEditor {
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getNivelinstrucciones() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELINSTRUCCIÓN", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELINSTRUCCION", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     } 
     
