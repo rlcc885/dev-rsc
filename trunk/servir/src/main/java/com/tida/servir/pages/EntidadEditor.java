@@ -195,6 +195,11 @@ public class EntidadEditor extends GeneralPage {
             }
         //return null;
         }
+        File copied;
+        copied = new File(globals.getServletContext().getRealPath("/") + "images/logotipo/"+entidadUE.getLogotipo());
+        if (!copied.exists()) {
+            entidadUE.setLogotipo(null);
+        }
         if (entidadUE.getOrganizacionEstado() != null) {
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
                 bMuestraSectorEdicion = true;
