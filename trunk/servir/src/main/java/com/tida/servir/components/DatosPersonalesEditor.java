@@ -89,27 +89,43 @@ public class DatosPersonalesEditor {
     @Persist
     @Property
     private DatoAuxiliar valtipozona;
+    
+    @Persist
+    @Property
+    private Integer valconadis;
+    @Persist
+    @Property
+    private String valessalud;
 //    @Persist
 //    @Property
-//    private DatoAuxiliar valtipodiscapacidad;
+//    private DatoAuxiliar valgruposanguineo;
 //    @Persist
 //    @Property
-//    private String valconadis;
+//    private String valnombreeps;
 //    @Persist
 //    @Property
-//    private String valessalud;
+//    private Boolean valeps;
+//    @Persist
+//    @Property
+//    private Boolean valrecibepension;
 //    @Persist
 //    @Property
 //    private DatoAuxiliar valsistemapensionario;
-//    @Persist
-//    @Property
-//    private DatoAuxiliar valregimenpensionario;
+    @Persist
+    @Property
+    private DatoAuxiliar valregimenpensionario;
     @InjectComponent
     @Property
     private Zone zonaGeneral;
-//    @Persist
-//    @Property
-//    private String valcuspp;
+    @InjectComponent
+    @Property
+    private Zone zonaSegunda;
+    @InjectComponent
+    @Property
+    private Zone zonaTercera;
+    @Persist
+    @Property
+    private String valcuspp;
 //    @InjectComponent
 //    @Property
 //    private Zone regimenZone;
@@ -119,7 +135,7 @@ public class DatosPersonalesEditor {
         
     @Log
     @SetupRender
-    private void inicio() {
+    private void inicio() {        
         if(actual.getSexo()!=null){
             if(actual.getSexo().equals("M")){
                 valsexo="MASCULINO";            
@@ -134,6 +150,7 @@ public class DatosPersonalesEditor {
         else{
             valsexo=null;
         }
+        
         
 
         domicilioCP = actual.getDomicilioCodigoPostal();
@@ -154,19 +171,22 @@ public class DatosPersonalesEditor {
 //        ubigeoNacimiento.setDistrito(actual.getCod_ubi_dist());
         valtipovia=actual.getTipovia();
         valtipozona=actual.getTipozona();
-//        valtipodiscapacidad=actual.getTipodiscapacidad();
-//        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());
-//        valessalud=actual.getEsSalud();
+        
+        valconadis=actual.getNroCertificadoCONADIS();
+        valessalud=actual.getEsSalud();
+//        valgruposanguineo=actual.getGruposanguineo();
+//        valrecibepension=actual.getRecibepension();
+//        valnombreeps=actual.getNombreeps();
+//        valeps=actual.getEps();
 //        valsistemapensionario=actual.getSistemapensionario();
-//        valregimenpensionario=actual.getRegimenpensionario();
-//        valcuspp=actual.getNumregimenpensionario();         
+        valregimenpensionario=actual.getRegimenpensionario();
+        valcuspp=actual.getNumregimenpensionario();         
         validaciones();    
         System.out.println("personallll");
 //         if(valconadis.equals("null")){
 //            valconadis=null;
 //        }
     }
-    
     
     
 //    
@@ -219,28 +239,30 @@ public class DatosPersonalesEditor {
         }
         else if(elemento==1){
             //validaciones
-            
-            if (actual.getFechaNacimiento().after(new Date())) {
-            Logger logger = new Logger();
-            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                    Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-                    Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
-
-            formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
-            return zonaGeneral.getBody();
-            } else {
-                ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-                if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
-
+            if(actual.getFechaNacimiento()!=null){
+                 if (actual.getFechaNacimiento().after(new Date())) {
                     Logger logger = new Logger();
                     logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                            Logger.CODIGO_ERROR_EDAD_MAYOR_18,
-                            Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
+                            Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
+                            Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
 
-                    formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
+                    formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
                     return zonaGeneral.getBody();
-                }
+                    } else {
+                        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+                        if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
+
+                            Logger logger = new Logger();
+                            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+                                    Logger.CODIGO_ERROR_EDAD_MAYOR_18,
+                                    Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
+
+                            formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
+                            return zonaGeneral.getBody();
+                        }
+                    }
             }
+           
             if(actual.getEmailPersonal()!=null){
                 if(!isEmail(actual.getEmailPersonal())){
                     formulariodatospersonales.recordError("Email Personal Formato incorrecto");
@@ -264,11 +286,13 @@ public class DatosPersonalesEditor {
 //            actual.setSistemapensionario(valsistemapensionario);
 //            actual.setRegimenpensionario(valregimenpensionario);
 //            actual.setNumregimenpensionario(valcuspp);
-            if(valsexo.equals("MASCULINO")){
-                actual.setSexo("M");
-            }
-            else{
-                actual.setSexo("F");
+            if(valsexo!=null){
+                if(valsexo.equals("MASCULINO")){
+                    actual.setSexo("M");
+                }
+                else{
+                    actual.setSexo("F");
+                }
             }
             //para dni 
             List<Trabajador> lTrabajador = session.createCriteria(Trabajador.class).add(Restrictions.eq("nroDocumento", actual.getNroDocumento())).add(Restrictions.ne("id", actual.getId())).list();
@@ -300,6 +324,16 @@ public class DatosPersonalesEditor {
             actual.setDomicilioDireccion(domicilioDireccion);
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
+            actual.setNroCertificadoCONADIS(valconadis);
+            
+            
+            actual.setEsSalud(valessalud);
+//            actual.setGruposanguineo(valgruposanguineo);
+//            actual.setRecibepension(valrecibepension);
+//            actual.setNombreeps(valnombreeps);
+//            actual.setEps(valeps);
+            actual.setRegimenpensionario(valregimenpensionario);
+            actual.setNumregimenpensionario(valcuspp);           
             
             session.saveOrUpdate(actual);
             session.flush();
@@ -316,8 +350,8 @@ public class DatosPersonalesEditor {
 
     MultiZoneUpdate tresZonas() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody())
-                .add("zonaGeneral", zonaGeneral.getBody());
+        mu = new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("zonaTercera", zonaTercera.getBody())
+                .add("zonaGeneral", zonaGeneral.getBody()).add("zonaSegunda", zonaSegunda.getBody());
                 //.add("regimenZone", regimenZone.getBody()); "ubigeoNacZone", ubigeoNacZone.getBody()).add(
         return mu;
     }
@@ -367,16 +401,21 @@ public class DatosPersonalesEditor {
         domicilioDireccion = _request.getParameter("param");
     }
     
-//    void onConaChanged() {
-//        valconadis = _request.getParameter("param");
+    void onConaChanged() {
+        valconadis = Integer.parseInt(_request.getParameter("param"));
+    }
+    
+    void onEssaChanged() {
+        valessalud = _request.getParameter("param");
+    }
+    
+//    void onNombreepsChanged() {
+//        valnombreeps = _request.getParameter("param");
 //    }
     
-//    void onEssaChanged() {
-//        valessalud = _request.getParameter("param");
-//    }
-//    void onCusppChanged() {
-//        valcuspp= _request.getParameter("param");
-//    }
+    void onCusppChanged() {
+        valcuspp= _request.getParameter("param");
+    }
 
     // TODO: poner en common
     private static int getAge(Date bDay, Date now) {
@@ -613,9 +652,22 @@ public class DatosPersonalesEditor {
         }        
     }
     
-    Object onValueChangedFromTipodiscapacidad(DatoAuxiliar dato) {
-        if(dato != null && !dato.equals("")){
-            if(dato.getValor().equals("NO TIENE") || dato.getValor().equals("")){
+//    Object onValueChangedFromTipodiscapacidad(DatoAuxiliar dato) {
+//        
+//    }
+//    Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
+//        return tresZonas();
+//    }
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosaludes() {        
+        return zonaTercera.getBody();
+    }
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariosalud() {        
+        if(actual.getTipodiscapacidad() != null && !actual.getTipodiscapacidad().equals("")){
+            if(actual.getTipodiscapacidad().getValor().equals("NO TIENE") || actual.getTipodiscapacidad().getValor().equals("")){
                 vconadis=true;
                 actual.setNroCertificadoCONADIS(null);
             }        
@@ -626,10 +678,6 @@ public class DatosPersonalesEditor {
         else{
             vconadis=true;
         }        
-        return zonaGeneral.getBody();
+        return zonaSegunda.getBody();
     }
-    Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
-        return zonaGeneral.getBody();
-    }
-    
 }
