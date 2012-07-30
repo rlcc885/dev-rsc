@@ -163,7 +163,6 @@
             </t:grid>  
         </t:zone>
     </div>
-
              
     <div class="box-background-title">
         <span class="box-title">Crear / Editar Registro de Entidad</span>
@@ -189,7 +188,8 @@
                             </div>
                             <div class="f-left"> 
                                 <t:label for="tiposubentidad"/>
-                                <input t:type="Select" t:id="tiposubentidad" t:disabled="${vdetalle}" t:value="entidadUE.tiposubentidad" model="TipoSubEntidad" t:blankOption="ALWAYS" />
+                                <input t:type="Select" t:id="tiposubentidad" t:disabled="${vdetalle}" t:value="entidadUE.tiposubentidad" 
+                                model="TipoSubEntidad" t:blankOption="ALWAYS" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
                             </div>
                         </t:if>
                     </div>

@@ -821,9 +821,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromSeleccionaEntidad(Entidad entidad) {
         System.err.println("onActionFromSeleccionaEntidad");
         if (entidad != null) {
-            entidadUE = entidad;
             entidad_origen = entidad.getDenominacion();
             entidadUE.setEntidad(entidad);
+            entidadUE.setEsSubEntidad(true);
             entidadUE.setTipoVia(entidad.getTipoVia());
             entidadUE.setTipoZona(entidad.getTipoZona());
             entidadUE.setDireccion(entidad.getDireccion());
