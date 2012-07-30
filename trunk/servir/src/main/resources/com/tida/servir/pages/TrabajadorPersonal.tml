@@ -62,6 +62,8 @@
                 <t:if test="${valida}" negate="true">
                     <t:DatosPersonalesEditor t:id="datos" actual= "menu"/>
                 </t:if>
+                <br/>
+                <br/>
             </div>
   
             <div class= "pane" id='estudios' name='estudios'>            
@@ -72,6 +74,8 @@
                 <t:if test="${valida}" negate="true">
                     <t:EstudiosEditor t:id="estudiox" actual= "menu" />
                 </t:if>
+                <br/>
+                <br/>
             </div>
         
             <div class= "pane" id='cursos' name='cursos'> 
@@ -81,6 +85,8 @@
                 <t:if test="${valida}" negate="true">
                     <t:CursosEditor t:id="cursosxr" actual= "menu"/>
                 </t:if>
+                <br/>
+                <br/>
             </div>
                 
             <div class= "pane" id='experiencia' name='experiencia'> 
@@ -90,6 +96,8 @@
                 <t:if test="${valida}" negate="true">
                     <t:AntecedentesEditor t:id="antecedentesx" actual= "menu"/>
                 </t:if>
+                <br/>
+                <br/>
             </div>
                 
             <div class= "pane" id='publicacion' name='publicacion'> 
@@ -99,6 +107,8 @@
                 <t:if test="${valida}" negate="true">
                     <t:PublicacionesEditor t:id="publicacionesx" actual= "menu"/>
                 </t:if>
+                <br/>
+                <br/>
             </div>
 
         <!--        
