@@ -35,13 +35,13 @@
 
     <!-- <t:if test="organismoInformante"> -->
         <t:if test="PuedeEditar">
-            <div class="box" id="box_conceptos">
             <h3>Crear/Editar Conceptos Remunerativos</h3>
+            <div class="box">
+            
 
                 <div id="form_conceptoremunerativo" class="abmform">
                     <t:form  t:id="formularioconceptoremunerativo" >
                         <t:errors/>
-
                         <div class="f-wrap">
                             <div class="f-left">
                                <t:label for="cod_concepto" />
@@ -73,11 +73,12 @@
                                 <input t:type="Select" t:id="periodicidad" t:value="conceptoRemunerativo.periodicidad" model="periodicidades" t:validate="required"/>
                             </div>
                         </div>
-                        <div class="actions f-right">
-                            <input type="submit" value="Guardar" class="button f-right"/>
-                            <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>
+                        <div class="f-wrap">
+                        <div class="f-right">
+                            <input t:type="submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
                         </div>
-
+                        <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>
+</div>
                     </t:form>
                 </div>
              </div>
