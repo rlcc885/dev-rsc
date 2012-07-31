@@ -4,15 +4,6 @@
 
     <t:content>
 
-
-     
-            <div t:type="zone" t:id="mensajesDTZone" >
-                <t:form t:id="formulariomensajesDT"  zone="mensajesDTZone"> 
-                    <t:envelope t:id="envelope"/>
-                    <t:errors/>
-                </t:form> 
-            </div>
-     
        <fieldset>
           <div class="f-wrap">  
             <div t:type="zone" t:id="documentosZone" >
@@ -41,8 +32,8 @@
                             </div>   
                              
                         </div>
-                         <div class="f-wrap">
-                           
+                        <br/>
+                         <div class="f-wrap">                           
                             <div class="f-left">
                                 <label>¿Obligatorio?</label>
                                 <input t:type="Select" t:id="bobligatorio"
@@ -56,7 +47,7 @@
                              <div class="f-left">	
                                 <label>* Fecha Entrega</label>
                                 <input t:type="DateField" t:id="fecha" t:value="constancia.fecha" t:validate="required"
-                                       size="10" />
+                                       size="25" />
                             </div> 
                              
                         </div>
@@ -90,7 +81,12 @@
  
      
      <br/>
-     <br/>
+     <div t:type="zone" t:id="mensajesDTZone" >
+                <t:form t:id="formulariomensajesDT"  zone="mensajesDTZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+     </div>
      <br/>     
 <div id = "tabla_oi">
             <t:zone t:id="listaDocumentosZone">   

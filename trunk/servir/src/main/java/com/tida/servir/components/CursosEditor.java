@@ -82,9 +82,9 @@ public class CursosEditor {
     @InjectComponent
     @Property
     private Zone primeraZone;   
-    @InjectComponent
-    @Property
-    private Zone segundaZone;  
+//    @InjectComponent
+//    @Property
+//    private Zone segundaZone;  
     @InjectComponent
     @Property
     private Zone terceraZone;
@@ -243,7 +243,7 @@ public class CursosEditor {
         }
 
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
+                    .add("terceraZone", terceraZone.getBody()); 
     }
     
     @Log
@@ -256,7 +256,7 @@ public class CursosEditor {
         vbotones=false;
         vformulario=true;
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody())                             
-                    .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
+                    .add("terceraZone", terceraZone.getBody()); 
     }
     
     @Log
@@ -269,7 +269,7 @@ public class CursosEditor {
         vbotones=false;
         vformulario=true;
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody())                             
-                    .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
+                    .add("terceraZone", terceraZone.getBody()); 
     }
     
     @Log
@@ -278,7 +278,7 @@ public class CursosEditor {
         session.delete(dato);
         envelope.setContents("Curso del Trabajador Eliminado");
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
+                    .add("terceraZone", terceraZone.getBody()); 
     }
     
     @Log
@@ -296,21 +296,21 @@ public class CursosEditor {
         else{
             votro=true;
         }
-        return segundaZone.getBody();
+        return primeraZone.getBody();
     }
         
-    @Log
-    @CommitAfter
-    Object onSuccessFromformulariosegundo(){
-        if(valestudiando){
-            vfechahasta=true;
-            valfec_hasta=null;
-        }
-        else{
-            vfechahasta=false;
-        }
-        return terceraZone.getBody();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromformulariosegundo(){
+//        if(valestudiando){
+//            vfechahasta=true;
+//            valfec_hasta=null;
+//        }
+//        else{
+//            vfechahasta=false;
+//        }
+//        return terceraZone.getBody();
+//    }
     
     void onSelectedFromSave() {        
         elemento=1;   
@@ -333,6 +333,18 @@ public class CursosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariotercero(){
+        if(valestudiando!=null){
+            if(valestudiando){
+                vfechahasta=true;
+                valfec_hasta=null;
+            }
+            else{
+                vfechahasta=false;
+            }
+        }
+        else{
+            vfechahasta=false;
+        }        
         if(elemento==3){
             if(_usuario.getRol().getId()==1)
                 return "Alerta";
@@ -433,7 +445,7 @@ public class CursosEditor {
                 envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
         }
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("segundaZone", segundaZone.getBody()).add("terceraZone", terceraZone.getBody()); 
+                    .add("terceraZone", terceraZone.getBody()); 
     }
     
     void mostrar(){        

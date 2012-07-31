@@ -5,89 +5,13 @@
 
     <t:content>
 
-        <div id = "tabla_oi">
-            <t:zone t:id="listaFamiliaresZone">   
-                <t:grid source="listadoFamiliares" rowsPerPage="10" t:add="Parentesco,Revisado,Acciones" pagerPosition="bottom"
-                        row="listafamiliar" include="nombres,apellidoPaterno,apellidoMaterno" inPlace="true" >
-                    <t:parameter name="empty">
-                        <div class="no-info">No se encontraron registros</div>
-                    </t:parameter>
-                    <p:parentescoCell>
-                        <t:if test="${listafamiliar.validado}">
-                            <label class="datofalse">${listafamiliar.parentesco.valor}</label>  
-                        </t:if>
-                        <t:if test="${listafamiliar.validado}" negate="true">
-                            <label class="datotrue">${listafamiliar.parentesco.valor}</label>  
-                        </t:if>
-                    </p:parentescoCell>
-                    <p:nombresCell>
-                        <t:if test="${listafamiliar.validado}">
-                            <label class="datofalse">${listafamiliar.nombres}</label>  
-                        </t:if>
-                        <t:if test="${listafamiliar.validado}" negate="true">
-                            <label class="datotrue">${listafamiliar.nombres}</label>  
-                        </t:if>
-                    </p:nombresCell>
-                    <p:apellidoPaternoCell>
-                        <t:if test="${listafamiliar.validado}">
-                            <label class="datofalse">${listafamiliar.apellidoPaterno}</label>  
-                        </t:if>
-                        <t:if test="${listafamiliar.validado}" negate="true">
-                            <label class="datotrue">${listafamiliar.apellidoPaterno}</label>  
-                        </t:if>
-                    </p:apellidoPaternoCell>
-                    <p:apellidoMaternoCell>
-                        <t:if test="${listafamiliar.validado}">
-                            <label class="datofalse">${listafamiliar.apellidoMaterno}</label>  
-                        </t:if>
-                        <t:if test="${listafamiliar.validado}" negate="true">
-                            <label class="datotrue">${listafamiliar.apellidoMaterno}</label>  
-                        </t:if>
-                    </p:apellidoMaternoCell>
-                    <p:revisadoCell>
-                        <t:if test="${bvalidausuario}">
-                            <t:if test="${listafamiliar.validado}">
-                                <label class="datofalse">SI</label>  
-                            </t:if>
-                            <t:if test="${listafamiliar.validado}" negate="true">
-                                <label class="datotrue">NO</label>  
-                            </t:if>
-                        </t:if>
-                    </p:revisadoCell>
-                    <p:accionesCell>
-                        <t:if test="${bvalidausuario}">
-                            <t:if test="${listafamiliar.validado}" negate="true">
-                                <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink> | 
-                            
-                                <t:actionlink t:id="eliminar" zone="listaFamiliaresZone" context="listafamiliar"> 
-                                    <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
-                                        Eliminar
-                                    </span>
-      
-                                </t:actionlink> 
-                            </t:if> 
-                        </t:if>
-                    </p:accionesCell>
-                    
-                </t:grid>
-            </t:zone>
-        </div>
-        
-        <div t:type="zone" t:id="mensajesFZone" >
-            <t:form t:id="formulariomensajesf"  zone="mensajesFZone"> 
-                <t:envelope t:id="envelope"/>
-                <t:errors/>
-            </t:form> 
-        </div>
-     
         <h3>Crear / Editar Familiar</h3>
         <div class="box">
             <div class="f-wrap">  
                 <div t:type="zone" t:id="familiaresZone" >
                     <t:form t:id="formulariofamiliares"  zone="familiaresZone">
 
-                        <div class="f-wrap">
-                             
+                        <div class="f-wrap">                             
                             <div class="f-left" >
                                 <t:label for="parentesco"/>
                                 <input t:type="Select" t:id="parentesco" t:value="familiarActual.parentesco" 
@@ -103,26 +27,26 @@
                             <div class="f-left">	
                                 <t:label for="fechaNacimiento"/>
                                 <input t:type="DateField" t:id="fechaNacimiento" t:value="familiarActual.fechaNacimiento" t:validate="required"
-                                       size="10" />
+                                       size="25" />
                             </div>
                              
                         </div>
-                        
+                        <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="nombres"/>
-                                <input t:type="TextField" t:id="nombres" t:validate="required" t:value="familiarActual.nombres" maxlength="255" size="34"/>
+                                <input t:type="TextField" t:id="nombres" t:validate="required" t:value="familiarActual.nombres" maxlength="255" size="33"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoPaterno" />
-                                <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:value="familiarActual.apellidoPaterno" maxlength="255" size="34"/>
+                                <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno" />
-                                <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:value="familiarActual.apellidoMaterno" maxlength="255" size="34"/>
+                                <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
                             </div>
                         </div>
-                        
+                        <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="tipoDocumento" />
@@ -132,7 +56,7 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="nroDocumento"/>
-                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" disabled="${bdni}" size="34" />
+                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" disabled="${bdni}" size="33" />
                             </div>
                             <div class="f-left">
                                 <t:label for="estadoCivil" />
@@ -140,17 +64,19 @@
                                         model="beanEstadoCivil" 
                                         t:blankOption="ALWAYS"/>
                             </div>
-                            <t:if test="${bvalidausuario}">
+                         </div>
+                             <br/>
+                           <div class="f-wrap">  
+                             <t:if test="${bvalidausuario}">
                                 <div class="f-left">
-                                    <label>Revisado: </label>
-                                    <input t:type="Checkbox" t:id="validado" 
-                                           t:value="familiarActual.validado"/>
+                                        Revisado  <input t:type="Checkbox" t:id="validado" 
+                                            t:value="familiarActual.validado"/>                                      
                                 </div>
-                            </t:if>
-                        </div> 
-                        <div class="f-wrap">
+                              </t:if>
+                           </div>
+                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                                        <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                             </div>
                         </div>
                     </t:form>  
@@ -171,9 +97,82 @@
 
                 </div>
             </div>
-
-        <div class="f-wrap">                        
-            (*) Campos Obligatorios
+ 
+     
+    <br/>
+    <div t:type="zone" t:id="mensajesFZone" >
+        <t:form t:id="formulariomensajesf"  zone="mensajesFZone"> 
+            <t:envelope t:id="envelope"/>
+            <t:errors/>
+        </t:form> 
+    </div>
+    <br/>     
+    <div id = "tabla_oi">
+            <t:zone t:id="listaFamiliaresZone">   
+                <t:grid source="listadoFamiliares" rowsPerPage="10" t:add="Parentesco,Revisado,Acciones" pagerPosition="bottom"
+                row="listafamiliar" include="nombres,apellidoPaterno,apellidoMaterno" inPlace="true" >
+                    <t:parameter name="empty">
+                    <div class="no-info">No se encontraron registros</div>
+                    </t:parameter>
+                    <p:parentescoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.parentesco.valor}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.parentesco.valor}</label>  
+                           </t:if>
+                    </p:parentescoCell>
+                    <p:nombresCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.nombres}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.nombres}</label>  
+                           </t:if>
+                    </p:nombresCell>
+                    <p:apellidoPaternoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.apellidoPaterno}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.apellidoPaterno}</label>  
+                           </t:if>
+                    </p:apellidoPaternoCell>
+                    <p:apellidoMaternoCell>
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">${listafamiliar.apellidoMaterno}</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">${listafamiliar.apellidoMaterno}</label>  
+                           </t:if>
+                    </p:apellidoMaternoCell>
+                     <p:revisadoCell>
+                         <t:if test="${bvalidausuario}">
+                           <t:if test="${listafamiliar.validado}">
+                               <label class="datofalse">SI</label>  
+                           </t:if>
+                            <t:if test="${listafamiliar.validado}" negate="true">
+                               <label class="datotrue">NO</label>  
+                           </t:if>
+                         </t:if>
+                    </p:revisadoCell>
+                    <p:accionesCell>
+                        <t:if test="${bvalidausuario}">
+                        <t:if test="${listafamiliar.validado}" negate="true">
+                               <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink> | 
+                            
+                        <t:actionlink t:id="eliminar" zone="listaFamiliaresZone" context="listafamiliar"> 
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span>
+      
+                        </t:actionlink> 
+                        </t:if> 
+                        </t:if>
+                    </p:accionesCell>
+                    
+                </t:grid>
+            </t:zone>
         </div>
         </div>
 

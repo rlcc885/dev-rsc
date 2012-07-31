@@ -51,7 +51,7 @@
                     </div>
                     <div class="f-left">
                         <label>Categoría</label>                                
-                        <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" />
+                        <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" onChange="this.form.fire()" t:zone="listaUOZone"/>
                     </div>
                 </div>
                         <!--</t:if>-->

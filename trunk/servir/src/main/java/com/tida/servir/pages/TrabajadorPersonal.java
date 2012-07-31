@@ -90,6 +90,9 @@ public class TrabajadorPersonal  extends GeneralPage
     @Property
     @Persist
     private Trabajador menu;
+    @Property
+    @Persist
+    private Trabajador enlace;
     
         
         /*
@@ -145,9 +148,9 @@ public class TrabajadorPersonal  extends GeneralPage
     @Property
     @SessionState
     private UsuarioAcceso usua;
-    @Property
-    @Persist
-    private Boolean valida;
+//    @Property
+//    @Persist
+//    private Boolean valida;
 
     public boolean getNoEditable() {
         return !getEditable();
@@ -205,13 +208,15 @@ public class TrabajadorPersonal  extends GeneralPage
             usua = (UsuarioAcceso) result.get(0);        
         }
         if(actual==null){
-            valida=false;
+//            valida=false;
             //menu=new Trabajador();
             menu=_usuario.getTrabajador();
             System.out.println("menuuu");
         }
         else{
-            valida=true;
+//            valida=true;
+            menu=actual;
+            actual=null;
             System.out.println("actualll");
         }
         
