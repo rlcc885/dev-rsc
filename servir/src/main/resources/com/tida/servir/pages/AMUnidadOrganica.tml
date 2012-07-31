@@ -12,15 +12,16 @@
 
     <script>
         jQuery(document).ready(function(){
-            jQuery(".box-title").click(function(){
-                jQuery("#panel-01").slideToggle("slow");
-                jQuery("#panel-02").slideToggle("slow");
-                return true;
-            });
+        jQuery(".box-title-01").click(function(){
+        jQuery("#panel-01").slideToggle("slow");
+        return true;
+        });
         });
     </script>
     <div class="box-background-title">
-        <span class="box-title-01"><strong style="cursor:pointer;">+</strong> Buscar UO</span>
+        <span class="box-title-01">
+            <strong style="cursor:pointer;">+</strong> Buscar UO
+        </span>
     </div>
     <div id="panel-01" class="box" >
         <!-- t:validate="required,minlength=1" -->
@@ -40,13 +41,13 @@
                     <div class="f-left">
                         <label>Nivel Organizacional</label>
                         <input t:type="Select" t:id="bunidadorganica_nivel"                                
-                                   t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
+                               t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
                     </div> 
                     <div class="f-left">
                         <label>Unidad Orgánica Antecesora</label>
                         <select t:type="select" t:id="bunidadOrganica_uoa"
-                                    model="bbeansUO" encoder="bbeansUO" value="buoAntece"
-                                    onChange="this.form.fire()" t:zone="listaUOZone"/>
+                                model="bbeansUO" encoder="bbeansUO" value="buoAntece"
+                                onChange="this.form.fire()" t:zone="listaUOZone"/>
                     </div>
                     <div class="f-left">
                         <label>Categoría</label>                                
@@ -95,13 +96,23 @@
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
         <!-- <t:if test = "hayOrgano"> -->        
         <t:if test="mostrar">
+            <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-02").click(function(){
+                jQuery("#panel-02").slideToggle("slow");
+                return true;
+                });
+                });
+            </script>
             <div class="box-background-title">
-                <span class="box-title-02"><strong style="cursor:pointer;">+</strong> Listado de UO</span>
+                <span class="box-title-02">
+                    <strong style="cursor:pointer;">+</strong> Listado de UO
+                </span>
             </div>
             <div id="panel-02" class="box" >
                 <t:form t:id="formularioxx">      
                     <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="uo" exclude="estado,nivel,sigla,cue,desczona">
+                            row="uo" exclude="estado,nivel,sigla,cue,desczona">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
@@ -118,7 +129,7 @@
                                 <t:if test="esBorrable">
                                     | 
                                     <a t:type="eventLink" t:event="borrarDato" t:context="uo"
-                                 t:zone="listaUOZone" href="#" >
+                                       t:zone="listaUOZone" href="#" >
                                         <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
                                             Eliminar
                                         </span> 
@@ -180,16 +191,16 @@
                             <div class="f-left">
                                 <label>* Nivel Organizacional</label>
                                 <input t:type="Select" t:id="unidadorganica_nivel"
-                                   t:zone="unidadesOrganicasZone" 
-                                   t:value="nivelUO" model="nivel" t:validate="required" t:disabled="${vdetalle}"/>
+                                       t:zone="unidadesOrganicasZone" 
+                                       t:value="nivelUO" model="nivel" t:validate="required" t:disabled="${vdetalle}"/>
                             </div>
                             <t:if test="nivelUno" negate= "true">
                                 <div class="f-left">
                                     <label>* Unidad Orgánica Antecesora</label>
                                     <input t:type="Select" t:id="unidadOrganica_uoa"
-                                       onChange="this.form.fire()" 
-                                       t:value="uoAntecesora" model="beansUO"
-                                       t:zone="ubigeoDomZone" t:disabled="${vdetalle}"/>
+                                           onChange="this.form.fire()" 
+                                           t:value="uoAntecesora" model="beansUO"
+                                           t:zone="ubigeoDomZone" t:disabled="${vdetalle}"/>
                                 </div>
                             </t:if>
                             <div class="f-left">
@@ -281,7 +292,7 @@
                                 <td colspan="3">-->
                         <div id="tamano-ubigeo-wrap">
                             <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                               t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" t:disabled="${vdetalle}"/>
+                                   t:zone="ubigeoDomZone" t:zoneName="ubigeoDomZone" t:disabled="${vdetalle}"/>
                         </div>
                                 <!--</td>
                                 </tr>
