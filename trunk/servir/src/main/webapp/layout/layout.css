@@ -1475,7 +1475,7 @@ DIV.t-data-grid {
     width:10px;
     height: 10px;
 }
-.box-title{
+.box-title, .box-title-01, .box-title-02{
     background-color:#D72522; 
     display: inline-block; 
     padding:5px;

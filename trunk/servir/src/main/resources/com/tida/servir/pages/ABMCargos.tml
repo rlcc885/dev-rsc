@@ -7,11 +7,18 @@
     </div>
 
     <h2>Administración de Cargos / Puestos</h2>
-
+    <script>
+        jQuery(document).ready(function(){
+        jQuery(".box-title-01").click(function(){
+        jQuery("#panel-01").slideToggle("slow");
+        return true;
+        });
+        });
+    </script>
     <div class="box-background-title">
-        <span class="box-title">Buscar Cargo/Puesto</span>
+        <span class="box-title-01"><strong style="cursor:pointer;">+</strong> Buscar Cargo/Puesto</span>
     </div>
-    <div id="box-unidades" class="box" >
+    <div id="panel-01" class="box" >
 
         <!-- t:validate="required,minlength=1" -->
             
@@ -87,11 +94,19 @@
     </div> 
                    
    <div t:type="zone" t:id="listaCargo" class="selectform" t:update="show">
-        <t:if test="mostrar">  
+        <t:if test="mostrar">
+            <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-02").click(function(){
+                jQuery("#panel-02").slideToggle("slow");
+                return true;
+                });
+                });
+            </script>
             <div class="box-background-title">
-                <span class="box-title">Listar Cargo/Puesto</span>
+                <span class="box-title-02"><strong style="cursor:pointer;">+</strong> Listar Cargo/Puesto</span>
             </div>
-            <div id="box-unidades" class="box" >
+            <div id="panel-02" class="box" >
             <t:form t:id="formlistaunidad">                
                 
                 <div id = "tabla_cargo">
