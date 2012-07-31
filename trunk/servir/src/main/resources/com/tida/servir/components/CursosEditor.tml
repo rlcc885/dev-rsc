@@ -4,7 +4,6 @@
 
 <t:content>
 
-     <h2>Cursos y Otros</h2>
      <div id = "tabla_oi">
         <t:zone t:id="listadoZone">  
             <t:form t:id="formlistacursos">
@@ -107,10 +106,10 @@
 
     </div> 
     
+    <h3>Crear / Editar Cursos y Otros</h3>
     <div class="box">          
       <t:zone t:id="primeraZone">         
          <t:if test="${vformulario}">
-          <h3>Crear / Editar Cursos y Otros</h3>
             <t:form t:id="formularioprimero" zone="segundaZone">                
                 <div class="f-wrap">
                     <div class="f-left">
@@ -190,9 +189,5 @@
              </t:if>
      </t:zone>
     </div> 
-     
-     
-     
-
     </t:content>
 </html>
