@@ -21,7 +21,6 @@ public class ConceptoRemunerativo {
 
     @NonVisual
     private Long id;
-
     private Entidad entidad;
 
     private String codigo;

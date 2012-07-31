@@ -177,30 +177,30 @@ public class CrearDatos {
         d = new DatoAuxiliar();
         d.setNombreTabla("FormacionProfesional");
         d.setValor("PROFESIONALES CIENTIFICOS E INTELECTUALES");
-        d.setCodigo(100);
+        d.setCodigo(100L);
         session.persist(d);
 
         d = new DatoAuxiliar();
         d.setNombreTabla("FormacionProfesional");
         d.setValor("TECNICOS DE NIVEL MEDIO");
-        d.setCodigo(200);
+        d.setCodigo(200L);
         session.persist(d);
 
 
         d = new DatoAuxiliar();
         d.setNombreTabla("FormacionProfesional2");
         d.setValor("PROFESIONALES DE LAS CIENCIAS FISICAS, QUIMICAS, MATEMATICAS,ESTADISTICA E INFORMATICA");
-        d.setRelacionCodigo(100);
+        d.setRelacionCodigo(100L);
         d.setTablaRelacion("FormacionProfesional");
-        d.setCodigo(110);
+        d.setCodigo(110L);
         session.persist(d);
 
         d = new DatoAuxiliar();
         d.setNombreTabla("FormacionProfesional3");
         d.setValor("FISICOS Y ASTRONOMOS");
-        d.setRelacionCodigo(110);
+        d.setRelacionCodigo(110L);
         d.setTablaRelacion("FormacionProfesional2");
-        d.setCodigo(111);
+        d.setCodigo(111L);
         session.persist(d);
 
         d = new DatoAuxiliar();

@@ -22,8 +22,6 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Entity
 @Table(name = "RSC_MERITODEMERITO")
 public class MeritoDemerito {
-
-    
     @Id
     @GeneratedValue
     @NonVisual
