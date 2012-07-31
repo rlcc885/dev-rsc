@@ -282,7 +282,9 @@ public class TrabajadorNuevo  extends GeneralPage
         List<LkCargosDisponibles> list;
         Criteria c = session.createCriteria(LkCargosDisponibles.class);
         
-        if(unidadorganica!=null)c.add(Restrictions.eq("uoid",unidadorganica.getId()));
+        if(unidadorganica!=null){
+            c.add(Restrictions.eq("uoid",unidadorganica.getId()));
+        }
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("resultado", true));
         list = c.list();        

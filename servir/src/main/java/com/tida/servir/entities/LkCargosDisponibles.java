@@ -17,11 +17,11 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 public class LkCargosDisponibles implements Serializable {
     @Id
     private long id;
-    private String den_cargo;
-    private int uoid; 
+    private String den_cargo;    
     private Boolean estado;
     private Boolean resultado;
-    
+    @NonVisual
+    private Long uoid; 
 
     public LkCargosDisponibles() {
     }
@@ -44,11 +44,11 @@ public class LkCargosDisponibles implements Serializable {
     }
     
  
-    public int getUoid() {
+    public long getUoid() {
         return uoid;
     }
 
-    public void setUoid(int uoid) {
+    public void setUoid(long uoid) {
         this.uoid = uoid;
     }
     
