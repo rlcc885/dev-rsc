@@ -29,7 +29,7 @@ public class UnidadOrganica {
         //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
-    private int id;
+    private long id;
     @Validate("required")
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    @PrimaryKeyJoinColumn
@@ -104,11 +104,11 @@ public class UnidadOrganica {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
     @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_UNIDADORGANICA_ID_SEQ" )
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -193,10 +193,9 @@ public class UnidadOrganica {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        return result;
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
     }
 
     @Override
