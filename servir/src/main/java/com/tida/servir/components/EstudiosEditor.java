@@ -251,18 +251,18 @@ public class EstudiosEditor {
         return primerZone.getBody();
     }
         
-    @Log
-    @CommitAfter
-    Object onSuccessFromformulariodos(){
-        if(valestudiando){
-            vfechahasta=true;
-            valfec_hasta=null;
-        }
-        else{
-            vfechahasta=false;
-        }
-        return tercerZone.getBody();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromformulariodos(){
+//        if(valestudiando){
+//            vfechahasta=true;
+//            valfec_hasta=null;
+//        }
+//        else{
+//            vfechahasta=false;
+//        }
+//        return tercerZone.getBody();
+//    }
     
 //    @Log
 //    void onValidateFromformulariobotones() {
@@ -289,10 +289,22 @@ public class EstudiosEditor {
         elemento=3;
     }
     
+    void onSelectedFromEstudiando() {        
+        elemento=4;
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones(){
-        
+        if(valestudiando!=null){
+            if(valestudiando){
+                vfechahasta=true;
+                valfec_hasta=null;
+            }
+            else{
+                vfechahasta=false;
+            }
+        }
         if(elemento==3){
             if(_usuario.getRol().getId()==1)
                 return "Alerta";
@@ -320,7 +332,7 @@ public class EstudiosEditor {
                 return listaZone.getBody();
             }
             if(valestudiando!=null){
-                System.out.println("Editooooooooo");
+//                System.out.println("Editooooooooo");
                 if(valestudiando==false){
                     if(valfec_hasta==null){
                         formlistaestudios.recordError("Debe ingresar Fecha de Fin");
@@ -352,7 +364,7 @@ public class EstudiosEditor {
             }
             else{//guardando
                 estudio = new Estudios();
-                System.out.println("Trabajadorrr"+actual);
+//                System.out.println("Trabajadorrr"+actual);
                 estudio.setTrabajador(actual);        
                 estudio.setEntidad(_usuario.getTrabajador().getEntidad());
                 estudio.setValidado(false);
@@ -385,9 +397,7 @@ public class EstudiosEditor {
             formlistaestudios.clearErrors();
             envelope.setContents("Estudios del Trabajador Modificados Exitosamente");
         }
-        
-        
-        
+
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
                     .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
     }

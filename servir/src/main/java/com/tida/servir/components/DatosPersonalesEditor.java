@@ -230,7 +230,7 @@ public class DatosPersonalesEditor {
     
     @Log
     @CommitAfter
-    Object onSuccessFromformulariodatospersonales() {
+    Object onSuccessFromformulariobotones() {
         if(elemento==4){
             return Busqueda.class;
         }
@@ -239,40 +239,40 @@ public class DatosPersonalesEditor {
         }
         else if(elemento==1){
             //validaciones
-            if(actual.getFechaNacimiento()!=null){
-                 if (actual.getFechaNacimiento().after(new Date())) {
-                    Logger logger = new Logger();
-                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                            Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-                            Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
-
-                    formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
-                    return zonaGeneral.getBody();
-                    } else {
-                        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-                        if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
-
-                            Logger logger = new Logger();
-                            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                                    Logger.CODIGO_ERROR_EDAD_MAYOR_18,
-                                    Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
-
-                            formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
-                            return zonaGeneral.getBody();
-                        }
-                    }
-            }
+//            if(actual.getFechaNacimiento()!=null){
+//                 if (actual.getFechaNacimiento().after(new Date())) {
+//                    Logger logger = new Logger();
+//                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+//                            Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
+//                            Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
+//
+//                    formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
+//                    return tresZonas();
+//                    } else {
+//                        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+//                        if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
+//
+//                            Logger logger = new Logger();
+//                            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+//                                    Logger.CODIGO_ERROR_EDAD_MAYOR_18,
+//                                    Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
+//
+//                            formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
+//                            return tresZonas();
+//                        }
+//                    }
+//            }
            
             if(actual.getEmailPersonal()!=null){
                 if(!isEmail(actual.getEmailPersonal())){
                     formulariodatospersonales.recordError("Email Personal Formato incorrecto");
-                    return zonaGeneral.getBody();
+                    return tresZonas();
                 }
             }
             if(actual.getEmailLaboral()!=null){
                 if(!isEmail(actual.getEmailLaboral())){
                     formulariodatospersonales.recordError("Email Laboral Formato incorrecto");
-                    return zonaGeneral.getBody();
+                    return tresZonas();
                 }
             }  
             
@@ -295,26 +295,29 @@ public class DatosPersonalesEditor {
                 }
             }
             //para dni 
+//            if(actual.getDocumentoidentidad().getCodigo()!=999999){
+//                
+//            }
             List<Trabajador> lTrabajador = session.createCriteria(Trabajador.class).add(Restrictions.eq("nroDocumento", actual.getNroDocumento())).add(Restrictions.ne("id", actual.getId())).list();
-
             if (lTrabajador.size() > 0) {
                 System.out.println("--------- id actual " + actual.getId() + " lTrabajador size " + lTrabajador.get(0).getId());
                 // No pueden haber 2 trabajadores con el mismo dni
                 formulariodatospersonales.recordError(Errores.ERROR_TRABAJADOR_DNI_EXISTENTE);
                 formulariodatospersonales.recordError("Numero de documento: "  + actual.getNroDocumento());
-                return zonaGeneral.getBody();
+                return tresZonas();
             }
+            
             //para email personal
             List<Trabajador> lbusqueda = session.createCriteria(Trabajador.class).add(Restrictions.like("emailPersonal", actual.getEmailPersonal())).add(Restrictions.ne("id", actual.getId())).list();
             if (lbusqueda.size() > 0) {                
                 formulariodatospersonales.recordError("Email Personal ya registrado");   
-                return zonaGeneral.getBody();
+                return tresZonas();
             }
             //para email laboral
             List<Trabajador> lbusqueda2 = session.createCriteria(Trabajador.class).add(Restrictions.like("emailLaboral", actual.getEmailLaboral())).add(Restrictions.ne("id", actual.getId())).list();
             if (lbusqueda2.size() > 0) {                
                 formulariodatospersonales.recordError("Email Laboral ya registrado");   
-                return zonaGeneral.getBody();
+                return tresZonas();
             }
             
             actual.setCod_dom_dept(ubigeoDomicilio.getDepartamento());
@@ -392,7 +395,56 @@ public class DatosPersonalesEditor {
     @Persist
     private String valsexo;
     
-
+    //keyup
+    void onNombresChanged() {
+        actual.setNombres(_request.getParameter("param"));
+    }
+    void onApellidopaternoChanged() {
+        actual.setApellidoPaterno(_request.getParameter("param"));
+    }
+    void onApellidomaternoChanged() {
+        actual.setApellidoMaterno(_request.getParameter("param"));
+    }
+    void onNrodocumentoChanged() {
+        actual.setNroDocumento(_request.getParameter("param"));
+    }
+    void onEpersonalChanged() {
+        actual.setEmailPersonal(_request.getParameter("param"));
+    }
+    void onElaboralChanged() {
+        actual.setEmailLaboral(_request.getParameter("param"));
+    }
+    void onRucChanged() {
+        actual.setNroRUC(_request.getParameter("param"));
+    }
+    void onTcelularChanged() {
+        actual.setTelefonocelular(_request.getParameter("param"));
+    }
+    void onTfijoChanged() {
+        actual.setTelefonofijo(_request.getParameter("param"));
+    }
+    void onRnpChanged() {
+        actual.setCodigoOSCE(_request.getParameter("param"));
+    }
+    void onOtraformacionChanged() {
+        actual.setFormacionInfAdicional(_request.getParameter("param"));
+    }
+    void onContactarChanged() {
+        actual.setEmergenciaNombre(_request.getParameter("param"));
+    }
+    void onDireccionemeChanged() {
+        actual.setEmergenciaDomicilio(_request.getParameter("param"));
+    }
+    void onTalternativopChanged() {
+        actual.setEmergenciaTelefonoAlternativo1(_request.getParameter("param"));
+    }    
+    void onTalternativosChanged() {
+        actual.setEmergenciaTelefonoAlternativo2(_request.getParameter("param"));
+    }    
+    void onNombreepsChanged() {
+        actual.setNombreeps(_request.getParameter("param"));
+    }    
+  
     void onCpChanged() {
         domicilioCP = _request.getParameter("param");
     }

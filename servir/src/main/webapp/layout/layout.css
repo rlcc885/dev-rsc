@@ -622,6 +622,14 @@ form th {
     width: 290px;
 }
 
+#periodoestudios {
+    position: absolute;
+    top: 540px;
+    left: 630px;
+    width: 230px;
+    margin-bottom: 0px;
+}
+
 /* Datos de familiares */
 #tabla_familiares {
     overflow:auto;

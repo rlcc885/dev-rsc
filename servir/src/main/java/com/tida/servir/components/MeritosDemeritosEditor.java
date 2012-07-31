@@ -143,12 +143,17 @@ public class MeritosDemeritosEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormularioclase() {
-        System.out.println("aaaaa"+ merito.getClasemeritodemerito().getId());
-        if(merito.getClasemeritodemerito().getCodigo()==1){
+        //System.out.println("aaaaa"+ merito.getClasemeritodemerito().getId());
+        if(merito.getClasemeritodemerito()!=null){
+            if(merito.getClasemeritodemerito().getCodigo()==1){
                 btipo=false;             
-        }else if(merito.getClasemeritodemerito().getCodigo()==2){
+            }else if(merito.getClasemeritodemerito().getCodigo()==2){
                 btipo=true;
+            }
         }
+        else{
+        }
+        
          return claseZone.getBody();
 
     }
