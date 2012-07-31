@@ -13,7 +13,7 @@
     </t:if>
 
     <div id = "Datos_Generales">
-        <h2> Modificar trabajador </h2>
+        <h2>Legajo Personal</h2>
            <!--<div id= "basicosTrabajador">
                <h3>${menu.documentoidentidad.valor}: ${menu.nroDocumento}
                ${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres}</h3>
