@@ -934,7 +934,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
     /*display:inline;*/
     margin: 10px;
 }
-#busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ /*width:920px;*/ height:auto; border-color:#D72522; padding:20px;}
+#busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ /*width:920px;*/ height:auto; border-color:#D72522; padding:10px;}
 #busquedas select, #mainfiltros select, #form_conceptoremunerativo select, #form_usuario select {font-size:11px;}
 #filtrosnombres, #filtrosdoc, #mainfiltros .seccionfiltros { float:none; margin:0;}
 #busquedas label, #mainfiltros label {margin-right:0;}
