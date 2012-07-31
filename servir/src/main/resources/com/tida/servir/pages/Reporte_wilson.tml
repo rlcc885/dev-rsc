@@ -6,24 +6,28 @@
     <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
 
 
-    <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${entidadUE.denominacion}
-    </div>
+
                            
     <h3>
-        Busqueda   Usuarios  
+        Reporte Unidades Organicas  
     </h3>
 
+    <br/>
+    
+    <t:form t:id="formulario" >
+    <div class="filtros">
+    Entidad:
+    <input t:type="TextField"  t:value="paramEntidad"  />
+    </div>
+    
+        <br/>
+    
         <div>
-    <label > Nombre : </label>
-    <input t:type="TextField"/><br/>
-    <label > Apellido paterno : </label>
-    <input t:type="TextField"/> <br/>
+    <input type="submit" value="submit"/>
         </div>
-          
-
-        <input type="submit" value="submit"/>
+    </t:form>
         
+    
     <SCRIPT LANGUAGE="JavaScript"> 
         function mostrarEsconder() { 
             cach.visibility = "visible";
