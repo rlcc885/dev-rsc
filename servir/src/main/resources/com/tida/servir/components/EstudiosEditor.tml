@@ -4,8 +4,6 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <t:content>
-
-     <h2>Estudios</h2>
      <div id = "tabla_oi">
         <t:zone t:id="listaZone">  
             <t:form t:id="formlistaestudios">
@@ -107,11 +105,12 @@
 
 
     </div>  
+    <h3>Crear / Editar Estudios</h3>
     
     <div class="box">          
       <t:zone t:id="primerZone">         
          <t:if test="${vformulario}">
-          <h3>Crear / Editar Estudios</h3>
+          
             <t:form t:id="formularioaltaestudio" t:zone="primerZone">                
                 <div class="f-wrap">
                     <div class="f-left">
