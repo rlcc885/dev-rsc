@@ -298,7 +298,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 vformulario=true;
                 vbotones=true; 
             }
-        
         }
     }
 
@@ -379,11 +378,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bussubdenominacion = "";
         ubigeobusSubEntidadUE = null;
         bBuscaEntidad = false;
-//        elemento = 3;
     }
 
     void onSelectedFromBusenviar() {
-//        bessubentidad = false;
         bBuscaEntidad = true;
     }
 
@@ -408,7 +405,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bussubdenominacion = "";
         ubigeobusSubEntidadUE = null;
         bBuscaSubEntidad = false;
-        //elemento = 3;
     }
 
     void onSelectedFromBussubenviar() {
@@ -425,7 +421,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     void onSelectedFromReset() {
-//        elemento = 1;
         bResetFormulario = true;
     }
 
@@ -483,7 +478,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         else if (bResetFormulario){
             resetFormulario(entidadUE);
-            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
+            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).
+                    add("zoneDatos", zoneDatos.getBody()).
+                    add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                    add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
+                    add("TitularZone", TitularZone.getBody()).
+                    add("JefeRRHHZone", JefeRRHHZone.getBody()).
+                    add("JefeOGAZone", JefeOGAZone.getBody());
         }
         else{
         entidadUE.setEstado(true);
@@ -493,35 +494,35 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (entidadUE.getEsSubEntidad()) {
             if (entidadUE.getTipoSubEntidad() == null) {
                 envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             }
         }
         if (entidadUE.getNivelGobierno() == null) {
             envelope.setContents("Debe ingresar el Nivel de Gobierno");
-            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
         if (entidadUE.getOrganizacionEstado() == null) {
             envelope.setContents("Debe ingresar la Organizacion Estado");
-            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
         if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
             if (entidadUE.getSectorGobierno() == null) {
                 envelope.setContents("Debe ingresar el Sector");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             }
             if (entidadUE.getTipoOrganismo() == null) {
                 envelope.setContents("Debe ingresar el Tipo de Organismo");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             }
         }
         if (entidadUE.getDenominacion() == null) {
             envelope.setContents("Debe ingresar el nombre de la Entidad ");
-            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+            return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                     .add("mensajesZone", mensajesZone.getBody());
         }
         if(usua.getAccesoreport()==0 && usua.getAccesoupdate()==1){
@@ -531,7 +532,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         envelope.setContents("Entidad creada exitosamente");
         }
-        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()) //                    .add("logoentidadZone", logoentidadZone.getBody())
+        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody())
                 .add("mensajesZone", mensajesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("zoneOtrosDatos",zoneOtrosDatos.getBody()).add("listaentidadZone",listaentidadZone.getBody());
 
     }
@@ -758,7 +759,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
         } else {
             bessubentidad = false;
         }
-        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("EOrigenZone", EOrigenZone.getBody());
+        return new MultiZoneUpdate("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody()).
+                add("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("zoneDatos", zoneDatos.getBody()).
+                add("EOrigenZone", EOrigenZone.getBody()).
+                add("ubigeoEntidadZone", ubigeoEntidadZone.getBody());
     }
 
     @CommitAfter
@@ -766,7 +773,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         btitulari = true;
 //        bSeleccionaPersonal = true;
 //        bSeleccionaEntidad = false;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody()).add("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody());
     }
 
     @CommitAfter
@@ -774,7 +784,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bjefeRRHHi = true;
 //        bSeleccionaPersonal = true;
 //        bSeleccionaEntidad = false;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody());
     }
 
     @CommitAfter
@@ -782,7 +795,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bjefeOGAi = true;
 //        bSeleccionaPersonal = true;
 //        bSeleccionaEntidad = false;
-        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody());
     }
 
     void onSelectedFromCancelFormFindTrabajador() {
@@ -799,7 +815,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         } else {
             mostrar = false;
         }
-        return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody());
+        return new MultiZoneUpdate("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody());
     }
 
     void onSelectedFromCancelFormFindEntidad() {
@@ -814,7 +833,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             return null;
         } else {
             mostrar = true;
-            return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
+            return new MultiZoneUpdate("busZone", busZone.getBody()).
+                    add("entiZone", entiZone.getBody()).
+                add("busZone2", busZone.getBody()).
+                add("trabajadorZone", entiZone.getBody());
         }
     }
 
@@ -838,7 +860,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         mostrar = false;
         bSeleccionaEntidad = false;
-        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody());
+        return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).
+                add("zoneDatos", zoneDatos.getBody()).
+                add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                add("zoneOtrosDatos", zoneOtrosDatos.getBody());
     }
 
     public List<LkBusquedaTrabajador> getTrabajadores() {
