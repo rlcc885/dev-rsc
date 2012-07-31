@@ -4,10 +4,7 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Encriptacion;
-import helpers.Helpers;
-import helpers.Reportes;
-import helpers.SMTPConfig;
+import helpers.*;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.*;
@@ -166,13 +163,11 @@ public class ABMUsuario extends GeneralPage {
             tc.add(Usuario.OPERADORANALISTA);
             tc.add(Usuario.ADMINSISTEMA);
         }
-
         if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
             tc.add(Usuario.OPERADORABMLOCAL);
             tc.add(Usuario.OPERADORLECTURALOCAL);
             tc.add(Usuario.TRABAJADOR);
         }
-
         return tc;
     }
 
@@ -182,7 +177,6 @@ public class ABMUsuario extends GeneralPage {
 
         if (loggedUser.getRol().getId() > 1 && this.primeraVez) {
             c = session.createCriteria(UsuarioTrabajador.class);
-
             //busqueda
             if (identificacionBusqueda != null && !identificacionBusqueda.equals("")) {
                 c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", identificacionBusqueda + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
@@ -193,7 +187,6 @@ public class ABMUsuario extends GeneralPage {
             if (nombresBusqueda != null && !nombresBusqueda.equals("")) {
                 c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresBusqueda + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
-
             if (loggedUser.getRol().getId() == 2) { // Si es administrador de Entidad, sólo puede ver su información
                 c.add(Restrictions.eq("entidad", loggedUser.getEntidad()));
             }
@@ -272,35 +265,24 @@ public class ABMUsuario extends GeneralPage {
             if (blanquearIntentosFallidos) {
                 usuario.setIntentos_fallidos(0L);
             }
-
             if (reinitialisarpassword) {
                 SecureRandom random = new SecureRandom();
                 password = new BigInteger(50, random).toString(32);
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 usuario.setClave(password);
                 String subject = "Datos de acceso al sistema Servir";
-                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getNroDocumento(), password);
+                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo()+usuario.getTrabajador().getNroDocumento(), password);
                 if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
-                    System.out.println("envío Correcto");
+                    System.out.println("Envío Correcto");
                 } else {
-                    System.out.println("envío Fallido");
+                    Logger logger = new Logger();
+                    Tipoevento tipoeve=new Tipoevento();
+                    tipoeve.setId(2);
+                    logger.loguearEvento(session,tipoeve,usuario.getEntidad(),usuario.getTrabajador().getId(),Logger.CORREO_FAIL_RESET_PASSWORD);
                 }
-
             }
-
             usuario.setEstado(lkEstadoUsuario.getId());
             usuario.setRol(rscrol);
-
-//        if (editando) {
-//            Logger logger = new Logger();
-//            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_EDICION, loggedUser);
-//        } else {
-//            Logger logger = new Logger();
-//            logger.loguearOperacionUsuario(session, usuario, Logger.USUARIO_TIPO_OPERACION_CREACION, loggedUser);
-//            usuario.setUltimo_cambio_clave(null);
-//            usuario.setIntentos_fallidos(0L);
-//        }
-
             session.saveOrUpdate(usuario);
             envelope.setContents(helpers.Constantes.USUARIO_EXITO);
             usuario = createNewUsuario();
