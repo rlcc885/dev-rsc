@@ -74,7 +74,6 @@
      
         <h3>Crear / Editar Publicaciones</h3>
         <div class="box">
-            <fieldset>
                 <div class="f-wrap">  
                     <div t:type="zone" t:id="proIntelectualZone" >
                         <t:form t:id="formularioprointelectual"  zone="proIntelectualZone">
