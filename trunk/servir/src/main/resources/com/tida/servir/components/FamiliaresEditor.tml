@@ -1,14 +1,12 @@
-
 <html t:type="layout" title="Editar Familiares"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
     <t:content>
 
-        <h3>Crear / Editar Familiar</h3>
-        <div class="box">
-            <div class="f-wrap">  
-                <div t:type="zone" t:id="familiaresZone" >
+      <fieldset>
+          <div class="f-wrap">  
+            <div t:type="zone" t:id="familiaresZone" >
                     <t:form t:id="formulariofamiliares"  zone="familiaresZone">
 
                         <div class="f-wrap">                             
@@ -47,8 +45,8 @@
                             </div>
                         </div>
                         <br/>
-                        <div class="f-wrap">
-                            <div class="f-left">
+                         <div class="f-wrap">
+                           <div class="f-left">
                                 <t:label for="tipoDocumento" />
                                 <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
                                         model="beanTiposDoc" disabled="${bdni}"
@@ -59,7 +57,7 @@
                                 <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" t:validate="regexp, required" disabled="${bdni}" size="33" />
                             </div>
                             <div class="f-left">
-                                <t:label for="estadoCivil" />
+                                 <t:label for="estadoCivil" />
                                 <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
                                         model="beanEstadoCivil" 
                                         t:blankOption="ALWAYS"/>
@@ -69,8 +67,8 @@
                            <div class="f-wrap">  
                              <t:if test="${bvalidausuario}">
                                 <div class="f-left">
-                                        Revisado  <input t:type="Checkbox" t:id="validado" 
-                                            t:value="familiarActual.validado"/>                                      
+                                        <input t:type="Checkbox" t:id="validado" 
+                                            t:value="familiarActual.validado"/>Revisado                                        
                                 </div>
                               </t:if>
                            </div>
@@ -80,22 +78,26 @@
                             </div>
                         </div>
                     </t:form>  
-                </div> 
+            </div> 
      
-                <div t:type="zone" t:id="botonesZone" >
-                    <t:form t:id="formulariobotones"  zone="familiaresZone">
-                        <div class="f-wrap">
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm"  t:message="Desea ejecutar esta acción?" /> 
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm"  t:message="Desea ejecutar esta acción?" />  
-                            </div>
-                        </div>
-                    </t:form>
-
-
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="familiaresZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm"  t:message="Desea ejecutar esta acción?" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm"  t:message="Desea ejecutar esta acción?" />  
+                    </div>
                 </div>
+                </t:form>
+
+
+            </div>
+       </div>
+ </fieldset>
+            <div class="f-wrap">                        
+                (*) Campos Obligatorios
             </div>
  
      
@@ -174,7 +176,5 @@
                 </t:grid>
             </t:zone>
         </div>
-        </div>
-
     </t:content>
 </html>
