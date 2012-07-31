@@ -2,43 +2,37 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${oi.denominacion}
-    </div>
 
-    <t:if test = "haymensajes">
-        <div id="Mensajes">
-            ${mensajes}
+        <div class="organismo_titulo">
+            Entidad /U. Ejecutora: ${oi.denominacion}
         </div>
-    </t:if>
 
-    <div id = "Datos_Generales">
-        <h2>Legajo Personal</h2>
+        <t:if test = "haymensajes">
+            <div id="Mensajes">
+                ${mensajes}
+            </div>
+        </t:if>
+
+      <div id = "Datos_Generales">
+           <h2> Modificar trabajador </h2>
            <!--<div id= "basicosTrabajador">
                <h3>${menu.documentoidentidad.valor}: ${menu.nroDocumento}
                ${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres}</h3>
            </div>-->
-    </div>
+      </div>
 
     <div class="wrap">
+
+
     <!-- the tabs -->
+
         <div>
-            <ul id="tabs-Personales" class="tabs">
-                <li>
-                    <a href="#"> Datos Personales</a>
-                </li>
-                <li>
-                    <a href="#"> Estudios </a>
-                </li>
-                <li>
-                    <a href="#"> Cursos y Otros</a>
-                </li>
-                <li>
-                    <a href="#"> Experiencia Laboral</a>
-                </li>
-                <li>
-                    <a href="#"> Producción Intelectual</a>
-                </li>
+        <ul id="tabs-Personales" class="tabs">
+            <li><a href="#"> Datos Personales</a></li>
+            <li><a href="#"> Estudios </a></li>
+            <li><a href="#"> Cursos y Otros</a></li>
+            <li><a href="#"> Experiencia Laboral</a></li>
+            <li><a href="#"> Producción Intelectual</a></li>
             <!--<li><a href="#"> Antecedentes Laborales</a></li>--> 
             <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
@@ -51,31 +45,32 @@
                 <li><a href="#"> Evaluaciones</a></li>
                 <li><a href="#"> Ausencias y Licencias</a></li>
             </t:if>-->
-            </ul>
+        </ul>
 
-<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
+
+
+		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
 	
         <div class= "pane" id='datosPersonales' name='datosPersonales'>
             <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "menu"/>       
             <br/>
             <br/>                
-            </div>
-     
+        </div>
         <div class= "pane" id='estudios' name='estudios'>            
                 <t:EstudiosEditor t:id="estudiox" actual= "menu" />
-            </div>
+	</div>
         
         <div class= "pane" id='cursos' name='cursos'> 
                 <t:CursosEditor t:id="cursosxr" actual= "menu"/>
-            </div>
+        </div>
                 
-        <div class= "pane" id='experiencia' name='experiencia'>  
-                <t:AntecedentesEditor t:id="antecedentesx" actual= "menu"/>            
-            </div>
+        <div class= "pane" id='experiencia' name='experiencia'> 
+                <t:AntecedentesEditor t:id="antecedentesx" actual= "menu"/>
+        </div>
                 
-        <div class= "pane" id='publicacion' name='publicacion'>             
-                <t:PublicacionesEditor t:id="publicacionesEditor" actual= "menu"/>           
-            </div>
+        <div class= "pane" id='publicacion' name='publicacion'> 
+                <t:PublicacionesEditor t:id="publicacionesx" actual= "menu"/>
+        </div>
 
         <!--        
         <div class= "pane" id='antecedentes' name='antecedentes'>
@@ -197,18 +192,23 @@
                   </t:zone>
             </div>
          </t:if> -->
-        </div>  
+    </div>  
 
 
     </div>
 
-    <script>
+     <script>
         <!--
+
 // perform JavaScript after the document is scriptable.
         jQuery(function() {
             jQuery("ul.tabs").tabs("> .pane");
         });
      -->
-    </script>
-    
+     </script>
+
+
+
+
+
 </html>

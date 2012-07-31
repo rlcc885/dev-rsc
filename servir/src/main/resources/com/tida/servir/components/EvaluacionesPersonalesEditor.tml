@@ -36,7 +36,8 @@
                                 </fieldset>                            
                              </div>
                          </div>
-                         <div class="f-wrap">
+                         <div class="f-wrap"> 
+                             dfdf
                              <div class="f-left">
                                 <label>* Resultado </label>
                                 <input t:type="TextField" t:id="resultado" t:validate="required, regexp" t:value="evaluacion.calificacion" maxlength="255" size="34"/>
