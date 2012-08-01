@@ -41,7 +41,7 @@
     <t:zone t:id="tabla_usuario">    
         <t:if test="primeraVez">
 <!--            <div id = "tabla_usuario_grid" >-->
-                <t:grid inPlace="true" source="usuarios" rowsPerPage="15" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid" reorder="nrodocumento,nombres,apellidos,estado">
+                <t:grid inPlace="true" source="usuarios" rowsPerPage="10" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid" reorder="nrodocumento,nombres,apellidos,estado">
                     <t:parameter name="empty">
                         <div class="no-info">No existen usuarios con los criterios seleccionados.</div>
                     </t:parameter>
