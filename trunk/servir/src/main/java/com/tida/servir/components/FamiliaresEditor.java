@@ -81,7 +81,9 @@ public class FamiliaresEditor {
     @Persist
     @Property
     private Familiar listafamiliar;
-    
+    @Property
+    @Persist
+    private String valsexo;
  
     @Inject
     private PropertyAccess _access;
@@ -98,6 +100,7 @@ public class FamiliaresEditor {
             }else{
                 bvalidausuario=false;
             }
+            
     }
     
     @Log
@@ -116,9 +119,8 @@ public class FamiliaresEditor {
     
     //para obtener datos del sexo
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanSexo() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SEXO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    public List<String> getBeanSexo() {
+        return Helpers.getValorTablaAuxiliar("SEXO", session);
     }
     
     //para obtener datos del Tipo de documento
@@ -186,9 +188,22 @@ public class FamiliaresEditor {
             System.out.println("Entro aka FINAL");
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
+            if(valsexo!=null){
+                if(valsexo.equals("MASCULINO")){
+                    familiarActual.setSexo("M");            
+                }
+                else if(valsexo.equals("FEMENINO")){
+                    familiarActual.setSexo("F");
+                }
+            }
+            else{
+                familiarActual.setSexo(null);
+            }
+ 
             session.saveOrUpdate(familiarActual);
             envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
             familiarActual=new Familiar();
+            valsexo=null;
             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("listaFamiliaresZone", listaFamiliaresZone.getBody())
                     .add("familiaresZone", familiaresZone.getBody());  
@@ -217,6 +232,7 @@ public class FamiliaresEditor {
             familiarActual=new Familiar();
             bdni=true;
             bfechanacimiento=false;
+            valsexo=null;
             return  familiaresZone.getBody();
         }else if(elemento==2){
             return "Busqueda";
@@ -229,6 +245,20 @@ public class FamiliaresEditor {
     @Log
     Object onActionFromEditar(Familiar fami) {        
         familiarActual=fami;
+        if(familiarActual.getSexo()!=null){
+            if(familiarActual.getSexo().equals("M")){
+                valsexo="MASCULINO";            
+            }
+            else if(actual.getSexo().equals("F")){
+                valsexo="FEMENINO";
+            }
+            else{
+                valsexo=null;
+            }
+        }
+        else{
+            valsexo=null;
+        }
            return familiaresZone.getBody(); 
     }
     

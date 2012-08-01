@@ -18,8 +18,8 @@
                             </div>
                             <div class="f-left" >	
                                 <t:label for="sexo"/>
-                                <select t:type="Select" t:id="sexo" value="familiarActual.sexo" 
-                                        model="beanSexo" 
+                                <select t:type="Select" t:id="sexo" value="valsexo" 
+                                        model="beanSexo" onChange="this.form.fire()" t:zone="familiaresZone"
                                         t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left">	
