@@ -15,7 +15,7 @@ public class Familiar // extends Persona
     private Long id;
     @Validate("required")
     private DatoAuxiliar parentesco;
-    private DatoAuxiliar sexo;
+    private String sexo;
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @Validate("required")
@@ -55,12 +55,12 @@ public class Familiar // extends Persona
         this.parentesco = parentesco;
     }
     
-    @ManyToOne
-    public DatoAuxiliar getSexo() {
+    //@ManyToOne
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(DatoAuxiliar sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
     
