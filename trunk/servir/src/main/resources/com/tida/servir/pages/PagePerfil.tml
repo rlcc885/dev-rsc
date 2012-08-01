@@ -78,7 +78,7 @@
     <t:zone t:id="listaPermisoZone" id="listaPermisoZone" t:update="show">
         <t:if test = "mostrarPermiso">
             <h3>Permisos del Perfil ${perfil.descperfil}</h3>
-            <t:grid t:source="allPermisos" t:add="Acciones" pagerPosition="bottom" row="rowPermiso" exclude="rownum,menuId,perfilId,id" reorder="descmenu,accesoselect,accesoupdate,accesoinsert,accesodelete" >
+            <t:grid t:source="allPermisos" t:add="Acciones" rowsPerPage="10" pagerPosition="bottom" row="rowPermiso" exclude="rownum,menuId,perfilId,id" reorder="descmenu,accesoselect,accesoupdate,accesoinsert,accesodelete" >
                 <t:parameter name="descmenuCell">
                     <t:eventLink t:event="editaPermiso" t:context="rowPermiso" href="#" page="PagePerfil" t:zone="editPermisoZone">
                         ${rowPermiso.descmenu}

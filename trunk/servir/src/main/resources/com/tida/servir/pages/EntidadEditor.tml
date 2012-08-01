@@ -1,3 +1,4 @@
+
 <html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -32,18 +33,18 @@
                                    t:disabled="true"/>
                         </div>
                         <t:if test="bMuestraSectorEdicion">
-                        <div class="f-left"> 
-                            <t:label for="sectorgobierno"/>
-                            <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno" 
+                            <div class="f-left"> 
+                                <t:label for="sectorgobierno"/>
+                                <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno" 
                                    model="SectorGobierno"
                                    t:disabled="true"/>
-                        </div>
-                        <div class="f-left"> 
-                            <t:label for="tipoorganismo"/>
-                            <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
+                            </div>
+                            <div class="f-left"> 
+                                <t:label for="tipoorganismo"/>
+                                <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
                                    model="TipoOrganismo"
                                    t:disabled="true"/>
-                        </div>
+                            </div>
                         </t:if>
                     </div>
                     <div class="f-wrap">
@@ -97,8 +98,8 @@
                         <div class="f-left">
                             <t:label for="direccion"/>
                             <input t:type="TextField" t:id="direccion" t:style="width: 500px;" 
-                                    t:value="entidadUE.direccion" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
-                                    t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
+                                   t:value="entidadUE.direccion" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
+                                   t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
                         </div>
                     </div> 
                     <div class="f-wrap">
@@ -119,7 +120,7 @@
                     <div class="f-wrap">
                         <div class="f-left" id="ubigeo_entidadUE"> 
                             <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" 
-                            t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" t:disabled="${veditar}" />         
+                                   t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" t:disabled="${veditar}" />         
                         </div>
                     </div>
                 </t:form>
@@ -171,16 +172,16 @@
             <div class="logoentidad">
                 <t:form t:id="formulariologoentidad" >
                     <t:if test="${veditar}" negate="true" >
-                    <div class="f-left">
-                        <t:label for="file"/>
-                        <input t:type="upload" t:id="file" t:size="50" />
-                    </div>
-                    <div class="f-left" style="margin-top:17px;">
-                        <input type="submit" value="Subir Archivo" class="button"/>
-                    </div>
-                    <div class="f-left">
-                        <t:errors/>
-                    </div>
+                        <div class="f-left">
+                            <t:label for="file"/>
+                            <input t:type="upload" t:id="file" t:size="50" />
+                        </div>
+                        <div class="f-left" style="margin-top:17px;">
+                            <input type="submit" value="Subir Archivo" class="button"/>
+                        </div>
+                        <div class="f-left">
+                            <t:errors/>
+                        </div>
                     </t:if>
                     <t:if test="${entidadUE.tienelogotipo}">
                         <div class="clear" style="margin-top:5px;">
@@ -199,8 +200,8 @@
                             <t:label for ="titular"/>
                             <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
                             <input t:id="buscarTitulari" t:type="submit" value="..." 
-                            class="button f-right" onClick="javascript: mostrar();"
-                            t:disabled="${veditar}"/>             
+                                   class="button f-right" onClick="javascript: mostrar();"
+                                   t:disabled="${veditar}"/>             
                         </div>
                     </t:form>
                 </t:zone>
@@ -212,8 +213,8 @@
                             <t:label for ="jefeRRHH"/>
                             <input t:type="TextField" t:id="jefeRRHH" t:style="width:600px;" t:value="jefeRRHH" t:readonly="readonly" />
                             <input t:type="submit" t:id="buscarjeferrhhi" value="..." 
-                            class="button f-right" onClick="javascript: mostrar();" 
-                            t:disabled="${veditar}"/>
+                                   class="button f-right" onClick="javascript: mostrar();" 
+                                   t:disabled="${veditar}"/>
                         </div>
                     </t:form>
                 </t:zone>
@@ -225,8 +226,8 @@
                             <t:label for ="jefeOGA"/>
                             <input t:type="TextField" t:id="jefeOGA" t:style="width:600px;" t:value="jefeOGA" t:readonly="readonly" />
                             <input t:type="submit" t:id="buscarjefeogai" value="..." 
-                            class="button f-right" onClick="javascript: mostrar();" 
-                            t:disabled="${veditar}"/>
+                                   class="button f-right" onClick="javascript: mostrar();" 
+                                   t:disabled="${veditar}"/>
                         </div>
                     </t:form>
                 </t:zone>
@@ -234,19 +235,19 @@
         </fieldset>
         <div t:type="zone" t:id="botonesZone" t:update="show">
             <t:if test="${veditar}" negate="true" >
-            <t:form t:id="formulariobotones"  zone="botonesZone">
-                <div class="f-wrap">
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
+                <t:form t:id="formulariobotones"  zone="botonesZone">
+                    <div class="f-wrap">
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
+                        </div>
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
+                        </div>
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
+                        </div>
                     </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
-                    </div>
-                </div>
-            </t:form>
+                </t:form>
             </t:if>
         </div>
     </div>
