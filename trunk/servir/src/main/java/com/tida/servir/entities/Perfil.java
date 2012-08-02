@@ -35,7 +35,6 @@ public class Perfil implements Serializable {
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
-    
     @JoinTable(name = "RSC_PERFILUSUARIO", joinColumns = {
         @JoinColumn(name = "PERFIL_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")})
@@ -46,17 +45,17 @@ public class Perfil implements Serializable {
         @JoinColumn(name = "MENU_ID", referencedColumnName = "ID")})
     @ManyToMany
     private Collection<Menu> menuCollection;
-    
-    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
-    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PERFIL_ID_SEQ", allocationSize=1 )
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PERFIL_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private long id;
     @Column(name = "DESCPERFIL")
     private String descperfil;
+    @Column(name = "ESTADO")
+    Boolean estado;
 
     public Perfil() {
     }
@@ -98,7 +97,6 @@ public class Perfil implements Serializable {
 //    public void setMenuperfilList(List<Menuperfil> menuperfilList) {
 //        this.menuperfilList = menuperfilList;
 //    }
-
     public Date getFechacreacion() {
         return fechacreacion;
     }
@@ -114,12 +112,20 @@ public class Perfil implements Serializable {
     public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
         this.usuarioCollection = usuarioCollection;
     }
-    
+
     public Collection<Menu> getMenuCollection() {
         return menuCollection;
     }
 
     public void setMenuCollection(Collection<Menu> menuCollection) {
         this.menuCollection = menuCollection;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 }

@@ -44,10 +44,10 @@ public class PagePerfil {
     private MenuPorPerfil rowPermiso;
     @Property
     private String descPerfil;
-    @Property
-    private boolean mostrarEdit;
-    @Property
-    private boolean mostrarNew;
+//    @Property
+//    private boolean mostrarEdit;
+//    @Property
+//    private boolean mostrarNew;
     @Persist
     @Property
     private boolean mostrarPermiso;
@@ -64,8 +64,8 @@ public class PagePerfil {
     private Zone listaZone;
     @InjectComponent
     private Zone editZone;
-    @InjectComponent
-    private Zone newZone;
+//    @InjectComponent
+//    private Zone newZone;
     @InjectComponent
     private Zone newPermisoZone;
     @InjectComponent
@@ -92,6 +92,12 @@ public class PagePerfil {
     @Persist
     @Property
     private String errorMessage;
+    @Property
+    @Persist
+    private boolean bCancelFormulario;
+    @Property
+    @Persist
+    private boolean bResetFormulario;
 
     public PagePerfil() {
     }
@@ -101,10 +107,11 @@ public class PagePerfil {
         /*
          * if (!userExists) { return "Index"; } return null;
          */
-        mostrarNew = true;
+//        mostrarNew = true;
         mostrarPermiso = false;
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
+        perfil = new Perfil();
         return null;
     }
 
@@ -177,8 +184,8 @@ public class PagePerfil {
 
         descPerfil = lperfil.getDescperfil();
 
-        mostrarNew = false;
-        mostrarEdit = true;
+//        mostrarNew = false;
+//        mostrarEdit = true;
         mostrarPermiso = false;
         mostrarNewPermiso = false;
         mostrarNuevoPermiso = false;
@@ -186,26 +193,26 @@ public class PagePerfil {
     }
     // CREA PERFIL
 
-    @Log
-    @CommitAfter
-    Object onNuevoPerfil() {
-        perfil = new Perfil();
-        perfil.setFechacreacion(new Date());
-        mostrarNew = false;
-        mostrarEdit = true;
-        mostrarEditPermiso = false;
-        return zonasTotal();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onNuevoPerfil() {
+//        perfil = new Perfil();
+//        perfil.setFechacreacion(new Date());
+////        mostrarNew = false;
+//        mostrarEdit = true;
+//        mostrarEditPermiso = false;
+//        return zonasTotal();
+//    }
     // GUARDA PERFIL
 
     @Log
     @CommitAfter
     Object onGuardaPerfil(Perfil lPerfil) {
-        System.out.println(lPerfil.getDescperfil());
+        System.out.println("onGuardaPerfil");
 
         session.saveOrUpdate(lPerfil);
-        mostrarNew = true;
-        mostrarEdit = false;
+//        mostrarNew = true;
+//        mostrarEdit = false;
         mostrarPermiso = false;
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
@@ -217,8 +224,9 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onCancelaPerfil() {
-        mostrarNew = true;
-        mostrarEdit = false;
+//        mostrarNew = true;
+//        mostrarEdit = false;
+        System.out.println("onCancelaPerfil");
         mostrarPermiso = false;
         mostrarNewPermiso = false;
         mostrarEditPermiso = false;
@@ -231,8 +239,8 @@ public class PagePerfil {
     @CommitAfter
     Object onPermisoPerfil(Perfil lperfil) {
         perfil = lperfil;
-        mostrarNew = true;
-        mostrarEdit = false;
+//        mostrarNew = true;
+//        mostrarEdit = false;
         mostrarPermiso = true;
         mostrarNewPermiso = true;
         return zonasTotal();
@@ -276,15 +284,25 @@ public class PagePerfil {
         mostrarNuevoPermiso = true;
         return zonasPermiso();
     }
-
+    
+    void onSelectedFromReset() {
+        bResetFormulario = true;
+    }
+    
+    void onSelectedFromCancel() {
+        bCancelFormulario = true;
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
-        System.out.println(perfil.getDescperfil());
+        System.out.println("onSuccessFromPerfilInputForm");
         session.saveOrUpdate(perfil);
         return "PagePerfil";
     }
-
+    
+    @Log
+    @CommitAfter
     void onSelectedFromResetNewPermiso() {
         cancelaNewPermiso = true;
     }
@@ -333,7 +351,8 @@ public class PagePerfil {
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
         //add("listaZone", listaZone.getBody()).
-        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaZone", listaZone.getBody()).add("newZone", newZone.getBody()).add("listaPermisoZone", listaPermisoZone.getBody()).add("newPermisoZone", newPermisoZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
+        //.add("newZone", newZone.getBody())
+        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("newPermisoZone", newPermisoZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
 
         return mu;
     }
