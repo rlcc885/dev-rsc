@@ -344,6 +344,7 @@ public class EstudiosEditor {
                     }  
                 }
             }
+            //fechas no deben ser iguales, fechas no deben ser mayores que la actualidad 
             else{
                 if(valfec_hasta==null){
                         formlistaestudios.recordError("Debe ingresar Fecha de Fin");
@@ -382,6 +383,7 @@ public class EstudiosEditor {
                 }
             }
             if(vrevisado==true){
+                //System.out.println("aquiiii"+valrevisado);
                 if(valrevisado==null){
                     estudio.setValidado(false);
                 }

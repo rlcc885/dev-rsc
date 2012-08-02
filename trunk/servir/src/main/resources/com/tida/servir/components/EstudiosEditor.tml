@@ -67,7 +67,7 @@
               <br/>
                 <t:if test="${vrevisado}">
                     <div class="f-wrap">
-                        Revisado <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}"/>     
+                        Revisado <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                     </div>
                 </t:if>
               <br/>
