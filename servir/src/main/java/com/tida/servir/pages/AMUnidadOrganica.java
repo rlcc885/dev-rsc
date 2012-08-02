@@ -959,4 +959,20 @@ public class AMUnidadOrganica extends GeneralPage {
         
         return unidadesOrganicasZone.getBody();
     }
+    
+    void onCodigoChanged() {
+        unidadOrganica.setCod_und_organica(_request.getParameter("param"));
+    }
+    void onDenoChanged() {
+        unidadOrganica.setDen_und_organica(_request.getParameter("param"));
+    }
+    void onSiglaChanged() {
+        unidadOrganica.setSigla(_request.getParameter("param"));
+    }
+    void onDireChanged() {
+        unidadOrganica.setLocalidad(_request.getParameter("param"));
+    }
+    void onDescriChanged() {
+        unidadOrganica.setDesczona(_request.getParameter("param"));
+    }
 }

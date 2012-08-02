@@ -399,7 +399,7 @@ public class ABMCargos extends GeneralPage {
     }
 
     @Log
-    void onActivate() {
+    String onActivate() {
 
         if (cargo == null) {
             cargo = new Cargoxunidad();
@@ -414,7 +414,7 @@ public class ABMCargos extends GeneralPage {
         if (regimengruponivel == null) {
             regimengruponivel = new RegimenGrupoNivel();
         }
-        
+        return "Alerta";
         //System.out.println("---------------on activate regimengruponivel "+regimengruponivel.getGrupo());
     }
 
