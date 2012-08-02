@@ -90,9 +90,6 @@ public class TrabajadorPersonal  extends GeneralPage
     @Property
     @Persist
     private Trabajador menu;
-    @Property
-    @Persist
-    private Trabajador enlace;
     
         
         /*

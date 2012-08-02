@@ -1132,17 +1132,7 @@ DIV.t-console DIV.t-debug {
 
 #actualizar_dpe{
     position: relative;
-    top:380px;
-    width:300px;
-    left:500px;  
-    margin-top: 0px;
-}
-
-#regresar_dpe{
-    position: relative;
-    top:380px;  
-    width:100px;
-    left:700px;
+    top:170px;
     margin-top: 0px;
 }
 
