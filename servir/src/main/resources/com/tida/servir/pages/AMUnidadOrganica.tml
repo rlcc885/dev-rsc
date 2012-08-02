@@ -110,14 +110,11 @@
             </div>
             <div id="panel-02" class="box" >
                 <t:form t:id="formularioxx">      
-                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Denominacion_,Acciones" pagerPosition="bottom"
-                        row="uo" reorder="nivel,Denominacion_,sigla,Acciones">
+                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                        row="uo" reorder="nivel,den_und_organica,sigla,Acciones">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
-                        </t:parameter>
-                        <p:denominacion_Cell>
-                            ${uo.den_und_organica}
-                        </p:denominacion_Cell>
+                        </t:parameter>   
                         <!--<p:categoria_Cell>
                             ${uo.categoriauo.valor}
                         </p:categoria_Cell>-->
