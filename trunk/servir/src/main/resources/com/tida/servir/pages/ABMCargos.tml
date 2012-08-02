@@ -110,7 +110,7 @@
             <t:form t:id="formlistaunidad">                
                 
                 <div id = "tabla_cargo">
-                    <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                    <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" inPlace="true"
                             row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, estado, nivel_unidad_organica,ctd_puestos_total,presupuestado_PAP">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
