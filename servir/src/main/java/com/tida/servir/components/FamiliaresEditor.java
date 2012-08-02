@@ -166,12 +166,12 @@ public class FamiliaresEditor {
             listaParentescoC=c2.list();
          }
         //Codigo de Conyugue = 1
-         if(familiarActual.getParentesco().getCodigo()==1){
-            Criteria c3 = session.createCriteria(Familiar.class);
-            c3.add(Restrictions.eq("trabajador",actual)); 
-            c3.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
-            listaParentescoCY=c3.list();
-        }
+//         if(familiarActual.getParentesco().getCodigo()==1){
+//            Criteria c3 = session.createCriteria(Familiar.class);
+//            c3.add(Restrictions.eq("trabajador",actual)); 
+//            c3.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
+//            listaParentescoCY=c3.list();
+//        }
         if(listaParentescoP!=null && listaParentescoP.size()>0 && familiarActual.getParentesco().getCodigo()==4){
             envelope.setContents("No es posible regstrar mas de un Progenitor");
             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
@@ -180,10 +180,10 @@ public class FamiliaresEditor {
              envelope.setContents("No es posible registrar mas de un Conviviente");
              return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("familiaresZone", familiaresZone.getBody());
-        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
-             envelope.setContents("No es posible registrar mas de un Cónyugue");
-             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
-                    .add("familiaresZone", familiaresZone.getBody());
+//        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
+//             envelope.setContents("No es posible registrar mas de un Cónyugue");
+//             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+//                    .add("familiaresZone", familiaresZone.getBody());
         }else{
             System.out.println("Entro aka FINAL");
             familiarActual.setTrabajador(actual);
