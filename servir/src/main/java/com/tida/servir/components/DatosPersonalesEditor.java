@@ -221,28 +221,30 @@ public class DatosPersonalesEditor {
         }
         else if(elemento==1){
             //validaciones
+//            if(actual.getFechaNacimiento()!=null){
+//                if (actual.getFechaNacimiento().after(new Date())) {
+//                    Logger logger = new Logger();
+//                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+//                            Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
+//                            Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
+//
+//                    formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
+//                    return zonaGeneral.getBody();
+//                    } else {
+//                        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+//                        if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
+//
+//                            Logger logger = new Logger();
+//                            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
+//                                    Logger.CODIGO_ERROR_EDAD_MAYOR_18,
+//                                    Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
+//
+//                            formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
+//                            return zonaGeneral.getBody();
+//                        }
+//                    }
+//            }
             
-            if (actual.getFechaNacimiento().after(new Date())) {
-            Logger logger = new Logger();
-            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                    Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-                    Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
-
-            formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
-            return zonaGeneral.getBody();
-            } else {
-                ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-                if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
-
-                    Logger logger = new Logger();
-                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-                            Logger.CODIGO_ERROR_EDAD_MAYOR_18,
-                            Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
-
-                    formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
-                    return zonaGeneral.getBody();
-                }
-            }
             if(actual.getEmailPersonal()!=null){
                 if(!isEmail(actual.getEmailPersonal())){
                     formulariodatospersonales.recordError("Email Personal Formato incorrecto");
@@ -266,12 +268,15 @@ public class DatosPersonalesEditor {
 //            actual.setSistemapensionario(valsistemapensionario);
 //            actual.setRegimenpensionario(valregimenpensionario);
 //            actual.setNumregimenpensionario(valcuspp);
-            if(valsexo.equals("MASCULINO")){
-                actual.setSexo("M");
-            }
-            else{
-                actual.setSexo("F");
-            }
+            
+//            if(valsexo!=null){
+//                if(valsexo.equals("MASCULINO")){
+//                    actual.setSexo("M");
+//                }
+//                else{
+//                    actual.setSexo("F");
+//                }
+//            }
             //para dni 
             List<Trabajador> lTrabajador = session.createCriteria(Trabajador.class).add(Restrictions.eq("nroDocumento", actual.getNroDocumento())).add(Restrictions.ne("id", actual.getId())).list();
 
