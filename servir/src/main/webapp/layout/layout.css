@@ -1509,7 +1509,6 @@ DIV.t-data-grid {
     background: #fff; 
     color: #333;
 }
-
 .noborder{
     border:none;
     padding-bottom: 0;
@@ -1520,4 +1519,13 @@ DIV.t-data-grid {
 }
 .margin-top10{
     margin-top: 10px;
+}
+#editZone{
+    margin-top:10px;
+}
+#listaPermisoZone{
+    margin-top:10px;
+}
+#editPermisoZone{
+    margin-top:10px;
 }

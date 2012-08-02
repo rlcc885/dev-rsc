@@ -21,7 +21,7 @@ import org.hibernate.Session;
  *
  * @author ale
  */
-@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
+//@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
 public class CambiarClavePrimera extends GeneralPage {
 
     @Inject

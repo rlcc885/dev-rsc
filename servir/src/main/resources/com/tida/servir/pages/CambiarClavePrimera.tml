@@ -49,7 +49,7 @@
                                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
                             </div>
                             <div class="f-right">
-                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Grabar" class="button" />
+                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" />
                             </div>
                         </div>
                     </t:if>
