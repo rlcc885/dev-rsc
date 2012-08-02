@@ -37,14 +37,19 @@ public class UnidadOrganica {
 //    @Validate("required")
 //    @OneToMany(cascade = CascadeType.ALL)
     private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
+    @NonVisual
     private String cod_und_organica; // Código de la unidad organica
+    @NonVisual
     @Validate("required")
     private String den_und_organica; //Denominación del órgano
+    @NonVisual
     private String localidad;
     private DatoAuxiliar cod_ubi_dist; //ubigeo distrito
     private DatoAuxiliar cod_ubi_prov; //ubigeo provincia
     private DatoAuxiliar cod_ubi_dept; //ubigeo depto
+    @NonVisual
     private Boolean estado; // para manejo del borrado lógico
+    @NonVisual
     private String cue;
     private String sigla;
     @Validate("required")
@@ -54,6 +59,7 @@ public class UnidadOrganica {
     private DatoAuxiliar categoriauo;
     private DatoAuxiliar tipovia;
     private DatoAuxiliar tipozona;
+    @NonVisual
     private String desczona;
     @Validate("required")
     private UnidadOrganica unidadorganica;
