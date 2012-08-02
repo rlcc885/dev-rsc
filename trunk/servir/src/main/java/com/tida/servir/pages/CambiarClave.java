@@ -22,7 +22,7 @@ import org.hibernate.Session;
  *
  * @author ale
  */
-@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
+
 public class CambiarClave extends GeneralPage {
 
     @Inject

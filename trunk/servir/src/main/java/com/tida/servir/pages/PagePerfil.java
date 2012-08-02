@@ -42,21 +42,23 @@ public class PagePerfil {
     private Menuperfil permiso;
     @Property
     private MenuPorPerfil rowPermiso;
-    @Property
-    private String descPerfil;
 //    @Property
+//    private String descPerfil;
+//    @Property
+//    @Persist
 //    private boolean mostrarEdit;
-//    @Property
-//    private boolean mostrarNew;
+    @Persist
+    @Property
+    private boolean mostrarNew;
     @Persist
     @Property
     private boolean mostrarPermiso;
     @Persist
     @Property
     private boolean mostrarEditPermiso;
-    @Persist
-    @Property
-    private boolean mostrarNewPermiso;
+//    @Persist
+//    @Property
+//    private boolean mostrarNewPermiso;
     @Persist
     @Property
     private boolean mostrarNuevoPermiso;
@@ -66,8 +68,8 @@ public class PagePerfil {
     private Zone editZone;
 //    @InjectComponent
 //    private Zone newZone;
-    @InjectComponent
-    private Zone newPermisoZone;
+//    @InjectComponent
+//    private Zone newPermisoZone;
     @InjectComponent
     private Zone editPermisoZone;
     @InjectComponent
@@ -89,7 +91,7 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean cancelaNewPermiso;
-    @Persist
+//    @Persist
     @Property
     private String errorMessage;
     @Property
@@ -102,20 +104,30 @@ public class PagePerfil {
     public PagePerfil() {
     }
 
+    @Log
+    void SetupRender() {
+        System.out.println("SetupRender");
+        mostrarNew = true;
+        //mostrarEdit = false;
+        mostrarPermiso = false;
+        mostrarNuevoPermiso = false;
+        mostrarEditPermiso = false;
+        perfil = new Perfil();
+    }
+
+    @Log
     String onActivate() {
         // Validar Acceso a la página
         /*
          * if (!userExists) { return "Index"; } return null;
          */
-//        mostrarNew = true;
-        mostrarPermiso = false;
-        mostrarNewPermiso = false;
-        mostrarEditPermiso = false;
-        perfil = new Perfil();
+        System.out.println("onActivate");
+
         return null;
     }
 
     public boolean isEliminaPerfil() {
+        //|| rowPerfil.getMenuCollection().isEmpty() || rowPerfil.getUsuarioCollection().isEmpty()
         if (rowPerfil.getId() > 8) {
             return true;
         } else {
@@ -150,7 +162,6 @@ public class PagePerfil {
         List<MenuPorPerfil> lista = null;
         Query query = session.getNamedQuery("callSpMenuPorPerfil");
         query.setParameter("in_perfil_id", perfil.getId());
-
         lista = query.list();
         return lista;
     }
@@ -166,28 +177,26 @@ public class PagePerfil {
             } else {
                 try {
                     session.delete(lperfil);
-
+                    nuevoPerfil();
+                    mostrarPermiso = false;
+                    mostrarNuevoPermiso = false;
+                    mostrarEditPermiso = false;
                 } catch (Exception e) {
                     errorMessage = "Otro error que pueda suceder :) ";
                 }
             }
         }
         return zonasTotal();
-
     }
     // EDITA EL PERFIL
 
     @Log
     @CommitAfter
     Object onEditaPerfil(Perfil lperfil) {
+        System.out.println("onEditaPerfil");
         perfil = lperfil;
-
-        descPerfil = lperfil.getDescperfil();
-
-//        mostrarNew = false;
-//        mostrarEdit = true;
+        mostrarNew = false;
         mostrarPermiso = false;
-        mostrarNewPermiso = false;
         mostrarNuevoPermiso = false;
         return zonasTotal();
     }
@@ -204,45 +213,42 @@ public class PagePerfil {
 //        return zonasTotal();
 //    }
     // GUARDA PERFIL
-
-    @Log
-    @CommitAfter
-    Object onGuardaPerfil(Perfil lPerfil) {
-        System.out.println("onGuardaPerfil");
-
-        session.saveOrUpdate(lPerfil);
-//        mostrarNew = true;
-//        mostrarEdit = false;
-        mostrarPermiso = false;
-        mostrarNewPermiso = false;
-        mostrarEditPermiso = false;
-        mostrarNuevoPermiso = false;
-        return zonasTotal();
-    }
+//    @Log
+//    @CommitAfter
+//    Object onGuardaPerfil(Perfil lPerfil) {
+//        System.out.println("onGuardaPerfil");
+//
+//        session.saveOrUpdate(lPerfil);
+////        mostrarNew = true;
+////        mostrarEdit = false;
+//        mostrarPermiso = false;
+//        mostrarNewPermiso = false;
+//        mostrarEditPermiso = false;
+//        mostrarNuevoPermiso = false;
+//        return zonasTotal();
+//    }
     // CANCELA OPERACION EN PERFIL
-
-    @Log
-    @CommitAfter
-    Object onCancelaPerfil() {
-//        mostrarNew = true;
-//        mostrarEdit = false;
-        System.out.println("onCancelaPerfil");
-        mostrarPermiso = false;
-        mostrarNewPermiso = false;
-        mostrarEditPermiso = false;
-        mostrarNuevoPermiso = false;
-        return PagePerfil.class;
-    }
+//    @Log
+//    @CommitAfter
+//    Object onCancelaPerfil() {
+////        mostrarNew = true;
+////        mostrarEdit = false;
+//        System.out.println("onCancelaPerfil");
+//        mostrarPermiso = false;
+////        mostrarNewPermiso = false;
+//        mostrarEditPermiso = false;
+//        mostrarNuevoPermiso = false;
+//        return PagePerfil.class;
+//    }
 
     // Si pulsa el enlace de PERMISOS
     @Log
     @CommitAfter
     Object onPermisoPerfil(Perfil lperfil) {
+        System.out.println("onPermisoPerfil");
         perfil = lperfil;
-//        mostrarNew = true;
-//        mostrarEdit = false;
         mostrarPermiso = true;
-        mostrarNewPermiso = true;
+        nuevoPermiso();
         return zonasTotal();
     }
     // Si elimina un PERMISO del perfil
@@ -250,17 +256,20 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPermiso(MenuPorPerfil lPermiso) {
+        System.out.println("onEliminaPermiso");
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.load(Menuperfil.class, menuperfilpk);
         session.delete(permiso);
         mostrarPermiso = true;
-        mostrarNewPermiso = true;
+//        mostrarNewPermiso = true;
+        nuevoPermiso();
         return zonasPermiso();
     }
 
     @Log
     @CommitAfter
     Object onEditaPermiso(MenuPorPerfil lPermiso) {
+        System.out.println("onEditaPermiso");
         Criteria c = session.createCriteria(Menu.class);
         c.add(Restrictions.eq("id", lPermiso.getMenuId()));
         menu = (Menu) c.list().get(0);
@@ -268,48 +277,73 @@ public class PagePerfil {
         permiso = (Menuperfil) session.load(Menuperfil.class, menuperfilpk);
 
         mostrarPermiso = true;
-        mostrarNewPermiso = false;
         mostrarEditPermiso = true;
         mostrarNuevoPermiso = false;
         return zonasPermiso();
     }
 
-    @Log
-    @CommitAfter
-    Object onNuevoPermiso() {
-        permiso = new Menuperfil();
-        mostrarPermiso = true;
-        mostrarNewPermiso = false;
-        mostrarEditPermiso = false;
-        mostrarNuevoPermiso = true;
-        return zonasPermiso();
-    }
-    
     void onSelectedFromReset() {
+        System.out.println("onSelectedFromReset");
         bResetFormulario = true;
     }
-    
+
     void onSelectedFromCancel() {
+         System.out.println("onSelectedFromCancel");
+         mostrarPermiso = false;
+         mostrarNuevoPermiso = false;
+        mostrarEditPermiso = false;
         bCancelFormulario = true;
     }
-    
+
+    void nuevoPermiso() {
+        System.out.println("nuevoPermiso");
+        mostrarNuevoPermiso = true;
+        mostrarEditPermiso = false;
+        permiso = new Menuperfil();
+    }
+
+    void nuevoPerfil() {
+        System.out.println("nuevoPerfil");
+        mostrarNew = true;
+        perfil = new Perfil();
+    }
+
     @Log
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
         System.out.println("onSuccessFromPerfilInputForm");
-        session.saveOrUpdate(perfil);
-        return "PagePerfil";
+        if (bCancelFormulario) {
+            bCancelFormulario = false;
+            nuevoPerfil();
+            return zonasTotal();
+        } else {
+            perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
+            if (mostrarNew) {
+                perfil.setFechacreacion(new Date());
+            }
+            session.saveOrUpdate(perfil);
+            //perfil = new Perfil();
+            if (mostrarNew) {
+                mostrarPermiso = true;
+                nuevoPermiso();
+                return zonasPermiso();
+            } else {
+                return zonasTotal();
+            }
+        }
     }
-    
+
     @Log
     @CommitAfter
     void onSelectedFromResetNewPermiso() {
+        System.out.println("onSelectedFromResetNewPermiso");
         cancelaNewPermiso = true;
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
+        System.out.println("onSuccessFromPermisoInputForm");
         if (!cancelaNewPermiso) {
             MenuperfilPK menuperfilpk = new MenuperfilPK();
             menuperfilpk.setMenuId(menu.getId());
@@ -318,27 +352,25 @@ public class PagePerfil {
             session.save(permiso);
         }
         mostrarPermiso = true;
-        mostrarNewPermiso = true;
-        mostrarEditPermiso = false;
-        mostrarNuevoPermiso = false;
+        nuevoPermiso();
         cancelaNewPermiso = false;
         return zonasPermiso();
     }
 
     void onSelectedFromResetEditPermiso() {
+        System.out.println("onSelectedFromResetEditPermiso");
         cancelaEditPermiso = true;
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPermisoEditForm() {
+        System.out.println("onSuccessFromPermisoEditForm");
         if (!cancelaEditPermiso) {
             session.saveOrUpdate(permiso);
         }
         mostrarPermiso = true;
-        mostrarNewPermiso = true;
-        mostrarEditPermiso = false;
-        mostrarNuevoPermiso = false;
+        nuevoPermiso();
         cancelaEditPermiso = false;
         return zonasPermiso();
     }
@@ -350,10 +382,10 @@ public class PagePerfil {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        //add("listaZone", listaZone.getBody()).
-        //.add("newZone", newZone.getBody())
-        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("newPermisoZone", newPermisoZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
-
+        mu = new MultiZoneUpdate("editZone", editZone.getBody())
+                .add("listaPermisoZone", listaPermisoZone.getBody())
+                .add("listaZone", listaZone.getBody())
+                .add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 
@@ -361,7 +393,9 @@ public class PagePerfil {
     private MultiZoneUpdate zonasPermiso() {
         MultiZoneUpdate mu;
         //add("listaZone", listaZone.getBody()).
-        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody()).add("newPermisoZone", newPermisoZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody())
+                .add("listaZone", listaZone.getBody()) 
+                .add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 }
