@@ -12,7 +12,7 @@
             </script>
             <div class="error mensajes">${errorMessage}</div>
         </t:if>
-        <t:grid t:source="allPerfiles" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
+        <t:grid t:source="allPerfiles" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
             <t:parameter name="descperfilCell">
                 <t:eventLink t:event="editaPerfil" t:context="rowPerfil" href="#" page="PagePerfil" t:zone="editZone">
                     ${rowPerfil.descperfil}
@@ -32,7 +32,7 @@
             </p:accionesCell>
         </t:grid>
     </t:zone>
-    <t:zone t:id="newZone" id="newZone" t:update="show">
+<!--    <t:zone t:id="newZone" id="newZone" t:update="show">
         <t:if test = "mostrarNew">
             <div id="bouttons" class="f-right">
                 <t:eventLink t:event="nuevoPerfil" href="#" page="PagePerfil" t:zone="editZone" class="button f-right">
@@ -42,36 +42,40 @@
             <br class="clear"/>
         </t:if>
     </t:zone>
-    <br />
+    <br />-->
     <t:zone t:id="editZone" id="editZone" t:update="show">
-        <t:if test = "mostrarEdit">
+<!--        <t:if test = "mostrarEdit">-->
             <h3>Crear/Editar Perfiles de Usuarios</h3>
             <div id="box-cargos" class="box" t:zone="editZone">
                 <t:form t:id="perfilInputForm">
                     <fieldset>
                         <legend>Descripción del Perfil:</legend>
                         <label>
-                            <t:textfield t:value="perfil.descperfil" t:size="80" />
+                            <t:textfield t:value="perfil.descperfil" t:size="80" t:style="text-transform: uppercase;" />
                         </label>
-                    </fieldset>  
-                    <div id="bouttons" class="f-right">
-                        <input type="submit" value="Guardar Perfil" class="button f-right"/>
-<!--                        <a t:type="eventLink" t:event="guardaPerfil" t:context="perfil" t:mixins="confirm" href="#" t:zone="listaPermisoZone" class="button f-right">Guardar Perfil</a>-->
+                    </fieldset>
+                    <div class="f-wrap">
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
+                        </div>
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
+                        </div>
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
+                        </div>
+                    </div>
+<!--                    <div id="bouttons" class="f-right">
+                        <input type="submit" value="Guardar" class="button f-right"/>
                         <a t:type="eventLink" t:event="cancelaPerfil" href="#" t:zone="listaPermisoZone" class="button f-right">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea cancelar los cambios?">
                                 Cancelar
                             </span>
                         </a>
-                        <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
-                        <!--
-                        <input type="submit" t:type="submit" t:id="submit" value="Guardar"  class="button"/>
-                        <input t:type="submit" t:id="reset" value="Cancelar" t:mixins="confirm" page="PagePerfil" class="button"/>
-                        -->
-                    </div>
-                    <br class="clear"/>
+                    </div>-->
                 </t:form>
             </div>
-        </t:if>
+<!--        </t:if>-->
     </t:zone>
 
 
