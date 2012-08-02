@@ -294,8 +294,9 @@ public class DatosPersonalesEditor {
                 formulariodatospersonales.recordError("Email Laboral ya registrado");   
                 return zonaGeneral.getBody();
             }
-            
-            actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+            if(valconadis!=null && !valconadis.equals("") && !valconadis.equals("null")){
+                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
+            }            
             
             actual.setCod_dom_dept(ubigeoDomicilio.getDepartamento());
             actual.setCod_dom_dist(ubigeoDomicilio.getDistrito());
@@ -667,27 +668,11 @@ public class DatosPersonalesEditor {
         else{
             vconadis=true;
         }        
-        return zonaGeneral.getBody();
-    }
-    Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
-        
-//        if(isNumberFloat(valconadis)){
-//            System.out.println("1numeroo");
-//        }
-//        else{
-//            System.out.println("1errorr");
-//        }
-     
         return _request.isXHR() ? new MultiZoneUpdate("zonaGeneral", zonaGeneral.getBody()) : null;
     }
-    public static boolean isNumberFloat(String cadena) {
-        try {
-        Float.parseFloat(cadena);
-//        if(cadena.length())
-        return true;
-        } catch (NumberFormatException nfe){
-        return false;
+    Object onValueChangedFromSistemapen(DatoAuxiliar dato) {     
+        return _request.isXHR() ? new MultiZoneUpdate("zonaGeneral", zonaGeneral.getBody()) : null;
     }
-    }
+
     
 }
