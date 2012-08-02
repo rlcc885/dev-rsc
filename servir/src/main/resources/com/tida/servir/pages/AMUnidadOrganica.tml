@@ -34,7 +34,7 @@
                 </form>
             </t:zone>-->
         <t:zone t:id="nivelUOZone">
-            <form t:type="form" t:id="xxx" t:zone="listaUOZone">
+            <form t:type="form" t:id="xxx" t:zone="nivelUOZone">
                     <!--<div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
                 <div class="f-wrap">
@@ -46,12 +46,11 @@
                     <div class="f-left">
                         <label>Unidad Orgánica Antecesora</label>
                         <select t:type="select" t:id="bunidadOrganica_uoa"
-                                model="bbeansUO" encoder="bbeansUO" value="buoAntece"
-                                onChange="this.form.fire()" t:zone="listaUOZone"/>
+                                model="bbeansUO" value="buoAntece" t:zone="nivelUOZone"/>
                     </div>
                     <div class="f-left">
                         <label>Categoría</label>                                
-                        <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" onChange="this.form.fire()" t:zone="listaUOZone"/>
+                        <input t:type="Select" t:id="bcategoria" t:value="valcategoria" model="tipoActividad" onChange="this.form.fire()" t:zone="nivelUOZone"/>
                     </div>
                 </div>
                         <!--</t:if>-->
@@ -111,11 +110,17 @@
             </div>
             <div id="panel-02" class="box" >
                 <t:form t:id="formularioxx">      
-                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                            row="uo" exclude="estado,nivel,sigla,cue,desczona">
+                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Denominacion_,Acciones" pagerPosition="bottom"
+                        row="uo" reorder="nivel,Denominacion_,sigla,Acciones">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
+                        <p:denominacion_Cell>
+                            ${uo.den_und_organica}
+                        </p:denominacion_Cell>
+                        <!--<p:categoria_Cell>
+                            ${uo.categoriauo.valor}
+                        </p:categoria_Cell>-->
                         <p:accionesCell>    
                             <t:if test="${veditar}">
                         <!--<a t:type="pagelink" t:page="AMUnidadOrganica" t:context="uo.id" href="#">Editar</a>-->
@@ -183,7 +188,7 @@
             </t:zone>-->
         <t:zone t:id="unidadesOrganicasZone">
             <t:if test="${vformulario}">    
-                <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
+                <t:form t:id="formularioaltaunidadorganica">
                     <fieldset>
                         <legend> Datos </legend>
                                             
@@ -249,12 +254,12 @@
                             <div class="f-left">
                                 <label>Urb./Res./Coo./AA.HH.</label>
                                 <input t:type="Select" t:id="unidadOrganica_tipozona" model="tipozona"
-                                       t:value="unidadorganica.tipozona" t:disabled="${vdetalle}"/>
+                                       t:value="unidadorganica.tipozona" t:disabled="${vdetalle}" t:zone="unidadesOrganicasZone"/>
                             </div>
                             <div class="f-left">
                                 <label>Descripción Zona</label>
                                 <input t:type="TextField" t:id="unidadOrganica_desczona"
-                                       t:value="unidadorganica.desczona" size="30" t:validate="maxlength=200" t:disabled="${vdetalle}"/>
+                                       t:value="unidadorganica.desczona" size="30" t:validate="maxlength=200" t:disabled="${vzona}"/>
                             </div>                                                     
                         </div>
                         <br/>
