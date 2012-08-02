@@ -252,7 +252,7 @@
                         <t:grid source="empleados" rowsPerPage="15" row="e" t:add="Acciones"
                         pagerPosition="bottom" reorder="nroDocumento,apellidoPaterno,
                         apellidoMaterno,nombres" t:context="e" 
-                        include="nroDocumento,nombres,apellidoPaterno,apellidoMaterno">
+                        include="nroDocumento,nombres,apellidoPaterno,apellidoMaterno" inPlace="true">
                     <!-- t:rowclass="prop:selectionrow" <t:parameter name="nroDocumentoCell">
                             <a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#">${e.nroDocumento}</a>
                     </t:parameter> -->

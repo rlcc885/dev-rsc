@@ -111,7 +111,7 @@
             <div id="panel-02" class="box" >
                 <t:form t:id="formularioxx">      
                     <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="uo" reorder="nivel,den_und_organica,sigla,Acciones">
+                        row="uo" reorder="nivel,den_und_organica,sigla,Acciones" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>   
