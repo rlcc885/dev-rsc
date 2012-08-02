@@ -237,9 +237,9 @@
                              </div>
                              
                              <div class="f-left">
-                                <label>* Cantidad de Puestos</label>
+                                <label>* Cantidad de Puestos/Plazas</label>
                                 <input t:type="TextField" t:id="cargo_ctd_puestos_total"
-                                       t:value="cargo.ctd_puestos_total" size="20" t:validate="required" t:disabled="${vdetalle}"/>
+                                       t:value="cargo.ctd_puestos_total" size="20" t:validate="required,regexp" t:disabled="${vdetalle}"/>
                             </div>
                              
                          </div>  

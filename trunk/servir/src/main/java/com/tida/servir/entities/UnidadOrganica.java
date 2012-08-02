@@ -39,7 +39,6 @@ public class UnidadOrganica {
     private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
     @NonVisual
     private String cod_und_organica; // Código de la unidad organica
-    @NonVisual
     @Validate("required")
     private String den_und_organica; //Denominación del órgano
     @NonVisual
