@@ -69,7 +69,7 @@
                         <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="busenviar" value="Buscar" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                        <input t:type="Submit" t:id="busenviar" value="Buscar" class="button" />
                     </div>
                 </div>  
             </t:form>
@@ -126,15 +126,20 @@
     </div>
     <div class="box">
         <t:zone t:id="listaentidadZone">
-            <t:grid source="listadoEntidades" rowsPerPage="10" t:add="Denominacion_, NivelGobierno_, Entidad_, Sigla_, Acciones" pagerPosition="bottom"
-                    row="listaentidad" exclude="id,denominacion,cue_entidad,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,departamento,provincia,distrito,subentidad,SIGLA,tiposubentidad,essubentidad" inPlace="true" >
+            <t:grid source="listadoEntidades" 
+                    rowsPerPage="10" 
+                    pagerPosition="bottom"
+                    row="listaentidad" 
+                    exclude="id,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
+                    reorder="ruc,denominacion,sigla,cue_entidad,departamento"
+                    inPlace="true" >
                 <t:parameter name="empty">
-                    <div class="no-info">No hay entidades generadas</div>
+                    <div class="no-info">No se encontraron coincidencias</div>
                 </t:parameter>
-                <p:denominacion_Cell>${listaentidad.denominacion}</p:denominacion_Cell>
+<!--                <p:denominacion_Cell>${listaentidad.denominacion}</p:denominacion_Cell>
                 <p:nivelGobierno_Cell>${listaentidad.nivelgobierno}</p:nivelGobierno_Cell>
                 <p:entidad_Cell>${listaentidad.subentidad}</p:entidad_Cell>
-                <p:sigla_Cell>${listaentidad.SIGLA}</p:sigla_Cell>
+                <p:sigla_Cell>${listaentidad.SIGLA}</p:sigla_Cell>-->
                 <p:accionesCell>
                     <t:if test="${veditar}">
                         <a t:type="eventLink" t:event="editarSeleccion" t:context="listaentidad" href="#" t:zone="listaentidadZone">Editar</a> 
