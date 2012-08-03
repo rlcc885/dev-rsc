@@ -4,37 +4,36 @@
         <li t:type="loop" source="OpcionesMenuPrincipal" value="opcion"  class="sub">
             <t:if test = "tieneHijo">
                 <a href = "#" class="${clase}">
-                ${opcion.descmenu}
+                    ${opcion.descmenu}
                 </a>
                 <ul>
                     <li t:type="loop" source="OpcionesMenu" value="opcion">
                         <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
-                        ${opcion.descmenu}
+                            ${opcion.descmenu}
                         </a>
                     </li>
                 </ul>
-            <t:parameter name = "else">
-                <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
-                ${opcion.descmenu}
-                </a>
-            </t:parameter>
+                <t:parameter name = "else">
+                    <a t:type="pagelink" page="${opcion.pagename}" class="${clase}">
+                        ${opcion.descmenu}
+                    </a>
+                </t:parameter>
             </t:if>
         </li>
         <li  class="sub">
-            <a t:type="pagelink" page="Index">Salir</a>
+            <a t:type="actionlink" t:id="returnstreamresponse" href="#">Ayuda</a>
         </li>
         <li  class="sub">
-            <a t:type="actionlink" t:id="returnstreamresponse" href="#">Ayuda</a>
+            <a t:type="pagelink" page="Index">Salir</a>
         </li>
     </ul>
     <br style="clear: both;" />
     <div class="mostraUsuarioMenu">
         <h3>${nombreusuario}</h3>
     </div>
-
     <script type='text/javascript'>
         document.observe('dom:loaded', function(){
-            ProtoFish('menu-1', '200', 'hover', false, true, true);
+        ProtoFish('menu-1', '200', 'hover', false, true, true);
         });
     </script>
 </div>

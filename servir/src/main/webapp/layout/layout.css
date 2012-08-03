@@ -1529,3 +1529,6 @@ DIV.t-data-grid {
 #editPermisoZone{
     margin-top:10px;
 }
+.complejidad-clave input{
+    width: 400px;
+}
