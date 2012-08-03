@@ -13,12 +13,12 @@
             <div id="header">
                  <div id="logo-left">
                     <h1>
-                        <t:pagelink page="index">RSC</t:pagelink>
+                        <t:pagelink page="alerta">RSC</t:pagelink>
                     </h1>
                 </div>
                 <div id="logo-right">
                     <h1>
-                        <t:pagelink page="index">SERVIR</t:pagelink>
+                        <t:pagelink page="alerta">SERVIR</t:pagelink>
                     </h1>
                 </div>
                     

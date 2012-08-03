@@ -14,9 +14,10 @@
     </t:if>
     <h2>Modificación de clave</h2>
 
-
-    <div class="change-pass box">
-        
+    <div class="box-background-title" style="width:472px; margin:auto; margin-top:100px;">
+        <span class="box-title">Cambiar Clave</span>
+    </div>
+    <div class="box" style="width:450px; margin: auto;">
         <div id="form_cambio_clave" class="abmform">
             <t:zone t:id="zone">
                 <t:form t:id="formulariocambioclave" t:zone = "zone">
@@ -56,8 +57,8 @@
                 </t:form>
             </t:zone>
             <t:zone t:id="zone2">
-                <div class="f-wrap">
-                    <div class="f-left">
+                <div class="f-wrap ">
+                    <div class="f-left complejidad-clave">
                         <input type="text" id="verificacion" t:value="verificacion" size="25" readonly="readonly" style="border-width: 0px; border-style: none; font-size:8pt;" />
                     </div>
                 </div>
