@@ -14,6 +14,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 @Entity
 public class LkBusquedaEntidad implements Serializable {
+
     @Id
     private long id;
     private String denominacion;
@@ -28,11 +29,12 @@ public class LkBusquedaEntidad implements Serializable {
     private String provincia;
     private String distrito;
     private String tiposubentidad;
-    @Column(name="SIGLA")
+    @Column(name = "SIGLA")
     private String SIGLA;
-    @Column(name="SUBENTIDAD")
+    @Column(name = "SUBENTIDAD")
     private String subentidad;
-    
+    private String ruc;
+
     public LkBusquedaEntidad() {
     }
 
@@ -51,7 +53,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setDenominacion(String denominacion) {
         this.denominacion = denominacion;
     }
-    
+
     public String getCue_entidad() {
         return cue_entidad;
     }
@@ -59,7 +61,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setCue_entidad(String cue_entidad) {
         this.cue_entidad = cue_entidad;
     }
-        
+
     public String getNivelgobierno() {
         return nivelgobierno;
     }
@@ -67,7 +69,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setNivelgobierno(String nivelgobierno) {
         this.nivelgobierno = nivelgobierno;
     }
-        
+
     public String getSectorgobierno() {
         return sectorgobierno;
     }
@@ -75,7 +77,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setSectorgobierno(String sectorgobierno) {
         this.sectorgobierno = sectorgobierno;
     }
-    
+
     public String getOrganizacionestado() {
         return organizacionestado;
     }
@@ -83,42 +85,47 @@ public class LkBusquedaEntidad implements Serializable {
     public void setOrganizacionestado(String organizacionestado) {
         this.organizacionestado = organizacionestado;
     }
-      public String getTipoorganismo() {
+
+    public String getTipoorganismo() {
         return tipoorganismo;
     }
 
     public void setTipoorganismo(String tipoorganismo) {
         this.tipoorganismo = tipoorganismo;
     }
-      public Boolean getEstado() {
+
+    public Boolean getEstado() {
         return estado;
     }
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-      public String getDepartamento() {
+
+    public String getDepartamento() {
         return departamento;
     }
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
-      public String getProvincia() {
+
+    public String getProvincia() {
         return provincia;
     }
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
-      public String geDistrito() {
+
+    public String geDistrito() {
         return distrito;
     }
 
     public void setDistrito(String distrito) {
         this.distrito = distrito;
     }
-    
+
     public String geTiposubentidad() {
         return tiposubentidad;
     }
@@ -126,7 +133,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setTiposubentidad(String tiposubentidad) {
         this.tiposubentidad = tiposubentidad;
     }
-    
+
     public String getSIGLA() {
         return SIGLA;
     }
@@ -134,7 +141,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setSIGLA(String SIGLA) {
         this.SIGLA = SIGLA;
     }
-    
+
     public String getSubentidad() {
         return subentidad;
     }
@@ -142,7 +149,7 @@ public class LkBusquedaEntidad implements Serializable {
     public void setSubentidad(String subentidad) {
         this.subentidad = subentidad;
     }
-    
+
     public Boolean getEssubentidad() {
         return essubentidad;
     }
@@ -150,6 +157,12 @@ public class LkBusquedaEntidad implements Serializable {
     public void setEssubentidad(Boolean essubentidad) {
         this.essubentidad = essubentidad;
     }
-      
-   
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
 }
