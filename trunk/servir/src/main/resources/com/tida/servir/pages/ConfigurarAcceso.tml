@@ -3,9 +3,9 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <h2>Alta/modificación de parámetros</h2>
+    <h2>Administración de parámetros</h2>
     <div class="box-background-title">
-        <span class="box-title">Editar Entidad</span>
+        <span class="box-title">Parámetros del Sistema</span>
     </div>
     <div class="box">
         <div id="form_cambio_clave" class="abmform">

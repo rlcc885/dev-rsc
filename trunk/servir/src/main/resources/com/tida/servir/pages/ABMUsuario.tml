@@ -2,12 +2,6 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-
-<!--    <t:if test= "usuarioDeOrganismo">
-        <div class="organismo_titulo">
-            Entidad U. Ejecutora: ${loggedUser.entidad.denominacion}
-        </div>
-    </t:if>-->
     <h2>Administración de Usuarios</h2>
     <h3>Busqueda de usuarios</h3>
     <div class="box">
@@ -40,7 +34,6 @@
     <br />
     <t:zone t:id="tabla_usuario">    
         <t:if test="primeraVez">
-<!--            <div id = "tabla_usuario_grid" >-->
                 <t:grid inPlace="true" source="usuarios" rowsPerPage="10" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid" reorder="nrodocumento,nombres,apellidos,estado">
                     <t:parameter name="empty">
                         <div class="no-info">No existen usuarios con los criterios seleccionados.</div>
@@ -59,7 +52,6 @@
                         <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                     </p:accionesListaUsuarioCell>
                 </t:grid>
-<!--            </div>-->
         </t:if>
     </t:zone>
   
@@ -69,34 +61,9 @@
             <h3>Datos del Usuario</h3>
             <div class="box" id="box_u">
                 <t:envelope t:id="envelope"/>
-        
-<!--                <div id= "form_organismos" class="abmform">
-                    <t:zone t:id="entidadZone">
-                        <t:if test="muestroOrganismos">
-                            <t:form  t:id="formOrganismo" t:zone="editarUsuarioZone" >
-                                <label>Entidad /U. Ejecutora</label>
-                                <input t:type="select" t:id="organismos" t:value="entidad"
-                                       model="beanOrganismos" encoder="beanOrganismos" t:validate="required"
-                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                       t:zone="editarUsuarioZone" t:blankOption="ALWAYS"/>
-                            </t:form>
-                        </t:if>
-                    </t:zone>
-                </div>-->
-        
                 <div id="form_usuario" class="abmform">
                     <t:form  t:id="formulariousuario" t:zone="editarUsuarioZone">
                         <t:errors/>
-<!--                        <t:if test="esTrabajador">
-                            <div class="f-left">
-                                <t:label for="tipoDocumento"/>
-                                <t:select t:id="tipoDocumento" model="tiposDoc" t:validate="required"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="nroDocumento" />
-                                <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="required, regexp" size="10" readonly="readonly"/>
-                            </div>
-                            <t:parameter name="else">-->
                         <div class="f-left">
                             <t:label for="apellidoPaterno" />
                             <input t:type="TextField" t:id="apellidoPaterno" t:value="usuariotrabajador.apellidopaterno" size="25" t:disabled="true"/>
@@ -109,8 +76,6 @@
                             <t:label for="nombres" />
                             <input t:type="TextField" t:id="nombres" t:value="usuariotrabajador.nombres" size="25" t:disabled="true"/>
                         </div>
-<!--                            </t:parameter>
-                        </t:if>-->
                         <div class="f-left">
                             <t:label for="identificacion_usuario" />
                             <input t:type="TextField" t:id="identificacion_usuario" t:value="usuario.login" size="25" t:disabled="true"/>
@@ -149,29 +114,12 @@
                         <div id="bouttons" class="f-right">
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <input t:type="Submit" t:id="save" value="Grabar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-<!--                            <input t:type="Submit" t:id="perfil" value="Asignar Perfil" class="button f-right"/>-->
-<!--                            <t:eventLink t:event="asignaPerfil" href="#" t:zone="editarUsuarioZone" class="button f-right">
-                                Perfiles
-                            </t:eventLink>-->
-
-                            
-<!--                            <t:actionlink t:id="reset" t:mixins="confirm" class="button f-right">
-                                Cancelar
-                            </t:actionlink>-->
-
-                        <!-- <t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink> -->
                         </div>
                         <br class="clear" />
                     </t:form>
                 </div>
             </div>
             <br />
-<!--        </t:if>
-    </t:zone>
-    
-    <br />
-    <t:zone t:id="asignarPerfilZone" >
-        <t:if test = "asignaPerfilUsuario">-->
             <h3>Perfiles asignados al usuario</h3>
             <t:grid t:source="allPerfiles" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="rownum,usuarioId, perfilId" >
                 <p:accionesCell>
