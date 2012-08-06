@@ -58,6 +58,7 @@ public class BusquedaEvento implements Serializable {
     @Column(name = "ENTIDAD")
     private String entidad;
     @Column(name = "PAGINA")
+    @NonVisual
     private String pagina;
     
     public BusquedaEvento() {
