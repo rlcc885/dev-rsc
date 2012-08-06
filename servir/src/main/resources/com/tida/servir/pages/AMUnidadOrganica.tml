@@ -33,7 +33,7 @@
                                                        
                 </form>
             </t:zone>-->
-        <t:zone t:id="nivelUOZone">
+        <t:zone t:id="nivelUOZone" t:update="show">
             <form t:type="form" t:id="xxx" t:zone="nivelUOZone">
                     <!--<div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
@@ -59,7 +59,7 @@
         </t:zone>
 
         <!--</div>-->                    
-        <div t:type="zone"  id="form_unidad_organica" class="abmform">
+        <div t:type="zone"  id="form_unidad_organica" class="abmform" t:update="show">
             <t:zone t:id="filtrosZone"> 
                 <form t:type="form" t:id="formulariofiltrounidad" zone="listaUOZone">
                     <div class="f-wrap">                        
@@ -92,7 +92,7 @@
         <br/>
     </div>
 
-    <div t:type="zone" t:id="listaUOZone" class="selectform" >
+    <div t:type="zone" t:id="listaUOZone" class="selectform" t:update="show">
         <!-- <t:if test = "hayOrgano"> -->        
         <t:if test="mostrar">
             <script>
@@ -110,8 +110,14 @@
             </div>
             <div id="panel-02" class="box" >
                 <t:form t:id="formularioxx">      
-                    <t:grid source="unidadesorganicas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                        row="uo" reorder="nivel,den_und_organica,categoriauo,sigla,Acciones" inPlace="true">
+                    <t:grid source="unidadesorganicas" 
+                            rowsPerPage="10" 
+                            t:add="Acciones" 
+                            pagerPosition="bottom"
+                            row="uo" 
+                            reorder="nivel,denominacion,desccategoriauo,sigla,Acciones"
+                            exclude="id,unidadorganicaid,categoriauoid,entidadid,estado"
+                            inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>   
@@ -125,7 +131,6 @@
                             </t:if>
                             <t:if test="${veditar}" negate="true">
                                 <t:actionlink t:id="detalle" zone="listaUOZone" context="uo">Ver Detalle</t:actionlink>
-                            
                             </t:if>
                             <t:if test="${veliminar}">  
                                 <t:if test="esBorrable">
@@ -183,7 +188,7 @@
                 </fieldset>
               </t:if>
             </t:zone>-->
-        <t:zone t:id="unidadesOrganicasZone">
+        <t:zone t:id="unidadesOrganicasZone" t:update="show">
             <t:if test="${vformulario}">    
                 <t:form t:id="formularioaltaunidadorganica" t:zone="unidadesOrganicasZone">
                     <fieldset>
@@ -208,7 +213,8 @@
                             <div class="f-left">
                                 <label>Categoría</label>
                                 <input t:type="Select" t:id="unidadOrganica_categoriauo" model="tipoActividad"
-                                       t:value="unidadorganica.categoriauo" t:disabled="${vdetalle}"/>
+                                       t:value="unidadorganica.categoriauo" t:disabled="${vdetalle}"
+                                       t:zone="unidadesOrganicasZone"/>
                             </div>
                         </div>                      
                         <br/>
@@ -244,7 +250,7 @@
                             <div class="f-left">
                                 <label>Avenida/Jirón/Calle</label>
                                 <input t:type="Select" t:id="unidadOrganica_tipovia" model="tipovia"
-                                       t:value="unidadorganica.tipovia" t:disabled="${vdetalle}"/>
+                                       t:value="unidadorganica.tipovia" t:disabled="${vdetalle}" t:zone="unidadesOrganicasZone"/>
                             </div>
                             <div class="f-left">
                                 <label>Dirección</label>

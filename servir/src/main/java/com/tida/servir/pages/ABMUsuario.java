@@ -123,9 +123,6 @@ public class ABMUsuario extends GeneralPage {
     @Property
     private boolean newPerfil;
 
-    public ABMUsuario() {
-    }
-
     public List<String> getTiposDoc() {
         return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
     }
@@ -271,14 +268,14 @@ public class ABMUsuario extends GeneralPage {
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 usuario.setClave(password);
                 String subject = "Datos de acceso al sistema Servir";
-                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo()+usuario.getTrabajador().getNroDocumento(), password);
+                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
                 if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
                     System.out.println("Envío Correcto");
                 } else {
                     Logger logger = new Logger();
-                    Tipoevento tipoeve=new Tipoevento();
+                    Tipoevento tipoeve = new Tipoevento();
                     tipoeve.setId(2);
-                    logger.loguearEvento(session,tipoeve,usuario.getEntidad(),usuario.getTrabajador().getId(),Logger.CORREO_FAIL_RESET_PASSWORD);
+                    logger.loguearEvento(session, tipoeve, usuario.getEntidad(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD);
                 }
             }
             usuario.setEstado(lkEstadoUsuario.getId());
@@ -335,8 +332,64 @@ public class ABMUsuario extends GeneralPage {
      * Cargar desde los parámetros
      */
 
-    void onActivate() {
+    void onActivate() throws Exception {
         System.out.println("onActivate");
+
+//        Document pdfDocument = new Document();
+//        URL oracle = new URL("http://www.oracle.com/");
+//        URLConnection conn = oracle.openConnection();
+//        /*
+//         * Reader htmlreader = new BufferedReader(new InputStreamReader(
+//         * oracle.openStream() ));
+//         */
+//        Reader htmlreader = new BufferedReader(new InputStreamReader(
+//                new FileInputStream("c://grafico.html")));
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        PdfWriter.getInstance(pdfDocument, baos);
+//        pdfDocument.open();
+//        StyleSheet styles = new StyleSheet();
+//        styles.loadTagStyle("body", "font", "Bitstream Vera Sans");
+//        ArrayList arrayElementList = (ArrayList) HTMLWorker.parseToList(htmlreader, styles);
+//        for (int i = 0; i < arrayElementList.size(); ++i) {
+//            Element e = (Element) arrayElementList.get(i);
+//            pdfDocument.add(e);
+//        }
+//        pdfDocument.close();
+//        byte[] bs = baos.toByteArray();
+//        String pdfBase64 = Base64.encodeBytes(bs); //output
+//        File pdfFile = new File("pdfExample.pdf");
+//        FileOutputStream out = new FileOutputStream(pdfFile);
+//        out.write(bs);
+////        out.close();
+//
+//        // codigo valido para html pero invalido para XHTML
+//        // no esta cerrando el tag img
+//        String html = new String("<img scr='img.gif'>");
+//        //--
+//        ByteArrayInputStream b = new ByteArrayInputStream(html.getBytes());
+//        ByteArrayOutputStream out2 = new ByteArrayOutputStream();
+//
+//        Tidy tidy = new Tidy();
+//        tidy.setXHTML(true); // queremos que la salida sea xhtml
+//        tidy.parse(b, out2);
+//        System.out.println(out2.toString());
+//        
+//        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
+//        imageGenerator.loadUrl("http://dl.dropbox.com/u/4151695/html/jOrgChart/example/example.html");
+//        imageGenerator.saveAsImage("hello-world.png");
+//        imageGenerator.saveAsHtmlWithMap("hello-world.html", "hello-world.png");
+//
+//        File inputFile = new File("hola.xhtml");
+//        OutputStream os = new FileOutputStream(new File("xhtmlToPdf_holaMundo.pdf"));
+//
+//        ITextRenderer renderer = new ITextRenderer();
+//        renderer.setDocument(inputFile);
+//        renderer.layout();
+//        renderer.createPDF(os);
+//
+//        os.close();
+//        out.close();
+
     }
 
     void setupRender() {
@@ -345,11 +398,11 @@ public class ABMUsuario extends GeneralPage {
         botonPerfil = false;
         newPerfil = false;
         System.out.println("setupRender");
-        Calendar c = Calendar.getInstance(); 
-        int dia = c.get(Calendar.DAY_OF_MONTH); 
-        int mes = c.get(Calendar.MONTH)+1; 
-        int anyo = c.get(Calendar.YEAR); 
-        System.out.println("hoy es:  "+dia+"/"+mes+"/"+anyo);
+        Calendar c = Calendar.getInstance();
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        int mes = c.get(Calendar.MONTH) + 1;
+        int anyo = c.get(Calendar.YEAR);
+        System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
     }
 
     @Log

@@ -25,17 +25,15 @@ public class UnidadOrganica {
     public static String SIGLA_DEFAULT = "IND";
     public static String NOMBRE_DEFAULT = "Unidad Organica indeterminada";
     public static Integer NIVEL_DEFAULT = 1;
-    
-        //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @NonVisual
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_UNIDADORGANICA_ID_SEQ", allocationSize = 1)
+    @Column(name = "ID")
     private long id;
+    @ManyToOne
     @Validate("required")
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @PrimaryKeyJoinColumn
     private Entidad entidad;
-//    @Validate("required")
-//    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Cargoxunidad> cargos = new ArrayList<Cargoxunidad>();
     @NonVisual
     private String cod_und_organica; // Código de la unidad organica
@@ -43,8 +41,11 @@ public class UnidadOrganica {
     private String den_und_organica; //Denominación del órgano
     @NonVisual
     private String localidad;
+    @ManyToOne
     private DatoAuxiliar cod_ubi_dist; //ubigeo distrito
+    @ManyToOne
     private DatoAuxiliar cod_ubi_prov; //ubigeo provincia
+    @ManyToOne
     private DatoAuxiliar cod_ubi_dept; //ubigeo depto
     @NonVisual
     private Boolean estado; // para manejo del borrado lógico
@@ -53,17 +54,18 @@ public class UnidadOrganica {
     private String sigla;
     @Validate("required")
     private Integer nivel;
-//    private String tipoActividad;
-//    @Validate("required")    
+    @ManyToOne
     private DatoAuxiliar categoriauo;
+    @ManyToOne
     private DatoAuxiliar tipovia;
+    @ManyToOne
     private DatoAuxiliar tipozona;
     @NonVisual
     private String desczona;
+    @ManyToOne
     @Validate("required")
     private UnidadOrganica unidadorganica;
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_dist() {
         return cod_ubi_dist;
     }
@@ -72,7 +74,6 @@ public class UnidadOrganica {
         this.cod_ubi_dist = cod_ubi_dist;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_prov() {
         return cod_ubi_prov;
     }
@@ -81,7 +82,6 @@ public class UnidadOrganica {
         this.cod_ubi_prov = cod_ubi_prov;
     }
 
-    @ManyToOne
     public DatoAuxiliar getCod_ubi_dept() {
         return cod_ubi_dept;
     }
@@ -106,9 +106,6 @@ public class UnidadOrganica {
         this.den_und_organica = den_und_organica;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
-    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_UNIDADORGANICA_ID_SEQ" )
     public long getId() {
         return id;
     }
@@ -125,7 +122,6 @@ public class UnidadOrganica {
         this.localidad = localidad;
     }
 
-    @ManyToOne
     public Entidad getEntidad() {
         return entidad;
     }
@@ -134,7 +130,6 @@ public class UnidadOrganica {
         this.entidad = entidad;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
     public List<Cargoxunidad> getCargos() {
         return cargos;
     }
@@ -151,8 +146,6 @@ public class UnidadOrganica {
         this.estado = estado;
     }
 
-
-    @ManyToOne
     public UnidadOrganica getUnidadorganica() {
         return unidadorganica;
     }
@@ -160,25 +153,6 @@ public class UnidadOrganica {
     public void setUnidadorganica(UnidadOrganica unidadorganica) {
         this.unidadorganica = unidadorganica;
     }
-
-    
-//    private int unidadorganica_id;
-
-//    public String getTipoActividad() {
-//        return tipoActividad;
-//    }
-//
-//    public void setTipoActividad(String tipoActividad) {
-//        this.tipoActividad = tipoActividad;
-//    }
-    
-//    public Integer getUnidadorganica_id() {
-//        return unidadorganica_id;
-//    }
-//
-//    public void setUnidadorganica_id(Integer unidadorganica_id) {
-//        this.unidadorganica_id = unidadorganica_id;
-//    }
 
     public Integer getNivel() {
         return nivel;
@@ -228,8 +202,7 @@ public class UnidadOrganica {
     public void setCue(String cue) {
         this.cue = cue;
     }
-    
-    @ManyToOne
+
     public DatoAuxiliar getCategoriauo() {
         return categoriauo;
     }
@@ -237,8 +210,7 @@ public class UnidadOrganica {
     public void setCategoriauo(DatoAuxiliar categoriauo) {
         this.categoriauo = categoriauo;
     }
-    
-    @ManyToOne
+
     public DatoAuxiliar getTipovia() {
         return tipovia;
     }
@@ -246,8 +218,7 @@ public class UnidadOrganica {
     public void setTipovia(DatoAuxiliar tipovia) {
         this.tipovia = tipovia;
     }
-    
-    @ManyToOne
+
     public DatoAuxiliar getTipozona() {
         return tipozona;
     }
@@ -255,7 +226,7 @@ public class UnidadOrganica {
     public void setTipozona(DatoAuxiliar tipozona) {
         this.tipozona = tipozona;
     }
-    
+
     public String getDesczona() {
         return desczona;
     }

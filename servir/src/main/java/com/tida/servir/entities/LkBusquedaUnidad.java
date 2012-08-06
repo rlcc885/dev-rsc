@@ -5,7 +5,6 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,28 +29,32 @@ public class LkBusquedaUnidad implements Serializable {
     @Basic(optional = false)
     @Id
     @Column(name = "ID")
-    private long id;
+    private Long id;
     @Column(name = "DENOMINACION")
     private String denominacion;
     @Column(name = "SIGLA")
     private String sigla;
     @Column(name = "NIVEL")
-    private Long nivel;
+    private Integer nivel;
     @Column(name = "UNIDADORGANICA_ID")
     private Long unidadorganicaId;
     @Column(name = "CATEGORIAUO_ID")
-    private BigInteger categoriauoId;
+    private long categoriauoId;
     @Column(name = "DESCCATEGORIAUO")
     private String desccategoriauo;
+    @Column(name = "ENTIDAD_ID")
+    private long entidadId;
+    @Column(name = "ESTADO")
+    private Boolean estado;
 
     public LkBusquedaUnidad() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,11 +74,11 @@ public class LkBusquedaUnidad implements Serializable {
         this.sigla = sigla;
     }
 
-    public Long getNivel() {
+    public Integer getNivel() {
         return nivel;
     }
 
-    public void setNivel(Long nivel) {
+    public void setNivel(Integer nivel) {
         this.nivel = nivel;
     }
 
@@ -87,11 +90,11 @@ public class LkBusquedaUnidad implements Serializable {
         this.unidadorganicaId = unidadorganicaId;
     }
 
-    public BigInteger getCategoriauoId() {
+    public long getCategoriauoId() {
         return categoriauoId;
     }
 
-    public void setCategoriauoId(BigInteger categoriauoId) {
+    public void setCategoriauoId(long categoriauoId) {
         this.categoriauoId = categoriauoId;
     }
 
@@ -101,6 +104,22 @@ public class LkBusquedaUnidad implements Serializable {
 
     public void setDesccategoriauo(String desccategoriauo) {
         this.desccategoriauo = desccategoriauo;
+    }
+
+    public long getEntidadId() {
+        return entidadId;
+    }
+
+    public void setEntidadId(long entidadId) {
+        this.entidadId = entidadId;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
     
 }
