@@ -9,7 +9,22 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 
 public class Logger {
-
+    
+    //indices
+    public static final long ERROR_ACCESO_AL_SISTEMA = 1;
+    public static final long ERROR_SERVIDOR_DE_CORREO = 2;
+    public static final long MODIFICACION_PERSONALES = 5;
+    public static final long CAIDA_SERVIDOR_CORREO = 7;
+    public static final long CAIDA_SERVIDOR_BD = 8;
+    public static final long ACCESOS = 9;
+    public static final long MODIFICACION_ESTUDIOS = 10;
+    public static final long MODIFICACION_CURSOS = 11;
+    public static final long MODIFICACION_EXPERIENCIA = 12;
+    public static final long MODIFICACION_PRODUCCION = 13;
+    public static final long MODIFICACION_FAMILIAR = 14;
+    public static final long MODIFICACION_MERITOS = 15;
+    public static final long MODIFICACION_DOCUMENTOS = 16;    
+    
     public static final String LOGIN_STATUS_OK = "OK";
     public static final String LOGIN_STATUS_ERROR = "ERROR";
     public static final String LOGIN_OK = "INGRESO EXITOSO";

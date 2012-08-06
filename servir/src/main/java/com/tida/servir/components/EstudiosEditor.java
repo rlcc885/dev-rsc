@@ -155,7 +155,6 @@ public class EstudiosEditor {
     private int elemento=0;
     
     
-    
 //    @Property
 //    @SessionState
 //    private DatoAuxiliar valtipoestudio;
@@ -318,6 +317,7 @@ public class EstudiosEditor {
             
         }
         else if(elemento==1){
+            Logger logger = new Logger();
             String hql="";
             if(valdenominacion==null){
                 formlistaestudios.recordError("Debe ingresar la Denominación");
@@ -368,7 +368,7 @@ public class EstudiosEditor {
                 estudio.setEstudiando(valestudiando);
             }
             else{//guardando
-                Logger logger = new Logger();
+                
                 estudio = new Estudios();
 //                System.out.println("Trabajadorrr"+actual);
                 estudio.setTrabajador(actual);        
@@ -386,7 +386,7 @@ public class EstudiosEditor {
                 else{
                     estudio.setAgregadotrabajador(false);
                 }
-                logger.loguearEvento(session, 5, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS);
+                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS);
             }
             if(vrevisado==true){
                 //System.out.println("aquiiii"+valrevisado);
@@ -402,8 +402,9 @@ public class EstudiosEditor {
             session.saveOrUpdate(estudio);
             session.flush();
             if(valrevisado!=null){
-                if(valrevisado==true){
-                    hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id=5 and estadoevento=0";
+                if(valrevisado==true){                    
+                    hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_ESTUDIOS+"' and estadoevento=0";
+                    System.out.println("aquiiiii"+hql);
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
                 }          
