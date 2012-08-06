@@ -57,6 +57,8 @@ public class BusquedaEvento implements Serializable {
     private String nombres;
     @Column(name = "ENTIDAD")
     private String entidad;
+    @Column(name = "PAGINA")
+    private String pagina;
     
     public BusquedaEvento() {
     }
@@ -132,4 +134,12 @@ public class BusquedaEvento implements Serializable {
     public void setEntidad(String entidad) {
         this.entidad = entidad;
     }  
+    
+    public String getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(String pagina) {
+        this.pagina = pagina;
+    }
 }

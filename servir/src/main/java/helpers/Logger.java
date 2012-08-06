@@ -64,6 +64,8 @@ public class Logger {
     public static final String RESULTADO_OPERACION_ERROR = "ERROR";
     public static final String CORREO_FAIL_RESET_PASSWORD = "Conexión con el Servidor de Correos no establecida al reestablecer contraseña.";
     
+    public static final String MODIFICACION_PERSONALES_ESTUDIOS = "ESTUDIOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MODIFICACION_PERSONALES_CURSOS = "CURSOS DEL TRABAJADOR MODIFICADOS";
     @Inject
     private HttpServletRequest requestGlobal;
 
@@ -134,10 +136,10 @@ public class Logger {
 
     @Log
     @CommitAfter
-    public void loguearEvento(Session session, Tipoevento tipoevento, Entidad entidad, long trabajador,
+    public void loguearEvento(Session session, long tipoevento, Entidad entidad, long trabajador,
         String descripcion) {
         Evento e = new Evento();
-        e.setTipoevento(tipoevento);
+        e.setTipoevento_id(tipoevento);
         e.setEntidad(entidad);
         e.setTrabajador_id(trabajador);
         e.setDescevento(descripcion);
