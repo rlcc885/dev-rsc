@@ -240,7 +240,6 @@ public class PagePerfil {
 //        mostrarNuevoPermiso = false;
 //        return PagePerfil.class;
 //    }
-
     // Si pulsa el enlace de PERMISOS
     @Log
     @CommitAfter
@@ -288,9 +287,9 @@ public class PagePerfil {
     }
 
     void onSelectedFromCancel() {
-         System.out.println("onSelectedFromCancel");
-         mostrarPermiso = false;
-         mostrarNuevoPermiso = false;
+        System.out.println("onSelectedFromCancel");
+        mostrarPermiso = false;
+        mostrarNuevoPermiso = false;
         mostrarEditPermiso = false;
         bCancelFormulario = true;
     }
@@ -382,10 +381,7 @@ public class PagePerfil {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editZone", editZone.getBody())
-                .add("listaPermisoZone", listaPermisoZone.getBody())
-                .add("listaZone", listaZone.getBody())
-                .add("editPermisoZone", editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 
@@ -393,9 +389,7 @@ public class PagePerfil {
     private MultiZoneUpdate zonasPermiso() {
         MultiZoneUpdate mu;
         //add("listaZone", listaZone.getBody()).
-        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody())
-                .add("listaZone", listaZone.getBody()) 
-                .add("editPermisoZone", editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 }

@@ -6,7 +6,7 @@
     <h1>Administración de Entidades</h1>
     <t:if test="${arroja}">
         <div class="t-error">
-            Usted no tiene acces
+            Usted no tiene acceso
         </div>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=alerta" />
     </t:if>
