@@ -13,13 +13,13 @@
                             <div class="f-left" >
                                 <t:label for="parentesco"/>
                                 <input t:type="Select" t:id="parentesco" t:value="familiarActual.parentesco" 
-                                       model="beanParentesco" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       model="beanParentesco"
                                        t:validate="required" t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left" >	
                                 <t:label for="sexo"/>
                                 <select t:type="Select" t:id="sexo" value="valsexo" 
-                                        model="beanSexo" onChange="this.form.fire()" t:zone="familiaresZone"
+                                        model="beanSexo"
                                         t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left">	
