@@ -428,7 +428,7 @@ public class CursosEditor {
                     else{
                         cursos.setAgregadotrabajador(false);
                     }
-                    logger.loguearEvento(session, 5, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS);
+                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS);
                 }
                 if(vrevisado==true){
                     if(valrevisado==null){

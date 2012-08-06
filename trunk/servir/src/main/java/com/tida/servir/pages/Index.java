@@ -139,14 +139,14 @@ public class Index {
 
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
             //logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());            
-            logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
             return this;
         }
 
         if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
 //            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
-            logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW);
             formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
             return this;
         }
@@ -165,11 +165,11 @@ public class Index {
                 System.out.println(new Date());
                 System.out.println("=============================================================================");
 //                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, getIp_Adress());
-                logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
+                logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
                 formulariologin.recordError("Demasiados Intentos Fallidos. El Usuario ha sido bloqueado.");
             } else {
 //                logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, getIp_Adress());
-                logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL);
+                logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL);
                 formulariologin.recordError("Clave incorrecta.");
             }
             session.saveOrUpdate(usuario);
@@ -182,13 +182,13 @@ public class Index {
             c1.add(Calendar.DATE, configuracionAcceso.getDuracion_clave().intValue());
             if (c1.getTime().before(new Date())) {
 //                logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED, getIp_Adress());
-                logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED);
+                logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDEXPIRED);
                 cambioClave.flagCambioForzado("Su clave ha expirado");
                 return cambioClave;
             }
         } else {
 //            logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST, getIp_Adress());
-            logger.loguearEvento(session, 9, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORFIRST);
             cambioClave.flagCambioForzado("Usted nunca ha cambiado su clave, debe hacerlo ahora.");
             return cambioClave;
         }

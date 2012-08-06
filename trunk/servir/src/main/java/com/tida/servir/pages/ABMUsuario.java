@@ -273,9 +273,7 @@ public class ABMUsuario extends GeneralPage {
                     System.out.println("Envío Correcto");
                 } else {
                     Logger logger = new Logger();
-                    Tipoevento tipoeve = new Tipoevento();
-                    tipoeve.setId(2);
-                    logger.loguearEvento(session, tipoeve, usuario.getEntidad(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD);
+                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD);
                 }
             }
             usuario.setEstado(lkEstadoUsuario.getId());
