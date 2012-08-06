@@ -101,6 +101,9 @@ public class Alerta  extends GeneralPage {
     @Property
     @Persist
     private BusquedaEvento eventosistemas;
+    @Property
+    @Persist
+    private String pagina;
     
     @Log
     @SetupRender
@@ -162,9 +165,10 @@ public class Alerta  extends GeneralPage {
     public List<BusquedaEvento> getTrabajadoresservir() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
         query.setParameter("in_rol_id",_usuario.getRol().getId());
-        query.setParameter("in_tipoevento_id",5);
         query.setParameter("in_perfil_id",6); 
+        query.setParameter("in_tipoevento_id","");        
         query.setParameter("in_entidad_id","");  
+        //System.out.println("usuuuuuuu"+_usuario.getRol().getId());
         List result = query.list();
         
         for (int i = 0; i < result.size(); i++) {

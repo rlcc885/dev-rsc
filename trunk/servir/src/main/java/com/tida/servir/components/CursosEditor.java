@@ -25,7 +25,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import com.tida.servir.pages.Busqueda;
-
+import helpers.Logger;
 
 
 
@@ -406,6 +406,7 @@ public class CursosEditor {
                 }
                 else{//guardando
                     //System.out.println("Trabajadorrr"+actual);
+                    Logger logger = new Logger();
                     cursos.setTrabajador(actual);        
                     cursos.setEntidad(_usuario.getTrabajador().getEntidad());
                     cursos.setValidado(false);
@@ -427,6 +428,7 @@ public class CursosEditor {
                     else{
                         cursos.setAgregadotrabajador(false);
                     }
+                    logger.loguearEvento(session, 5, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS);
                 }
                 if(vrevisado==true){
                     if(valrevisado==null){

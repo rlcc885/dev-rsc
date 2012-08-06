@@ -25,6 +25,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import com.tida.servir.pages.Busqueda;
+import org.hibernate.Query;
+import helpers.Logger;
 
 
 /**
@@ -151,6 +153,7 @@ public class EstudiosEditor {
     @Property
     private Boolean vrevisado;
     private int elemento=0;
+    
     
     
 //    @Property
@@ -295,7 +298,7 @@ public class EstudiosEditor {
     
     @Log
     @CommitAfter
-    Object onSuccessFromformulariobotones(){
+    Object onSuccessFromformulariobotones(){        
         if(valestudiando!=null){
             if(valestudiando){
                 vfechahasta=true;
@@ -315,6 +318,7 @@ public class EstudiosEditor {
             
         }
         else if(elemento==1){
+            String hql="";
             if(valdenominacion==null){
                 formlistaestudios.recordError("Debe ingresar la Denominación");
                 return listaZone.getBody();
@@ -364,6 +368,7 @@ public class EstudiosEditor {
                 estudio.setEstudiando(valestudiando);
             }
             else{//guardando
+                Logger logger = new Logger();
                 estudio = new Estudios();
 //                System.out.println("Trabajadorrr"+actual);
                 estudio.setTrabajador(actual);        
@@ -381,6 +386,7 @@ public class EstudiosEditor {
                 else{
                     estudio.setAgregadotrabajador(false);
                 }
+                logger.loguearEvento(session, 5, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS);
             }
             if(vrevisado==true){
                 //System.out.println("aquiiii"+valrevisado);
@@ -388,12 +394,20 @@ public class EstudiosEditor {
                     estudio.setValidado(false);
                 }
                 else{
-                    estudio.setValidado(valrevisado);
+                    estudio.setValidado(valrevisado);                   
                 }
                 
             }
             seteo();
-            session.saveOrUpdate(estudio); 
+            session.saveOrUpdate(estudio);
+            session.flush();
+            if(valrevisado!=null){
+                if(valrevisado==true){
+                    hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id=5 and estadoevento=0";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+                }          
+            }
             editando = false; 
             limpiar();
             formlistaestudios.clearErrors();

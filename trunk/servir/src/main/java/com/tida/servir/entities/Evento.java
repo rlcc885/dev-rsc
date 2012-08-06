@@ -27,7 +27,7 @@ public class Evento implements Serializable {
     private Entidad entidad;
     private long trabajador_id;
     
-    private Tipoevento tipoevento;
+    private long tipoevento_id;
     private Boolean estadoevento;
     @Temporal(TemporalType.DATE)
     private Date fechaevento;
@@ -65,13 +65,12 @@ public class Evento implements Serializable {
         this.trabajador_id = trabajador_id;
     }
     
-    @ManyToOne
-    public Tipoevento getTipoevento() {
-        return tipoevento;
+    public long getTipoevento_id() {
+        return tipoevento_id;
     }
 
-    public void setTipoevento(Tipoevento tipoevento) {
-        this.tipoevento = tipoevento;
+    public void setTipoevento_id(long tipoevento_id) {
+        this.tipoevento_id = tipoevento_id;
     }
     
     public Boolean getEstadoevento() {
