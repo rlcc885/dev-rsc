@@ -68,7 +68,7 @@
                             <t:label for="sentidad">Entidad</t:label>
                             <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
                                     model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:validate="required" t:zone="EntidadZone" t:blankOption="ALWAYS" />
+                                    t:zone="EntidadZone"/>
                         </div>
                     </t:zone>
                 </div>
@@ -118,7 +118,7 @@
                                 <t:label for="ssubentidad">Sub-Entidad</t:label>
                                 <select t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;"
                                     model="SubEntidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
+                                    t:zone="SubEntidadZone"/>
                             </div>
                         </form>
                     </t:if>
@@ -132,6 +132,7 @@
                 </script>
                     <div t:type="zone" t:id="botonesZone" >
                         <t:form t:id="formulariobotones"  zone="botonesZone">
+                            <t:errors/>
                             <div class="f-right">
                                 <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?" /> 
                             </div>

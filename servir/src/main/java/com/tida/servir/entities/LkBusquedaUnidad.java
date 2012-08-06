@@ -39,11 +39,11 @@ public class LkBusquedaUnidad implements Serializable {
     @Column(name = "UNIDADORGANICA_ID")
     private Long unidadorganicaId;
     @Column(name = "CATEGORIAUO_ID")
-    private long categoriauoId;
+    private Long categoriauoId;
     @Column(name = "DESCCATEGORIAUO")
     private String desccategoriauo;
     @Column(name = "ENTIDAD_ID")
-    private long entidadId;
+    private Long entidadId;
     @Column(name = "ESTADO")
     private Boolean estado;
 

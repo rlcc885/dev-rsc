@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -111,6 +112,9 @@ public class EntidadSelect {
     private int elemento = 0;
     @Inject
     private Request request;
+    @Component(id = "formulariobotones")
+    private Form formulariobotones;
+    
 
     //Para inicializar valores
     @Log
@@ -319,11 +323,30 @@ public class EntidadSelect {
             return "Alerta";
         } else {
             if (bessubentidad) {
-                entidad = ssubentidad;
+                if(ssubentidad==null){
+                    formulariobotones.recordError("Tiene que seleccionar una Sub-Entidad");
+                    return UnidadEjecutoraZone.getBody();
+                }
+                else{
+                    entidad = ssubentidad;
+                }
             } else {
-                entidad = sentidad;
+                if(sentidad==null){
+                    formulariobotones.recordError("Tiene que seleccionar una Entidad");
+                    return UnidadEjecutoraZone.getBody();
+                }
+                else{
+                    entidad = sentidad;
+                }                
             }
-            System.out.println("Entroooo");
+//            if(entidad!=null && !entidad.equals("")){
+//                System.out.println("entroooo"+entidad+"--");
+//            }
+//            else{
+//                System.out.println("aquiiiiiiiiii"+entidad);
+//                formulariobotones.recordError("Tiene que seleccionar una entidad");
+//                return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
+//            }
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
             if (_zone != null) {
                 return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
