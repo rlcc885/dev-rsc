@@ -74,6 +74,10 @@ public class FamiliaresEditor {
     @Property
     @Persist
     private boolean bdni;
+    
+    @Property
+    @Persist
+    private boolean bedicion;
    
     //Listado de familiares
     @InjectComponent
@@ -92,6 +96,7 @@ public class FamiliaresEditor {
     @Log
     @SetupRender
     private void inicio() {
+
             familiarActual = new Familiar();
             bdni=false;
             bfechanacimiento=false;
@@ -130,6 +135,7 @@ public class FamiliaresEditor {
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+    
     //para obtener datos del estado civil
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanEstadoCivil() {
@@ -150,7 +156,7 @@ public class FamiliaresEditor {
     Object onSuccessFromFormulariofamiliares() {
         
         //if(bfechanacimiento){
-        
+        if(!bedicion){
         //Codigo de Progenitor = 4
         if(familiarActual.getParentesco().getCodigo()==4){
             Criteria c1 = session.createCriteria(Familiar.class);
@@ -165,6 +171,7 @@ public class FamiliaresEditor {
             c2.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoC=c2.list();
          }
+        }
         //Codigo de Conyugue = 1
 //         if(familiarActual.getParentesco().getCodigo()==1){
 //            Criteria c3 = session.createCriteria(Familiar.class);
@@ -172,20 +179,23 @@ public class FamiliaresEditor {
 //            c3.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
 //            listaParentescoCY=c3.list();
 //        }
-        if(listaParentescoP!=null && listaParentescoP.size()>0 && familiarActual.getParentesco().getCodigo()==4){
-            envelope.setContents("No es posible regstrar mas de un Progenitor");
-            return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
-                    .add("familiaresZone", familiaresZone.getBody());
-        }else if(listaParentescoC!=null && listaParentescoC.size()>0 && familiarActual.getParentesco().getCodigo()==2) {
-             envelope.setContents("No es posible registrar mas de un Conviviente");
-             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
-                    .add("familiaresZone", familiaresZone.getBody());
-//        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
-//             envelope.setContents("No es posible registrar mas de un Cónyugue");
-//             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
-//                    .add("familiaresZone", familiaresZone.getBody());
+         System.out.println("entro: "+bedicion);      
+         if(listaParentescoP!=null && listaParentescoP.size()>0 && familiarActual.getParentesco().getCodigo()==4 && !bedicion){
+                envelope.setContents("No es posible regstrar mas de un Progenitor");
+                return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+                        .add("familiaresZone", familiaresZone.getBody());
+         }
+         else if(listaParentescoC!=null && listaParentescoC.size()>0 && familiarActual.getParentesco().getCodigo()==2 && !bedicion) {
+                envelope.setContents("No es posible registrar mas de un Conviviente");
+                return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+                        .add("familiaresZone", familiaresZone.getBody());
+
+    //        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
+    //             envelope.setContents("No es posible registrar mas de un Cónyugue");
+    //             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+    //                    .add("familiaresZone", familiaresZone.getBody());
         }else{
-            System.out.println("Entro aka FINAL");
+             
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
             if(valsexo!=null){
@@ -199,15 +209,16 @@ public class FamiliaresEditor {
             else{
                 familiarActual.setSexo(null);
             }
- 
             session.saveOrUpdate(familiarActual);
             envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
             familiarActual=new Familiar();
             valsexo=null;
+            bedicion=false;
             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("listaFamiliaresZone", listaFamiliaresZone.getBody())
-                    .add("familiaresZone", familiaresZone.getBody());  
-        }
+                    .add("familiaresZone", familiaresZone.getBody());
+         }
+
         /*}else{
             if(familiarActual.getFechaNacimiento()!=null){
                     bfechanacimiento=true;
@@ -230,7 +241,8 @@ public class FamiliaresEditor {
     Object onSuccessFromFormulariobotones() {
         if(elemento==1){
             familiarActual=new Familiar();
-            bdni=true;
+            bdni=false;
+            bedicion=false;
             bfechanacimiento=false;
             valsexo=null;
             return  familiaresZone.getBody();
@@ -243,22 +255,24 @@ public class FamiliaresEditor {
     }
     
     @Log
-    Object onActionFromEditar(Familiar fami) {        
+    Object onActionFromEditar(Familiar fami) {
+        
         familiarActual=fami;
-        if(familiarActual.getSexo()!=null){
-            if(familiarActual.getSexo().equals("M")){
+          if(familiarActual.getSexo()!=null){
+            if(familiarActual.getSexo().equalsIgnoreCase("M")){
                 valsexo="MASCULINO";            
             }
-            else if(actual.getSexo().equals("F")){
+            else if(familiarActual.getSexo().equalsIgnoreCase("F")){
                 valsexo="FEMENINO";
             }
             else{
                 valsexo=null;
             }
-        }
-        else{
-            valsexo=null;
-        }
+          }else{
+                valsexo=null;
+          }
+        bedicion=true;
+
            return familiaresZone.getBody(); 
     }
     

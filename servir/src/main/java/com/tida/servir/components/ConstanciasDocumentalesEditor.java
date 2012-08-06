@@ -119,7 +119,8 @@ public class ConstanciasDocumentalesEditor {
     public List<ConstanciaDocumental> getListadoDocumentos() {
         System.out.println("aaa "+buscarlegajo().getCod_legajo());
         Criteria c = session.createCriteria(ConstanciaDocumental.class);
-        c.add(Restrictions.eq("entrego",true));  
+        c.add(Restrictions.eq("entrego",true));
+        c.add(Restrictions.eq("legajo",buscarlegajo()));
          System.out.println("aaa "+c.list().size());
         return c.list();
     }
