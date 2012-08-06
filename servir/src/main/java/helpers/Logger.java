@@ -152,7 +152,7 @@ public class Logger {
     @Log
     @CommitAfter
     public void loguearEvento(Session session, long tipoevento, Entidad entidad, long trabajador,
-        String descripcion) {
+        String descripcion,long tabla) {
         Evento e = new Evento();
         e.setTipoevento_id(tipoevento);
         e.setEntidad(entidad);
@@ -160,6 +160,7 @@ public class Logger {
         e.setDescevento(descripcion);
         e.setFechaevento(new Date());
         e.setEstadoevento(Boolean.FALSE);
+        e.setTabla_id(tabla);
         session.persist(e);
         //session.flush();
     }
