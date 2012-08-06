@@ -245,14 +245,12 @@
     <t:if test="vselect">
         <div id="grillas-busquedas">
             <div id="tablaTrabajador">
-                <h2>Trabajadores</h2>
+                <h2>Lista de Trabajadores</h2>
                 <t:zone t:id="empleadoszone">
                     <t:form t:id="xxx"  zone="empleadoszone">
                         <t:errors/> 
-                        <t:grid source="empleados" rowsPerPage="15" row="e" t:add="Acciones"
-                        pagerPosition="bottom" reorder="nroDocumento,apellidoPaterno,
-                        apellidoMaterno,nombres" t:context="e" 
-                        include="nroDocumento,nombres,apellidoPaterno,apellidoMaterno" inPlace="true">
+                        <t:grid source="empleados" rowsPerPage="15" row="persons" t:add="Acciones"
+                        pagerPosition="bottom" inPlace="true">
                     <!-- t:rowclass="prop:selectionrow" <t:parameter name="nroDocumentoCell">
                             <a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#">${e.nroDocumento}</a>
                     </t:parameter> -->
@@ -263,14 +261,14 @@
                                 </div>
                             </t:parameter>
                             <p:accionesCell>
-                                <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="e.id" href="#">Personales</a>
+                                <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="persons.id" href="#">Personales</a>
                                 |
-                                <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="e.id" href="#">Familiares</a>
+                                <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="persons.id" href="#">Familiares</a>
                                 |
-                                <a t:type="pagelink" t:page="Meritos" t:context="e.id" href="#">Laborales</a>
-                        <!--|<a t:type="eventLink" t:event="toCargo" t:context="e" t:zone="cargosGrillaZone" href="#"> Cargos </a>-->
+                                <a t:type="pagelink" t:page="Meritos" t:context="persons.id" href="#">Laborales</a>
+                        
                                 |
-                                <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="e.id" href="#">Documentos</a>
+                                <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                             </p:accionesCell>
 
                         </t:grid>

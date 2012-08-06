@@ -113,13 +113,13 @@ public class RecuperarClave {
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
 
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
-            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED,0);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
             return this;
         }
 
         if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
-            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW,0);
             formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
             return this;
         }
@@ -145,7 +145,7 @@ public class RecuperarClave {
             //formulariologin.recordError("La nueva contraseña ha sido enviado a su correo electrónico laboral. Verifique su bandeja de entrada.");
         } else {
             System.out.println("envío Fallido");
-            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_ERROR_RECUPERAR_CLAVE);
+            logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidad(), usuarioTrabajador.getTrabajadorid(), Logger.LOGIN_MOTIVO_ERROR_RECUPERAR_CLAVE,0);
 //            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
             formulariologin.recordError("Hubo un problema al enviar la nueva contraseña a su correo electrónico. Intente más tarde.");
         }

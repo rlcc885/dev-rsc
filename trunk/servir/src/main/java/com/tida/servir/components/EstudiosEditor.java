@@ -320,46 +320,28 @@ public class EstudiosEditor {
             Logger logger = new Logger();
             String hql="";
             if(valdenominacion==null){
-                formlistaestudios.recordError("Debe ingresar la Denominación");
+                formlistaestudios.recordError("Tiene que ingresar la Denominación");
                 return listaZone.getBody();
             }
             if(valtipoestudio==null){
-                formlistaestudios.recordError("Debe seleccionar el Tipo de Estudio");
+                formlistaestudios.recordError("Tiene que seleccionar el Tipo de Estudio");
                 return listaZone.getBody();
             }
             if(valcentroestudio==null){
-                formlistaestudios.recordError("Debe seleccionar el Centro de Estudio");
+                formlistaestudios.recordError("Tiene que seleccionar el Centro de Estudio");
                 return listaZone.getBody();
             }
             if(valfec_desde==null){
-                formlistaestudios.recordError("Debe ingresar Fecha de Inicio");
+                formlistaestudios.recordError("Tiene que ingresar Fecha de Inicio");
                 return listaZone.getBody();
             }
-            if(valestudiando!=null){
-//                System.out.println("Editooooooooo");
-                if(valestudiando==false){
-                    if(valfec_hasta==null){
-                        formlistaestudios.recordError("Debe ingresar Fecha de Fin");
-                        return listaZone.getBody();
-                    }
-                    if (valfec_desde.after(valfec_hasta)) {
-                        formlistaestudios.recordError("Las fechas de fin no pueden ser menores a las de inicio");
-                        return listaZone.getBody();
-                    }  
-                }
+            if(valfec_desde.after(new Date())){
+                formlistaestudios.recordError("La fecha de inicio debe ser previa a la fecha actual.");
+                return listaZone.getBody();
             }
-            //fechas no deben ser iguales, fechas no deben ser mayores que la actualidad 
-            else{
-                if(valfec_hasta==null){
-                        formlistaestudios.recordError("Debe ingresar Fecha de Fin");
-                        return listaZone.getBody();
-                    }
-                if (valfec_desde.after(valfec_hasta)) {
-                        formlistaestudios.recordError("Las fechas de fin no pueden ser menores a las de inicio");
-                        return listaZone.getBody();
-                    } 
+            if(validando()==false){
+                return listaZone.getBody();
             }
-
             if(editando){
                 //editando
                 if(usua.getAccesoreport()==0){
@@ -386,7 +368,7 @@ public class EstudiosEditor {
                 else{
                     estudio.setAgregadotrabajador(false);
                 }
-                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS);
+                
             }
             if(vrevisado==true){
                 //System.out.println("aquiiii"+valrevisado);
@@ -400,10 +382,12 @@ public class EstudiosEditor {
             }
             seteo();
             session.saveOrUpdate(estudio);
-            session.flush();
+            if(!editando){
+                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS,estudio.getId());
+            }
             if(valrevisado!=null){
                 if(valrevisado==true){                    
-                    hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_ESTUDIOS+"' and estadoevento=0";
+                    hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_ESTUDIOS+"' and tabla_id='"+estudio.getId()+"' and estadoevento=0";
                     System.out.println("aquiiiii"+hql);
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
@@ -417,6 +401,51 @@ public class EstudiosEditor {
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
                     .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+    }
+    
+    boolean validando(){
+       boolean resultado=true;
+       if(valestudiando!=null){
+            if(valestudiando==false){
+                
+                if(valfec_hasta==null){
+                    formlistaestudios.recordError("Debe ingresar Fecha de Fin");
+                    resultado=false;
+                }
+                else if(valfec_hasta.after(new Date())){
+                    formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                    resultado=false;
+                }                                
+                else if (valfec_desde.after(valfec_hasta)){
+                    formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
+                    resultado=false;
+                }  
+                else if(valfec_desde.equals(valfec_hasta)){
+                    resultado=false;
+                    formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
+                }
+            }
+            else{
+                if(valfec_hasta==null){
+                    formlistaestudios.recordError("Tiene que ingresar Fecha de Fin");
+                    resultado=false;
+                }
+                else if(valfec_hasta.after(new Date())){
+                    formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                    resultado=false;
+                }                                
+                else if (valfec_desde.after(valfec_hasta)){
+                    formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
+                    resultado=false;
+                }  
+                else if(valfec_desde.equals(valfec_hasta)){
+                    resultado=false;
+                    formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
+                }
+            }
+       }       
+        System.out.println("resuuuuuu"+resultado);
+       return resultado;
     }
     
     void mostrar(){        

@@ -31,7 +31,7 @@ public class Evento implements Serializable {
     private Boolean estadoevento;
     @Temporal(TemporalType.DATE)
     private Date fechaevento;
-
+    private long tabla_id;
       
     public String getDescevento() {
         return descevento;
@@ -63,6 +63,14 @@ public class Evento implements Serializable {
 
     public void setTrabajador_id(long trabajador_id) {
         this.trabajador_id = trabajador_id;
+    }
+    
+    public long getTabla_id() {
+        return tabla_id;
+    }
+
+    public void setTabla_id(long tabla_id) {
+        this.tabla_id = tabla_id;
     }
     
     public long getTipoevento_id() {

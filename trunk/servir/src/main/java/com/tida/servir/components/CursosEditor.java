@@ -355,7 +355,7 @@ public class CursosEditor {
             
         }
         else if(elemento==1){            
-        
+            Logger logger = new Logger();
             if(valdenominacion==null){
                     formlistacursos.recordError("Debe ingresar la Denominación");
                     return listadoZone.getBody();
@@ -405,8 +405,7 @@ public class CursosEditor {
 
                 }
                 else{//guardando
-                    //System.out.println("Trabajadorrr"+actual);
-                    Logger logger = new Logger();
+                    //System.out.println("Trabajadorrr"+actual);                    
                     cursos.setTrabajador(actual);        
                     cursos.setEntidad(_usuario.getTrabajador().getEntidad());
                     cursos.setValidado(false);
@@ -427,8 +426,7 @@ public class CursosEditor {
                     }
                     else{
                         cursos.setAgregadotrabajador(false);
-                    }
-                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS);
+                    }                    
                 }
                 if(vrevisado==true){
                     if(valrevisado==null){
@@ -441,6 +439,9 @@ public class CursosEditor {
                 }
                 seteo();
                 session.saveOrUpdate(cursos); 
+                if(!editando){
+                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS,cursos.getId());
+                }
                 editando = false; 
                 limpiar();
                 formlistacursos.clearErrors();

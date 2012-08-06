@@ -14,7 +14,7 @@
         </t:if>-->
 
       <div id = "Datos_Generales">
-           <h2> Modificar trabajador </h2>
+           <h2> Legajo - Datos Laborales </h2>
            <div id= "basicosTrabajador">
                <h3><!--${actual.tipoDocumento}: ${actual.nroDocumento}-->
                ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
