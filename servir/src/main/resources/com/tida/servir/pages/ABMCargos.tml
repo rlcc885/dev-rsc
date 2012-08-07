@@ -28,7 +28,7 @@
                     
                 </form>
             </t:zone>-->
-            <t:zone t:id="nivelUOZone" t:update="show">
+            <t:zone t:id="nivelUOZone">
                 <form t:type="form" t:id="xxx" t:zone="listaCargo">
                    <!-- <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
                         <!--<t:if test = "hayNivel">-->
@@ -42,7 +42,7 @@
                           <label>Unidad Orgánica</label>
                             <select t:type="select" t:id="select_unidadOrganica"
                                     model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
-                                    onChange="this.form.fire()" t:zone="listaCargo"/>
+                                    onChange="this.form.fire()" t:zone="nivelUOZone"/>
                             </div>
                         <div class="f-left">
                             <label>Denominación</label>
@@ -107,26 +107,29 @@
                 <span class="box-title-02"><strong style="cursor:pointer;">+</strong> Listar Cargo/Puesto</span>
             </div>
             <div id="panel-02" class="box" >
-            <t:form t:id="formlistaunidad">                
-                
+            <t:form t:id="formlistaunidad">
+                <!--<t:eventLink t:event="mostrartodos" href="#" t:zone="listaCargo">
+                    Mostrar Todos
+                </t:eventLink>-->
+                <br/>
                 <div id = "tabla_cargo">
                     <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" inPlace="true"
-                            row="c" exclude= "situacioncap,esorganico,supervisapersonal,und_organica,dec_jurada_byr, estado, nivel_unidad_organica,ctd_puestos_total,presupuestado_PAP">
+                            row="lkcargo" >
                         <t:parameter name="empty">
                             <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="${veditar}">
-                                <t:actionlink t:id="editar" zone="listaCargo" context="c">Editar</t:actionlink>
+                                <t:actionlink t:id="editar" zone="listaCargo" context="lkcargo">Editar</t:actionlink>
                             </t:if>
                             <t:if test="${veditar}" negate="true">
-                                <t:actionlink t:id="detalle" zone="listaCargo" context="c">Ver Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle" zone="listaCargo" context="lkcargo">Detalle</t:actionlink>
                             </t:if>
                                 <!--
                                 <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
                                 --> 
                             <t:if test="${veliminar}">    
-                                | <a t:type="eventLink" t:event="borrarDato" t:context="c"
+                                | <a t:type="eventLink" t:event="borrarDato" t:context="lkcargo"
                                      t:zone="listaCargo" href="#"><span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
                                     Eliminar
                                     </span> </a>
@@ -262,11 +265,11 @@
                             <br/>
                             <t:if test="${vbotones}">
                             <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="ABMCargos" class="button"/>                            
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/> 
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>                            
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
                             
                             </t:if>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="ABMCargos" class="button" /> 
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button" /> 
                         </div>
                      
                         <br style="clear: both;" />

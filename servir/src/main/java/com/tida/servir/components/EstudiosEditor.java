@@ -155,43 +155,6 @@ public class EstudiosEditor {
     private int elemento=0;
     
     
-//    @Property
-//    @SessionState
-//    private DatoAuxiliar valtipoestudio;
-//    @Property
-//    @SessionState
-//    private DatoAuxiliar valcentroestudio;
-//    @Property
-//    @SessionState
-//    private String valotrocentro;
-//    @Property
-//    @SessionState
-//    private DatoAuxiliar pais;
-    
-
-
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.puedeEscribir(_usuario, _oi);
-//    }
-    
-
-    
-//    public List<String> getValorTablaAuxiliar(String tabla) {
-//    	// TODO: este codigo esta duplicado
-//    	Criteria c = session.createCriteria(DatoAuxiliar.class);
-//    	c.add(Restrictions.eq("nombreTabla", tabla));
-//    	c.setProjection(Projections.property("valor"));
-//        return c.list();
-//    }
-//
-//    public List<String> getNiveles() {
-//    	return getValorTablaAuxiliar("NivelTitulo");
-//    }
-    
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
         Criteria c = session.createCriteria(LkBusquedaEstudios.class);
@@ -252,28 +215,7 @@ public class EstudiosEditor {
         }
         return primerZone.getBody();
     }
-        
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformulariodos(){
-//        if(valestudiando){
-//            vfechahasta=true;
-//            valfec_hasta=null;
-//        }
-//        else{
-//            vfechahasta=false;
-//        }
-//        return tercerZone.getBody();
-//    }
-    
-//    @Log
-//    void onValidateFromformulariobotones() {
-//        //formlistaestudios.recordError("Debe ingresar la Denominación");
-//        
-//        
-//        
-//    }
-    
+
     void onSelectedFromSave() {        
         elemento=1;   
     }
@@ -382,14 +324,16 @@ public class EstudiosEditor {
             }
             seteo();
             session.saveOrUpdate(estudio);
+            session.flush();
             if(!editando){
-                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_ESTUDIOS,estudio.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS,estudio.getId());
             }
             if(valrevisado!=null){
                 if(valrevisado==true){                    
                     String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_ESTUDIOS+"' and tabla_id='"+estudio.getId()+"' and estadoevento=0";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
+                    session.flush();
                 }          
             }
             editando = false; 
@@ -600,78 +544,5 @@ public class EstudiosEditor {
         valrevisado=null;
         vfechahasta=false;
     }
-    
-
-    
-
-  
-//  @CommitAfter
-//  public Object onSuccess()
-//  {
-//      for(Titulo tit : actual.titulos) {
-//    	  
-//          if(tit.getFec_emision().after(new Date())) {
-//            Logger logger = new Logger();
-//            logger.loguearError(session, _usuario, tit.getId().toString(),
-//                            Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
-//                            Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
-//
-//            _form.recordError(Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL);
-//            return this;
-//          }
-//    }
-//      
-//      //es el usuario trabajador o no
-//      /*if(_usuario.getTipo_usuario().equals("")){
-//          titulo.setAgregadoTrabajador(Boolean.TRUE);
-//      }*/
-//        _form.clearErrors();
-//        envelope.setContents(helpers.Constantes.TITULO_EXITO);
-//
-//	return this;
-//  }
-
-//     Object onFailure() {
-//          return this;
-//    }
-     
-// 	@Log
-//	Object onValidateFormtitulosEdit()
-//	{
-//		if(titulo.getFec_emision().after(new Date())) {
-//                        Logger logger = new Logger();
-//    			logger.loguearError(session, _usuario, titulo.getId().toString(),
-//    					Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
-//    					Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
-//
-//			_form.recordError(Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL);
-//		}
-//		return this;
-//	}
-
-
-//  @CommitAfter
-//  Object onAddRow()
-//  {
-//    Titulo tit = new Titulo();
-//    if(actual.getTitulos() == null){
-//        actual.setTitulos(new ArrayList<Titulo>());
-//    }
-//    tit.setTrabajador(actual);
-//    if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
-//        titulo.setAgregadoTrabajador(Boolean.TRUE);
-//    actual.getTitulos().add(tit);
-//    session.saveOrUpdate(actual);
-//	new Logger().loguearOperacion(session, _usuario, String.valueOf(tit.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TITULO);
-//    return tit;
-//  }
-
-//  @CommitAfter
-//  void onRemoveRow(Titulo tit)
-//  {
-//    actual.getTitulos().remove(tit);
-//    session.delete(tit);
-//    new Logger().loguearOperacion(session, _usuario, String.valueOf(tit.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TITULO);
-//  }
   
 }

@@ -47,7 +47,7 @@ public class ABMCargos extends GeneralPage {
     private Cargoxunidad c;
     @Property
     @Persist
-    private UnidadOrganica uo;
+    private LkBusquedaUnidad uo;
     @Property
     @SessionState
     private Entidad entidadUE;
@@ -64,7 +64,7 @@ public class ABMCargos extends GeneralPage {
     @Persist
     private RegimenGrupoNivel regimengruponivel;
     @Persist
-    private GenericSelectModel<UnidadOrganica> _beanUOrganicas;
+    private GenericSelectModel<LkBusquedaUnidad> _beanUOrganicas;
     @Inject
     private PropertyAccess _access;
     @InjectComponent
@@ -145,6 +145,9 @@ public class ABMCargos extends GeneralPage {
      /*@Property
     @Persist
     private Ocupacional ocupacional;*/
+    @Property
+    @Persist
+    private LkBusquedaCargo lkcargo;
     
     @Log
     @SetupRender
@@ -262,16 +265,19 @@ public class ABMCargos extends GeneralPage {
     }
 
     @Log
-    public GenericSelectModel<UnidadOrganica> getBeanUOrganicas() {
-        List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));        
-        c.add(Restrictions.eq("entidad", entidadUE));
+    public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicas() {
+        String consulta="SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"+
+          " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"+
+          " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"+
+          " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO!=0 AND S1.ENTIDAD_ID='"+entidadUE.getId()+"'";
         if(nivel!=null){
-            c.add(Restrictions.eq("nivel", nivel));
+            consulta+=" AND S1.NIVEL='"+nivel+"'";
         }
-        list = c.list();
-        _beanUOrganicas = new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
+        consulta+="ORDER BY(DENOMINACION)";
+        List<LkBusquedaUnidad> list;
+        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
+        list=query.list();
+        _beanUOrganicas = new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
         return _beanUOrganicas;
     }
     
@@ -287,42 +293,45 @@ public class ABMCargos extends GeneralPage {
     }
     
     @Log
-    public List<Cargoxunidad> getCargos() {
-        Criteria c = session.createCriteria(Cargoxunidad.class);
-        c.createAlias("unidadorganica", "unidadorganica"); 
-        c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
-        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
+    public List<LkBusquedaCargo> getCargos() {
+        String consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
+                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
+                        "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='"+entidadUE.getId()+"'";
+//        Criteria c = session.createCriteria(Cargoxunidad.class);
+//        c.createAlias("unidadorganica", "unidadorganica"); 
+//        c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
+//        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
         if(num3==2){
             
         }
-        else{  
+        else{          
             if(nivel!= null){
-                c.add(Restrictions.eq("unidadorganica.nivel", nivel));     
+               consulta+=" AND S2.NIVEL='"+nivel+"'";     
             }
             if (uo != null && !uo.equals("")) {
-                c.add(Restrictions.eq("unidadorganica", uo));
+                consulta+=" AND S1.UNIDADORGANICA_ID='"+uo.getId()+"'";     
             }
             if (bdcargo != null && !bdcargo.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("den_cargo", bdcargo + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdcargo.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("den_cargo", bdcargo.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
+                consulta+=" AND UPPER(S1.DEN_CARGO) LIKE UPPER('"+bdcargo+"')||'%'";
+            }            
             if (valsituacioncap != null && !valsituacioncap.equals("")) {
-                c.add(Restrictions.like("situacioncap", valsituacioncap));
+                consulta+=" AND S1.SITUACIONCAP_ID='"+valsituacioncap.getId()+"'"; 
             }
             if (bregimengruponivel.getRegimen() != null && !bregimengruponivel.getRegimen().equals("")) {
-                c.createAlias("regimenlaboral", "regimenlaboral");
-                c.add(Restrictions.like("regimenlaboral", bregimengruponivel.getRegimen()));
+                consulta+=" AND S1.REGIMENLABORAL_ID='"+bregimengruponivel.getRegimen().getId()+"'"; 
             }
             if (bregimengruponivel.getGrupo() != null && !bregimengruponivel.getGrupo().equals("")) {
-                c.createAlias("grupoOcupacional", "grupoOcupacional");
-                c.add(Restrictions.like("grupoOcupacional", bregimengruponivel.getGrupo()));
+                consulta+=" AND S1.GRUPOOCUPACIONAL_ID='"+bregimengruponivel.getGrupo().getId()+"'"; 
             }
             if (bregimengruponivel.getNivelRemunerativo() != null && !bregimengruponivel.getNivelRemunerativo().equals("")) {
-                c.createAlias("nivelRemunerativo", "nivelRemunerativo");  
-                c.add(Restrictions.like("nivelRemunerativo", bregimengruponivel.getNivelRemunerativo()));
+                consulta+=" AND S1.NIVELREMUNERATIVO_ID='"+bregimengruponivel.getNivelRemunerativo().getId()+"'"; 
             } 
         }
-        c.addOrder(Order.asc("den_cargo"));
-        return c.list();
+        consulta+=" ORDER BY(DENOMINACION)";
+        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
+        return query.list();
     }
 
     /*@InjectComponent
@@ -740,4 +749,18 @@ public class ABMCargos extends GeneralPage {
         uo = null;
         return nivelUOZone.getBody();
     }
+    
+//    @Log
+//    @CommitAfter
+//    Object onMostrartodos() {
+//        num2=3;
+//        mostrar=true; 
+//        nivel=null; 
+//        valsituacioncap=null;
+//        bdcargo=null;        
+//        bregimengruponivel = new RegimenGrupoNivel();
+//        uo=null;
+//        num3=2;
+//        return listaCargo.getBody();        
+//    }
 }

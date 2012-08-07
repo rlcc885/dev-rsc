@@ -99,7 +99,7 @@ public class AMUnidadOrganica extends GeneralPage {
     private DatoAuxiliar valcategoria;
     @Property
     @Persist
-    private UnidadOrganica buoAntece;
+    private LkBusquedaUnidad buoAntece;
     @InjectComponent
     @Property
     private Zone filtrosZone;
@@ -150,6 +150,8 @@ public class AMUnidadOrganica extends GeneralPage {
     @Log
     //@SetupRender
     void SetupRender() {
+        onSelectedFromLimpia();
+        onSelectedFromReset();
         unidadOrganica = new UnidadOrganica();
         ubigeoDomicilio = new Ubigeo();
         nivelUO = 1;
@@ -184,46 +186,26 @@ public class AMUnidadOrganica extends GeneralPage {
         }
     }
 
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformNivelUOUnidad() {
-////        if(bnivelUO==1){
-////            siuno=false;
-////        }
-////        else if(bnivelUO== null){
-////            siuno=false;
-////        }
-////        else{
-////            siuno=true;
-////        }
-//
-////        if (getPuedeEditar()) {
-////            System.out.println("--------- entrÃ© iuci");
-////            //onUbigeoEntidadUOAntecesora();
-////            return new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("bnivelZone", bnivelZone.getBody());
-////        }
-//////        formularioaltaunidadorganica.recordError(String.valueOf(buoAntecesora.getId()));
-//////        unidadOrganica.setDen_und_organica(String.valueOf(buoAntecesora.getId()));
-//        buoAntece=null;        
-//        return nivelUOZone.getBody();
-//    }
+
     @Log
     public boolean getHayNivel() {
         return !(bnivelUO == null);
     }
 
     @Log
-    public GenericSelectModel<UnidadOrganica> getbbeansUO() {
-
-        Criteria c;
-        c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidad", entidadUE));
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
-        if (bnivelUO != null) {
-            c.add(Restrictions.eq("nivel", bnivelUO - 1));
+    public GenericSelectModel<LkBusquedaUnidad> getbbeansUO() {
+        String consulta="SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"+
+          " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"+
+          " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"+
+          " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='"+entidadUE.getId()+"'";
+        if(bnivelUO!=null){
+            consulta+=" AND S1.NIVEL='"+(bnivelUO-1)+"'";
         }
-
-        return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
+        consulta+="ORDER BY(DENOMINACION)";
+        List<LkBusquedaUnidad> list;
+        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
+        list=query.list();
+        return new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
     }
 
     void onSelectedFromReset() {
@@ -291,7 +273,7 @@ public class AMUnidadOrganica extends GeneralPage {
             this.onSelectedFromReset();
             //formularioaltaunidadorganica.recordError(String.valueOf(buoAntece));
         }
-        ubicacion();
+        //ubicacion();
         return zonas();
     }
 
@@ -895,7 +877,7 @@ public class AMUnidadOrganica extends GeneralPage {
         return nivelUOZone.getBody();
     }
 
-    Object onValueChangedFromBunidadOrganica_uoa(UnidadOrganica dato) {
+    Object onValueChangedFromBunidadOrganica_uoa(LkBusquedaUnidad dato) {
         buoAntece = dato;
         return nivelUOZone.getBody();
     }

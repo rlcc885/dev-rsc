@@ -93,9 +93,9 @@
               
             <t:if test="${vbotones}">
                 <div class="actions f-right">
-                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" class="button"/> 
-                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/>
-                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/> 
+                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
+                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
+                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
                    
                 </div>
             </t:if>
@@ -183,11 +183,11 @@
                                     <t:actionlink t:id="editar" zone="listaZone" context="listacurso">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${listacurso.validado}">
-                                    <t:actionlink t:id="detalles" zone="listaZone" context="listacurso">Ver Detalle</t:actionlink>
+                                    <t:actionlink t:id="detalles" zone="listaZone" context="listacurso">Detalle</t:actionlink>
                                 </t:if>
                             </t:if>
                             <t:if test="${veditar}" negate="true">
-                                <t:actionlink t:id="detalle" zone="listaZone" context="listacurso">Ver Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle" zone="listaZone" context="listacurso">Detalle</t:actionlink>
                             </t:if>
                             <t:if test="${veliminar}">
                                 <t:if test="${listacurso.validado}" negate="true">

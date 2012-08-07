@@ -428,15 +428,19 @@ public class CursosEditor {
 
                 }
                 seteo();
-                session.saveOrUpdate(cursos); 
+                session.saveOrUpdate(cursos);
+                session.flush();
                 if(!editando){
-                logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MODIFICACION_PERSONALES_CURSOS,cursos.getId());
+                    System.out.println("primerooooooo"+editando);
+                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MOTIVO_PERSONALES_CURSOS,cursos.getId());
                 }
                 if(valrevisado!=null){
-                    if(valrevisado==true){                    
+                    if(valrevisado==true){
+                        System.out.println("segundoooooo");
                         String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+cursos.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_CURSOS+"' and tabla_id='"+cursos.getId()+"' and estadoevento=0";
                         Query query = session.createSQLQuery(hql);
                         int rowCount = query.executeUpdate();
+                        session.flush();
                     }          
                 }
                 editando = false; 

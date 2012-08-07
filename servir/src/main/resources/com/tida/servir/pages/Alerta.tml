@@ -44,7 +44,7 @@
                     <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoentidad" reorder="nombres,entidad,fechaevento">
+                                row="eventoentidad" reorder="nombres,entidad,fechaevento" exclude="descripcion">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
