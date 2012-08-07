@@ -7,7 +7,6 @@ package com.tida.servir.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -55,7 +54,7 @@ public class Perfil implements Serializable {
     @Column(name = "DESCPERFIL")
     private String descperfil;
     @Column(name = "ESTADO")
-    Boolean estado;
+    private Boolean estado;
 
     public Perfil() {
     }
