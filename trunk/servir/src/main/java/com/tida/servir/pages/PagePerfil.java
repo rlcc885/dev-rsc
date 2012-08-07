@@ -113,6 +113,8 @@ public class PagePerfil {
         mostrarNuevoPermiso = false;
         mostrarEditPermiso = false;
         perfil = new Perfil();
+        perfil.setFechacreacion(new Date());
+        perfil.setEstado(true);
     }
 
     @Log
