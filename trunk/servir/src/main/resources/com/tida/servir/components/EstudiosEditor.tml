@@ -111,9 +111,9 @@
           </div>            
             <t:if test="${vbotones}">
                 <div class="actions f-right">                    
-                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button"/>
-                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" class="button"/> 
-                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button"/> 
+                    <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
+                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
+                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
                 </div>
             </t:if>
         </t:form>
@@ -200,11 +200,11 @@
                                     <t:actionlink t:id="editar" zone="listaZone" context="listaestu">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${listaestu.validado}">
-                                    <t:actionlink t:id="detalles" zone="listaZone" context="listaestu">Ver Detalle</t:actionlink>
+                                    <t:actionlink t:id="detalles" zone="listaZone" context="listaestu">Detalle</t:actionlink>
                                 </t:if>
                             </t:if>
                             <t:if test="${veditar}" negate="true">
-                                <t:actionlink t:id="detalle" zone="listaZone" context="listaestu">Ver Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle" zone="listaZone" context="listaestu">Detalle</t:actionlink>
                             </t:if>
                             <t:if test="${veliminar}">
                                 <t:if test="${listaestu.validado}" negate="true">

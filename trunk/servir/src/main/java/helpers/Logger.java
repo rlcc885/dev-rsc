@@ -79,8 +79,13 @@ public class Logger {
     public static final String RESULTADO_OPERACION_ERROR = "ERROR";
     public static final String CORREO_FAIL_RESET_PASSWORD = "Conexión con el Servidor de Correos no establecida al reestablecer contraseña.";
     
-    public static final String MODIFICACION_PERSONALES_ESTUDIOS = "ESTUDIOS DEL TRABAJADOR MODIFICADOS";
-    public static final String MODIFICACION_PERSONALES_CURSOS = "CURSOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_PERSONALES_ESTUDIOS = "ESTUDIOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_PERSONALES_CURSOS = "CURSOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_PERSONALES_EXPERIENCIA = "EXPERIENCIA LABORAL DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_PERSONALES_PRODUCCION = "PRODUCCION INTELECTUAL DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_FAMILIARES = "FAMILIARES DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_LABORALES_MERITOS = "METIROS/DEMERITOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_DOCUMENTOS_DOCUMENTOS = "DOCUMENTOS DEL TRABAJADOR MODIFICADOS";
     @Inject
     private HttpServletRequest requestGlobal;
 
@@ -161,7 +166,7 @@ public class Logger {
         e.setFechaevento(new Date());
         e.setEstadoevento(Boolean.FALSE);
         e.setTabla_id(tabla);
-        session.persist(e);
-        //session.flush();
+        session.save(e);
+        session.flush();
     }
 }

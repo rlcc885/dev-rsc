@@ -249,11 +249,11 @@
                 
                <div class="clear"  id="actualizar_dpe">
                      <t:if test="vbotones">             
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>                            
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                            
                      </t:if>
                      <t:if test="vbotones" negate="true">
-                            <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" class="button f-right"/>
+                            <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                      </t:if>
                </div>
             </form>

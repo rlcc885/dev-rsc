@@ -21,6 +21,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -105,7 +106,7 @@ public class FamiliaresEditor {
             }else{
                 bvalidausuario=false;
             }
-            
+            bedicion=false;   
     }
     
     @Log
@@ -154,7 +155,7 @@ public class FamiliaresEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariofamiliares() {
-        
+        Logger logger = new Logger(); 
         //if(bfechanacimiento){
         if(!bedicion){
         //Codigo de Progenitor = 4
@@ -171,6 +172,13 @@ public class FamiliaresEditor {
             c2.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoC=c2.list();
          }
+            if(_usuario.getRol().getId()==1){
+                familiarActual.setAgregadoTrabajador(true);
+            }
+            else{
+                familiarActual.setAgregadoTrabajador(false);
+            }  
+        
         }
         //Codigo de Conyugue = 1
 //         if(familiarActual.getParentesco().getCodigo()==1){
@@ -189,7 +197,8 @@ public class FamiliaresEditor {
                 envelope.setContents("No es posible registrar mas de un Conviviente");
                 return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                         .add("familiaresZone", familiaresZone.getBody());
-
+         
+                
     //        }else if(listaParentescoCY!=null && listaParentescoCY.size()>0 && familiarActual.getParentesco().getCodigo()==1) {
     //             envelope.setContents("No es posible registrar mas de un Cónyugue");
     //             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
@@ -210,6 +219,20 @@ public class FamiliaresEditor {
                 familiarActual.setSexo(null);
             }
             session.saveOrUpdate(familiarActual);
+            session.flush();
+            
+            if(!bedicion){
+                logger.loguearEvento(session, logger.MODIFICACION_FAMILIAR, _oi, actual.getId(), logger.MOTIVO_FAMILIARES,familiarActual.getId());
+            }
+            if(familiarActual.getValidado()!=null){
+                if(familiarActual.getValidado()==true){                    
+                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+familiarActual.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_FAMILIAR+"' and tabla_id='"+familiarActual.getId()+"' and estadoevento=0";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+                    session.flush();
+                }          
+            }            
+            
             envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
             familiarActual=new Familiar();
             valsexo=null;

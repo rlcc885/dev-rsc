@@ -46,7 +46,7 @@
                     <div class="f-left">
                         <label>Unidad Orgánica Antecesora</label>
                         <select t:type="select" t:id="bunidadOrganica_uoa"
-                                model="bbeansUO" value="buoAntece" t:zone="nivelUOZone"/>
+                                model="bbeansUO" value="buoAntece" onChange="this.form.fire()" t:zone="nivelUOZone"/>
                     </div>
                     <div class="f-left">
                         <label>Categoría</label>                                
@@ -130,7 +130,7 @@
                                 <t:actionlink t:id="editar" zone="listaUOZone" context="uo">Editar</t:actionlink>
                             </t:if>
                             <t:if test="${veditar}" negate="true">
-                                <t:actionlink t:id="detalle" zone="listaUOZone" context="uo">Ver Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle" zone="listaUOZone" context="uo">Detalle</t:actionlink>
                             </t:if>
                             <t:if test="${veliminar}">  
                                 <t:if test="esBorrable">
@@ -280,10 +280,10 @@
                     <div class="actionunidad f-right">
                             <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
                         <t:if test="${vbotones}">
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>  
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>  
                         </t:if>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" page="AMUnidadOrganica" class="button"/>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
                              <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                     </div>                     
                 </t:form>
