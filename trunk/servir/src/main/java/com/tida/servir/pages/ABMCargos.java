@@ -525,38 +525,6 @@ public class ABMCargos extends GeneralPage {
         return editando;
     }
 
-//    @Log
-//    void onValidateFromFormularioaltacargo() {
-//        
-//        
-//        if(num==2){
-//            
-//                      
-//        }
-//        else if(num==3){
-//        
-//        }else{
-//            if (!editando) {                
-//            }
-//            else{
-//
-//            }
-////            if(cargo.getEsorganico()==null){
-////                formmensaje.recordError("Tiene que seleccionar una opción para ¿Es Orgánico?");
-////                cargo.setEsorganico(false);
-////            }
-//            // Seguimos sólo si hay puestos disponibles.
-//            
-////            Criteria cx = session.createCriteria(Cargoxunidad.class);            
-////            cx.add(Restrictions.like("den_cargo", cargo.getDen_cargo()));
-////            cx.createAlias("unidadorganica", "unidadorganica");
-////            cx.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
-////            if (cx.list().size() > 0) {
-////                _altaForm.recordError(Errores.ERROR_DEN_CARGO_UNICO);                    
-////            }
-//            envelope.setContents(helpers.Constantes.CARGO_EXITO);
-//        }
-//    }
 
     @Log
     Object onFailureFromFormularioaltacargo() {
@@ -597,38 +565,54 @@ public class ABMCargos extends GeneralPage {
         
         }else if(num==1){
             formmensaje.clearErrors();
-            //validaciones           
-            
-            Criteria c;
-            c = session.createCriteria(Cargoxunidad.class);
-            if (editando) {
-                    c.add(Restrictions.ne("id", cargo.getId()));
+            //validaciones      
+            String consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
+                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
+                        "WHERE S2.ENTIDAD_ID='"+entidadUE.getId()+"' AND S1.COD_CARGO='"+cargo.getCod_cargo()+"'";
+            if(editando){
+                consulta+=("AND S1.ID!='"+cargo.getId()+"'");
             }
-            c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
-            c.createAlias("unidadorganica", "unidadorganica");
-            c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
-            //c.add(Restrictions.like("und_organica", uo));
-            if (c.list().size() > 0) {
+            Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
+//            if (editando) {
+//                    c.add(Restrictions.ne("id", cargo.getId()));
+//            }
+//            c.add(Restrictions.like("cod_cargo", cargo.getCod_cargo()));
+//            c.createAlias("unidadorganica", "unidadorganica");
+//            c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
+//            //c.add(Restrictions.like("und_organica", uo));
+            if (query.list().size() > 0){
                 formmensaje.recordError(Errores.ERROR_COD_CARGO_UNICO);
-                return zonasDatos();
-                    
+                return zonasDatos();                    
             }
             else{
-                c = session.createCriteria(Cargoxunidad.class);
-                if (editando) {
-                    c.add(Restrictions.ne("id", cargo.getId()));
-                }
-
-                c.add(Restrictions.like("den_cargo", cargo.getDen_cargo()));
-                c.createAlias("unidadorganica", "unidadorganica");
-                c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
+//                Criteria c;
+//                c = session.createCriteria(Cargoxunidad.class);
+//                c = session.createCriteria(Cargoxunidad.class);
+//                if (editando) {
+//                    c.add(Restrictions.ne("id", cargo.getId()));
+//                }
+//
+//                c.add(Restrictions.like("den_cargo", cargo.getDen_cargo()));
+//                c.createAlias("unidadorganica", "unidadorganica");
+//                c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
                 //c.add(Restrictions.like("und_organica", uo));
-                if (c.list().size() > 0) {
+                consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
+                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
+                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
+                        "WHERE S2.ENTIDAD_ID='"+entidadUE.getId()+"' AND UPPER(S1.DEN_CARGO)=UPPER('"+cargo.getDen_cargo()+"')";
+                if(editando){
+                    consulta+=("AND S1.ID!='"+cargo.getId()+"'");
+                }
+                query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
+                if (query.list().size() > 0) {
                     formmensaje.recordError(Errores.ERROR_DEN_CARGO_UNICO);
                     return zonasDatos();
-                }
-                
+                }                
             }
+            
             if(cargo.getEsorganico()==null){
                 formmensaje.recordError("Tiene que seleccionar una opción para ¿Es Orgánico?.");
                 return zonasDatos();

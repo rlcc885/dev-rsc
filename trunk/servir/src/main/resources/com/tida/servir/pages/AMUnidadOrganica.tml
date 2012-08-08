@@ -8,7 +8,7 @@
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
-    <h2> Unidades Orgánicas </h2>
+    <h2> Administración de Unidades Orgánicas </h2>
 
     <script>
         jQuery(document).ready(function(){
