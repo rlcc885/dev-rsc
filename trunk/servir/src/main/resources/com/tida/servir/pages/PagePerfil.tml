@@ -12,6 +12,7 @@
             </script>
             <div class="error mensajes">${errorMessage}</div>
         </t:if>
+        
         <t:grid t:source="allPerfiles" inPlace="true" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
 <!--            <t:parameter name="descperfilCell">
                 <t:eventLink t:event="editaPerfil" t:context="rowPerfil" href="#" page="PagePerfil" t:zone="editZone">
