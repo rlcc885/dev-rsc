@@ -483,6 +483,20 @@ public class AMUnidadOrganica extends GeneralPage {
 
         return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
     }
+//    @Log
+//    public GenericSelectModel<LkBusquedaUnidad> getbeansUO() {
+//        String consulta="SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"+
+//          " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"+
+//          " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"+
+//          " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='"+entidadUE.getId()+"'"+
+//          " AND S1.NIVEL='"+(nivelUO - 1)+"' AND S1.ID!='"+unidadOrganica.getId()+"'";
+//        consulta+="ORDER BY(DENOMINACION)";
+//        List<LkBusquedaUnidad> list;
+//        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
+//        list=query.list();
+//        return new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
+//    }
+    
 
 //    @Log
 //    @CommitAfter
@@ -782,10 +796,8 @@ public class AMUnidadOrganica extends GeneralPage {
     }
 
     @Log
-    Object onActionFromDetalle(LkBusquedaUnidad uo) {
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("id", uo.getId()));
-        unidadOrganica = (UnidadOrganica) c.list().get(0);
+    Object onActionFromDetalle(UnidadOrganica uo) {
+        unidadOrganica = (UnidadOrganica) session.load(UnidadOrganica.class, uo.getId());
         editando = false;
         cargoDatos();
         vdetalle = true;
@@ -835,10 +847,11 @@ public class AMUnidadOrganica extends GeneralPage {
 //        return zonas();
 //    }
     @Log
-    Object onActionFromEditar(LkBusquedaUnidad uo) {
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("id", uo.getId()));
-        unidadOrganica = (UnidadOrganica) c.list().get(0);
+    Object onActionFromEditar(UnidadOrganica uo) {
+//        Criteria c = session.createCriteria(UnidadOrganica.class);
+//        c.add(Restrictions.eq("id", uo.getId()));
+//        unidadOrganica = (UnidadOrganica) c.list().get(0);
+        unidadOrganica = (UnidadOrganica) session.load(UnidadOrganica.class, uo.getId());
         editando = true;
         cargoDatos();
         vformulario = true;
