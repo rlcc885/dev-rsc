@@ -56,14 +56,14 @@ public class Usuario implements Serializable {
     @Column(name = "FECHA_BLOQUEO", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_bloqueo;
-    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    @Column(name = "DOCUMENTOIDENTIDAD_ID", nullable=true)
     private long documentoId;
     @Column(name = "NRODOCUMENTO")
-    private long numeroDocumento;
+    private String numeroDocumento;
     @Column(name = "APELLIDOPATERNO")
-    private long apellidoPaterno;
+    private String apellidoPaterno;
     @Column(name = "APELLIDOMATERNO")
-    private long apellidoMaterno;
+    private String apellidoMaterno;
     
     public String getClave() {
         return clave;
@@ -169,27 +169,27 @@ public class Usuario implements Serializable {
         this.documentoId = documentoId;
     }
 
-    public long getNumeroDocumento() {
+    public String getNumeroDocumento() {
         return numeroDocumento;
     }
 
-    public void setNumeroDocumento(long numeroDocumento) {
+    public void setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public long getApellidoPaterno() {
+    public String getApellidoPaterno() {
         return apellidoPaterno;
     }
 
-    public void setApellidoPaterno(long apellidoPaterno) {
+    public void setApellidoPaterno(String apellidoPaterno) {
         this.apellidoPaterno = apellidoPaterno;
     }
 
-    public long getApellidoMaterno() {
+    public String getApellidoMaterno() {
         return apellidoMaterno;
     }
 
-    public void setApellidoMaterno(long apellidoMaterno) {
+    public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
     }
     
