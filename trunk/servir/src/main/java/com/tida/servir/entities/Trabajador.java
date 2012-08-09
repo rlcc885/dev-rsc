@@ -11,8 +11,6 @@ import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
-
-
 /**
  *
  * @author ale
