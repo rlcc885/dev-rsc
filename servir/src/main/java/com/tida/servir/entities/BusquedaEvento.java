@@ -63,7 +63,6 @@ public class BusquedaEvento implements Serializable {
     @NonVisual
     private long tabla;
     
-    
     public BusquedaEvento() {
     }
 
