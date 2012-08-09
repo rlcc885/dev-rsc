@@ -59,6 +59,10 @@ public class BusquedaEvento implements Serializable {
     @Column(name = "PAGINA")
     @NonVisual
     private String pagina;
+    @Column(name = "TABLA_ID")
+    @NonVisual
+    private long tabla;
+    
     
     public BusquedaEvento() {
     }
@@ -142,4 +146,13 @@ public class BusquedaEvento implements Serializable {
     public void setPagina(String pagina) {
         this.pagina = pagina;
     }
+    
+    public long getTabla() {
+        return tabla;
+    }
+
+    public void setTabla(long tabla) {
+        this.tabla = tabla;
+    }
+ 
 }

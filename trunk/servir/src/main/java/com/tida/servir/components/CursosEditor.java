@@ -432,7 +432,7 @@ public class CursosEditor {
                 session.flush();
                 if(!editando){
                     System.out.println("primerooooooo"+editando);
-                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, _oi, actual.getId(), logger.MOTIVO_PERSONALES_CURSOS,cursos.getId());
+                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_CURSOS,cursos.getId());
                 }
                 if(valrevisado!=null){
                     if(valrevisado==true){

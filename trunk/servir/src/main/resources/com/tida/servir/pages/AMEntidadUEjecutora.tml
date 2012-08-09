@@ -131,8 +131,8 @@
                     pagerPosition="bottom"
                     row="listaentidad" 
                     exclude="id,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
-                    reorder="ruc,denominacion,sigla,cue_entidad,departamento"
-                    inPlace="true" >
+                    reorder="ruc,denominacion,sigla,cue_entidad,departamento,acciones"
+                    inPlace="true" t:add="Acciones">
                 <t:parameter name="empty">
                     <div class="no-info">No se encontraron coincidencias</div>
                 </t:parameter>

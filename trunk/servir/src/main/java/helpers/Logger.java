@@ -14,6 +14,7 @@ public class Logger {
     public static final long ERROR_ACCESO_AL_SISTEMA = 1;
     public static final long ERROR_SERVIDOR_DE_CORREO = 2;
     public static final long MODIFICACION_PERSONALES = 5;
+    public static final long MODIFICACION_ENTIDADES = 6;
     public static final long CAIDA_SERVIDOR_CORREO = 7;
     public static final long CAIDA_SERVIDOR_BD = 8;
     public static final long ACCESOS = 9;
@@ -79,6 +80,8 @@ public class Logger {
     public static final String RESULTADO_OPERACION_ERROR = "ERROR";
     public static final String CORREO_FAIL_RESET_PASSWORD = "Conexión con el Servidor de Correos no establecida al reestablecer contraseña.";
     
+    public static final String MOTIVO_REGISTRO_ENTIDADES = "ENTIDAD REGISTRADA";
+    public static final String MOTIVO_MODIFICACION_ENTIDADES = "ENTIDAD MODIFICADA";
     public static final String MOTIVO_PERSONALES_ESTUDIOS = "ESTUDIOS DEL TRABAJADOR MODIFICADOS";
     public static final String MOTIVO_PERSONALES_CURSOS = "CURSOS DEL TRABAJADOR MODIFICADOS";
     public static final String MOTIVO_PERSONALES_EXPERIENCIA = "EXPERIENCIA LABORAL DEL TRABAJADOR MODIFICADOS";
