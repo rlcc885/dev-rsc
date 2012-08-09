@@ -20,7 +20,6 @@
                         </t:grid>
                     </div>
                     <br/><br/>
-                    
                     <h2>Datos de Entidades Modificadas</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="eventos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
