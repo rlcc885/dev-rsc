@@ -30,7 +30,6 @@
             <br class="clear" />
         </t:form>
     </div> <!-- Zona filtros -->
-    
     <br />
     <t:zone t:id="tabla_usuario">    
         <t:if test="primeraVez">
