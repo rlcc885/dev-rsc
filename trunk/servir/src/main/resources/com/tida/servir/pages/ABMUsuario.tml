@@ -10,8 +10,8 @@
                 <t:errors/>
                 <div id="filtrosnombres" class="f-wrap">
                     <div class="f-left">
-                        <t:label for="identificacionBusqueda"/>
-                        <input t:type="TextField" t:id="identificacionBusqueda" size="30"/>
+                        <t:label for="bidentificacionBusqueda"/>
+                        <input t:type="TextField" t:id="bidentificacionBusqueda" size="30"/>
                     </div>
                     <div class="f-left">
                         <t:label for="apellidosBusqueda"/>

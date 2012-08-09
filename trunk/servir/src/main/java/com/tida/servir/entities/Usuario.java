@@ -56,7 +56,15 @@ public class Usuario implements Serializable {
     @Column(name = "FECHA_BLOQUEO", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_bloqueo;
-
+    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    private long documentoId;
+    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    private long numeroDocumento;
+    @Column(name = "APELLIDOPATERNO")
+    private long apellidoPaterno;
+    @Column(name = "APELLIDOMATERNO")
+    private long apellidoMaterno;
+    
     public String getClave() {
         return clave;
     }
@@ -88,14 +96,6 @@ public class Usuario implements Serializable {
     public void setUltimo_cambio_clave(Date ultimo_cambio_clave) {
         this.ultimo_cambio_clave = ultimo_cambio_clave;
     }
-
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
 
     public Long getId() {
         return id;
@@ -145,14 +145,6 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-//    public long getRolid() {
-//        return rolid;
-//    }
-//
-//    public void setRolid(long rolid) {
-//        this.rolid = rolid;
-//    }
-
     public Rol getRol() {
         return rol;
     }
@@ -168,23 +160,39 @@ public class Usuario implements Serializable {
     public void setFecha_bloqueo(Date fecha_bloqueo) {
         this.fecha_bloqueo = fecha_bloqueo;
     }
-    
-//    public String getApellidos() {
-//        return apellidos;
-//    }
-//
-//    public void setApellidos(String apellidos) {
-//        this.apellidos = apellidos;
-//    }
-//
-//    public String getNombres() {
-//        return nombres;
-//    }
-//
-//    public void setNombres(String nombres) {
-//        this.nombres = nombres;
-//    }
 
+    public long getDocumentoId() {
+        return documentoId;
+    }
+
+    public void setDocumentoId(long documentoId) {
+        this.documentoId = documentoId;
+    }
+
+    public long getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(long numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    public long getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(long apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public long getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(long apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

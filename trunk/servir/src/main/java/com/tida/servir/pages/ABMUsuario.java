@@ -100,13 +100,20 @@ public class ABMUsuario extends GeneralPage {
     private Envelope envelope;
     @Persist
     @Property
-    private String identificacionBusqueda;
+    private String bidentificacionBusqueda;
+    @Persist
+    @Property
+    private String bapellidoPaterno;
+    @Persist
+    @Property
+    private String bapellidoMaterno;
     @Persist
     @Property
     private String apellidosBusqueda;
     @Persist
     @Property
     private String nombresBusqueda;
+    
     @Persist
     @Property
     private boolean primeraVez;
@@ -175,8 +182,8 @@ public class ABMUsuario extends GeneralPage {
         if (loggedUser.getRol().getId() > 1 && this.primeraVez) {
             c = session.createCriteria(UsuarioTrabajador.class);
             //busqueda
-            if (identificacionBusqueda != null && !identificacionBusqueda.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", identificacionBusqueda + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nrodocumento", identificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
+            if (bidentificacionBusqueda != null && !bidentificacionBusqueda.equals("")) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", bidentificacionBusqueda + "%").ignoreCase()).add(Restrictions.like("nrodocumento", bidentificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nrodocumento", bidentificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (apellidosBusqueda != null && !apellidosBusqueda.equals("")) {
                 c.add(Restrictions.disjunction().add(Restrictions.like("apellidos", apellidosBusqueda + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidos", apellidosBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
