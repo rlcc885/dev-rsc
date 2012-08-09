@@ -58,7 +58,7 @@ public class Usuario implements Serializable {
     private Date fecha_bloqueo;
     @Column(name = "DOCUMENTOIDENTIDAD_ID")
     private long documentoId;
-    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    @Column(name = "NRODOCUMENTO")
     private long numeroDocumento;
     @Column(name = "APELLIDOPATERNO")
     private long apellidoPaterno;
