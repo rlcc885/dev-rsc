@@ -91,13 +91,13 @@
                 </fieldset>
                 <div class="f-wrap">
                     <div class="f-right">
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
+                        <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
                     </div>
                     <div class="f-right">
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
                     </div>
                     <div class="f-right">
-                        <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
                     </div>
                 </div>
 <!--                    <div id="bouttons" class="f-right">
@@ -196,8 +196,8 @@
                         </div>
                     </fieldset>
                     <div id="bouttons" class="f-right">
-                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
                         <input t:type="Submit" t:id="saveNewPermiso" value="Guardar" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
+                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
                     </div>
                     <br class="clear"/>
                 </t:form>
@@ -232,8 +232,8 @@
                         </div>
                     </div>
                     <div id="bouttons" class="f-right">
-                        <input t:type="Submit" t:id="resetEditPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
                         <input t:type="Submit" t:id="saveEditPermiso" value="Guardar" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
+                        <input t:type="Submit" t:id="resetEditPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>
                     </div>
                     <br class="clear"/>
                 </t:form>

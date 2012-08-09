@@ -111,8 +111,8 @@
                         </div>
                         <br class="clear"/>
                         <div id="bouttons" class="f-right">
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <input t:type="Submit" t:id="save" value="Grabar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         </div>
                         <br class="clear" />
                     </t:form>
@@ -152,8 +152,8 @@
                         </div>
                     </div>
                     <div id="bouttons" class="f-right">
-                        <input t:type="Submit" t:id="cancelPerfil" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         <input t:type="Submit" t:id="savePerfil" value="Grabar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        <input t:type="Submit" t:id="cancelPerfil" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                     </div>
                     <br class="clear"/>
                 </t:form>
