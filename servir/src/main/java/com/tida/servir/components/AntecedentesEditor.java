@@ -179,7 +179,7 @@ public class AntecedentesEditor {
             session.flush();
             
             if(!editando){
-                logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, _oi, actual.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA,ant_Laborales.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA,ant_Laborales.getId());
             }
             if(ant_Laborales.getValidado()!=null){
                 if(ant_Laborales.getValidado()==true){                    

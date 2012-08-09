@@ -144,7 +144,7 @@ public class PublicacionesEditor {
         session.flush(); 
         
         if(!editando){
-            logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, _oi, actual.getId(), logger.MOTIVO_PERSONALES_PRODUCCION,publicacion.getId());
+            logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_PRODUCCION,publicacion.getId());
         }
         if(publicacion.getValidado()!=null){
             if(publicacion.getValidado()==true){                    

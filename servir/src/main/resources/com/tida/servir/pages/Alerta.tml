@@ -15,7 +15,7 @@
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <a t:type="pagelink" t:page="${eventoservir1.pagina}" t:context="eventoservir1.trabajadorid" href="#">Ver</a>
+                                    <a t:type="pagelink" t:page="${eventoservir1.pagina}" t:context="eventoservir1.trabajadorid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
                     </div>
@@ -29,7 +29,7 @@
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <!--<a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidadid" href="#">Ver</a>-->
+                                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.tabla" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
                     </div>
@@ -49,7 +49,7 @@
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <a t:type="pagelink" t:page="${eventoentidad.pagina}" t:context="eventoentidad.trabajadorid" href="#">Ver</a>
+                                    <a t:type="pagelink" t:page="${eventoentidad.pagina}" t:context="eventoentidad.trabajadorid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
                     </div>                    

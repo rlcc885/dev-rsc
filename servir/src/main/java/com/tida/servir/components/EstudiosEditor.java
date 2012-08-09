@@ -326,7 +326,7 @@ public class EstudiosEditor {
             session.saveOrUpdate(estudio);
             session.flush();
             if(!editando){
-                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, _oi, actual.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS,estudio.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS,estudio.getId());
             }
             if(valrevisado!=null){
                 if(valrevisado==true){                    
