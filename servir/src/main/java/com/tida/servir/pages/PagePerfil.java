@@ -95,6 +95,8 @@ public class PagePerfil {
     @Property
     private String errorMessage;
     @Property
+    private String errorMessageSavePerfil;
+    @Property
     @Persist
     private boolean bCancelFormulario;
     @Property
@@ -123,9 +125,7 @@ public class PagePerfil {
         /*
          * if (!userExists) { return "Index"; } return null;
          */
-        System.out.println("onActivate");
-
-        return null;
+         return null;
     }
 
     public boolean isEliminaPerfil() {
@@ -172,7 +172,7 @@ public class PagePerfil {
     @CommitAfter
     Object onEliminaPerfil(Perfil lperfil) {
         if (lperfil.getUsuarioCollection().size() > 0) {
-            errorMessage = "El Perfil no puede ser eliminado porque existen usuarios asignados al perfill.";
+            errorMessage = "El Perfil no puede ser eliminado porque existen usuarios asignados al perfil.";
         } else {
             if (lperfil.getMenuCollection().size() > 0) {
                 errorMessage = "El Perfil no puede ser eliminado porque existen opciones de menu asociados.";
@@ -307,17 +307,28 @@ public class PagePerfil {
         System.out.println("nuevoPerfil");
         mostrarNew = true;
         perfil = new Perfil();
+        perfil.setFechacreacion(new Date());
+        perfil.setEstado(true);
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
         System.out.println("onSuccessFromPerfilInputForm");
-        if (bCancelFormulario) {
+        if (bCancelFormulario || bResetFormulario) {
             bCancelFormulario = false;
+            bResetFormulario = false;
             nuevoPerfil();
             return zonasTotal();
         } else {
+            List<Perfil> lista = null;
+            Query query = session.getNamedQuery("Perfil.findByDescperfil");
+            query.setParameter("descperfil", perfil.getDescperfil().toUpperCase());
+            if (query.list().size()>0){
+                errorMessageSavePerfil = "Ya existe un perfil con la misma descripción.";
+                return editZone.getBody();
+            }
+            
             perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
             if (mostrarNew) {
                 perfil.setFechacreacion(new Date());
@@ -383,7 +394,10 @@ public class PagePerfil {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("editZone", editZone.getBody()).
+                add("listaPermisoZone", listaPermisoZone.getBody()).
+                add("listaZone", listaZone.getBody()).
+                add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 
@@ -391,7 +405,9 @@ public class PagePerfil {
     private MultiZoneUpdate zonasPermiso() {
         MultiZoneUpdate mu;
         //add("listaZone", listaZone.getBody()).
-        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody()).add("listaZone", listaZone.getBody()).add("editPermisoZone", editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("listaPermisoZone", listaPermisoZone.getBody()).
+                add("listaZone", listaZone.getBody()).
+                add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 }

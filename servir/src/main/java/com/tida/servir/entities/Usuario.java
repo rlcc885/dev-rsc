@@ -56,8 +56,8 @@ public class Usuario implements Serializable {
     @Column(name = "FECHA_BLOQUEO", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_bloqueo;
-    @Column(name = "DOCUMENTOIDENTIDAD_ID", nullable=true)
-    private long documentoId;
+    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    private Long documentoId;
     @Column(name = "NRODOCUMENTO")
     private String numeroDocumento;
     @Column(name = "APELLIDOPATERNO")
