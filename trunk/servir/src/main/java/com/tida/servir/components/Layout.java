@@ -17,7 +17,7 @@ import org.apache.tapestry5.services.javascript.StylesheetOptions;
 "context:layout/tabs.css"})
 //        @IncludeJavaScriptLibrary("context:layout/protofish.js")
 @IncludeJavaScriptLibrary({"context:layout/jquery.tools.min.js", "context:layout/protofish-min.js"
-                            , "context:layout/jALDropDown1.7.3.js","context:layout/navegador.js","context:layout/selectorder.js"})
+                            , "context:layout/jALDropDown1.7.3.js","context:layout/navegador.js","context:layout/selectorder.js","context:layout/popcalendar.js"})
 public class Layout
 {
 	/** The page title, for the <title> element and the <h1> element. */
