@@ -163,9 +163,14 @@ public class FamiliaresEditor {
          elemento=1;
     }
     
+    void onSelectedFromGuardar() {
+         elemento=3;
+    }
+    
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariofamiliares() {
+        if(elemento==3){
         Logger logger = new Logger(); 
         //if(bfechanacimiento){
         if(!bedicion){
@@ -278,6 +283,9 @@ public class FamiliaresEditor {
                     .add("familiaresZone", familiaresZone.getBody());
              }
          }
+        }else{
+             return familiaresZone.getBody(); 
+        }
 
         /*}else{
             if(familiarActual.getFechaNacimiento()!=null){
@@ -357,6 +365,7 @@ public class FamiliaresEditor {
         .add("listaFamiliaresZone", listaFamiliaresZone.getBody());
     }
     
+  
     
     
     
