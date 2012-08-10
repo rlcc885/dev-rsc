@@ -128,7 +128,12 @@ public class ABMCargos extends GeneralPage {
         //validaciones
     @Persist
     @Property
-    private Boolean vdetalle; 
+    private Boolean vdetalle;
+    
+    @Persist
+    @Property
+    private Boolean vdetalle2; // restriccion del campo denominacion y codigo
+
     @Persist
     @Property
     private Boolean vformulario;
@@ -158,6 +163,8 @@ public class ABMCargos extends GeneralPage {
         vbotones=false;
         vformulario=false;
         vdetalle=false;
+        //RESTRICCION
+        vdetalle2=false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -233,7 +240,9 @@ public class ABMCargos extends GeneralPage {
             //envelope.setContents(String.valueOf(nivel)+bdcargo+String.valueOf(uo)+String.valueOf(valsituacioncap));
             reto=zonasDatos(); 
             
-        }        
+        }
+        // RESTRICCION
+        vdetalle2=false;
         return reto;
     }
     
@@ -314,7 +323,7 @@ public class ABMCargos extends GeneralPage {
                 consulta+=" AND S1.UNIDADORGANICA_ID='"+uo.getId()+"'";     
             }
             if (bdcargo != null && !bdcargo.equals("")) {
-                consulta+=" AND UPPER(S1.DEN_CARGO) LIKE UPPER('"+bdcargo+"')||'%'";
+                consulta+=" AND UPPER(S1.DEN_CARGO) LIKE '%' || UPPER('"+bdcargo+"')||'%'";
             }            
             if (valsituacioncap != null && !valsituacioncap.equals("")) {
                 consulta+=" AND S1.SITUACIONCAP_ID='"+valsituacioncap.getId()+"'"; 
@@ -375,6 +384,8 @@ public class ABMCargos extends GeneralPage {
         vformulario=true;
         editando=true;
         vdetalle=false;
+        // RESTRICCION CAMPOS
+        vdetalle2=true;
         vbotones=true;
         //envelope.setContents(String.valueOf(uo)+String.valueOf(cargo.getUnidadorganica()));
         //uo=cargo.getUnidadorganica();
@@ -665,8 +676,11 @@ public class ABMCargos extends GeneralPage {
         formmensaje.clearErrors();
         envelope.setContents(helpers.Constantes.CARGO_EXITO);
         
+        
         //return abmZone.getBody();
         }
+        //RESTRICCION
+        vdetalle2=false;
         return zonasDatos();
 
     }
