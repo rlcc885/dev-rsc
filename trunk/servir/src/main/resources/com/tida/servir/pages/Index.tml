@@ -38,23 +38,23 @@
             <div class="f-wrap" style="margin-top:30px;">
                 <div class="centerClave">
                     <div id="recuperar-clave">
-                        <a t:type="pagelink" page="RecuperarClave">Olvido su clave?</a>
+                        <a t:type="pagelink" page="RecuperarClave" title="Recuperar Clave">Recuperar Clave</a>
                     </div>
                     <div id="acceso-sancion">
-                        <a href="http://www.servir.gob.pe">Transparencia</a>
+                        <a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>
                     </div>
                     <div id="consulta-ciudadana">
-                        <a href="http://www.servir.gob.pe">Transparencia</a>
+                        <a href="http://172.16.19.56/Consultas" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
                     </div>
                     <br class="clear" />
                     <div id="recuperar-clave-enlace">
-                        <a t:type="pagelink" page="RecuperarClave">Recuperar Clave</a>
+                        <a t:type="pagelink" page="RecuperarClave" title="Recuperar Clave">Recuperar Clave</a>
                     </div>
                     <div id="acceso-sancion-enlace">
-                        <a href="http://www.servir.gob.pe">Solicitud de acceso al módulo de sanciones</a>
+                        <a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>
                     </div>
                     <div id="consulta-ciudadana-enlace">
-                        <a href="http://www.servir.gob.pe">Consultas Ciudadanas</a>
+                        <a href="http://172.16.19.56/Consultas" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
                     </div>
                     <!--                    <a t:type="actionlink" t:id="returnstreamresponse" href="#">Guía del sistema</a>-->
                 </div>

@@ -78,7 +78,6 @@ h3 {
 }
 
 p, ol, ul {
-    margin-bottom: 2em;
     line-height: 200%;
 }
 
@@ -110,9 +109,10 @@ legend {
 }
 
 #mainsection {
-    background-color: #f5f5f5;
+/*    background-color: #f5f5f5;*/
     width: 960px;
     margin:0 auto;
+    margin-bottom:30px;
 }
 
 /*HEADER*/
@@ -128,14 +128,14 @@ legend {
 
 #logo{
 }
-#header #logo-left a { 
+#logo-left a { 
     background:url(images/logo-rsc.png) no-repeat top left;  
     float:left;
     height:60px; 
     width:270px;
     margin-left: 20px;
 }
-#header #logo-right a { 
+#logo-right a { 
     background:url(images/logo-servir.png) no-repeat top left; 
     float:right; 
     height:61px; 
@@ -143,7 +143,7 @@ legend {
     margin-right: 20px;
     margin-top: 5px;
 }
-.login, .change-pass { margin:100px auto 0; width:532px; }
+.login, .change-pass { margin:80px auto 0; width:432px; }
 .login .button { margin-right:5px;}
 .login label {
     font-family: sans-serif;
@@ -164,6 +164,10 @@ legend {
     margin-top:50px;
     /*padding-bottom: 20px;*/
 }
+.centerClave{
+    margin:auto;
+    width: 280px;
+}
 #login-box{
     width:152px;
     margin:auto;
@@ -172,65 +176,62 @@ legend {
     margin: 0px;
 }
 #recuperar-clave a { 
-    background:url(images/loginrc.png) no-repeat top left; 
+    background:url(images/loginrc.png) no-repeat bottom left; 
     float:left; 
-    height:137px; 
-    width:150px; 
-    margin-right: 20px;
+    height:55px; 
+    width:60px; 
+    margin-right: 50px;
     text-indent: -9999px;
 }
 #recuperar-clave-enlace a{
     float:left; 
-    width:150px; 
+    width:60px; 
     margin-right: 20px;
     text-align: center;
 }
 #acceso-sancion a { 
-    background:url(images/loginsa.png) no-repeat top left; 
+    background:url(images/loginsa.png) no-repeat bottom left; 
     float:left; 
-    height:137px; 
-    width:150px; 
-    margin-right: 20px;
+    height:55px; 
+    width:60px; 
+    margin-right: 50px;
     text-indent: -9999px;
 }
 #acceso-sancion-enlace a{
     float:left; 
-    width:150px; 
+    width:120px; 
     margin-right: 20px;
     text-align: center;
 }
 #consulta-ciudadana a { 
-    background:url(images/logincc.png) no-repeat top left; 
+    background:url(images/logincc.png) no-repeat bottom left; 
     float:left; 
-    height:137px; 
-    width:150px; 
-    margin-right: 20px;
+    height:55px; 
+    width:60px;
     text-indent: -9999px;
 }
 #consulta-ciudadana-enlace a{
     float:left; 
-    width:150px; 
-    margin-right: 20px;
+    width:60px; 
     text-align: center;
 }
 
 /* Footer */
 #footer { 
     margin:0 auto; 
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border:none; 
-    padding-top:30px;
-    width: 960px;
+    width: 920px;
+    background-color: #F5F5F5;
+    font-size: 10px;
+    color: #7C7C7C;
+    font-weight: bold;
 }
 
-#footer p {
-    margin-bottom: 1em;
-    text-align: center;
-    line-height: normal;
-    font-size: .9em;
-    color: #bgbgbg;
-}
-
-#footer a {
+/*#footer a {
     padding: 0 20px;
     text-decoration: none;
     color: #DDDDDD;
@@ -238,7 +239,7 @@ legend {
 
 #footer a:hover {
     color: #FFFFFF;
-}
+}*/
 
 #footer .rss {
     background: url(images/img18.gif) no-repeat left center;
@@ -255,7 +256,47 @@ legend {
 #footer .legal a {
     padding: 0;
 }
-
+.social{
+    font-size: 9px;
+    margin-top:20px;
+    font-weight: normal;
+}
+.texto{
+    width:75px;
+}
+#iconfacebook a { 
+    background:url(images/facebook.png) no-repeat top left; 
+    height:32px; 
+    width:32px; 
+    text-indent: -9999px;
+    float:left;
+    margin-right: 10px;
+}
+#icontwitter a { 
+    background:url(images/twitter.png) no-repeat top left; 
+    height:32px; 
+    width:32px; 
+    text-indent: -9999px;
+    float:left;
+    margin-right: 10px;
+}
+#iconyoutube a { 
+    background:url(images/youtube.png) no-repeat top left; 
+    height:32px; 
+    width:32px; 
+    text-indent: -9999px;
+    float:left;
+    margin-right: 10px;
+}
+#logopie-right a { 
+    background:url(images/pcm.gif) no-repeat top left; 
+    float:right;
+    height:47px;
+    width:381px;
+    text-indent: -9999px;
+/*    margin-right: 20px;
+    margin-top: 5px;*/
+}
 /* Page */
 #page {
     border-color: #F2F2F2;
