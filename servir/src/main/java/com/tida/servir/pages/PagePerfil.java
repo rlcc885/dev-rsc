@@ -132,7 +132,6 @@ public class PagePerfil {
     }
 
     public boolean isEliminaPerfil() {
-        //|| rowPerfil.getMenuCollection().isEmpty() || rowPerfil.getUsuarioCollection().isEmpty()
         if (rowPerfil.getId() > 8) {
             return true;
         } else {
