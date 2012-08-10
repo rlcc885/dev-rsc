@@ -313,7 +313,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 c.add(Restrictions.eq("unidadorganicaId", buoAntece.getId()));
             }
             if (bdenouni != null && !bdenouni.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenouni + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenouni.replaceAll("Ã±", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenouni.replaceAll("n", "Ã±") + "%").ignoreCase()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenouni + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenouni.replaceAll("Ã±", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenouni.replaceAll("n", "Ã±") + "%").ignoreCase()));
             }
             if (bsigla != null && !bsigla.equals("")) {
                 c.add(Restrictions.disjunction().add(Restrictions.like("sigla", bsigla + "%").ignoreCase()).add(Restrictions.like("sigla", bsigla.replaceAll("Ã±", "n") + "%").ignoreCase()).add(Restrictions.like("sigla", bsigla.replaceAll("n", "Ã±") + "%").ignoreCase()));
