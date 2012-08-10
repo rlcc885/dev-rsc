@@ -1,5 +1,4 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-
         <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -7,7 +6,6 @@
         <title>${title}</title>
     </head>
     <body>
-
         <div id = "mainsection" >
             <!-- start header -->
             <div id="header">
@@ -60,16 +58,17 @@
      <script>
         <!--
 
-// perform JavaScript after the document is scriptable. Fix ie comboboxes
-        jQuery(function() {
-            jQuery("select").jALDropdown();
-        });
-     -->
-     </script>
+       // perform JavaScript after the document is scriptable. Fix ie comboboxes
+               jQuery(function() {
+                   jQuery("select").jALDropdown();
+               });
+            -->
+        </script>
         <!-- start footer -->
         <div id="footer">
             <p class="legal">
-                &copy;2010 Sistema SERVIR. Todos los derechos reservados.<br/>
+                &copy;2010 Sistema SERVIR. Todos los derechos reservados.
+                <br/>
                 SERVIR V.${appVersion}
             </p>
             

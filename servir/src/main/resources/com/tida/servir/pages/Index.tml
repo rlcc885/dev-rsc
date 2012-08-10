@@ -2,33 +2,25 @@
       t:sidebarTitle="Current Time"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-    <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
-
 
     <div class = "login">
         <h3>Inicio de Sesión</h3>
         <div class = "box">
-                <!-- <div id="dialog" title="Olvido su clave">${textoClave}</div> -->
-
-            <div class = "OrganismosInformantes" t:id="organismosZone" t:type="zone">
+            <div id="login-box">
                 <t:if test="muestrosubmit">
-                    <t:form t:id="formulariologin"  t:zone="organismosZone" >
+                    <t:form t:id="formulariologin" >
                         <t:errors/>
                         <t:if test="muestrosubmit">
                             <div class="clear f-wrap">
                                 <div class="f-left">
                                     <t:label for="login"/>
-                                </div>
-                                <div class="f-left">
-                                    <input t:type="TextField" t:id="login" t:value="login" size="30"  />
+                                    <input t:type="TextField" t:id="login" t:value="login" size="20" t:validate="maxlength=50" />
                                 </div>
                             </div>
                             <div class="clear f-wrap">
                                 <div class="f-left">
                                     <t:label for="clave"/>
-                                </div>
-                                <div class="f-left">
-                                    <input t:type="PasswordField" t:id="clave" size="30"  />
+                                    <input t:type="PasswordField" t:id="clave" size="20" t:validate="maxlength=50" />
                                 </div>
                             </div>
                             <div class="clear f-wrap">
@@ -37,61 +29,38 @@
                         </t:if>
                     </t:form>
                 </t:if>
-
-                <!--
-                            <t:if test="administrador">
-                                <t:form t:id="formularioorganismos"  >
-                                    <label> Seleccione Entidad/U. Ejecutora</label>
-                                    <t:EntidadSelect  t:id="entidades" t:entidad ="eue" />
-                        </t:form>
-                          </t:if>
-                -->
             </div>
-
             <script language="javaScript"> 
                 function popup(ventana) {
-                    $(ventana).toggle('slow');
+                $(ventana).toggle('slow');
                 }
             </script> 
-            <div class="f-wrap centerImagenesIndex">
-<!--                <div class="f-left">
-                    <div class="seguridad-left">
-                    </div>
-                </div>-->
+            <div class="f-wrap" style="margin-top:30px;">
                 <div class="centerClave">
-                    <a t:type="pagelink" page="RecuperarClave">Transparencia</a>
-                    <br />
-                    <a t:type="pagelink" page="RecuperarClave">Olvido su clave?</a>
-                    <br />
-                    <!-- <input onclick="javascript:popup('textoIndexClave');">Olvido su clave?</input><br/> -->
-                    <a href="javascript:popup('textoIndexUsuario');">Solicitar acceso al módulo de sanciones</a>
-                    <br />
-                    <a t:type="actionlink" t:id="returnstreamresponse" href="#">Guía del sistema</a>
-                </div>
-<!--                <div class="f-left">
-                    <div class="guia-right">
+                    <div id="recuperar-clave">
+                        <a t:type="pagelink" page="RecuperarClave">Olvido su clave?</a>
                     </div>
-                </div>-->
-                <div class="centerClave">
-                    
-
+                    <div id="acceso-sancion">
+                        <a href="http://www.servir.gob.pe">Transparencia</a>
+                    </div>
+                    <div id="consulta-ciudadana">
+                        <a href="http://www.servir.gob.pe">Transparencia</a>
+                    </div>
+                    <br class="clear" />
+                    <div id="recuperar-clave-enlace">
+                        <a t:type="pagelink" page="RecuperarClave">Recuperar Clave</a>
+                    </div>
+                    <div id="acceso-sancion-enlace">
+                        <a href="http://www.servir.gob.pe">Solicitud de acceso al módulo de sanciones</a>
+                    </div>
+                    <div id="consulta-ciudadana-enlace">
+                        <a href="http://www.servir.gob.pe">Consultas Ciudadanas</a>
+                    </div>
+                    <!--                    <a t:type="actionlink" t:id="returnstreamresponse" href="#">Guía del sistema</a>-->
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- <div class = "login box">
-        <div class="f-wrap">
-            <div class="f-left">
-                <img src="images/seguridad.jpg" border="0" align="center" width="25" height="100%"></img>
-                <img jwcid="@Image" image="/servir/seguridad.jpg" alt="View Tapestry Home"/>
-            </div>
-            <div class="f-left">
-                <a href="images/guia.jpg">Sistema SERVIR</a>
-            </div>            
-        </div>
-    </div> -->
-
 
     <div id="textoIndexClave" style="display:none">
         <span id="close">   
