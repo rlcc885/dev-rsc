@@ -7,6 +7,10 @@ import helpers.Logger;
 
 
 import helpers.Helpers;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +28,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 
 public class FamiliaresEditor {
@@ -92,6 +97,12 @@ public class FamiliaresEditor {
  
     @Inject
     private PropertyAccess _access;
+    
+    
+    @Property
+    @Persist
+    private String nuevafecha;
+    
     
     //Inicio de lac carga de la pagina
     @Log
@@ -187,9 +198,9 @@ public class FamiliaresEditor {
 //            c3.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
 //            listaParentescoCY=c3.list();
 //        }
-         System.out.println("entro: "+bedicion);      
+    
          if(listaParentescoP!=null && listaParentescoP.size()>0 && familiarActual.getParentesco().getCodigo()==4 && !bedicion){
-                envelope.setContents("No es posible regstrar mas de un Progenitor");
+                envelope.setContents("No es posible registrar mas de un Progenitor");
                 return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                         .add("familiaresZone", familiaresZone.getBody());
          }
@@ -205,8 +216,16 @@ public class FamiliaresEditor {
     //                    .add("familiaresZone", familiaresZone.getBody());
         }else{
              
+             if(nuevafecha==null||nuevafecha.equalsIgnoreCase("")){
+                 envelope.setContents("Debe ingresar la fecha");
+                 return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
+                    .add("listaFamiliaresZone", listaFamiliaresZone.getBody())
+                    .add("familiaresZone", familiaresZone.getBody());
+             }else{
+             
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
+            
             if(valsexo!=null){
                 if(valsexo.equals("MASCULINO")){
                     familiarActual.setSexo("M");            
@@ -217,6 +236,16 @@ public class FamiliaresEditor {
             }
             else{
                 familiarActual.setSexo(null);
+            }
+            if(nuevafecha!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date fecha;
+                try {
+                fecha = (Date)formatoDelTexto.parse(nuevafecha);
+                familiarActual.setFechaNacimiento(fecha);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
             }
             session.saveOrUpdate(familiarActual);
             session.flush();
@@ -237,9 +266,17 @@ public class FamiliaresEditor {
             familiarActual=new Familiar();
             valsexo=null;
             bedicion=false;
+            nuevafecha=null;
+             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+                bvalidausuario=true;
+            }else{
+                bvalidausuario=false;
+            }
+            
             return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
                     .add("listaFamiliaresZone", listaFamiliaresZone.getBody())
                     .add("familiaresZone", familiaresZone.getBody());
+             }
          }
 
         /*}else{
@@ -268,6 +305,7 @@ public class FamiliaresEditor {
             bedicion=false;
             bfechanacimiento=false;
             valsexo=null;
+            nuevafecha=null;
             return  familiaresZone.getBody();
         }else if(elemento==2){
             return "Busqueda";
@@ -281,6 +319,11 @@ public class FamiliaresEditor {
     Object onActionFromEditar(Familiar fami) {
         
         familiarActual=fami;
+        if(familiarActual.getFechaNacimiento()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            nuevafecha=formatoDeFecha.format(familiarActual.getFechaNacimiento());
+        }
+        
           if(familiarActual.getSexo()!=null){
             if(familiarActual.getSexo().equalsIgnoreCase("M")){
                 valsexo="MASCULINO";            
@@ -295,6 +338,11 @@ public class FamiliaresEditor {
                 valsexo=null;
           }
         bedicion=true;
+        if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+                bvalidausuario=true;
+            }else{
+                bvalidausuario=false;
+            }
 
            return familiaresZone.getBody(); 
     }
