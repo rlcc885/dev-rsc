@@ -12,7 +12,7 @@
                             <div class="f-left" >
                                 <t:label for="parentesco"/>
                                 <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
-                                        model="beanParentesco" 
+                                        model="beanParentesco"  onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                          t:validate="required" t:blankOption="ALWAYS"/>       
                                        
                             </div>
