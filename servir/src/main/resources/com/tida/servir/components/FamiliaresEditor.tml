@@ -1,20 +1,20 @@
 <html t:type="layout" title="Editar Familiares"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-      xmlns:p="tapestry:parameter">
-
-    <t:content>
+      xmlns:p="tapestry:parameter">        
+   <t:content>
 
       <fieldset>
           <div class="f-wrap">  
             <div t:type="zone" t:id="familiaresZone" >
-                    <t:form t:id="formulariofamiliares"  zone="familiaresZone">
+                    <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
 
                         <div class="f-wrap">                             
                             <div class="f-left" >
                                 <t:label for="parentesco"/>
-                                <input t:type="Select" t:id="parentesco" t:value="familiarActual.parentesco" 
-                                       model="beanParentesco"
-                                       t:validate="required" t:blankOption="ALWAYS" />
+                                <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
+                                        model="beanParentesco" 
+                                         t:validate="required" t:blankOption="ALWAYS"/>       
+                                       
                             </div>
                             <div class="f-left" >	
                                 <t:label for="sexo"/>
@@ -24,8 +24,9 @@
                             </div>
                             <div class="f-left">	
                                 <t:label for="fechaNacimiento"/>
-                                <input t:type="DateField" t:id="fechaNacimiento" t:value="familiarActual.fechaNacimiento" t:validate="required"
-                                       size="25" />
+                                <input t:type="TextField" t:id="fechaNacimiento" t:value="nuevafecha" />
+                                <img src="../layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariofamiliares.fechaNacimiento, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                               
                             </div>
                              
                         </div>
@@ -79,7 +80,7 @@
                         </div>
                     </t:form>  
             </div> 
-     
+    
             <div t:type="zone" t:id="botonesZone" >
                 <t:form t:id="formulariobotones"  zone="familiaresZone">
                 <div class="f-wrap">
@@ -177,4 +178,5 @@
             </t:zone>
         </div>
     </t:content>
+    
 </html>
