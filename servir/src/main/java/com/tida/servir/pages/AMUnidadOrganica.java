@@ -584,6 +584,19 @@ public class AMUnidadOrganica extends GeneralPage {
                     unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
                     unidadOrganica.setCod_ubi_prov(ubigeoDomicilio.getProvincia());
                     unidadOrganica.setUnidadorganica(uoAntecesora);
+                    
+            /* INICIO CAMBIO    */    
+                    if(editando==true)
+                   {
+                   envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);   
+                   }
+                   else
+                   {
+                   envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
+                   }
+                                   
+        // FIN CAMBIO */ 
+                                   
                     session.saveOrUpdate(unidadOrganica);
                     new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                     editando = false;
@@ -591,7 +604,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     onSelectedFromReset();
 //                setupUbigeos();
                     formmensaje.clearErrors();
-                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
+//                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
                 }
             } else {
                 errorBorrar = null;
@@ -641,6 +654,17 @@ public class AMUnidadOrganica extends GeneralPage {
                 unidadOrganica.setCod_ubi_dist(ubigeoDomicilio.getDistrito());
                 unidadOrganica.setCod_ubi_prov(ubigeoDomicilio.getProvincia());
                 unidadOrganica.setUnidadorganica(uoAntecesora);
+         /* INICIO CAMBIO    */    
+                    if(editando==true)
+                   {
+                   envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);   
+                   }
+                   else
+                   {
+                   envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
+                   }
+                                   
+        // FIN CAMBIO */ 
                 session.saveOrUpdate(unidadOrganica);
                 new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                 editando = false;
@@ -649,7 +673,7 @@ public class AMUnidadOrganica extends GeneralPage {
 //            setupUbigeos();
                 formmensaje.clearErrors();
 
-                envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
+          //      envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
 
             }
 
