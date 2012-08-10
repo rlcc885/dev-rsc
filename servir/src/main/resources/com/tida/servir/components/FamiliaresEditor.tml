@@ -7,15 +7,15 @@
           <div class="f-wrap">  
             <div t:type="zone" t:id="familiaresZone" >
                     <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
-
+<!--onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"-->
                         <div class="f-wrap">                             
-                            <div class="f-left" >
+<!--                            <div class="f-left" >
                                 <t:label for="parentesco"/>
                                 <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
-                                        model="beanParentesco"  onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        model="beanParentesco"  
                                          t:validate="required" t:blankOption="ALWAYS"/>       
                                        
-                            </div>
+                            </div>-->
                             <div class="f-left" >	
                                 <t:label for="sexo"/>
                                 <select t:type="Select" t:id="sexo" value="valsexo" 
