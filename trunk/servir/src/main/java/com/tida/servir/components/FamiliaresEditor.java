@@ -152,15 +152,19 @@ public class FamiliaresEditor {
     void onSelectedFromReset() {
          elemento=1;
     }
-    
+//    Object onValueChangedFromParentesco(DatoAuxiliar dato) {
+//        
+//        return request.isXHR() ? new MultiZoneUpdate("OrganizacionZone", OrganizacionZone.getBody()).add("EntidadZone", EntidadZone.getBody()) : null;
+//    }
     void onSelectedFromGuardar() {
+        System.out.println("onSelectedFromGuardar");
          elemento=3;
     }
     
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariofamiliares() {
-        if(elemento==3){
+//        if(elemento==3){
         Logger logger = new Logger(); 
         //if(bfechanacimiento){
         if(!bedicion){
@@ -273,9 +277,9 @@ public class FamiliaresEditor {
                     .add("familiaresZone", familiaresZone.getBody());
              }
          }
-        }else{
-             return familiaresZone.getBody(); 
-        }
+//        }else{
+//             return familiaresZone.getBody(); 
+//        }
 
         /*}else{
             if(familiarActual.getFechaNacimiento()!=null){
