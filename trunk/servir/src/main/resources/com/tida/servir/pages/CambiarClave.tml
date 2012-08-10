@@ -29,28 +29,28 @@
                             <div class="f-left">
                                 <t:label for="clave_vieja"/>
                                 <input t:type="PasswordField" t:id="clave_vieja"
-                                   t:value="oldPass" size="20" t:validate="required" />
+                                   t:value="oldPass" size="20"  />
                             </div>
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="clave_nueva_1"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_1"
-                                       t:value="newPass1" size="20" t:validate="required" />
+                                       t:value="newPass1" size="20"  />
                             </div>
                             <div class="f-left">
                                 <t:label for="clave_nueva_2"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_2"
-                                       t:value="newPass2" size="20" t:validate="required" onkeypress="javascript: verificar();" />
+                                       t:value="newPass2" size="20" onkeypress="javascript: verificar();" />
                             </div>
                         </div>
                        
                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button" t:message="Desea ejecutar esta acción?" />
+                                <input t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" t:message="Desea ejecutar esta acción?" />
                             </div>
                             <div class="f-right">
-                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" t:message="Desea ejecutar esta acción?" />
+                                <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button" t:message="Desea ejecutar esta acción?" />
                             </div>
                         </div>
                     </t:if>

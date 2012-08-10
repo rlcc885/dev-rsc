@@ -27,18 +27,18 @@
                         <div class="f-wrap" id="div_cambiarclave">
                             <t:label for="clave_actual"/>
                             <input t:type="PasswordField" t:id="clave_actual"
-                                   t:value="oldPass" size="20" t:validate="required" />
+                                   t:value="oldPass" size="20"/>
                         </div>
                         <div class="f-wrap" id="cambiarclave">
                             <div class="f-left">
                                 <t:label for="nueva_clave"/>
                                 <input t:type="PasswordField" t:id="nueva_clave"
-                                       t:value="newPass1" size="20" t:validate="required" />
+                                       t:value="newPass1" size="20" />
                             </div>
                             <div class="f-left">
                                 <t:label for="repita_nueva_clave"/>
                                 <input t:type="PasswordField" t:id="repita_nueva_clave"
-                                       t:value="newPass2" size="20" t:validate="required" onclick="javascript: verificar();" />
+                                       t:value="newPass2" size="20" onclick="javascript: verificar();" />
                             </div>
                         </div>
                         <div class="f-wrap" id="complejidadclave">                                 
@@ -46,10 +46,10 @@
                         </div>
                         <div class="f-wrap">
                             <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
+                                <input t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" />
                             </div>
                             <div class="f-right">
-                                <input  t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" />
+                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
                             </div>
                         </div>
                     </t:if>

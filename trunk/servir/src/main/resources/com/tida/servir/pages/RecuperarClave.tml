@@ -8,7 +8,7 @@
     <div class = "login">
         <h3>Recuperar Clave</h3>
         <div class = "box">
-                <!-- <div id="dialog" title="Olvido su clave">${textoClave}</div> -->
+            <!-- <div id="dialog" title="Olvido su clave">${textoClave}</div> -->
 
             <div class = "OrganismosInformantes" t:id="organismosZone" t:type="zone">
 
@@ -36,16 +36,21 @@
                             </div>
                             -->
                             <div class="clear f-wrap">
-                                <input id="loginSubmit" type="submit" value="Recuperar clave" class="button f-right" />
-                                <!--                                <input id="resetSubmit" type="reset" value="Cancelar" class="button f-right" />-->
-                                <input type="submit" t:type="submit" t:id="botonCancelar" value="Cancelar" class="button f-right"/>
+                                <div class="f-right">
+                                    <input id="loginSubmit" type="submit" value="Recuperar clave" class="button" />
+                                </div>
+                                <div class="f-right">
+                                    <input type="submit" t:type="submit" t:id="botonCancelar" value="Cancelar" class="button"/>
+                                </div>
                             </div>
                         </t:if>
                     </t:form>
                     <t:parameter name="else">
                         <div class="t-error">
                             <div>Clave enviada satisfactoriamente</div>
-                            <ul><li>Verifique la bandeja de entrada de su correo laboral.</li></ul>
+                            <ul>
+                                <li>Verifique la bandeja de entrada de su correo laboral.</li>
+                            </ul>
                         </div>
                         <META HTTP-EQUIV="Refresh" CONTENT="5;URL=index" />
                     </t:parameter>

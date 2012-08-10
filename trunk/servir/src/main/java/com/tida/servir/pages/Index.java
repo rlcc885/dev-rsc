@@ -58,8 +58,6 @@ public class Index {
     private String clave;
     @Property
     private String login;
-    @InjectComponent
-    private Zone organismosZone;
     @Inject
     private Request request;
     @Component(id = "formulariologin")

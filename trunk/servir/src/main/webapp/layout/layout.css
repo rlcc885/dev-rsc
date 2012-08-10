@@ -25,7 +25,7 @@ input, select, textarea {
     font-size:11px;
 }
 select { width:200px;  padding: 3px 4px; height: 22px;}
-label { display:block; margin-bottom:5px; width:auto; background-color: transparent;}
+label { display:block; margin-bottom:5px; width:auto; background-color: transparent; cursor: pointer;}
 .check { float:left;}
 .check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
 
@@ -128,7 +128,6 @@ legend {
 
 #logo{
 }
-
 #header #logo-left a { 
     background:url(images/logo-rsc.png) no-repeat top left;  
     float:left;
@@ -143,6 +142,76 @@ legend {
     width:167px; 
     margin-right: 20px;
     margin-top: 5px;
+}
+.login, .change-pass { margin:100px auto 0; width:532px; }
+.login .button { margin-right:5px;}
+.login label {
+    font-family: sans-serif;
+/*    font-size: 12px;*/
+}
+.login input {
+    margin-bottom: 5px;
+    font-family: sans-serif;
+/*    font-size: 24px;*/
+    padding: 3px;
+}
+
+.login select {
+    margin-bottom: 5px;
+    font-size:10px;
+}
+.change-pass { 
+    margin-top:50px;
+    /*padding-bottom: 20px;*/
+}
+#login-box{
+    width:152px;
+    margin:auto;
+}
+#login-box .f-left{
+    margin: 0px;
+}
+#recuperar-clave a { 
+    background:url(images/loginrc.png) no-repeat top left; 
+    float:left; 
+    height:137px; 
+    width:150px; 
+    margin-right: 20px;
+    text-indent: -9999px;
+}
+#recuperar-clave-enlace a{
+    float:left; 
+    width:150px; 
+    margin-right: 20px;
+    text-align: center;
+}
+#acceso-sancion a { 
+    background:url(images/loginsa.png) no-repeat top left; 
+    float:left; 
+    height:137px; 
+    width:150px; 
+    margin-right: 20px;
+    text-indent: -9999px;
+}
+#acceso-sancion-enlace a{
+    float:left; 
+    width:150px; 
+    margin-right: 20px;
+    text-align: center;
+}
+#consulta-ciudadana a { 
+    background:url(images/logincc.png) no-repeat top left; 
+    float:left; 
+    height:137px; 
+    width:150px; 
+    margin-right: 20px;
+    text-indent: -9999px;
+}
+#consulta-ciudadana-enlace a{
+    float:left; 
+    width:150px; 
+    margin-right: 20px;
+    text-align: center;
 }
 
 /* Footer */
@@ -487,35 +556,6 @@ form th {
 
 #cargoCell {
     float:none;
-}
-
-/* Login */
-/*
-.login {
-    padding:20px;
-    border:thin solid;
-    border-color:#e30031;
-    margin-top: 100px;
-    margin-left: 200px;
-    width:400px;
-}
-*/
-.login label {
-    /*font: normal 1em Arial, Helvetica, sans-serif;*/
-    width: 150px;
-    text-align: left;
-    margin-right: 10px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.login input {
-    margin-bottom: 5px;
-}
-
-.login select {
-    margin-bottom: 5px;
-    font-size:10px;
 }
 
 /* Menu */
@@ -906,12 +946,6 @@ DIV.t-available-values UL LI
 
 /*LOGIN - HOME*/
 #mainsection.home { background-color:#666565; border:none; }
-.login, .change-pass { margin:100px auto 0; width:467px; width:480px; }
-.login .button { margin-right:5px;}
-.change-pass { 
-    margin-top:50px;
-    /*padding-bottom: 20px;*/
-}
 html > body div.t-error li { margin:0 0 0 10px;}
 
 
