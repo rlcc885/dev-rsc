@@ -102,6 +102,9 @@ public class PagePerfil {
     @Property
     @Persist
     private boolean bResetFormulario;
+    @Property
+    @Persist
+    private boolean accesoTotal;
 
     public PagePerfil() {
     }

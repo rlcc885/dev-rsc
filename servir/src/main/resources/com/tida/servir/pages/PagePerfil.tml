@@ -58,7 +58,7 @@
     <br />-->
     <t:zone t:id="editZone" t:update="show">
 <!--        <t:if test = "mostrarEdit">-->
-<t:if test="errorMessageSavePerfil">
+        <t:if test="errorMessageSavePerfil">
             <script>
                 setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
             </script>
@@ -181,6 +181,10 @@
                             </div>
                         </div>
                         <div class ="f-wrap">
+                            <div class="f-left" style="width:100px;">
+                                <input t:type="Checkbox" t:id="accesoTotal" t:value="accesoTotal"
+                                   onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/> Control Total
+                            </div>
                             <div class="f-left" style="width:100px;">
                                 <input t:type="Checkbox" t:id="accesoConsultaNuevo" t:value="permiso.accesoselect"/> Consulta
                             </div>
