@@ -79,9 +79,9 @@
                     <div class="actions f-right">
                         <!--<t:actionlink t:id="muestra" zone="listaUOZone">Mostrar Todo</t:actionlink>-->
                         <!--<a t:type="eventLink" t:event="toMostrar" t:context="literal:1" t:zone="listaUOZone" href="#"> Mostrar </a>-->
-                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
                         <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" page="AMUnidadOrganica" class="button"/> 
-                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/> 
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                     </div>                         
 
                 </form> 

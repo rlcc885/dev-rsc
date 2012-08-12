@@ -4,10 +4,9 @@
  */
 package com.tida.servir.entities;
 
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
@@ -21,10 +20,13 @@ public class Evento implements Serializable {
     public static boolean ESTADO_ALTA = true;
     public static Integer CANT_DEFAULT = 1;
         
+    @Id
+    @GeneratedValue
     private long id;
     private String descevento;
-    @ManyToOne
-    private Entidad entidad;
+//    @ManyToOne
+//    @ManyToOne
+    private Long entidad;
     private long trabajador_id;
     
     private long tipoevento_id;
@@ -41,12 +43,11 @@ public class Evento implements Serializable {
         this.descevento = descevento;
     }
     
-    @ManyToOne
-    public Entidad getEntidad() {
+        public long getEntidad() {
         return entidad;
     }
 
-    public void setEntidad(Entidad entidad) {
+    public void setEntidad(long entidad) {
         this.entidad = entidad;
     }
     
@@ -97,9 +98,7 @@ public class Evento implements Serializable {
         this.fechaevento = fechaevento;
     }   
    
-    @Id
-    @GeneratedValue
-    public long getId() {
+        public long getId() {
         return id;
     }
 

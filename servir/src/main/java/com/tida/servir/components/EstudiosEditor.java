@@ -1,17 +1,12 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
+import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Errores;
 import helpers.Helpers;
-
 import helpers.Logger;
-import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.PrimaryKeyEncoder;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -21,13 +16,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import com.tida.servir.pages.Busqueda;
 import org.hibernate.Query;
-import helpers.Logger;
-
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -39,27 +30,21 @@ public class EstudiosEditor {
     @Parameter
     @Property
     private Trabajador actual;
-
     @Property
     @SessionState
     private Entidad _oi;
-
 //    @Component(id = "titulosEdit")
 //    private Form _form;
-
     @InjectComponent
     private Envelope envelope;
-        
     @Property
     @Persist
     private Estudios estudio;
     @Property
     @Persist
     private LkBusquedaEstudios listaestu;
-
 //    @Persist
 //    private boolean entradaTituloGrid;
-
     @Property
     @SessionState
     private Usuario _usuario;
@@ -68,16 +53,15 @@ public class EstudiosEditor {
     @Property
     @SessionState
     private UsuarioAcceso usua;
-    
     //zonas
     @InjectComponent
     private Zone listaZone;
     @InjectComponent
     @Property
-    private Zone primerZone;   
+    private Zone primerZone;
     @InjectComponent
     @Property
-    private Zone segundoZone;  
+    private Zone segundoZone;
     @InjectComponent
     @Property
     private Zone tercerZone;
@@ -85,7 +69,6 @@ public class EstudiosEditor {
     private Form formlistaestudios;
     @Inject
     private Request _request;
-        
     //campos
     @Property
     @Persist
@@ -122,8 +105,7 @@ public class EstudiosEditor {
     private Boolean valestudiando;
     @Persist
     @Property
-    private Boolean valrevisado; 
-    
+    private Boolean valrevisado;
     //validaciones
     @Persist
     @Property
@@ -152,15 +134,15 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean vrevisado;
-    private int elemento=0;
-    
-    
+    private int elemento = 0;
+
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
         Criteria c = session.createCriteria(LkBusquedaEstudios.class);
-        c.add(Restrictions.eq("trabajador", actual.getId()));        
+        c.add(Restrictions.eq("trabajador", actual.getId()));
         return c.list();
     }
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoestudios() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOESTUDIO", null, 0, session);
@@ -171,14 +153,14 @@ public class EstudiosEditor {
     public GenericSelectModel<DatoAuxiliar> getCentroestudios() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CENTROESTUDIO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    } 
-    
+    }
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getPaises() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("PAISES", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    
+
     void onDenChanged() {
         valdenominacion = _request.getParameter("param");
     }
@@ -186,333 +168,308 @@ public class EstudiosEditor {
     void onOtroChanged() {
         valotrocentro = _request.getParameter("param");
     }
-    
+
     void onColeChanged() {
         valcolegio = _request.getParameter("param");
     }
-    
+
     void onColegChanged() {
         valcolegiatura = _request.getParameter("param");
     }
-
     @Inject
     private Session session;
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformularioaltaestudio(){
-        if(valcentroestudio!=null){
-            if(valcentroestudio.getCodigo()==999999){
-                votro=false;                
+    Object onSuccessFromformularioaltaestudio() {
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 999999) {
+                votro = false;
+            } else {
+                votro = true;
+                valotrocentro = null;
             }
-            else{
-                votro=true;
-                valotrocentro=null;
-            }
-        }
-        else{
-            votro=true;
+        } else {
+            votro = true;
         }
         return primerZone.getBody();
     }
 
-    void onSelectedFromSave() {        
-        elemento=1;   
+    void onSelectedFromSave() {
+        elemento = 1;
     }
-    void onSelectedFromReset(){
+
+    void onSelectedFromReset() {
         limpiar();
-        editando=false;
-        estudio=new Estudios();
-        if(usua.getAccesoreport()==0){
-            vformulario=false;
-        } 
-        elemento=2;
+        editando = false;
+        estudio = new Estudios();
+        if (usua.getAccesoreport() == 0) {
+            vformulario = false;
+        }
+        elemento = 2;
     }
-    
-    void onSelectedFromCancel() {        
-        elemento=3;
+
+    void onSelectedFromCancel() {
+        elemento = 3;
     }
-    
-    void onSelectedFromEstudiando() {        
-        elemento=4;
+
+    void onSelectedFromEstudiando() {
+        elemento = 4;
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariobotones(){        
-        if(valestudiando!=null){
-            if(valestudiando){
-                vfechahasta=true;
-                valfec_hasta=null;
-            }
-            else{
-                vfechahasta=false;
+    Object onSuccessFromformulariobotones() {
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+                valfec_hasta = null;
+            } else {
+                vfechahasta = false;
             }
         }
-        if(elemento==3){
-            if(_usuario.getRol().getId()==1)
+        if (elemento == 3) {
+            if (_usuario.getRol().getId() == 1) {
                 return "Alerta";
-            else
+            } else {
                 return Busqueda.class;
-        }
-        else if(elemento==2){
-            
-        }
-        else if(elemento==1){
+            }
+        } else if (elemento == 2) {
+        } else if (elemento == 1) {
             formlistaestudios.clearErrors();
-            Logger logger = new Logger();           
-            if(valdenominacion==null){
+            Logger logger = new Logger();
+            if (valdenominacion == null) {
                 formlistaestudios.recordError("Tiene que ingresar la Denominación");
                 return listaZone.getBody();
             }
-            if(valtipoestudio==null){
+            if (valtipoestudio == null) {
                 formlistaestudios.recordError("Tiene que seleccionar el Tipo de Estudio");
                 return listaZone.getBody();
             }
-            if(valcentroestudio==null){
+            if (valcentroestudio == null) {
                 formlistaestudios.recordError("Tiene que seleccionar el Centro de Estudio");
                 return listaZone.getBody();
             }
-            if(valfec_desde==null){
+            if (valfec_desde == null) {
                 formlistaestudios.recordError("Tiene que ingresar Fecha de Inicio");
                 return listaZone.getBody();
             }
-            if(valfec_desde.after(new Date())){
+            if (valfec_desde.after(new Date())) {
                 formlistaestudios.recordError("La fecha de inicio debe ser previa a la fecha actual.");
                 return listaZone.getBody();
             }
-            if(validando()==false){
+            if (validando() == false) {
                 return listaZone.getBody();
             }
-            if(editando){
+            if (editando) {
                 //editando
-                if(usua.getAccesoreport()==0){
-                    vformulario=false;
+                if (usua.getAccesoreport() == 0) {
+                    vformulario = false;
                 }
                 estudio.setEstudiando(valestudiando);
-            }
-            else{//guardando
-                
+            } else {//guardando
+
                 estudio = new Estudios();
 //                System.out.println("Trabajadorrr"+actual);
-                estudio.setTrabajador(actual);        
+                estudio.setTrabajador(actual);
                 estudio.setEntidad(_usuario.getTrabajador().getEntidad());
                 estudio.setValidado(false);
-                if(valestudiando==null){
+                if (valestudiando == null) {
                     estudio.setEstudiando(false);
-                }
-                else{
+                } else {
                     estudio.setEstudiando(valestudiando);
                 }
-                if(_usuario.getRol().getId()==1){
+                if (_usuario.getRol().getId() == 1) {
                     estudio.setAgregadotrabajador(true);
-                }
-                else{
+                } else {
                     estudio.setAgregadotrabajador(false);
                 }
-                
+
             }
-            if(vrevisado==true){
+            if (vrevisado == true) {
                 //System.out.println("aquiiii"+valrevisado);
-                if(valrevisado==null){
+                if (valrevisado == null) {
                     estudio.setValidado(false);
+                } else {
+                    estudio.setValidado(valrevisado);
                 }
-                else{
-                    estudio.setValidado(valrevisado);                   
-                }
-                
+
             }
             seteo();
             session.saveOrUpdate(estudio);
             session.flush();
-            if(!editando){
-                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS,estudio.getId());
+            if (!editando) {
+                logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS, estudio.getId());
             }
-            if(valrevisado!=null){
-                if(valrevisado==true){                    
-                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+estudio.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_ESTUDIOS+"' and tabla_id='"+estudio.getId()+"' and estadoevento=0";
+            if (valrevisado != null) {
+                if (valrevisado == true) {
+                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + estudio.getTrabajador().getId() + "' and tipoevento_id='" + logger.MODIFICACION_ESTUDIOS + "' and tabla_id='" + estudio.getId() + "' and estadoevento=0";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
                     session.flush();
-                }          
+                }
             }
-            editando = false; 
+            editando = false;
             limpiar();
             formlistaestudios.clearErrors();
             envelope.setContents("Estudios del Trabajador Modificados Exitosamente");
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
-                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
-    
-    boolean validando(){
-       boolean resultado=true;
-       if(valestudiando!=null){
-            if(valestudiando==false){
-                
-                if(valfec_hasta==null){
+
+    boolean validando() {
+        boolean resultado = true;
+        if (valestudiando != null) {
+            if (valestudiando == false) {
+
+                if (valfec_hasta == null) {
                     formlistaestudios.recordError("Debe ingresar Fecha de Fin");
-                    resultado=false;
-                }
-                else if(valfec_hasta.after(new Date())){
+                    resultado = false;
+                } else if (valfec_hasta.after(new Date())) {
                     formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
-                    resultado=false;
-                }                                
-                else if (valfec_desde.after(valfec_hasta)){
+                    resultado = false;
+                } else if (valfec_desde.after(valfec_hasta)) {
                     formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
-                    resultado=false;
-                }  
-                else if(valfec_desde.equals(valfec_hasta)){
-                    resultado=false;
+                    resultado = false;
+                } else if (valfec_desde.equals(valfec_hasta)) {
+                    resultado = false;
                     formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
             }
-       }
-        else{
-            if(valfec_hasta==null){
+        } else {
+            if (valfec_hasta == null) {
                 formlistaestudios.recordError("Tiene que ingresar Fecha de Fin");
-                resultado=false;
-            }
-            else if(valfec_hasta.after(new Date())){
+                resultado = false;
+            } else if (valfec_hasta.after(new Date())) {
                 formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
-                resultado=false;
-            }                                
-            else if (valfec_desde.after(valfec_hasta)){
+                resultado = false;
+            } else if (valfec_desde.after(valfec_hasta)) {
                 formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
-                resultado=false;
-            }  
-            else if(valfec_desde.equals(valfec_hasta)){
-                resultado=false;
+                resultado = false;
+            } else if (valfec_desde.equals(valfec_hasta)) {
+                resultado = false;
                 formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
-            
-        System.out.println("resuuuuuu"+resultado);
-       return resultado;
+
+        System.out.println("resuuuuuu" + resultado);
+        return resultado;
     }
-    
-    void mostrar(){        
-        valdenominacion=estudio.getDenominacion();
-        valtipoestudio=estudio.getTipoestudio();
-        valcentroestudio=estudio.getCentroestudio();
-        valotrocentro=estudio.getOtrocentroestudio();
-        valpais=estudio.getPais();
+
+    void mostrar() {
+        valdenominacion = estudio.getDenominacion();
+        valtipoestudio = estudio.getTipoestudio();
+        valcentroestudio = estudio.getCentroestudio();
+        valotrocentro = estudio.getOtrocentroestudio();
+        valpais = estudio.getPais();
         if (ubigeoDomicilio == null) {
             ubigeoDomicilio = new Ubigeo();
         }
         ubigeoDomicilio.setDepartamento(estudio.getDepartamento());
         ubigeoDomicilio.setProvincia(estudio.getProvincia());
         ubigeoDomicilio.setDistrito(estudio.getDistrito());
-        valcolegio=estudio.getColegio();
-        valcolegiatura=estudio.getColegiatura();
-        valfec_desde=estudio.getFechainicio();
-        valfec_hasta=estudio.getFechafin();
-        valestudiando=estudio.getEstudiando();  
-        valrevisado=estudio.getValidado(); 
+        valcolegio = estudio.getColegio();
+        valcolegiatura = estudio.getColegiatura();
+        valfec_desde = estudio.getFechainicio();
+        valfec_hasta = estudio.getFechafin();
+        valestudiando = estudio.getEstudiando();
+        valrevisado = estudio.getValidado();
     }
-    
+
     @Log
     Object onActionFromEditar(Estudios estu) {
-        estudio=estu;
-        vformulario=true;
-        editando=true;
-        vdetalle=false;
-        vbotones=true;
+        estudio = estu;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
         mostrar();
-        if(valestudiando!=null){
-            if(valestudiando){
-            vfechahasta=true;
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+            } else {
+                vfechahasta = false;
             }
-            else{
-                vfechahasta=false;
-            }
+        } else {
+            vfechahasta = false;
         }
-        else{
-            vfechahasta=false;
-        }
-        if(valcentroestudio!=null){
-            if(valcentroestudio.getCodigo()==9999999){
-                votro=false;
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 9999999) {
+                votro = false;
+            } else {
+                votro = true;
             }
-            else{
-                votro=true;
-            }
-        }
-        else{
-            votro=true;
+        } else {
+            votro = true;
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
-                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
-    
+
     @Log
     Object onActionFromDetalle(Estudios estu) {
-        estudio=estu;
-        mostrar();        
-        vdetalle=true;
-        vfechahasta=true;
-        votro=true;
-        vbotones=false;
-        vformulario=true;
-        return new MultiZoneUpdate("primerZone", primerZone.getBody())                             
-                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+        estudio = estu;
+        mostrar();
+        vdetalle = true;
+        vfechahasta = true;
+        votro = true;
+        vbotones = false;
+        vformulario = true;
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
-    
+
     @Log
     Object onActionFromDetalles(Estudios estu) {
-        estudio=estu;
-        mostrar();        
-        vdetalle=true;
-        vfechahasta=true;
-        votro=true;
-        vbotones=false;
-        vformulario=true;
-        return new MultiZoneUpdate("primerZone", primerZone.getBody())                             
-                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+        estudio = estu;
+        mostrar();
+        vdetalle = true;
+        vfechahasta = true;
+        votro = true;
+        vbotones = false;
+        vformulario = true;
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
-    
+
     @Log
     @CommitAfter
     Object onBorrarDato(Estudios dato) {
         session.delete(dato);
         envelope.setContents("Estudio del Trabajador Eliminado");
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody())                             
-                    .add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()); 
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
-    
+
     @Log
     @SetupRender
     private void inicio() {
-        vrevisado=false;
-        if(usua.getAccesoupdate()==1){
-            veditar=true;
-            vbotones=true;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+        vrevisado = false;
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
+            vbotones = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        if(usua.getAccesodelete()==1){
-            veliminar=true; 
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+        if (usua.getAccesodelete() == 1) {
+            veliminar = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        if(usua.getAccesoreport()==1){
-            vformulario=true;
-            vbotones=true;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;
+        if (usua.getAccesoreport() == 1) {
+            vformulario = true;
+            vbotones = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        
-        votro=true;
-        editando=false;
+
+        votro = true;
+        editando = false;
         limpiar();
     }
-    
-    void seteo(){
+
+    void seteo() {
         estudio.setDenominacion(valdenominacion);
         estudio.setTipoestudio(valtipoestudio);
         estudio.setCentroestudio(valcentroestudio);
@@ -527,22 +484,21 @@ public class EstudiosEditor {
         estudio.setFechafin(valfec_hasta);
         //estudio.setEstudiando(valestudiando);
     }
-    
-    void limpiar(){
-        estudio=new Estudios();
-        valdenominacion=null;
-        valtipoestudio=null;
-        valcentroestudio=null;
-        valotrocentro=null;
-        valpais=null;
-        ubigeoDomicilio=null;
-        valcolegio=null;
-        valcolegiatura=null;
-        valfec_desde=null;
-        valfec_hasta=null;
-        valestudiando=null;  
-        valrevisado=null;
-        vfechahasta=false;
+
+    void limpiar() {
+        estudio = new Estudios();
+        valdenominacion = null;
+        valtipoestudio = null;
+        valcentroestudio = null;
+        valotrocentro = null;
+        valpais = null;
+        ubigeoDomicilio = null;
+        valcolegio = null;
+        valcolegiatura = null;
+        valfec_desde = null;
+        valfec_hasta = null;
+        valestudiando = null;
+        valrevisado = null;
+        vfechahasta = false;
     }
-  
 }

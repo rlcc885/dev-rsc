@@ -593,10 +593,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 if(usua.getAccesoreport()==0){
                     vformulario=false;
                 }
-                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE, _usuario.getTrabajador().getId(), Logger.MOTIVO_MODIFICACION_ENTIDADES, entidadUE.getId());
+                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_MODIFICACION_ENTIDADES, entidadUE.getId());
             }  
             else{
-                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE, _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
+                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
             //new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Entidad creada exitosamente");
@@ -807,7 +807,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bSeleccionaPersonal = false;
     }
 
-    @CommitAfter
+    @Log
     Object onSuccessFromFormFindTrabajador() {
         if (bjefeOGAi || bjefeRRHHi || btitulari) {
             mostrar = true;
@@ -824,7 +824,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bSeleccionaEntidad = false;
     }
 
-    @CommitAfter
+    @Log
     Object onSuccessFromFormFindEntidad() {
         System.err.println("onSuccessFromFormFindEntidad");
         if (bSeleccionaEntidad == false) {
@@ -836,7 +836,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     add("trabajadorZone", entiZone.getBody());
         }
     }
-
+    @Log
     Object onActionFromSeleccionaEntidad(Entidad entidad) {
         System.err.println("onActionFromSeleccionaEntidad");
         if (entidad != null) {

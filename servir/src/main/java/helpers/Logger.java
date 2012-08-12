@@ -159,11 +159,11 @@ public class Logger {
 
     @Log
     @CommitAfter
-    public void loguearEvento(Session session, long tipoevento, Entidad entidad, long trabajador,
+    public void loguearEvento(Session session, long tipoevento, long entidadid, long trabajador,
         String descripcion,long tabla) {
         Evento e = new Evento();
         e.setTipoevento_id(tipoevento);
-        e.setEntidad(entidad);
+        e.setEntidad(entidadid);
         e.setTrabajador_id(trabajador);
         e.setDescevento(descripcion);
         e.setFechaevento(new Date());
