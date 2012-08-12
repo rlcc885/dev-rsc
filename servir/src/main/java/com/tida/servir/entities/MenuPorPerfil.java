@@ -35,13 +35,13 @@ public class MenuPorPerfil implements Serializable {
     @Column(name = "DESCMENU")
     private String descmenu;
     @Column(name = "ACCESOSELECT")
-    private long accesoselect;
+    private boolean accesoselect;
     @Column(name = "ACCESOUPDATE")
-    private long accesoupdate;
+    private boolean accesoupdate;
     @Column(name = "ACCESOINSERT")
-    private long accesoinsert;
+    private boolean accesoinsert;
     @Column(name = "ACCESODELETE")
-    private long accesodelete;
+    private boolean accesodelete;
     @Column(name = "ROW_NUM")
     private long rownum;
 
@@ -56,35 +56,35 @@ public class MenuPorPerfil implements Serializable {
         this.id = id;
     }
 
-    public long getAccesoselect() {
+    public boolean getAccesoselect() {
         return accesoselect;
     }
 
-    public void setAccesoselect(long accesoselect) {
+    public void setAccesoselect(boolean accesoselect) {
         this.accesoselect = accesoselect;
     }
 
-    public long getAccesoupdate() {
+    public boolean getAccesoupdate() {
         return accesoupdate;
     }
 
-    public void setAccesoupdate(long accesoupdate) {
+    public void setAccesoupdate(boolean accesoupdate) {
         this.accesoupdate = accesoupdate;
     }
 
-    public long getAccesoinsert() {
+    public boolean getAccesoinsert() {
         return accesoinsert;
     }
 
-    public void setAccesoinsert(long accesoinsert) {
+    public void setAccesoinsert(boolean accesoinsert) {
         this.accesoinsert = accesoinsert;
     }
 
-    public long getAccesodelete() {
+    public boolean getAccesodelete() {
         return accesodelete;
     }
 
-    public void setAccesodelete(long accesodelete) {
+    public void setAccesodelete(boolean accesodelete) {
         this.accesodelete = accesodelete;
     }
 
