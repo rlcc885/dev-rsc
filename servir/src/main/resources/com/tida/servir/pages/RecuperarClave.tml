@@ -37,7 +37,7 @@
                             -->
                             <div class="clear f-wrap">
                                 <div class="f-right">
-                                    <input id="loginSubmit" type="submit" value="Recuperar clave" class="button" />
+                                    <input id="loginSubmit" type="submit" value="Enviar" class="button" />
                                 </div>
                                 <div class="f-right">
                                     <input type="submit" t:type="submit" t:id="botonCancelar" value="Cancelar" class="button"/>

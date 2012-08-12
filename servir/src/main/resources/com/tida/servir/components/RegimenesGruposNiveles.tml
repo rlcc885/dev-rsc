@@ -9,7 +9,7 @@
                 <select t:type="Select" t:id="regimen" t:value="regimengruponivel.regimen"
                 model="beanDatoAuxReg" encoder="beanDatoAuxReg"
                 onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                t:blankOption="AUTO" t:disabled="disabled" t:zone="prop:zoneRegGruNiv"/>
+                t:blankOption="ALWAYS" t:disabled="disabled" t:zone="prop:zoneRegGruNiv" t:validate="required"/>
             </div>
             <div class="f-left">
                 <t:label for="grupo"/>

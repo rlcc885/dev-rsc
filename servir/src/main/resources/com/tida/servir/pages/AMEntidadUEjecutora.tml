@@ -136,10 +136,6 @@
                 <t:parameter name="empty">
                     <div class="no-info">No se encontraron coincidencias</div>
                 </t:parameter>
-<!--                <p:denominacion_Cell>${listaentidad.denominacion}</p:denominacion_Cell>
-                <p:nivelGobierno_Cell>${listaentidad.nivelgobierno}</p:nivelGobierno_Cell>
-                <p:entidad_Cell>${listaentidad.subentidad}</p:entidad_Cell>
-                <p:sigla_Cell>${listaentidad.SIGLA}</p:sigla_Cell>-->
                 <p:accionesCell>
                     <t:if test="${veditar}">
                         <a t:type="eventLink" t:event="editarSeleccion" t:context="listaentidad" href="#" t:zone="listaentidadZone">Editar</a> 
@@ -230,14 +226,14 @@
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
-                                <t:label for ="denominacion"/>
-                                <input t:type="TextField" t:id="denominacion" t:disabled="${vdetalle}"
+                                <t:label for ="denominacionedit"/>
+                                <input t:type="TextField" t:id="denominacionedit" t:disabled="${vdetalle}"
                                    t:value="entidadUE.denominacion" t:validate="required, maxlength=255" size="85"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denominacionChanged"  t:zone="zoneDatos" />
                             </div>
                             <div class="f-left">
-                                <t:label for="sigla"/>
-                                <input t:type="TextField" t:id="sigla"  t:disabled="${vdetalle}"
+                                <t:label for="siglaedit"/>
+                                <input t:type="TextField" t:id="siglaedit"  t:disabled="${vdetalle}"
                                    t:value="entidadUE.sigla" t:validate="maxlength=20" size="12" 
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaChanged"  t:zone="zoneDatos" />
                             </div>
@@ -245,14 +241,14 @@
 
                         <div class="f-wrap">
                             <div class="f-left">
-                                <t:label for="ruc"/>
-                                <input t:type="TextField" t:id="ruc" t:disabled="${vdetalle}"
+                                <t:label for="rucedit"/>
+                                <input t:type="TextField" t:id="rucedit" t:disabled="${vdetalle}"
                                    t:value="entidadUE.ruc" t:validate="regexp"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zoneDatos"/>
                             </div>
                             <div class="f-left">
-                                <t:label for="cue_entidad"/>
-                                <input t:type="TextField" t:id="cue_entidad" t:disabled="${vdetalle}"
+                                <t:label for="cueedit"/>
+                                <input t:type="TextField" t:id="cueedit" t:disabled="${vdetalle}"
                                    t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" 
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cue_entidadChanged" t:zone="zoneDatos" />
                             </div>
