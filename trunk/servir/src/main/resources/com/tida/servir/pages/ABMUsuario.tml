@@ -1,60 +1,125 @@
-<html t:type="layout" title="Editar Usuarios"
+
+<html t:type="layout" title="Administración de Usuarios"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
     <h2>Administración de Usuarios</h2>
-    <h3>Busqueda de usuarios</h3>
-    <div class="box">
-        <t:form t:id="formulariobusqueda"  t:zone="tabla_usuario">
-            <div style="display:block;">
-                <t:errors/>
-                <div id="filtrosnombres" class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="bidentificacionBusqueda"/>
-                        <input t:type="TextField" t:id="bidentificacionBusqueda" size="30"/>
+    <script>
+        jQuery(document).ready(function(){
+        jQuery(".box-title-01").click(function(){
+        jQuery("#panel-01").slideToggle("slow");
+        return true;
+        });
+        });
+    </script>
+    <div class="box-background-title">
+        <span class="box-title-01">
+            <strong style="cursor:pointer;">+</strong> Buscar Usuarios
+        </span>
+    </div>
+    <div id="panel-01" class="box">
+        <t:zone t:id="zonaFormularioBusqueda">
+            <t:form t:id="formularioBusqueda"  t:zone="zonaFormularioBusqueda">
+                <div style="display:block;">
+                    <t:errors/>
+                    <div id="filtrosnombres" class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bidentificacionBusqueda"/>
+                            <input t:type="TextField" t:id="bidentificacionBusqueda" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Tipo Documento</label>
+                            <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
+                        </div>
+                        <div class="f-left">
+                                <!-- t:validate="required,minlength=1" -->
+                            <t:label for="bNumeroDocumento"/>
+                            <input t:type="TextField" t:id="bNumeroDocumento" t:validate="regexp" t:style="width: 270px;"/>
+                        </div>
                     </div>
-                    <div class="f-left">
-                        <t:label for="apellidosBusqueda"/>
-                        <input t:type="TextField" t:id="apellidosBusqueda" size="30"/>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bNombres"/>
+                            <input t:type="TextField" t:id="bNombres" t:value="bNombres" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bApellidoPaterno"/>
+                            <input t:type="TextField" t:id="bApellidoPaterno" t:value="bApellidoPaterno" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bApellidoMaterno"/>
+                            <input t:type="TextField" t:id="bApellidoMaterno" t:value="bApellidoMaterno" t:style="width: 270px;"/>
+                        </div>
                     </div>
-                    <div class="f-left">
-                        <t:label for="nombresBusqueda"/>
-                        <input t:type="TextField" t:id="nombresBusqueda" size="30"/>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bEstado"/>
+                            <input t:type="Select"
+                               t:id="bEstado"
+                               t:value="bEstado" 
+                               t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
+                               t:style="width: 100px;" />
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bNombreEntidad"/>
+<!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
+                            <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
+                            <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bselectPerfil"/>
+                            <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 300px;" />
+                        </div>
                     </div>
-                </div> <!-- filtrosnombres -->
-            </div> <!-- busquedas -->
-            <div id="bouttons" class="f-right">
-                <input id="buscarsubmit" type="submit" value="Buscar" class="button f-right"/>
-                    <!-- <input t:id = "borrarbusquedas" t:type="submit" value="Borrar" class="button"/> -->
-            </div>
-            <br class="clear" />
-        </t:form>
+                </div> <!-- busquedas -->
+                <div class="f-wrap f-right">
+                    <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button" t:message="Esta seguro de realizar esta acción?"/>
+                </div>
+                <br class="clear" />
+            </t:form>
+        </t:zone>
     </div> <!-- Zona filtros -->
-    <br />
-    <t:zone t:id="tabla_usuario">    
-        <t:if test="primeraVez">
-                <t:grid inPlace="true" source="usuarios" rowsPerPage="10" t:add="organismo,accionesListaUsuario" pagerPosition="bottom" row="u" exclude= "id,md5Clave,clave,apellidopaterno,apellidomaterno,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid" reorder="nrodocumento,nombres,apellidos,estado">
-                    <t:parameter name="empty">
-                        <div class="no-info">No existen usuarios con los criterios seleccionados.</div>
-                    </t:parameter>
-                
-                    <p:organismoCell>
-                        <t:if test="u.entidad">
-                            ${u.entidad.denominacion}
-                        </t:if>
-                    </p:organismoCell>
-                    <p:accionesListaUsuarioCell>
-                        <t:eventLink t:event="editaUsuario" t:context="u" href="#" t:zone="tabla_usuario">
-                            Editar
-                        </t:eventLink>
-                        | 
-                        <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
-                    </p:accionesListaUsuarioCell>
-                </t:grid>
-        </t:if>
+    
+    <t:zone t:id="tabla_usuario">
+        <!--        <t:if test="primeraVez">-->
+        <script>
+            jQuery(document).ready(function(){
+            jQuery(".box-title-02").click(function(){
+            jQuery("#panel-02").slideToggle("slow");
+            return true;
+            });
+            });
+        </script>
+        <div class="box-background-title">
+            <span class="box-title-02">
+                <strong style="cursor:pointer;">+</strong> Lista de Usuarios
+            </span>
+        </div>
+        <div id="panel-02" class="box">
+            <t:grid t:inPlace="true" 
+                    t:source="usuarios" 
+                    t:rowsPerPage="10" 
+                    t:add="acciones" 
+                    t:pagerPosition="bottom" 
+                    t:row="u" 
+                    t:exclude= "apellidos,id,md5Clave,clave,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado" 
+                    t:reorder="nrodocumento,nombres,apellidopaterno,apellidomaterno,estadodesc">
+                <t:parameter name="empty">
+                    <div class="no-info">No se han encontrado coincidencias.</div>
+                </t:parameter>
+                <p:accionesCell>
+                    <t:eventLink t:event="editaUsuario" t:context="u" href="#" t:zone="tabla_usuario">
+                        Editar
+                    </t:eventLink>
+                    | 
+                    <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
+                </p:accionesCell>
+            </t:grid>
+        </div>
+<!--        </t:if>-->
     </t:zone>
-  
-    <br />
+
     <t:zone t:id="editarUsuarioZone">
         <t:if test="editaUsuario">
             <h3>Datos del Usuario</h3>
@@ -146,7 +211,7 @@
                             <fieldset>
                                 <legend>Seleccione Opción:</legend>
                                 <label>
-                                    <t:select t:id="selectPerfiles" model="selectPerfiles" encoder="selectPerfiles" t:value="perfil" t:validate="required" style="width: 400px;" />
+                                    <t:select t:id="selectPerfiles" model="selectPerfilesSinAsignar" encoder="selectPerfilesSinAsignar" t:value="perfil" t:validate="required" style="width: 400px;" />
                                 </label>
                             </fieldset>
                         </div>
@@ -160,4 +225,55 @@
             </div>
         </t:if>
     </t:zone>
+    
+    <div id="shade"></div>
+    <div id="modal">
+        <t:zone t:id="busZone" t:update="show">
+<!--            <t:if test="bSeleccionaEntidad">-->
+            <h1>Selección de entidad</h1>
+            <div class="pane">
+                <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            Denominación
+                            <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 300px;"/> 
+                        </div>                   
+                        <div class="actions f-right">
+                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                            <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+<!--            </t:if>-->
+        </t:zone>
+        <div t:type="zone" t:id="entiZone" t:update="show">
+<!--            <t:if test="bSeleccionaEntidad">-->
+            <t:if test="mostrar">
+                <div class="box">
+                    <t:grid source="entidades" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowEntidad" include="denominacion" inPlace="true" >
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades con los criterios de búsqueda.</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="seleccionaEntidad" zone="zonaFormularioBusqueda" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </div>
+            </t:if>
+<!--            </t:if>-->
+        </div>
+    </div>
+    
+
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
 </html>

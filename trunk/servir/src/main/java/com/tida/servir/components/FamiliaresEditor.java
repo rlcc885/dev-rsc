@@ -250,7 +250,7 @@ public class FamiliaresEditor {
             session.flush();
             
             if(!bedicion){
-                logger.loguearEvento(session, logger.MODIFICACION_FAMILIAR, actual.getEntidad(), actual.getId(), logger.MOTIVO_FAMILIARES,familiarActual.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_FAMILIAR, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_FAMILIARES,familiarActual.getId());
             }
             if(familiarActual.getValidado()!=null){
                 if(familiarActual.getValidado()==true){                    

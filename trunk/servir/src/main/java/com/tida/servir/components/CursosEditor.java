@@ -1,17 +1,12 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
+import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Errores;
 import helpers.Helpers;
-
 import helpers.Logger;
-import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.PrimaryKeyEncoder;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -21,14 +16,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import com.tida.servir.pages.Busqueda;
-import helpers.Logger;
 import org.hibernate.Query;
-
-
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -44,45 +34,35 @@ public class CursosEditor {
     @Parameter
     @Property
     private Trabajador actual;
-
     @Property
     @SessionState
     private Usuario _usuario;
-
     @Property
     @SessionState
     private Entidad _oi;
-
 //    @Component(id = "cursosEdit")
 //    private Form _form;
-
     @Property
     @Persist
     private Curso cursos;
-
     @Property
     @Persist
     private LkBusquedaCursos listacurso;
-
     @Inject
     private Session session;
-
     @InjectComponent
-    private Envelope envelope; 
-    
+    private Envelope envelope;
     @Property
     @SessionState
     private UsuarioAcceso usu;
-    
     @Inject
     private PropertyAccess _access;
-    
-     //zonas
+    //zonas
     @InjectComponent
     private Zone listadoZone;
     @InjectComponent
     @Property
-    private Zone primeraZone;   
+    private Zone primeraZone;
 //    @InjectComponent
 //    @Property
 //    private Zone segundaZone;  
@@ -93,7 +73,6 @@ public class CursosEditor {
     private Form formlistacursos;
     @Inject
     private Request _request;
-        
     //campos
     @Property
     @Persist
@@ -121,8 +100,7 @@ public class CursosEditor {
     private Boolean valfuera;
     @Persist
     @Property
-    private Boolean valrevisado; 
-    
+    private Boolean valrevisado;
     //validaciones
     @Persist
     @Property
@@ -151,43 +129,43 @@ public class CursosEditor {
     @Persist
     @Property
     private Boolean vrevisado;
-    private int elemento=0;
+    private int elemento = 0;
 
     @Log
     @SetupRender
     private void inicio() {
-        vrevisado=false;
-        if(usu.getAccesoupdate()==1){
-            veditar=true;
-            vbotones=true;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;                
+        vrevisado = false;
+        if (usu.getAccesoupdate() == 1) {
+            veditar = true;
+            vbotones = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        if(usu.getAccesodelete()==1){
-            veliminar=true; 
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;                
+        if (usu.getAccesodelete() == 1) {
+            veliminar = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        if(usu.getAccesoreport()==1){
-            vformulario=true;
-            vbotones=true;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
-                vrevisado=true;                
+        if (usu.getAccesoreport() == 1) {
+            vformulario = true;
+            vbotones = true;
+            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+                vrevisado = true;
             }
         }
-        cursos=new Curso();
-        votro=true;
-        editando=false;
-        System.out.println("Eliminar2"+usu.getAccesodelete()+usu.getAccesoreport()+usu.getAccesoupdate());
+        cursos = new Curso();
+        votro = true;
+        editando = false;
+        System.out.println("Eliminar2" + usu.getAccesodelete() + usu.getAccesoreport() + usu.getAccesoupdate());
         //limpiar();
     }
-    
+
     @Log
     public List<LkBusquedaCursos> getListacur() {
         Criteria c = session.createCriteria(LkBusquedaCursos.class);
-        c.add(Restrictions.eq("trabajador", actual.getId()));        
+        c.add(Restrictions.eq("trabajador", actual.getId()));
         return c.list();
     }
 
@@ -201,8 +179,7 @@ public class CursosEditor {
     public GenericSelectModel<DatoAuxiliar> getCentroestudios() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CENTROESTUDIO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    } 
-
+    }
 
     void onDenChanged() {
         valdenominacion = _request.getParameter("param");
@@ -211,95 +188,85 @@ public class CursosEditor {
     void onOtroChanged() {
         valotrocentro = _request.getParameter("param");
     }
-    
+
     @Log
     Object onActionFromEditar(Curso c) {
-        cursos=c;
-        vformulario=true;
-        editando=true;
-        vdetalle=false;
-        vbotones=true;
+        cursos = c;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
         mostrar();
-        if(valestudiando!=null){
-            if(valestudiando){
-            vfechahasta=true;
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+            } else {
+                vfechahasta = false;
             }
-            else{
-                vfechahasta=false;
-            }
+        } else {
+            vfechahasta = false;
         }
-        else{
-            vfechahasta=false;
-        }
-        if(valcentroestudio!=null){
-            if(valcentroestudio.getCodigo()==9999999){
-                votro=false;
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 9999999) {
+                votro = false;
+            } else {
+                votro = true;
             }
-            else{
-                votro=true;
-            }
-        }
-        else{
-            votro=true;
+        } else {
+            votro = true;
         }
 
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("terceraZone", terceraZone.getBody()); 
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
-    
+
     @Log
     Object onActionFromDetalle(Curso c) {
-        cursos=c;
-        mostrar();        
-        vdetalle=true;
-        vfechahasta=true;
-        votro=true;
-        vbotones=false;
-        vformulario=true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody())                             
-                    .add("terceraZone", terceraZone.getBody()); 
+        cursos = c;
+        mostrar();
+        vdetalle = true;
+        vfechahasta = true;
+        votro = true;
+        vbotones = false;
+        vformulario = true;
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
-    
+
     @Log
     Object onActionFromDetalles(Curso c) {
-        cursos=c;
-        mostrar();        
-        vdetalle=true;
-        vfechahasta=true;
-        votro=true;
-        vbotones=false;
-        vformulario=true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody())                             
-                    .add("terceraZone", terceraZone.getBody()); 
+        cursos = c;
+        mostrar();
+        vdetalle = true;
+        vfechahasta = true;
+        votro = true;
+        vbotones = false;
+        vformulario = true;
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
-    
+
     @Log
     @CommitAfter
     Object onBorrarDato(Curso dato) {
         session.delete(dato);
         envelope.setContents("Curso del Trabajador Eliminado");
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("terceraZone", terceraZone.getBody()); 
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformularioprimero(){
-        if(valcentroestudio!=null){
-            if(valcentroestudio.getCodigo()==999999){
-                votro=false;                
+    Object onSuccessFromformularioprimero() {
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 999999) {
+                votro = false;
+            } else {
+                votro = true;
+                valotrocentro = null;
             }
-            else{
-                votro=true;
-                valotrocentro=null;
-            }
-        }
-        else{
-            votro=true;
+        } else {
+            votro = true;
         }
         return primeraZone.getBody();
     }
-        
+
 //    @Log
 //    @CommitAfter
 //    Object onSuccessFromformulariosegundo(){
@@ -312,213 +279,196 @@ public class CursosEditor {
 //        }
 //        return terceraZone.getBody();
 //    }
-    
-    void onSelectedFromSave() {        
-        elemento=1;   
+    void onSelectedFromSave() {
+        elemento = 1;
     }
-    
-    void onSelectedFromReset(){
+
+    void onSelectedFromReset() {
         limpiar();
-        editando=false;
-        cursos=new Curso();
-        if(usu.getAccesoreport()==0){
-            vformulario=false;
-        } 
-        elemento=2;
+        editando = false;
+        cursos = new Curso();
+        if (usu.getAccesoreport() == 0) {
+            vformulario = false;
+        }
+        elemento = 2;
     }
-    
-    void onSelectedFromCancel() {        
-        elemento=3;
+
+    void onSelectedFromCancel() {
+        elemento = 3;
     }
-    
+
     @Log
     @CommitAfter
-    Object onSuccessFromformulariotercero(){
-        if(valestudiando!=null){
-            if(valestudiando){
-                vfechahasta=true;
-                valfec_hasta=null;
+    Object onSuccessFromformulariotercero() {
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+                valfec_hasta = null;
+            } else {
+                vfechahasta = false;
             }
-            else{
-                vfechahasta=false;
-            }
+        } else {
+            vfechahasta = false;
         }
-        else{
-            vfechahasta=false;
-        }        
-        if(elemento==3){
-            elemento=0;
-            if(_usuario.getRol().getId()==1)
+        if (elemento == 3) {
+            elemento = 0;
+            if (_usuario.getRol().getId() == 1) {
                 return "Alerta";
-            else
+            } else {
                 return Busqueda.class;
-        }
-        else if(elemento==2){
-            elemento=0;
-        }
-        else if(elemento==1){      
-            elemento=0;
+            }
+        } else if (elemento == 2) {
+            elemento = 0;
+        } else if (elemento == 1) {
+            elemento = 0;
             formlistacursos.clearErrors();
             Logger logger = new Logger();
-            if(valdenominacion==null){
-                    formlistacursos.recordError("Tiene que ingresar la Denominación");
-                    return listadoZone.getBody();
+            if (valdenominacion == null) {
+                formlistacursos.recordError("Tiene que ingresar la Denominación");
+                return listadoZone.getBody();
+            }
+            if (valtipoestudio == null) {
+                formlistacursos.recordError("Tiene que seleccionar el Tipo de Estudio");
+                return listadoZone.getBody();
+            }
+            if (valcentroestudio == null) {
+                formlistacursos.recordError("Tiene que seleccionar el Centro de Estudio");
+                return listadoZone.getBody();
+            }
+            if (valfec_desde == null) {
+                formlistacursos.recordError("Tiene que ingresar Fecha de Inicio");
+                return listadoZone.getBody();
+            }
+            if (valfec_desde.after(new Date())) {
+                formlistacursos.recordError("La fecha de inicio debe ser previa a la fecha actual.");
+                return listadoZone.getBody();
+            }
+            if (validando() == false) {
+                return listadoZone.getBody();
+            }
+
+            if (editando) {
+                //editando
+                if (usu.getAccesoreport() == 0) {
+                    vformulario = false;
                 }
-                if(valtipoestudio==null){
-                    formlistacursos.recordError("Tiene que seleccionar el Tipo de Estudio");
-                    return listadoZone.getBody();
-                }
-                if(valcentroestudio==null){
-                    formlistacursos.recordError("Tiene que seleccionar el Centro de Estudio");
-                    return listadoZone.getBody();
-                }
-                if(valfec_desde==null){
-                    formlistacursos.recordError("Tiene que ingresar Fecha de Inicio");
-                    return listadoZone.getBody();
-                }
-                if(valfec_desde.after(new Date())){
-                    formlistacursos.recordError("La fecha de inicio debe ser previa a la fecha actual.");
-                    return listadoZone.getBody();
-                }
-                if(validando()==false){
-                    return listadoZone.getBody();
-                }
-                
-                if(editando){
-                    //editando
-                    if(usu.getAccesoreport()==0){
-                        vformulario=false;
-                    } 
-                    System.out.println("fuerae"+valfuera);
+                System.out.println("fuerae" + valfuera);
+                cursos.setEstudiando(valestudiando);
+                cursos.setFueradelpais(valfuera);
+
+            } else {//guardando
+                //System.out.println("Trabajadorrr"+actual);                    
+                cursos.setTrabajador(actual);
+                cursos.setEntidad(_usuario.getTrabajador().getEntidad());
+                cursos.setValidado(false);
+                if (valestudiando == null) {
+                    cursos.setEstudiando(false);
+                } else {
                     cursos.setEstudiando(valestudiando);
+                }
+                if (valfuera == null) {
+                    cursos.setFueradelpais(false);
+                } else {
                     cursos.setFueradelpais(valfuera);
-
                 }
-                else{//guardando
-                    //System.out.println("Trabajadorrr"+actual);                    
-                    cursos.setTrabajador(actual);        
-                    cursos.setEntidad(_usuario.getTrabajador().getEntidad());
+                if (_usuario.getRol().getId() == 1) {
+                    cursos.setAgregadotrabajador(true);
+                } else {
+                    cursos.setAgregadotrabajador(false);
+                }
+            }
+            if (vrevisado == true) {
+                if (valrevisado == null) {
                     cursos.setValidado(false);
-                    if(valestudiando==null){
-                        cursos.setEstudiando(false);
-                    }
-                    else{
-                        cursos.setEstudiando(valestudiando);
-                    }
-                    if(valfuera==null){
-                        cursos.setFueradelpais(false);
-                    }
-                    else{
-                        cursos.setFueradelpais(valfuera);
-                    }
-                    if(_usuario.getRol().getId()==1){
-                        cursos.setAgregadotrabajador(true);
-                    }
-                    else{
-                        cursos.setAgregadotrabajador(false);
-                    }                    
+                } else {
+                    cursos.setValidado(valrevisado);
                 }
-                if(vrevisado==true){
-                    if(valrevisado==null){
-                        cursos.setValidado(false);
-                    }
-                    else{
-                        cursos.setValidado(valrevisado);
-                    }
 
+            }
+            seteo();
+            session.saveOrUpdate(cursos);
+            session.flush();
+            if (!editando) {
+                System.out.println("primerooooooo" + editando);
+                logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_CURSOS, cursos.getId());
+            }
+            if (valrevisado != null) {
+                if (valrevisado == true) {
+                    System.out.println("segundoooooo");
+                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + cursos.getTrabajador().getId() + "' and tipoevento_id='" + logger.MODIFICACION_CURSOS + "' and tabla_id='" + cursos.getId() + "' and estadoevento=0";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+                    session.flush();
                 }
-                seteo();
-                session.saveOrUpdate(cursos);
-                session.flush();
-                if(!editando){
-                    System.out.println("primerooooooo"+editando);
-                    logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad(), actual.getId(), logger.MOTIVO_PERSONALES_CURSOS,cursos.getId());
-                }
-                if(valrevisado!=null){
-                    if(valrevisado==true){
-                        System.out.println("segundoooooo");
-                        String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='"+cursos.getTrabajador().getId()+"' and tipoevento_id='"+logger.MODIFICACION_CURSOS+"' and tabla_id='"+cursos.getId()+"' and estadoevento=0";
-                        Query query = session.createSQLQuery(hql);
-                        int rowCount = query.executeUpdate();
-                        session.flush();
-                    }          
-                }
-                editando = false; 
-                limpiar();
-                formlistacursos.clearErrors();
-                envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
+            }
+            editando = false;
+            limpiar();
+            formlistacursos.clearErrors();
+            envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
         }
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody())                             
-                    .add("terceraZone", terceraZone.getBody()); 
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
-    
-    boolean validando(){
-       boolean resultado=true;
-       if(valestudiando!=null){
-            if(valestudiando==false){                
-                if(valfec_hasta==null){
+
+    boolean validando() {
+        boolean resultado = true;
+        if (valestudiando != null) {
+            if (valestudiando == false) {
+                if (valfec_hasta == null) {
                     formlistacursos.recordError("Debe ingresar Fecha de Fin");
-                    resultado=false;
-                    elemento=0;
-                }
-                else if(valfec_hasta.after(new Date())){
+                    resultado = false;
+                    elemento = 0;
+                } else if (valfec_hasta.after(new Date())) {
                     formlistacursos.recordError("La fecha de fin debe ser previa a la fecha actual.");
-                    resultado=false;
-                    elemento=0;
-                }                                
-                else if (valfec_desde.after(valfec_hasta)){
+                    resultado = false;
+                    elemento = 0;
+                } else if (valfec_desde.after(valfec_hasta)) {
                     formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
-                    resultado=false;
-                    elemento=0;
-                }  
-                else if(valfec_desde.equals(valfec_hasta)){
-                    resultado=false;
-                    elemento=0;
+                    resultado = false;
+                    elemento = 0;
+                } else if (valfec_desde.equals(valfec_hasta)) {
+                    resultado = false;
+                    elemento = 0;
                     formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
             }
-       }
-        else{
-            if(valfec_hasta==null){
+        } else {
+            if (valfec_hasta == null) {
                 formlistacursos.recordError("Tiene que ingresar Fecha de Fin");
-                resultado=false;
-                elemento=0;
-            }
-            else if(valfec_hasta.after(new Date())){
+                resultado = false;
+                elemento = 0;
+            } else if (valfec_hasta.after(new Date())) {
                 formlistacursos.recordError("La fecha de fin debe ser previa a la fecha actual.");
-                resultado=false;
-                elemento=0;
-            }                                
-            else if (valfec_desde.after(valfec_hasta)){
+                resultado = false;
+                elemento = 0;
+            } else if (valfec_desde.after(valfec_hasta)) {
                 formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
-                resultado=false;
-                elemento=0;
-            }  
-            else if(valfec_desde.equals(valfec_hasta)){
-                resultado=false;
-                elemento=0;
+                resultado = false;
+                elemento = 0;
+            } else if (valfec_desde.equals(valfec_hasta)) {
+                resultado = false;
+                elemento = 0;
                 formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
-            
-        System.out.println("resuuuuuu"+resultado);
-       return resultado;
-    }
-    
-    void mostrar(){        
-        valdenominacion=cursos.getDenominacion();
-        valtipoestudio=cursos.getTipoestudio();
-        valcentroestudio=cursos.getCentroestudio();
-        valotrocentro=cursos.getOtrocentroestudio();
-        valfec_desde=cursos.getFechainicio();
-        valfec_hasta=cursos.getFechafin();
-        valestudiando=cursos.getEstudiando();  
-        valrevisado=cursos.getValidado(); 
-        valfuera=cursos.getFueradelpais();
-        System.out.println("fueram"+valfuera);
+
+        System.out.println("resuuuuuu" + resultado);
+        return resultado;
     }
 
-    void seteo(){
+    void mostrar() {
+        valdenominacion = cursos.getDenominacion();
+        valtipoestudio = cursos.getTipoestudio();
+        valcentroestudio = cursos.getCentroestudio();
+        valotrocentro = cursos.getOtrocentroestudio();
+        valfec_desde = cursos.getFechainicio();
+        valfec_hasta = cursos.getFechafin();
+        valestudiando = cursos.getEstudiando();
+        valrevisado = cursos.getValidado();
+        valfuera = cursos.getFueradelpais();
+        System.out.println("fueram" + valfuera);
+    }
+
+    void seteo() {
         cursos.setDenominacion(valdenominacion);
         cursos.setTipoestudio(valtipoestudio);
         cursos.setCentroestudio(valcentroestudio);
@@ -526,38 +476,20 @@ public class CursosEditor {
         cursos.setFechainicio(valfec_desde);
         cursos.setFechafin(valfec_hasta);
     }
-    
-    void limpiar(){
-        cursos=new Curso();
-        valdenominacion=null;
-        valtipoestudio=null;
-        valcentroestudio=null;
-        valotrocentro=null;
-        valfec_desde=null;
-        valfec_hasta=null;
-        valestudiando=null;
-        valfuera=null;
-        valrevisado=null;
-        vfechahasta=false;
+
+    void limpiar() {
+        cursos = new Curso();
+        valdenominacion = null;
+        valtipoestudio = null;
+        valcentroestudio = null;
+        valotrocentro = null;
+        valfec_desde = null;
+        valfec_hasta = null;
+        valestudiando = null;
+        valfuera = null;
+        valrevisado = null;
+        vfechahasta = false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
 //    public boolean getNoEditable() {
 //        return !getEditable();
 //    }
@@ -565,7 +497,6 @@ public class CursosEditor {
 //    public boolean getEditable() {
 //       return Permisos.puedeEscribir(_usuario, _oi);
 //    }
-    
 //    public boolean getEsTrabajadorEditable(){        
 //        if(curso != null){
 //            if((curso.getAgregadoTrabajador() == null)){
@@ -578,7 +509,6 @@ public class CursosEditor {
 //        }
 //        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
 //    }
-    
 //  public PrimaryKeyEncoder<Long, Curso> getEncoder()
 //  {
 //    return new PrimaryKeyEncoder<Long, Curso>()
@@ -656,8 +586,9 @@ public class CursosEditor {
 //          return this;
 //    }
 
-  /*@Log
-    Object onValidate(){
-    	  
-    }*/
+    /*
+     * @Log Object onValidate(){
+     *
+     * }
+     */
 }

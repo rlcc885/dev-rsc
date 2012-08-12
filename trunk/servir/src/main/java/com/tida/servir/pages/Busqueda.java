@@ -1,14 +1,11 @@
 package com.tida.servir.pages;
 
-import annotations.XHR;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.services.SelectIdModelFactory;
-import helpers.Constantes;
 import helpers.Helpers;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
@@ -24,7 +21,6 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**

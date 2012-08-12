@@ -238,7 +238,7 @@ public class EntidadEditor extends GeneralPage {
             return this;
         }
         String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-        String nombreArchivo = Encriptacion.encriptaEnMD5(entidadUE.getId().toString()) + file.getFileName().substring(file.getFileName().length() - 4);
+        String nombreArchivo = Encriptacion.encriptaEnMD5( String.valueOf(entidadUE.getId()) ) + file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivo);
         copied = new File(path);
         if (!copied.exists()) {

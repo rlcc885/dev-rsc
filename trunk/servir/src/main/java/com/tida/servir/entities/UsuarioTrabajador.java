@@ -50,15 +50,20 @@ public class UsuarioTrabajador implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date ultimoCambioClave;
     @Column(name = "ESTADO")
-    private Short estado;
+    private int estado;
+    @Column(name = "ESTADODESC")
+    private String estadodesc;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     private long id;
-    @ManyToOne
-    private Entidad entidad;
+    //@ManyToOne
+    @Column(name = "ENTIDAD_ID")
+    private Long entidadid;
+    @Column(name = "DENOMINACION")
+    private String denominacion;
     @Column(name = "ROL_ID")
-    private long rolid;
+    private Long rolid;
     @Column(name = "EMAILLABORAL")
     private String emaillaboral;
     @Column(name = "TRABAJADOR_ID")
@@ -123,12 +128,20 @@ public class UsuarioTrabajador implements Serializable {
         this.ultimoCambioClave = ultimoCambioClave;
     }
 
-    public Short getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Short estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getEstadodesc() {
+        return estadodesc;
+    }
+
+    public void setEstadodesc(String estadodesc) {
+        this.estadodesc = estadodesc;
     }
 
     public long getId() {
@@ -147,12 +160,20 @@ public class UsuarioTrabajador implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public Entidad getEntidad() {
-        return entidad;
+    public long getEntidadid() {
+        return entidadid;
     }
 
-    public void setEntidad(Entidad entidad) {
-        this.entidad = entidad;
+    public void setEntidadid(long entidadid) {
+        this.entidadid = entidadid;
+    }
+
+    public String getDenominacion() {
+        return denominacion;
+    }
+
+    public void setDenominacion(String denominacion) {
+        this.denominacion = denominacion;
     }
 
     public long getRolid() {

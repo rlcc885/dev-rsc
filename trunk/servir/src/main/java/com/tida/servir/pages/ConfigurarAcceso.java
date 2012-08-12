@@ -72,7 +72,6 @@ public class ConfigurarAcceso extends GeneralPage {
         if (num == 2) {
             return zone;
         } else if (num == 3) {
-            System.out.println("cancelarrr");
             return zone;
         } else if (num == 1) {
             Date fechaactual = new Date();
@@ -80,7 +79,6 @@ public class ConfigurarAcceso extends GeneralPage {
             ca.setDuracion_clave(Long.parseLong(vigenciaClave));
             session.saveOrUpdate(ca);
             envelope.setContents(helpers.Constantes.CONFIGURAR_ACCESO_EXITO);
-            System.out.println("guardarrr");
             return zone;
         }
         return zone;
@@ -90,7 +88,7 @@ public class ConfigurarAcceso extends GeneralPage {
     @CommitAfter
     Object onProbarConexion() {
         if (SMTPConfig.sendMail("TEST","TEST",ca.getSMTP_usuario(), ca)) {
-            envelope.setContents("Configuración correcta.");
+            envelope.setContents("Configuraci&oacute;n correcta.");
         } else {
             Logger logger = new Logger();
             Tipoevento tipoeve = new Tipoevento();

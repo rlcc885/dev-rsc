@@ -24,7 +24,7 @@ input, select, textarea {
     color:#555454;
     font-size:11px;
 }
-select { width:200px;  padding: 3px 4px; height: 22px;}
+select { width:200px;  padding: 4px; /*height: 22px;*/}
 label { display:block; margin-bottom:5px; width:auto; background-color: transparent; cursor: pointer;}
 .check { float:left;}
 .check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
@@ -800,10 +800,10 @@ form th {
     margin-left: 12px;
 }
 */
-#entiZone{
+/*#entiZone{
     top: 200px;
     margin-left: 12px;
-}
+}*/
 
 /* Cargos */
 .cargosAM {
