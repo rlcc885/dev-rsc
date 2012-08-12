@@ -156,7 +156,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubigeoDomicilio = new Ubigeo();
         nivelUO = 1;
         uoAntecesora = null;
-//        mostrar=false;
+        mostrar=true;
         vbotones = false;
         vformulario = false;
         vdetalle = false;

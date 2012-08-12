@@ -1,6 +1,9 @@
 package com.tida.servir.pages;
 
-import com.tida.servir.entities.*;
+import com.tida.servir.entities.ConfiguracionAcceso;
+import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.UsuarioTrabajador;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
 import helpers.Logger;

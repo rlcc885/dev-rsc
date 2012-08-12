@@ -26,7 +26,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Order;
 
 /**
  *
@@ -72,12 +71,14 @@ public class ABMCargos extends GeneralPage {
     @Property
     @Persist
     private String errorBorrar;
-    /*@Component(id = "formularioselectorgano")
-    private Form _selectOrganoForm;*/
+    /*
+     * @Component(id = "formularioselectorgano") private Form _selectOrganoForm;
+     */
     @Persist
     private boolean editando;
-    /*@Component(id = "formularioselectuo")
-    private Form selectUoForm;*/
+    /*
+     * @Component(id = "formularioselectuo") private Form selectUoForm;
+     */
 //    @Component(id = "formularioaltacargo")
 //    private Form _altaForm;
     @Component(id = "formmensaje")
@@ -88,8 +89,7 @@ public class ABMCargos extends GeneralPage {
     private ComponentResources _resources;
     @InjectComponent
     private Envelope envelope;
-
-    private int num=0,num2=0,num3=0;
+    private int num = 0, num2 = 0, num3 = 0;
     private Object reto;
     @Property
     @Persist
@@ -123,17 +123,14 @@ public class ABMCargos extends GeneralPage {
     @Property
     @Persist
     private UsuarioAcceso usua;
-    
     //validaciones
-        //validaciones
+    //validaciones
     @Persist
     @Property
     private Boolean vdetalle;
-    
     @Persist
     @Property
     private Boolean vdetalle2; // restriccion del campo denominacion y codigo
-
     @Persist
     @Property
     private Boolean vformulario;
@@ -146,113 +143,108 @@ public class ABMCargos extends GeneralPage {
     @Persist
     @Property
     private Boolean veditar;
-    
-     /*@Property
-    @Persist
-    private Ocupacional ocupacional;*/
+    /*
+     * @Property @Persist private Ocupacional ocupacional;
+     */
     @Property
     @Persist
     private LkBusquedaCargo lkcargo;
-    
+
     @Log
     @SetupRender
     private void inicio() {
         onSelectedFromClear();
         onSelectedFromReset();
-        //mostrar=false;
-        vbotones=false;
-        vformulario=false;
-        vdetalle=false;
+        mostrar = true;
+        vbotones = false;
+        vformulario = false;
+        vdetalle = false;
         //RESTRICCION
-        vdetalle2=false;
+        vdetalle2 = false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        List result = query.list();        
-        if(result.isEmpty()){
+        List result = query.list();
+        if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
-            
-        }
-        else{
+
+        } else {
             usua = (UsuarioAcceso) result.get(0);
-            if(usua.getAccesoupdate()==1){
-                veditar=true;
-                vbotones=true;
+            if (usua.getAccesoupdate() == 1) {
+                veditar = true;
+                vbotones = true;
             }
-            if(usua.getAccesodelete()==1){
-                veliminar=true; 
+            if (usua.getAccesodelete() == 1) {
+                veliminar = true;
             }
-            if(usua.getAccesoreport()==1){
-                vformulario=true;
-                vbotones=true; 
+            if (usua.getAccesoreport() == 1) {
+                vformulario = true;
+                vbotones = true;
             }
-        
+
         }
-        
-        
+
+
     }
+
     @Log
     @CommitAfter
-    Object retorno(){        
+    Object retorno() {
         return Alerta.class;
     }
-    
-    void onSelectedFromClear() {        
-        num2=2;
-        nivel=null; 
-        valsituacioncap=null;
-        bdcargo=null;        
+
+    void onSelectedFromClear() {
+        num2 = 2;
+        nivel = null;
+        valsituacioncap = null;
+        bdcargo = null;
         bregimengruponivel = new RegimenGrupoNivel();
     }
-    
-    void onSelectedFromMuestra() {        
-        num2=3;
-        mostrar=true; 
-        nivel=null; 
-        valsituacioncap=null;
-        bdcargo=null;        
+
+    void onSelectedFromMuestra() {
+        num2 = 3;
+        mostrar = true;
+        nivel = null;
+        valsituacioncap = null;
+        bdcargo = null;
         bregimengruponivel = new RegimenGrupoNivel();
-        uo=null;
+        uo = null;
 //        cargo = new Cargoxunidad();
 //        editando = false;
 //        regimengruponivel = new RegimenGrupoNivel();
-        num3=2;
+        num3 = 2;
     }
-    
-    void onSelectedFromSave() {        
-        num=1;
+
+    void onSelectedFromSave() {
+        num = 1;
     }
-    
+
     @Log
     @CommitAfter
     Object onSuccessFromFormulariofiltrocargo() {
-        if(num2==2){
-           reto=zonasFiltros();
-        }
-        else if(num2==3){
-            return new MultiZoneUpdate("filtrosZone", filtrosZone.getBody()).add("listaCargo", listaCargo.getBody())
-                .add("BOcupacionalesZone", BOcupacionalesZone.getBody()).add("nivelUOZone", nivelUOZone.getBody());
-                    //.add("nivelcargo", nivelcargo.getBody());
-        }            
-        else{
-            mostrar=true;
-            num3=1;
+        if (num2 == 2) {
+            reto = zonasFiltros();
+        } else if (num2 == 3) {
+            return new MultiZoneUpdate("filtrosZone", filtrosZone.getBody()).add("listaCargo", listaCargo.getBody()).add("BOcupacionalesZone", BOcupacionalesZone.getBody()).add("nivelUOZone", nivelUOZone.getBody());
+            //.add("nivelcargo", nivelcargo.getBody());
+        } else {
+            mostrar = true;
+            num3 = 1;
             //envelope.setContents(String.valueOf(nivel)+bdcargo+String.valueOf(uo)+String.valueOf(valsituacioncap));
-            reto=zonasDatos(); 
-            
+            reto = zonasDatos();
+
         }
         // RESTRICCION
-        vdetalle2=false;
+        vdetalle2 = false;
         return reto;
     }
-    
+
     @Log
     @CommitAfter
     Object onSuccessFromformBOcupacional() {
         return BOcupacionalesZone.getBody();
     }
-    
-    
+
     @Log
     public boolean getHayNivel() {
         return !(nivel == null);
@@ -275,21 +267,21 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicas() {
-        String consulta="SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"+
-          " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"+
-          " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"+
-          " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO!=0 AND S1.ENTIDAD_ID='"+entidadUE.getId()+"'";
-        if(nivel!=null){
-            consulta+=" AND S1.NIVEL='"+nivel+"'";
+        String consulta = "SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"
+                + " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"
+                + " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"
+                + " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO!=0 AND S1.ENTIDAD_ID='" + entidadUE.getId() + "'";
+        if (nivel != null) {
+            consulta += " AND S1.NIVEL='" + nivel + "'";
         }
-        consulta+="ORDER BY(DENOMINACION)";
+        consulta += "ORDER BY(DENOMINACION)";
         List<LkBusquedaUnidad> list;
         Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
-        list=query.list();
+        list = query.list();
         _beanUOrganicas = new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
         return _beanUOrganicas;
     }
-    
+
     @Log
     public GenericSelectModel<UnidadOrganica> getBeanUOrganicas2() {
         List<UnidadOrganica> list;
@@ -300,51 +292,50 @@ public class ABMCargos extends GeneralPage {
         _beanUOrganicas2 = new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
         return _beanUOrganicas2;
     }
-    
+
     @Log
     public List<LkBusquedaCargo> getCargos() {
-        String consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
-                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
-                        "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='"+entidadUE.getId()+"'";
+        String consulta = "SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "
+                + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
+                + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
+                + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
+                + "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='" + entidadUE.getId() + "'";
 //        Criteria c = session.createCriteria(Cargoxunidad.class);
 //        c.createAlias("unidadorganica", "unidadorganica"); 
 //        c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
 //        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
-        if(num3==2){
-            
-        }
-        else{          
-            if(nivel!= null){
-               consulta+=" AND S2.NIVEL='"+nivel+"'";     
+        if (num3 == 2) {
+        } else {
+            if (nivel != null) {
+                consulta += " AND S2.NIVEL='" + nivel + "'";
             }
             if (uo != null && !uo.equals("")) {
-                consulta+=" AND S1.UNIDADORGANICA_ID='"+uo.getId()+"'";     
+                consulta += " AND S1.UNIDADORGANICA_ID='" + uo.getId() + "'";
             }
             if (bdcargo != null && !bdcargo.equals("")) {
-                consulta+=" AND UPPER(S1.DEN_CARGO) LIKE '%' || UPPER('"+bdcargo+"')||'%'";
-            }            
+                consulta += " AND UPPER(S1.DEN_CARGO) LIKE '%' || UPPER('" + bdcargo + "')||'%'";
+            }
             if (valsituacioncap != null && !valsituacioncap.equals("")) {
-                consulta+=" AND S1.SITUACIONCAP_ID='"+valsituacioncap.getId()+"'"; 
+                consulta += " AND S1.SITUACIONCAP_ID='" + valsituacioncap.getId() + "'";
             }
             if (bregimengruponivel.getRegimen() != null && !bregimengruponivel.getRegimen().equals("")) {
-                consulta+=" AND S1.REGIMENLABORAL_ID='"+bregimengruponivel.getRegimen().getId()+"'"; 
+                consulta += " AND S1.REGIMENLABORAL_ID='" + bregimengruponivel.getRegimen().getId() + "'";
             }
             if (bregimengruponivel.getGrupo() != null && !bregimengruponivel.getGrupo().equals("")) {
-                consulta+=" AND S1.GRUPOOCUPACIONAL_ID='"+bregimengruponivel.getGrupo().getId()+"'"; 
+                consulta += " AND S1.GRUPOOCUPACIONAL_ID='" + bregimengruponivel.getGrupo().getId() + "'";
             }
             if (bregimengruponivel.getNivelRemunerativo() != null && !bregimengruponivel.getNivelRemunerativo().equals("")) {
-                consulta+=" AND S1.NIVELREMUNERATIVO_ID='"+bregimengruponivel.getNivelRemunerativo().getId()+"'"; 
-            } 
+                consulta += " AND S1.NIVELREMUNERATIVO_ID='" + bregimengruponivel.getNivelRemunerativo().getId() + "'";
+            }
         }
-        consulta+=" ORDER BY(DENOMINACION)";
+        consulta += " ORDER BY(DENOMINACION)";
         Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
         return query.list();
     }
 
-    /*@InjectComponent
-    private Zone selectZone;*/
+    /*
+     * @InjectComponent private Zone selectZone;
+     */
 //    @Log
 //    public List<String> getEstado() {
 //        List<String> estadosCargo = new LinkedList<String>();
@@ -352,26 +343,26 @@ public class ABMCargos extends GeneralPage {
 //        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
 //        return estadosCargo;
 //    }
-
     @Log
     public List<String> getRegimen() {
         return Helpers.getValorTablaAuxiliar("RegimenLaboralContractual", session);
     }
 
     /*
-    public GenericSelectModel<DatoAuxiliar> getCodEstCargo() {
-    List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CodigoEstructuralCargo", null, 0, session);
-
-    return new GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
-
-    }
+     * public GenericSelectModel<DatoAuxiliar> getCodEstCargo() {
+     * List<DatoAuxiliar> list =
+     * Helpers.getDatoAuxiliar("CodigoEstructuralCargo", null, 0, session);
+     *
+     * return new
+     * GenericSelectModel<DatoAuxiliar>(list,DatoAuxiliar.class,"valor","codigo",_access);
+     *
+     * }
      */
     @Log
     public GenericSelectModel<DatoAuxiliar> getCodFunCargo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ClasificadorFuncional", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
     }
-
 
     @Log
     Object onActionFromEditar(Cargoxunidad c) {
@@ -381,26 +372,26 @@ public class ABMCargos extends GeneralPage {
         cargoDatos();
         errorBorrar = null;
         editando = true;
-        vformulario=true;
-        editando=true;
-        vdetalle=false;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
         // RESTRICCION CAMPOS
-        vdetalle2=true;
-        vbotones=true;
+        vdetalle2 = true;
+        vbotones = true;
         //envelope.setContents(String.valueOf(uo)+String.valueOf(cargo.getUnidadorganica()));
         //uo=cargo.getUnidadorganica();
         //System.out.println("uo en actionfromeditar "+uo+" getpuedeeditar "+getPuedeEditar() );
         return zonasDatos();
     }
-    
+
     @Log
     Object onActionFromDetalle(Cargoxunidad c) {
         cargo = (Cargoxunidad) session.load(Cargoxunidad.class, c.getId());
-        vdetalle=true;
+        vdetalle = true;
         cargoDatos();
         errorBorrar = null;
-        vbotones=false;
-        vformulario=true;
+        vbotones = false;
+        vformulario = true;
         return zonasDatos();
     }
 
@@ -415,7 +406,6 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     void onPrepareFromFormularioaltacargo() {
-
     }
 
     @Log
@@ -454,7 +444,7 @@ public class ABMCargos extends GeneralPage {
             if (regimengruponivel == null) {
                 regimengruponivel = new RegimenGrupoNivel();
             }
-            
+
             regimengruponivel.setRegimen(c.getRegimenlaboral());
             regimengruponivel.setGrupo(c.getGrupoOcupacional());
             regimengruponivel.setNivelRemunerativo(c.getNivelRemunerativo());
@@ -468,10 +458,7 @@ public class ABMCargos extends GeneralPage {
     }
 
     /*
-    Cargo onPassivate()
-    {
-    return cargo;
-    }
+     * Cargo onPassivate() { return cargo; }
      */
     @Log
     @CommitAfter
@@ -505,24 +492,23 @@ public class ABMCargos extends GeneralPage {
 //        regimengruponivel = new RegimenGrupoNivel();
 //        return zonasDatos();
 //    }
-    void onSelectedFromReset() {        
-        num=2;     
+    void onSelectedFromReset() {
+        num = 2;
         cargo = new Cargoxunidad();
         editando = false;
         regimengruponivel = new RegimenGrupoNivel();
     }
-    
-    void onSelectedFromCancel() {        
-        num=3;     
-        if(!vbotones){
-            vformulario=false;
-        }
-        else{
+
+    void onSelectedFromCancel() {
+        num = 3;
+        if (!vbotones) {
+            vformulario = false;
+        } else {
             cargo = new Cargoxunidad();
             editando = false;
             regimengruponivel = new RegimenGrupoNivel();
         }
-        
+
     }
 
     @Log
@@ -536,7 +522,6 @@ public class ABMCargos extends GeneralPage {
         return editando;
     }
 
-
     @Log
     Object onFailureFromFormularioaltacargo() {
         return this;
@@ -548,7 +533,6 @@ public class ABMCargos extends GeneralPage {
 //        uo = null;
 //        return nivelUOZone.getBody();
 //    }
-
 //    @Log
 //    @CommitAfter
 //    Object onSuccessFromformUOCargo() {
@@ -558,7 +542,6 @@ public class ABMCargos extends GeneralPage {
 //
 //        return zonasDatos();
 //    }
-
     @Log
     @CommitAfter
     Object onSuccessFromformOcupacional() {
@@ -569,21 +552,18 @@ public class ABMCargos extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioaltacargo() {
 
-        if(num==2){
-            
-        }
-        else if(num==3){
-        
-        }else if(num==1){
+        if (num == 2) {
+        } else if (num == 3) {
+        } else if (num == 1) {
             formmensaje.clearErrors();
             //validaciones      
-            String consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
-                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
-                        "WHERE S2.ENTIDAD_ID='"+entidadUE.getId()+"' AND S1.COD_CARGO='"+cargo.getCod_cargo()+"'";
-            if(editando){
-                consulta+=("AND S1.ID!='"+cargo.getId()+"'");
+            String consulta = "SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "
+                    + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
+                    + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
+                    + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
+                    + "WHERE S2.ENTIDAD_ID='" + entidadUE.getId() + "' AND S1.COD_CARGO='" + cargo.getCod_cargo() + "'";
+            if (editando) {
+                consulta += ("AND S1.ID!='" + cargo.getId() + "'");
             }
             Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
 //            if (editando) {
@@ -593,11 +573,10 @@ public class ABMCargos extends GeneralPage {
 //            c.createAlias("unidadorganica", "unidadorganica");
 //            c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
 //            //c.add(Restrictions.like("und_organica", uo));
-            if (query.list().size() > 0){
+            if (query.list().size() > 0) {
                 formmensaje.recordError(Errores.ERROR_COD_CARGO_UNICO);
-                return zonasDatos();                    
-            }
-            else{
+                return zonasDatos();
+            } else {
 //                Criteria c;
 //                c = session.createCriteria(Cargoxunidad.class);
 //                c = session.createCriteria(Cargoxunidad.class);
@@ -609,78 +588,78 @@ public class ABMCargos extends GeneralPage {
 //                c.createAlias("unidadorganica", "unidadorganica");
 //                c.add(Restrictions.eq("unidadorganica.entidad", entidadUE ));
                 //c.add(Restrictions.like("und_organica", uo));
-                consulta="SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "+
-                        "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "+
-                        "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "+
-                        "WHERE S2.ENTIDAD_ID='"+entidadUE.getId()+"' AND UPPER(S1.DEN_CARGO)=UPPER('"+cargo.getDen_cargo()+"')";
-                if(editando){
-                    consulta+=("AND S1.ID!='"+cargo.getId()+"'");
+                consulta = "SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "
+                        + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
+                        + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
+                        + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
+                        + "WHERE S2.ENTIDAD_ID='" + entidadUE.getId() + "' AND UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "')";
+                if (editando) {
+                    consulta += ("AND S1.ID!='" + cargo.getId() + "'");
                 }
                 query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
                 if (query.list().size() > 0) {
                     formmensaje.recordError(Errores.ERROR_DEN_CARGO_UNICO);
                     return zonasDatos();
-                }                
+                }
             }
-            
-            if(cargo.getEsorganico()==null){
+
+            if (cargo.getEsorganico() == null) {
                 formmensaje.recordError("Tiene que seleccionar una opción para ¿Es Orgánico?.");
                 return zonasDatos();
             }
-            if(cargo.getPresupuestado_PAP()==null){
+            if (cargo.getPresupuestado_PAP() == null) {
                 formmensaje.recordError("Tiene que seleccionar una opción para ¿Presupuestado en PAP?.");
                 return zonasDatos();
             }
-            if(cargo.getDec_jurada_byr()==null){
+            if (cargo.getDec_jurada_byr() == null) {
                 formmensaje.recordError("Tiene que seleccionar una opción para ¿Presenta Declaración Jurada de Bienes y Rentas?.");
                 return zonasDatos();
             }
-            if(regimengruponivel.getRegimen()==null){
+            if (regimengruponivel.getRegimen() == null) {
                 formmensaje.recordError("Tiene que seleccionar un Régimen Laboral/Contractual.");
                 return zonasDatos();
             }
-            if(regimengruponivel.getGrupo()==null){
-                formmensaje.recordError("Tiene que seleccionar un Grupo Ocupacional.");
-                return zonasDatos();
+            if (regimengruponivel.getRegimen().getCodigo() != 3) {
+                if (regimengruponivel.getGrupo() == null) {
+                    formmensaje.recordError("Tiene que seleccionar un Grupo Ocupacional.");
+                    return zonasDatos();
+                }
+                if (regimengruponivel.getNivelRemunerativo() == null) {
+                    formmensaje.recordError("Tiene que seleccionar un Nivel Remunerativo.");
+                    return zonasDatos();
+                }
             }
-            if(regimengruponivel.getNivelRemunerativo()==null){
-                formmensaje.recordError("Tiene que seleccionar un Nivel Remunerativo.");
-                return zonasDatos();
-            }
-            
-            
-        errorBorrar = null;
-        if (!editando) {
-            //cargo.setUnidadorganica(uo);
-            //cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);            
-        }
-        else{
-            if(usua.getAccesoreport()==0){
-                    vformulario=false;
-            }
-        }
-        
-        cargo.setNivelRemunerativo(regimengruponivel.getNivelRemunerativo());
-        cargo.setGrupoOcupacional(regimengruponivel.getGrupo());
-        cargo.setRegimenlaboral(regimengruponivel.getRegimen());
 
-        cargo.setEstado(Cargoxunidad.ESTADO_ALTA);
+            errorBorrar = null;
+            if (!editando) {
+                //cargo.setUnidadorganica(uo);
+                //cargo.setCtd_puestos_total(Cargoxunidad.CANT_DEFAULT);            
+            } else {
+                if (usua.getAccesoreport() == 0) {
+                    vformulario = false;
+                }
+            }
+
+            cargo.setNivelRemunerativo(regimengruponivel.getNivelRemunerativo());
+            cargo.setGrupoOcupacional(regimengruponivel.getGrupo());
+            cargo.setRegimenlaboral(regimengruponivel.getRegimen());
+
+            cargo.setEstado(Cargoxunidad.ESTADO_ALTA);
 //        session.saveOrUpdate(cargo);
-        session.merge(cargo);
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(cargo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
-        cargo = new Cargoxunidad();
-        regimengruponivel = new RegimenGrupoNivel();
-        mostrar=true;
-        editando = false;
-        formmensaje.clearErrors();
-        envelope.setContents(helpers.Constantes.CARGO_EXITO);
-        
-        
-        //return abmZone.getBody();
+            session.merge(cargo);
+            new Logger().loguearOperacion(session, loggedUser, String.valueOf(cargo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+            cargo = new Cargoxunidad();
+            regimengruponivel = new RegimenGrupoNivel();
+            mostrar = true;
+            editando = false;
+            formmensaje.clearErrors();
+            envelope.setContents(helpers.Constantes.CARGO_EXITO);
+
+
+            //return abmZone.getBody();
         }
         //RESTRICCION
-        vdetalle2=false;
+        vdetalle2 = false;
         return zonasDatos();
 
     }
@@ -699,55 +678,48 @@ public class ABMCargos extends GeneralPage {
     private MultiZoneUpdate zonasDatos() {
         MultiZoneUpdate mu;
 
-        mu = new MultiZoneUpdate("listaCargo", listaCargo.getBody()).add("OcupacionalesZone", OcupacionalesZone.getBody())
-                .add("abmZone", abmZone.getBody()).add("mensajeZone",mensajeZone.getBody());
+        mu = new MultiZoneUpdate("listaCargo", listaCargo.getBody()).add("OcupacionalesZone", OcupacionalesZone.getBody()).add("abmZone", abmZone.getBody()).add("mensajeZone", mensajeZone.getBody());
         return mu;
 
     }
-    @Log 
+
+    @Log
     private MultiZoneUpdate zonasFiltros() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("filtrosZone", filtrosZone.getBody())
-                .add("BOcupacionalesZone", BOcupacionalesZone.getBody()).add("nivelUOZone", nivelUOZone.getBody());
-                //.add("nivelcargo", nivelcargo.getBody());
+        mu = new MultiZoneUpdate("filtrosZone", filtrosZone.getBody()).add("BOcupacionalesZone", BOcupacionalesZone.getBody()).add("nivelUOZone", nivelUOZone.getBody());
+        //.add("nivelcargo", nivelcargo.getBody());
         return mu;
 
     }
-
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getbeanDatoSituacionCAP() {
         //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
         //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
-        
+
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SITUACIONCAP", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    /*@Log
-    @SetupRender
-    private void setupCombos() {
-    //System.out.println("=======================Estoy aca,");
-
-    }*/
+    /*
+     * @Log @SetupRender private void setupCombos() {
+     * //System.out.println("=======================Estoy aca,");
+     *
+     * }
+     */
 
     /*
-    @Log
-    @SetupRender
-    private void setupOcupacionales() {
-    if (cargo != null) {
-    cargoDatos();
-    }
-    }
+     * @Log @SetupRender private void setupOcupacionales() { if (cargo != null)
+     * { cargoDatos(); } }
      */
     void onDenoChanged() {
         bdcargo = _request.getParameter("param");
     }
+
     Object onValueChangedFromUnidadorganica_nivel(Integer dato) {
-        nivel=dato;
+        nivel = dato;
         uo = null;
         return nivelUOZone.getBody();
     }
-    
 //    @Log
 //    @CommitAfter
 //    Object onMostrartodos() {

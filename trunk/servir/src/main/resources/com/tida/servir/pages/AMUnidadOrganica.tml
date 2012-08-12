@@ -279,11 +279,12 @@
                         
                     <div class="actionunidad f-right">
                             <!--<input id="submit" type="submit" value="Guardar" class="button f-right"/>-->
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
                         <t:if test="${vbotones}">
+                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>  
                         </t:if>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
+                        
                              <!--<t:actionlink t:id="reset" href="#">Borrar Formulario/Nuevo</t:actionlink>-->
                     </div>                     
                 </t:form>
