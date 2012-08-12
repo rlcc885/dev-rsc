@@ -1607,3 +1607,10 @@ DIV.t-data-grid {
 .complejidad-clave input{
     width: 400px;
 }
+
+.accesoupdate, .accesoselect, .accesoinsert, .accesodelete{
+    text-align: center;
+}
+#listaPermisoZone TABLE.t-data-grid THEAD TR TH{
+    text-align: center;
+}
