@@ -191,6 +191,9 @@ public class Busqueda extends GeneralPage {
     @SetupRender
     private void inicio() {
         limpiar();
+        // MODIFICACION 13 AGOSTO
+       // vselect = true;
+        //
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -227,30 +230,13 @@ public class Busqueda extends GeneralPage {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-
-//    public List<String> getDiscapacidades() {
-//        return Helpers.getValorTablaAuxiliar("TIPODISCAPACIDAD", session);
-//    }
-//    
+ 
     @Log
     public GenericSelectModel<DatoAuxiliar> getEstadocivil() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ESTADOCIVIL", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-//    public List<String> getEstado() {
-//        List<String> estadosCargo = new LinkedList<String>();
-//        /*
-//         * TODO JZM verificar linea de codigo
-//         */
-////        estadosCargo.add(Cargoxunidad.ESTADO_ALTA);
-////        estadosCargo.add(Cargoxunidad.ESTADO_BAJA);
-//
-//        estadosCargo.add("Alta");
-//        estadosCargo.add("Baja");
-//
-//        return estadosCargo;
-//    }
         @Log
     public GenericSelectModel<UnidadOrganica> getBeanUOrganicas() {
         List<UnidadOrganica> list;
@@ -272,8 +258,8 @@ public class Busqueda extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
 
     }
-    @Component(id = "formulariobusquedasfiltros")
-    private Form formulariobusquedasfiltros;
+   //WW  @Component(id = "formulariobusquedasfiltros")
+   //WW  private Form formulariobusquedasfiltros;
 
     public List<LkAdminTrabajador> getEmpleados() {
         String consulta="SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "+
@@ -378,37 +364,71 @@ public class Busqueda extends GeneralPage {
     }
     private boolean resetBusquedas = false;
 
-    void onSelectedFromBorrarBusquedas() {
+    void onSelectedFromBorrarBusquedasA() 
+    {
         resetBusquedas = true;
         //reseteo el formulario
 
     }
-
+    void onSelectedFromBorrarBusquedasB()
+    {  
+        resetBusquedas = true;
+    }
+    
     Busqueda onActionFromToggle_filtros() {
         if (mostrarFiltros) {
             mostrarFiltros = false;
             mostrarEsconder = "Mostrar";
         } else {
             mostrarFiltros = true;
-            mostrarEsconder = "Oscultar";
+            mostrarEsconder = "Ocultar";
         }
         return this;
     }
-
-    public Object onSuccess() {
+    @Property
+    @InjectComponent
+    private Zone filtrosZone;
+    
+    @Component(id="formulariobusquedaA")
+    private Form formulariobusquedaA;
+    
+    @Property
+    @InjectComponent
+    private Zone  busquedaA;          
+    public Object onSuccessFromFormularioBusquedaA() {
         if (resetBusquedas) {
-            limpiar();            
+            limpiar();
+            formulariobusquedaA.clearErrors();
         }
-        formulariobusquedasfiltros.clearErrors();
         if (resetBusquedas) {
             resetBusquedas = false;
-            //return getTodasZones(); // actualizo toda la pantalla
-            return Busqueda.class;
+            return new MultiZoneUpdate("busquedaA",busquedaA);
         } else {
-            //xxx.recordError(String.valueOf(valformacionprofe));
-            return getEmpleadosZones(); // actualizo los trabajadores
+            return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
         }
     }
+    @Component(id="formulariobusquedaB")
+    private Form formulariobusquedaB;
+    
+   @Property
+   @InjectComponent
+   private Zone busquedaB;
+   
+   public Object onSuccessFromFormularioBusquedaB()
+   {
+          if (resetBusquedas) {
+            limpiar(); 
+            formulariobusquedaB.clearErrors();
+        }
+        if (resetBusquedas) {
+            resetBusquedas = false;
+
+            return new MultiZoneUpdate("busquedaB",busquedaB);
+        } else {
+            return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
+        }     
+   }
+    
     @Inject
     private SelectIdModelFactory selectIdModelFactory;
     @Property
@@ -433,53 +453,10 @@ public class Busqueda extends GeneralPage {
 
     }
 
-    /*
-     * public List<String> getTiposDoc() { return
-     * Helpers.getValorTablaAuxiliar("TipoDocumento", session); }
-     */
 
-    /*
-     * Para armar la zona dinámica
-     */
-//    @InjectComponent
-//    private Zone cargosGrillaZone;
+    @Property
     @InjectComponent
     private Zone empleadoszone;
-    @InjectComponent
-    private Zone filtrosZone;
-
-//    Object onToCargo(Trabajador persona) {
-//        actual = persona;
-//        if (!request.isXHR()) {
-//            return this;
-//        }
-//
-//        return cargosGrillaZone.getBody();
-//    }
-
-//    @XHR
-//    Object onToUpdateCargosGrilla() {
-//        if (actual != null) {
-//            if (!request.isXHR()) {
-//                return this;
-//            }
-//
-//            return cargosGrillaZone.getBody();
-//        }
-//        return null;
-//    }
-
-//    private MultiZoneUpdate getZones() {
-//        return new MultiZoneUpdate("cargosGrillaZone", cargosGrillaZone.getBody());
-//    }
-
-    private MultiZoneUpdate getEmpleadosZones() {
-        return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
-    }
-
-    private MultiZoneUpdate getTodasZones() {
-        return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody()).add("filtrosZone", filtrosZone.getBody());
-    }
 
     public String getSelectionRow() {
         if (actual != null) {
@@ -512,7 +489,7 @@ public class Busqueda extends GeneralPage {
         apellidoMaterno = null;
         nombres = null;
         nroDocumento = null;
-//            tipoDocumento = null;
+//      tipoDocumento = null;
         sexo = null;
         fechadenacimientomenora = null;
         fechadenacimientomayora = null;
@@ -533,5 +510,13 @@ public class Busqueda extends GeneralPage {
         fechadeingresodesdea=null;
         fechadeingresohastaa=null;
         valregimenlaboral=null;
+        
+        //=======13 agosto
+        valestadocivil = null;
+        valunidadorganica = null;
+        valnivelinstruccion = null;
+        valformacionprofe = null;
+        valdocumentoide = null;
+        //
     }
 }
