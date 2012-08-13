@@ -977,7 +977,7 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
 #busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ /*width:920px;*/ height:auto; border-color:#D72522; padding:10px;}
 #busquedas select, #mainfiltros select, #form_conceptoremunerativo select, #form_usuario select {font-size:11px;}
 #busquedas label, #mainfiltros label {margin-right:0;}
-.seccionfiltros { width:auto;}
+.seccionfiltros { width:100%;}
 #tablaTrabajador {clear:both;}
 
 #Datos_Generales { border:none; padding:0;}
