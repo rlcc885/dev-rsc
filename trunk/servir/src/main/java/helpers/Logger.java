@@ -163,7 +163,7 @@ public class Logger {
         String descripcion,long tabla) {
         Evento e = new Evento();
         e.setTipoevento_id(tipoevento);
-        e.setEntidad(entidadid);
+        e.setEntidad_id(entidadid);
         e.setTrabajador_id(trabajador);
         e.setDescevento(descripcion);
         e.setFechaevento(new Date());

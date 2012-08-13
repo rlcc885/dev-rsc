@@ -26,7 +26,7 @@ public class Evento implements Serializable {
     private String descevento;
 //    @ManyToOne
 //    @ManyToOne
-    private Long entidad;
+    private Long entidad_id;
     private long trabajador_id;
     
     private long tipoevento_id;
@@ -42,14 +42,16 @@ public class Evento implements Serializable {
     public void setDescevento(String descevento) {
         this.descevento = descevento;
     }
-    
-        public long getEntidad() {
-        return entidad;
+
+    public long getEntidad_id() {
+        return entidad_id;
     }
 
-    public void setEntidad(long entidad) {
-        this.entidad = entidad;
+    public void setEntidad_id(long entidad_id) {
+        this.entidad_id = entidad_id;
     }
+    
+
     
 //    public Trabajador getTrabajador() {
 //        return trabajador;

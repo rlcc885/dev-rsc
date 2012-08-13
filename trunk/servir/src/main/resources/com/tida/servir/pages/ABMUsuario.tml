@@ -216,14 +216,13 @@
                             <input t:type="Checkbox" t:value="blanquearIntentosFallidos" />
                         </div>-->
                         <div class="f-wrap">
-                            <div class="f-left">
+                            <div>
                                 <t:label for="observacionedit" />
                                 <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
                                 t:validate="max=150,min=1" 
                                 t:rows="5" 
-                                t:style="width:100%;"
-                                t:disabled="true"/>
-                            (Ingresar 150 caracteres como máximo)
+                                t:cols="123"/>
+                            <em>(Ingresar 150 caracteres como máximo)</em>
                             </div>
                             
                         </div>
