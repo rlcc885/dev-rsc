@@ -31,7 +31,11 @@ import javax.persistence.*;
 
 public class UsuarioTrabajador implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
+    @Column(name = "LOGIN")
+    private String login;
+    @Column(name = "DOCUMENTOIDENTIDAD_ID")
+    private Long documentoidentidadid;
     @Column(name = "NRODOCUMENTO")
     private String nrodocumento;
     @Column(name = "NOMBRES")
@@ -81,6 +85,22 @@ public class UsuarioTrabajador implements Serializable {
     public UsuarioTrabajador() {
     }
 
+    public long getDocumentoidentidadid() {
+        return documentoidentidadid;
+    }
+
+    public void setDocumentoidentidadid(long documentoidentidadid) {
+        this.documentoidentidadid = documentoidentidadid;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
     public String getNrodocumento() {
         return nrodocumento;
     }
