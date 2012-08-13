@@ -420,18 +420,47 @@ public class TrabajadorNuevo  extends GeneralPage
     }
     
     void onSelectedFromReset() {
-         elemento=1;
+       
+    //===13 agosto
+            elemento = 1;
+            bUOrganica=false;
+            bCargo=false;
+            unidadorganica = null;
+            cargo = null;
+            tipovinculo = null;
+            nuevo=new Trabajador();
+
+        
     }
+    
+    @Property
+    @InjectComponent
+    private Zone tipovinculoZone;
+    
+    @Log
+    Object onSuccessFromFormularioBotones(){
+    if (elemento == 1)
+    {
+     //   return "TrabajadorNuevo";
+        return new MultiZoneUpdate("trabajadorNuevoZone",trabajadorNuevoZone.getBody())
+                .add("tipoVinculoZone", tipovinculoZone).add("cargosZone",cargosZone)
+                .add("unidadOrganicaZone",unidadOrganicaZone)
+                .add("nuevaUnidadOrganicaZone",nuevaUnidadOrganicaZone).add("nuevoCargosZone",nuevoCargosZone);
+    }
+    else
+    {return "Alerta";}
+    }
+    //===============================
     
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariotipovinculo() throws ParseException {
         
-        if(elemento==1){
-            return "TrabajadorNuevo";
-        }else if(elemento==2){
-            return "Alerta";
-        }else{
+ //       if(elemento==1){
+ //           return "TrabajadorNuevo";
+ //       }else if(elemento==2){
+ //           return "Alerta";
+ //       }else{
             if(getListadoEntidades().size()>0){
                  envelope.setContents(helpers.Constantes.EUE_EXITO);
                  envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
@@ -507,7 +536,7 @@ public class TrabajadorNuevo  extends GeneralPage
                   return Busqueda.class;
                 }
             }
-        }        
+//        }        
     }
     
     
