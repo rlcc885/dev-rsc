@@ -103,10 +103,10 @@
                     t:add="acciones" 
                     t:pagerPosition="bottom" 
                     t:row="u" 
-                    t:exclude= "apellidos,id,md5Clave,clave,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
-                    t:reorder="nrodocumento,nombres,apellidopaterno,apellidomaterno,estadodesc">
+                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
+                    t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc">
                 <t:parameter name="empty">
-                    <div class="no-info">No se han encontrado coincidencias.</div>
+                    No se han encontrado coincidencias.
                 </t:parameter>
                 <p:accionesCell>
                     <t:eventLink t:event="editaUsuario" t:context="u" href="#" t:zone="tabla_usuario">
@@ -132,7 +132,7 @@
                         <div class="f-left">
                             <t:label for="loginedit" />
                             <input t:type="TextField" t:id="loginedit" t:value="usuario.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="false"/>
-                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" t:mixins="confirm" class="button"/>
+                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>
                         </div>
                         <div class="f-left">
                             <t:label for="rolUsuarioEdit"/>
@@ -200,7 +200,7 @@
                             <div class="f-left">
                                 <t:label for="estadoUsuarioEdit" />
                                 <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" encoder="estadoUsuario" t:value="estadoUsuarioEdit" 
-                                t:validate="required" style="width:100px;"/>
+                                          t:validate="required" style="width:100px;"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="fechacreacionedit" />
@@ -219,10 +219,10 @@
                             <div>
                                 <t:label for="observacionedit" />
                                 <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
-                                t:validate="max=150,min=1" 
-                                t:rows="5" 
-                                t:cols="123"/>
-                            <em>(Ingresar 150 caracteres como máximo)</em>
+                                       t:validate="max=150,min=1" 
+                                       t:rows="5" 
+                                       t:cols="123"/>
+                                <em>(Ingresar 150 caracteres como máximo)</em>
                             </div>
                             
                         </div>
@@ -236,26 +236,29 @@
                 </t:form>
             </div>
         </div>
-        <br />
-        <h3>Perfiles asignados al usuario</h3>
-        <t:grid t:source="allPerfiles" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="rownum,usuarioId, perfilId" >
-            <p:accionesCell>
-                <t:actionlink t:id="eliminaPerfil" t:mixins="confirm" t:message="Desea ejecutar esta acción?" t:context="rowPerfil" href="#" t:zone="editarUsuarioZone">Eliminar</t:actionlink>
-            </p:accionesCell>
-        </t:grid>
+
+        
 <!--        </t:if>-->
     </t:zone>
     <br />
     <t:zone t:id="perfilZone">
-        <t:if test = "botonPerfil">
+<!--        <t:if test = "botonPerfil">
             <div id="bouttons" class="f-right">
                 <t:eventLink t:event="newPerfil" href="#" t:zone="perfilZone" class="button f-right">
                     Agregar Perfil
                 </t:eventLink>
             </div>
             <br class="clear"/>
-        </t:if>
-        <t:if test = "newPerfil">
+        </t:if>-->
+        <t:if test="editaUsuario">
+            <h3>Perfiles asignados al usuario</h3>
+            <div class="box">
+                <t:grid t:source="allPerfiles" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="rownum,usuarioId, perfilId" >
+                    <p:accionesCell>
+                        <t:actionlink t:id="eliminaPerfil" t:mixins="confirm" t:message="Desea ejecutar esta acción?" t:context="rowPerfil" href="#" t:zone="editarUsuarioZone">Eliminar</t:actionlink>
+                    </p:accionesCell>
+                </t:grid>
+            </div>
             <h3>Asignar Perfil al Usuario</h3>
             <div id="box-cargos" class="box">
                 <t:form t:id="perfilInputForm" t:zone="perfilZone">
