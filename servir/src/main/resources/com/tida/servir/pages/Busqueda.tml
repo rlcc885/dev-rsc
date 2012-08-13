@@ -58,8 +58,6 @@
                     <br class="clear" />
                     <t:if test="vselect">
                         <div class="actions f-right">
-                            <br/>
-                            <br/>
                             <input t:id="buscarsubmitA" t:type="submit" value="Buscar" class="button"/>
                             <input t:id="borrarbusquedasA" t:type="submit" value="Limpiar Formulario" class="button"/>
                         </div>
@@ -140,8 +138,6 @@
                     </div>       
                     <t:if test="vselect">
                         <div class="actions f-right">  
-                            <br/>
-                            <br/>
                             <input t:id="buscarsubmitB" t:type="submit" value="Buscar" class="button"/>
                             <input t:id="borrarbusquedasB" t:type="submit" value="Limpiar Formulario" class="button"/>
                         </div>
