@@ -20,58 +20,56 @@
     <div id="panel-01" class="box">
         <t:zone t:id="zonaFormularioBusqueda">
             <t:form t:id="formularioBusqueda"  t:zone="zonaFormularioBusqueda">
-                <div style="display:block;">
-                    <t:errors/>
-                    <div id="filtrosnombres" class="f-wrap">
-                        <div class="f-left">
-                            <t:label for="bidentificacionBusqueda"/>
-                            <input t:type="TextField" t:id="bidentificacionBusqueda" t:style="width: 270px;"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Tipo Documento</label>
-                            <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
-                        </div>
-                        <div class="f-left">
+                <t:errors/>
+                <div id="filtrosnombres" class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="bidentificacionBusqueda"/>
+                        <input t:type="TextField" t:id="bidentificacionBusqueda" t:style="width: 270px;"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Tipo Documento</label>
+                        <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
+                    </div>
+                    <div class="f-left">
                                 <!-- t:validate="required,minlength=1" -->
-                            <t:label for="bNumeroDocumento"/>
-                            <input t:type="TextField" t:id="bNumeroDocumento" t:validate="regexp" t:style="width: 270px;"/>
-                        </div>
+                        <t:label for="bNumeroDocumento"/>
+                        <input t:type="TextField" t:id="bNumeroDocumento" t:style="width: 270px;"/>
                     </div>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <t:label for="bNombres"/>
-                            <input t:type="TextField" t:id="bNombres" t:value="bNombres" t:style="width: 270px;"/>
-                        </div>
-                        <div class="f-left">
-                            <t:label for="bApellidoPaterno"/>
-                            <input t:type="TextField" t:id="bApellidoPaterno" t:value="bApellidoPaterno" t:style="width: 270px;"/>
-                        </div>
-                        <div class="f-left">
-                            <t:label for="bApellidoMaterno"/>
-                            <input t:type="TextField" t:id="bApellidoMaterno" t:value="bApellidoMaterno" t:style="width: 270px;"/>
-                        </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="bNombres"/>
+                        <input t:type="TextField" t:id="bNombres" t:value="bNombres" t:style="width: 270px;"/>
                     </div>
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <t:label for="bEstado"/>
-                            <input t:type="Select"
+                    <div class="f-left">
+                        <t:label for="bApellidoPaterno"/>
+                        <input t:type="TextField" t:id="bApellidoPaterno" t:value="bApellidoPaterno" t:style="width: 270px;"/>
+                    </div>
+                    <div class="f-left">
+                        <t:label for="bApellidoMaterno"/>
+                        <input t:type="TextField" t:id="bApellidoMaterno" t:value="bApellidoMaterno" t:style="width: 270px;"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <t:label for="bEstado"/>
+                        <input t:type="Select"
                                    t:id="bEstado"
                                    t:value="bEstado" 
                                    t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
                                    t:style="width: 100px;" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="bNombreEntidad"/>
-<!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
-                            <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
-                            <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
-                        </div>
-                        <div class="f-left">
-                            <t:label for="bselectPerfil"/>
-                            <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 300px;" />
-                        </div>
                     </div>
-                </div> <!-- busquedas -->
+                    <div class="f-left">
+                        <t:label for="bNombreEntidad"/>
+<!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
+                        <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
+                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                    </div>
+                    <div class="f-left">
+                        <t:label for="bselectPerfil"/>
+                        <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 300px;" />
+                    </div>
+                </div>
                 <div class="f-wrap f-right">
                     <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button" t:message="Esta seguro de realizar esta acción?"/>
                     <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button" t:message="Esta seguro de realizar esta acción?"/>
@@ -131,7 +129,7 @@
                         <legend> Datos de la Cuenta </legend>
                         <div class="f-left">
                             <t:label for="loginedit" />
-                            <input t:type="TextField" t:id="loginedit" t:value="usuario.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="false"/>
+                            <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="false"/>
                             <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>
                         </div>
                         <div class="f-left">

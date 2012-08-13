@@ -60,12 +60,12 @@ public class ABMUsuario extends GeneralPage {
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
     private PropertyAccess _access;
-    @Property
-    @Persist
-    private String nroDocumento;
-    @Property
-    @Persist
-    private String tipoDocumento;
+//    @Property
+//    @Persist
+//    private String nroDocumento;
+//    @Property
+//    @Persist
+//    private String tipoDocumento;
     @Component(id = "formularioCuenta")
     private Form formularioCuenta;
     @Component(id = "formularioPersonal")
@@ -97,24 +97,12 @@ public class ABMUsuario extends GeneralPage {
     private Context context;
     @InjectComponent
     private Envelope envelope;
-    @Persist
-    @Property
-    private String bidentificacionBusqueda;
-    @Persist
-    @Property
-    private String bapellidoPaterno;
-    @Persist
-    @Property
-    private String bapellidoMaterno;
-    @Persist
-    @Property
-    private String apellidosBusqueda;
 //    @Persist
 //    @Property
 //    private String nombresBusqueda;
-    @Persist
-    @Property
-    private boolean primeraVez;
+//    @Persist
+//    @Property
+//    private boolean primeraVez;
     @Persist
     @Property
     private boolean editaUsuario;
@@ -127,6 +115,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private boolean newPerfil;
+    @Persist
+    @Property
+    private String bidentificacionBusqueda;
     @Property
     @Persist
     private DatoAuxiliar bDocumentoIdentidad;
@@ -145,13 +136,13 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private String bNumeroDocumento;
-//    @Persist
+    @Persist
     @Property
     private String bNombres;
-//    @Persist
+    @Persist
     @Property
     private String bApellidoPaterno;
-//    @Persist
+    @Persist
     @Property
     private String bApellidoMaterno;
     @Persist
@@ -197,6 +188,9 @@ public class ABMUsuario extends GeneralPage {
         usuariotrabajadoredit = new UsuarioTrabajador();
         usuario = new Usuario();
         perfil = new Perfil();
+        // primera vez, se setea la entidad
+        bEntidad = entidad;
+        bNombreEntidad = bEntidad.getDenominacion();
     }
 
     @Log
@@ -286,51 +280,44 @@ public class ABMUsuario extends GeneralPage {
         if (loggedUser.getRol().getId() <= 2) { // Si es administrador de Entidad, sólo puede ver su información
             bEntidad = entidad;
         }
-        if (!primeraVez) {
-            primeraVez = true;
-            c.add(Restrictions.eq("entidadid", entidad.getId()));
-        } else {
-//        if (loggedUser.getRol().getId() > 1) {
-            //busqueda
-            if (bidentificacionBusqueda != null && !bidentificacionBusqueda.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("login", "%" + bidentificacionBusqueda + "%").ignoreCase()).
-                        add(Restrictions.like("login", "%" + bidentificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("login", "%" + bidentificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
-            if (bDocumentoIdentidad != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.eq("documentoidentidadid", bDocumentoIdentidad.getId())));
-            }
-            if (bEstado != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.eq("estado", bEstado)));
-            }
-            if (bselectPerfil != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", bselectPerfil.getId())));
-            }
-            if (bNumeroDocumento != null && !bidentificacionBusqueda.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento + "%").ignoreCase()).
-                        add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
-            if (bApellidoPaterno != null && !bApellidoPaterno.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno + "%").ignoreCase()).
-                        add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
-            if (bApellidoMaterno != null && !bApellidoMaterno.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno + "%").ignoreCase()).
-                        add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
-            if (bNombres != null && !bNombres.equals("")) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + bNombres + "%").ignoreCase()).
-                        add(Restrictions.like("nombres", "%" + bNombres.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("nombres", "%" + bNombres.replaceAll("n", "ñ") + "%").ignoreCase()));
-            }
-            if (bEntidad != null) {
-                c.add(Restrictions.eq("entidadid", bEntidad.getId()));
-            }
-//        }
+        if (bidentificacionBusqueda != null && !bidentificacionBusqueda.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("login", "%" + bidentificacionBusqueda + "%").ignoreCase()).
+                    add(Restrictions.like("login", "%" + bidentificacionBusqueda.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("login", "%" + bidentificacionBusqueda.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
+        if (bDocumentoIdentidad != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.eq("documentoidentidadid", bDocumentoIdentidad.getId())));
+        }
+        if (bEstado != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.eq("estado", bEstado)));
+        }
+        if (bselectPerfil != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", bselectPerfil.getId())));
+        }
+        if (bNumeroDocumento != null && !bidentificacionBusqueda.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento + "%").ignoreCase()).
+                    add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        if (bApellidoPaterno != null && !bApellidoPaterno.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno + "%").ignoreCase()).
+                    add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("apellidopaterno", "%" + bApellidoPaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        if (bApellidoMaterno != null && !bApellidoMaterno.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno + "%").ignoreCase()).
+                    add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("apellidomaterno", "%" + bApellidoMaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        if (bNombres != null && !bNombres.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + bNombres + "%").ignoreCase()).
+                    add(Restrictions.like("nombres", "%" + bNombres.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("nombres", "%" + bNombres.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        if (bEntidad != null) {
+            c.add(Restrictions.eq("entidadid", bEntidad.getId()));
+        }
+        System.out.println(bEntidad.getId());
         List<UsuarioTrabajador> listaUsuarios = c.list();
         return listaUsuarios;
     }
@@ -383,7 +370,7 @@ public class ABMUsuario extends GeneralPage {
         editaUsuario = false;
 //        botonPerfil = false;
         newPerfil = false;
-        return zonasTotal();
+        return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
     }
 
     @Log
@@ -394,13 +381,6 @@ public class ABMUsuario extends GeneralPage {
     @Log
     public boolean getEsTrabajador() {
         return tipoUsuario.equals(Usuario.TRABAJADOR);
-    }
-
-    @Log
-    void onPrepareFromFormularioUsuario() {
-//        if (loggedUser.getEntidad() != null) {
-//            entidad = loggedUser.getEntidad();
-//        }
     }
 
     @Log
@@ -476,8 +456,8 @@ public class ABMUsuario extends GeneralPage {
     private Usuario createNewUsuario() {
         Usuario usuario_local = new Usuario();
         usuario_local.setIntentos_fallidos(0L);
-        tipoDocumento = null;
-        nroDocumento = null;
+//        tipoDocumento = null;
+//        nroDocumento = null;
         return usuario_local;
     }
 
@@ -500,6 +480,7 @@ public class ABMUsuario extends GeneralPage {
      * Cargar desde los parámetros
      */
 
+    @Log
     void onActivate() throws Exception {
         System.out.println("onActivate");
 
