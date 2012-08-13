@@ -68,6 +68,15 @@ public class UsuarioTrabajador implements Serializable {
     private String emaillaboral;
     @Column(name = "TRABAJADOR_ID")
     private Long trabajadorid;
+    @Column(name = "TELEFONO")
+    private String telefono;
+    @Column(name = "DEN_CARGO")
+    private String cargo;
+    @Column(name = "FECHA_CREACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechacreacion;
+    @Column(name = "OBSERVACION")
+    private String observacion;
     
     public UsuarioTrabajador() {
     }
@@ -198,6 +207,38 @@ public class UsuarioTrabajador implements Serializable {
 
     public void setTrabajadorid(Long trabajadorid) {
         this.trabajadorid = trabajadorid;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public Date getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
     
 }

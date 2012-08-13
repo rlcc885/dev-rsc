@@ -150,7 +150,6 @@ public class Index {
         Criteria cq = session.createCriteria(Usuario.class);
         cq.add(Restrictions.eq("id", usuarioTrabajador.getId()));
         usuario = (Usuario) cq.list().get(0); // Guardamos la sesión
-        
 
         if (!usuarioTrabajador.getMd5clave().equals(Encriptacion.encriptaEnMD5(clave))) {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
@@ -191,7 +190,7 @@ public class Index {
 
         usuario.setIntentos_fallidos(0L);
         session.saveOrUpdate(usuario);
-
+        
         /*
          * if (Helpers.esMultiOrganismo(usuario)) { administrador = true;
          *
@@ -200,7 +199,8 @@ public class Index {
          * Permisos.paginaInicial(usuario); }
          *
          */
-        eue = usuario.getEntidad();
+        eue = (Entidad) session.get(Entidad.class, usuarioTrabajador.getEntidadid());
+        //eue = usuario.getEntidad();
 //        traba=usuario.getTrabajador();
 
 //        logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());

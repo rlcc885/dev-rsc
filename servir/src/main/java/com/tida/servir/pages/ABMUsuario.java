@@ -43,9 +43,7 @@ public class ABMUsuario extends GeneralPage {
     private Usuario usuario;
     @Property
     private UsuarioTrabajador u;
-    @Property
-    @Persist
-    private UsuarioTrabajador usuariotrabajador;
+    
     @Property
     @Persist
     private Perfilporusuario perfilporusuario;
@@ -57,14 +55,10 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private Perfilusuario permiso;
-    @Property
-    @Persist
-    private Rol rscrol;
-    @Property
-    @Persist
-    private LkEstadoUsuario lkEstadoUsuario;
-    @Persist
-    private GenericSelectModel<Rol> _RscRol;
+    
+    
+//    @Persist
+//    private GenericSelectModel<Rol> _RscRol;
     @Persist
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
@@ -75,8 +69,10 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @Persist
     private String tipoDocumento;
-    @Component(id = "formulariousuario")
-    private Form formularioUsuario;
+    @Component(id = "formularioCuenta")
+    private Form formularioCuenta;
+    @Component(id = "formularioPersonal")
+    private Form formularioPersonal;
     @Component(id = "formulariobusqueda")
     private Form formulariobusqueda;
     @Property
@@ -137,6 +133,20 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar bDocumentoIdentidad;
+    
+    @Property
+    @Persist
+    private UsuarioTrabajador usuariotrabajadoredit;
+    @Property
+    @Persist
+    private DatoAuxiliar documentoIdentidadEdit;
+    @Property
+    @Persist
+    private LkEstadoUsuario estadoUsuarioEdit;
+    @Property
+    @Persist
+    private Rol rolUsuarioEdit;
+    
     @Persist
     @Property
     private String bNumeroDocumento;
@@ -189,6 +199,8 @@ public class ABMUsuario extends GeneralPage {
         int anyo = c.get(Calendar.YEAR);
         System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
         resetBuscar();
+        usuariotrabajadoredit = new UsuarioTrabajador();
+        usuario = new Usuario();
     }
 
     @Log
@@ -218,8 +230,8 @@ public class ABMUsuario extends GeneralPage {
         } else {
             list = Helpers.getRolUSuario(loggedUser.getRol().getId(), session);
         }
-        _RscRol = new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
-        return _RscRol;
+//        _RscRol = new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
+        return new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
     }
 
     @Log
@@ -272,7 +284,7 @@ public class ABMUsuario extends GeneralPage {
     @Log
     public List<UsuarioTrabajador> getUsuarios() {
         Criteria c;
-        List<UsuarioTrabajador> listaUsuarios = null;
+ 
         c = session.createCriteria(UsuarioTrabajador.class);
 
         if (loggedUser.getRol().getId() <= 2) { // Si es administrador de Entidad, sólo puede ver su información
@@ -280,7 +292,7 @@ public class ABMUsuario extends GeneralPage {
         }
         if (!primeraVez) {
             primeraVez = true;
-            c.add(Restrictions.eq("entidad", entidad));
+            c.add(Restrictions.eq("entidadid", entidad.getId()));
         } else {
 //        if (loggedUser.getRol().getId() > 1) {
             //busqueda
@@ -298,7 +310,7 @@ public class ABMUsuario extends GeneralPage {
             }
 //        }
         }
-        listaUsuarios = c.list();
+        List<UsuarioTrabajador> listaUsuarios = c.list();
         return listaUsuarios;
     }
 
@@ -411,8 +423,8 @@ public class ABMUsuario extends GeneralPage {
                     logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
                 }
             }
-            usuario.setEstado(lkEstadoUsuario.getId());
-            usuario.setRol(rscrol);
+            usuario.setEstado(estadoUsuarioEdit.getId());
+            usuario.setRol(rolUsuarioEdit);
             session.saveOrUpdate(usuario);
             envelope.setContents(helpers.Constantes.USUARIO_EXITO);
             usuario = createNewUsuario();
@@ -529,12 +541,12 @@ public class ABMUsuario extends GeneralPage {
     @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
         usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
-        rscrol = usuario.getRol();
-        lkEstadoUsuario = Helpers.getEstadoUsuario(usuario.getEstado(), session);
+        rolUsuarioEdit = usuario.getRol();
+        estadoUsuarioEdit = Helpers.getEstadoUsuario(usuario.getEstado(), session);
         editaUsuario = true;
         botonPerfil = true;
         //primeraVez = true;
-        usuariotrabajador = lusuariotrabajador;
+        usuariotrabajadoredit = lusuariotrabajador;
         return zonasTotal();
     }
 
