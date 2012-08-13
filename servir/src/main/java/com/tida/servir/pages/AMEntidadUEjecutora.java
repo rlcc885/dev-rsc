@@ -682,7 +682,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
             }
             if (busdenominacion != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", busdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion","%"+busdenominacion + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion","%"+busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion","%"+busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (ubigeobusEntidadUE.getDepartamento() != null) {
                 c.add(Restrictions.eq("departamento", ubigeobusEntidadUE.getDepartamento().getValor()));
@@ -707,7 +709,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 c.add(Restrictions.eq("tiposubentidad", btiposubentidad.getValor()));
             }
             if (bussubdenominacion != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bussubdenominacion + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion","%"+bussubdenominacion + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion","%"+bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion","%"+bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (ubigeobusSubEntidadUE.getDepartamento() != null) {
                 c.add(Restrictions.eq("departamento", ubigeobusSubEntidadUE.getDepartamento().getValor()));
