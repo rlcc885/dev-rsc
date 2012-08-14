@@ -29,7 +29,6 @@ import org.hibernate.criterion.Restrictions;
  *
  */
 public class ABMUsuario extends GeneralPage {
-
     @Inject
     private Session session;
     @Property
@@ -54,18 +53,10 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private Perfilusuario permiso;
-//    @Persist
-//    private GenericSelectModel<Rol> _RscRol;
     @Persist
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
     private PropertyAccess _access;
-//    @Property
-//    @Persist
-//    private String nroDocumento;
-//    @Property
-//    @Persist
-//    private String tipoDocumento;
     @Component(id = "formularioCuenta")
     private Form formularioCuenta;
     @Component(id = "formularioPersonal")
@@ -87,9 +78,6 @@ public class ABMUsuario extends GeneralPage {
     private Request _request;
     @Property
     private Boolean reinitialisarpassword;
-//    @Property
-//    @Persist
-//    private Entidad entidad;
     @Property
     @Persist
     private Entidad bEntidad;
@@ -97,21 +85,12 @@ public class ABMUsuario extends GeneralPage {
     private Context context;
     @InjectComponent
     private Envelope envelope;
-//    @Persist
-//    @Property
-//    private String nombresBusqueda;
-//    @Persist
-//    @Property
-//    private boolean primeraVez;
     @Persist
     @Property
     private boolean editaUsuario;
     @Persist
     @Property
     private boolean cancelaEditUsuario;
-//    @Persist
-//    @Property
-//    private boolean botonPerfil;
     @Persist
     @Property
     private boolean newPerfil;
@@ -175,9 +154,7 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     void setupRender() {
-//        primeraVez = false;
         editaUsuario = false;
-//        botonPerfil = false;
         newPerfil = false;
         Calendar c = Calendar.getInstance();
         int dia = c.get(Calendar.DAY_OF_MONTH);
@@ -220,7 +197,6 @@ public class ABMUsuario extends GeneralPage {
         } else {
             list = Helpers.getRolUSuario(loggedUser.getRol().getId(), session);
         }
-//        _RscRol = new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
         return new GenericSelectModel<Rol>(list, Rol.class, "descrol", "id", _access);
     }
 
@@ -270,11 +246,6 @@ public class ABMUsuario extends GeneralPage {
         }
         return tc;
     }
-
-//    @Log
-//    Object onActionFromSeleccionaEntidad(Entidad entidad) {
-//         mostrar = false;
-//    }
 
     @Log
     public List<UsuarioTrabajador> getUsuarios() {
@@ -354,26 +325,16 @@ public class ABMUsuario extends GeneralPage {
     @Log
     void onSelectedFromBuscarReset() {
         bBuscarReset = true;
-//        editando = false;
     }
 
-//    @Log
-//    void onPrepareFromFormularioBusqueda() {
-//        if (entidad != null) {
-//            bEntidad = entidad;
-//            bNombreEntidad = bEntidad.getDenominacion();
-//        }
-//    }
     @Log
     Object onSuccessFromFormularioBusqueda() {
-//        primeraVez = true;
         if (bBuscarReset) {
             bBuscarReset = false;
             resetBuscar();
             return zonaFormularioBusqueda.getBody();
         }
         editaUsuario = false;
-//        botonPerfil = false;
         newPerfil = false;
         return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
     }
@@ -399,9 +360,7 @@ public class ABMUsuario extends GeneralPage {
     }
 
     @Log
-//    @CommitAfter
     Object onNewPerfil() {
-//        botonPerfil = false;
         newPerfil = true;
         permiso = new Perfilusuario();
         return perfilZone.getBody();
@@ -436,7 +395,6 @@ public class ABMUsuario extends GeneralPage {
             envelope.setContents(helpers.Constantes.USUARIO_EXITO);
             usuario = createNewUsuario();
         }
-//        primeraVez = true;
         cancelaEditUsuario = false;
         editaUsuario = false;
         return zonasTotal();
@@ -450,10 +408,8 @@ public class ABMUsuario extends GeneralPage {
         perfilusuariopk.setPerfilId(perfil.getId());
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
-//        botonPerfil = true;
         editaUsuario = true;
         newPerfil = false;
-//        primeraVez = true;
         return zonasTotal();
     }
 
@@ -461,8 +417,6 @@ public class ABMUsuario extends GeneralPage {
     private Usuario createNewUsuario() {
         Usuario usuario_local = new Usuario();
         usuario_local.setIntentos_fallidos(0L);
-//        tipoDocumento = null;
-//        nroDocumento = null;
         return usuario_local;
     }
 
@@ -475,9 +429,7 @@ public class ABMUsuario extends GeneralPage {
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK(lPermiso.getUsuarioId(), lPermiso.getPerfilId());
         permiso = (Perfilusuario) session.get(Perfilusuario.class, perfilusuariopk);
         session.delete(permiso);
-//        primeraVez = true;
         editaUsuario = true;
-//        botonPerfil = true;
         newPerfil = false;
         return zonasTotal();
     }
