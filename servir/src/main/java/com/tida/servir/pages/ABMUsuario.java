@@ -271,6 +271,11 @@ public class ABMUsuario extends GeneralPage {
         return tc;
     }
 
+//    @Log
+//    Object onActionFromSeleccionaEntidad(Entidad entidad) {
+//         mostrar = false;
+//    }
+
     @Log
     public List<UsuarioTrabajador> getUsuarios() {
         Criteria c;

@@ -16,7 +16,9 @@ body {
     color: #333333;
 }
 a, a:visited, a:link { font-size:11px; color:#e10827; text-decoration:none;}
-a:hover { text-decoration:underline;}
+a:hover {
+    text-decoration: none;
+}
 #bouttons a, #bouttons a:visited, #bouttons a:link { font-size:11px; color:#ffffff; text-decoration:none;}
 
 input, select, textarea {
@@ -25,7 +27,7 @@ input, select, textarea {
     font-size:11px;
 }
 select { width:200px;  padding: 4px; /*height: 22px;*/}
-label { display:block; margin-bottom:5px; width:auto; background-color: transparent; cursor: pointer;}
+label { display:block; width:auto; background-color: transparent; cursor: pointer;}
 .check { float:left;}
 .check, #formacion #interno {width:auto !Important; vertical-align:top; margin:2px !important; border:none; }
 
@@ -87,13 +89,11 @@ blockquote {
     border-left: 5px solid #DDDDDD;
 }
 
-a {
+/*a {
     color: #1692B8;
-}
+}*/
 
-a:hover {
-    text-decoration: none;
-}
+
 fieldset {
     border: 1px solid #999;
     margin-bottom: 10px;
@@ -304,7 +304,7 @@ legend {
 }
 
 /* Content */
-#content {
+/*#content {
 }
 
 .post {
@@ -363,10 +363,10 @@ legend {
     width: 152px;
     height: 30px;
     background: url(images/img04.jpg) no-repeat left center;
-}
+}*/
 
 /* Sidebar */
-#sidebar {
+/*#sidebar {
     float: right;
     width: 300px;
     margin-top: 30px;
@@ -406,10 +406,10 @@ legend {
     width: 265px;
     margin-left: 10px;
     padding-bottom: 1px;
-}
+}*/
 
 /* Search */
-#search {
+/*#search {
     padding: 20px 30px 40px 30px;
 }
 
@@ -432,12 +432,12 @@ legend {
 
 #search br {
     display: none;
-}
+}*/
 
 /* Categories */
-#sidebar #categories li {
+/*#sidebar #categories li {
     background: url(images/img12.gif) no-repeat left center;
-}
+}*/
 
 /* Calendar */
 #calendar_wrap {
@@ -502,28 +502,28 @@ legend {
 .seccionfiltros {
     width:240px;
 }
-#busquedas, #mainfiltros {
+/*#busquedas, #mainfiltros {
     height: 180px;
     border:  1px solid #E40132;
     margin-bottom: 10px;
-}
+}*/
 
-#busquedasUsuario{
+/*#busquedasUsuario{
     height: 70px;
     border:  1px solid #E40132;
     width: 780px;
     margin-bottom: 10px;
-}
+}*/
 
-#busquedas h2, #mainfiltros h2 {
+/*#busquedas h2, #mainfiltros h2 {
     margin-bottom: 10px;
-}
+}*/
 
 #filtrosdoc {
     height: 60px;
 }
 
-#busquedas #buscarsubmit {
+/*#busquedas #buscarsubmit {
     float: none;
 }
 
@@ -531,9 +531,9 @@ legend {
     text-align: left;
     margin-right: 10px;
     display: block;
-}
+}*/
 
-#tablaCargo {
+/*#tablaCargo {
     float:left;
     padding-left: 10px;
 }
@@ -569,7 +569,7 @@ legend {
 form th {
     color:#fff;
 
-}
+}*/
 
 /* Para modificar el trabajador */
 #basicosTrabajador {
@@ -650,16 +650,16 @@ form th {
     padding: 10px;
 }
 
-#form_usuario label {
-    /*font: normal 1em Arial, Helvetica, sans-serif;*/
+/*#form_usuario label {
+    font: normal 1em Arial, Helvetica, sans-serif;
     width: 150px;
     text-align: left;
     margin-right: 10px;
-    /*display: block;*/
+    display: block;
     margin-bottom: 5px;
-}
+}*/
 
-#form_usuario input {
+/*#form_usuario input {
     margin-bottom: 5px;
 }
 
@@ -667,7 +667,7 @@ form th {
 #form_usuario select {
     margin-bottom: 5px;
     font-size:10px;
-}
+}*/
 
 #formulariotrabajadornuevolegajocargo input,
 #formulariotrabajadornuevolegajocargo select {
@@ -840,7 +840,7 @@ form th {
     width: 300px;
     height: 340px;
 }
-
+/*
 UL.t-data-list LI {
     list-style-type: square;
 }
@@ -888,7 +888,7 @@ DIV.t-available-values UL LI
 {
     list-style-type : disc;
     margin-left: 0px;
-}
+}*/
 
 .box { 
     border:1px solid #707070; 
@@ -914,6 +914,7 @@ DIV.t-available-values UL LI
 .f-wrap { 
     overflow:auto; 
     zoom:1;
+    margin-bottom: 5px;
 }
 .f-left{ float:left; margin-right: 10px;}
 .f-right { float:right;}
@@ -930,9 +931,6 @@ DIV.t-available-values UL LI
 #toggle_filtros {height:18px; padding-left:20px; display:-moz-inline-stack; display:inline-block;zoom:1;display:inline; }
 
 #page { border: medium none; height: auto !important; min-height: 300px; padding: 10px;}
-.entry h1{
-    margin-bottom: 10px;
-}
 #content h1, .organismo_titulo { 
     font-size:14px; 
     font-weight:bold; 
@@ -940,11 +938,15 @@ DIV.t-available-values UL LI
     background:url(images/bg-title.gif) no-repeat 0 0;
     padding: 11px 10px 11px 30px; 
     text-align:left;}
+/*.entry h1{
+    margin-bottom: 10px;
+}
+*/
 
 
 /*LOGIN - HOME*/
-#mainsection.home { background-color:#666565; border:none; }
-html > body div.t-error li { margin:0 0 0 10px;}
+/*#mainsection.home { background-color:#666565; border:none; }
+html > body div.t-error li { margin:0 0 0 10px;}*/
 
 
 /*MENU*/
@@ -965,15 +967,15 @@ ul.tabs a.active { border-color:#E40132; border-bottom: 1px solid #fff;}
 /*BUSQUEDA*/
 .wrap .pane { padding:20px;}
 /*#selectors { border:none; padding:0; width:100%;}*/
-.actions { overflow:auto;zoom:1; margin-bottom: 5px;}
+/*.actions { overflow:auto;zoom:1; margin-bottom: 5px;}*/
 .actionpersonal { overflow:auto;zoom:1; margin-top: 10px;}
-.actions a { 
+/*.actions a { 
     display:-moz-inline-stack;
     display:inline-block;
     zoom:1;
-    /*display:inline;*/
+    display:inline;
     margin: 10px;
-}
+}*/
 #busquedas, #mainfiltros, #datosPersonales, #familiares, #formacion, #antecedentes, #produccionintelectual, #meritosdemeritos{ /*width:920px;*/ height:auto; border-color:#D72522; padding:10px;}
 #busquedas select, #mainfiltros select, #form_conceptoremunerativo select, #form_usuario select {font-size:11px;}
 #busquedas label, #mainfiltros label {margin-right:0;}
@@ -1511,7 +1513,7 @@ DIV.t-data-grid {
     padding:5px;
     /*font-size: 14px;*/
     color:#FFFFFF;
-    font-size: 10px;
+    font-size: 1em;
     font-weight: bold;
 }
 
@@ -1573,3 +1575,14 @@ DIV.t-data-grid {
 /* Grid Usuarios */
 TABLE.t-data-grid THEAD TR TH.login {width:80px;}
 table.t-data-grid tbody tr td.login {width:80px;}
+
+/* Usuarios */
+#perfilZone h3{
+    margin-top: 10px;
+}
+#editarUsuarioZone{
+    margin-top:10px;
+}
+a.button.f-right {
+    color: #FFFFFF;
+}

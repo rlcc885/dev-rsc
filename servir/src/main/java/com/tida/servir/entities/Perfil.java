@@ -30,10 +30,20 @@ import javax.persistence.*;
 })
 public class Perfil implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PERFIL_ID_SEQ", allocationSize = 1)
+    @Column(name = "ID")
+    private long id;
+    @Column(name = "DESCPERFIL")
+    private String descperfil;
     @Basic(optional = false)
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
+    @Column(name = "ESTADO")
+    private Boolean estado;
     @JoinTable(name = "RSC_PERFILUSUARIO", joinColumns = {
         @JoinColumn(name = "PERFIL_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")})
@@ -44,17 +54,6 @@ public class Perfil implements Serializable {
         @JoinColumn(name = "MENU_ID", referencedColumnName = "ID")})
     @ManyToMany
     private Collection<Menu> menuCollection;
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
-    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PERFIL_ID_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private long id;
-    @Column(name = "DESCPERFIL")
-    private String descperfil;
-    @Column(name = "ESTADO")
-    private Boolean estado;
 
     public Perfil() {
     }
