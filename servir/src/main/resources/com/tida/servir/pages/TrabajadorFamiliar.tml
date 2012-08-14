@@ -25,6 +25,7 @@
         <div>
         <ul id="tabs-Personales" class="tabs">
             <li><a href="#"> Familiares</a></li>
+            <li><a href="#"> Remuneraciones</a></li>
             <!--<li><a href="#"> Antecedentes Laborales</a></li>--> 
             <!--<li><a href="#"> Producción Intelectual</a></li>-->
             <!--<li><a href="#"> Familia</a></li>
@@ -46,6 +47,11 @@
         <div class= "pane" id='familiares' name='familiares'>
               
                 <t:FamiliaresEditor t:id="familiaresEditor" actual= "actual"/>
+              
+        </div>
+        <div class= "pane" id='remuneraciones' name='remuneraciones'>
+              
+                <t:RemuneracionesPersonalesEditor t:id="RemuneracionesPersonalesEditor" actual= "actual"/>
               
         </div>
 
