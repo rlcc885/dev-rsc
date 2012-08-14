@@ -101,8 +101,8 @@ public class CopiadorEntidades {
         destino.setEntidad(origen.getEntidad());
         destino.setCodigo(CopiadorEntidades.verifacionNull(origen.getCodigo()));
         destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
-        destino.setConceptoStd(CopiadorEntidades.verifacionNull(origen.getConceptoStd()));
-        destino.setPeriodicidad(CopiadorEntidades.verifacionNull(origen.getPeriodicidad()));
+//        destino.setConceptoStd(CopiadorEntidades.verifacionNull(origen.getConceptoStd()));
+//        destino.setPeriodicidad(CopiadorEntidades.verifacionNull(origen.getPeriodicidad()));
         destino.setClasificacion(CopiadorEntidades.verifacionNull(origen.getClasificacion()));
         destino.setSustento_legal(CopiadorEntidades.verifacionNull(origen.getSustento_legal()));
     }
@@ -287,7 +287,7 @@ public class CopiadorEntidades {
     
     public static void remuneracionPersonal(RemuneracionPersonal origen, RemuneracionPersonal destino){
         destino.setConceptoRemunerativo(origen.getConceptoRemunerativo());
-        destino.setImporte((Double) CopiadorEntidades.verifacionNull(origen.getImporte()));
+//        destino.setImporte((Double) CopiadorEntidades.verifacionNull(origen.getImporte()));
     }
     
     public static void evaluacionPersonal(EvaluacionPersonal origen, EvaluacionPersonal destino){
