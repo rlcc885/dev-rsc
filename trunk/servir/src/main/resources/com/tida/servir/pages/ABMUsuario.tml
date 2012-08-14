@@ -17,64 +17,66 @@
             <strong style="cursor:pointer;">+</strong> Buscar Usuarios
         </span>
     </div>
-    <div id="panel-01" class="box">
+    <div id="panel-01" class="pane">
         <t:zone t:id="zonaFormularioBusqueda">
             <t:form t:id="formularioBusqueda"  t:zone="zonaFormularioBusqueda">
-                <t:errors/>
-                <div id="filtrosnombres" class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="bidentificacionBusqueda"/>
-                        <input t:type="TextField" t:id="bidentificacionBusqueda" t:style="width: 270px;"/>
+                <fieldset>
+                    <t:errors/>
+                    <div id="filtrosnombres" class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bidentificacionBusqueda"/>
+                            <input t:type="TextField" t:id="bidentificacionBusqueda" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <label>Tipo Documento</label>
+                            <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
+                        </div>
+                        <div class="f-left">
+                            <!-- t:validate="required,minlength=1" -->
+                            <t:label for="bNumeroDocumento"/>
+                            <input t:type="TextField" t:id="bNumeroDocumento" t:style="width: 270px;"/>
+                        </div>
                     </div>
-                    <div class="f-left">
-                        <label>Tipo Documento</label>
-                        <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bNombres"/>
+                            <input t:type="TextField" t:id="bNombres" t:value="bNombres" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bApellidoPaterno"/>
+                            <input t:type="TextField" t:id="bApellidoPaterno" t:value="bApellidoPaterno" t:style="width: 270px;"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bApellidoMaterno"/>
+                            <input t:type="TextField" t:id="bApellidoMaterno" t:value="bApellidoMaterno" t:style="width: 270px;"/>
+                        </div>
                     </div>
-                    <div class="f-left">
-                                <!-- t:validate="required,minlength=1" -->
-                        <t:label for="bNumeroDocumento"/>
-                        <input t:type="TextField" t:id="bNumeroDocumento" t:style="width: 270px;"/>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bEstado"/>
+                            <input t:type="Select"
+                               t:id="bEstado"
+                               t:value="bEstado" 
+                               t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
+                               t:style="width: 100px;" />
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bNombreEntidad"/>
+                            <!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
+                            <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
+                            <a onClick="javascript: mostrar();" class="button f-right">...</a>
+                            <!--                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right"  />-->
+                        </div>
+                        <div class="f-left">
+                            <t:label for="bselectPerfil"/>
+                            <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 300px;" />
+                        </div>
                     </div>
-                </div>
+                </fieldset>
                 <div class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="bNombres"/>
-                        <input t:type="TextField" t:id="bNombres" t:value="bNombres" t:style="width: 270px;"/>
-                    </div>
-                    <div class="f-left">
-                        <t:label for="bApellidoPaterno"/>
-                        <input t:type="TextField" t:id="bApellidoPaterno" t:value="bApellidoPaterno" t:style="width: 270px;"/>
-                    </div>
-                    <div class="f-left">
-                        <t:label for="bApellidoMaterno"/>
-                        <input t:type="TextField" t:id="bApellidoMaterno" t:value="bApellidoMaterno" t:style="width: 270px;"/>
-                    </div>
+                    <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button f-right" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button f-right" t:message="Esta seguro de realizar esta acción?"/>
                 </div>
-                <div class="f-wrap">
-                    <div class="f-left">
-                        <t:label for="bEstado"/>
-                        <input t:type="Select"
-                                   t:id="bEstado"
-                                   t:value="bEstado" 
-                                   t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
-                                   t:style="width: 100px;" />
-                    </div>
-                    <div class="f-left">
-                        <t:label for="bNombreEntidad"/>
-<!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
-                        <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
-                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
-                    </div>
-                    <div class="f-left">
-                        <t:label for="bselectPerfil"/>
-                        <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 300px;" />
-                    </div>
-                </div>
-                <div class="f-wrap f-right">
-                    <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button" t:message="Esta seguro de realizar esta acción?"/>
-                    <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button" t:message="Esta seguro de realizar esta acción?"/>
-                </div>
-                <br class="clear" />
             </t:form>
         </t:zone>
     </div> <!-- Zona filtros -->
@@ -115,11 +117,11 @@
                 </p:accionesCell>
             </t:grid>
         </div>
-<!--        </t:if>-->
+        <!--        </t:if>-->
     </t:zone>
 
     <t:zone t:id="editarUsuarioZone">
-<!--        <t:if test="editaUsuario">-->
+        <!--        <t:if test="editaUsuario">-->
         <h3>Datos del Usuario</h3>
         <div class="box" id="box_u">
             <t:envelope t:id="envelope"/>
@@ -130,7 +132,8 @@
                         <div class="f-left">
                             <t:label for="loginedit" />
                             <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="false"/>
-                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>
+                            <t:actionlink t:id="validalogin" class="button f-right">Ver Disponibilidad</t:actionlink>
+                            <!--                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>-->
                         </div>
                         <div class="f-left">
                             <t:label for="rolUsuarioEdit"/>
@@ -205,7 +208,7 @@
                                 <input t:type="datefield" t:id="fechacreacionedit" t:value="usuariotrabajadoredit.fechacreacion" t:size="20" t:disabled="true"/>
                             </div>
                         </div>
-<!--                        <div class="f-left">
+                        <!--                        <div class="f-left">
                             <t:label for="intentos_fallidos" />
                             <input t:type="TextField" t:id="intentos_fallidos" t:value="usuariotrabajador.intentosFallidos" t:disabled="true" size="1"/>
                         </div>
@@ -225,22 +228,21 @@
                             
                         </div>
                     </fieldset>
-                    <div id="bouttons" class="f-right">
+                    <div class="f-wrap">
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                     </div>
-                    <br class="clear" />
                 </t:form>
             </div>
         </div>
 
         
-<!--        </t:if>-->
+        <!--        </t:if>-->
     </t:zone>
-    <br />
+
     <t:zone t:id="perfilZone">
-<!--        <t:if test = "botonPerfil">
+        <!--        <t:if test = "botonPerfil">
             <div id="bouttons" class="f-right">
                 <t:eventLink t:event="newPerfil" href="#" t:zone="perfilZone" class="button f-right">
                     Agregar Perfil
@@ -258,7 +260,7 @@
                 </t:grid>
             </div>
             <h3>Asignar Perfil al Usuario</h3>
-            <div id="box-cargos" class="box">
+            <div class="box">
                 <t:form t:id="perfilInputForm" t:zone="perfilZone">
                     <div class ="f-wrap">
                         <div class="f-left">
@@ -283,7 +285,7 @@
     <div id="shade"></div>
     <div id="modal">
         <t:zone t:id="busZone" t:update="show">
-<!--            <t:if test="bSeleccionaEntidad">-->
+            <!--            <t:if test="bSeleccionaEntidad">-->
             <h1>Selección de entidad</h1>
             <div class="pane">
                 <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
@@ -299,10 +301,10 @@
                     </div>
                 </form>
             </div>
-<!--            </t:if>-->
+            <!--            </t:if>-->
         </t:zone>
         <div t:type="zone" t:id="entiZone" t:update="show">
-<!--            <t:if test="bSeleccionaEntidad">-->
+            <!--            <t:if test="bSeleccionaEntidad">-->
             <t:if test="mostrar">
                 <div class="box">
                     <t:grid source="entidades" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowEntidad" include="denominacion" inPlace="true" >
@@ -315,7 +317,7 @@
                     </t:grid>
                 </div>
             </t:if>
-<!--            </t:if>-->
+            <!--            </t:if>-->
         </div>
     </div>
     

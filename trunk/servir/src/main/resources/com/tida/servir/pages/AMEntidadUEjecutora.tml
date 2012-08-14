@@ -64,14 +64,10 @@
                         </div>
                     </div>
                 </fieldset>
-                <div class="f-wrap f-right">
-<!--                    <div class="f-right">-->
-                        <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
-<!--                    </div>
-                    <div class="f-right">-->
-                        <input t:type="Submit" t:id="busenviar" value="Buscar" class="button f-right" />
-<!--                    </div>-->
-                </div>  
+                <div class="f-wrap">
+                    <input t:type="Submit" t:id="busenviar" value="Buscar" class="button f-right" />
+                    <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
+                </div>
             </t:form>
         </div>
     </div>
@@ -110,12 +106,8 @@
                     </div>
                 </fieldset>
                 <div class="f-wrap">
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?" />  
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
-                    </div>
+                    <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?" />  
                 </div>
             </t:form>
         </div>
