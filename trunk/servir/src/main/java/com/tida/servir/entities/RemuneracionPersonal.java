@@ -8,19 +8,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
+import org.apache.tapestry5.beaneditor.Validate;
 
 /**
  *
  * @author ale
  */
 @Entity
-@Table(name = "RSC_REM_PERSONALES")
+@Table(name = "RSC_REMUNERACIONPERSONAL")
 public class RemuneracionPersonal {
 
     @NonVisual
     private Long id;
-    private Double importe;
+    @Validate("required")
+    private String importe;
+    @Validate("required")
     private ConceptoRemunerativo conceptoRemunerativo;
+    private CargoAsignado cargoAsignado;
 
     @Id
     @GeneratedValue
@@ -40,12 +44,21 @@ public class RemuneracionPersonal {
     public void setConceptoRemunerativo(ConceptoRemunerativo conceptoRemunerativo) {
         this.conceptoRemunerativo = conceptoRemunerativo;
     }
+    
+    @ManyToOne
+    public CargoAsignado getCargoAsignado() {
+        return cargoAsignado;
+    }
 
-    public Double getImporte() {
+    public void setCargoAsignado(CargoAsignado cargoAsignado) {
+        this.cargoAsignado = cargoAsignado;
+    }
+
+    public String getImporte() {
         return importe;
     }
 
-    public void setImporte(Double importe) {
+    public void setImporte(String importe) {
         this.importe = importe;
     }
 
