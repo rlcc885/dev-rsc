@@ -264,15 +264,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Boolean editando;
     @PageActivationContext
     private Entidad entidadalerta;
-    
+
+    @Log
     public Entidad getEntidadalerta() {
-            return entidadalerta;
+        return entidadalerta;
     }
 
     public void setEntidadalerta(Entidad entidadalerta) {
-            this.entidadalerta = entidadalerta;
+        this.entidadalerta = entidadalerta;
     }
-    
+
+    @Log
     //Inicio de lac carga de la pagina
     @SetupRender
     private void inicio() {
@@ -289,16 +291,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vbotones = false;
         vformulario = false;
         vdetalle = false;
-        editando=false;
+        editando = false;
         //validacion de alerta
-        if(entidadalerta!=null){
-            entidadUE=entidadalerta; 
-            String hql = "update RSC_EVENTO set estadoevento=1 where tipoevento_id='"+Logger.MODIFICACION_ENTIDADES+"' and tabla_id='"+entidadUE.getId()+"' and estadoevento=0";
-            System.out.println("iniciooooo"+Logger.MODIFICACION_ENTIDADES+"-"+entidadUE.getId());
+        if (entidadalerta != null) {
+            entidadUE = entidadalerta;
+            String hql = "update RSC_EVENTO set estadoevento=1 where tipoevento_id='" + Logger.MODIFICACION_ENTIDADES + "' and tabla_id='" + entidadUE.getId() + "' and estadoevento=0";
+            System.out.println("iniciooooo" + Logger.MODIFICACION_ENTIDADES + "-" + entidadUE.getId());
             Query query = session.createSQLQuery(hql);
             int rowCount = query.executeUpdate();
-            seteo();            
-            entidadalerta=null;
+            seteo();
+            entidadalerta = null;
         }
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
@@ -324,7 +326,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
     }
 
-    void seteo(){
+    @Log
+    void nuevoRegistro() {
+        entidadUE = new Entidad();
+        entidad_origen = null;
+        titular = null;
+        jefeRRHH = null;
+        jefeOGA = null;
+        bessubentidad = false;
+    }
+
+    @Log
+    void seteo() {
         titular = null;
         jefeRRHH = null;
         jefeOGA = null;
@@ -365,20 +378,22 @@ public class AMEntidadUEjecutora extends GeneralPage {
             jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
     }
-    
-    
+
+    @Log
     //para obtener datatos del Nivel Gobierno
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Sector Gobierno
     public GenericSelectModel<DatoAuxiliar> getSectorGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos de la Organizacion
     public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
         List<DatoAuxiliar> list = new ArrayList<DatoAuxiliar>();
@@ -388,6 +403,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos de la Organizacion
     public GenericSelectModel<DatoAuxiliar> getOrganizacionEstadoEdicion() {
         List<DatoAuxiliar> list = new ArrayList<DatoAuxiliar>();
@@ -397,42 +413,49 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Organismo
     public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Via
     public GenericSelectModel<DatoAuxiliar> getTipoVia() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Zona
     public GenericSelectModel<DatoAuxiliar> getTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Via Sub Entidad
     public GenericSelectModel<DatoAuxiliar> getSubTipoVia() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Zona Sub Entidad
     public GenericSelectModel<DatoAuxiliar> getSubTipoZona() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     //para obtener datatos del Tipo Entidad
     public GenericSelectModel<DatoAuxiliar> getTipoSubEntidad() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     void onSelectedFromBusreset() {
         bnivelGobierno = null;
         bsectorGobierno = null;
@@ -446,10 +469,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bBuscaEntidad = false;
     }
 
+    @Log
     void onSelectedFromBusenviar() {
         bBuscaEntidad = true;
     }
 
+    @Log
     @CommitAfter
 //    Object onSuccessFromformulariocombosbusqueda() {
     Object onSuccessFromformBusqueda() {
@@ -460,6 +485,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
     }
 
+    @Log
     void onSelectedFromBussubreset() {
         bnivelGobierno = null;
         bsectorGobierno = null;
@@ -473,10 +499,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bBuscaSubEntidad = false;
     }
 
+    @Log
     void onSelectedFromBussubenviar() {
         bBuscaSubEntidad = true;
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromformulariosubcombosbusqueda() {
         if (!bBuscaSubEntidad) {
@@ -486,16 +514,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
     }
 
+    @Log
     void onSelectedFromReset() {
         bResetFormulario = true;
-        editando=false;
+        editando = false;
     }
 
+    @Log
     void onSelectedFromCancel() {
         bCancelFormulario = true;
-        editando=false;
+        editando = false;
     }
 
+    @Log
     void resetFormulario(Entidad entidad) {
         entidadUE = (Entidad) session.load(Entidad.class, entidad.getId());
         if (entidadUE.getOrganizacionEstado() != null) {
@@ -534,9 +565,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
         //return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
         if (bCancelFormulario) {
+            nuevoRegistro();
             if (!vbotones) {
                 vformulario = false;
             } else {
@@ -590,12 +623,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
             session.saveOrUpdate(entidadUE);
             session.flush();
             if (editando) {
-                if(usua.getAccesoreport()==0){
-                    vformulario=false;
+                if (usua.getAccesoreport() == 0) {
+                    vformulario = false;
                 }
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_MODIFICACION_ENTIDADES, entidadUE.getId());
-            }  
-            else{
+            } else {
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
             //new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
@@ -605,6 +637,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     }
 
+    @Log
     AMEntidadUEjecutora onActionFromToggle_filtros() {
         if (mostrarFiltros) {
             mostrarFiltros = false;
@@ -616,15 +649,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return this;
     }
 
+    @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
         mostrarEsconder = "Ocultar";
         mostrarFiltros = true;
     }
 
+    @Log
     Object onEditarSeleccion(Entidad entidad) {
         entidadUE = entidad;
-        editando=true;
+        editando = true;
         seteo();
         vformulario = true;
         vdetalle = false;
@@ -643,6 +678,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody());
     }
 
+    @Log
     @CommitAfter
     Object onActionFromEliminarSeleccion(Entidad enti1) {
         if (enti1.getEstado()) {
@@ -657,6 +693,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaentidadZone", listaentidadZone.getBody());
     }
 
+    @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
         if (bdenoentidad != null) {
@@ -665,6 +702,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return c.list();
     }
 
+    @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
         if (bBuscaEntidad) {
@@ -682,9 +720,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
             }
             if (busdenominacion != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion","%"+busdenominacion + "%").ignoreCase()).
-                        add(Restrictions.like("denominacion","%"+busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("denominacion","%"+busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + busdenominacion + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion", "%" + busdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion", "%" + busdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (ubigeobusEntidadUE.getDepartamento() != null) {
                 c.add(Restrictions.eq("departamento", ubigeobusEntidadUE.getDepartamento().getValor()));
@@ -709,9 +747,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 c.add(Restrictions.eq("tiposubentidad", btiposubentidad.getValor()));
             }
             if (bussubdenominacion != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion","%"+bussubdenominacion + "%").ignoreCase()).
-                        add(Restrictions.like("denominacion","%"+bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("denominacion","%"+bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bussubdenominacion + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion", "%" + bussubdenominacion.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("denominacion", "%" + bussubdenominacion.replaceAll("n", "ñ") + "%").ignoreCase()));
             }
             if (ubigeobusSubEntidadUE.getDepartamento() != null) {
                 c.add(Restrictions.eq("departamento", ubigeobusSubEntidadUE.getDepartamento().getValor()));
@@ -736,27 +774,32 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return c.list();
     }
 
+    @Log
     void onSelectedFromBuscarTitular() {
         bSeleccionaPersonal = true;
         bSeleccionaEntidad = false;
     }
 
+    @Log
     void onSelectedFromBuscarJefeRRHH() {
         bSeleccionaPersonal = true;
         bSeleccionaEntidad = false;
     }
 
+    @Log
     void onSelectedFromBuscarJefeOGA() {
         bSeleccionaPersonal = true;
         bSeleccionaEntidad = false;
     }
 
+    @Log
     void onSelectedFromBuscarEntidad() {
         bSeleccionaPersonal = false;
         bSeleccionaEntidad = true;
         mostrar = false;
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromFormularioEntidadOrigen() {
         System.err.println("onSuccessFromFormularioEntidadOrigen");
@@ -774,6 +817,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("ubigeoEntidadZone", ubigeoEntidadZone.getBody());
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromformulariotitular() {
         btitulari = true;
@@ -784,6 +828,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("entiZone", entiZone.getBody());
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromformulariojeferrhh() {
         bjefeRRHHi = true;
@@ -794,6 +839,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("entiZone", entiZone.getBody());
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromformulariojefeoga() {
         bjefeOGAi = true;
@@ -823,23 +869,24 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("entiZone", entiZone.getBody());
     }
 
-    void onSelectedFromCancelFormFindEntidad() {
-        System.err.println("onSelectedFromCancelFormFindEntidad");
-        bSeleccionaEntidad = false;
+    @Log
+    Object onActionFromCancelFormFindEntidad() {
+        mostrar = false;
+        zonasPopup();
+        return request.isXHR() ? EOrigenZone.getBody() : null;
     }
 
     @Log
     Object onSuccessFromFormFindEntidad() {
         System.err.println("onSuccessFromFormFindEntidad");
-        if (bSeleccionaEntidad == false) {
-            return null;
-        } else {
+//        if (bSeleccionaEntidad == false) {
+//            mostrar = false;
+//        } else {
             mostrar = true;
-            return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody()).
-                    add("busZone2", busZone.getBody()).
-                    add("trabajadorZone", entiZone.getBody());
-        }
+//        }
+        return zonasPopup();
     }
+
     @Log
     Object onActionFromSeleccionaEntidad(Entidad entidad) {
         System.err.println("onActionFromSeleccionaEntidad");
@@ -866,6 +913,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("zoneOtrosDatos", zoneOtrosDatos.getBody());
     }
 
+    @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         if (nombreTrabajador != null) {
@@ -874,6 +922,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return c.list();
     }
 
+    @Log
     Object onActionFromSeleccionaTitular(Trabajador traba) {
         if (traba != null) {
             titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -886,6 +935,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return TitularZone.getBody();
     }
 
+    @Log
     Object onActionFromSeleccionaJefeRRHH(Trabajador traba) {
         if (traba != null) {
             jefeRRHH = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -898,6 +948,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return JefeRRHHZone.getBody();
     }
 
+    @Log
     Object onActionFromSeleccionaJefeOGA(Trabajador traba) {
         if (traba != null) {
             jefeOGA = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -910,46 +961,57 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return JefeOGAZone.getBody();
     }
 
+    @Log
     void onDenominacionChanged() {
         entidadUE.setDenominacion(_request.getParameter("param"));
     }
 
+    @Log
     void onSiglaChanged() {
         entidadUE.setSigla(_request.getParameter("param"));
     }
 
+    @Log
     void onRucChanged() {
         entidadUE.setRuc(_request.getParameter("param"));
     }
 
+    @Log
     void onCue_EntidadChanged() {
         entidadUE.setCue_entidad(_request.getParameter("param"));
     }
 
+    @Log
     void onDireccionChanged() {
         entidadUE.setDireccion(_request.getParameter("param"));
     }
 
+    @Log
     void onDescZonaChanged() {
         entidadUE.setDescZona(_request.getParameter("param"));
     }
 
+    @Log
     void onEmailInstitucionalChanged() {
         entidadUE.setEmailInstitucional(_request.getParameter("param"));
     }
 
+    @Log
     void onUrlEntidadChanged() {
         entidadUE.setUrlEntidad(_request.getParameter("param"));
     }
 
+    @Log
     void onTelefonoEntidadChanged() {
         entidadUE.setTelefonoEntidad(_request.getParameter("param"));
     }
 
+    @Log
     Object onValueChangedFromBnivelGobierno(DatoAuxiliar dato) {
         return request.isXHR() ? new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody()) : null;
     }
 
+    @Log
     Object onValueChangedFromborganizacionEstado(DatoAuxiliar dato) {
         if (dato != null) {
             if (dato.getCodigo() == 5) {
@@ -961,6 +1023,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return request.isXHR() ? new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody()) : null;
     }
 
+    @Log
     Object onValueChangedFromNivelGobierno(DatoAuxiliar dato) {
         if (dato == null) {
             entidadUE.setOrganizacionEstado(null);
@@ -968,6 +1031,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         return request.isXHR() ? new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()) : null;
     }
 
+    @Log
     Object onValueChangedFromOrganizacionEdicion(DatoAuxiliar dato) {
         if (dato != null) {
             if (dato.getCodigo() == 5) {
@@ -977,5 +1041,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
             }
         }
         return request.isXHR() ? new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()) : null;
+    }
+
+    @Log
+    private MultiZoneUpdate zonasPopup() {
+        MultiZoneUpdate mu;
+        mu = new MultiZoneUpdate("busZone2", busZone2.getBody()).
+                add("trabajadorZone", trabajadorZone.getBody()).
+                add("busZone", busZone.getBody()).
+                add("entiZone", entiZone.getBody());
+        return mu;
     }
 }

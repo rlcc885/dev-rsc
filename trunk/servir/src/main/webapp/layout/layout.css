@@ -1586,3 +1586,7 @@ table.t-data-grid tbody tr td.login {width:80px;}
 a.button.f-right {
     color: #FFFFFF;
 }
+.actions a{
+    color: #FFFFFF;
+    padding: 5px 8px;
+}

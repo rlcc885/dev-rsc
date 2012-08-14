@@ -378,17 +378,11 @@
             <t:if test="${vformulario}">
                 <t:form t:id="formulariobotones"  zone="botonesZone">
                     <div class="f-wrap">                    
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/> 
-                        </div>
                         <t:if test="${vbotones}">
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
-                            </div>
+                                <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
                         </t:if>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/> 
                     </div>
                 </t:form>
             </t:if>
@@ -474,7 +468,6 @@
                 </t:if>
             </t:if>
         </t:zone>
-        
         <t:zone t:id="busZone" t:update="show">
             <t:if test="bSeleccionaEntidad">
                 <h1>Selección de entidad</h1>
@@ -487,15 +480,16 @@
                             </div>                   
                         
                             <div class="actions f-right">
+                                <t:actionlink t:id="cancelFormFindEntidad" t:zone="EOrigenZone" href="#" t:class="button" t:onClick="javascript: ocultar();">Cancelar</t:actionlink>
+<!--                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>-->
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+
                             </div>
                         </div>
                     </form>
                 </div>
             </t:if>
         </t:zone>
-            
         <div t:type="zone" t:id="entiZone" t:update="show">
             <t:if test="bSeleccionaEntidad">
                 <t:if test="mostrar">
@@ -510,9 +504,7 @@
                 </t:if>
             </t:if>
         </div>
-        
     </div>
-    
 
     <script type="text/javascript">
         var modal= document.getElementById('modal');

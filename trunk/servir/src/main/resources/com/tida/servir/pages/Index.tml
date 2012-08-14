@@ -33,7 +33,7 @@ window.close()
                     </div>
                     <div class="clear f-wrap">
                         <input id="loginSubmit" type="submit" value="Ingresar" class="button f-right" />
-                        <input id="loginCancel" type="Button" value="Cancelar" onClick="window.close();" />
+<!--                        <input id="loginCancel" type="Button" value="Cancelar" onClick="window.close();" />-->
 <!--                        <a onClick="window.close()" class="button f-right">Cancelar</a>-->
                     </div>
                 </div>
