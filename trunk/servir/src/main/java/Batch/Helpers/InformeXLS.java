@@ -5,17 +5,17 @@
 package Batch.Helpers;
 
 import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
+import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.Certificacion;
 import com.tida.servir.entities.ConceptoRemunerativo;
 import com.tida.servir.entities.ConstanciaDocumental;
 import com.tida.servir.entities.Curso;
 import com.tida.servir.entities.DatoAuxiliar;
+import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Familiar;
 import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.Titulo;
 import com.tida.servir.entities.Trabajador;
@@ -1920,23 +1920,23 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracion", InformeXLS.leoCampo(cr.getClasificacion()), errores, session));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracionStd", InformeXLS.leoCampo(cr.getConceptoStd()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracionStd", InformeXLS.leoCampo(cr.getConceptoStd()), errores, session));
                 escribir.print("|");
                 if(cr.getPeriodicidad() != null ){
-                    if(!cr.getPeriodicidad().trim().equals("")){
-                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(0))){
-                            periodicidad = 0;
-                        }
-                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(1))){
-                            periodicidad = 1;
-                        }
-                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(2))){
-                            periodicidad = 2;
-                        }
-                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(3))){
-                            periodicidad = 3;
-                        }
-                    }
+//                    if(!cr.getPeriodicidad().trim().equals("")){
+//                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(0))){
+//                            periodicidad = 0;
+//                        }
+//                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(1))){
+//                            periodicidad = 1;
+//                        }
+//                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(2))){
+//                            periodicidad = 2;
+//                        }
+//                        if(cr.getPeriodicidad().equals(ConceptoRemunerativo.PERIODICIDADES.get(3))){
+//                            periodicidad = 3;
+//                        }
+//                    }
                 }
                 escribir.print(periodicidad);
                 escribir.println();
