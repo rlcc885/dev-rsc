@@ -36,14 +36,14 @@
                             <div class="f-left"> 
                                 <t:label for="sectorgobierno"/>
                                 <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno" 
-                                   model="SectorGobierno"
-                                   t:disabled="true"/>
+                                       model="SectorGobierno"
+                                       t:disabled="true"/>
                             </div>
                             <div class="f-left"> 
                                 <t:label for="tipoorganismo"/>
                                 <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
-                                   model="TipoOrganismo"
-                                   t:disabled="true"/>
+                                       model="TipoOrganismo"
+                                       t:disabled="true"/>
                             </div>
                         </t:if>
                     </div>
@@ -75,7 +75,7 @@
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cueEntidadChanged" 
                                    t:zone="principalZone" />
                         </div>
-<!--                        <div class="f-left">
+                        <!--                        <div class="f-left">
                             <t:label for ="proc_batch"/>
                             <input t:type="Checkbox" t:id="proc_batch" 
                                    t:value="entidadUE.proc_batch" t:disabled="true"  />
@@ -235,17 +235,11 @@
         </fieldset>
         <div t:type="zone" t:id="botonesZone" t:update="show">
             <t:if test="${veditar}" negate="true" >
-                <t:form t:id="formulariobotones"  zone="botonesZone">
+                <t:form t:id="formulariobotones" zone="botonesZone">
                     <div class="f-wrap">
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
-                        </div>
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
-                        </div>
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
-                        </div>
+                        <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
                     </div>
                 </t:form>
             </t:if>

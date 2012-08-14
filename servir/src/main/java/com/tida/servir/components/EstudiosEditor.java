@@ -27,6 +27,8 @@ import org.hibernate.criterion.Restrictions;
 public class EstudiosEditor {
 //Parameters of component
 
+    @Inject
+    private Session session;
     @Parameter
     @Property
     private Trabajador actual;
@@ -161,23 +163,25 @@ public class EstudiosEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     void onDenChanged() {
         valdenominacion = _request.getParameter("param");
     }
 
+    @Log
     void onOtroChanged() {
         valotrocentro = _request.getParameter("param");
     }
 
+    @Log
     void onColeChanged() {
         valcolegio = _request.getParameter("param");
     }
 
+    @Log
     void onColegChanged() {
         valcolegiatura = _request.getParameter("param");
     }
-    @Inject
-    private Session session;
 
     @Log
     @CommitAfter
@@ -195,10 +199,12 @@ public class EstudiosEditor {
         return primerZone.getBody();
     }
 
+    @Log
     void onSelectedFromSave() {
         elemento = 1;
     }
 
+    @Log
     void onSelectedFromReset() {
         limpiar();
         editando = false;
@@ -209,10 +215,12 @@ public class EstudiosEditor {
         elemento = 2;
     }
 
+    @Log
     void onSelectedFromCancel() {
         elemento = 3;
     }
 
+    @Log
     void onSelectedFromEstudiando() {
         elemento = 4;
     }
@@ -318,6 +326,7 @@ public class EstudiosEditor {
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
 
+    @Log
     boolean validando() {
         boolean resultado = true;
         if (valestudiando != null) {
@@ -357,6 +366,7 @@ public class EstudiosEditor {
         return resultado;
     }
 
+    @Log
     void mostrar() {
         valdenominacion = estudio.getDenominacion();
         valtipoestudio = estudio.getTipoestudio();
@@ -469,6 +479,7 @@ public class EstudiosEditor {
         limpiar();
     }
 
+    @Log
     void seteo() {
         estudio.setDenominacion(valdenominacion);
         estudio.setTipoestudio(valtipoestudio);
@@ -485,6 +496,7 @@ public class EstudiosEditor {
         //estudio.setEstudiando(valestudiando);
     }
 
+    @Log
     void limpiar() {
         estudio = new Estudios();
         valdenominacion = null;
@@ -492,7 +504,7 @@ public class EstudiosEditor {
         valcentroestudio = null;
         valotrocentro = null;
         valpais = null;
-        ubigeoDomicilio = null;
+        ubigeoDomicilio = new Ubigeo();
         valcolegio = null;
         valcolegiatura = null;
         valfec_desde = null;
