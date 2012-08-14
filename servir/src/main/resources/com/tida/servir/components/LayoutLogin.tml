@@ -55,15 +55,7 @@
             </div>
             <!-- end page -->
         </div>
-     <script>
-        <!--
 
-       // perform JavaScript after the document is scriptable. Fix ie comboboxes
-               jQuery(function() {
-                   jQuery("select").jALDropdown();
-               });
-            -->
-        </script>
         <!-- start footer -->
         <div id="footer">
             <div class="f-left" style="width=400px;">

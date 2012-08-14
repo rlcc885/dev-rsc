@@ -50,8 +50,8 @@ public class Index {
     @Property
     @Persist
     private ConfiguracionAcceso configuracionAcceso;
-    @Property
-    private boolean administrador = false;
+//    @Property
+//    private boolean administrador = false;
     @Property
     private String clave;
     @Property
@@ -93,9 +93,9 @@ public class Index {
         return mensajes.get("nuevoUsuario");
     }
 
-    public boolean getMuestroSubmit() {
-        return !administrador;
-    }
+//    public boolean getMuestroSubmit() {
+//        return !administrador;
+//    }
 
     public GenericSelectModel<Entidad> getBeanOrganismos() {
         List<Entidad> list;
