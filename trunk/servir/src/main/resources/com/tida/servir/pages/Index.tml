@@ -1,35 +1,46 @@
+
 <html t:type="layoutlogin" title="Sistema SERVIR"
       t:sidebarTitle="Current Time"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
+<script>
+function cerrarse(){
+window.close()
+}
+</script>
+
     <div class = "login">
         <h3>Inicio de Sesión</h3>
         <div class = "box">
-            <div id="login-box">
-                <t:if test="muestrosubmit">
-                    <t:form t:id="formulariologin" >
-                        <t:errors/>
-                        <t:if test="muestrosubmit">
-                            <div class="clear f-wrap">
-                                <div class="f-left">
-                                    <t:label for="login"/>
-                                    <input t:type="TextField" t:id="login" t:value="login" size="20" t:validate="maxlength=50" />
-                                </div>
-                            </div>
-                            <div class="clear f-wrap">
-                                <div class="f-left">
-                                    <t:label for="clave"/>
-                                    <input t:type="PasswordField" t:id="clave" size="20" t:validate="maxlength=50" />
-                                </div>
-                            </div>
-                            <div class="clear f-wrap">
-                                <input id="loginSubmit" type="submit" value="Ingresar" class="button f-right" />
-                            </div>
-                        </t:if>
-                    </t:form>
-                </t:if>
-            </div>
+            
+<!--                <t:if test="muestrosubmit">-->
+            <t:form t:id="formulariologin" >
+                <t:errors/>
+                <div id="login-box">
+<!--                        <t:if test="muestrosubmit">-->
+                    <div class="clear f-wrap">
+                        <div class="f-left">
+                            <t:label for="login"/>
+                            <input t:type="TextField" t:id="login" t:value="login" size="20" t:validate="maxlength=50" />
+                        </div>
+                    </div>
+                    <div class="clear f-wrap">
+                        <div class="f-left">
+                            <t:label for="clave"/>
+                            <input t:type="PasswordField" t:id="clave" size="20" t:validate="maxlength=50" />
+                        </div>
+                    </div>
+                    <div class="clear f-wrap">
+                        <input id="loginSubmit" type="submit" value="Ingresar" class="button f-right" />
+                        <input id="loginCancel" type="Button" value="Cancelar" onClick="window.close();" />
+<!--                        <a onClick="window.close()" class="button f-right">Cancelar</a>-->
+                    </div>
+                </div>
+<!--                        </t:if>-->
+            </t:form>
+<!--                </t:if>-->
+            
             <script language="javaScript"> 
                 function popup(ventana) {
                 $(ventana).toggle('slow');

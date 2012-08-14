@@ -182,7 +182,6 @@
                                 |
                                 <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                             </p:accionesCell>
-
                         </t:grid>
                     </t:form>
                 </t:zone>
