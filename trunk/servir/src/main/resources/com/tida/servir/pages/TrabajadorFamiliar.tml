@@ -183,12 +183,12 @@
      <script>
         <!--
 
-// perform JavaScript after the document is scriptable.
-        jQuery(function() {
-            jQuery("ul.tabs").tabs("> .pane");
-        });
-     -->
-     </script>
+   // perform JavaScript after the document is scriptable.
+           jQuery(function() {
+               jQuery("ul.tabs").tabs("> .pane");
+           });
+        -->
+    </script>
 
 
 
