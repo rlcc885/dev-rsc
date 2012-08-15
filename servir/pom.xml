@@ -297,7 +297,7 @@ Fin de librerias pentaho -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <version>2.2</version>
                 <configuration>
                     <ignoreWebxml>false</ignoreWebxml>
                 </configuration>
@@ -397,6 +397,5 @@ of a Tapestry Maven plugin is not required.   -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <tapestry-release-version>5.2.6</tapestry-release-version>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 </project>
