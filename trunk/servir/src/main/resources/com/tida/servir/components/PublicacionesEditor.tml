@@ -13,13 +13,13 @@
                             <div class="f-left">
                                  <label>* Clase: </label>
                                  <input t:type="Select" t:id="clasepublicacion" t:value="publicacion.clasepublicacion" 
-                                           model="beanClasePublicacion" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                           model="beanClasePublicacion"
                                            t:validate="required" t:blankOption="ALWAYS" />
                             </div>
                             <div class="f-left">
                                  <label>* Tipo: </label>
                                  <input t:type="Select" t:id="tipo" t:value="publicacion.tipo" 
-                                           model="beanTipo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                           model="beanTipo"
                                            t:validate="required" t:blankOption="ALWAYS" />
                             </div>                           
                         </div>

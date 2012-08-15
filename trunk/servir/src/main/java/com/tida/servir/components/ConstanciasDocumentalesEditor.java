@@ -89,6 +89,10 @@ public class ConstanciasDocumentalesEditor {
     @Persist
     @Property
     private String bentrego;
+    
+        @Property
+    @Persist
+    private boolean beditar;
  
     @Inject
     private PropertyAccess _access;
@@ -98,17 +102,18 @@ public class ConstanciasDocumentalesEditor {
     @SetupRender
     private void inicio() {
             constancia=new ConstanciaDocumental();
+            listaDocumentos=new ConstanciaDocumental();
             bentrego="";
             bobligatorio="";
+            beditar=false;
            
     }
     
     public Legajo buscarlegajo(){
-         Criteria c = session.createCriteria(Legajo.class);  
-         c.add(Restrictions.eq("trabajador", actual));
-         c.add(Restrictions.eq("entidad", _oi));
-         c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-         List result = c.list();
+         Criteria c1 = session.createCriteria(Legajo.class);  
+         c1.add(Restrictions.eq("trabajador", actual));
+         c1.add(Restrictions.eq("entidad", _oi));
+         List result = c1.list();
          lega=(Legajo) result.get(0);
          return lega;
          
@@ -117,23 +122,19 @@ public class ConstanciasDocumentalesEditor {
     
     @Log
     public List<ConstanciaDocumental> getListadoDocumentos() {
-        System.out.println("aaa "+buscarlegajo().getCod_legajo());
-        Criteria c = session.createCriteria(ConstanciaDocumental.class);
-        c.add(Restrictions.eq("entrego",true));
-        c.add(Restrictions.eq("legajo",buscarlegajo()));
-         System.out.println("aaa "+c.list().size());
-        return c.list();
+        Criteria c2 = session.createCriteria(ConstanciaDocumental.class);
+        //c.add(Restrictions.eq("entrego",true));
+        c2.add(Restrictions.eq("legajo",buscarlegajo()));
+        c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
+        return c2.list();
     }
    
     @Log
    public CargoAsignado getCargosAsignados() {
-       Criteria c = session.createCriteria(CargoAsignado.class);
-         c.createAlias("legajo", "legajo");
-         c.add(Restrictions.eq("trabajador", actual));
-         c.add(Restrictions.eq("legajo.entidad", _oi));
-         c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-         List result = c.list();
-         cargoasignado=(CargoAsignado) result.get(0);
+       Criteria c3 = session.createCriteria(CargoAsignado.class);
+         c3.add(Restrictions.eq("trabajador", actual));
+         List result2 = c3.list();
+         cargoasignado=(CargoAsignado) result2.get(0);
          
        return cargoasignado;
    }
@@ -163,24 +164,31 @@ public class ConstanciasDocumentalesEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormulariodocumentos() {
-            System.out.println("aaa "+buscarlegajo().getCod_legajo());
+        if(!beditar){
             constancia.setLegajo(buscarlegajo());
             constancia.setCargoasignado(getCargosAsignados());
+        }
+            
             if(bentrego.equalsIgnoreCase("SI")){
                 constancia.setEntrego(Boolean.TRUE);
-            }else{
+            }else if(bentrego.equalsIgnoreCase("NO")){
                 constancia.setEntrego(Boolean.FALSE);
+            }else{
+                constancia.setEntrego(null);
             }
             if(bobligatorio.equalsIgnoreCase("SI")){
                 constancia.setObligatorio(Boolean.TRUE);
-            }else{
+            }else if(bobligatorio.equalsIgnoreCase("NO")){
                 constancia.setObligatorio(Boolean.FALSE);
+            }else{
+                 constancia.setObligatorio(null);
             }
             session.saveOrUpdate(constancia);
-            envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
+            envelope.setContents(helpers.Constantes.CONSTANCIAS_DOCUMENTALES_EXITO);
             constancia=new ConstanciaDocumental();
             bentrego="";
             bobligatorio="";
+            beditar=false;
             return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
                     .add("listaDocumentosZone", listaDocumentosZone.getBody())
                     .add("documentosZone", documentosZone.getBody());  
@@ -206,6 +214,21 @@ public class ConstanciasDocumentalesEditor {
     @Log
     Object onActionFromEditar(ConstanciaDocumental consta) {        
         constancia=consta;
+        beditar=true;
+        if(constancia.getEntrego()==true){ 
+            bentrego="SI";
+        }else if(constancia.getEntrego()==false){
+            bentrego="NO";
+        }else{
+            bentrego="";
+        }
+        if(constancia.getObligatorio()==true){ 
+            bobligatorio="SI";
+        }else if(constancia.getObligatorio()==false){
+            bobligatorio="NO";
+        }else{
+            bobligatorio="";
+        }
            return documentosZone.getBody(); 
     }
     
@@ -213,7 +236,7 @@ public class ConstanciasDocumentalesEditor {
     @CommitAfter        
     Object onActionFromEliminar(ConstanciaDocumental consta) {
         session.delete(consta);
-         envelope.setContents("Se realizo la elimiación satisfactoriamente");
+         envelope.setContents("Constancias Documentales eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
                     .add("listaDocumentosZone", listaDocumentosZone.getBody());
 

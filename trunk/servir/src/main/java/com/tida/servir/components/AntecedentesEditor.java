@@ -208,7 +208,7 @@ public class AntecedentesEditor {
     @CommitAfter
     Object onActionFromEliminar(Ant_Laborales antLab) {
         session.delete(antLab);
-        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        envelope.setContents("Antecedentes Laborales eliminados exitosamente.");
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaAntLoboralZone", listaAntLoboralZone.getBody());
     }
 

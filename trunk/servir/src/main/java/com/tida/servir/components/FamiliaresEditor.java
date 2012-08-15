@@ -354,7 +354,7 @@ public class FamiliaresEditor {
     Object onActionFromEliminar(Familiar fami) {
         session.delete(fami);
         
-        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        envelope.setContents("Familiares eliminados exitosamente.");
         return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody())                             
         .add("listaFamiliaresZone", listaFamiliaresZone.getBody());
     }

@@ -10,7 +10,7 @@
                          <div class="f-wrap">
                            <div class="f-left" >
                                 <t:label for="concepto"/>
-                                <input t:type="Select" t:id="concepto" t:value="conceptoremun"
+                                <input t:type="Select" t:id="concepto" t:value="remuneracion.conceptoRemunerativo"
                                        model="beanConceptoRemunerativo"
                                        t:blankOption="ALWAYS"  t:validate="required" />
                                
@@ -67,8 +67,8 @@
                     </p:conceptoRemunerativoCell>
                     
                     <p:accionesCell>
-                        <t:actionlink t:id="editarCR" zone="remuneracionesZone" context="listadoRemuneraciones">Editar</t:actionlink> | 
-                        <t:actionlink t:id="eliminarCR" zone="listaRemuneracionesZone" context="listadoRemuneraciones"> 
+                        <t:actionlink t:id="editarCR" zone="remuneracionesZone" context="listaRemuneraciones">Editar</t:actionlink> | 
+                        <t:actionlink t:id="eliminarCR" zone="listaRemuneracionesZone" context="listaRemuneraciones"> 
                             <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                 Eliminar
                             </span>
