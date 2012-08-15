@@ -4,10 +4,8 @@
  */
 package com.tida.servir.entities;
 
-import java.util.Date;
 import java.io.Serializable;
 import javax.persistence.*;
-import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
@@ -15,6 +13,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 @Entity
 public class LkBusquedaTrabajador implements Serializable {
+
     @Id
     private long id;
     private String nombretrabajador;
@@ -24,6 +23,7 @@ public class LkBusquedaTrabajador implements Serializable {
     private String cargo;
     private String estadocargo;
     private String nrodocumento;
+    private Boolean estado;
     private Long entidad_id;
 
     public long getEntidad_id() {
@@ -34,7 +34,14 @@ public class LkBusquedaTrabajador implements Serializable {
         this.entidad_id = entidad_id;
     }
 
-    
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public LkBusquedaTrabajador() {
     }
 
@@ -45,7 +52,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public String getNombretrabajador() {
         return nombretrabajador;
     }
@@ -53,6 +60,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setNombretrabajador(String nombretrabajador) {
         this.nombretrabajador = nombretrabajador;
     }
+
     public Boolean getValidado() {
         return validado;
     }
@@ -60,7 +68,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setValidado(Boolean validado) {
         this.validado = validado;
     }
-    
+
     public String getEntidad() {
         return entidad;
     }
@@ -68,6 +76,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setEntidad(String entidad) {
         this.entidad = entidad;
     }
+
     public String getUnidadorganica() {
         return unidadorganica;
     }
@@ -75,6 +84,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setUnidadorganica(String unidadorganica) {
         this.unidadorganica = unidadorganica;
     }
+
     public String getCargo() {
         return cargo;
     }
@@ -82,6 +92,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
+
     public String getEstadocargo() {
         return estadocargo;
     }
@@ -89,6 +100,7 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setEstadocargo(String estadocargo) {
         this.estadocargo = estadocargo;
     }
+
     public String getNrodocumento() {
         return nrodocumento;
     }
@@ -96,5 +108,4 @@ public class LkBusquedaTrabajador implements Serializable {
     public void setNrodocumento(String nrodocumento) {
         this.nrodocumento = nrodocumento;
     }
-    
 }

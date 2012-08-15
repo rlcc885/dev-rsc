@@ -1,5 +1,6 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +13,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 @Entity
 @Table(name = "RSC_DATOAUXILIAR")
-public class DatoAuxiliar {
+public class DatoAuxiliar implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 //implements Serializable {
 
