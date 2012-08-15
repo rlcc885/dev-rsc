@@ -4,16 +4,26 @@
  */
 package com.tida.servir.entities;
 
+import java.util.Date;
 import java.io.Serializable;
+import javax.persistence.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
 
-
+/**
+ *
+ * @author Jurguen Zambrano
+ */
+@Entity
 public class LkAdminTrabajador implements Serializable {
+    @NonVisual
+    @Id
     private long id;
     private String tipodoc;
     private String nrodocumento;
     private String nombres;
     private String apellidopaterno;
     private String apellidomaterno;
+    @NonVisual
     private Long cargoasi;
     
     public LkAdminTrabajador() {
