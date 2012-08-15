@@ -16,17 +16,18 @@
            <h2>Baja de trabajador</h2>
             <div id="filtrosdoc">
                 <div class="f-left">
-                    <t:label for="tipoDocumento"/>
-                    <t:select t:id="tipoDocumento" model="tiposDoc" t:validate="required"/>
+                    <t:label for="tipoDocumento" />
+                    <select t:type="Select" t:id="tipoDocumento" value="tipoDocumento" 
+                            model="beanTiposDoc"
+                            t:validate="required" t:blankOption="ALWAYS" />
                 </div>
-
                 <div class="f-left">
                     <t:label for="nroDocumento"/>
-                    <input t:type="TextField" t:id="nroDocumento" t:validate="regexp, required" size="30"/>
+                    <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="regexp, required" />
                 </div>
           </div> <!-- filtrosdoc -->
           <div class="actions f-right button_bajaTrabajador">
-            <input id = "buscarsubmit" type="submit" value="Buscar" class="buttonGrey"/>
+            <input id = "buscarsubmit" type="submit" value="Buscar" class="button"/>           
               </div>
 
            </t:form>
