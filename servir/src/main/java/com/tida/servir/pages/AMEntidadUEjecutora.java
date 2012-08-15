@@ -262,7 +262,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Boolean editando;
     @PageActivationContext
     private Entidad entidadalerta;
-
+    @Property
+    @Persist
+    private Boolean opcion_limpiar;
+    
     @Log
     public Entidad getEntidadalerta() {
         return entidadalerta;
@@ -290,6 +293,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vformulario = false;
         vdetalle = false;
         editando = false;
+        opcion_limpiar = false;
         //validacion de alerta
         if (entidadalerta != null) {
             entidadUE = entidadalerta;
@@ -570,8 +574,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
             } else {
                 return "AMEntidadUEjecutora";
             }
-        } else if (bResetFormulario) {
-            resetFormulario(entidadUE);
+        } else if (bResetFormulario)
+        {   System.out.println("********FASE 1");
+            if (opcion_limpiar.equals(true))
+            {System.out.println("**** RESETFORMULARIO");
+                resetFormulario(entidadUE);}
+            else
+            {// entidadUE = new Entidad();
+                System.out.println("***** LIMPIAR FORMULARIO");
+            this.limpiar_formulario();}
+            
+            opcion_limpiar = false;
+
             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
                     add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
                     add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
@@ -579,24 +593,36 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     add("JefeRRHHZone", JefeRRHHZone.getBody()).
                     add("JefeOGAZone", JefeOGAZone.getBody());
         } else {
+            System.out.println("***** FASE DE CREACION:" +entidadUE.toString());
+            System.out.println("******"+ ubigeoEntidadUE.toString());
             entidadUE.setEstado(true);
+            
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
+            
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
+            System.out.println("****************** 22222");
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
+            System.out.println("****************** 22222");
+            System.out.println(entidadUE.getEsSubEntidad());
+           // System.out.println(entidadUE.getTipoSubEntidad().toString());
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
                     envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                 }
             }
+            
+            System.out.println("************************* 1111111");
             if (entidadUE.getNivelGobierno() == null) {
                 envelope.setContents("Debe ingresar el Nivel de Gobierno");
                 return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
             }
+            
             if (entidadUE.getOrganizacionEstado() == null) {
                 envelope.setContents("Debe ingresar la Organizacion Estado");
                 return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
             }
+            
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
                 if (entidadUE.getSectorGobierno() == null) {
                     envelope.setContents("Debe ingresar el Sector");
@@ -607,6 +633,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                 }
             }
+            
             if (entidadUE.getDenominacion() == null) {
                 envelope.setContents("Debe ingresar el nombre de la Entidad ");
                 return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
@@ -614,7 +641,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
-
+            System.out.println("********** FASE DE CREACION FIN");
             session.saveOrUpdate(entidadUE);
             session.flush();
             if (editando) {
@@ -625,7 +652,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             } else {
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
-            envelope.setContents("Entidad creada exitosamente");
+           // envelope.setContents("Entidad creada exitosamente");
+            envelope.setContents(this.mensaje_accion());
+            // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
+            opcion_limpiar = false;
         }
         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("listaentidadZone", listaentidadZone.getBody());
 
@@ -658,6 +688,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vformulario = true;
         vdetalle = false;
         vbotones = true;
+        opcion_limpiar = true;
+        
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody());
     }
 
@@ -1026,7 +1058,41 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         return request.isXHR() ? new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()) : null;
     }
-
+    private void limpiar_formulario()
+    {
+        //OPC 2
+      //  this.inicio();
+        //OPC 3
+        bCancelFormulario = true;
+        editando= false;
+    //    this.nuevoRegistro();
+        entidadUE = new Entidad();
+        entidadUE.setEsSubEntidad(false);
+        entidad_origen = null;
+        titular = null;
+        jefeRRHH = null;
+        jefeOGA = null;
+        bessubentidad = false;
+        //OPC 1
+  /*    entidadUE = new Entidad();  */
+      ubigeoEntidadUE.setDepartamento(null);
+      ubigeoEntidadUE.setProvincia(null);
+      ubigeoEntidadUE.setDistrito(null);
+    /*  titular = "";
+      jefeRRHH = "";
+      jefeOGA = "";*/
+    }
+ //   private String mensaje;
+    private String mensaje_accion()
+    {String tipo = "";
+    String modo = "";
+        if (entidadUE.getEsSubEntidad())
+        {tipo="Subentidad";}else{tipo="Entidad";}
+        if (opcion_limpiar)
+        {modo="modificada";}else{modo="creada";}
+    return tipo + " " + modo + " Exitosamente";
+    }
+    
     @Log
     private MultiZoneUpdate zonasPopup() {
         MultiZoneUpdate mu;
