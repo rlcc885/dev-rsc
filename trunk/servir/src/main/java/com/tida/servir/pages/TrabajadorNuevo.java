@@ -543,7 +543,8 @@ public class TrabajadorNuevo  extends GeneralPage
     @Log
     public List<Evento> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
-        c.add(Restrictions.eq("nrodocumento",nuevo.getNroDocumento()));                     
+        c.add(Restrictions.eq("nrodocumento",nuevo.getNroDocumento()));
+        c.add(Restrictions.eq("estado",true));
         return c.list();
     }
     

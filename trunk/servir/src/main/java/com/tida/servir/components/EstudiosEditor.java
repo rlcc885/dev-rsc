@@ -450,8 +450,8 @@ public class EstudiosEditor {
     }
 
     @Log
-    @SetupRender
-    private void inicio() {
+//    @SetupRender
+    void setupRender() {
         vrevisado = false;
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
