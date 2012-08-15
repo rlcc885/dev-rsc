@@ -218,7 +218,7 @@ public class MeritosDemeritosEditor {
     @CommitAfter        
     Object onActionFromEliminarME(MeritoDemerito meri) {
         session.delete(meri);
-         envelope.setContents("Se realizo la elimiación satisfactoriamente");
+         envelope.setContents("Meritos demeritos eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                     .add("listaMeritosZone", listaMeritosZone.getBody());
     }

@@ -20,11 +20,11 @@
                                         model="beanSexo"
                                         t:blankOption="ALWAYS" />
                             </div>
-<!--                            <div class="f-left">	
+                            <div class="f-left">	
                                 <t:label for="fechaNacimiento"/>
                                 <input t:type="TextField" t:id="fechaNacimiento" t:value="nuevafecha" />
-                                <img src="../layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariofamiliares.fechaNacimiento, 'dd/mm/yyyy');" style="cursor:hand;"></img>
-                            </div>-->
+                                <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariofamiliares.fechaNacimiento, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                            </div>
                         </div>
                         <br/>
                         <div class="f-wrap">
