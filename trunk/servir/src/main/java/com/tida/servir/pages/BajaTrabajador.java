@@ -6,19 +6,13 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
+import com.tida.servir.services.GenericSelectModel;
 import helpers.Constantes;
 import helpers.Helpers;
 import java.util.List;
 import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -66,7 +60,7 @@ public class BajaTrabajador extends GeneralPage {
 
     @Persist
     @Property
-    private String tipoDocumento;
+    private DatoAuxiliar tipoDocumento;
 
     @InjectComponent
     private Zone cargosGrillaZone;
@@ -81,13 +75,11 @@ public class BajaTrabajador extends GeneralPage {
 
 
         if (nroDocumento != null) {
-            System.out.println("nroDocumento");
             c.add(Restrictions.eq("trabajador.nroDocumento", nroDocumento));
         }
-        if (tipoDocumento != null && !tipoDocumento.equals("")) {
-            System.out.println("tipoDocumento");
-            c.add(Restrictions.like("trabajador.tipoDocumento", tipoDocumento));
-        }
+//        if (tipoDocumento != null ) {
+//            c.add(Restrictions.like("trabajador.documentoidentidad", tipoDocumento));
+//        }
         c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
         c.setProjection(Projections.distinct(Projections.property("trabajador")));
 
@@ -95,8 +87,11 @@ public class BajaTrabajador extends GeneralPage {
     }
 
 
-    public List<String> getTiposDoc() {
-        return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
+    //para obtener datos del Tipo de documento
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTiposDoc() {        
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     public Object onSuccessFromFormulariobusquedasfiltros() {

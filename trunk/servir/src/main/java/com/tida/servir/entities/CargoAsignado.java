@@ -2,6 +2,7 @@ package com.tida.servir.entities;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "RSC_CARGOASIGNADO")
-public class CargoAsignado {
+public class CargoAsignado implements Serializable {
     
     public static boolean ESTADO_BAJA = false;
     public static boolean ESTADO_ALTA = true;

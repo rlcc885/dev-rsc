@@ -75,7 +75,7 @@ public class PublicacionesEditor {
     }
 
     @Log
-    public List<Ant_Laborales> getListadoProIntelectual() {
+    public List<Publicacion> getListadoProIntelectual() {
         Criteria c = session.createCriteria(Publicacion.class);
         c.add(Restrictions.eq("trabajador", actual));
         return c.list();

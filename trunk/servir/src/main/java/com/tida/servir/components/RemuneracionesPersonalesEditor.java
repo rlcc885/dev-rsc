@@ -69,6 +69,7 @@ public class RemuneracionesPersonalesEditor {
     private void inicio() {
         remuneracion = new RemuneracionPersonal();
         listaRemuneraciones = new RemuneracionPersonal();
+        getCargosAsignados();
         elemento=0;
     }
 
@@ -84,7 +85,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     public List<RemuneracionPersonal> getListadoRemuneraciones() {
         Criteria c2 = session.createCriteria(RemuneracionPersonal.class);
-        c2.add(Restrictions.eq("cargoAsignado", getCargosAsignados()));
+        c2.add(Restrictions.eq("cargoAsignado", cargoAsignado));
         return c2.list();
     }
 
