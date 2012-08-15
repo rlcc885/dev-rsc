@@ -102,8 +102,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @InjectComponent
     @Property
     private Zone busquedacombosZone;
-//    @Component(id = "formulariocombosbusqueda")
-//    private Form formulariocombosbusqueda;
     @Component(id = "formBusqueda")
     private Form formBusqueda;
     @Property
@@ -309,7 +307,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
             arroja = true;
-
         } else {
             usua = (UsuarioAcceso) result.get(0);
             if (usua.getAccesoupdate() == 1) {
@@ -476,7 +473,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     @CommitAfter
-//    Object onSuccessFromformulariocombosbusqueda() {
     Object onSuccessFromformBusqueda() {
         if (!bBuscaEntidad) {
             return new MultiZoneUpdate("busquedacombosZone", busquedacombosZone.getBody());
@@ -562,7 +558,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (entidadUE.getJefeOga() != null) {
             jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
-        //return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody());
     }
 
     @Log
@@ -630,7 +625,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
             } else {
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
-            //new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
             envelope.setContents("Entidad creada exitosamente");
         }
         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("listaentidadZone", listaentidadZone.getBody());
@@ -821,8 +815,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromformulariotitular() {
         btitulari = true;
-//        bSeleccionaPersonal = true;
-//        bSeleccionaEntidad = false;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody()).
                 add("busZone", busZone.getBody()).
                 add("entiZone", entiZone.getBody());
@@ -832,8 +824,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromformulariojeferrhh() {
         bjefeRRHHi = true;
-//        bSeleccionaPersonal = true;
-//        bSeleccionaEntidad = false;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody()).
                 add("busZone", busZone.getBody()).
                 add("entiZone", entiZone.getBody());
@@ -843,8 +833,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @CommitAfter
     Object onSuccessFromformulariojefeoga() {
         bjefeOGAi = true;
-//        bSeleccionaPersonal = true;
-//        bSeleccionaEntidad = false;
         return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("trabajadorZone", trabajadorZone.getBody()).
                 add("busZone", busZone.getBody()).
                 add("entiZone", entiZone.getBody());
@@ -879,11 +867,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onSuccessFromFormFindEntidad() {
         System.err.println("onSuccessFromFormFindEntidad");
-//        if (bSeleccionaEntidad == false) {
-//            mostrar = false;
-//        } else {
             mostrar = true;
-//        }
         return zonasPopup();
     }
 
