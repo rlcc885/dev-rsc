@@ -184,7 +184,7 @@ public class EstudiosEditor {
     }
 
     @Log
-    @CommitAfter
+    //@CommitAfter
     Object onSuccessFromformularioaltaestudio() {
         if (valcentroestudio != null) {
             if (valcentroestudio.getCodigo() == 999999) {
