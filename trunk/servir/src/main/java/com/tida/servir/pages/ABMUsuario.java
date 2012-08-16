@@ -29,6 +29,7 @@ import org.hibernate.criterion.Restrictions;
  *
  */
 public class ABMUsuario extends GeneralPage {
+
     @Inject
     private Session session;
     @Property
@@ -37,9 +38,9 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @SessionState
     private Entidad entidad;
-    @Property
-    @Persist
-    private Usuario usuario;
+//    @Property
+//    @Persist
+//    private Usuario usuario;
     @Property
     private UsuarioTrabajador u;
     @Property
@@ -88,6 +89,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private boolean editaUsuario;
+    @Persist
+    @Property
+    private boolean noEditaUsuario;
     @Persist
     @Property
     private boolean cancelaEditUsuario;
@@ -163,7 +167,7 @@ public class ABMUsuario extends GeneralPage {
         System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
         resetBuscar();
         usuariotrabajadoredit = new UsuarioTrabajador();
-        usuario = new Usuario();
+//        usuario = new Usuario();
         perfil = new Perfil();
         // primera vez, se setea la entidad
         bEntidad = entidad;
@@ -192,7 +196,7 @@ public class ABMUsuario extends GeneralPage {
     @Log
     public GenericSelectModel<Rol> getRolUsuario() {
         List<Rol> list;
-        if (usuario.getRol() == null) {
+        if (loggedUser.getRol() == null) {
             list = Helpers.getRolUSuario(1, session);
         } else {
             list = Helpers.getRolUSuario(loggedUser.getRol().getId(), session);
@@ -216,7 +220,7 @@ public class ABMUsuario extends GeneralPage {
     @Log
     public GenericSelectModel<Perfil> getSelectPerfilesSinAsignar() {
         List<Perfil> list;
-        list = Helpers.getPerfilesSinAsignarPorUsuario(usuario.getId(), session);
+        list = Helpers.getPerfilesSinAsignarPorUsuario(usuariotrabajadoredit.getId(), session);
         return new GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
     }
 
@@ -302,7 +306,7 @@ public class ABMUsuario extends GeneralPage {
     public List<Perfilporusuario> getAllPerfiles() {
         List<Perfilporusuario> lista = null;
         Query query = session.getNamedQuery("Perfilporusuario.findByUsuarioId");
-        query.setParameter("usuarioId", usuario.getId());
+        query.setParameter("usuarioId", usuariotrabajadoredit.getId());
         lista = query.list();
         return lista;
     }
@@ -367,36 +371,68 @@ public class ABMUsuario extends GeneralPage {
     }
 
     @Log
-    @CommitAfter
-    Object onSuccessFromFormularioUsuario() {
-        if (!cancelaEditUsuario) {
-            ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-            String password = null;
-            if (blanquearIntentosFallidos) {
-                usuario.setIntentos_fallidos(0L);
-            }
-            if (reinitialisarpassword) {
-                SecureRandom random = new SecureRandom();
-                password = new BigInteger(50, random).toString(32);
-                usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
-                usuario.setClave(password);
-                String subject = "Datos de acceso al sistema Servir";
-                String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
-                if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
-                    System.out.println("Envío Correcto");
-                } else {
-                    Logger logger = new Logger();
-                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
-                }
-            }
-            usuario.setEstado(estadoUsuarioEdit.getId());
-            usuario.setRol(rolUsuarioEdit);
-            session.saveOrUpdate(usuario);
-            envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-            usuario = createNewUsuario();
-        }
-        cancelaEditUsuario = false;
+    void resetUsuario() {
+        usuariotrabajadoredit = new UsuarioTrabajador();
+//        usuario = new Usuario();
+        usuariotrabajadoredit.setFechacreacion(new Date());
+        usuariotrabajadoredit.setEstado(1);
+        perfil = new Perfil();
         editaUsuario = false;
+    }
+
+    @Log
+    Object onReset() {
+        resetUsuario();
+        return zonasTotal();
+    }
+    
+    @Log
+    Object onCancel() {
+        resetUsuario();
+        return zonasTotal();
+    }
+
+    @Log
+    @CommitAfter
+//    Object onSuccessFromFormularioUsuario() {
+    Object onSuccessFromFormularioPersonal() {
+//        if (!cancelaEditUsuario) {
+        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+        Usuario usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
+        String password = null;
+        if (blanquearIntentosFallidos) {
+            usuario.setIntentos_fallidos(0L);
+        }
+        if (reinitialisarpassword) {
+            SecureRandom random = new SecureRandom();
+            password = new BigInteger(50, random).toString(32);
+            usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
+//            usuario.setClave(password);
+            String subject = "Datos de acceso al sistema Servir";
+            String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
+            if (SMTPConfig.sendMail(subject, body, usuario.getTrabajador().getEmailLaboral(), ca)) {
+                System.out.println("Envío Correcto");
+            } else {
+                Logger logger = new Logger();
+                logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+            }
+        }
+        usuario.setApellidoMaterno(usuariotrabajadoredit.getApellidomaterno());
+        usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
+        usuario.setDocumentoId(documentoIdentidadEdit.getId());
+        usuario.setLogin(usuariotrabajadoredit.getLogin());
+        usuario.setEstado(estadoUsuarioEdit.getId());
+        usuario.setRol(rolUsuarioEdit);
+        usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
+        usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
+        usuario.setTelefono(usuariotrabajadoredit.getTelefono());
+        usuario.setFecha_creacion(usuariotrabajadoredit.getFechacreacion());
+        usuario.setObservacion(usuariotrabajadoredit.getObservacion());
+        session.saveOrUpdate(usuario);
+        envelope.setContents(helpers.Constantes.USUARIO_EXITO);
+//        usuario = createNewUsuario();
+//        }
+//        cancelaEditUsuario = false;
         return zonasTotal();
     }
 
@@ -404,7 +440,7 @@ public class ABMUsuario extends GeneralPage {
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK();
-        perfilusuariopk.setUsuarioId(usuario.getId());
+        perfilusuariopk.setUsuarioId(usuariotrabajadoredit.getId());
         perfilusuariopk.setPerfilId(perfil.getId());
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
@@ -501,10 +537,14 @@ public class ABMUsuario extends GeneralPage {
     @Log
 //    @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
-        usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
+        Usuario usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
         rolUsuarioEdit = usuario.getRol();
         estadoUsuarioEdit = Helpers.getEstadoUsuario(usuario.getEstado(), session);
-        editaUsuario = true;
+        if (lusuariotrabajador.getTrabajadorid() == null) {
+            noEditaUsuario = false;
+        } else {
+            noEditaUsuario = true;
+        }
 //        botonPerfil = true;
         //primeraVez = true;
         usuariotrabajadoredit = lusuariotrabajador;
