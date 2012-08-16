@@ -64,6 +64,15 @@ public class Usuario implements Serializable {
     private String apellidoPaterno;
     @Column(name = "APELLIDOMATERNO")
     private String apellidoMaterno;
+    @Column(name = "EMAILLABORAL")
+    private String emaillaboral;
+    @Column(name = "TELEFONO")
+    private String telefono;
+    @Column(name = "FECHA_CREACION", insertable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha_creacion;
+    @Column(name = "OBSERVACION")
+    private String observacion;
     
     public String getClave() {
         return clave;
@@ -191,6 +200,38 @@ public class Usuario implements Serializable {
 
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getEmaillaboral() {
+        return emaillaboral;
+    }
+
+    public void setEmaillaboral(String emaillaboral) {
+        this.emaillaboral = emaillaboral;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Date getFecha_creacion() {
+        return fecha_creacion;
+    }
+
+    public void setFecha_creacion(Date fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
     
     @Override
