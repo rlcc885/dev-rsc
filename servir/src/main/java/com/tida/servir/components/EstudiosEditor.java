@@ -145,6 +145,9 @@ public class EstudiosEditor {
     @Property
     private Boolean vrevisado;
     private int elemento = 0;
+    @Persist
+    @Property
+    private Boolean ingresaubigeo;
 
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
@@ -203,6 +206,16 @@ public class EstudiosEditor {
             }
         } else {
             votro = true;
+        }
+        if (valpais != null) {
+            if (valpais.getCodigo() != 170) {
+                ubigeoDomicilio.setDepartamento(null);
+                ubigeoDomicilio.setDistrito(null);
+                ubigeoDomicilio.setProvincia(null);
+                ingresaubigeo = true;
+            } else {
+                ingresaubigeo = false;
+            }
         }
         return primerZone.getBody();
     }
@@ -459,6 +472,7 @@ public class EstudiosEditor {
         estudio = estu;
         mostrar();
         vdetalle = true;
+        ingresaubigeo = true;
         vfechahasta = true;
         votro = true;
         vbotones = false;
@@ -471,6 +485,7 @@ public class EstudiosEditor {
         estudio = estu;
         mostrar();
         vdetalle = true;
+        ingresaubigeo = true;
         vfechahasta = true;
         votro = true;
         vbotones = false;
