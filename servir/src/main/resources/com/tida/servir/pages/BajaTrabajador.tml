@@ -13,7 +13,7 @@
              ${mensajes}
         </div>
        <t:form t:id="formulariobusquedasfiltros"  zone="cargosGrillaZone">
-           <h2>Baja de trabajador</h2>
+           <h2>Baja de trabajador </h2>
             <div id="filtrosdoc">
                 <div class="f-left">
                     <t:label for="tipoDocumento" />
