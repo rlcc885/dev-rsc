@@ -12,6 +12,8 @@ import java.util.Date;
 import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,12 @@ public class ConstanciasDocumentalesEditor {
     @Property
     private ConstanciaDocumental constancia;
     
+    @Persist
+    @Property
+    private String valfec_desde;
+    @Persist
+    @Property
+    private Date fecha_desde;
 
     @Persist
     private GenericSelectModel<CargoAsignado> _cargoasignado;
@@ -106,6 +114,7 @@ public class ConstanciasDocumentalesEditor {
             bentrego="";
             bobligatorio="";
             beditar=false;
+            valfec_desde=null;
            
     }
     
@@ -183,9 +192,22 @@ public class ConstanciasDocumentalesEditor {
             }else{
                  constancia.setObligatorio(null);
             }
+            
+            if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+            constancia.setFecha(fecha_desde);
+            
+            
             session.saveOrUpdate(constancia);
             envelope.setContents(helpers.Constantes.CONSTANCIAS_DOCUMENTALES_EXITO);
             constancia=new ConstanciaDocumental();
+            valfec_desde=null;
             bentrego="";
             bobligatorio="";
             beditar=false;
@@ -200,6 +222,7 @@ public class ConstanciasDocumentalesEditor {
     Object onSuccessFromFormulariobotones() {
         if(elemento==1){
             constancia=new ConstanciaDocumental();
+            valfec_desde=null;
             bentrego="";
             bobligatorio="";
             return  documentosZone.getBody();
@@ -214,6 +237,12 @@ public class ConstanciasDocumentalesEditor {
     @Log
     Object onActionFromEditar(ConstanciaDocumental consta) {        
         constancia=consta;
+        
+        if(constancia.getFecha()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(constancia.getFecha());
+        }
+        
         beditar=true;
         if(constancia.getEntrego()==true){ 
             bentrego="SI";

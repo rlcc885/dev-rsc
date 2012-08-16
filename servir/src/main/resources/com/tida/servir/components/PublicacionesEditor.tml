@@ -32,8 +32,8 @@
                             </div>
                              <div class="f-left">
                                 <label>Fecha: </label>
-                                <input t:type="DateField" t:id="fecha" 
-                                        t:value="publicacion.fecha" size="25" />
+                                <input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde"  size="25" />
+                                <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioprointelectual.fec_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                             </div>                            
                         </div> 
                         <div class="f-wrap">                            

@@ -14,7 +14,7 @@
         </div>
 
         <div class= "pane" id='datosremuneraciones' name='remuneraciones'>    
-              Remuneraciones                
+              <t:RemuneracionesPersonalesEditor t:id="remuneracionesPersonalesEditor" actual= "actual" />                  
         </div>
         
         <div class= "pane" id='datosevaluaciones' name='evaluaciones'>             

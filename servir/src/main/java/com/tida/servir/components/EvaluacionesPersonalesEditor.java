@@ -6,6 +6,8 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,6 +69,19 @@ public class EvaluacionesPersonalesEditor {
     private boolean bvalidausuario;
     
    
+    @Persist
+    @Property
+    private String valfec_desde;
+    @Persist
+    @Property
+    private String valfec_hasta;
+    @Persist
+    @Property
+    private Date fecha_desde;
+    @Persist
+    @Property
+    private Date fecha_hasta;
+    
     //Listado de evaluaciones
     @InjectComponent
     private Zone listaEvaluacionZone;
@@ -86,6 +101,8 @@ public class EvaluacionesPersonalesEditor {
     @SetupRender
     private void inicio() {
             evaluacion = new EvaluacionPersonal();
+            valfec_desde=null;
+            valfec_hasta=null;
             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
                 bvalidausuario=true;
             }else{
@@ -139,10 +156,33 @@ public class EvaluacionesPersonalesEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormularioevaluaciones() {
+        if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+          
+            if(valfec_hasta!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+            
+            evaluacion.setFec_desde(fecha_desde);
+            evaluacion.setFec_hasta(fecha_hasta);
+        
         evaluacion.setCargoasignado(getCargosAsignados());
         session.saveOrUpdate(evaluacion);
         envelope.setContents(helpers.Constantes.EVALUACION_EXITO);
         evaluacion=new EvaluacionPersonal();
+        valfec_desde=null;
+        valfec_hasta=null;
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                 .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                 .add("evaluacionesZone", evaluacionesZone.getBody());
@@ -154,7 +194,9 @@ public class EvaluacionesPersonalesEditor {
     @CommitAfter    
     Object onSuccessFromFormulariobotones() {
         if(elemento==1){
-            evaluacion=new EvaluacionPersonal();   
+            evaluacion=new EvaluacionPersonal();
+            valfec_desde=null;
+            valfec_hasta=null;
             return  evaluacionesZone.getBody();
         }else if(elemento==2){
             return "Busqueda";
@@ -167,6 +209,16 @@ public class EvaluacionesPersonalesEditor {
     @Log
     Object onActionFromEditar(EvaluacionPersonal evalu) {        
         evaluacion=evalu;
+        
+        if(evaluacion.getFec_desde()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(evaluacion.getFec_desde());
+        }
+        if(evaluacion.getFec_hasta()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta=formatoDeFecha.format(evaluacion.getFec_hasta());
+        }
+        
            return evaluacionesZone.getBody(); 
     }
     
