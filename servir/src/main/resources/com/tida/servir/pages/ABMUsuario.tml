@@ -55,10 +55,10 @@
                         <div class="f-left">
                             <t:label for="bEstado"/>
                             <input t:type="Select"
-                               t:id="bEstado"
-                               t:value="bEstado" 
-                               t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
-                               t:style="width: 100px;" />
+                                   t:id="bEstado"
+                                   t:value="bEstado" 
+                                   t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
+                                   t:style="width: 100px;" />
                         </div>
                         <div class="f-left">
                             <t:label for="bNombreEntidad"/>
@@ -131,8 +131,8 @@
                         <legend> Datos de la Cuenta </legend>
                         <div class="f-left">
                             <t:label for="loginedit" />
-                            <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="false"/>
-                            <t:actionlink t:id="validalogin" class="button f-right">Ver Disponibilidad</t:actionlink>
+                            <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="${noEditaUsuario}"/>
+                            <t:actionlink t:id="validalogin" class="button f-right" t:disabled="${noEditaUsuario}">Ver Disponibilidad</t:actionlink>
                             <!--                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>-->
                         </div>
                         <div class="f-left">
@@ -148,15 +148,15 @@
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="nombresedit" />
-                                <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="true"/>
+                                <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoPaternoedit" />
-                                <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="true"/>
+                                <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaternoedit" />
-                                <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="true"/>
+                                <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
                             </div>
                         </div>
                         <div class="f-wrap">
@@ -164,20 +164,22 @@
                                 <t:label for="documentoidentidadedit" />
                                 <select t:type="Select" t:id="documentoidentidadedit" t:value="documentoIdentidadEdit" t:model="DocumentoIdentidad" 
                                         t:validate="required"
+                                        t:disabled="${noEditaUsuario}"
                                         t:style="width: 183px;"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="nrodocumentoedit"/>
-                                <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="max=50,min=1,required,regexp" 
+                                <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
+                                t:disabled="${noEditaUsuario}" 
                                        t:size="32"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="emailLaboralEdit" />
-                                <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="true"/>
+                                <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="telefonoEdit" />
-                                <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="max=20,min=1" t:disabled="true"/>
+                                <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="max=20,min=1" t:disabled="${noEditaUsuario}"/>
                             </div>
                         </div>
                         <div class="f-wrap">
@@ -196,7 +198,7 @@
                             </div>
                             <div class="f-left" style="text-align:center;">
                                 <t:label for="reinitialisarpasswordedit" style="text-align:center;"/>
-                                <input t:type="Checkbox" t:id="reinitialisarpasswordedit" t:value="reinitialisarpassword" style="text-align:center;"/>
+                                <input t:type="Checkbox" t:id="reinitialisarpasswordedit" t:value="reinitialisarpassword" style="text-align:center;" />
                             </div>
                             <div class="f-left">
                                 <t:label for="estadoUsuarioEdit" />
@@ -229,9 +231,19 @@
                         </div>
                     </fieldset>
                     <div class="f-wrap">
-                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Confirmo, en calidad de Declaración Jurada, la veracidad y exactitud de la información registrada y autorizo la verificación de lo declarado; asumiendo las responsabilidades a que hubiere lugar." class="button f-right"/>
+<!--                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
+                        <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Limpiar Formulario
+                            </span> 
+                        </t:eventLink>
+<!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
+                        <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="editarUsuarioZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Cancelar
+                            </span> 
+                        </t:eventLink>
                     </div>
                 </t:form>
             </div>
