@@ -150,7 +150,17 @@ public class Index {
         Criteria cq = session.createCriteria(Usuario.class);
         cq.add(Restrictions.eq("id", usuarioTrabajador.getId()));
         usuario = (Usuario) cq.list().get(0); // Guardamos la sesión
-
+        
+        ///*******
+        String clave2 = clave;
+        if (clave2 == null){clave2 = "x";}
+        if ("x".equals(clave2))
+        {
+        formulariologin.recordError("     No ingreso ninguna Clave");    
+        return this;    
+        }
+        ///*****
+        
         if (!usuarioTrabajador.getMd5clave().equals(Encriptacion.encriptaEnMD5(clave))) {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
             if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
