@@ -1,4 +1,3 @@
-
 <html t:type="layoutlogin" title="Sistema SERVIR"
       t:sidebarTitle="Current Time"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
@@ -13,12 +12,9 @@ window.close()
     <div class = "login">
         <h3>Inicio de Sesión</h3>
         <div class = "box">
-            
-<!--                <t:if test="muestrosubmit">-->
             <t:form t:id="formulariologin" >
                 <t:errors/>
                 <div id="login-box">
-<!--                        <t:if test="muestrosubmit">-->
                     <div class="clear f-wrap">
                         <div class="f-left">
                             <t:label for="login"/>
