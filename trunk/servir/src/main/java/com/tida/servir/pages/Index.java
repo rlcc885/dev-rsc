@@ -153,10 +153,9 @@ public class Index {
         
         ///*******
         String clave2 = clave;
-        if (clave2 == null){clave2 = "x";}
-        if ("x".equals(clave2))
+        if (clave2 == null)
         {
-        formulariologin.recordError("     No ingreso ninguna Clave");    
+        formulariologin.recordError("No ingreso ninguna Clave");    
         return this;    
         }
         ///*****
