@@ -548,6 +548,7 @@ public class ABMUsuario extends GeneralPage {
 //        botonPerfil = true;
         //primeraVez = true;
         usuariotrabajadoredit = lusuariotrabajador;
+        editaUsuario = true;
         permiso = new Perfilusuario();
         return zonasTotal();
     }

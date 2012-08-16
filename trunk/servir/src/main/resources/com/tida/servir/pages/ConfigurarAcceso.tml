@@ -74,9 +74,9 @@
                         <div class="f-left margin-left10 margin-top10">
                             * Campos Obligatorios
                         </div>
-                        <div class="f-right">
+<!--                        <div class="f-right">
                             <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                        </div>
+                        </div>-->
                         <div class="f-right">
                             <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>  
                         </div>
