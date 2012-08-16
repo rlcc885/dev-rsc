@@ -8,6 +8,8 @@ import com.tida.servir.entities.*;
 
 import helpers.Errores;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -63,6 +65,20 @@ public class AntecedentesEditor {
     @Persist
     @Property
     private Boolean editando;
+    
+    @Persist
+    @Property
+    private String valfec_desde;
+    @Persist
+    @Property
+    private String valfec_hasta;
+    @Persist
+    @Property
+    private Date fecha_desde;
+    @Persist
+    @Property
+    private Date fecha_hasta;
+    
     //validaciones
     @Persist
     @Property
@@ -92,6 +108,8 @@ public class AntecedentesEditor {
     private void inicio() {
         ant_Laborales = new Ant_Laborales();
         bvalidausuario = false;
+        valfec_hasta=null;
+        valfec_desde=null;
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             vbotones = true;
@@ -136,6 +154,28 @@ public class AntecedentesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioantlaboral() {
+        
+        if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+          
+            if(valfec_hasta!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+            
+            ant_Laborales.setFec_ingreso(fecha_desde);
+            ant_Laborales.setFec_egreso(fecha_hasta);
+        
         if (ant_Laborales.getFec_egreso().before(ant_Laborales.getFec_ingreso()) || ant_Laborales.getFec_egreso().equals(ant_Laborales.getFec_ingreso())) {
             envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
 
@@ -173,6 +213,8 @@ public class AntecedentesEditor {
             editando = false;
             envelope.setContents(helpers.Constantes.ANT_LABORAL_EXITO);
             ant_Laborales = new Ant_Laborales();
+            valfec_hasta=null;
+            valfec_desde=null;
         }
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaAntLoboralZone", listaAntLoboralZone.getBody()).add("antLaboralZone", antLaboralZone.getBody());
 
@@ -185,6 +227,8 @@ public class AntecedentesEditor {
         if (elemento == 1) {
             ant_Laborales = new Ant_Laborales();
             editando = false;
+            valfec_hasta=null;
+            valfec_desde=null;
             return antLaboralZone.getBody();
         } else if (elemento == 2) {
             return "Busqueda";
@@ -197,6 +241,16 @@ public class AntecedentesEditor {
     @Log
     Object onActionFromEditar(Ant_Laborales antLab) {
         ant_Laborales = antLab;
+        
+        if(ant_Laborales.getFec_ingreso()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(ant_Laborales.getFec_ingreso());
+        }
+        if(ant_Laborales.getFec_egreso()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta=formatoDeFecha.format(ant_Laborales.getFec_egreso());
+        }
+        
         editando = true;
         vformulario = true;
         vdetalle = false;

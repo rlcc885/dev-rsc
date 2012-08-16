@@ -124,10 +124,17 @@
                                     <input t:type="Checkbox" t:id="puestoconfianza"
                                             t:value="puestoconfianza" t:zone="tipoVinculoZone" />
                               </div>
+                            <!--
                                 <div class="f-left">
                                     <t:label for="fecha_ingreso"/>
                                     <input t:type="DateField" t:id="fecha_ingreso"
                                         t:validate="required" t:value="fechaingreso" t:mixins="zoneUpdater" t:clientEvent="onBlur" t:event="fechaIngresoChanged"  t:zone="tipoVinculoZone" />
+                                </div>
+                            -->
+                                <div class="f-left">	
+                                    <t:label for="fecha_ingreso"/>
+                                    <input t:type="TextField" t:id="fecha_ingreso" t:value="fechaingreso" t:validate="required" />
+                                    <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotipovinculo.fecha_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                                 </div>
                             <div class="f-right">
                                 <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>

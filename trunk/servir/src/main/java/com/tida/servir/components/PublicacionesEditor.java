@@ -4,6 +4,9 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -61,11 +64,19 @@ public class PublicacionesEditor {
     @Property
     private Boolean editando;
 
+    @Persist
+    @Property
+    private String valfec_desde;
+    @Persist
+    @Property
+    private Date fecha_desde;
+    
     //Inicio de lac carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
         publicacion = new Publicacion();
+        valfec_desde=null;
         if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
             bvalidausuario = true;
         } else {
@@ -106,6 +117,15 @@ public class PublicacionesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioprointelectual() {
+        if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+        }
+        publicacion.setFecha(fecha_desde);
         Logger logger = new Logger();
         publicacion.setTrabajador(actual);
         publicacion.setEntidad(_oi);
@@ -136,6 +156,7 @@ public class PublicacionesEditor {
         editando = false;
         envelope.setContents(helpers.Constantes.PROD_INTELECTUAL_EXITO);
         publicacion = new Publicacion();
+        valfec_desde=null;
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
 
     }
@@ -146,6 +167,7 @@ public class PublicacionesEditor {
         if (elemento == 1) {
             publicacion = new Publicacion();
             editando = false;
+            valfec_desde=null;
             return proIntelectualZone.getBody();
         } else if (elemento == 2) {
             return "Busqueda";
@@ -158,6 +180,12 @@ public class PublicacionesEditor {
     @Log
     Object onActionFromEditar(Publicacion publi) {
         publicacion = publi;
+        
+        if(publicacion.getFecha()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(publicacion.getFecha());
+        }
+                
         editando = true;
         return proIntelectualZone.getBody();
     }

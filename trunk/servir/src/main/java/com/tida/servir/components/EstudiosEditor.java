@@ -5,6 +5,8 @@ import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -98,10 +100,16 @@ public class EstudiosEditor {
     private String valcolegiatura;
     @Persist
     @Property
-    private Date valfec_desde;
+    private String valfec_desde;
     @Persist
     @Property
-    private Date valfec_hasta;
+    private Date fecha_desde;
+    @Persist
+    @Property
+    private Date fecha_hasta;
+    @Persist
+    @Property
+    private String valfec_hasta;
     @Persist
     @Property
     private Boolean valestudiando;
@@ -228,6 +236,26 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() {
+         
+          if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+          
+            if(valfec_hasta!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+        
+        
         if (valestudiando != null) {
             if (valestudiando) {
                 vfechahasta = true;
@@ -258,11 +286,11 @@ public class EstudiosEditor {
                 formlistaestudios.recordError("Tiene que seleccionar el Centro de Estudio");
                 return listaZone.getBody();
             }
-            if (valfec_desde == null) {
+            if (fecha_desde == null) {
                 formlistaestudios.recordError("Tiene que ingresar Fecha de Inicio");
                 return listaZone.getBody();
             }
-            if (valfec_desde.after(new Date())) {
+            if (fecha_desde.after(new Date())) {
                 formlistaestudios.recordError("La fecha de inicio debe ser previa a la fecha actual.");
                 return listaZone.getBody();
             }
@@ -335,13 +363,13 @@ public class EstudiosEditor {
                 if (valfec_hasta == null) {
                     formlistaestudios.recordError("Debe ingresar Fecha de Fin");
                     resultado = false;
-                } else if (valfec_hasta.after(new Date())) {
+                } else if (fecha_hasta.after(new Date())) {
                     formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
                     resultado = false;
-                } else if (valfec_desde.after(valfec_hasta)) {
+                } else if (fecha_desde.after(fecha_hasta)) {
                     formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                     resultado = false;
-                } else if (valfec_desde.equals(valfec_hasta)) {
+                } else if (fecha_desde.equals(fecha_hasta)) {
                     resultado = false;
                     formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
@@ -350,13 +378,13 @@ public class EstudiosEditor {
             if (valfec_hasta == null) {
                 formlistaestudios.recordError("Tiene que ingresar Fecha de Fin");
                 resultado = false;
-            } else if (valfec_hasta.after(new Date())) {
+            } else if (fecha_hasta.after(new Date())) {
                 formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
                 resultado = false;
-            } else if (valfec_desde.after(valfec_hasta)) {
+            } else if (fecha_desde.after(fecha_hasta)) {
                 formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                 resultado = false;
-            } else if (valfec_desde.equals(valfec_hasta)) {
+            } else if (fecha_desde.equals(fecha_hasta)) {
                 resultado = false;
                 formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
@@ -381,8 +409,8 @@ public class EstudiosEditor {
         ubigeoDomicilio.setDistrito(estudio.getDistrito());
         valcolegio = estudio.getColegio();
         valcolegiatura = estudio.getColegiatura();
-        valfec_desde = estudio.getFechainicio();
-        valfec_hasta = estudio.getFechafin();
+        fecha_desde = estudio.getFechainicio();
+        fecha_hasta = estudio.getFechafin();
         valestudiando = estudio.getEstudiando();
         valrevisado = estudio.getValidado();
     }
@@ -412,6 +440,15 @@ public class EstudiosEditor {
             }
         } else {
             votro = true;
+        }
+        
+        if(estudio.getFechainicio()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(estudio.getFechainicio());
+        }
+        if(estudio.getFechafin()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta=formatoDeFecha.format(estudio.getFechafin());
         }
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
@@ -491,8 +528,8 @@ public class EstudiosEditor {
         estudio.setDistrito(ubigeoDomicilio.getDistrito());
         estudio.setColegio(valcolegio);
         estudio.setColegiatura(valcolegiatura);
-        estudio.setFechainicio(valfec_desde);
-        estudio.setFechafin(valfec_hasta);
+        estudio.setFechainicio(fecha_desde);
+        estudio.setFechafin(fecha_hasta);
         //estudio.setEstudiando(valestudiando);
     }
 
@@ -512,5 +549,6 @@ public class EstudiosEditor {
         valestudiando = null;
         valrevisado = null;
         vfechahasta = false;
+        
     }
 }

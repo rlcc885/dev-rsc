@@ -7,6 +7,8 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -69,6 +71,12 @@ public class MeritosDemeritosEditor {
     @Component(id = "formulariomeritos")
     private Form formulariomeritos;
     
+    @Persist
+    @Property
+    private String valfec_desde;
+    @Persist
+    @Property
+    private Date fecha_desde;
     
     @Parameter
     @Property
@@ -100,6 +108,7 @@ public class MeritosDemeritosEditor {
             merito=new MeritoDemerito();
             listaMeritos=new MeritoDemerito();
             btipo=false;
+            valfec_desde=null;
            
     }
     
@@ -172,12 +181,24 @@ public class MeritosDemeritosEditor {
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
-        }else{    
+        }else{
+            
+        if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+        }
+        merito.setFecha(fecha_desde);
+        
         merito.setTrabajador(actual);
         merito.setEntidad(_oi);
         session.saveOrUpdate(merito);
         envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
         merito=new MeritoDemerito();
+        valfec_desde=null;
         return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("listaMeritosZone",listaMeritosZone.getBody())
                 .add("meritosZone", meritosZone.getBody())
@@ -191,6 +212,7 @@ public class MeritosDemeritosEditor {
     Object onSuccessFromFormulariobotonesME() {
         if(elemento==1){
             merito=new MeritoDemerito();
+            valfec_desde=null;
             return  new MultiZoneUpdate("meritosZone", meritosZone.getBody())
                  .add("mensajesMEZone", mensajesMEZone.getBody())
                 .add("claseZone", claseZone.getBody());   
@@ -205,6 +227,12 @@ public class MeritosDemeritosEditor {
     @Log
     Object onActionFromEditarME(MeritoDemerito meri) {        
         merito=meri;
+        
+        if(merito.getFecha()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(merito.getFecha());
+        }
+        
         if(merito.getClasemeritodemerito().getCodigo()==1){
                 btipo=false;             
         }else if(merito.getClasemeritodemerito().getCodigo()==2){

@@ -5,6 +5,8 @@ import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -88,10 +90,16 @@ public class CursosEditor {
     private String valotrocentro;
     @Persist
     @Property
-    private Date valfec_desde;
+    private String valfec_desde;
     @Persist
     @Property
-    private Date valfec_hasta;
+    private String valfec_hasta;
+    @Persist
+    @Property
+    private Date fecha_desde;
+    @Persist
+    @Property
+    private Date fecha_hasta;
     @Persist
     @Property
     private Boolean valestudiando;
@@ -215,6 +223,15 @@ public class CursosEditor {
         } else {
             votro = true;
         }
+        
+         if(cursos.getFechainicio()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(cursos.getFechainicio());
+        }
+        if(cursos.getFechafin()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta=formatoDeFecha.format(cursos.getFechafin());
+        }
 
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
     }
@@ -300,6 +317,25 @@ public class CursosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariotercero() {
+        
+        if(valfec_desde!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+          
+            if(valfec_hasta!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+        
         if (valestudiando != null) {
             if (valestudiando) {
                 vfechahasta = true;
@@ -335,11 +371,11 @@ public class CursosEditor {
                 formlistacursos.recordError("Tiene que seleccionar el Centro de Estudio");
                 return listadoZone.getBody();
             }
-            if (valfec_desde == null) {
+            if (fecha_desde == null) {
                 formlistacursos.recordError("Tiene que ingresar Fecha de Inicio");
                 return listadoZone.getBody();
             }
-            if (valfec_desde.after(new Date())) {
+            if (fecha_desde.after(new Date())) {
                 formlistacursos.recordError("La fecha de inicio debe ser previa a la fecha actual.");
                 return listadoZone.getBody();
             }
@@ -417,15 +453,15 @@ public class CursosEditor {
                     formlistacursos.recordError("Debe ingresar Fecha de Fin");
                     resultado = false;
                     elemento = 0;
-                } else if (valfec_hasta.after(new Date())) {
+                } else if (fecha_hasta.after(new Date())) {
                     formlistacursos.recordError("La fecha de fin debe ser previa a la fecha actual.");
                     resultado = false;
                     elemento = 0;
-                } else if (valfec_desde.after(valfec_hasta)) {
+                } else if (fecha_desde.after(fecha_hasta)) {
                     formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                     resultado = false;
                     elemento = 0;
-                } else if (valfec_desde.equals(valfec_hasta)) {
+                } else if (fecha_desde.equals(fecha_hasta)) {
                     resultado = false;
                     elemento = 0;
                     formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
@@ -436,15 +472,15 @@ public class CursosEditor {
                 formlistacursos.recordError("Tiene que ingresar Fecha de Fin");
                 resultado = false;
                 elemento = 0;
-            } else if (valfec_hasta.after(new Date())) {
+            } else if (fecha_hasta.after(new Date())) {
                 formlistacursos.recordError("La fecha de fin debe ser previa a la fecha actual.");
                 resultado = false;
                 elemento = 0;
-            } else if (valfec_desde.after(valfec_hasta)) {
+            } else if (fecha_desde.after(fecha_hasta)) {
                 formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                 resultado = false;
                 elemento = 0;
-            } else if (valfec_desde.equals(valfec_hasta)) {
+            } else if (fecha_desde.equals(fecha_hasta)) {
                 resultado = false;
                 elemento = 0;
                 formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
@@ -460,8 +496,8 @@ public class CursosEditor {
         valtipoestudio = cursos.getTipoestudio();
         valcentroestudio = cursos.getCentroestudio();
         valotrocentro = cursos.getOtrocentroestudio();
-        valfec_desde = cursos.getFechainicio();
-        valfec_hasta = cursos.getFechafin();
+        fecha_desde = cursos.getFechainicio();
+        fecha_hasta = cursos.getFechafin();
         valestudiando = cursos.getEstudiando();
         valrevisado = cursos.getValidado();
         valfuera = cursos.getFueradelpais();
@@ -473,8 +509,8 @@ public class CursosEditor {
         cursos.setTipoestudio(valtipoestudio);
         cursos.setCentroestudio(valcentroestudio);
         cursos.setOtrocentroestudio(valotrocentro);
-        cursos.setFechainicio(valfec_desde);
-        cursos.setFechafin(valfec_hasta);
+        cursos.setFechainicio(fecha_desde);
+        cursos.setFechafin(fecha_hasta);
     }
 
     void limpiar() {

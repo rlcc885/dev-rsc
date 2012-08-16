@@ -156,7 +156,7 @@ public class TrabajadorNuevo  extends GeneralPage
     private CargosSelectModel<Cargoxunidad> _beans;
     @Property
     @Persist
-    private Date fechaingreso;
+    private String fechaingreso;
 
     
     @Property
@@ -217,7 +217,7 @@ public class TrabajadorNuevo  extends GeneralPage
         nuevoLegajo=new Legajo();
         mostrar=true;
         puestoconfianza=false;
-        fechaingreso=null;
+        fechaingreso="";
         if(actual!=null){
             nuevo=actual;            
             buscarlegajo();
@@ -429,6 +429,7 @@ public class TrabajadorNuevo  extends GeneralPage
             cargo = null;
             tipovinculo = null;
             nuevo=new Trabajador();
+            fechaingreso="";
 
         
     }
@@ -500,7 +501,7 @@ public class TrabajadorNuevo  extends GeneralPage
                     envelope.setContents("Debe ingresar el Tipo de Vinculo.");
                     return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                 .add("mensajesZone", mensajesZone.getBody());
-                }else if(fechaingreso==null){
+                }else if(fechaingreso==null || fechaingreso.equalsIgnoreCase("")){
                     envelope.setContents("Debe ingresar la fecha de Ingreso.");
                     return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                 .add("mensajesZone", mensajesZone.getBody());
@@ -523,8 +524,20 @@ public class TrabajadorNuevo  extends GeneralPage
                     cargoAsignado.setTrabajador(nuevo);
                     cargoAsignado.setLegajo(nuevoLegajo);
                 }                            
-                  cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);            
-                  cargoAsignado.setFec_inicio(fechaingreso);
+                  cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
+                  
+                  if(fechaingreso!=null){
+                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                Date fecha;
+                try {
+                fecha = (Date)formatoDelTexto.parse(fechaingreso);
+                cargoAsignado.setFec_inicio(fecha);
+                } catch (ParseException ex) {
+                ex.printStackTrace();
+                }
+            }
+                  
+                  //cargoAsignado.setFec_inicio(fechaingreso);
                   cargoAsignado.setTipovinculo(tipovinculo);
                   cargo2.setId(cargo.getId());
                   cargoAsignado.setCargoxunidad(cargo2);                
