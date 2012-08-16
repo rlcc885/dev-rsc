@@ -40,7 +40,7 @@
                              <div class="f-left">
                                 <label>Descripción: </label>
                                 <input t:type="TextArea" t:id="descripcion"
-                                        t:value="publicacion.descripcion" cols="43"/>
+                                       t:value="publicacion.descripcion" cols="43" rows="5"/>
                                 <label><i>(Máximo 250 caracteres)</i></label>
                             </div>
   
@@ -121,27 +121,37 @@
                            </t:if>
                     </p:tituloCell>
                      <p:revisadoCell>
-                         <t:if test="${bvalidausuario}">
+                         <!--<t:if test="${bvalidausuario}">-->
                            <t:if test="${listaprointelectual.validado}">
                                <label class="datofalse">SI</label>  
                            </t:if>
                             <t:if test="${listaprointelectual.validado}" negate="true">
                                <label class="datotrue">NO</label>  
                            </t:if>
-                         </t:if>
+                         <!--</t:if>-->
                     </p:revisadoCell>
                     <p:accionesCell>
-                        <t:if test="${bvalidausuario}">
+                        <t:if test="${bvalidausuario}" negate="true">
                         <t:if test="${listaprointelectual.validado}" negate="true">
-                               <t:actionlink t:id="editar" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
+                               <t:actionlink t:id="editar1" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
                             
-                        <t:actionlink t:id="eliminar" zone="listaProIntelectualZone" context="listaprointelectual"> 
+                        <t:actionlink t:id="eliminar1" zone="listaProIntelectualZone" context="listaprointelectual"> 
                             <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                 Eliminar
                             </span>
       
                         </t:actionlink> 
                         </t:if> 
+                        </t:if>
+                        <t:if test="${bvalidausuario}">
+                               <t:actionlink t:id="editar2" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
+                            
+                        <t:actionlink t:id="eliminar2" zone="listaProIntelectualZone" context="listaprointelectual"> 
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span>
+      
+                        </t:actionlink> 
                         </t:if>
                     </p:accionesCell>
                     

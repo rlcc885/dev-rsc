@@ -176,16 +176,21 @@ public class EvaluacionesPersonalesEditor {
             
             evaluacion.setFec_desde(fecha_desde);
             evaluacion.setFec_hasta(fecha_hasta);
-        
+        if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
+            envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
+
+        } else {
         evaluacion.setCargoasignado(getCargosAsignados());
         session.saveOrUpdate(evaluacion);
         envelope.setContents(helpers.Constantes.EVALUACION_EXITO);
         evaluacion=new EvaluacionPersonal();
         valfec_desde=null;
         valfec_hasta=null;
+        }
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                 .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                 .add("evaluacionesZone", evaluacionesZone.getBody());
+        
 
   
     }
@@ -226,7 +231,7 @@ public class EvaluacionesPersonalesEditor {
     @CommitAfter        
     Object onActionFromEliminar(EvaluacionPersonal evalu) {
         session.delete(evalu);
-        envelope.setContents("Se realizo la elimiación satisfactoriamente");
+        envelope.setContents("Se realizo la eliminación satisfactoriamente");
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
         .add("listaEvaluacionZone", listaEvaluacionZone.getBody());
        

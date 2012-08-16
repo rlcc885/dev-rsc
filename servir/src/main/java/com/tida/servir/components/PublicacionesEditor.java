@@ -178,7 +178,7 @@ public class PublicacionesEditor {
     }
 
     @Log
-    Object onActionFromEditar(Publicacion publi) {
+    Object onActionFromEditar1(Publicacion publi) {
         publicacion = publi;
         
         if(publicacion.getFecha()!=null){
@@ -192,7 +192,29 @@ public class PublicacionesEditor {
 
     @Log
     @CommitAfter
-    Object onActionFromEliminar(Publicacion publi) {
+    Object onActionFromEliminar1(Publicacion publi) {
+        session.delete(publi);
+        envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
+
+    }
+    
+    @Log
+    Object onActionFromEditar2(Publicacion publi) {
+        publicacion = publi;
+        
+        if(publicacion.getFecha()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(publicacion.getFecha());
+        }
+                
+        editando = true;
+        return proIntelectualZone.getBody();
+    }
+
+    @Log
+    @CommitAfter
+    Object onActionFromEliminar2(Publicacion publi) {
         session.delete(publi);
         envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
