@@ -18,7 +18,7 @@
                             <div class="f-left">
                                 <t:label for="importe"/>
                                 <input t:type="TextField" t:id="importe" t:value="remuneracion.importe"
-                                         t:validate="required" />                               
+                                         t:validate="required, regexp" />                               
                             </div>      
                         </div>
                         </fieldset>
