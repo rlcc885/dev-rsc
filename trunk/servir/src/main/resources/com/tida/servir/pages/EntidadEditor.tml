@@ -1,10 +1,7 @@
-
 <html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-
     <h2> Editar Entidad </h2>
-  
     <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
             <t:envelope t:id="envelope"/>
@@ -26,20 +23,20 @@
                                    model="NivelGobierno"
                                    t:disabled="true"/>
                         </div>
-                        <div class="f-left"> 
+                        <div class="f-left">
                             <t:label for="organizacionestado"/>
                             <input t:type="Select" t:id="organizacionestado" t:value="entidadUE.organizacionestado" 
                                    model="OrganizacionEstado"
                                    t:disabled="true"/>
                         </div>
                         <t:if test="bMuestraSectorEdicion">
-                            <div class="f-left"> 
+                            <div class="f-left">
                                 <t:label for="sectorgobierno"/>
                                 <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno" 
                                        model="SectorGobierno"
                                        t:disabled="true"/>
                             </div>
-                            <div class="f-left"> 
+                            <div class="f-left">
                                 <t:label for="tipoorganismo"/>
                                 <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
                                        model="TipoOrganismo"
@@ -108,14 +105,13 @@
                             <input t:type="Select" t:id="tipozona" t:value="entidadUE.tipozona" 
                                    model="TipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                    t:blankOption="ALWAYS" t:disabled="${veditar}"/>
-                        </div> 
+                        </div>
                         <div class="f-left">
                             <t:label for="desczona"/>
                             <input t:type="TextField" t:id="desczona" t:style="width: 500px;"
                                    t:value="entidadUE.descZona" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descZonaChanged" 
                                    t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
                         </div>
-                        
                     </div>
                     <div class="f-wrap">
                         <div class="f-left" id="ubigeo_entidadUE"> 
@@ -124,7 +120,6 @@
                         </div>
                     </div>
                 </t:form>
-                
             </t:zone>
         </fieldset>
         <fieldset>
