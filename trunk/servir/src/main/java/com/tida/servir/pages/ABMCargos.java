@@ -143,6 +143,9 @@ public class ABMCargos extends GeneralPage {
     @Persist
     @Property
     private Boolean veditar;
+    @Persist
+    @Property
+    private Boolean vNoedita; //
     /*
      * @Property @Persist private Ocupacional ocupacional;
      */
@@ -167,7 +170,6 @@ public class ABMCargos extends GeneralPage {
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
-
         } else {
             usua = (UsuarioAcceso) result.get(0);
             if (usua.getAccesoupdate() == 1) {
@@ -181,10 +183,9 @@ public class ABMCargos extends GeneralPage {
                 vformulario = true;
                 vbotones = true;
             }
-
         }
-
-
+        // Utilizado para ocultar o mostrar los botones de cancelar y limpiar formulario.
+        vNoedita = true;
     }
 
     @Log
@@ -378,6 +379,7 @@ public class ABMCargos extends GeneralPage {
         // RESTRICCION CAMPOS
         vdetalle2 = true;
         vbotones = true;
+        vNoedita = false;
         //envelope.setContents(String.valueOf(uo)+String.valueOf(cargo.getUnidadorganica()));
         //uo=cargo.getUnidadorganica();
         //System.out.println("uo en actionfromeditar "+uo+" getpuedeeditar "+getPuedeEditar() );
@@ -401,7 +403,6 @@ public class ABMCargos extends GeneralPage {
         regimengruponivel.setNivelRemunerativo(cargo.getNivelRemunerativo());
         regimengruponivel.setGrupo(cargo.getGrupoOcupacional());
         regimengruponivel.setRegimen(cargo.getRegimenlaboral());
-
     }
 
     @Log
@@ -543,15 +544,28 @@ public class ABMCargos extends GeneralPage {
 //        return zonasDatos();
 //    }
     @Log
-    @CommitAfter
     Object onSuccessFromformOcupacional() {
         return OcupacionalesZone.getBody();
     }
-
+    @Log
+    void resetCargo() {
+        cargo = new Cargoxunidad();
+        vNoedita = true;
+        vdetalle2 = false;
+    }
+    @Log
+    Object onReset(){
+        resetCargo();
+        return abmZone.getBody();
+    }
+    @Log
+    Object onCancel(){
+        resetCargo();
+        return abmZone.getBody();
+    }
     @Log
     @CommitAfter
     Object onSuccessFromFormularioaltacargo() {
-
         if (num == 2) {
         } else if (num == 3) {
         } else if (num == 1) {
