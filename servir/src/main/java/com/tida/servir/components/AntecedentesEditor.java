@@ -6,16 +6,12 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
 
-import helpers.Errores;
 import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.PrimaryKeyEncoder;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -113,20 +109,20 @@ public class AntecedentesEditor {
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 bvalidausuario = true;
             }
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 bvalidausuario = true;
             }
         }
         if (usua.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 bvalidausuario = true;
             }
         }
@@ -185,7 +181,7 @@ public class AntecedentesEditor {
             ant_Laborales.setEntidad(_oi);
             if (!editando) {
                 //guardando
-                if (_usuario.getRol().getId() == 1) {
+                if (_usuario.getRolid() == 1) {
                     ant_Laborales.setAgregadoTrabajador(true);
                 } else {
                     ant_Laborales.setAgregadoTrabajador(false);

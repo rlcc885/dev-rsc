@@ -108,16 +108,16 @@ public class Alerta  extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
-        if(_usuario.getRol().getId()==4){
+        if(_usuario.getRolid()==4){
             mostrars=true;
         }
-        if(_usuario.getRol().getId()==2){
+        if(_usuario.getRolid()==2){
             mostrare=true;
         }
-        if(_usuario.getRol().getId()==3){
+        if(_usuario.getRolid()==3){
             mostrarse=true;
         }
-        if(_usuario.getRol().getId()==1){
+        if(_usuario.getRolid()==1){
             mostrars=false;
             mostrare=false;
             mostrarse=false;
@@ -149,7 +149,7 @@ public class Alerta  extends GeneralPage {
     @Log
     public List<BusquedaEvento> getEventos() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
-        query.setParameter("in_rol_id",_usuario.getRol().getId());
+        query.setParameter("in_rol_id",_usuario.getRolid());
         query.setParameter("in_tipoevento_id",6);
         query.setParameter("in_perfil_id",""); 
         query.setParameter("in_entidad_id","");        
@@ -164,7 +164,7 @@ public class Alerta  extends GeneralPage {
     @Log
     public List<BusquedaEvento> getTrabajadoresservir() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
-        query.setParameter("in_rol_id",_usuario.getRol().getId());
+        query.setParameter("in_rol_id",_usuario.getRolid());
         query.setParameter("in_perfil_id",6); 
         query.setParameter("in_tipoevento_id","");        
         query.setParameter("in_entidad_id","");  
@@ -180,7 +180,7 @@ public class Alerta  extends GeneralPage {
     @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
-        query.setParameter("in_rol_id",_usuario.getRol().getId());
+        query.setParameter("in_rol_id",_usuario.getRolid());
         query.setParameter("in_tipoevento_id","");
         query.setParameter("in_perfil_id",6);
         query.setParameter("in_entidad_id",entidadUE.getId());  
@@ -195,7 +195,7 @@ public class Alerta  extends GeneralPage {
     @Log
     public List<BusquedaEvento> getEventossistemas() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
-        query.setParameter("in_rol_id",_usuario.getRol().getId());
+        query.setParameter("in_rol_id",_usuario.getRolid());
         query.setParameter("in_tipoevento_id","");
         query.setParameter("in_perfil_id",""); 
         query.setParameter("in_entidad_id","");  

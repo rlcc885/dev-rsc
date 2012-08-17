@@ -278,7 +278,7 @@ public class EstudiosEditor {
             }
         }
         if (elemento == 3) {
-            if (_usuario.getRol().getId() == 1) {
+            if (_usuario.getRolid() == 1) {
                 return "Alerta";
             } else {
                 return Busqueda.class;
@@ -328,7 +328,7 @@ public class EstudiosEditor {
                 } else {
                     estudio.setEstudiando(valestudiando);
                 }
-                if (_usuario.getRol().getId() == 1) {
+                if (_usuario.getRolid() == 1) {
                     estudio.setAgregadotrabajador(true);
                 } else {
                     estudio.setAgregadotrabajador(false);
@@ -508,20 +508,20 @@ public class EstudiosEditor {
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
         if (usua.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }

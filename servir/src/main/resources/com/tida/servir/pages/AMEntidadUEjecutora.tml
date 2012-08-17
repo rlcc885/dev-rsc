@@ -390,7 +390,7 @@
         <div t:type="zone" t:id="mensajesZone" >
             <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
                 <t:envelope t:id="envelope"/>
-                <t:errors/>
+                <t:errors t:id="errores"/>
             </t:form>
         </div>
     </div>

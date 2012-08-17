@@ -32,7 +32,6 @@
                             <select t:type="Select" t:id="documentoidentidad" t:value="bDocumentoIdentidad" model="DocumentoIdentidad" t:style="width: 280px;"/>
                         </div>
                         <div class="f-left">
-                            <!-- t:validate="required,minlength=1" -->
                             <t:label for="bNumeroDocumento"/>
                             <input t:type="TextField" t:id="bNumeroDocumento" t:style="width: 270px;"/>
                         </div>
@@ -62,10 +61,8 @@
                         </div>
                         <div class="f-left">
                             <t:label for="bNombreEntidad"/>
-                            <!--                        <input t:type="TextField" t:id="bEntidad" size="30"/>-->
                             <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
                             <a onClick="javascript: mostrar();" class="button f-right">...</a>
-                            <!--                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right"  />-->
                         </div>
                         <div class="f-left">
                             <t:label for="bselectPerfil"/>
@@ -82,7 +79,6 @@
     </div> <!-- Zona filtros -->
     
     <t:zone t:id="tabla_usuario">
-        <!--        <t:if test="primeraVez">-->
         <script>
             jQuery(document).ready(function(){
             jQuery(".box-title-02").click(function(){
@@ -117,48 +113,42 @@
                 </p:accionesCell>
             </t:grid>
         </div>
-        <!--        </t:if>-->
     </t:zone>
 
-    <t:zone t:id="editarUsuarioZone">
-        <!--        <t:if test="editaUsuario">-->
+    <t:zone t:id="editarUsuarioZone" id="editarUsuarioZone">
         <h3>Datos del Usuario</h3>
         <div class="box" id="box_u">
             <t:envelope t:id="envelope"/>
             <div id="form_usuario" class="abmform">
-                <t:form  t:id="formularioCuenta" t:zone="editarUsuarioZone">
-                    <fieldset>
-                        <legend> Datos de la Cuenta </legend>
+                <fieldset>
+                    <legend> Datos de la Cuenta </legend>
+                    <t:form  t:id="formularioCuenta" t:zone="idValidaLogin">
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="loginedit" />
                                 <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
-                                       t:validate="max=50,min=1,required" t:disabled="${noEditaUsuario}"/>
-                                <t:actionlink t:id="validaLogin" 
-                                              t:class="button f-right" 
-                                              t:disabled="${noEditaUsuario}"
-                                              t:context="usuariotrabajadoredit.login"
-                                              t:zone="idValidaLogin">Ver Disponibilidad
-                                </t:actionlink>
-                                <!--                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>-->
+                                       t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaUsuario}"
+                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
+                                <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>
+                                
                             </div>
                             <div class="f-left">
                                 <t:label for="rolUsuarioEdit"/>
                                 <t:select t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit" />
                             </div>
                         </div>
-                        <t:zone t:id="idValidaLogin">
-                            <t:if test="${muestraValidaLogin}">
-                                <t:if test="${bLoginValido}">
-                                    Login de usuario válido.
-                                    <p:else>
-                                        Ya existe el nombre del login ingresado.
-                                    </p:else>
-                                </t:if>
+                    </t:form>
+                    <t:zone t:id="idValidaLogin" id="idValidaLogin">
+                        <t:if test="${muestraValidaLogin}">
+                            <t:if test="${bLoginValido}">
+                                <span class="okmsg">Login de usuario válido.</span>
+                                <p:else>
+                                    <span class="errormsg">Ya existe el login de usuario.</span>
+                                </p:else>
                             </t:if>
-                        </t:zone>
-                    </fieldset>
-                </t:form>
+                        </t:if>
+                    </t:zone>
+                </fieldset>
                 <t:form  t:id="formularioPersonal" t:zone="editarUsuarioZone">
                     <fieldset>
                         <legend> Datos Personales </legend>
@@ -197,7 +187,7 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="telefonoEdit" />
-                                <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="max=20,min=1" t:disabled="${noEditaUsuario}"/>
+                                <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxLength=20,minLength=1" t:disabled="${noEditaUsuario}"/>
                             </div>
                         </div>
                         <div class="f-wrap">
@@ -250,13 +240,11 @@
                     </fieldset>
                     <div class="f-wrap">
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Confirmo, en calidad de Declaración Jurada, la veracidad y exactitud de la información registrada y autorizo la verificación de lo declarado; asumiendo las responsabilidades a que hubiere lugar." class="button f-right"/>
-                        <!--                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
                         <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Limpiar Formulario
                             </span> 
                         </t:eventLink>
-                        <!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
                         <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="editarUsuarioZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Cancelar
@@ -266,20 +254,8 @@
                 </t:form>
             </div>
         </div>
-
-        
-        <!--        </t:if>-->
     </t:zone>
-
     <t:zone t:id="perfilZone">
-        <!--        <t:if test = "botonPerfil">
-            <div id="bouttons" class="f-right">
-                <t:eventLink t:event="newPerfil" href="#" t:zone="perfilZone" class="button f-right">
-                    Agregar Perfil
-                </t:eventLink>
-            </div>
-            <br class="clear"/>
-        </t:if>-->
         <t:if test="editaUsuario">
             <h3>Perfiles asignados al usuario</h3>
             <div class="box">
@@ -315,7 +291,6 @@
     <div id="shade"></div>
     <div id="modal">
         <t:zone t:id="busZone" t:update="show">
-            <!--            <t:if test="bSeleccionaEntidad">-->
             <h1>Selección de entidad</h1>
             <div class="pane">
                 <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
@@ -331,10 +306,8 @@
                     </div>
                 </form>
             </div>
-            <!--            </t:if>-->
         </t:zone>
         <div t:type="zone" t:id="entiZone" t:update="show">
-            <!--            <t:if test="bSeleccionaEntidad">-->
             <t:if test="mostrar">
                 <div class="box">
                     <t:grid source="entidades" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowEntidad" include="denominacion" inPlace="true" >
@@ -347,10 +320,8 @@
                     </t:grid>
                 </div>
             </t:if>
-            <!--            </t:if>-->
         </div>
     </div>
-    
 
     <script type="text/javascript">
         var modal= document.getElementById('modal');

@@ -102,7 +102,7 @@ public class FamiliaresEditor {
             familiarActual = new Familiar();
             bdni=false;
             bfechanacimiento=false;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+            if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
                 bvalidausuario=true;
             }else{
                 bvalidausuario=false;
@@ -182,7 +182,7 @@ public class FamiliaresEditor {
             c2.add(Restrictions.eq("parentesco",familiarActual.getParentesco())); 
             listaParentescoC=c2.list();
          }
-            if(_usuario.getRol().getId()==1){
+            if(_usuario.getRolid()==1){
                 familiarActual.setAgregadoTrabajador(true);
             }
             else{
@@ -266,7 +266,7 @@ public class FamiliaresEditor {
             valsexo=null;
             bedicion=false;
             nuevafecha=null;
-             if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+             if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
                 bvalidausuario=true;
             }else{
                 bvalidausuario=false;
@@ -340,7 +340,7 @@ public class FamiliaresEditor {
                 valsexo=null;
           }
         bedicion=true;
-        if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+        if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
                 bvalidausuario=true;
             }else{
                 bvalidausuario=false;

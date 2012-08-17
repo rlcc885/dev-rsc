@@ -50,8 +50,8 @@ public class Usuario implements Serializable {
     @Validate("required")
     private Trabajador trabajador;
     private String clave;
-    @ManyToOne
-    private Rol rol;
+    @Column(name = "ROL_ID")
+    private Long rolid;
     @NonVisual
     @Column(name = "FECHA_BLOQUEO", insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -73,7 +73,15 @@ public class Usuario implements Serializable {
     private Date fecha_creacion;
     @Column(name = "OBSERVACION")
     private String observacion;
-    
+
+    public Long getRolid() {
+        return rolid;
+    }
+
+    public void setRolid(Long rolid) {
+        this.rolid = rolid;
+    }
+
     public String getClave() {
         return clave;
     }
@@ -154,14 +162,6 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
     public Date getFecha_bloqueo() {
         return fecha_bloqueo;
     }
@@ -233,7 +233,7 @@ public class Usuario implements Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -255,5 +255,4 @@ public class Usuario implements Serializable {
         hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
 }

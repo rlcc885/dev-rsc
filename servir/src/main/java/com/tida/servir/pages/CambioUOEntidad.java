@@ -198,7 +198,7 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     @SetupRender
     private void inicio() {
-        if(usuario.getRol().getId()==3){
+        if(usuario.getRolid()==3){
             mostrarUO=true;
         }
         else{
