@@ -1,4 +1,3 @@
-
 <html t:type="layout" title="Servir - Cargos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -22,50 +21,33 @@
         </span>
     </div>
     <div id="panel-01" class="box" >
-
-        <!-- t:validate="required,minlength=1" -->
-            
-        <!--<div id="cargosSelects">-->
-            <!--<t:zone t:id="nivelcargo">
-                <form t:type="form" t:id="formNivelUOCargo" t:zone="nivelUOZone">
-                    
-                </form>
-            </t:zone>-->
         <t:zone t:id="nivelUOZone">
             <form t:type="form" t:id="xxx" t:zone="listaCargo">
-                   <!-- <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >-->
-                        <!--<t:if test = "hayNivel">-->
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>Nivel Organizacional</label>
                         <input t:type="Select" t:id="unidadorganica_nivel"                                
-                                   t:value="nivel" model="beanNivel" t:zone="nivelUOZone" t:blankLabel="...TODOS"/>
+                               t:value="nivel" model="beanNivel" t:zone="nivelUOZone" t:blankLabel="...TODOS"/>
                     </div>
                     <div class="f-left">
                         <label>Unidad Orgánica</label>
                         <select t:type="select" t:id="select_unidadOrganica"
-                                    model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
-                                    onChange="this.form.fire()" t:zone="nivelUOZone"/>
+                                model="beanUOrganicas" encoder="beanUOrganicas" value="uo"
+                                onChange="this.form.fire()" t:zone="nivelUOZone"/>
                     </div>
                     <div class="f-left">
                         <label>Denominación</label>
-                                <!--<input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="30"/>--> 
                         <input t:type="TextField" t:id="bdenocargo" t:value="bdcargo" size="35"
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoChanged"  t:zone="nivelUOZone"/>
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denoChanged"  t:zone="nivelUOZone"/>
                     </div>
                 </div>
-                        <!--</t:if>-->
-                    <!--</div>-->
             </form>
         </t:zone>
-        <!--</div>-->      
-          
-          
         <div id = "busquedaocupacionalescargoxx">
             <t:zone t:id="BOcupacionalesZone" t:update="show">          
                 <form t:type="form" t:id="formBOcupacional" t:zone="BOcupacionalesZone">
                     <input t:type="RegimenesGruposNiveles" t:id="bregimengruponivel" t:regimengruponivel="bregimengruponivel"
-                               t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone"/>
+                           t:zone="BOcupacionalesZone" t:zoneName="BOcupacionalesZone"/>
                 </form>                 
             </t:zone>    
         </div>
@@ -79,8 +61,6 @@
                         </div> 
                     </div>
                     <div class="actions f-right">
-                        
-                        <!--<a t:type="eventLink" t:event="muestra" t:context="valsituacioncap" t:zone="filtrosZone" href="#">Mostra Todo</a>-->
                         <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
                         <input t:type="Submit" t:id="clear" value="Limpiar formulario" t:mixins="confirm" page="ABMCargos" class="button"/>
                         <input id="buscarsubmit" type="submit" value="Buscar" class="button"/>
@@ -88,11 +68,9 @@
                 </form>   
             </t:zone>
         </div>
-  
         <br/> 
         <br/>
         <br/>
-        
     </div> 
                    
     <div t:type="zone" t:id="listaCargo" class="selectform" t:update="show">
@@ -112,13 +90,9 @@
             </div>
             <div id="panel-02" class="box" >
                 <t:form t:id="formlistaunidad">
-                <!--<t:eventLink t:event="mostrartodos" href="#" t:zone="listaCargo">
-                    Mostrar Todos
-                </t:eventLink>-->
-                    <br/>
                     <div id = "tabla_cargo">
                         <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" inPlace="true"
-                            row="lkcargo" >
+                                row="lkcargo" >
                             <t:parameter name="empty">
                                 <div class="no-info">No se han encontrado coincidencias</div>
                             </t:parameter>
@@ -129,13 +103,10 @@
                                 <t:if test="${veditar}" negate="true">
                                     <t:actionlink t:id="detalle" zone="listaCargo" context="lkcargo">Detalle</t:actionlink>
                                 </t:if>
-                                <!--
-                                <a t:type="pagelink" t:page="ABMCargos" t:context="c.id" href="#">Editar</a>
-                                --> 
                                 <t:if test="${veliminar}">    
                                     | 
                                     <a t:type="eventLink" t:event="borrarDato" t:context="lkcargo"
-                                     t:zone="listaCargo" href="#">
+                                       t:zone="listaCargo" href="#">
                                         <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
                                             Eliminar
                                         </span> 
@@ -151,8 +122,8 @@
     </div> <!-- tabla cargos --> 
     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
-                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-            </script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
         <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
             <t:envelope t:id="envelope"/>
             <t:errors/> 
@@ -162,61 +133,32 @@
         <span class="box-title">Crear/Editar Cargo</span>
     </div>
     <div class="box" id="box-cargos">           
-        <div t:type="zone" t:id="abmZone" class="abmform" t:update="show">
+        <div t:type="zone" t:id="abmZone" class="abmform">
             <t:if test="${vformulario}">
-            <!--<h3> Crear / Editar Cargo </h3>-->
-                <br/>
                 <t:form t:id="formularioaltacargo" t:zone="abmZone">                           
-         
-                        <!-- <div id="cargos_izq" class="cargosAM">-->
-                        <!--<div id="cargos_izq" class="cargosAM">-->
                     <div class="f-wrap">
-                            <!--<div class="f-left">
-                                <label>* Nivel Organizacional</label>
-                                <input t:type="Select" t:id="cargo_nivel" model="beanNivel" t:value="nivel"/>
-                            </div>-->                            
                         <div class="f-left">
                             <label>Código</label>
                             <input t:type="TextField" t:id="cargo_cod_cargo"
-                                       t:value="cargo.cod_cargo" size="20" t:validate="maxlength=15" t:disabled="${vdetalle2}"/>
+                                   t:value="cargo.cod_cargo" size="20" t:validate="maxlength=15" t:disabled="${vdetalle2}"/>
                         </div>
                         <div class="f-left">
                             <label>* Denominación</label>
                             <input t:type="TextField" t:id="cargo_den_cargo"
-                                       t:value="cargo.den_cargo" size="60" t:validate="required, maxlength=255" t:disabled="${vdetalle2}"/>
+                                   t:value="cargo.den_cargo" size="60" t:validate="required, maxlength=255" t:disabled="${vdetalle2}"/>
                         </div>
                         <div class="f-left">
                             <label>* Situación CAP</label>
                             <input t:type="Select" t:id="cargo_situacioncap" t:value="cargo.situacioncap" model="beanDatoSituacionCAP" t:disabled="${vdetalle}"/>
                         </div>
-
-                            <!-- <div class="f-left">
-                                <label>Estado</label>
-                                <input t:type="Select" t:id="cargo_estado" model="estado"
-                                t:value="cargo.estado"/>
-                            </div>-->
                     </div> <!-- div f-wrap -->
-                        <!--</div>-->
-                    <br/>
                     <div class ="f-wrap">
                         <div class="f-left">
                             <label>* Unidad Orgánica</label>
                             <input t:type="Select" t:id="cargo_unidadorganica" model="beanUOrganicas2" encoder="beanUOrganicas2" t:value="cargo.unidadorganica" t:disabled="${vdetalle}"/>
                         </div>                            
                     </div> 
-
-                        <!-- <div class="f-wrap">
-                            <div class="f-left">              
-                                <label>Régimen Laboral /Contractual</label>
-                                <input t:type="Select" t:id="cargo_reg_lab_con" model="regimen"
-                                t:value="cargo.reg_lab_con"/>
-                            </div>
-                        </div> -->
-                        <!--</div>-->
-                        <!--<div id="cargos_der" class="cargosAM">-->
-                     
-                        
-                    <div class="logoentidad" style="position:absolute; top:100px; left:260px; width: 400px;                         
+                    <div class="logoentidad" style="position:absolute; top:70px; left:260px; width: 400px;                         
                         padding: 5px;">  
                         <fieldset>
                             <legend>* Condiciones</legend>
@@ -242,57 +184,43 @@
                                 </t:radiogroup>                                                               
                             </div>
                         </fieldset>
-                        <br/>
                         <div class="f-wrap">
                             <div class="f-left">
                                 ¿Supervisa Personal?
                                 <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
                             </div>
                             <div class="f-left">
-                                <label>      </label>
-                            </div>
-                             
-                            <div class="f-left">
                                 <label>* Cantidad de Puestos/Plazas</label>
                                 <input t:type="TextField" t:id="cargo_ctd_puestos_total"
                                        t:value="cargo.ctd_puestos_total" size="20" t:validate="required,regexp" t:disabled="${vdetalle}"/>
                             </div>
-                             
                         </div>  
                     </div>
-                     
-
-
-                        <!--<div id="cargos_der" class="cargosAM">-->
-
-                        <!--<div class="f-left checkbox">
-                            <label>Tiene personas a cargo</label>
-                            <input t:type="Checkbox" t:id="cargo_personasCargo"
-                                   t:value="cargo.personasCargo"/>
-                        </div>-->
-                        <!--</div>--> <!-- div f-wrap -->
-                        <!-- </div> --><!-- div der -->
-                        
-                    <div class="actioncargo f-right">
-                        <br/>
-                        <br/>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button" /> 
+                    <div class="actioncargo">
                         <t:if test="${vbotones}">
-                            <!--<input id="submit" type="submit" value="Grabar" class="button f-right"/>-->
-                            <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>                            
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <t:if test="vNoedita">
+                                <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="abmZone">
+                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Limpiar Formulario
+                                    </span> 
+                                </t:eventLink>
+                            </t:if>
+                            <t:if test="vNoedita" negate="true">
+                                <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="abmZone">
+                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Cancelar
+                                    </span> 
+                                </t:eventLink>
+                            </t:if>
                         </t:if>
-                        
                     </div>
-                     
                     <br style="clear: both;" />
                 </t:form> 
             </t:if>
         </div> <!-- div box -->
-                 <!-- puedeEditar -->
-                  
+        <!-- puedeEditar -->      
     </div> <!-- abmZone -->
-
     <div id = "ocupacionalescargo">
         <t:zone t:id="OcupacionalesZone" t:update="show"> 
             <t:if test="${vformulario}">                
@@ -301,20 +229,11 @@
                            t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" t:disabled="${vdetalle}"/>
                 </form>
             </t:if>
-                    <!-- <form t:type="form" t:id="formOcupacional" t:zone="OcupacionalesZone">
-                        <input t:type="Ocupacionales" t:id="ocupacional" t:ocupacional="ocupacional"
-                        t:zone="OcupacionalesZone" t:zoneName="OcupacionalesZone" disabled ="noeditable"/>
-                    </form> -->
- 
         </t:zone>
         <t:if test="${vformulario}">
-            <br/>
             <div class="f-wrap">                        
                 (*) Campos Obligatorios
             </div>
         </t:if>
-        
-        
     </div>
-
 </html>

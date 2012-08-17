@@ -804,7 +804,7 @@ form th {
 }
 
 #ocupacionalescargo {
-    top: -160px;
+    top: -155px;
     position: relative;
     width: 300px;
     left: 8px;
@@ -1593,6 +1593,7 @@ table.t-data-grid tbody tr td.login {width:80px;}
 }
 a.button.f-right {
     color: #FFFFFF;
+    height: 16px;
 }
 .actions a{
     color: #FFFFFF;
