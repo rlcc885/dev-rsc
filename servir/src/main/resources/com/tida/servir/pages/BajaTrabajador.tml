@@ -4,23 +4,24 @@
       xmlns:p="tapestry:parameter">
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
         
-
+<!-- 
         <div class="organismo_titulo">
             Entidad /U. Ejecutora: ${entidadUE.denominacion}
         </div>
-
+-->
         <div class = "mensajes">
              ${mensajes}
         </div>
        <t:form t:id="formulariobusquedasfiltros"  zone="cargosGrillaZone">
            <h2>Baja de trabajador </h2>
             <div id="filtrosdoc">
-                <div class="f-left">
-                    <t:label for="tipoDocumento" />
-                    <select t:type="Select" t:id="tipoDocumento" value="tipoDocumento" 
+               <!-- <div class="f-left">
+               
+                    <select t:type="Select" value="documentoIdentidad" 
                             model="beanTiposDoc"
                             t:validate="required" t:blankOption="ALWAYS" />
                 </div>
+                -->
                 <div class="f-left">
                     <t:label for="nroDocumento"/>
                     <input t:type="TextField" t:id="nroDocumento" t:value="nroDocumento" t:validate="regexp, required" />

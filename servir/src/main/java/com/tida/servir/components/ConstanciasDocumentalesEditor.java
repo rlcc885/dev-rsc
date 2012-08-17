@@ -89,7 +89,8 @@ public class ConstanciasDocumentalesEditor {
     @Persist
     @Property
     private CargoAsignado cargoasignado;
-    
+    @Persist
+    @Property
     private Legajo lega;
     @Persist
     @Property

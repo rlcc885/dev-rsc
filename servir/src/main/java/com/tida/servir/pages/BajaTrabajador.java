@@ -43,13 +43,17 @@ public class BajaTrabajador extends GeneralPage {
     public void setMensajes(String mensajes) {
         this.mensajes = mensajes;
     }
-    @Property
-    @SessionState
-    private Entidad_BK _entidadUE;
+
 
     @Property
     @SessionState
     private Usuario _usuario;
+    @Property
+    @SessionState
+    private Entidad _oi;
+    @Persist
+    @Property
+    private Legajo lega;
 
     @Component(id = "formulariobusquedasfiltros")
     private Form formulariobusquedasfiltros;
@@ -60,7 +64,7 @@ public class BajaTrabajador extends GeneralPage {
 
     @Persist
     @Property
-    private DatoAuxiliar tipoDocumento;
+    private DatoAuxiliar documentoIdentidad;
 
     @InjectComponent
     private Zone cargosGrillaZone;
@@ -68,25 +72,34 @@ public class BajaTrabajador extends GeneralPage {
     public List<Trabajador> getEmpleados() {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.createAlias("trabajador", "trabajador");
-        c.createAlias("legajo", "legajo");
-        c.createAlias("cargo", "cargo");
-
-        c.add(Restrictions.eq("legajo.entidadUE", _entidadUE));
-
-
+        //c.createAlias("legajo", "legajo");
+        //c.createAlias("cargo", "cargo");
+        //c.add(Restrictions.eq("legajo.entidadUE", _entidadUE));
+         
         if (nroDocumento != null) {
             c.add(Restrictions.eq("trabajador.nroDocumento", nroDocumento));
         }
 //        if (tipoDocumento != null ) {
 //            c.add(Restrictions.like("trabajador.documentoidentidad", tipoDocumento));
 //        }
+        c.add(Restrictions.eq("legajo", buscarlegajo()));
         c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
-        c.setProjection(Projections.distinct(Projections.property("trabajador")));
+        //c.setProjection(Projections.distinct(Projections.property("trabajador")));
 
         return c.list();
     }
 
 
+    public Legajo buscarlegajo(){
+         Criteria c1 = session.createCriteria(Legajo.class);  
+         c1.add(Restrictions.eq("trabajador", actual));
+         c1.add(Restrictions.eq("entidad", _oi));
+         List result = c1.list();
+         lega=(Legajo) result.get(0);
+         return lega;
+         
+   }
+    
     //para obtener datos del Tipo de documento
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanTiposDoc() {        
