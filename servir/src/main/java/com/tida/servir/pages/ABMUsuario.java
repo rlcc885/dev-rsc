@@ -152,9 +152,19 @@ public class ABMUsuario extends GeneralPage {
     private Zone entiZone;
     @InjectComponent
     private Zone zonaFormularioBusqueda;
+    @InjectComponent
+    private Zone idValidaLogin;
     @Persist
     @Property
     private boolean bBuscarReset;
+    @Persist
+    @Property
+    private boolean bLoginValido;
+    @Persist
+    @Property
+    private boolean muestraValidaLogin;
+    @Inject
+    private Request request;
 
     @Log
     void setupRender() {
@@ -310,7 +320,21 @@ public class ABMUsuario extends GeneralPage {
         lista = query.list();
         return lista;
     }
-
+    @Log
+    Object onActionFromValidalogin(String login){
+        List<Perfilporusuario> lista = null;
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
+        query.setParameter("login", login );
+        lista = query.list();
+        muestraValidaLogin = true;
+        if (lista.isEmpty()){
+            bLoginValido = true;
+        }else{
+            bLoginValido = false;
+        }
+        //return new MultiZoneUpdate("validaLogin", validaLogin.getBody());
+        return request.isXHR() ? idValidaLogin.getBody() : null;
+    }
     @Log
     StreamResponse onActionFromReporteUsuario(Long userID) {
         Reportes rep = new Reportes();

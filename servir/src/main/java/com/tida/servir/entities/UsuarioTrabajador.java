@@ -26,7 +26,8 @@ import javax.persistence.*;
     @NamedQuery(name = "UsuarioTrabajador.findByIntentosFallidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.intentosFallidos = :intentosFallidos"),
     @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
     @NamedQuery(name = "UsuarioTrabajador.findByEstado", query = "SELECT u FROM UsuarioTrabajador u WHERE u.estado = :estado"),
-    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id")
+    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id"),
+    @NamedQuery(name = "UsuarioTrabajador.findByLogin", query = "SELECT u FROM UsuarioTrabajador u WHERE u.login = :login")
 })
 
 public class UsuarioTrabajador implements Serializable {
