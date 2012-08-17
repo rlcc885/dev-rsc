@@ -658,7 +658,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
             opcion_limpiar = false;
         }
         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("listaentidadZone", listaentidadZone.getBody());
-
     }
 
     @Log

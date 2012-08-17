@@ -103,7 +103,7 @@ public class EvaluacionesPersonalesEditor {
             evaluacion = new EvaluacionPersonal();
             valfec_desde=null;
             valfec_hasta=null;
-            if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+            if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
                 bvalidausuario=true;
             }else{
                 bvalidausuario=false;

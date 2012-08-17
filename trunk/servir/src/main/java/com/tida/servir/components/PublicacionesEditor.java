@@ -77,7 +77,7 @@ public class PublicacionesEditor {
     private void inicio() {
         publicacion = new Publicacion();
         valfec_desde=null;
-        if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         } else {
             bvalidausuario = false;
@@ -131,7 +131,7 @@ public class PublicacionesEditor {
         publicacion.setEntidad(_oi);
         if (!editando) {
             //guardando
-            if (_usuario.getRol().getId() == 1) {
+            if (_usuario.getRolid() == 1) {
                 publicacion.setAgregadoTrabajador(true);
             } else {
                 publicacion.setAgregadoTrabajador(false);

@@ -50,7 +50,7 @@ public class UsuarioTrabajador implements Serializable {
     @Column(name = "MD5CLAVE")
     private String md5clave;
     @Column(name = "INTENTOS_FALLIDOS")
-    private int intentosFallidos;
+    private Long intentosFallidos;
     @Column(name = "ULTIMO_CAMBIO_CLAVE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ultimoCambioClave;
@@ -142,11 +142,11 @@ public class UsuarioTrabajador implements Serializable {
         this.md5clave = md5clave;
     }
 
-    public int getIntentosFallidos() {
+    public long getIntentosFallidos() {
         return intentosFallidos;
     }
 
-    public void setIntentosFallidos(int intentosFallidos) {
+    public void setIntentosFallidos(long intentosFallidos) {
         this.intentosFallidos = intentosFallidos;
     }
 

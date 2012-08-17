@@ -618,13 +618,13 @@ public class DatosPersonalesEditor {
         }
         
             if(usua.getAccesoupdate()==1){
-                if(_usuario.getRol().getId()==1){
+                if(_usuario.getRolid()==1){
                     vdatospersonales=true;
                     vdatosubicacion=false;
                     votros=true;
                     vemergencia=false;            
                 }
-                else if(_usuario.getRol().getId()==2 || _usuario.getRol().getId()==3){
+                else if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
                     vdatospersonales=true;
                     vdatosubicacion=false;
                     votros=false;

@@ -146,20 +146,20 @@ public class CursosEditor {
         if (usu.getAccesoupdate() == 1) {
             veditar = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
         if (usu.getAccesodelete() == 1) {
             veliminar = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
         if (usu.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
-            if (_usuario.getRol().getId() == 2 || _usuario.getRol().getId() == 3) {
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
@@ -348,7 +348,7 @@ public class CursosEditor {
         }
         if (elemento == 3) {
             elemento = 0;
-            if (_usuario.getRol().getId() == 1) {
+            if (_usuario.getRolid() == 1) {
                 return "Alerta";
             } else {
                 return Busqueda.class;
@@ -407,7 +407,7 @@ public class CursosEditor {
                 } else {
                     cursos.setFueradelpais(valfuera);
                 }
-                if (_usuario.getRol().getId() == 1) {
+                if (_usuario.getRolid() == 1) {
                     cursos.setAgregadotrabajador(true);
                 } else {
                     cursos.setAgregadotrabajador(false);
