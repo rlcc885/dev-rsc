@@ -129,16 +129,34 @@
                 <t:form  t:id="formularioCuenta" t:zone="editarUsuarioZone">
                     <fieldset>
                         <legend> Datos de la Cuenta </legend>
-                        <div class="f-left">
-                            <t:label for="loginedit" />
-                            <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" t:validate="max=50,min=1,required" t:disabled="${noEditaUsuario}"/>
-                            <t:actionlink t:id="validalogin" class="button f-right" t:disabled="${noEditaUsuario}">Ver Disponibilidad</t:actionlink>
-                            <!--                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>-->
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="loginedit" />
+                                <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
+                                       t:validate="max=50,min=1,required" t:disabled="${noEditaUsuario}"/>
+                                <t:actionlink t:id="validaLogin" 
+                                              t:class="button f-right" 
+                                              t:disabled="${noEditaUsuario}"
+                                              t:context="usuariotrabajadoredit.login"
+                                              t:zone="idValidaLogin">Ver Disponibilidad
+                                </t:actionlink>
+                                <!--                            <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button"/>-->
+                            </div>
+                            <div class="f-left">
+                                <t:label for="rolUsuarioEdit"/>
+                                <t:select t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit" />
+                            </div>
                         </div>
-                        <div class="f-left">
-                            <t:label for="rolUsuarioEdit"/>
-                            <t:select t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit"/>
-                        </div>
+                        <t:zone t:id="idValidaLogin">
+                            <t:if test="${muestraValidaLogin}">
+                                <t:if test="${bLoginValido}">
+                                    Login de usuario válido.
+                                    <p:else>
+                                        Ya existe el nombre del login ingresado.
+                                    </p:else>
+                                </t:if>
+                            </t:if>
+                        </t:zone>
                     </fieldset>
                 </t:form>
                 <t:form  t:id="formularioPersonal" t:zone="editarUsuarioZone">
@@ -170,7 +188,7 @@
                             <div class="f-left">
                                 <t:label for="nrodocumentoedit"/>
                                 <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
-                                t:disabled="${noEditaUsuario}" 
+                                       t:disabled="${noEditaUsuario}" 
                                        t:size="32"/>
                             </div>
                             <div class="f-left">
@@ -232,13 +250,13 @@
                     </fieldset>
                     <div class="f-wrap">
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Confirmo, en calidad de Declaración Jurada, la veracidad y exactitud de la información registrada y autorizo la verificación de lo declarado; asumiendo las responsabilidades a que hubiere lugar." class="button f-right"/>
-<!--                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
+                        <!--                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
                         <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Limpiar Formulario
                             </span> 
                         </t:eventLink>
-<!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
+                        <!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>-->
                         <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="editarUsuarioZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Cancelar
