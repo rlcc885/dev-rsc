@@ -463,10 +463,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         borganizacionEstado = null;
         btipoOrganismo = null;
         busdenominacion = "";
-        ubigeobusEntidadUE = null;
+        ubigeobusEntidadUE = new Ubigeo();
         btiposubentidad = null;
         bussubdenominacion = "";
-        ubigeobusSubEntidadUE = null;
+        ubigeobusSubEntidadUE = new Ubigeo();
         bBuscaEntidad = false;
     }
 
@@ -492,10 +492,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
         borganizacionEstado = null;
         btipoOrganismo = null;
         busdenominacion = "";
-        ubigeobusEntidadUE = null;
+        ubigeobusEntidadUE = new Ubigeo();
         btiposubentidad = null;
         bussubdenominacion = "";
-        ubigeobusSubEntidadUE = null;
+        ubigeobusSubEntidadUE = new Ubigeo();
         bBuscaSubEntidad = false;
     }
 
