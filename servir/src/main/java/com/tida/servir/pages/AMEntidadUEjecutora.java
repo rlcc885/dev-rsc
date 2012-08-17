@@ -605,6 +605,36 @@ public class AMEntidadUEjecutora extends GeneralPage {
             System.out.println("****************** 22222");
             System.out.println(entidadUE.getEsSubEntidad());
            // System.out.println(entidadUE.getTipoSubEntidad().toString());
+            
+                   ///************ 17 agosto
+         Criteria c = session.createCriteria(Entidad.class);
+         c.add(Restrictions.eq("ruc", entidadUE.getRuc()));
+   //   if (!editando)    
+   //   {  
+          if (entidadUE.getEsSubEntidad())
+            {   
+                if (!c.list().isEmpty())
+                {
+                    if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc()) )
+                    {
+                    envelope.setContents("RUC duplicado");
+                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());   
+                    }                      
+                }
+            }
+            else
+            {
+            if (!c.list().isEmpty())
+              {
+                envelope.setContents("RUC duplicado");
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+              }
+            }
+//      }
+
+          ///************
+            
+            
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
                     envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
