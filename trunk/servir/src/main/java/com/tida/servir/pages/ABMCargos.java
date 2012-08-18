@@ -145,7 +145,7 @@ public class ABMCargos extends GeneralPage {
     private Boolean veditar;
     @Persist
     @Property
-    private Boolean vNoedita; //
+    private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
     /*
      * @Property @Persist private Ocupacional ocupacional;
      */
