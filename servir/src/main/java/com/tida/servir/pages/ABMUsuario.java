@@ -619,6 +619,7 @@ public class ABMUsuario extends GeneralPage {
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
 //        
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
+        documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
         estadoUsuarioEdit = (LkEstadoUsuario) session.get(LkEstadoUsuario.class, lusuariotrabajador.getEstado());
         if (lusuariotrabajador.getTrabajadorid() == null) {
             noEditaUsuario = false;
