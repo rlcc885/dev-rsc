@@ -20,11 +20,10 @@
         </li>
     </ul>
     <div id="busquedasenti" class="pane">
-        <div t:type="zone" t:id="busquedacombosZone" t:update="show">
+        <div t:type="zone" t:id="busquedacombosZone">
             <script>
                 sortAllSelects();
             </script>
-            
             <t:form t:id="formBusqueda" t:zone="listaentidadZone"> 
                 <fieldset>
                     <div class="f-wrap">
@@ -72,30 +71,31 @@
         </div>
     </div>
     <div id="busquedassubenti" class="pane">
-        <div t:type="zone" t:id="busquedasubcombosZone" >
+        <div t:type="zone" t:id="busquedasubcombosZone" id="busquedasubcombosZone">
             <script>
                 sortAllSelects();
             </script>
-            <t:form t:id="formulariosubcombosbusqueda" t:zone="listaentidadZone"> 
+            <t:form t:id="formulariosubcombosbusqueda" id="formulariosubcombosbusqueda" t:zone="listaentidadZone"> 
                 <fieldset>
                     <div class="f-wrap">
-                        <div class="f-left"> 
+                        <div class="f-left">
                             <t:label for="btiposubentidad"/>
-                            <input t:type="Select" t:id="btiposubentidad" t:value="btiposubentidad" 
+                            <select t:type="Select" t:id="btiposubentidad" t:value="btiposubentidad" 
                                    model="TipoSubEntidad" 
-                                   t:blankOption="ALWAYS"/>
+                                   t:blankOption="ALWAYS"
+                                    t:zone="busquedasubcombosZone" />
                         </div> 
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for ="bussubdenominacion"/>
-                            <input t:type="TextField" t:id="bussubdenominacion"
+                            <input t:type="TextField" t:id="bussubdenominacion" t:clientEvent="keyup"
                                    t:value="bussubdenominacion" t:validate="maxlength=255" size="75"/>
                         </div>
                         <div class="f-left">
                             <t:label for ="bussubestado"/>
-                            <input t:type="Select" t:id="bussubestado"
-                                   t:value="bussubestado"  model="literal:Activo,Inactivo" />
+                            <select t:type="Select" t:id="bussubestado" id="bussubestado"
+                                   t:value="bussubestado"  model="literal:Activo,Inactivo" t:zone="busquedasubcombosZone"/>
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -481,7 +481,7 @@
                         
                             <div class="actions f-right">
                                 <t:actionlink t:id="cancelFormFindEntidad" t:zone="EOrigenZone" href="#" t:class="button" t:onClick="javascript: ocultar();">Cancelar</t:actionlink>
-<!--                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>-->
+                                <!--                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>-->
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
 
                             </div>
