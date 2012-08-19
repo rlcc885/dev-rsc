@@ -1,4 +1,3 @@
-
 <html t:type="layout" title="Sistema SERVIR"
       t:sidebarTitle="Current Time"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
@@ -10,7 +9,6 @@
     <div class = "mensajes">
         ${mensajes}
     </div>
-    <!-- <a title= "Mostrar/Ocultar filtros y búsquedas" id = "toggle_filtros" href="#" onclick="toggle_filtros();">Mostrar/Ocultar</a> -->
     <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
     <div t:type="zone" t:id="filtrosZone" visible="${mostrarFiltros}">
                 <!-- the tabs -->
@@ -22,7 +20,6 @@
                 <a href="#"> Búsqueda Avanzada</a>
             </li>
         </ul>
-         
         <div id="busquedas" class="pane" >                
             <div t:type="zone" t:id="busquedaA" t:update="show"> 
                 <t:form t:id="formulariobusquedaA" zone="empleadoszone">
@@ -52,14 +49,13 @@
                                 <t:label for="nroDocumento"/>
                                 <input t:type="TextField" t:id="nroDocumento" t:validate="regexp" size="30"/>
                             </div>
-                        
                         </div> <!-- filtrosdoc -->
                     </div>
                     <br class="clear" />
                     <t:if test="vselect">
-                        <div class="actions f-right">
-                            <input t:id="buscarsubmitA" t:type="submit" value="Buscar" class="button"/>
-                            <input t:id="borrarbusquedasA" t:type="submit" value="Limpiar Formulario" class="button"/>
+                        <div class="actions">
+                            <input t:id="buscarsubmitA" t:type="submit" value="Buscar" class="button f-right"/>
+                            <input t:id="borrarbusquedasA" t:type="submit" value="Limpiar Formulario" class="button f-right"/>
                         </div>
                     </t:if>
                 </t:form>  
@@ -190,9 +186,6 @@
     
         </div> <!-- Grillas-busqueda -->
     </t:if>
-
-    <br/>
-    <br/>
 
     <SCRIPT LANGUAGE="JavaScript"> 
         function mostrarEsconder() { 

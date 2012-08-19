@@ -120,8 +120,8 @@ public class DatosPersonalesEditor {
 
         
     @Log
-    @SetupRender
-    private void inicio() {
+//    @SetupRender
+    private void setupRender() {
         if(actual.getSexo()!=null){
             if(actual.getSexo().equals("M")){
                 valsexo="MASCULINO";            

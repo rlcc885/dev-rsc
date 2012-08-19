@@ -3,41 +3,56 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.Entidad;
+import java.util.List;
+
+import com.tida.servir.entities.DatoAuxiliar;
+import com.tida.servir.entities.UsuarioAcceso;
 import com.tida.servir.entities.FormacionProfesional;
+import com.tida.servir.entities.MeritoDemerito;
 import com.tida.servir.entities.Permisos;
+import com.tida.servir.entities.Publicacion;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UsuarioAcceso;
+import helpers.Constantes;
 import java.util.ArrayList;
-import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
+import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.*;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Query;
-import org.hibernate.Session;
+
 
 /**
  * Clase que maneja la pagina de modificacion de un Trabajador
  */
-public class TrabajadorPersonal extends GeneralPage {
-
+public class TrabajadorPersonal  extends GeneralPage
+{
     /**
      * Listas necesarias para los modelos.
      */
+
     private List<String> pais = new ArrayList<String>();
     private List<String> nacionalidad = new ArrayList<String>();
     private List<String> estadoCivil = new ArrayList<String>();
     private List<String> tipoDiscapacidad = new ArrayList<String>();
-    @Property
-    @Persist
-    private CargoAsignado _ca;
 
-    public List<String> getPais() {
+    @Property
+     @Persist
+     private CargoAsignado _ca;
+
+    public List<String> getPais(){
         return pais;
     }
-
+    
     public List<String> getEstadoCivil() {
         return estadoCivil;
     }
@@ -46,30 +61,41 @@ public class TrabajadorPersonal extends GeneralPage {
         return nacionalidad;
     }
 
+ 
     public List<String> getTipoDiscapacidad() {
         return tipoDiscapacidad;
     }
+
+
     @Property
     @SessionState
     private Entidad _oi;
+
     /**
      * Hasta acá
      */
     @Inject
     private Session session;
+
     @Property
     @SessionState
     private Usuario _usuario;
+    
     @Inject
     private PropertyAccess _access;
+
     @PageActivationContext
     private Trabajador actual;
+    
     @Property
     @Persist
     private Trabajador menu;
-    /*
+    
+        
+        /*
      * Código de grillas
      */
+
     // Grilla de Antecedentes laborales
 //    @InjectComponent
 //    private Zone antecedentesZone;
@@ -79,6 +105,7 @@ public class TrabajadorPersonal extends GeneralPage {
 //
 //    @InjectComponent
 //    private Zone trabajosZone;
+
     // Código generales de la grilla, cada uno tendrá que agregar su código acá
     // Cófigo necesario antes de procesar
 //    @InjectComponent
@@ -103,11 +130,16 @@ public class TrabajadorPersonal extends GeneralPage {
     /*
      * Hasta acá código de grillas
      */
+
     @Property
     @Persist
     private FormacionProfesional formacionProfesional;
+    
+    
+
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
+
     @Inject
     private ComponentResources _resources;
     @Property
@@ -122,18 +154,19 @@ public class TrabajadorPersonal extends GeneralPage {
     }
 
     public boolean getEditable() {
-        return Permisos.puedeEscribir(_usuario, _oi);
+       return Permisos.puedeEscribir(_usuario, _oi);
     }
-
-    public TrabajadorPersonal() {
+    
+    public TrabajadorPersonal()
+    {
     }
 
     public Trabajador getActual() {
-        return actual;
+            return actual;
     }
 
     public void setActual(Trabajador actual) {
-        this.actual = actual;
+            this.actual = actual;
     }
 
     public String getMensajes() {
@@ -144,10 +177,10 @@ public class TrabajadorPersonal extends GeneralPage {
         mensajes = msg;
     }
 
-    public boolean getHaymensajes() {
+    public boolean getHaymensajes () {
         return mensajes != null;
     }
-
+    
 //    public void onActivate() {
 //        if(actual==null){
 //            actual=_usuario.getTrabajador();
@@ -161,30 +194,36 @@ public class TrabajadorPersonal extends GeneralPage {
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        List result = query.list();
-        if (result.isEmpty()) {
+        List result = query.list();        
+        if(result.isEmpty()){
             System.out.println(String.valueOf("Vacio:"));
-        } else {
-            usua = (UsuarioAcceso) result.get(0);
+            
         }
-        if (actual == null) {
+        else{
+            usua = (UsuarioAcceso) result.get(0);        
+        }
+        if(actual==null){
 //            valida=false;
             //menu=new Trabajador();
-            menu = _usuario.getTrabajador();
+            menu=_usuario.getTrabajador();
             System.out.println("menuuu");
-        } else {
+        }
+        else{
 //            valida=true;
-            menu = actual;
-            actual = null;
+            menu=actual;
+            actual=null;
             System.out.println("actualll");
         }
-
+        
         System.out.println("trabajaaaanulo");
     }
+    
+    
 //    @Component(id = "instruccion")
 //    private Form formInstruccion;
+
 //    @Log
 //    @SetupRender
 //    void loadFormacion() {
@@ -202,6 +241,7 @@ public class TrabajadorPersonal extends GeneralPage {
 //            _ca = (CargoAsignado) c.list().get(0);
 //        else _ca = null;
 //    }
+
 // 
 //    @CommitAfter
 //    Object onSuccessFromInstruccion(){
@@ -210,6 +250,7 @@ public class TrabajadorPersonal extends GeneralPage {
 //        session.saveOrUpdate(actual);
 //        return instruccionZone;
 //    }
+
 //    public String getClasePublicacion() {
 //        return Publicacion.CLASE_PUBLICACION;
 //    }
@@ -227,6 +268,7 @@ public class TrabajadorPersonal extends GeneralPage {
 //    public String getClaseDeMeritos() {
 //        return MeritoDemerito.CLASE_DEMERITO;
 //    }
+
 //    public List<String> getValorTablaAuxiliar(String tabla) 
 //    {
 //        // TODO: este codigo esta duplicado
@@ -245,4 +287,6 @@ public class TrabajadorPersonal extends GeneralPage {
 //    public boolean getHayCargosAsignados() {
 //        return _ca != null;
 //    }
+
+
 }

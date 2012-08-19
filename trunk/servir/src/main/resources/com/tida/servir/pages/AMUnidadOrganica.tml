@@ -129,8 +129,8 @@
     
     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
-                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-            </script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
         <form t:type="form" t:id="formmensaje" id="formmensaje" t:zone="mensajeZone">
             <t:envelope t:id="envelope"/>
             <t:errors/> 

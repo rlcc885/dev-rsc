@@ -255,7 +255,7 @@ public class Busqueda extends GeneralPage {
     //WW  private Form formulariobusquedasfiltros;
 
     @Log
-    public List<LkAdminTrabajador> getEmpleados() {
+    public List<Trabajador> getEmpleados() {
         String consulta = "SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "
                 + "FROM RSC_CARGOASIGNADO S1 JOIN RSC_LEGAJO S8 ON S8.ID=S1.LEGAJO_ID "
                 + "JOIN RSC_TRABAJADOR S9 ON S9.ID=S1.TRABAJADOR_ID "
