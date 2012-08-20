@@ -23,7 +23,6 @@
                     <t:if test="mostrar">
                         <fieldset>
                             <legend> Datos Personales</legend>
-                            
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nuevo_tipoDocumento"/> 

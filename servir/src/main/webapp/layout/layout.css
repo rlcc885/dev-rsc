@@ -529,9 +529,9 @@ legend {
     margin-bottom: 10px;
 }*/
 
-#filtrosdoc {
+/*#filtrosdoc {
     height: 60px;
-}
+}*/
 
 /*#busquedas #buscarsubmit {
     float: none;
@@ -1277,9 +1277,9 @@ DIV.t-console DIV.t-debug {
     margin-left: 5px;
 }
 
-.filtros input{
+/*.filtros input{
     padding: 0px;
-}
+}*/
 
 .grupocheckbox{
     clear:both;
