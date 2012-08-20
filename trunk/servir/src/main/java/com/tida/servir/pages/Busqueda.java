@@ -176,19 +176,19 @@ public class Busqueda extends GeneralPage {
     @Property
     @Persist
     private Boolean vselect;
-    @Component(id = "xxx")
-    private Form xxx;
+//    @Component(id = "xxx")
+//    private Form xxx;
     @Property
     @Persist
-    private LkAdminTrabajador persons;
+    private LkBusquedaTrabajador persons;
 
     @Log
     @SetupRender
     private void inicio() {
         limpiar();
         // MODIFICACION 13 AGOSTO
-        // vselect = true;
-        //
+         vselect = true;
+        
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -255,105 +255,134 @@ public class Busqueda extends GeneralPage {
     //WW  private Form formulariobusquedasfiltros;
 
     @Log
-    public List<Trabajador> getEmpleados() {
-        String consulta = "SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "
-                + "FROM RSC_CARGOASIGNADO S1 JOIN RSC_LEGAJO S8 ON S8.ID=S1.LEGAJO_ID "
-                + "JOIN RSC_TRABAJADOR S9 ON S9.ID=S1.TRABAJADOR_ID "
-                + "JOIN RSC_CARGOXUNIDAD S10 ON S10.ID=S1.CARGOXUNIDAD_ID "
-                + "LEFT JOIN RSC_DATOAUXILIAR S2 ON S2.ID = S9.DOCUMENTOIDENTIDAD_ID "
-                + "WHERE S1.ESTADO=1 AND (S8.ENTIDAD_ID='" + _entidadUE.getId() + "')";
-        System.out.println(consulta);
-        //List pri=session.createSQLQuery("select id,apellidopaterno,apellidomaterno,nombres from rsc_trabajador where entidad_id=40").list();
-        //persons=(List<Trabajador>)session.createSQLQuery("select id,apellidopaterno from rsc_trabajador where entidad_id=40").list();
-//        Criteria c = session.createCriteria(CargoAsignado.class); 
-//        c.createAlias("trabajador", "trabajador");
-//        c.createAlias("legajo", "legajo");
-//        c.createAlias("cargoxunidad", "cargoxunidad");
-//        c.add(Restrictions.eq("legajo.entidad", _entidadUE));
-//        // busquedasI
-        if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
-            consulta += " AND UPPER(S9.APELLIDOPATERNO) LIKE UPPER('" + apellidoPaterno + "')||'%'";
+    public List<LkBusquedaTrabajador> getEmpleados() {
 
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        c.add(Restrictions.eq("estado",true));
+        c.add(Restrictions.eq("entidad_id",_entidadUE.getId()));
+        if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno + "%").ignoreCase()).
+                        add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (apellidoMaterno != null && !apellidoMaterno.equals("")) {
-            consulta += " AND UPPER(S9.APELLIDOMATERNO) LIKE UPPER('" + apellidoMaterno + "')||'%'";
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno + "%").ignoreCase()).
+                        add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (nombres != null && !nombres.equals("")) {
-            consulta += " AND UPPER(S9.NOMBRES) LIKE UPPER('" + nombres + "')||'%'";
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + nombres + "%").ignoreCase()).
+                        add(Restrictions.like("nombres", "%" + nombres.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("nombres", "%" + nombres.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-
         if (nroDocumento != null && !nroDocumento.equals("")) {
-            //System.out.println("------------------ empleados nroDocumento " + nroDocumento);
-            consulta += " AND S9.NRODOCUMENTO='" + nroDocumento + "'";
+            c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + nroDocumento + "%").ignoreCase()).
+                        add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
+                        add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-
         if (valdocumentoide != null && !valdocumentoide.equals("")) {
-            consulta += " AND S9.DOCUMENTOIDENTIDAD_ID='" + valdocumentoide.getId() + "'";
+            c.add(Restrictions.eq("documentoidentidad_id", valdocumentoide.getId()));
         }
+        return c.list();
 
-        // filtros
-        if (sexo != null && !sexo.equals("")) {
-            if (sexo.equals("MASCULINO")) {
-                consulta += " AND S9.SEXO= 'M'";
-            } else if (sexo.equals("FEMENINO")) {
-                consulta += " AND S9.SEXO= 'F'";
-            }
-        }
-
-        if (valTipoDiscapacidad != null && !valTipoDiscapacidad.equals("")) {
-            consulta += " AND S9.TIPODISCAPACIDAD_ID='" + valTipoDiscapacidad.getId() + "'";
-        }
-
-        if (valestadocivil != null && !valestadocivil.equals("")) {
-            consulta += " AND S9.ESTADOCIVIL_ID='" + valestadocivil.getId() + "'";
-        }
-
-        if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
-            consulta += " AND S10.REGIMENLABORAL_ID='" + valregimenlaboral.getId() + "'";
-        }
-        if (valunidadorganica != null && !valunidadorganica.equals("")) {
-            consulta += " AND S10.UNIDADORGANICA_ID='" + valunidadorganica.getId() + "'";
-        }
-
-        if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
-            consulta += " AND S9.NIVELINSTRUCCION_ID='" + valnivelinstruccion.getId() + "'";
-        }
-        if (valformacionprofe != null && !valformacionprofe.equals("")) {
-            consulta += " AND S9.FORMACIONPROFESIONAL_ID='" + valformacionprofe.getId() + "'";
-        }
-
-
-        java.util.Date date = new java.util.Date();
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        String fecha = "";
-        if (fechadenacimientomayora != null) {
-            fecha = sdf.format(fechadenacimientomayora);
-            consulta += " AND S9.FECHANACIMIENTO>=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-        }
-
-        if (fechadenacimientomenora != null) {
-            fecha = sdf.format(fechadenacimientomenora);
-            consulta += " AND S9.FECHANACIMIENTO<=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-        }
-        if (fechadeingresodesdea != null) {
-            fecha = sdf.format(fechadeingresodesdea);
-            consulta += " AND S1.FEC_INICIO>(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-        }
-
-        if (fechadeingresohastaa != null) {
-            fecha = sdf.format(fechadeingresohastaa);
-            consulta += " AND S1.FEC_INICIO< (select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-
-        }
-
-        consulta += " ORDER BY(APELLIDOPATERNO)";
+//        String consulta = "SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "
+//                + "FROM RSC_CARGOASIGNADO S1 JOIN RSC_LEGAJO S8 ON S8.ID=S1.LEGAJO_ID "
+//                + "JOIN RSC_TRABAJADOR S9 ON S9.ID=S1.TRABAJADOR_ID "
+//                + "JOIN RSC_CARGOXUNIDAD S10 ON S10.ID=S1.CARGOXUNIDAD_ID "
+//                + "LEFT JOIN RSC_DATOAUXILIAR S2 ON S2.ID = S9.DOCUMENTOIDENTIDAD_ID "
+//                + "WHERE S1.ESTADO=1 AND (S8.ENTIDAD_ID='" + _entidadUE.getId() + "')";
 //
-//        c.add(Restrictions.like("estado", CargoAsignado.ESTADO_ALTA));
-//        c.setProjection(Projections.distinct(Projections.property("trabajador")));
-//        Trabajador trabajador = new Trabajador();
-        //System.out.println("-------------------- trabajador "+trabajador.getNroDocumento());
-        Query query = session.createSQLQuery(consulta).addEntity(LkAdminTrabajador.class);
-        return query.list();
+//        //List pri=session.createSQLQuery("select id,apellidopaterno,apellidomaterno,nombres from rsc_trabajador where entidad_id=40").list();
+//        //persons=(List<Trabajador>)session.createSQLQuery("select id,apellidopaterno from rsc_trabajador where entidad_id=40").list();
+////        Criteria c = session.createCriteria(CargoAsignado.class); 
+////        c.createAlias("trabajador", "trabajador");
+////        c.createAlias("legajo", "legajo");
+////        c.createAlias("cargoxunidad", "cargoxunidad");
+////        c.add(Restrictions.eq("legajo.entidad", _entidadUE));
+////        // busquedasI
+//        if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
+//            consulta += " AND UPPER(S9.APELLIDOPATERNO) LIKE UPPER('" + apellidoPaterno + "')||'%'";
+//
+//        }
+//        if (apellidoMaterno != null && !apellidoMaterno.equals("")) {
+//            consulta += " AND UPPER(S9.APELLIDOMATERNO) LIKE UPPER('" + apellidoMaterno + "')||'%'";
+//        }
+//        if (nombres != null && !nombres.equals("")) {
+//            consulta += " AND UPPER(S9.NOMBRES) LIKE UPPER('" + nombres + "')||'%'";
+//        }
+//
+//        if (nroDocumento != null && !nroDocumento.equals("")) {
+//            //System.out.println("------------------ empleados nroDocumento " + nroDocumento);
+//            consulta += " AND S9.NRODOCUMENTO='" + nroDocumento + "'";
+//        }
+//
+//        if (valdocumentoide != null && !valdocumentoide.equals("")) {
+//            consulta += " AND S9.DOCUMENTOIDENTIDAD_ID='" + valdocumentoide.getId() + "'";
+//        }
+//
+//        // filtros
+//        if (sexo != null && !sexo.equals("")) {
+//            if (sexo.equals("MASCULINO")) {
+//                consulta += " AND S9.SEXO= 'M'";
+//            } else if (sexo.equals("FEMENINO")) {
+//                consulta += " AND S9.SEXO= 'F'";
+//            }
+//        }
+//
+//        if (valTipoDiscapacidad != null && !valTipoDiscapacidad.equals("")) {
+//            consulta += " AND S9.TIPODISCAPACIDAD_ID='" + valTipoDiscapacidad.getId() + "'";
+//        }
+//
+//        if (valestadocivil != null && !valestadocivil.equals("")) {
+//            consulta += " AND S9.ESTADOCIVIL_ID='" + valestadocivil.getId() + "'";
+//        }
+//
+//        if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
+//            consulta += " AND S10.REGIMENLABORAL_ID='" + valregimenlaboral.getId() + "'";
+//        }
+//        if (valunidadorganica != null && !valunidadorganica.equals("")) {
+//            consulta += " AND S10.UNIDADORGANICA_ID='" + valunidadorganica.getId() + "'";
+//        }
+//
+//        if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
+//            consulta += " AND S9.NIVELINSTRUCCION_ID='" + valnivelinstruccion.getId() + "'";
+//        }
+//        if (valformacionprofe != null && !valformacionprofe.equals("")) {
+//            consulta += " AND S9.FORMACIONPROFESIONAL_ID='" + valformacionprofe.getId() + "'";
+//        }
+//
+//
+//        java.util.Date date = new java.util.Date();
+//        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+//        String fecha = "";
+//        if (fechadenacimientomayora != null) {
+//            fecha = sdf.format(fechadenacimientomayora);
+//            consulta += " AND S9.FECHANACIMIENTO>=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//        }
+//
+//        if (fechadenacimientomenora != null) {
+//            fecha = sdf.format(fechadenacimientomenora);
+//            consulta += " AND S9.FECHANACIMIENTO<=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//        }
+//        if (fechadeingresodesdea != null) {
+//            fecha = sdf.format(fechadeingresodesdea);
+//            consulta += " AND S1.FEC_INICIO>(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//        }
+//
+//        if (fechadeingresohastaa != null) {
+//            fecha = sdf.format(fechadeingresohastaa);
+//            consulta += " AND S1.FEC_INICIO< (select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//
+//        }
+//
+//        consulta += " ORDER BY(APELLIDOPATERNO)";
+////
+////        c.add(Restrictions.like("estado", CargoAsignado.ESTADO_ALTA));
+////        c.setProjection(Projections.distinct(Projections.property("trabajador")));
+////        Trabajador trabajador = new Trabajador();
+//        //System.out.println("-------------------- trabajador "+trabajador.getNroDocumento());
+//        Query query = session.createSQLQuery(consulta).addEntity(LkAdminTrabajador.class);
+//        return query.list();
     }
     private boolean resetBusquedas = false;
 

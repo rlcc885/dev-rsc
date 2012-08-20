@@ -204,8 +204,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     private Entidad entidadUE;
     @Property
+    @Persist
     private boolean bMuestraSector;
     @Property
+    @Persist
     private boolean bMuestraSectorEdicion;
     @Property
     @Persist
@@ -217,21 +219,28 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     private boolean bessubentidad;
     @Property
+    @Persist
     private boolean bCancelFormulario;
     @Property
+    @Persist
     private boolean bBuscaEntidad;
     @Property
+    @Persist
     private boolean bBuscaSubEntidad;
     @Property
+    @Persist
     private boolean bResetFormulario;
     @Persist
     @Property
     private Entidad rowEntidad;
     @Property
+    @Persist
     private LkBusquedaTrabajador titulart;
     @Property
+    @Persist
     private LkBusquedaTrabajador jeferrhht;
     @Property
+    @Persist
     private LkBusquedaTrabajador jefeogat;
     @Property
     @Persist
@@ -276,9 +285,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     @Log
-    //Inicio de lac carga de la pagina
-    @SetupRender
-    private void inicio() {
+    void setupRender() {
         entidadUE = new Entidad();
         entidadUE.setEsSubEntidad(false);
         ubigeoEntidadUE = new Ubigeo();
@@ -330,10 +337,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void nuevoRegistro() {
         entidadUE = new Entidad();
-        entidad_origen = null;
-        titular = null;
-        jefeRRHH = null;
-        jefeOGA = null;
+        entidad_origen = "";
+        titular = "";
+        jefeRRHH = "";
+        jefeOGA = "";
         bessubentidad = false;
     }
 
@@ -515,18 +522,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     @Log
-    void onSelectedFromReset() {
-        bResetFormulario = true;
-        editando = false;
-    }
-
-    @Log
-    void onSelectedFromCancel() {
-        bCancelFormulario = true;
-        editando = false;
-    }
-
-    @Log
     void resetFormulario(Entidad entidad) {
         entidadUE = (Entidad) session.load(Entidad.class, entidad.getId());
         if (entidadUE.getOrganizacionEstado() != null) {
@@ -562,6 +557,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (entidadUE.getJefeOga() != null) {
             jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
+    }
+
+    @Log
+    void onSelectedFromReset() {
+        bResetFormulario = true;
+        editando = false;
+    }
+
+    @Log
+    void onSelectedFromCancel() {
+        bCancelFormulario = true;
+        editando = false;
     }
 
     @Log
@@ -624,11 +631,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                 }
             }
-//      }
-
-            ///************
-
-
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
                     envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
@@ -681,7 +683,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
             // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
             opcion_limpiar = false;
         }
-        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("listaentidadZone", listaentidadZone.getBody());
+        nuevoRegistro();
+        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).
+                add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                add("TitularZone", TitularZone.getBody()).
+                add("JefeRRHHZone", JefeRRHHZone.getBody()).
+                add("JefeOGAZone", JefeOGAZone.getBody()).
+                add("mensajesZone", mensajesZone.getBody()).
+                add("botonesZone", botonesZone.getBody()).
+                add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
+                add("listaentidadZone", listaentidadZone.getBody()).
+                add("EOrigenZone",EOrigenZone.getBody());
     }
 
     @Log
@@ -712,7 +724,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vdetalle = false;
         vbotones = true;
         opcion_limpiar = true;
-
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody());
     }
 

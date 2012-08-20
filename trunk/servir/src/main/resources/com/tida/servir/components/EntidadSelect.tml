@@ -14,8 +14,8 @@
                     <div class="f-left">
                         <t:label for="snivelGobierno">Nivel de Gobierno</t:label>
                         <select t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno"
-                            model="NivelGobierno" 
-                            t:zone="OrganizacionZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS" />
+                                model="NivelGobierno" 
+                                t:zone="OrganizacionZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS" />
                     </div>
                     <t:zone t:id="OrganizacionZone" class="f-left" t:update="show">
                         <t:if test="borganizacionestado">
@@ -25,8 +25,8 @@
                             <div class="f-left">
                                 <t:label for="sorganizacionestado">Organización Estado</t:label>
                                 <select t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado"
-                                    model="OrganizacionEstado" 
-                                    t:zone="SectorZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                                        model="OrganizacionEstado" 
+                                        t:zone="SectorZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                             </div>
                         </t:if>
                     </t:zone> 
@@ -39,8 +39,8 @@
                             <div class="f-left">
                                 <t:label for="ssectorgobierno">Sector</t:label>
                                 <select t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno"
-                                    model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:zone="TipoOrganismoZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                                        model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:zone="TipoOrganismoZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                             </div>
                         </t:if>    
                     </t:zone>
@@ -53,8 +53,8 @@
                             <div class="f-left">
                                 <t:label for="stipoOrganismo">Tipo Organismo</t:label>
                                 <select t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo"
-                                    model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:zone="EntidadZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                                        model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:zone="EntidadZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
                             </div>
                         </t:if>
                     </t:zone>
@@ -67,7 +67,7 @@
                         <div class="f-left">
                             <t:label for="sentidad">Entidad</t:label>
                             <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
-                                    model="Entidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:model="Entidades" t:encoder="Entidades" t:blankOption="NEVER" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                     t:zone="EntidadZone"/>
                         </div>
                     </t:zone>
@@ -86,7 +86,7 @@
                         <div class="f-left">
                             <t:label for ="sessubentidad">Es Sub-Entidad</t:label>
                             <input t:type="Checkbox" t:id="sessubentidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                               t:value="sessubentidad" />
+                                   t:value="sessubentidad" />
                         </div>
                     </form>            
                 </t:zone>   
@@ -100,8 +100,8 @@
                             <div class="f-left">
                                 <t:label for="stipoSubEntidad">Tipo Sub-Entidad</t:label>
                                 <select t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad"
-                                    model="TipoSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
+                                        model="TipoSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
                             </div>
                         </form>
                     </t:if>
@@ -117,8 +117,9 @@
                             <div class="f-left">
                                 <t:label for="ssubentidad">Sub-Entidad</t:label>
                                 <select t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;"
-                                    model="SubEntidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                    t:zone="SubEntidadZone"/>
+                                        model="SubEntidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:blankOption="NEVER"
+                                        t:zone="SubEntidadZone"/>
                             </div>
                         </form>
                     </t:if>
@@ -126,29 +127,23 @@
             </div>
         </fieldset>
  
-            <t:zone t:id="UnidadEjecutoraZone" class = "clear" t:update="show">
-                <script>
-                    sortAllSelects();
-                </script>
-                    <div t:type="zone" t:id="botonesZone" >
-                        <t:form t:id="formulariobotones"  zone="botonesZone">
-                            <t:errors/>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?" /> 
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>  
-                            </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>
-                            </div>
-                        </t:form>
-                    </div>
-                    <br class="clear" />
-                    <t:if test="vistaCorta" negate = "true">
-                        <t:envelope t:id="envelope"/>
-                    </t:if>
-            </t:zone>
+        <t:zone t:id="UnidadEjecutoraZone" class = "clear" t:update="show">
+            <script>
+                sortAllSelects();
+            </script>
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="botonesZone">
+                    <t:errors/>
+                    <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>
+                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>  
+                    <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?" /> 
+                </t:form>
+            </div>
+            <br class="clear" />
+            <t:if test="vistaCorta" negate = "true">
+                <t:envelope t:id="envelope"/>
+            </t:if>
+        </t:zone>
 
     </t:content>
 </html>
