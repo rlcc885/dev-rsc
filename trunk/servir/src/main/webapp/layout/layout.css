@@ -1612,9 +1612,9 @@ table.t-data-grid tbody tr td.login {width:80px;}
 #editarUsuarioZone{
     margin-top:10px;
 }
-a.button.f-right {
+.actioncargo a.button.f-right {
     color: #FFFFFF;
-    height: 14px;
+    height: 16px;
 }
 .actions a{
     color: #FFFFFF;

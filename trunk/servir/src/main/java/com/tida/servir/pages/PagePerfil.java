@@ -104,12 +104,21 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean bcontrolTotal;
+    @Persist
+    @Property
+    private boolean vNoeditaperfil;
+    @Persist
+    @Property
+    private Boolean mostrarEdicionPerfil;
 
     public PagePerfil() {
     }
 
     @Log
     void SetupRender() {
+        if (mostrarEdicionPerfil == null ){
+            mostrarEdicionPerfil = true;
+        }
         if (!mostrarNew) {
             nuevoPerfil();
         }
@@ -193,6 +202,12 @@ public class PagePerfil {
         mostrarPermiso = false;
         errorMessageSavePerfil = null;
         okMessageSavePerfil = null;
+        mostrarEdicionPerfil = true;
+        if (perfil.getId()<=8){
+            vNoeditaperfil = true;
+        }else{
+            vNoeditaperfil = false;
+        }
     }
 
     // Si pulsa el enlace de PERMISOS
@@ -203,6 +218,7 @@ public class PagePerfil {
         mostrarPermiso = true;
         errorMessageSavePerfil = null;
         okMessageSavePerfil = null;
+        mostrarEdicionPerfil = false;
         nuevoPermiso();
     }
 
@@ -227,11 +243,18 @@ public class PagePerfil {
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.get(Menuperfil.class, menuperfilpk);
         editPermiso = true;
+        if (perfil.getId()<=8){
+            vNoeditaperfil = true;
+        }else{
+            vNoeditaperfil = false;
+        }
         return this;
     }
 
     void onSelectedFromReset() {
         bResetFormulario = true;
+        mostrarPermiso = false;
+        vNoeditaperfil = false;
     }
 
     void onSelectedFromCancel() {
