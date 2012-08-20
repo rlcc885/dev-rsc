@@ -45,7 +45,7 @@ public class PagePerfil {
     private MenuPorPerfil rowPermiso;
     @Property
     @Persist
-    private boolean editaPerfil;
+    private Boolean editaPerfil;
     @Persist
     @Property
     private boolean mostrarNew;
@@ -110,7 +110,10 @@ public class PagePerfil {
     @Persist
     @Property
     private Boolean mostrarEdicionPerfil;
-
+//    @Persist
+//    @Property
+//    private Boolean editaPerfil;
+    
     public PagePerfil() {
     }
 
@@ -118,6 +121,9 @@ public class PagePerfil {
     void SetupRender() {
         if (mostrarEdicionPerfil == null ){
             mostrarEdicionPerfil = true;
+        }
+        if (editaPerfil == null ){
+            editaPerfil = false;
         }
         if (!mostrarNew) {
             nuevoPerfil();
@@ -203,6 +209,7 @@ public class PagePerfil {
         errorMessageSavePerfil = null;
         okMessageSavePerfil = null;
         mostrarEdicionPerfil = true;
+        editaPerfil = true;
         if (perfil.getId()<=8){
             vNoeditaperfil = true;
         }else{
@@ -255,12 +262,16 @@ public class PagePerfil {
         bResetFormulario = true;
         mostrarPermiso = false;
         vNoeditaperfil = false;
+        editaPerfil = false;
+        vNoeditaperfil = false;
     }
 
     void onSelectedFromCancel() {
         mostrarPermiso = false;
+        editaPerfil = false;
         editPermiso = false;
         bCancelFormulario = true;
+        vNoeditaperfil = false;
     }
 
     void nuevoPermiso() {
