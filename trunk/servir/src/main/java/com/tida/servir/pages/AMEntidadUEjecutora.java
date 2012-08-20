@@ -616,23 +616,33 @@ public class AMEntidadUEjecutora extends GeneralPage {
             // System.out.println(entidadUE.getTipoSubEntidad().toString());
 
             ///************ 17 agosto
+         String x = ruc_anterior;   
             Criteria c = session.createCriteria(Entidad.class);
-            c.add(Restrictions.eq("ruc", entidadUE.getRuc()));
-            //   if (!editando)    
-            //   {  
-            if (entidadUE.getEsSubEntidad()) {
-                if (!c.list().isEmpty()) {
+            c.add(Restrictions.eq("ruc", x));
+       if (!editando)    
+       {  
+            if (entidadUE.getEsSubEntidad()) 
+            {if (!c.list().isEmpty()) {
                     if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc())) {
                         envelope.setContents("RUC duplicado");
                         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                     }
                 }
-            } else {
-                if (!c.list().isEmpty()) {
+            } 
+            else 
+            {if (!c.list().isEmpty()) {
                     envelope.setContents("RUC duplicado");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-                }
+                     }
             }
+       }
+ 
+       
+
+
+            //**************************************************
+            
+            
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
                     envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
@@ -716,12 +726,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
         mostrarEsconder = "Ocultar";
         mostrarFiltros = true;
     }
-
+    @Persist
+    private String ruc_anterior;
     @Log
     Object onEditarSeleccion(Entidad entidad) {
+        
+      System.out.println("*********** AME : ON EDITAR SELECCION");
         entidadUE = entidad;
         editando = true;
-        seteo();
+        //**********
+        ruc_anterior = entidad.getRuc();
+        System.out.println("*********** AME : RUC"+ ruc_anterior);
+        //seteo();
         vformulario = true;
         vdetalle = false;
         vbotones = true;
