@@ -5,7 +5,7 @@
     <t:content>
         <div class="f-wrap">
             <div class="f-left">
-                <label>Departamentos</label>
+                <label>Departamento</label>
                 <select t:type="Select" t:id="cod_ubi_dept" id="cod_ubi_dept" t:value="ubigeo.departamento"
                 model="beanDatoAuxDepto" encoder="beanDatoAuxDepto" t:disabled="disabled"
                  t:zone="prop:zoneName" />
