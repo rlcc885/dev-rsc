@@ -46,15 +46,12 @@
                 <li><a href="#"> Ausencias y Licencias</a></li>
             </t:if>-->
         </ul>
-
-
-
 		<!-- INICIO / Zona de datosPersonales, correspondientes al TAB-->
-	
+                
         <div class= "pane" id='datosPersonales' name='datosPersonales'>
             <t:DatosPersonalesEditor t:id="datosPersonalesEditor" actual= "menu"/>       
         </div>
-<!--        <div class= "pane" id='estudios' name='estudios'>            
+        <div class= "pane" id='estudios' name='estudios'>            
                 <t:EstudiosEditor t:id="estudiox" actual= "menu" />
 	</div>
         
@@ -68,7 +65,7 @@
                 
         <div class= "pane" id='publicacion' name='publicacion'> 
                 <t:PublicacionesEditor t:id="publicacionesx" actual= "menu"/>
-        </div>-->
+        </div>
 
         <!--        
         <div class= "pane" id='antecedentes' name='antecedentes'>

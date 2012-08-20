@@ -585,6 +585,9 @@ form th {
 #unidadOrganicaZone select, #cargosZone select{
     width:408px;
 }
+#listaentidadZone{
+    margin-top: 10px;
+}
 #basicosTrabajador {
     padding: 50px;
     padding-top:10px;
@@ -1530,8 +1533,8 @@ DIV.t-data-grid {
     font-weight: bold;
 }
 
-#shade, #modal,#modalNuevaUnidadOrganica,#modalNuevoCargo { display: none; }
-#shade { 
+#shade,#shade2, #modal,#modalNuevaUnidadOrganica,#modalNuevoCargo { display: none; }
+#shade,#shade2 { 
     position: fixed; 
     z-index: 100; 
     top: 0; 
@@ -1611,7 +1614,7 @@ table.t-data-grid tbody tr td.login {width:80px;}
 }
 a.button.f-right {
     color: #FFFFFF;
-    height: 16px;
+    height: 14px;
 }
 .actions a{
     color: #FFFFFF;

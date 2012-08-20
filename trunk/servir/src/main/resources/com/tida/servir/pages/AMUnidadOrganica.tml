@@ -232,7 +232,7 @@
                         </div>
                     </fieldset>
                     <t:if test="${vbotones}">
-                        <div class="actionunidad">
+                        <div class="actions">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <t:if test="vNoedita">
                                 <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="unidadesOrganicasZone">

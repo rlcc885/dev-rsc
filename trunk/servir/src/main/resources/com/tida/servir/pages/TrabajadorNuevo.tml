@@ -1,3 +1,4 @@
+
 <html t:type="layout" title="Sistema SERVIR"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"    
       xmlns:p="tapestry:parameter">
@@ -5,7 +6,6 @@
     <div class="organismo_titulo">
         Entidad /U. Ejecutora: ${oi.denominacion}
     </div>
-
     <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
             <t:envelope t:id="envelope"/>
@@ -66,7 +66,8 @@
                                             t:id="unidadorganica"
                                             t:value="unidadorganica"   
                                             model="beanUOrganicas"
-                                            t:blankOption="ALWAYS" />
+                                            t:blankOption="ALWAYS" 
+                                            t:zone="cargosZone"/>
                                     <!--                                <input t:type="Submit" t:id="nuevaUO" value="..." class="button" />-->
                                     <a onClick="javascript: mostrar();" class="button">...</a>
                                     <!--                                <t:actionlink t:id="nuevaUnidadOrganica" 
@@ -121,7 +122,8 @@
                         <!--                            <div t:type="zone" t:id="botonesZone" >-->
                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/>
+<!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/>-->
+                        <a t:type="pagelink" page="busqueda" class="button f-right">Cancelar</a>
                         <!--                            </div> -->
                     </div>
                     
@@ -188,17 +190,20 @@
             </t:form>
         </t:zone>
     </div>
+    <div id="shade2"></div>
     <div id="modalNuevoCargo">
-        <t:form t:id="formularionuevocargo" zone="modalNuevoCargo">
-            <div class ="f-wrap">
-                <t:label for="cargo2"/>
-                <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="65"/>
-            </div>
-            <div class ="f-wrap">
-                <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right" onClick="javascript: ocultarCargo();"/>
-                <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
-            </div>
-        </t:form>
+        <t:zone t:id="nuevoCargoZone">
+            <t:form t:id="formularionuevocargo" t:zone="nuevoCargoZone">
+                <div class ="f-wrap">
+                    <t:label for="cargo2"/>
+                    <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="65"/>
+                </div>
+                <div class ="f-wrap">
+                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right" onClick="javascript: ocultarCargo();"/>
+                    <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
+                </div>
+            </t:form>
+        </t:zone>
     </div>
     <script type="text/javascript">
         var modal= document.getElementById('modalNuevaUnidadOrganica');
@@ -211,11 +216,14 @@
         modal.style.display=shade.style.display= 'none';
         };
         function mostrarCargo() {
-        modalCargo.style.display=shade.style.display= 'block';
+        modalCargo.style.display=shade2.style.display= 'block';
         };
         function ocultarCargo() {
-        modalCargo.style.display=shade.style.display= 'none';
+        modalCargo.style.display=shade2.style.display= 'none';
         };
+        jQuery(function() {
+        jQuery('#fecha_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
+        });
     </script>
     
 </html>
