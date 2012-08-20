@@ -400,14 +400,17 @@ public class ABMCargos extends GeneralPage {
         return zonasDatos();
     }
 
+
     @Log
     void cargoDatos() {
         regimengruponivel = new RegimenGrupoNivel();
         regimengruponivel.setNivelRemunerativo(cargo.getNivelRemunerativo());
         regimengruponivel.setGrupo(cargo.getGrupoOcupacional());
         regimengruponivel.setRegimen(cargo.getRegimenlaboral());
-    }
+        cantidadPuestos = String.valueOf(cargo.getCtd_puestos_total());
 
+    }
+    
     @Log
     void onPrepareFromFormularioaltacargo() {
     }
