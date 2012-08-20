@@ -36,6 +36,7 @@
             </p:accionesCell>
         </t:grid>
     </t:zone>
+    <t:if test = "mostrarEdicionPerfil">
     <t:zone t:id="editZone" t:update="show">
         <t:if test="errorMessageSavePerfil">
             <script>
@@ -56,7 +57,7 @@
                     <legend>Descripción del Perfil:</legend>
                     <div class="f-left">
                         <t:label for="descripcion"/>
-                        <t:textfield t:id="descripcion" t:value="perfil.descperfil" t:size="80" t:style="text-transform: uppercase;"/>
+                        <t:textfield t:id="descripcion" t:value="perfil.descperfil" t:size="80" t:style="text-transform: uppercase;" t:disabled="${vNoeditaperfil}"/>
                     </div>
                     <div class="f-left">
                         <t:label for="estado"/>
@@ -87,7 +88,7 @@
             </t:form>
         </div>
     </t:zone>
-
+</t:if>
     <t:if test = "mostrarPermiso">
         <t:zone t:id="listaPermisoZone" id="listaPermisoZone" t:update="show">
             <br />

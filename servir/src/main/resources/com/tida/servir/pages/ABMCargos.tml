@@ -196,7 +196,7 @@
                             </div>
                         </div>  
                     </div>
-                    <div class="actions">
+                    <div class="actioncargo">
                         <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <t:if test="vNoedita">
