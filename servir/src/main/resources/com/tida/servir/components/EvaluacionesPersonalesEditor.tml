@@ -52,7 +52,9 @@
                          </div>
                          <div class="f-wrap">
                         <div class="f-right">
+                            <t:if test="${bvalidausuario}">
                                 <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                            </t:if>    
                         </div>
                         </div>
                     </t:form>  
