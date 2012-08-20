@@ -231,7 +231,12 @@ public class EvaluacionesPersonalesEditor {
     @CommitAfter        
     Object onActionFromEliminar(EvaluacionPersonal evalu) {
         session.delete(evalu);
-        envelope.setContents("Se realizo la eliminación satisfactoriamente");
+        if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
+                bvalidausuario=true;
+            }else{
+                bvalidausuario=false;
+            }
+        envelope.setContents("Evaluacion personal eliminada exitosamente.");
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
         .add("listaEvaluacionZone", listaEvaluacionZone.getBody());
        
