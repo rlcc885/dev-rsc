@@ -15,31 +15,38 @@ public class Constantes {
    //public static final String ESTADO_BAJA = "Baja";
    public static boolean ESTADO_BAJA = false;
    public static boolean ESTADO_ACTIVO = true;
-   public static final String TITULO_EXITO ="Titulos modificados exitosamente.";
-   public static final String CERTIFICACION_EXITO ="Certificaciones modificados exitosamente.";
-   public static final String CURSO_EXITO ="Cursos modificados exitosamente.";
-   public static final String FAMILIAR_EXITO ="Familiares modificados exitosamente.";
+   
+   //modificado 20/08/2012 
+   //MACL
+   public static final String TITULO_EXITO ="Titulos creaods / modificados exitosamente.";
+   public static final String CERTIFICACION_EXITO ="Certificaciones creados / modificados exitosamente.";
+   public static final String CURSO_EXITO ="Cursos creados / modificados exitosamente.";
+   public static final String FAMILIAR_EXITO ="Familiares creados / modificados exitosamente.";
    public static final String ANT_LABORAL_EXITO ="Antecedentes Laborales creados / modificados exitosamente.";
    public static final String PROD_INTELECTUAL_EXITO ="Produciones Intelectuales modificados exitosamente.";
-   public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado exitosamente.";
+   public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado / modificados exitosamente.";
    public static final String EUE_EXITO ="Entidades Unidad Ejecutora modificadas exitosamente.";
-   public static final String USUARIO_EXITO ="Usuarios modificados exitosamente.";
-   public static final String TRABAJADOR_EXITO ="Trabajador agregado exitosamente.";
-   public static final String TRABAJADOR_EDIT_EXITO ="Trabajador modificado exitosamente.";
-   public static final String CARGO_EXITO ="Cargos modificados exitosamente.";
-   public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado modificado exitosamente.";
-   public static final String MERITO_DEMERITO_EXITO ="Meritos demeritos modificados exitosamente.";
-   public static final String UNIDAD_ORGANICA_EXITO ="Unidades Organicas modificadas exitosamente.";
+   public static final String USUARIO_EXITO ="Usuarios creaods / modificados exitosamente.";
+   public static final String TRABAJADOR_EXITO ="Trabajador agregado / modificado exitosamente.";
+   public static final String TRABAJADOR_EDIT_EXITO ="Trabajador creado / modificado exitosamente.";
+   public static final String CARGO_EXITO ="Cargos creados exitosamente.";
+   public static final String CARGO_EDIT_EXITO ="Cargos modificados exitosamente.";
+   public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado / modificado exitosamente.";
+   public static final String MERITO_DEMERITO_EXITO ="Meritos demeritos creados / modificados exitosamente.";
+   public static final String UNIDAD_ORGANICA_EXITO ="Unidades Organicas creados / modificadas exitosamente.";
    
    //modificado 10agosto
-   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
-   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica modificada exitosamente.";
+   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada / modificada exitosamente.";
+   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica creada / modificada exitosamente.";
    
-   public static final String AUSENCIA_EXITO ="Ausencias licencias modificadas exitosamente.";
-   public static final String REMUNERACION_EXITO ="Remuneraciones personales modificadas exitosamente.";
-   public static final String EVALUACION_EXITO ="Evaluaciones personales modificadas exitosamente.";
+   public static final String AUSENCIA_EXITO ="Ausencias licencias creadas / modificadas exitosamente.";
+   public static final String REMUNERACION_EXITO ="Remuneraciones personales creadas / modificadas exitosamente.";
+   public static final String EVALUACION_EXITO ="Evaluaciones personales creadas / modificadas exitosamente.";
    public static final String CONSTANCIAS_DOCUMENTALES_EXITO ="Modificados exitosamente.";
-   public static final String CONFIGURAR_ACCESO_EXITO ="Parametros modificados exitosamente.";
+   public static final String CONFIGURAR_ACCESO_EXITO ="Parametros creados / modificados exitosamente.";
+   
+   // FIN MODIFICACION MACL 
+   
    
    //nombre archivos
    public static final String ENTIDADES_UE = "Entidades U./Ejecutoras";
