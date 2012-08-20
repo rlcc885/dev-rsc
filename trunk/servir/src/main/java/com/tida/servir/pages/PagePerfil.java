@@ -113,16 +113,16 @@ public class PagePerfil {
 //    @Persist
 //    @Property
 //    private Boolean editaPerfil;
-    
+
     public PagePerfil() {
     }
 
     @Log
     void SetupRender() {
-        if (mostrarEdicionPerfil == null ){
+        if (mostrarEdicionPerfil == null) {
             mostrarEdicionPerfil = true;
         }
-        if (editaPerfil == null ){
+        if (editaPerfil == null) {
             editaPerfil = false;
         }
         if (!mostrarNew) {
@@ -210,9 +210,9 @@ public class PagePerfil {
         okMessageSavePerfil = null;
         mostrarEdicionPerfil = true;
         editaPerfil = true;
-        if (perfil.getId()<=8){
+        if (perfil.getId() <= 8) {
             vNoeditaperfil = true;
-        }else{
+        } else {
             vNoeditaperfil = false;
         }
     }
@@ -250,9 +250,9 @@ public class PagePerfil {
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.get(Menuperfil.class, menuperfilpk);
         editPermiso = true;
-        if (perfil.getId()<=8){
+        if (perfil.getId() <= 8) {
             vNoeditaperfil = true;
-        }else{
+        } else {
             vNoeditaperfil = false;
         }
         return this;
@@ -331,6 +331,17 @@ public class PagePerfil {
     @CommitAfter
     void onSelectedFromResetNewPermiso() {
         cancelaNewPermiso = true;
+        mostrarEdicionPerfil = true;
+        mostrarPermiso = false;
+        editaPerfil = false;
+        mostrarNew = false;
+    }
+
+    @Log
+    @CommitAfter
+    void onSelectedFromSaveNewPermiso() {
+        mostrarPermiso = true;
+        bcontrolTotal = false;
     }
 
     @Log
@@ -345,7 +356,6 @@ public class PagePerfil {
             }
             session.saveOrUpdate(permiso);
         }
-        mostrarPermiso = true;
         nuevoPermiso();
         cancelaNewPermiso = false;
         return this;
