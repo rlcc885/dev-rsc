@@ -180,7 +180,11 @@ public class PublicacionesEditor {
     @Log
     Object onActionFromEditar1(Publicacion publi) {
         publicacion = publi;
-        
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+            bvalidausuario = true;
+        } else {
+            bvalidausuario = false;
+        }
         if(publicacion.getFecha()!=null){
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde=formatoDeFecha.format(publicacion.getFecha());
@@ -194,6 +198,11 @@ public class PublicacionesEditor {
     @CommitAfter
     Object onActionFromEliminar1(Publicacion publi) {
         session.delete(publi);
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+            bvalidausuario = true;
+        } else {
+            bvalidausuario = false;
+        }
         envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
 
@@ -202,7 +211,11 @@ public class PublicacionesEditor {
     @Log
     Object onActionFromEditar2(Publicacion publi) {
         publicacion = publi;
-        
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+            bvalidausuario = true;
+        } else {
+            bvalidausuario = false;
+        }
         if(publicacion.getFecha()!=null){
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde=formatoDeFecha.format(publicacion.getFecha());
@@ -216,6 +229,11 @@ public class PublicacionesEditor {
     @CommitAfter
     Object onActionFromEliminar2(Publicacion publi) {
         session.delete(publi);
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+            bvalidausuario = true;
+        } else {
+            bvalidausuario = false;
+        }
         envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
 
