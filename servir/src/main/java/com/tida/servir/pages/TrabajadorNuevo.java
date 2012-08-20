@@ -54,12 +54,15 @@ public class TrabajadorNuevo extends GeneralPage {
     @InjectComponent
     @Property
     private Zone trabajadorNuevoZone;
-    @InjectComponent
-    @Property
-    private Zone unidadOrganicaZone;
+//    @InjectComponent
+//    @Property
+//    private Zone unidadOrganicaZone;
     @InjectComponent
     @Property
     private Zone nuevaUnidadZone;
+    @InjectComponent
+    @Property
+    private Zone nuevoCargoZone;
     @InjectComponent
     @Property
     private Zone cargosZone;
@@ -96,18 +99,18 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private UnidadOrganica unidadorganica;
-    @Property
-    @Persist
-    private UnidadOrganica nuevaunidadorganica;
+//    @Property
+//    @Persist
+//    private UnidadOrganica nuevaunidadorganica;
     @Property
     @Persist
     private LkCargosDisponibles cargo;
     @Property
     @Persist
     private Cargoxunidad cargo2;
-    @Property
-    @Persist
-    private Cargoxunidad ncargo;
+//    @Property
+//    @Persist
+//    private Cargoxunidad ncargo;
     //Variables
     private List<String> tiposDoc = new ArrayList();
 //    @Property
@@ -159,6 +162,12 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private Boolean mostrar;
+    @Property
+    @Persist
+    private Boolean creaNuevaUnidad;
+    @Property
+    @Persist
+    private Boolean creaNuevoCargo;
 
     public Trabajador getActual() {
         return actual;
@@ -175,9 +184,9 @@ public class TrabajadorNuevo extends GeneralPage {
 //        bCargo = false;
         //nuevo=new Trabajador();
         unidadorganica = null;
-        nuevaunidadorganica = new UnidadOrganica();
+//        nuevaunidadorganica = new UnidadOrganica();
         cargo = new LkCargosDisponibles();
-        ncargo = new Cargoxunidad();
+//        ncargo = new Cargoxunidad();
         cargo2 = new Cargoxunidad();
         nuevaUOrganica = "";
         nuevoCargo = "";
@@ -185,6 +194,8 @@ public class TrabajadorNuevo extends GeneralPage {
         bTrabajadorRegistrado = false;
         nuevoLegajo = new Legajo();
         mostrar = true;
+        creaNuevaUnidad = false;
+        creaNuevoCargo = false;
         puestoconfianza = false;
         fechaingreso = "";
         if (actual != null) {
@@ -263,6 +274,11 @@ public class TrabajadorNuevo extends GeneralPage {
 //    void onSelectedFromAgregarUO() {
 //        elemento = 5;
 //    }
+            @Log
+    Object onActionFromNuevaUnidadOrganica() {
+        creaNuevaUnidad = true;
+        return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody());
+    }
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {
@@ -317,25 +333,26 @@ public class TrabajadorNuevo extends GeneralPage {
 //        bCargo = false;
 //        return nuevaUnidadCargoZone.getBody();
 //    }
+
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevocargo() {
-//        if (elemento == 6) {
         if (nuevoCargo != null) {
+            Cargoxunidad ncargo;
             ncargo = new Cargoxunidad();
             ncargo.setDen_cargo(nuevoCargo);
             ncargo.setCod_cargo("C9999");
             ncargo.setUnidadorganica(unidadorganica);
             ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
             session.saveOrUpdate(ncargo);
-
+            cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class,ncargo.getId());
             envelope.setContents(helpers.Constantes.EUE_EXITO);
             envelope.setContents("Se creo el Cargo con éxito.");
-            elemento = 0;
+//            elemento = 0;
 //            bCargo = false;
         } else {
-            envelope.setContents("No puede agregar un cargo vacio");
-            elemento = 0;
+            formulariotrabajadornuevo.recordError("No puede agregar un cargo vacio");
+//            elemento = 0;
 //            bCargo = false;
         }
 //        } else {
@@ -344,11 +361,10 @@ public class TrabajadorNuevo extends GeneralPage {
 //            } else {
 //                bCargo = true;
 //            }
-//        }
 
-        return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())
-                .add("cargosZone", cargosZone.getBody());
 
+        return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
+                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
 
 //    @Log
@@ -422,7 +438,7 @@ public class TrabajadorNuevo extends GeneralPage {
     //===============================
     @Log
     @CommitAfter
-    Object onSuccessFromFormulariotipovinculo() throws ParseException {
+    Object onSuccessFromFormulariotrabajadornuevo() throws ParseException {
 
         //       if(elemento==1){
         //           return "TrabajadorNuevo";
@@ -548,17 +564,7 @@ public class TrabajadorNuevo extends GeneralPage {
     }
 
     @Log
-    Object onValueChangedFromunidadorganica() {
-//        if (dato != null && !dato.equals("")) {
-//            if (dato.getValor().equals("NO TIENE") || dato.getValor().equals("")) {
-//                vconadis = true;
-//                actual.setNroCertificadoCONADIS(null);
-//            } else {
-//                vconadis = false;
-//            }
-//        } else {
-//            vconadis = true;
-//        }
+    Object onValueChangedFromUnidadorganica() {
         return _request.isXHR() ? new MultiZoneUpdate("cargosZone", cargosZone.getBody()) : null;
     }
 }
