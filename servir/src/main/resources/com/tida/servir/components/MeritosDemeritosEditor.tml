@@ -10,20 +10,21 @@
                     <t:form t:id="formularioclase"  zone="claseZone">                         
                            <div class="f-left" >
                                 <label>* Tipo</label>
-                                <input t:type="Select" t:id="clase" t:value="merito.clasemeritodemerito"
+                                <select t:type="Select" t:id="clase" value="merito.clasemeritodemerito"
                                        model="beanClaseMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS" t:zone="claseZone"/>
+                                       t:blankOption="ALWAYS" />
+                                
                             </div>
                             <div class="f-left" >
                                 <label>* Tipo de Documento</label>
                                 <t:if test="btipo" negate="true">
-                                <input t:type="Select" t:id="tipoMerito" t:value="merito.tipomeritodemerito" 
-                                       model="beanTipoMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                <select t:type="Select" t:id="tipoMerito" value="merito.tipomeritodemerito" 
+                                       model="beanTipoMerito" 
                                       t:blankOption="ALWAYS" />
                                 </t:if>
                                 <t:if test="btipo" >
-                                <input t:type="Select" t:id="tipoDemerito" t:value="merito.tipomeritodemerito"
-                                       model="beanTipoDemerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                <select t:type="Select" t:id="tipoDemerito" value="merito.tipomeritodemerito"
+                                       model="beanTipoDemerito"  
                                       t:blankOption="ALWAYS" />
                                 </t:if>
                             </div>             
