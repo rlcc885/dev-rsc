@@ -152,11 +152,11 @@ public class LkBusquedaTrabajador implements Serializable {
         this.nombres = nombres;
     }
 
-    public Long getDocumentoidentidad_id() {
+    public long getDocumentoidentidad_id() {
         return documentoidentidad_id;
     }
 
-    public void setDocumentoidentidad_id(Long documentoidentidad_id) {
+    public void setDocumentoidentidad_id(long documentoidentidad_id) {
         this.documentoidentidad_id = documentoidentidad_id;
     }
 

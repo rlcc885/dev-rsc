@@ -67,7 +67,7 @@
                             size="25" t:disabled="${vdetalle}" t:readonly="readlony"/>
                             -->
                             <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde"  size="25" t:disabled="${vdetalle}" t:readonly="readlony"/>
-                            <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotercero.fec_inicio, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                            <img src="${context:layout/images/cal3.gif}" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotercero.fec_inicio, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -78,7 +78,7 @@
                                     size="25" t:disabled="${vfechahasta}" t:readonly="readlony"/>
                             -->
                             <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta"  size="25" t:disabled="${vfechahasta}" t:readonly="readlony"/>
-                            <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotercero.fec_fin, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                            <img src="${context:layout/images/cal3.gif}" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotercero.fec_fin, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                             </div>                        
                     </div>
                 </fieldset>

@@ -48,7 +48,7 @@
                                         t:value="ant_Laborales.fec_ingreso" t:validate="required" size="25" t:disabled="${vdetalle}"/>                                                     
                                 -->
                                 <input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde"  size="25" t:disabled="${vdetalle}" t:validate="required"/>
-                                <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioantlaboral.fec_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                                <img src="${context:layout/images/cal3.gif}" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioantlaboral.fec_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                             </div>
                             <div class="f-left">
                                 <label>* Fecha de Finalización</label>
@@ -57,7 +57,7 @@
                                         t:value="ant_Laborales.fec_egreso" t:validate="required" size="25" t:disabled="${vdetalle}"/>
                                 -->
                                 <input t:type="TextField" t:id="fec_egreso" t:value="valfec_hasta"  size="25" t:disabled="${vdetalle}" t:validate="required"/>
-                                <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioantlaboral.fec_egreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                                <img src="${context:layout/images/cal3.gif}" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioantlaboral.fec_egreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
                             </div>                           
                         </div>
                         <br/>

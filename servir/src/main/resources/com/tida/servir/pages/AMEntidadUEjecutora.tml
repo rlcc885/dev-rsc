@@ -124,7 +124,8 @@
                     row="listaentidad" 
                     exclude="id,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
                     reorder="ruc,denominacion,sigla,cue_entidad,departamento,acciones"
-                    inPlace="true" t:add="Acciones">
+                    inPlace="true" 
+                    t:add="Acciones">
                 <t:parameter name="empty">
                     <div class="no-info">No se encontraron coincidencias</div>
                 </t:parameter>
@@ -380,14 +381,21 @@
                     <div class="f-wrap">                    
                         <t:if test="${vbotones}">
                                 <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                                <t:if test="${editando}" negate="true">
                                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
+                                </t:if>
+                                <t:if test="${editando}">
+                                <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                                </t:if>
                         </t:if>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/> 
                     </div>
                 </t:form>
             </t:if>
         </div>
         <div t:type="zone" t:id="mensajesZone" >
+            <script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
             <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
                 <t:envelope t:id="envelope"/>
                 <t:errors t:id="errores"/>

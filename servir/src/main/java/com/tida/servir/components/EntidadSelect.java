@@ -72,7 +72,6 @@ public class EntidadSelect {
     @Property
     @Persist
     private boolean sessubentidad;
-
     @InjectComponent
     @Property
     private Zone OrganizacionZone;
@@ -114,12 +113,10 @@ public class EntidadSelect {
     private Request request;
     @Component(id = "formulariobotones")
     private Form formulariobotones;
-    
 
     //Para inicializar valores
     @Log
-    @SetupRender
-    void initializeValue() {
+    void setupRender() {
         borganizacionestado = false;
         bsectorgobierno = false;
         btipoorganismo = false;
@@ -130,21 +127,19 @@ public class EntidadSelect {
         ssectorGobierno = null;
         stipoOrganismo = null;
         sentidad = null;
-        ssubentidad=null;
-        if(entidad.getEntidad()==null){
-            sentidad=entidad;
-            bessubentidad=false;
-            sessubentidad=false;
-            System.out.println("entiii"+sentidad);
+        ssubentidad = null;
+        if (entidad.getEntidad() == null) {
+            sentidad = entidad;
+            bessubentidad = false;
+            sessubentidad = false;
+            System.out.println(sentidad.getDenominacion());
+        } else {
+            ssubentidad = entidad;
+            bessubentidad = true;
+            sessubentidad = true;
+            System.out.println(ssubentidad.getDenominacion());
         }
-        else{
-            ssubentidad=entidad;
-            sentidad=null;
-            bessubentidad=true;
-            sessubentidad=true;
-            System.out.println("sentiii"+ssubentidad+"-"+sentidad);
-        }
-
+        
         //Si se requiere que se seteen en los combos los valores de la entidad seleccionada por defecto
         /*
          * if (entidad != null) { snivelGobierno = entidad.getNivelGobierno();
@@ -218,7 +213,7 @@ public class EntidadSelect {
         if (stipoOrganismo != null) {
             c.add(Restrictions.eq("tipoOrganismo", stipoOrganismo));
         }
-        c.add(Restrictions.eq("esSubEntidad",false));
+        c.add(Restrictions.eq("esSubEntidad", false));
         return c.list();
     }
 
@@ -250,6 +245,7 @@ public class EntidadSelect {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     Object onValueChangedFromSnivelGobierno(DatoAuxiliar dato) {
         if (dato == null) {
             borganizacionestado = false;
@@ -260,6 +256,7 @@ public class EntidadSelect {
         return request.isXHR() ? new MultiZoneUpdate("OrganizacionZone", OrganizacionZone.getBody()).add("EntidadZone", EntidadZone.getBody()) : null;
     }
 
+    @Log
     Object onValueChangedFromSorganizacionestado(DatoAuxiliar dato) {
         if (dato == null) {
             bsectorgobierno = false;
@@ -274,25 +271,29 @@ public class EntidadSelect {
         ssectorGobierno = null;
         return request.isXHR() ? new MultiZoneUpdate("SectorZone", SectorZone.getBody()).add("EntidadZone", EntidadZone.getBody()).add("TipoOrganismoZone", TipoOrganismoZone.getBody()) : null;
     }
-    
-    Object onValueChangedFromSsectorgobierno(DatoAuxiliar dato){
+
+    @Log
+    Object onValueChangedFromSsectorgobierno(DatoAuxiliar dato) {
         if (dato == null) {
             btipoorganismo = false;
-        }else{
+        } else {
             btipoorganismo = true;
         }
         stipoOrganismo = null;
         return new MultiZoneUpdate("TipoOrganismoZone", TipoOrganismoZone.getBody()).add("EntidadZone", EntidadZone.getBody());
     }
-    
-    Object onValueChangedStipoOrganismo(DatoAuxiliar dato){
+
+    @Log
+    Object onValueChangedStipoOrganismo(DatoAuxiliar dato) {
         return EntidadZone.getBody();
     }
 
+    @Log
     Object onSuccessFromformEntidad() {
         return new MultiZoneUpdate("EsSubEntidadZone", EsSubEntidadZone.getBody()).add("TipoSubEntidadZone", TipoSubEntidadZone.getBody()).add("SubEntidadZone", SubEntidadZone.getBody());
     }
 
+    @Log
     Object onSuccessFromformEsSubEntidad() {
         if (bessubentidad) {
             bessubentidad = false;
@@ -302,14 +303,17 @@ public class EntidadSelect {
         return new MultiZoneUpdate("TipoSubEntidadZone", TipoSubEntidadZone.getBody()).add("SubEntidadZone", SubEntidadZone.getBody());
     }
 
+    @Log
     Object onSuccessFromformTipoSubEntidad() {
         return SubEntidadZone.getBody();
     }
 
+    @Log
     void onSelectedFromCancel() {
         elemento = 2;
     }
 
+    @Log
     void onSelectedFromReset() {
         elemento = 1;
     }
@@ -323,30 +327,20 @@ public class EntidadSelect {
             return "Alerta";
         } else {
             if (bessubentidad) {
-                if(ssubentidad==null){
+                if (ssubentidad == null) {
                     formulariobotones.recordError("Tiene que seleccionar una Sub-Entidad");
                     return UnidadEjecutoraZone.getBody();
-                }
-                else{
+                } else {
                     entidad = ssubentidad;
                 }
             } else {
-                if(sentidad==null){
+                if (sentidad == null) {
                     formulariobotones.recordError("Tiene que seleccionar una Entidad");
                     return UnidadEjecutoraZone.getBody();
-                }
-                else{
+                } else {
                     entidad = sentidad;
-                }                
+                }
             }
-//            if(entidad!=null && !entidad.equals("")){
-//                System.out.println("entroooo"+entidad+"--");
-//            }
-//            else{
-//                System.out.println("aquiiiiiiiiii"+entidad);
-//                formulariobotones.recordError("Tiene que seleccionar una entidad");
-//                return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
-//            }
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
             if (_zone != null) {
                 return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
