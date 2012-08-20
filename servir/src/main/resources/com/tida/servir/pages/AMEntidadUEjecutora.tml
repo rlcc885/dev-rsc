@@ -523,6 +523,6 @@
         function ocultar() {
         modal.style.display=shade.style.display= 'none';
         };
-    </script>  
+    </script>
 
 </html>

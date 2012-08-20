@@ -59,13 +59,13 @@ public class TrabajadorNuevo extends GeneralPage {
     private Zone unidadOrganicaZone;
     @InjectComponent
     @Property
-    private Zone nuevaUnidadOrganicaZone;
+    private Zone nuevaUnidadZone;
     @InjectComponent
     @Property
     private Zone cargosZone;
-    @InjectComponent
-    @Property
-    private Zone nuevoCargosZone;
+//    @InjectComponent
+//    @Property
+//    private Zone nuevoCargosZone;
 //    @InjectComponent
 //    @Property
 //    private Zone botonesZone;
@@ -76,10 +76,10 @@ public class TrabajadorNuevo extends GeneralPage {
     private Form formulariotrabajadornuevo;
 //    @Component(id = "formulariounidadorganica")
 //    private Form formulariounidadorganica;
-//    @Component(id = "formularionuevaunidadorganica")
-//    private Form formularionuevaunidadorganica;
-//    @Component(id = "formulariocargo")
-//    private Form formulariocargo;
+    @Component(id = "formularionuevaunidadorganica")
+    private Form formularionuevaunidadorganica;
+//    @Component(id = "formulariotipovinculo")
+//    private Form formulariotipovinculo;
 //    @Component(id = "formularionuevocargo")
 //    private Form formularionuevocargo;
 //    @Component(id = "formulariobotones")
@@ -110,15 +110,15 @@ public class TrabajadorNuevo extends GeneralPage {
     private Cargoxunidad ncargo;
     //Variables
     private List<String> tiposDoc = new ArrayList();
-    @Property
-    @Persist
-    private boolean bUOrganica;
+//    @Property
+//    @Persist
+//    private boolean bUOrganica;
     @Persist
     @Property
     private String nuevaUOrganica;
-    @Property
-    @Persist
-    private boolean bCargo;
+//    @Property
+//    @Persist
+//    private boolean bCargo;
     @Persist
     @Property
     private String nuevoCargo;
@@ -171,8 +171,8 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     @SetupRender
     void initializeValue() {
-        bUOrganica = false;
-        bCargo = false;
+//        bUOrganica = false;
+//        bCargo = false;
         //nuevo=new Trabajador();
         unidadorganica = null;
         nuevaunidadorganica = new UnidadOrganica();
@@ -212,6 +212,7 @@ public class TrabajadorNuevo extends GeneralPage {
         }
     }
 
+    @Log
     void buscarlegajo() {
         Criteria c = session.createCriteria(Legajo.class);
         c.add(Restrictions.eq("trabajador", actual));
@@ -259,111 +260,114 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<LkCargosDisponibles>(list, LkCargosDisponibles.class, "den_cargo", "id", _access);
     }
 
-    void onSelectedFromAgregarUO() {
-        elemento = 5;
-    }
-
+//    void onSelectedFromAgregarUO() {
+//        elemento = 5;
+//    }
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {
-        if (elemento == 5) {
-            System.out.println("entroo aaa");
-            System.out.println("entroo aaa" + nuevaUOrganica);
-            if (nuevaUOrganica == null) {
-                System.out.println("entroo bbbb");
-                envelope.setContents("No puede agregar una Unidad Organica vacia");
-                elemento = 0;
-                bUOrganica = false;
-            } else {
-                System.out.println("entroo ccc");
-                nuevaunidadorganica = new UnidadOrganica();
-                nuevaunidadorganica.setDen_und_organica(nuevaUOrganica);
-                nuevaunidadorganica.setNivel(1);
-                nuevaunidadorganica.setEntidad(oi);
-                nuevaunidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
-                session.saveOrUpdate(nuevaunidadorganica);
-                envelope.setContents(helpers.Constantes.EUE_EXITO);
-                envelope.setContents("Se creo la Unidad Organica con éxito.");
-                elemento = 0;
-                bUOrganica = false;
-            }
+//        if (elemento == 5) {
+        System.out.println("entroo aaa");
+        System.out.println("entroo aaa" + nuevaUOrganica);
+        if (nuevaUOrganica == null) {
+//                System.out.println("entroo bbbb");
+            //envelope.setContents("No puede agregar una Unidad Organica vacia");
+            formulariotrabajadornuevo.recordError("No puede agregar una Unidad Organica vacia.");
+//                elemento = 0;
+//                bUOrganica = false;
+//                return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
+//                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
         } else {
-            if (bUOrganica) {
-                bUOrganica = false;
-            } else {
-                bUOrganica = true;
-            }
+            System.out.println("entroo ccc");
+            unidadorganica = new UnidadOrganica();
+            unidadorganica.setDen_und_organica(nuevaUOrganica);
+            unidadorganica.setNivel(1);
+            unidadorganica.setEntidad(oi);
+            unidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
+            session.saveOrUpdate(unidadorganica);
+            envelope.setContents(helpers.Constantes.EUE_EXITO);
+            envelope.setContents("Se creo la Unidad Organica con éxito.");
+//                elemento = 0;
+//                bUOrganica = false;
         }
+//        } else {
+//            if (bUOrganica) {
+//                bUOrganica = false;
+//            } else {
+//                bUOrganica = true;
+//            }
+//        }
 
-        return new MultiZoneUpdate("nuevaUnidadOrganicaZone", nuevaUnidadOrganicaZone.getBody())
-                .add("mensajesZone", mensajesZone.getBody())
-                .add("unidadOrganicaZone", unidadOrganicaZone.getBody());
+        return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
+                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
 
-    void onSelectedFromAgregarCargo() {
-        elemento = 6;
-    }
-
+//    void onSelectedFromAgregarCargo() {
+//        elemento = 6;
+//    }
 //    @Log
 //    @CommitAfter
 //    Object onSuccessFromFormulariounidadorganica() {
 //        return new MultiZoneUpdate("nuevaUnidadOrganicaZone", nuevaUnidadOrganicaZone.getBody())
 //                .add("cargosZone", cargosZone.getBody());
 //    }
-
+//    @Log
+//    Object onActionFromNuevaUnidadOrganica() {
+//        bUOrganica = true;
+//        bCargo = false;
+//        return nuevaUnidadCargoZone.getBody();
+//    }
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevocargo() {
-        if (elemento == 6) {
-            if (nuevoCargo != null) {
-                ncargo = new Cargoxunidad();
-                ncargo.setDen_cargo(nuevoCargo);
-                ncargo.setCod_cargo("C9999");
-                ncargo.setUnidadorganica(unidadorganica);
-                ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
-                session.saveOrUpdate(ncargo);
+//        if (elemento == 6) {
+        if (nuevoCargo != null) {
+            ncargo = new Cargoxunidad();
+            ncargo.setDen_cargo(nuevoCargo);
+            ncargo.setCod_cargo("C9999");
+            ncargo.setUnidadorganica(unidadorganica);
+            ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
+            session.saveOrUpdate(ncargo);
 
-                envelope.setContents(helpers.Constantes.EUE_EXITO);
-                envelope.setContents("Se creo el Cargo con éxito.");
-                elemento = 0;
-                bCargo = false;
-            } else {
-                envelope.setContents("No puede agregar un cargo vacio");
-                elemento = 0;
-                bCargo = false;
-            }
+            envelope.setContents(helpers.Constantes.EUE_EXITO);
+            envelope.setContents("Se creo el Cargo con éxito.");
+            elemento = 0;
+//            bCargo = false;
         } else {
-            if (bCargo) {
-                bCargo = false;
-            } else {
-                bCargo = true;
-            }
+            envelope.setContents("No puede agregar un cargo vacio");
+            elemento = 0;
+//            bCargo = false;
         }
+//        } else {
+//            if (bCargo) {
+//                bCargo = false;
+//            } else {
+//                bCargo = true;
+//            }
+//        }
 
-        return new MultiZoneUpdate("nuevoCargosZone", nuevoCargosZone.getBody())
-                .add("mensajesZone", mensajesZone.getBody())
+        return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody())
                 .add("cargosZone", cargosZone.getBody());
 
     }
 
+//    @Log
+//    void onPrepareFromformulariotrabajadornuevo() {
+//        if (nuevo == null) {
+//            nuevo = new Trabajador();
+//        }
+//        System.out.println("entro y gravo " + fechaingreso);
+//        System.out.println("entro y gravo2 " + puestoconfianza);
+//        //trabajadorTieneCargoOtraEntidad = false;
+//    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromformulariotrabajadornuevo() {
+//        System.out.println("entro y gravo " + fechaingreso);
+//        System.out.println("entro y gravo2 " + puestoconfianza);
+//        return trabajadorNuevoZone.getBody();
+//    }
     @Log
-    void onPrepareFromformulariotrabajadornuevo() {
-        if (nuevo == null) {
-            nuevo = new Trabajador();
-        }
-        System.out.println("entro y gravo " + fechaingreso);
-        System.out.println("entro y gravo2 " + puestoconfianza);
-        //trabajadorTieneCargoOtraEntidad = false;
-    }
-
-    @Log
-    @CommitAfter
-    Object onSuccessFromformulariotrabajadornuevo() {
-        System.out.println("entro y gravo " + fechaingreso);
-        System.out.println("entro y gravo2 " + puestoconfianza);
-        return trabajadorNuevoZone.getBody();
-    }
-
     public boolean getDNI() {
         if (nuevo.getTipodiscapacidad().equals("DNI")) {
             return true;
@@ -379,16 +383,18 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
+    @Log
     void onSelectedFromCancel() {
         elemento = 2;
     }
 
+    @Log
     void onSelectedFromReset() {
 
         //===13 agosto
         elemento = 1;
-        bUOrganica = false;
-        bCargo = false;
+//        bUOrganica = false;
+//        bCargo = false;
         unidadorganica = null;
         cargo = null;
         tipovinculo = null;
@@ -402,20 +408,18 @@ public class TrabajadorNuevo extends GeneralPage {
 //    @InjectComponent
 //    private Zone tipovinculoZone;
     // TO-DO FALTA IMPLEMENTAR
-    @Log
-    Object onSuccessFromFormularioBotones() {
-        if (elemento == 1) {
-            //   return "TrabajadorNuevo";
-            return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody())
-                    //                .add("tipoVinculoZone", tipovinculoZone).add("cargosZone",cargosZone)
-                    .add("unidadOrganicaZone", unidadOrganicaZone)
-                    .add("nuevaUnidadOrganicaZone", nuevaUnidadOrganicaZone).add("nuevoCargosZone", nuevoCargosZone);
-        } else {
-            return "Alerta";
-        }
-    }
+//    @Log
+//    Object onSuccessFromFormularioBotones() {
+//        if (elemento == 1) {
+//            //   return "TrabajadorNuevo";
+//            return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody())
+//                    //                .add("tipoVinculoZone", tipovinculoZone).add("cargosZone",cargosZone)
+//                    .add("unidadOrganicaZone", unidadOrganicaZone);
+//        } else {
+//            return "Alerta";
+//        }
+//    }
     //===============================
-
     @Log
     @CommitAfter
     Object onSuccessFromFormulariotipovinculo() throws ParseException {
@@ -523,19 +527,38 @@ public class TrabajadorNuevo extends GeneralPage {
         return c.list();
     }
 
+    @Log
     void onDNIChanged() {
         nuevo.setNroDocumento(_request.getParameter("param"));
     }
 
+    @Log
     void onNombreChanged() {
         nuevo.setNombres(_request.getParameter("param"));
     }
 
+    @Log
     void onApePatChanged() {
         nuevo.setApellidoPaterno(_request.getParameter("param"));
     }
 
+    @Log
     void onApeMatChanged() {
         nuevo.setApellidoMaterno(_request.getParameter("param"));
+    }
+
+    @Log
+    Object onValueChangedFromunidadorganica() {
+//        if (dato != null && !dato.equals("")) {
+//            if (dato.getValor().equals("NO TIENE") || dato.getValor().equals("")) {
+//                vconadis = true;
+//                actual.setNroCertificadoCONADIS(null);
+//            } else {
+//                vconadis = false;
+//            }
+//        } else {
+//            vconadis = true;
+//        }
+        return _request.isXHR() ? new MultiZoneUpdate("cargosZone", cargosZone.getBody()) : null;
     }
 }

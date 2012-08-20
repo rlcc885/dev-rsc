@@ -17,12 +17,13 @@
             <span class="box-title">Alta de Trabajador</span>
         </div>
         <div class="box">
-            <t:if test="mostrar">
-                <fieldset>
-                    <legend> Datos Personales</legend>
-                    <t:zone t:id="trabajadorNuevoZone">
-                        <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
-                            <t:errors/>
+            <t:zone t:id="trabajadorNuevoZone">
+                <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
+                    <t:errors/>
+                    <t:if test="mostrar">
+                        <fieldset>
+                            <legend> Datos Personales</legend>
+                            
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nuevo_tipoDocumento"/> 
@@ -49,92 +50,85 @@
                                     <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="30" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                             </div>                    
-                        </t:form>
-                    </t:zone>
-                </fieldset>
-            </t:if>
-            <t:form t:id="formulariotipovinculo">
-                <fieldset>
-                    <legend> Asignación de Cargo</legend>
-                    <div class = "f-wrap">
-                        <t:zone t:id="unidadOrganicaZone">
-                            <!--                            <t:form t:id="formulariounidadorganica" zone="nuevaUnidadOrganicaZone">-->
-                            <div class ="f-left">
-                                <t:label for="unidadorganica" />
-                                <input t:type="Select" t:id="unidadorganica" t:value="unidadorganica"   
-                                       model="beanUOrganicas" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:zone="nuevaUnidadOrganicaZone" t:blankOption="ALWAYS" disabled="${bUOrganica}"/>
-                            </div>
-                            <!--                            </t:form>-->
-                        </t:zone>
-                        <t:zone t:id="nuevaUnidadOrganicaZone">
-                            <!--                            <t:form t:id="formularionuevaunidadorganica" zone="nuevaUnidadOrganicaZone">-->
-                            <input t:type="Submit" t:id="nuevaUO" value="|+|" class="button" /> 
-                            <t:if test="bUOrganica">
-                                <div class="f-left">
-                                    <t:label for="unidadorganica2"/>
-                                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="60"/>
-                                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button" />
-                                </div>
-                            </t:if>                        
-                            <!--                            </t:form>-->
-                        </t:zone>
-                        <t:zone t:id="cargosZone">
-                            <!--                            <t:form t:id="formulariocargo" zone="nuevoCargosZone">-->
-                            <div class ="f-left">
-                                <t:label for="cargo"/>
-                                <input t:type="Select" t:id="cargo" t:value="cargo" 
-                                       model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
-                                       t:zone="nuevoCargosZone" t:blankOption="ALWAYS"  disabled="${bCargo}"/>
-                            </div>
-                            <!--                            </t:form>-->
-                        </t:zone>
-                        <t:zone t:id="nuevoCargosZone">
-                            <!--                            <t:form t:id="formularionuevocargo" zone="nuevoCargosZone">-->
-                            <input t:type="Submit" t:id="nuevaCargo" value="|+|" class="button" /> 
-                            <t:if test="bCargo">
+                        </fieldset>
+                    </t:if>
+                    <!--                                    </t:form>
+                    </t:zone>-->
+                    <!--            <t:form t:id="formulariotipovinculo">-->
+                    <fieldset>
+                        <legend> Asignación de Cargo</legend>
+                        <div class = "f-wrap">
+                            <t:zone t:id="unidadOrganicaZone" id="unidadOrganicaZone">
+                                <!--                            <t:form t:id="formulariounidadorganica" zone="nuevaUnidadOrganicaZone">-->
                                 <div class ="f-left">
-                                    <t:label for="cargo2"/>
-                                    <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="60"/>
-                                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button" />
+                                    <t:label for="unidadorganica" />
+                                    <select t:type="Select"
+                                            t:id="unidadorganica"
+                                            t:value="unidadorganica"   
+                                            model="beanUOrganicas"
+                                            t:blankOption="ALWAYS" />
+                                    <!--                                <input t:type="Submit" t:id="nuevaUO" value="..." class="button" />-->
+                                    <a onClick="javascript: mostrar();" class="button">...</a>
+                                    <!--                                <t:actionlink t:id="nuevaUnidadOrganica" 
+                                                  t:zone="nuevaUnidadCargoZone" 
+                                                  onClick="javascript: mostrar();"
+                                                  href="#"
+                                                  t:class="button">...
+                                    </t:actionlink>-->
                                 </div>
-                            </t:if> 
-                            <!--                            </t:form>-->
-                        </t:zone>
-                    </div>
+                                <!--                            </t:form>-->
+                            </t:zone>
+
+                            <t:zone t:id="cargosZone" id="cargosZone">
+                                <!--                            <t:form t:id="formulariocargo" zone="nuevoCargosZone">-->
+                                <div class ="f-right">
+                                    <t:label for="cargo"/>
+                                    <input t:type="Select" t:id="cargo" t:value="cargo" 
+                                           model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
+                                           t:blankOption="ALWAYS"/>
+                                    <!--                                <input t:type="Submit" t:id="nuevaCargo" value="..." class="button" />-->
+                                    <a onClick="javascript: mostrarCargo();" class="button">...</a>
+                                </div>
+                                <!--                            </t:form>-->
+                            </t:zone>
+                        
+                        </div>
                 
-                    <div class = "f-wrap">
-                        <!--                    <t:zone t:id="tipoVinculoZone">-->
-                        <div class ="f-left">
-                            <t:label for="tipovinculo" />
-                            <input t:type="Select" t:id="tipovinculo" t:value="tipovinculo"   
-                                   model="beanTipoVinculo"
-                                   t:validate="required" t:blankOption="ALWAYS"/>
+                        <div class = "f-wrap">
+                            <!--                    <t:zone t:id="tipoVinculoZone">-->
+                            <div class ="f-left">
+                                <t:label for="tipovinculo" />
+                                <input t:type="Select" t:id="tipovinculo" t:value="tipovinculo"   
+                                       model="beanTipoVinculo"
+                                       t:validate="required" t:blankOption="ALWAYS"/>
+                            </div>
+                            <div class="f-left">
+                                <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
+                                <input t:type="Checkbox" t:id="puestoconfianza"
+                                       t:value="puestoconfianza" />
+                            </div>                           
+                            <div class="f-left">	
+                                <t:label for="fecha_ingreso"/>
+                                <input t:type="TextField" t:id="fecha_ingreso" t:value="fechaingreso" t:validate="required" />
+                                <!--                                <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotipovinculo.fecha_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>-->
+                            </div>
                         </div>
+                    </fieldset>
+                    <div class="actions">
                         <div class="f-left">
-                            <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
-                            <input t:type="Checkbox" t:id="puestoconfianza"
-                                   t:value="puestoconfianza" />
-                        </div>                           
-                        <div class="f-left">	
-                            <t:label for="fecha_ingreso"/>
-                            <input t:type="TextField" t:id="fecha_ingreso" t:value="fechaingreso" t:validate="required" />
-                            <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariotipovinculo.fecha_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>
+                            (*) Campos Obligatorios
                         </div>
+                        <!--                            <div t:type="zone" t:id="botonesZone" >-->
+                        <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/>
+                        <!--                            </div> -->
                     </div>
-                </fieldset>
-                <div class="actions">
-                    <div class="f-left">
-                        (*) Campos Obligatorios
-                    </div>
-                    <!--                            <div t:type="zone" t:id="botonesZone" >-->
-                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
-                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
-                    <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/>
-                    <!--                            </div> -->
-                </div>
                     
-            </t:form>
+                    <!--            </t:form>-->
+
+                </t:form>
+            </t:zone>
         </div>
                 
         <!--                    </t:form>
@@ -177,4 +171,51 @@
     <t:if test="${vformulario}" negate="true" >
         <div class="no-info">No tiene permisos suficientes</div>
     </t:if>
+    
+    <div id="shade"></div>
+    <div id="modalNuevaUnidadOrganica">
+        <t:zone t:id="nuevaUnidadZone">
+            <t:form t:id="formularionuevaunidadorganica" t:zone="nuevaUnidadZone">
+                <t:errors/>
+                <div class="f-wrap">
+                    <t:label for="unidadorganica2"/>
+                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="65"/>
+                </div>
+                <div class ="f-wrap">
+                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button f-right" onClick="javascript: ocultar();"/>
+                    <a onClick="javascript: ocultar();" class="button f-right">Cancelar</a>
+                </div>
+            </t:form>
+        </t:zone>
+    </div>
+    <div id="modalNuevoCargo">
+        <t:form t:id="formularionuevocargo" zone="modalNuevoCargo">
+            <div class ="f-wrap">
+                <t:label for="cargo2"/>
+                <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="65"/>
+            </div>
+            <div class ="f-wrap">
+                <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right" onClick="javascript: ocultarCargo();"/>
+                <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
+            </div>
+        </t:form>
+    </div>
+    <script type="text/javascript">
+        var modal= document.getElementById('modalNuevaUnidadOrganica');
+        var modalCargo= document.getElementById('modalNuevoCargo');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+        function mostrarCargo() {
+        modalCargo.style.display=shade.style.display= 'block';
+        };
+        function ocultarCargo() {
+        modalCargo.style.display=shade.style.display= 'none';
+        };
+    </script>
+    
 </html>

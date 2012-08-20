@@ -582,6 +582,9 @@ form th {
 }*/
 
 /* Para modificar el trabajador */
+#unidadOrganicaZone select, #cargosZone select{
+    width:408px;
+}
 #basicosTrabajador {
     padding: 50px;
     padding-top:10px;
@@ -1527,7 +1530,7 @@ DIV.t-data-grid {
     font-weight: bold;
 }
 
-#shade, #modal { display: none; }
+#shade, #modal,#modalNuevaUnidadOrganica,#modalNuevoCargo { display: none; }
 #shade { 
     position: fixed; 
     z-index: 100; 
@@ -1548,6 +1551,19 @@ DIV.t-data-grid {
     height: 400px; 
     margin-top:-200px; 
     margin-left:-400px;
+    padding: 10px; 
+    background: #fff; 
+    color: #333;
+}
+#modalNuevaUnidadOrganica,#modalNuevoCargo { 
+    position: fixed; 
+    z-index:1002; 
+    top: 50%; 
+    left: 50%; 
+    width: 350px; 
+    height: 70px; 
+    margin-top:-35px; 
+    margin-left:-175px;
     padding: 10px; 
     background: #fff; 
     color: #333;
