@@ -28,7 +28,7 @@
                 <fieldset>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <t:label for="bnivelGobierno">Nivel de Gobierno</t:label>
+                            <t:label for="bnivelGobierno">Nivel de Gobierno:</t:label>
                             <select t:type="Select" t:id="bnivelGobierno" t:value="bnivelGobierno" model="NivelGobierno" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:120px;"/>
                         </div>
                         <div class="f-left"> 
@@ -49,11 +49,12 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for ="busdenominacion"/>
-                            <input t:type="TextField" t:id="busdenominacion" t:value="busdenominacion" t:validate="maxlength=255" size="75"/>
+                            <input t:type="TextField" t:id="busdenominacion" t:value="busdenominacion" t:validate="maxlength=255" size="75"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="busdenominacionChanged"  t:zone="busquedasubcombosZone"/>
                         </div>
                         <div class="f-left">
                             <t:label for ="busestado"/>
-                            <input t:type="Select" t:id="busestado" t:value="busestado"  model="literal:Activo,Inactivo" />
+                            <input t:type="Select" t:id="busestado" t:value="busestado"  model="literal:Activo,Inactivo" t:zone="busquedasubcombosZone" />
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -89,8 +90,9 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for ="bussubdenominacion"/>
-                            <input t:type="TextField" t:id="bussubdenominacion" t:clientEvent="keyup"
-                                   t:value="bussubdenominacion" t:validate="maxlength=255" size="75"/>
+                            <input t:type="TextField" t:id="bussubdenominacion"
+                                   t:value="bussubdenominacion" t:validate="maxlength=255" size="75"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bussubdenominacionChanged"  t:zone="busquedasubcombosZone"/>
                         </div>
                         <div class="f-left">
                             <t:label for ="bussubestado"/>

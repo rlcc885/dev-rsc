@@ -475,6 +475,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bussubdenominacion = "";
         ubigeobusSubEntidadUE = new Ubigeo();
         bBuscaEntidad = false;
+        busestado=null;
     }
 
     @Log
@@ -504,6 +505,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bussubdenominacion = "";
         ubigeobusSubEntidadUE = new Ubigeo();
         bBuscaSubEntidad = false;
+        bussubestado=null;
     }
 
     @Log
@@ -1101,6 +1103,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onBussubdenominacionChanged() {
         bussubdenominacion = _request.getParameter("param");
+    }
+    
+    @Log
+    void onBusdenominacionChanged() {
+        busdenominacion = _request.getParameter("param");
     }
 
     private void limpiar_formulario() {
