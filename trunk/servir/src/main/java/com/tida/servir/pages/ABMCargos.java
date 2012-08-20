@@ -71,6 +71,9 @@ public class ABMCargos extends GeneralPage {
     @Property
     @Persist
     private String errorBorrar;
+    @Property
+    @Persist
+    private String cantidadPuestos;
     /*
      * @Component(id = "formularioselectorgano") private Form _selectOrganoForm;
      */
@@ -657,7 +660,7 @@ public class ABMCargos extends GeneralPage {
             cargo.setNivelRemunerativo(regimengruponivel.getNivelRemunerativo());
             cargo.setGrupoOcupacional(regimengruponivel.getGrupo());
             cargo.setRegimenlaboral(regimengruponivel.getRegimen());
-
+            cargo.setCtd_puestos_total(Integer.parseInt(cantidadPuestos));
             cargo.setEstado(Cargoxunidad.ESTADO_ALTA);
 //        session.saveOrUpdate(cargo);
             session.merge(cargo);

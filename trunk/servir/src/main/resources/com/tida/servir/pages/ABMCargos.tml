@@ -192,11 +192,11 @@
                             <div class="f-left">
                                 <label>* Cantidad de Puestos/Plazas</label>
                                 <input t:type="TextField" t:id="cargo_ctd_puestos_total"
-                                       t:value="cargo.ctd_puestos_total" size="20" t:validate="required,regexp" t:disabled="${vdetalle}"/>
+                                       t:value="cantidadPuestos" size="3" t:validate="max=999,min=1,required,regexp" t:disabled="${vdetalle}"/>
                             </div>
                         </div>  
                     </div>
-                    <div class="actioncargo">
+                    <div class="actions">
                         <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <t:if test="vNoedita">
