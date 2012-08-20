@@ -399,25 +399,34 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    @Log
-    void onSelectedFromCancel() {
-        elemento = 2;
-    }
+//    @Log
+//    void onSelectedFromCancel() {
+//        elemento = 2;
+//    }
 
-    @Log
-    void onSelectedFromReset() {
-
-        //===13 agosto
-        elemento = 1;
-//        bUOrganica = false;
-//        bCargo = false;
+//    @Log
+//    void onSelectedFromReset() {
+//
+//        //===13 agosto
+//        elemento = 1;
+////        bUOrganica = false;
+////        bCargo = false;
+//        unidadorganica = null;
+//        cargo = null;
+//        tipovinculo = null;
+//        nuevo = new Trabajador();
+//        fechaingreso = "";
+//
+//
+//    }
+@Log
+    Object onReset() {
         unidadorganica = null;
         cargo = null;
         tipovinculo = null;
         nuevo = new Trabajador();
         fechaingreso = "";
-
-
+        return trabajadorNuevoZone.getBody();
     }
 
 //    @Property

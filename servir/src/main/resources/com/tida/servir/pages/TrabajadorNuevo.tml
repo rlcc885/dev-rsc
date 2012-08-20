@@ -121,7 +121,12 @@
                         </div>
                         <!--                            <div t:type="zone" t:id="botonesZone" >-->
                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>
+<!--                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"/>-->
+                        <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="trabajadorNuevoZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Limpiar Formularios
+                            </span> 
+                        </t:eventLink>
 <!--                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm"  t:message="Desea ejecutar esta acción?"/>-->
                         <a t:type="pagelink" page="busqueda" class="button f-right">Cancelar</a>
                         <!--                            </div> -->
