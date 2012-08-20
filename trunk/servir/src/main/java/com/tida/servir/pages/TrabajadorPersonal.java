@@ -1,34 +1,16 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad;
-import java.util.List;
-
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.UsuarioAcceso;
-import com.tida.servir.entities.FormacionProfesional;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
-import helpers.Constantes;
+import com.tida.servir.entities.*;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 /**

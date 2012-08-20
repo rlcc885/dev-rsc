@@ -5,6 +5,8 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.services.SelectIdModelFactory;
 import helpers.Helpers;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
@@ -181,14 +183,28 @@ public class Busqueda extends GeneralPage {
     @Property
     @Persist
     private LkBusquedaTrabajador persons;
+    @Property
+    @Persist
+    private String fechaingresode;
+    @Property
+    @Persist
+    private String fechaingresoa;
+    @Persist
+    @Property
+    private String fecnacimientomenora;
+    @Persist
+    @Property
+    private String fecnacimientomayora;
 
     @Log
-    @SetupRender
-    private void inicio() {
+    private void setupRender() {
         limpiar();
         // MODIFICACION 13 AGOSTO
-         vselect = true;
-        
+        vselect = true;
+        fechaingresode = "";
+        fechaingresoa = "";
+        fecnacimientomenora = "";
+        fecnacimientomayora = "";
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -214,10 +230,9 @@ public class Busqueda extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    public List<String> getSexos() {
-        return Helpers.getValorTablaAuxiliar("SEXO", session);
-    }
-
+//    public List<String> getSexos() {
+//        return Helpers.getValorTablaAuxiliar("SEXO", session);
+//    }
     @Log
     public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
@@ -255,34 +270,86 @@ public class Busqueda extends GeneralPage {
     //WW  private Form formulariobusquedasfiltros;
 
     @Log
-    public List<LkBusquedaTrabajador> getEmpleados() {
+    public List<LkBusquedaTrabajador> getEmpleados() throws ParseException {
 
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
-        c.add(Restrictions.eq("estado",true));
-        c.add(Restrictions.eq("entidad_id",_entidadUE.getId()));
+        c.add(Restrictions.eq("estado", true));
+        c.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
         if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno + "%").ignoreCase()).
-                        add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
+                    add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("apellidoPaterno", "%" + apellidoPaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (apellidoMaterno != null && !apellidoMaterno.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno + "%").ignoreCase()).
-                        add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
+                    add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("apellidoMaterno", "%" + apellidoMaterno.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (nombres != null && !nombres.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + nombres + "%").ignoreCase()).
-                        add(Restrictions.like("nombres", "%" + nombres.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("nombres", "%" + nombres.replaceAll("n", "ñ") + "%").ignoreCase()));
+                    add(Restrictions.like("nombres", "%" + nombres.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("nombres", "%" + nombres.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (nroDocumento != null && !nroDocumento.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + nroDocumento + "%").ignoreCase()).
-                        add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
-                        add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
+                    add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
+                    add(Restrictions.like("nrodocumento", "%" + nroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         if (valdocumentoide != null && !valdocumentoide.equals("")) {
             c.add(Restrictions.eq("documentoidentidad_id", valdocumentoide.getId()));
         }
+
+        if (sexo != null && !sexo.equals("")) {
+            c.add(Restrictions.eq("sexo", sexo));
+        }
+        if (valTipoDiscapacidad != null && !valTipoDiscapacidad.equals("")) {
+            c.add(Restrictions.eq("tipodiscapacidad_id", valTipoDiscapacidad.getId()));
+        }
+
+        if (valestadocivil != null && !valestadocivil.equals("")) {
+            c.add(Restrictions.eq("estadocivil_id", valestadocivil.getId()));
+        }
+
+        if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
+            c.add(Restrictions.eq("regimenlaboral_id", valregimenlaboral.getId()));
+        }
+        if (valunidadorganica != null && !valunidadorganica.equals("")) {
+            c.add(Restrictions.eq("unidadorganica_id", valunidadorganica.getId()));
+        }
+
+        if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
+            c.add(Restrictions.eq("nivelinstruccion_id", valnivelinstruccion.getId()));
+        }
+        if (valformacionprofe != null && !valformacionprofe.equals("")) {
+            c.add(Restrictions.eq("formacionprofesional_id", valformacionprofe.getId()));
+        }
+        java.util.Date date = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
+//        Date convertedDate = dateFormat.parse(dateString); 
+        Date fecha;
+        if (fechaingresode != null && !fechaingresode.equals("")) {
+//            fecha = sdf.format(fechadeingresodesdea);
+            fecha = dateFormat.parse(fechaingresode);
+//            consulta += " AND S1.FEC_INICIO>(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+            c.add(Restrictions.eq("fechainicio", fecha));
+        }
+//        if (fechadenacimientomayora != null) {
+//            fecha = sdf.format(fechadenacimientomayora);
+//            consulta += " AND S9.FECHANACIMIENTO>=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//        }
+//
+//        if (fechadenacimientomenora != null) {
+//            fecha = sdf.format(fechadenacimientomenora);
+//            consulta += " AND S9.FECHANACIMIENTO<=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//        }
+//        
+//
+//        if (fechadeingresohastaa != null) {
+//            fecha = sdf.format(fechadeingresohastaa);
+//            consulta += " AND S1.FEC_INICIO< (select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
+//
+//        }
         return c.list();
 
 //        String consulta = "SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "
@@ -390,7 +457,6 @@ public class Busqueda extends GeneralPage {
     void onSelectedFromBorrarBusquedasA() {
         resetBusquedas = true;
         //reseteo el formulario
-
     }
 
     @Log
@@ -422,8 +488,8 @@ public class Busqueda extends GeneralPage {
         if (resetBusquedas) {
             limpiar();
             formulariobusquedaA.clearErrors();
-        }
-        if (resetBusquedas) {
+//        }
+//        if (resetBusquedas) {
             resetBusquedas = false;
             return new MultiZoneUpdate("busquedaA", busquedaA);
         } else {
@@ -441,10 +507,9 @@ public class Busqueda extends GeneralPage {
         if (resetBusquedas) {
             limpiar();
             formulariobusquedaB.clearErrors();
-        }
-        if (resetBusquedas) {
+//        }
+//        if (resetBusquedas) {
             resetBusquedas = false;
-
             return new MultiZoneUpdate("busquedaB", busquedaB);
         } else {
             return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());

@@ -22,11 +22,11 @@
                 <a href="#"> Búsqueda Avanzada</a>
             </li>
         </ul>
-         
-        <div id="busquedas" class="pane" >                
-            <div t:type="zone" t:id="busquedaA" t:update="show"> 
+
+        <div id="busquedas" class="pane" >
+            <div t:type="zone" t:id="busquedaA" t:update="show">
                 <t:form t:id="formulariobusquedaA" zone="empleadoszone">
-                    <div class="box">
+                    <fieldset>
                         <!-- t:validate="required,minlength=1" -->
                         <div id="filtrosnombres" class="f-wrap">
                             <div class="f-left">
@@ -41,39 +41,39 @@
                                 <t:label for="nombres"/>
                                 <input t:type="TextField" t:id="nombres" size="30"/>
                             </div>
-                        </div> <!-- filtrosnombres -->                 
+                        </div> <!-- filtrosnombres -->
                         <div id="filtrosdoc">
                             <div class="f-left">
                                 <label>Tipo Documento</label>
                                 <select t:type="Select" t:id="documentoide" t:value="valdocumentoide" model="documentoide" />
                             </div>
-                        
+
                             <div class="f-left">
                                 <t:label for="nroDocumento"/>
-                                <input t:type="TextField" t:id="nroDocumento" t:validate="regexp" size="30"/>
+                                <input t:type="TextField" t:id="nroDocumento" size="30"/>
                             </div>
-                        
+
                         </div> <!-- filtrosdoc -->
-                    </div>
-                    <br class="clear" />
+
+                    </fieldset>
                     <t:if test="vselect">
-                        <div class="actions f-right">
-                            <input t:id="buscarsubmitA" t:type="submit" value="Buscar" class="button"/>
-                            <input t:id="borrarbusquedasA" t:type="submit" value="Limpiar Formulario" class="button"/>
+                        <div class="actions">
+                            <input t:id="buscarsubmitA" t:type="submit" value="Buscar" class="button f-right"/>
+                            <input t:id="borrarbusquedasA" t:type="submit" value="Limpiar Formulario" class="button f-right"/>
                         </div>
                     </t:if>
-                </t:form>  
+                </t:form>
             </div>
             <br class="clear" />
-        </div>  
-        <div id="mainfiltros" class="pane">           
+        </div>
+        <div id="mainfiltros" class="pane">
             <div t:type="zone" t:id="busquedaB">
-                <t:form t:id="formulariobusquedaB" zone="empleadoszone">  
-                    <div class="box"> 
+                <t:form t:id="formulariobusquedaB" zone="empleadoszone">
+                    <fieldset>
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
                                 <t:label for="filtro_sexo"/>
-                                <select t:type="Select" t:id="filtro_sexo"  t:model="sexos" t:value="sexo" />
+                                <select t:type="Select" t:id="filtro_sexo"  t:model="literal:M=Masculino,F=Femenino" t:value="sexo" />
                             </div>
                             <div class="filtros">
                                 <t:label for="tipodiscapacidad"/>
@@ -83,7 +83,7 @@
                                 <t:label for="filtroestadocivil"/>
                                 <input t:type="Select" t:id="filtroestadocivil" t:value="valestadocivil" model="estadocivil" />
                             </div>
-                        </div>          
+                        </div>
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
                                 <label>Regimen Laboral</label>
@@ -92,8 +92,8 @@
                             <div class="filtros">
                                 <label>Unidad Orgánica</label>
                                 <select t:type="select" t:id="select_unidadOrganica"
-                                    model="beanUOrganicas" encoder="beanUOrganicas" value="valunidadorganica"
-                                    onChange="this.form.fire()" t:zone="busquedaB"/>
+                                        model="beanUOrganicas" encoder="beanUOrganicas" value="valunidadorganica"
+                                        onChange="this.form.fire()" t:zone="busquedaB"/>
                             </div>
                             <div class="filtros">
                                 <t:label for="filtronivelinstruccion"/>
@@ -108,13 +108,11 @@
                                     <legend>Ingreso a la Institución</legend>
                                     <div class="f-wrap">
                                         <label>Desde</label>
-                                        <input t:type="DateField" t:id="fechaingresodesde"
-                                           t:value="fechadeingresodesdea" size="30" />
-                                    </div>                                            
+                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" t:validate="regexp" />
+                                    </div>
                                     <div class="f-wrap">
                                         <label>Hasta</label>
-                                        <input t:type="DateField" t:id="fechaingresohasta"
-                                           t:value="fechadeingresohastaa" size="30" />
+                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoa" size="30" t:validate="regexp" />
                                     </div>
                                 </fieldset>
                             </div>
@@ -123,32 +121,29 @@
                                     <legend>Fecha de Nacimiento</legend>
                                     <div class="f-wrap">
                                         <label> Mayor o igual a</label>
-                                        <input t:type="DateField" t:id="fechadenacimientomayora"
-                                           t:date="fechadenacimientomayora" size="30" />
+                                        <input t:type="TextField" t:id="fechadenacimientomayora" t:value="fecnacimientomayora" size="30" t:validate="regexp"/>
                                     </div>
                                     <div class="f-wrap">
                                         <label> Menor o igual a </label>
-                                        <input t:type="DateField" t:id="fechadenacimientomenora"
-                                           t:date="fechadenacimientomenora" size="30" />
+                                        <input t:type="TextField" t:id="fechadenacimientomenora" t:value="fecnacimientomenora" size="30" t:validate="regexp"/>
                                     </div>
                                 </fieldset>
                             </div>
                         </div>
-                        <br class="clear" />
-                    </div>       
+                    </fieldset>
                     <t:if test="vselect">
-                        <div class="actions f-right">  
-                            <input t:id="buscarsubmitB" t:type="submit" value="Buscar" class="button"/>
-                            <input t:id="borrarbusquedasB" t:type="submit" value="Limpiar Formulario" class="button"/>
+                        <div class="actions">
+                            <input t:id="buscarsubmitB" t:type="submit" value="Buscar" class="button f-right"/>
+                            <input t:id="borrarbusquedasB" t:type="submit" value="Limpiar Formulario" class="button f-right"/>
                         </div>
                     </t:if>
                 </t:form>
             </div>
             <br class="clear" />
-        </div>               
+        </div>
 
     </div>
-    
+
     <script>
         <!--
         // perform JavaScript after the document is scriptable.
@@ -164,38 +159,50 @@
                 <t:zone t:id="empleadoszone">
 <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
 <!--                        <t:errors/> -->
-                        <t:grid source="empleados" rowsPerPage="15" row="persons" t:add="Acciones"
-                                pagerPosition="bottom" inPlace="true">
-                            <t:parameter name="empty">
-                                <div class="no-info">
-                                    No se encontraron trabajadores con el criterio seleccionado.
-                                    O bien no hay trabajadores.
-                                </div>
-                            </t:parameter>
-                            <p:accionesCell>
-                                <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="persons.id" href="#">Personales</a>
-                                |
-                                <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="persons.id" href="#">Familiares</a>
-                                |
-                                <a t:type="pagelink" t:page="Meritos" t:context="persons.id" href="#">Laborales</a>
-                                |
-                                <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
-                            </p:accionesCell>
-                        </t:grid>
+                    <t:grid source="empleados"
+                            rowsPerPage="15"
+                            row="persons"
+                            t:add="Legajo"
+                            pagerPosition="bottom"
+                            inPlace="true"
+                            t:exclude="entidad_id,estado,id,nombretrabajador,validado,entidad,unidadorganica,cargo,estadocargo,documentoidentidad_id,sexo,tipodiscapacidad_id,estadocivil_id,regimenlaboral_id,unidadorganica_id,nivelinstruccion_id,formacionprofesional_id,fechainicio,fechafin,fechanacimiento,"
+                            t:reorder="descdocumentoidentidad,nrodocumento,nombres">
+                        <t:parameter name="empty">
+                            <div class="no-info">
+                                No se encontraron trabajadores con el criterio seleccionado.
+                                O bien no hay trabajadores.
+                            </div>
+                        </t:parameter>
+                        <p:legajoCell>
+                            <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="persons.id" href="#">Personales</a>
+                            |
+                            <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="persons.id" href="#">Familiares</a>
+                            |
+                            <a t:type="pagelink" t:page="Meritos" t:context="persons.id" href="#">Laborales</a>
+                            |
+                            <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
+                        </p:legajoCell>
+                    </t:grid>
 <!--                    </t:form>-->
                 </t:zone>
             </div>
             <br/>
-    
+
         </div> <!-- Grillas-busqueda -->
     </t:if>
 
     <br/>
     <br/>
 
-    <SCRIPT LANGUAGE="JavaScript"> 
-        function mostrarEsconder() { 
+    <SCRIPT LANGUAGE="JavaScript">
+        function mostrarEsconder() {
         cach.visibility = "visible";
-        } 
+        }
+        jQuery(function() {
+        jQuery('#fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
+        jQuery('#fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
+        jQuery('#fechadenacimientomayora').datepick({dateFormat: 'dd/mm/yyyy'});
+        jQuery('#fechadenacimientomenora').datepick({dateFormat: 'dd/mm/yyyy'});
+        });
     </SCRIPT>
 </html>
