@@ -365,6 +365,7 @@ public class AMUnidadOrganica extends GeneralPage {
         Criteria p;
         p = session.createCriteria(LkBusquedaUnidad.class);
         p.add(Restrictions.eq("unidadorganicaId", uo.getId()));
+        p.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
         // no quiero las que estÃ©n en baja.
         if (p.list().size() > 0) {
             return false;
