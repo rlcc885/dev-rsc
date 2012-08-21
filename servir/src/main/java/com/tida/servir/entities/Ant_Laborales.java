@@ -1,5 +1,6 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
@@ -8,30 +9,29 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  *
  * @author ale
  */
-
 @Entity
 @Table(name = "RSC_ANTECEDENTELABORAL")
-public class Ant_Laborales {
-
+public class Ant_Laborales implements Serializable {
 
     @NonVisual
+    @Id
+    @GeneratedValue
     private Long id;
     private String empresa;
     private String cargo;
-    private String funcion;  
+    private String funcion;
     private String motivocese;
     @Temporal(TemporalType.DATE)
     private Date fec_ingreso;
     @Temporal(TemporalType.DATE)
-    private Date fec_egreso;       
-    private Boolean agregadoTrabajador;    
-    private Boolean validado;        
+    private Date fec_egreso;
+    private Boolean agregadoTrabajador;
+    private Boolean validado;
+    @ManyToOne(optional = false)
     private Trabajador trabajador;
+    @ManyToOne(optional = false)
     private Entidad entidad;
-    
-    
-    @Id
-    @GeneratedValue
+
     public Long getId() {
         return id;
     }
@@ -39,16 +39,17 @@ public class Ant_Laborales {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getEmpresa() {
         return empresa;
     }
 
     public void setEmpresa(String empresa) {
-        if (empresa != null)
+        if (empresa != null) {
             this.empresa = empresa.trim();
+        }
     }
-    
+
     public String getCargo() {
         return cargo;
     }
@@ -64,7 +65,7 @@ public class Ant_Laborales {
     public void setFuncion(String funcion) {
         this.funcion = funcion;
     }
-    
+
     public String getMotivocese() {
         return motivocese;
     }
@@ -72,7 +73,7 @@ public class Ant_Laborales {
     public void setMotivocese(String motivocese) {
         this.motivocese = motivocese;
     }
-    
+
     public Date getFec_egreso() {
         return fec_egreso;
     }
@@ -97,7 +98,7 @@ public class Ant_Laborales {
         this.agregadoTrabajador = agregadoTrabajador;
 
     }
-    
+
     public Boolean getValidado() {
         return validado;
     }
@@ -105,8 +106,7 @@ public class Ant_Laborales {
     public void setValidado(Boolean validado) {
         this.validado = validado;
     }
-    
-    @ManyToOne(optional = false)
+
     public Trabajador getTrabajador() {
         return trabajador;
     }
@@ -114,8 +114,7 @@ public class Ant_Laborales {
     public void setTrabajador(Trabajador trabajador) {
         this.trabajador = trabajador;
     }
-    
-    @ManyToOne(optional = false)
+
     public Entidad getEntidad() {
         return entidad;
     }
@@ -123,8 +122,7 @@ public class Ant_Laborales {
     public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
     }
-    
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -146,7 +144,4 @@ public class Ant_Laborales {
         hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
-
-
 }

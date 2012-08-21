@@ -230,7 +230,7 @@
                             <div>
                                 <t:label for="observacionedit" />
                                 <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
-                                       t:validate="max=150,min=1" 
+                                       t:validate="maxLength=150" 
                                        t:rows="5" 
                                        t:cols="123"/>
                                 <em>(Ingresar 150 caracteres como máximo)</em>

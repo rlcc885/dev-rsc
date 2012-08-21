@@ -65,6 +65,9 @@ public class CursosEditor {
     @InjectComponent
     @Property
     private Zone primeraZone;
+    @InjectComponent
+    @Property
+    private Zone mensajescurso;
 //    @InjectComponent
 //    @Property
 //    private Zone segundaZone;  
@@ -223,14 +226,14 @@ public class CursosEditor {
         } else {
             votro = true;
         }
-        
-         if(cursos.getFechainicio()!=null){
+
+        if (cursos.getFechainicio() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(cursos.getFechainicio());
+            valfec_desde = formatoDeFecha.format(cursos.getFechainicio());
         }
-        if(cursos.getFechafin()!=null){
+        if (cursos.getFechafin() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_hasta=formatoDeFecha.format(cursos.getFechafin());
+            valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
         }
 
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
@@ -317,25 +320,25 @@ public class CursosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariotercero() {
-        
-        if(valfec_desde!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
+
+        if (valfec_desde != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
             }
-          
-            if(valfec_hasta!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
-                } catch (ParseException ex) {
+        }
+
+        if (valfec_hasta != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_hasta = (Date) formatoDelTexto.parse(valfec_hasta);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
             }
-        
+        }
+
         if (valestudiando != null) {
             if (valestudiando) {
                 vfechahasta = true;
@@ -361,26 +364,26 @@ public class CursosEditor {
             Logger logger = new Logger();
             if (valdenominacion == null) {
                 formlistacursos.recordError("Tiene que ingresar la Denominación");
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
             if (valtipoestudio == null) {
                 formlistacursos.recordError("Tiene que seleccionar el Tipo de Estudio");
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
             if (valcentroestudio == null) {
                 formlistacursos.recordError("Tiene que seleccionar el Centro de Estudio");
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
             if (fecha_desde == null) {
                 formlistacursos.recordError("Tiene que ingresar Fecha de Inicio");
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
             if (fecha_desde.after(new Date())) {
                 formlistacursos.recordError("La fecha de inicio debe ser previa a la fecha actual.");
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
             if (validando() == false) {
-                return listadoZone.getBody();
+                return mensajescurso.getBody();
             }
 
             if (editando) {
@@ -442,7 +445,9 @@ public class CursosEditor {
             formlistacursos.clearErrors();
             envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
         }
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).
+                add("terceraZone", terceraZone.getBody()).
+                add("mensajescurso", mensajescurso.getBody());
     }
 
     boolean validando() {

@@ -1,10 +1,11 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
-import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -206,7 +207,7 @@ public class DatosPersonalesEditor {
 
     @Log
     @CommitAfter
-    Object onSuccessFromFormulariodatospersonales() {
+    Object onSuccessFromFormulariodatospersonales() throws ParseException {
 //        if (elemento == 4) {
 //            return Busqueda.class;
 //        } else if (elemento == 3) {
@@ -302,6 +303,9 @@ public class DatosPersonalesEditor {
             actual.setDomicilioDireccion(domicilioDireccion);
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = dateFormat.parse(fechanacimiento);
+            actual.setFechaNacimiento(fecha);
             session.saveOrUpdate(actual);
             session.flush();
             formulariodatospersonales.clearErrors();
