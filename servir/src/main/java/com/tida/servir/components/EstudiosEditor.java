@@ -470,7 +470,7 @@ public class EstudiosEditor {
             valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
 
     @Log
