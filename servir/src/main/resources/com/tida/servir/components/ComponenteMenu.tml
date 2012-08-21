@@ -23,8 +23,11 @@
         <li  class="sub">
             <a t:type="actionlink" t:id="returnstreamresponse" href="#">Ayuda</a>
         </li>
-        <li  class="sub">
+ <!--       <li  class="sub">
             <a t:type="pagelink" page="Index">Salir</a>
+        </li> -->
+        <li class="sub">
+            <a t:type="eventlink" t:event="salir">Salir</a>
         </li>
     </ul>
     <br style="clear: both;" />
