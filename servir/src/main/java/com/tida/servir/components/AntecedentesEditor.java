@@ -183,7 +183,6 @@ public class AntecedentesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioantlaboral() {
-        formulariomensajesantecedente.clearErrors();
         if (valfec_desde != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -208,7 +207,6 @@ public class AntecedentesEditor {
         if (ant_Laborales.getFec_egreso().before(ant_Laborales.getFec_ingreso()) || ant_Laborales.getFec_egreso().equals(ant_Laborales.getFec_ingreso())) {
             formulariomensajesantecedente.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
             return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("antLaboralZone", antLaboralZone.getBody());
-//            return mensajesZone.getBody();
         } else {
             Logger logger = new Logger();
             ant_Laborales.setTrabajador(actual);
