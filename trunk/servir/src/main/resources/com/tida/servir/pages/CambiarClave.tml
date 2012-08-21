@@ -78,20 +78,21 @@
  
         porcentaje=0;
             
-        var texto = document.getElementById("clave_nueva_1").value;
+        var texto = document.getElementById("clave_nueva_2").value;
         if(tiene_letras(texto)) porcentaje++;   
         if(tiene_numeros(texto)) porcentaje++;  
         if(tiene_pocoscaracteres(texto)) porcentaje++;  
-        if(tiene_caracteres(texto)) porcentaje++;  
-
+        if(tiene_caracteres(texto)) porcentaje++;
+        
         if(porcentaje==0){ 
         document.getElementById("verificacion").value="Complejidad de clave: 0%";
-        document.getElementById("clave_nueva_1").value="";
+        document.getElementById("clave_nueva_2").value="";
         }
-        if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 25%";
-        if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
-        if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 75%";
-        if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 100%";
+        if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 0%";
+        if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 25%";
+        if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 50%";
+        if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 75%";
+        if(porcentaje==5) document.getElementById("verificacion").value="Complejidad de clave: 100%";
         }
 
         function tiene_caracteres(texto){
