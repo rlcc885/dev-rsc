@@ -200,18 +200,26 @@ public class AMUnidadOrganica extends GeneralPage {
 
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getbbeansUO() {
-        String consulta = "SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"
-                + " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"
-                + " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"
-                + " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='" + entidadUE.getId() + "'";
+//        String consulta = "SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"
+//                + " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"
+//                + " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"
+//                + " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='" + entidadUE.getId() + "'";
+//        if (bnivelUO != null) {
+//            consulta += " AND S1.NIVEL='" + (bnivelUO - 1) + "'";
+//        }
+//        consulta += "ORDER BY(DENOMINACION)";
+//        List<LkBusquedaUnidad> list;
+//        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
+//        list = query.list();
+        
+        Criteria c;
+        c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.eq("entidadId", entidadUE.getId()));
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         if (bnivelUO != null) {
-            consulta += " AND S1.NIVEL='" + (bnivelUO - 1) + "'";
-        }
-        consulta += "ORDER BY(DENOMINACION)";
-        List<LkBusquedaUnidad> list;
-        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
-        list = query.list();
-        return new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
+            c.add(Restrictions.eq("nivel", bnivelUO - 1));
+        }        
+        return new GenericSelectModel<LkBusquedaUnidad>(c.list(), LkBusquedaUnidad.class, "denominacion", "id", _access);
     }
 
 

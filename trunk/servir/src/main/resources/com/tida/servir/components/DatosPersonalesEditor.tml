@@ -152,7 +152,7 @@
                         <div class="f-left">
                             <label>Tipo de Discapacidad</label>
                             <input t:type="Select" t:id="tipodiscapacidad"                            
-                                   t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="conadisZone" t:disabled="${vtipodiscapacidad}" t:blankOption="NEVER"/>
+                                   t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="conadisZone" t:disabled="${vtipodiscapacidad}"/>
                         </div>
                         <t:zone t:id="conadisZone" id="conadisZone">
                             <div class="f-left">
