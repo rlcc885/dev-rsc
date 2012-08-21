@@ -13,42 +13,45 @@
                 <t:errors/>
             </t:form>
         </t:zone>
-        <fieldset>          
-            <t:zone t:id="primeraZone">         
-                <t:if test="${vformulario}">          
-                    <t:form t:id="formularioprimero" zone="primeraZone">                
+        <t:zone t:id="primeraZone">         
+            <t:if test="${vformulario}">
+                <t:form t:id="formularioprimero" zone="mensajescurso">
+                    <fieldset>             
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>* Tipo de Estudios</label>
-                                <input t:type="Select" t:id="tipoestudio" model="tipoestudios" t:value="valtipoestudio" onChange="this.form.fire()" t:disabled="${vdetalle}" t:zone="primeraZone"/>
+                                <input t:type="Select" t:id="tipoestudio" model="tipoestudios" 
+                                       t:value="valtipoestudio" t:disabled="${vdetalle}" />
                             </div>
                             <div class="f-left">
                                 <label>* Denominación</label>
-                                <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="70" t:disabled="${vdetalle}"
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denChanged"  t:zone="primeraZone" />
+                                <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="70" t:disabled="${vdetalle}" />
                             </div>               
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label>* Centro de Estudios</label>
-                                <input t:type="Select" t:id="centroestudio" model="centroestudios" t:value="valcentroestudio" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  t:disabled="${vdetalle}" t:zone="primeraZone"/>
+                                <select t:type="Select" t:id="centroestudio" model="centroestudios" 
+                                        t:value="valcentroestudio"
+                                        t:disabled="${vdetalle}" t:zone="centroZone"/>
                             </div>
                             <div class="f-left">
                                 <label>Otro Centro Especificar</label>
-                                <input t:type="TextField" t:id="otrocentro" t:value="valotrocentro" size="30" t:disabled="${votro}"
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otroChanged"  t:zone="primeraZone"/>
-                            </div> 
+                                <t:zone t:id="centroZone" id="centroZone">
+                                    <input t:type="TextField" t:id="otrocentro" t:value="valotrocentro" size="30" t:disabled="${votro}"/>
+                                </t:zone>
+                            </div>
                             <div class="f-left">
                                 <label>Fuera del Pais</label>
-                                <input t:type="Checkbox" t:id="pais" t:value="valfuera" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:disabled="${vdetalle}" t:zone="terceraZone"/>
+                                <input t:type="Checkbox" t:id="pais" t:value="valfuera" t:disabled="${vdetalle}"/>
                             </div>
                         </div>
-                    </t:form>
-                </t:if>
-            </t:zone>
-            <t:zone t:id="terceraZone">
-                <t:if test="${vformulario}">
-                    <t:form t:id="formulariotercero" t:zone="mensajescurso">
+                        <!--                    </t:form>
+                    </t:if>
+                </t:zone>
+                <t:zone t:id="terceraZone">
+                    <t:if test="${vformulario}">
+                        <t:form t:id="formulariotercero" t:zone="mensajescurso">-->
                         <fieldset>
                             <legend>* Periodo</legend>   
                             <div class="f-wrap">
@@ -75,34 +78,34 @@
                             </t:if>
                         </div>
                         <!--<t:if test="${vbotones}">-->
-                            <div class="actions">
-                                <div class="f-left"> (*) Campos Obligatorios </div>
-                                <t:if test="${vbotones}">
-                                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                                </t:if>
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
-                            </div>
+                        <div class="actions">
+                            <div class="f-left"> (*) Campos Obligatorios </div>
+                            <t:if test="${vbotones}">
+                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            </t:if>
+                            <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
+                        </div>
                         <!--</t:if>-->
-                    </t:form>
-                </t:if>
-                <div>
-                    <script>
-                        jQuery(document).ready(function() {
-                        jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
-                        jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
-                        });
-                        function toggleStatus() {
-                        if (jQuery('.idestudiando').is(':checked')) {
-                        jQuery('.fec_fin').attr('disabled', true);
-                        } else {
-                        jQuery('.fec_fin').removeAttr('disabled');
-                        }
-                        }
-                    </script>
-                </div>
-            </t:zone>
-        </fieldset> 
+                    </fieldset> 
+                </t:form>
+            </t:if>
+            <div>
+                <script>
+                    jQuery(document).ready(function() {
+                    jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                    });
+                    function toggleStatus() {
+                    if (jQuery('.idestudiando').is(':checked')) {
+                    jQuery('.fec_fin').attr('disabled', true);
+                    } else {
+                    jQuery('.fec_fin').removeAttr('disabled');
+                    }
+                    }
+                </script>
+            </div>
+        </t:zone>
 
         <div id = "tabla_oi">
             <t:zone t:id="listadoZone">  
@@ -156,14 +159,14 @@
                             </t:if>
                         </p:estadoCell>                       
                         <p:validadoCell>
-<!--                            <t:if test="${vrevisado}"> -->
-                                <t:if test="${listacurso.validado}">
-                                    <label class="datofalse">SI</label>  
-                                </t:if>
-                                <t:if test="${listacurso.validado}" negate="true">
-                                    <label class="datotrue">NO</label>  
-                                </t:if>
-<!--                            </t:if>-->
+                            <!--                            <t:if test="${vrevisado}"> -->
+                            <t:if test="${listacurso.validado}">
+                                <label class="datofalse">SI</label>  
+                            </t:if>
+                            <t:if test="${listacurso.validado}" negate="true">
+                                <label class="datotrue">NO</label>  
+                            </t:if>
+                            <!--                            </t:if>-->
                         </p:validadoCell>                 
                         <t:parameter name="empty">
                             <div class="no-info">No existen registros ingresados</div>
