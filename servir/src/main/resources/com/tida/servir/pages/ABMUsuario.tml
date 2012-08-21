@@ -134,7 +134,7 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="rolUsuarioEdit"/>
-                                <t:select t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit" />
+                                <select t:type="Select" t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit" />
                             </div>
                         </div>
                     </t:form>

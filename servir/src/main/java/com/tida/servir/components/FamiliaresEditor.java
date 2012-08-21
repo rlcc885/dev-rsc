@@ -146,6 +146,27 @@ public class FamiliaresEditor {
     }
 
     @Log
+    void resetRegistro() {
+        familiarActual = new Familiar();
+        bdni = false;
+        bedicion = false;
+        bfechanacimiento = false;
+        valsexo = null;
+        nuevafecha = null;
+    }
+
+    @Log
+    Object onReset() {
+        resetRegistro();
+        return familiaresZone.getBody();
+    }
+
+    @Log
+    Object onCancel() {
+        return "Busqueda";
+    }
+
+    @Log
     @CommitAfter
     Object onSuccessFromFormulariofamiliares() {
 //        if(elemento==3){
@@ -222,6 +243,7 @@ public class FamiliaresEditor {
                         ex.printStackTrace();
                     }
                 }
+                familiarActual.setValidado(false);
                 session.saveOrUpdate(familiarActual);
                 session.flush();
 
@@ -267,34 +289,31 @@ public class FamiliaresEditor {
 
     }
 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormulariobotones() {
-        if (elemento == 1) {
-            familiarActual = new Familiar();
-            bdni = false;
-            bedicion = false;
-            bfechanacimiento = false;
-            valsexo = null;
-            nuevafecha = null;
-            return familiaresZone.getBody();
-        } else if (elemento == 2) {
-            return "Busqueda";
-        } else {
-            return this;
-        }
-
-    }
-
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormulariobotones() {
+//        if (elemento == 1) {
+//            familiarActual = new Familiar();
+//            bdni = false;
+//            bedicion = false;
+//            bfechanacimiento = false;
+//            valsexo = null;
+//            nuevafecha = null;
+//            return familiaresZone.getBody();
+//        } else if (elemento == 2) {
+//            return "Busqueda";
+//        } else {
+//            return this;
+//        }
+//
+//    }
     @Log
     Object onActionFromEditar(Familiar fami) {
-
         familiarActual = fami;
         if (familiarActual.getFechaNacimiento() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             nuevafecha = formatoDeFecha.format(familiarActual.getFechaNacimiento());
         }
-
         if (familiarActual.getSexo() != null) {
             if (familiarActual.getSexo().equalsIgnoreCase("M")) {
                 valsexo = "MASCULINO";
@@ -320,8 +339,18 @@ public class FamiliaresEditor {
     @CommitAfter
     Object onActionFromEliminar(Familiar fami) {
         session.delete(fami);
-
-        envelope.setContents("Familiares eliminados exitosamente.");
-        return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody());
+        envelope.setContents("Familiar eliminado exitosamente.");
+        return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone",familiaresZone.getBody());
     }
+    
+    @Log
+    Object onActionFromEditarSuper(Familiar fami) {
+        return onActionFromEditar(fami);
+    }
+        @Log
+    @CommitAfter
+    Object onActionFromEliminarSuper(Familiar fami) {
+        return onActionFromEliminar(fami);
+    }
+        
 }

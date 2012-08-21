@@ -503,6 +503,8 @@ public class ABMUsuario extends GeneralPage {
         usuario.setLogin(usuariotrabajadoredit.getLogin());
         usuario.setEstado(estadoUsuarioEdit.getId());
         usuario.setRolid(rolUsuarioEdit.getId());
+        System.out.println("==============================================================================");
+        System.out.println(rolUsuarioEdit.getId());
         usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
         usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
         usuario.setTelefono(usuariotrabajadoredit.getTelefono());
@@ -677,5 +679,11 @@ public class ABMUsuario extends GeneralPage {
             //.add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()))
         }
         return c.list();
+    }
+    
+    @Log
+    Object onValueChangedFromRolUsuarioEdit(Rol editRol){
+        rolUsuarioEdit = editRol;
+        return idValidaLogin.getBody();
     }
 }
