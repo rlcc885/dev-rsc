@@ -31,7 +31,7 @@
                         <div id="filtrosnombres" class="f-wrap">
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
-                                <input t:type="TextField" t:id="apellidoPaterno" size="30" class=".pictureInputText"/>
+                                <input t:type="TextField" t:id="apellidoPaterno" size="30"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>

@@ -1,14 +1,15 @@
+
 <html t:type="layout" title="Editar Antecedentes Laborales"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
     <t:content>
         <script type="text/javascript">
-jQuery(function() {
-	jQuery('#fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
-});
-</script>
-            <t:zone t:id="zonaGeneral">
+            jQuery(function() {
+            jQuery('#fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
+            });
+        </script>
+        <t:zone t:id="zonaGeneral">
                         
             <form t:type="form" t:id="formulariodatospersonales" t:zone="zonaGeneral">
                 <t:errors/>
@@ -19,17 +20,17 @@ jQuery(function() {
                         <div class="f-left">
                             <t:label for="nombres"/>
                             <select t:type="TextField" t:id="nombres" t:value="actual.nombres" 
-                        t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                    t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="apellidoPaterno"/>
                             <input t:type="TextField" t:id="apellidoPaterno" t:value="actual.apellidoPaterno" 
-                       t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                   t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                         </div>
                         <div class="f-left">
                             <t:label for="apellidoMaterno"/>
                             <select t:type="TextField" t:id="apellidoMaterno" t:value="actual.apellidoMaterno" 
-                        t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
+                                    t:validate="required" size="34" t:disabled="${vdatospersonales}"/>
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -40,7 +41,7 @@ jQuery(function() {
                         <div class="f-left">
                             <t:label for="nuevo_nroDocumento"/>
                             <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="actual.nroDocumento"
-                       size="34" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
+                                   size="34" t:validate="required, regexp" t:disabled="${vdatospersonales}"/>
                         </div>
                         <div class="f-left">
                             <label>Sexo</label>
@@ -59,7 +60,7 @@ jQuery(function() {
                         <div class="f-left">
                             <label>* Fecha de Nacimiento</label>
                             <input t:type="TextField" t:id="fechaNacimiento" t:clientId="fechaNacimiento"
-                                   t:value="fechanacimiento" t:validate="required" size="30" t:disabled="${vdatospersonales}"/>
+                                   t:value="fechanacimiento" t:validate="required" size="30" t:disabled="${vdatospersonales}" class="pictureInputDate"/>
 <!--                            <input t:type="TextField" t:id="fec_ingreso" id="fec_ingreso" t:value="valfec_desde"  size="25" />-->
                         </div>
                     </div>
@@ -70,34 +71,34 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Email Personal</label>
                             <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="34" t:disabled="${vdatosubicacion}"
-                       t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="epersonalChanged" t:zone="zonaGeneral"/>
+                                   t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="epersonalChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>Email Laboral</label>
                             <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="34" t:disabled="${votros}"
-                       t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="elaboralChanged" t:zone="zonaGeneral"/>
+                                   t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="elaboralChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>RUC</label>
                             <input t:type="TextField" t:id="numeroRUC" t:value="actual.nroRUC" size="34" t:disabled="${vruc}" t:validate="regexp"
-                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zonaGeneral"/>
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zonaGeneral"/>
                         </div> 
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Teléfono Celular</label>
                             <input t:type="TextField" t:id="numeroc" t:value="actual.telefonocelular" size="34" t:disabled="${vdatosubicacion}"
-                       t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="tcelularChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="tcelularChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>Teléfono Fijo</label>
                             <input t:type="TextField" t:id="numerof" t:value="actual.telefonofijo" size="34" t:disabled="${vdatosubicacion}"
-                       t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="tfijoChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="tfijoChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>RNP - OSCE</label>
                             <input t:type="TextField" t:id="ocse" t:value="actual.codigoOSCE" size="34" t:disabled="${votros}"
-                       t:validate="maxlength=50" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rnpChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=50" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rnpChanged" t:zone="zonaGeneral"/>
                         </div>
                     </div>
                 </fieldset>
@@ -115,7 +116,7 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Otros Especificar</label>
                             <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="34" t:disabled="${votros}"
-                       t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otraformacionChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otraformacionChanged" t:zone="zonaGeneral"/>
                         </div>
                     </div>
                 </fieldset>
@@ -125,24 +126,24 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Contactar a</label>
                             <input t:type="TextField" t:id="emergencianombre" t:value="actual.emergenciaNombre" size="34" t:disabled="${vemergencia}"
-                                     t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="contactarChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="contactarChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>Dirección</label>
                             <input t:type="TextField" t:id="emergenciadireccion" t:value="actual.emergenciaDomicilio" size="34" t:disabled="${vemergencia}"
-                                     t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionemeChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionemeChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>Teléfono Alternativo 1</label>
                             <input t:type="TextField" t:id="emergenciatelefono1" t:value="actual.emergenciaTelefonoAlternativo1" size="34" t:disabled="${vemergencia}"
-                                     t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="talternativopChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="talternativopChanged" t:zone="zonaGeneral"/>
                         </div>
 <!--                    </div>
                     <div class="f-wrap">                        -->
                         <div class="f-left">
                             <label>Teléfono Alternativo 2</label>
                             <input t:type="TextField" t:id="emergenciatelefono2" t:value="actual.emergenciaTelefonoAlternativo2" size="34" t:disabled="${vemergencia}"
-                                     t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="talternativosChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="talternativosChanged" t:zone="zonaGeneral"/>
                         </div>
                     </div>
                 </fieldset>
@@ -152,19 +153,19 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Tipo de Discapacidad</label>
                             <input t:type="Select" t:id="tipodiscapacidad"                            
-                                 t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="zonaGeneral" t:disabled="${vtipodiscapacidad}"/>
+                                   t:value="actual.tipodiscapacidad" model="tipodiscapacidades" t:zone="conadisZone" t:disabled="${vtipodiscapacidad}" t:blankOption="NEVER"/>
                         </div>
                         <t:zone t:id="conadisZone" id="conadisZone">
-                        <div class="f-left">
-                            <label>Número CONADIS</label>
-                            <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="34"
-                                 t:validate="regexp,maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="conadisZone" t:disabled="${vconadis}"/>                            
-                        </div>
+                            <div class="f-left">
+                                <label>Número CONADIS</label>
+                                <input t:type="TextField" t:id="nroconadis" t:value="valconadis" size="34"
+                                   t:validate="regexp,maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="conaChanged"  t:zone="conadisZone" t:disabled="${vconadis}"/>                            
+                            </div>
                         </t:zone>
                         <div class="f-left">
                             <label>Código ESSALUD</label>
                             <input t:type="TextField" t:id="essalud" t:value="actual.esSalud" size="30"
-                                 t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="zonaGeneral" t:disabled="${vessalud}"/>
+                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="essaChanged"  t:zone="zonaGeneral" t:disabled="${vessalud}"/>
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -175,24 +176,20 @@ jQuery(function() {
                         <div class="f-left">                                
                             <label>Nombre de EPS</label>   
                             <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
-                                <label>
                                     <t:radio t:id="o1" t:value="true" t:disabled="${votros}"/> Si 
                                     <t:radio t:id="o2" t:value="false" t:disabled="${votros}"/> No
-                                </label>
-                            </t:radiogroup>                                                          
+                            </t:radiogroup>
                         </div>
                         <div class="f-left">
                             <label>Nombre de EPS</label>
                             <input t:type="TextField" t:id="nombreeps" t:value="actual.nombreeps" size="30" t:disabled="${votros}"
-                                     t:validate="maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreepsChanged" t:zone="zonaGeneral"/>
+                                   t:validate="maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreepsChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">                                
                             <label>Recibe Pensión</label>   
                             <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
-                                <label>
                                     <t:radio t:id="r1" t:value="true" t:disabled="${votros}"/> Si 
                                     <t:radio t:id="r2" t:value="false" t:disabled="${votros}"/> No
-                                </label>
                             </t:radiogroup>                                                          
                         </div>
                     </div>
@@ -200,20 +197,20 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Sistema Pensionario</label>
                             <select t:type="Select" t:id="sistemapen"                            
-                                  t:value="actual.sistemapensionario" model="sistemapensionarios" t:zone="tipoPensionZone" t:disabled="${votros}"/>
+                                    t:value="actual.sistemapensionario" model="sistemapensionarios" t:zone="tipoPensionZone" t:disabled="${votros}"/>
                         </div>
                         <t:zone t:id="tipoPensionZone" id="tipoPensionZone">
-                        <div class="f-left">
-                            <label>Tipo</label>
-                            <input t:type="Select" t:id="regimenpen"
-                                 onChange="this.form.fire()"
-                                 t:value="actual.regimenpensionario" model="regimenpensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
-                        </div>
+                            <div class="f-left">
+                                <label>Tipo</label>
+                                <input t:type="Select" t:id="regimenpen"
+                                   onChange="this.form.fire()"
+                                   t:value="actual.regimenpensionario" model="regimenpensionarios" t:zone="zonaGeneral" t:disabled="${votros}"/>
+                            </div>
                         </t:zone>
                         <div class="f-left">
                             <label>CUSPP o CÓDIGO ONP</label>     
                             <input t:type="TextField" t:id="cuspp" t:value="actual.numregimenpensionario" t:disabled="${votros}"
-                                 t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="zonaGeneral" size="30"/>
+                                   t:validate="maxlength=20" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cusppChanged" t:zone="zonaGeneral" size="30"/>
                         </div>    
                     </div>   
                 </fieldset>
@@ -227,7 +224,7 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Direccion</label>
                             <input t:type="TextField" t:id="domicilio" t:value="domicilioDireccion" size="30"
-                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="zonaGeneral" t:disabled="${vdatosubicacion}"/>
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="domChanged"  t:zone="zonaGeneral" t:disabled="${vdatosubicacion}"/>
                         </div>
                         <div class="f-left">
                             <label>Urb./Res./Coo./AA.HH.</label>
@@ -236,15 +233,15 @@ jQuery(function() {
                         <div class="f-left">
                             <label>Nombre de Zona</label>
                             <input t:type="TextField" t:id="dom_cod_postal" t:value="domicilioCP" t:disabled="${vdatosubicacion}"
-                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="zonaGeneral"  size="20"/>
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cpChanged" t:zone="zonaGeneral"  size="20"/>
                         </div>     
                     </div>
 <!--                    <div class="f-wrap">
                         <div class="f-left" id="ubigeo_dpe">            -->
-                        <t:zone t:id="ubigeoZone" id="ubigeoZone">
-                            <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                    t:zone="ubigeoZone" t:zoneName="ubigeoZone" t:label="Holamundo"/>
-                        </t:zone>
+                    <t:zone t:id="ubigeoZone" id="ubigeoZone">
+                        <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
+                                   t:zone="ubigeoZone" t:zoneName="ubigeoZone" t:label="Holamundo"/>
+                    </t:zone>
 <!--                        </div>
                     </div>-->
                 </fieldset>
@@ -257,14 +254,14 @@ jQuery(function() {
                             <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                      </t:if>
                </div>-->
-               <div class="f-wrap"> 
-                     <t:if test="vbotones">             
-                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                            
-                     </t:if>
-                     <t:if test="vbotones" negate="true">
-                            <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                     </t:if>
+                <div class="f-wrap"> 
+                    <t:if test="vbotones">             
+                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                            
+                    </t:if>
+                    <t:if test="vbotones" negate="true">
+                        <input t:type="Submit" t:id="back" value="Regresar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                    </t:if>
                 </div>
             </form>
         </t:zone>

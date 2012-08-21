@@ -69,6 +69,9 @@ public class EstudiosEditor {
     @InjectComponent
     @Property
     private Zone tercerZone;
+    @InjectComponent
+    @Property
+    private Zone mensajes;
     @Component(id = "formlistaestudios")
     private Form formlistaestudios;
     @Inject
@@ -148,7 +151,7 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean ingresaubigeo;
-
+ 
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
         Criteria c = session.createCriteria(LkBusquedaEstudios.class);
@@ -249,26 +252,25 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() {
-         
-          if(valfec_desde!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
+
+        if (valfec_desde != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
             }
-          
-            if(valfec_hasta!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
-                } catch (ParseException ex) {
+        }
+
+        if (valfec_hasta != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_hasta = (Date) formatoDelTexto.parse(valfec_hasta);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
             }
-        
-        
+        }
+
         if (valestudiando != null) {
             if (valestudiando) {
                 vfechahasta = true;
@@ -284,31 +286,32 @@ public class EstudiosEditor {
                 return Busqueda.class;
             }
         } else if (elemento == 2) {
+            return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
         } else if (elemento == 1) {
             formlistaestudios.clearErrors();
             Logger logger = new Logger();
             if (valdenominacion == null) {
                 formlistaestudios.recordError("Tiene que ingresar la Denominación");
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (valtipoestudio == null) {
                 formlistaestudios.recordError("Tiene que seleccionar el Tipo de Estudio");
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (valcentroestudio == null) {
                 formlistaestudios.recordError("Tiene que seleccionar el Centro de Estudio");
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (fecha_desde == null) {
                 formlistaestudios.recordError("Tiene que ingresar Fecha de Inicio");
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (fecha_desde.after(new Date())) {
                 formlistaestudios.recordError("La fecha de inicio debe ser previa a la fecha actual.");
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (validando() == false) {
-                return listaZone.getBody();
+                return mensajes.getBody();
             }
             if (editando) {
                 //editando
@@ -364,7 +367,10 @@ public class EstudiosEditor {
             envelope.setContents("Estudios del Trabajador Modificados Exitosamente");
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("mensajes", mensajes.getBody()).
+                add("listaZone", listaZone.getBody()).
+                add("segundoZone", segundoZone.getBody()).
+                add("tercerZone", tercerZone.getBody());
     }
 
     @Log
@@ -454,14 +460,14 @@ public class EstudiosEditor {
         } else {
             votro = true;
         }
-        
-        if(estudio.getFechainicio()!=null){
+
+        if (estudio.getFechainicio() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(estudio.getFechainicio());
+            valfec_desde = formatoDeFecha.format(estudio.getFechainicio());
         }
-        if(estudio.getFechafin()!=null){
+        if (estudio.getFechafin() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_hasta=formatoDeFecha.format(estudio.getFechafin());
+            valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
         }
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
@@ -564,6 +570,6 @@ public class EstudiosEditor {
         valestudiando = null;
         valrevisado = null;
         vfechahasta = false;
-        
+
     }
 }
