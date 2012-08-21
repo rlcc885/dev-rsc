@@ -210,8 +210,8 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="estadoUsuarioEdit" />
-                                <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" encoder="estadoUsuario" t:value="estadoUsuarioEdit" 
-                                          t:validate="required" style="width:100px;"/>
+                                <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" t:value="estadoUsuarioEdit" 
+                                          t:validate="required" onChange="this.form.fire()" t:zone="editarUsuarioZone" style="width:100px;"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="fechacreacionedit" />

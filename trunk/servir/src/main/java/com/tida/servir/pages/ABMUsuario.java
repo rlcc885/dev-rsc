@@ -481,7 +481,7 @@ public class ABMUsuario extends GeneralPage {
             enviacorreo = true;
         }
 
-        if (blanquearIntentosFallidos) {
+        if (estadoUsuarioEdit.getId()==1) {
             usuario.setIntentos_fallidos(0L);
         }
 
