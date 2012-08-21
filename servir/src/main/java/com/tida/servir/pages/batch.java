@@ -83,12 +83,12 @@ public class batch  extends GeneralPage {
         return org;
     }
     
-    public Boolean getNoEsAdmSystema(){
-        if(_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA))
-            return Boolean.FALSE;
-        
-        return Boolean.TRUE;
-    }
+//    public Boolean getNoEsAdmSystema(){
+//        if(_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA))
+//            return Boolean.FALSE;
+//        
+//        return Boolean.TRUE;
+//    }
     
     public List<String> getCarpetas() {
         List<String> carpetas = new LinkedList<String>();

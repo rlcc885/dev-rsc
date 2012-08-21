@@ -66,8 +66,8 @@ public class DeteccionIntrusion extends GeneralPage {
     }
     
      public Boolean getNoEsAdmSystema(){
-        if(_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA))
-            return Boolean.FALSE;
+//        if(_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA))
+//            return Boolean.FALSE;
         
         return Boolean.TRUE;
     }

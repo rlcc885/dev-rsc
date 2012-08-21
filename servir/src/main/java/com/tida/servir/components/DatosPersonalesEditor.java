@@ -177,18 +177,18 @@ public class DatosPersonalesEditor {
         return this;
     }
 
-    @Log
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    @Log
-    public boolean getEditable() {
-//        if(_usuario.getRol().getId()==1 ||_usuario.getRol().getId()==2 ||_usuario.getRol().getId()==3 ){
-//            
-//        }
-        return Permisos.puedeEscribir(_usuario, _oi);
-    }
+//    @Log
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    @Log
+//    public boolean getEditable() {
+////        if(_usuario.getRol().getId()==1 ||_usuario.getRol().getId()==2 ||_usuario.getRol().getId()==3 ){
+////            
+////        }
+//        return Permisos.puedeEscribir(_usuario, _oi);
+//    }
 
     @Log
     void onSelectedFromSave() {

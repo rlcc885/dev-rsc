@@ -44,13 +44,13 @@ public class CambiarClavePrimera extends GeneralPage {
     @Persist
     private boolean cambioForzado;
 
-    public Boolean getNoEsAdmSystema() {
-        if ((_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) || (_usuario.getTipo_usuario().equals(Usuario.ADMINGRAL))) {
-            return Boolean.FALSE;
-        }
-
-        return Boolean.TRUE;
-    }
+//    public Boolean getNoEsAdmSystema() {
+//        if ((_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) || (_usuario.getTipo_usuario().equals(Usuario.ADMINGRAL))) {
+//            return Boolean.FALSE;
+//        }
+//
+//        return Boolean.TRUE;
+//    }
     @Property
     @SessionState
     private Entidad_BK _entidadUE;
@@ -99,7 +99,7 @@ public class CambiarClavePrimera extends GeneralPage {
         }
         // formulariocambioclave.recordError("Clave modificada con éxito");
         _usuario.setMd5Clave(Encriptacion.encriptaEnMD5(newPass1));
-        _usuario.setClave(newPass1);
+//        _usuario.setClave(newPass1);
         _usuario.setUltimo_cambio_clave(new Date());
         _usuario.setIntentos_fallidos(0L);
         session.saveOrUpdate(_usuario);

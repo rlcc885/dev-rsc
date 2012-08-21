@@ -247,25 +247,25 @@ public class ABMUsuario extends GeneralPage {
         list = c.list();
         return new GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
     }
-
-    @Log
-    public List<String> getTiposUsuarios() {
-        List<String> tc = new ArrayList<String>();
-        // Sólo los usuarios admin_graal pueden generar administradores generales y locales
-        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
-            tc.add(Usuario.ADMINGRAL);
-            tc.add(Usuario.ADMINLOCAL);
-            tc.add(Usuario.OPERADORABMSERVIR);
-            tc.add(Usuario.OPERADORANALISTA);
-            tc.add(Usuario.ADMINSISTEMA);
-        }
-        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-            tc.add(Usuario.OPERADORABMLOCAL);
-            tc.add(Usuario.OPERADORLECTURALOCAL);
-            tc.add(Usuario.TRABAJADOR);
-        }
-        return tc;
-    }
+//
+//    @Log
+//    public List<String> getTiposUsuarios() {
+//        List<String> tc = new ArrayList<String>();
+//        // Sólo los usuarios admin_graal pueden generar administradores generales y locales
+//        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
+//            tc.add(Usuario.ADMINGRAL);
+//            tc.add(Usuario.ADMINLOCAL);
+//            tc.add(Usuario.OPERADORABMSERVIR);
+//            tc.add(Usuario.OPERADORANALISTA);
+//            tc.add(Usuario.ADMINSISTEMA);
+//        }
+//        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
+//            tc.add(Usuario.OPERADORABMLOCAL);
+//            tc.add(Usuario.OPERADORLECTURALOCAL);
+//            tc.add(Usuario.TRABAJADOR);
+//        }
+//        return tc;
+//    }
 
     @Log
     public List<UsuarioTrabajador> getUsuarios() {
@@ -392,10 +392,10 @@ public class ABMUsuario extends GeneralPage {
         return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
     }
 
-    @Log
-    public boolean getMuestroOrganismos() {
-        return ((tipoUsuario.equals(Usuario.ADMINLOCAL)) && (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)));
-    }
+//    @Log
+//    public boolean getMuestroOrganismos() {
+//        return ((tipoUsuario.equals(Usuario.ADMINLOCAL)) && (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)));
+//    }
 
     @Log
     public boolean getEsTrabajador() {

@@ -308,23 +308,23 @@ public class AMUnidadOrganica extends GeneralPage {
         return c.list();
     }
 
-    @Log
-    public boolean getUsuarioGeneral() {
-        return Helpers.esMultiOrganismo(loggedUser);
-    }
+//    @Log
+//    public boolean getUsuarioGeneral() {
+//        return Helpers.esMultiOrganismo(loggedUser);
+//    }
+//
+//    @Log
+//    public boolean getNoUsuarioGeneral() {
+//        return !getUsuarioGeneral();
+//    }
 
-    @Log
-    public boolean getNoUsuarioGeneral() {
-        return !getUsuarioGeneral();
-    }
-
-    @Log
-    public boolean getPuedeEditar() {
-        if (entidadUE == null) {
-            return false;
-        }
-        return Permisos.puedeEscribir(loggedUser, entidadUE);
-    }
+//    @Log
+//    public boolean getPuedeEditar() {
+//        if (entidadUE == null) {
+//            return false;
+//        }
+//        return Permisos.puedeEscribir(loggedUser, entidadUE);
+//    }
 
     /**
      * Hasta acÃ¡ para levantar combo de organos

@@ -142,14 +142,14 @@ public class TrabajadorFamiliar  extends GeneralPage
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
 
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
-    }
-    
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.puedeEscribir(_usuario, _oi);
+//    }
+//    
     public TrabajadorFamiliar()
     {
     }

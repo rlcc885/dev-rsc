@@ -205,10 +205,10 @@ public class Helpers {
      * @param user
      * @return
      */
-    public static boolean esMultiOrganismo(Usuario user) {
-        return (user.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
-                || user.getTipo_usuario().equals(Usuario.OPERADORANALISTA));
-    }
+//    public static boolean esMultiOrganismo(Usuario user) {
+//        return (user.getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)
+//                || user.getTipo_usuario().equals(Usuario.OPERADORANALISTA));
+//    }
 
     public static Integer maxNivelUO(Entidad eue, Session session) {
         Criteria c;

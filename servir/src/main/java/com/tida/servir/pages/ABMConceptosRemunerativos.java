@@ -41,16 +41,17 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @InjectComponent
     private Zone listaConceptosRemunerativosZone;
 
-    public boolean getUsuarioGeneral() {
-        return Helpers.esMultiOrganismo(loggedUser);
-    }
-
-    public boolean getNoUsuarioGeneral() {
-        return !getUsuarioGeneral();
-    }
+//    public boolean getUsuarioGeneral() {
+//        return Helpers.esMultiOrganismo(loggedUser);
+//    }
+//
+//    public boolean getNoUsuarioGeneral() {
+//        return !getUsuarioGeneral();
+//    }
 
     public boolean getPuedeEditar() {
-        return Permisos.puedeEscribir(loggedUser, _oi);
+//        return Permisos.puedeEscribir(loggedUser, _oi);
+        return true;
     }
     @Property
     @Persist

@@ -151,13 +151,13 @@ public class Meritos  extends GeneralPage
         }        
     }
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
-    }
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.puedeEscribir(_usuario, _oi);
+//    }
     
     public Meritos()
     {

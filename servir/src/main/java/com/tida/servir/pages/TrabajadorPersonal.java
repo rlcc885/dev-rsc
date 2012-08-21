@@ -131,13 +131,13 @@ public class TrabajadorPersonal  extends GeneralPage
 //    @Persist
 //    private Boolean valida;
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
-    }
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.puedeEscribir(_usuario, _oi);
+//    }
     
     public TrabajadorPersonal()
     {
