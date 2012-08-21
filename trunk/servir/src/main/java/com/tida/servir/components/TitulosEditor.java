@@ -67,13 +67,13 @@ public class TitulosEditor {
     private Usuario _usuario;
 
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
-    }
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.puedeEscribir(_usuario, _oi);
+//    }
     
     public boolean getEsTrabajadorEditable(){
         if(titulo != null){
@@ -85,7 +85,8 @@ public class TitulosEditor {
                 return true;
             }
         }
-        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
+//        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
+        return true;
     }
     
     public List<String> getValorTablaAuxiliar(String tabla) {
@@ -180,7 +181,7 @@ public class TitulosEditor {
 //        actual.setTitulos(new ArrayList<Titulo>());
 //    }
     tit.setTrabajador(actual);
-    if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
+//    if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
         titulo.setAgregadoTrabajador(Boolean.TRUE);
 //    actual.getTitulos().add(tit);
     session.saveOrUpdate(actual);

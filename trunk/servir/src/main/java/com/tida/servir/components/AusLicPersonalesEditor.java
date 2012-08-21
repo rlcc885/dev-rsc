@@ -67,17 +67,17 @@ public class AusLicPersonalesEditor {
         return Helpers.getValorTablaAuxiliar("TipoAusencias", session);
     }
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-        if(readOnly != null) {
-            return ((!readOnly) && Permisos.puedeEscribir(_usuario, _oi) );
-        } else {
-            return Permisos.puedeEscribir(_usuario, _oi);
-        }
-    }
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//        if(readOnly != null) {
+//            return ((!readOnly) && Permisos.puedeEscribir(_usuario, _oi) );
+//        } else {
+//            return Permisos.puedeEscribir(_usuario, _oi);
+//        }
+//    }
 
     public PrimaryKeyEncoder<Long, AusLicPersonal> getEncoder() {
         return new PrimaryKeyEncoder<Long, AusLicPersonal>()

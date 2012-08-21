@@ -125,7 +125,7 @@ public class CreadorDesdeCsv {
             if (!c.list().isEmpty()) {
                 //modificacion
                 Entidad_BK eueDestino = (Entidad_BK) c.list().get(0);
-                if (myTratamiento.getUsuario().getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
+//                if (myTratamiento.getUsuario().getTipo_usuario().equals(Usuario.OPERADORABMSERVIR)) {
                     //verificar si puede ingresar informacion
                     if (!eueDestino.getDef_servir()) {
                         errores.add(helpers.Errores.NO_SE_PUEDE_INGRESAR_INFORMACION_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
@@ -137,7 +137,7 @@ public class CreadorDesdeCsv {
                         errores.add(helpers.Errores.NO_SE_PUEDE_PROCESAR_BATCH_EN_ESTA_ENTIDAD + eueDestino.getCodigoEntidadUE());
                         return null;
                     }
-                }
+//                }
                     // revisar
                 if (ComparadorEntidades.entidadUEs(eueO, eueD).equals(ResultadoOperacionCSV.MODIFICADO)) {
                     CopiadorEntidades.entidadUE(eueOrigen, eueDestino);

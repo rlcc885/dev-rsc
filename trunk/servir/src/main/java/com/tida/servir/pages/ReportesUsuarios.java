@@ -99,10 +99,10 @@ public class ReportesUsuarios  extends GeneralPage
 
             // busco legajos en este organismo con este trabajador.
             Criteria c = session.createCriteria(Usuario.class);
-            if(loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-                c.add(Restrictions.eq("entidadUE", loggedUser.getEntidad()));
-
-            }
+//            if(loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
+//                c.add(Restrictions.eq("entidadUE", loggedUser.getEntidad()));
+//
+//            }
             c.add(Restrictions.eq("login", identUsuario));
 
             List<Usuario> usuarios=c.list();

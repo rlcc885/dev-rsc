@@ -64,13 +64,13 @@ public class CertificacionesEditor {
     private Session session;
 
 
-    public boolean getNoEditable() {
-        return !getEditable();
-    }
-
-    public boolean getEditable() {
-       return Permisos.puedeEscribir(_usuario, _oi);
-    }
+//    public boolean getNoEditable() {
+//        return !getEditable();
+//    }
+//
+//    public boolean getEditable() {
+//       return Permisos.puedeEscribir(_usuario, _oi);
+//    }
     
     public boolean getEsTrabajadorEditable(){
         if(certificacion != null){
@@ -82,7 +82,8 @@ public class CertificacionesEditor {
                 return true;
             }
         }
-        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
+//        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
+        return true;
     }
 
     public PrimaryKeyEncoder<Long, Certificacion> getEncoder()
@@ -145,7 +146,7 @@ public class CertificacionesEditor {
             actual.setCertificaciones(new ArrayList<Certificacion>());
         }
     	cert.setTrabajador(actual);
-        if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
+//        if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
             cert.setAgregadoTrabajador(Boolean.TRUE);
     	actual.getCertificaciones().add(cert);
     	session.saveOrUpdate(actual);

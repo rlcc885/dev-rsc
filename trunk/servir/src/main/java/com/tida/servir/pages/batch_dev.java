@@ -86,10 +86,10 @@ public class batch_dev extends GeneralPage {
 
     public List<String> getOrigenesArchivos() {
         List<String> org = new ArrayList<String>();
-        if (!_usuario.getTipo_usuario().equals(Usuario.OPERADORABMLOCAL)) {
+        
             org.add(OrigenArchivos.CARGA_INICIAL_ORGANISMOS);
             org.add(OrigenArchivos.CARGA_MASIVA_ORGANISMOS);
-        }
+        
         org.add(OrigenArchivos.CARGA_MASIVA_ORGANISMO);
 
         //org.add(OrigenArchivos.PROCESO_OFFLINE);

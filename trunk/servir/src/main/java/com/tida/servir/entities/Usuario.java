@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
     @Validate("required")
     private Entidad entidad;
     private String login; //el login del usuario
-    private String tipo_usuario;
+//    private String tipo_usuario;
 //    private String email;
     private int estado;
     // Si venció el passwd, etc.
@@ -49,7 +49,7 @@ public class Usuario implements Serializable {
     @ManyToOne
     @Validate("required")
     private Trabajador trabajador;
-    private String clave;
+//    private String clave;
     @Column(name = "ROL_ID")
     private Long rolid;
     @NonVisual
@@ -82,13 +82,13 @@ public class Usuario implements Serializable {
         this.rolid = rolid;
     }
 
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
+//    public String getClave() {
+//        return clave;
+//    }
+//
+//    public void setClave(String clave) {
+//        this.clave = clave;
+//    }
 
     public Trabajador getTrabajador() {
         return trabajador;
@@ -146,13 +146,13 @@ public class Usuario implements Serializable {
         this.login = login;
     }
 
-    public String getTipo_usuario() {
-        return tipo_usuario;
-    }
-
-    public void setTipo_usuario(String tipo_usuario) {
-        this.tipo_usuario = tipo_usuario;
-    }
+//    public String getTipo_usuario() {
+//        return tipo_usuario;
+//    }
+//
+//    public void setTipo_usuario(String tipo_usuario) {
+//        this.tipo_usuario = tipo_usuario;
+//    }
 
     public int getEstado() {
         return estado;

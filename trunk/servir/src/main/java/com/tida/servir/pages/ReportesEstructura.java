@@ -73,13 +73,13 @@ public class ReportesEstructura extends GeneralPage {
         return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
     }
 
-    public boolean getUsuarioGeneral() {
-        return Helpers.esMultiOrganismo(loggedUser);
-    }
-
-    public boolean getNoUsuarioGeneral() {
-        return !getUsuarioGeneral();
-    }
+//    public boolean getUsuarioGeneral() {
+//        return Helpers.esMultiOrganismo(loggedUser);
+//    }
+//
+//    public boolean getNoUsuarioGeneral() {
+//        return !getUsuarioGeneral();
+//    }
 
 
     StreamResponse onReporteUO(Long idUO, String reporte) {
