@@ -28,7 +28,7 @@
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.tabla" href="#">Detalle</a>
+                                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidad" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
                     </div>
