@@ -31,7 +31,7 @@
                         <div id="filtrosnombres" class="f-wrap">
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
-                                <input t:type="TextField" t:id="apellidoPaterno" size="30"/>
+                                <input t:type="TextField" t:id="apellidoPaterno" size="30" class=".pictureInputText"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>
@@ -108,11 +108,11 @@
                                     <legend>Ingreso a la Institución</legend>
                                     <div class="f-wrap">
                                         <label>Desde</label>
-                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" t:validate="regexp" class="fechaingresodesde"/>
+                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" t:validate="regexp" class="fechaingresodesde pictureInputDate"/>
                                     </div>
                                     <div class="f-wrap">
                                         <label>Hasta</label>
-                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoa" size="30" t:validate="regexp" class="fechaingresohasta"/>
+                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoa" size="30" t:validate="regexp" class="fechaingresohasta pictureInputDate"/>
                                     </div>
                                 </fieldset>
                             </div>
@@ -121,11 +121,11 @@
                                     <legend>Fecha de Nacimiento</legend>
                                     <div class="f-wrap">
                                         <label> Mayor o igual a</label>
-                                        <input t:type="TextField" t:id="fechadenacimientomayora" t:value="fecnacimientomayora" size="30" t:validate="regexp" class="fechadenacimientomayora"/>
+                                        <input t:type="TextField" t:id="fechadenacimientomayora" t:value="fecnacimientomayora" size="30" t:validate="regexp" class="fechadenacimientomayora pictureInputDate"/>
                                     </div>
                                     <div class="f-wrap">
                                         <label> Menor o igual a </label>
-                                        <input t:type="TextField" t:id="fechadenacimientomenora" t:value="fecnacimientomenora" size="30" t:validate="regexp" class="fechadenacimientomenora"/>
+                                        <input t:type="TextField" t:id="fechadenacimientomenora" t:value="fecnacimientomenora" size="30" t:validate="regexp" class="fechadenacimientomenora pictureInputDate"/>
                                     </div>
                                 </fieldset>
                             </div>
