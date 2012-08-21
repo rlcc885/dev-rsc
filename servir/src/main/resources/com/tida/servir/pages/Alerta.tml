@@ -10,7 +10,7 @@
                     <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="trabajadoresservir" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoservir1" reorder="nombres,entidad,fechaevento" exclude="descripcion">
+                                row="eventoservir1" reorder="nombres,entidad,fechaevento">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
@@ -23,12 +23,12 @@
                     <h2>Datos de Entidades Modificadas</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="eventos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoservir2" reorder="entidad,fechaevento" exclude="descripcion,nombres">
+                                row="eventoservir2" reorder="entidad,fechaevento" exclude="desctipo,nombres">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
                             <p:accionesCell>                           
-                                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidad" href="#">Detalle</a>
+                                    <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidadid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
                     </div>
@@ -43,7 +43,7 @@
                     <h2>Datos de Trabajadores Modificados</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventoentidad" reorder="nombres,entidad,fechaevento" exclude="descripcion">
+                                row="eventoentidad" reorder="nombres,entidad,fechaevento">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>
@@ -63,7 +63,7 @@
                     <h2>Ultimos Eventos</h2>
                     <div id = "tabla_cargo">
                         <t:grid source="eventossistemas" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="eventosistemas" reorder="descripcion,nombres,entidad,fechaevento">
+                                row="eventosistemas" reorder="nombres,entidad,fechaevento">
                             <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                             </t:parameter>

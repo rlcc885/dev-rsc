@@ -37,6 +37,7 @@ public class BusquedaEvento implements Serializable {
     @NonVisual
     private long id;
     @Basic(optional = false)
+    @NonVisual
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Column(name = "ENTIDAD_ID")
@@ -45,6 +46,7 @@ public class BusquedaEvento implements Serializable {
     @Column(name = "TRABAJADOR_ID")
     @NonVisual
     private long trabajadorid;
+    @NonVisual
     @Column(name = "TIPOEVENTO_ID")
     private long tipoeventoid;
     @Column(name = "ESTADO")

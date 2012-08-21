@@ -140,12 +140,12 @@
                         <div class="f-left">
                             <label>Código</label>
                             <input t:type="TextField" t:id="cargo_cod_cargo"
-                                   t:value="cargo.cod_cargo" size="20" t:validate="maxlength=15" t:disabled="${vdetalle2}"/>
+                                   t:value="cargo.cod_cargo" size="20" t:validate="maxlength=15" t:disabled="${vdetalle}"/>
                         </div>
                         <div class="f-left">
                             <label>* Denominación</label>
                             <input t:type="TextField" t:id="cargo_den_cargo"
-                                   t:value="cargo.den_cargo" size="60" t:validate="required, maxlength=255" t:disabled="${vdetalle2}"/>
+                                   t:value="cargo.den_cargo" size="60" t:validate="required, maxlength=255" t:disabled="${vdetalle}"/>
                         </div>
                         <div class="f-left">
                             <label>* Situación CAP</label>
@@ -213,6 +213,7 @@
                                     </span> 
                                 </t:eventLink>
                             </t:if>
+                            
                         </t:if>
                     </div>
                     <br style="clear: both;" />

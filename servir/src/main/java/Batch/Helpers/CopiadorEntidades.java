@@ -103,7 +103,7 @@ public class CopiadorEntidades {
         destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
 //        destino.setConceptoStd(CopiadorEntidades.verifacionNull(origen.getConceptoStd()));
 //        destino.setPeriodicidad(CopiadorEntidades.verifacionNull(origen.getPeriodicidad()));
-        destino.setClasificacion(CopiadorEntidades.verifacionNull(origen.getClasificacion()));
+//        destino.setClasificacion(CopiadorEntidades.verifacionNull(origen.getClasificacion()));
         destino.setSustento_legal(CopiadorEntidades.verifacionNull(origen.getSustento_legal()));
     }
     

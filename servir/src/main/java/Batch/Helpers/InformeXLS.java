@@ -1918,7 +1918,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(cr.getSustento_legal()));
                 escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracion", InformeXLS.leoCampo(cr.getClasificacion()), errores, session));
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracion", InformeXLS.leoCampo(cr.getClasificacion()), errores, session));
                 escribir.print("|");
 //                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoRemuneracionStd", InformeXLS.leoCampo(cr.getConceptoStd()), errores, session));
                 escribir.print("|");
