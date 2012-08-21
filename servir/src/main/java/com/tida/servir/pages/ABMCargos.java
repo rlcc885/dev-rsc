@@ -203,6 +203,7 @@ public class ABMCargos extends GeneralPage {
         valsituacioncap = null;
         bdcargo = null;
         bregimengruponivel = new RegimenGrupoNivel();
+        uo = null;
     }
 
     void onSelectedFromMuestra() {
@@ -562,7 +563,9 @@ public class ABMCargos extends GeneralPage {
     @Log
     Object onReset(){
         resetCargo();
+        cantidadPuestos = "";
         return abmZone.getBody();
+        
     }
     @Log
     Object onCancel(){
@@ -623,6 +626,39 @@ public class ABMCargos extends GeneralPage {
                 }
             }
 
+            
+                        //**********************************************
+
+           // cargo.getCtd_puestos_total();
+	if (editando)
+	{
+            consulta = "SELECT COUNT(*) FROM RSC_CARGOASIGNADO S0 JOIN RSC_CARGOXUNIDAD S1 ON (S0.CARGOXUNIDAD_ID = S1.ID)"
+             + "JOIN RSC_UNIDADORGANICA S2 ON (S2.ID = S1.UNIDADORGANICA_ID)"
+             + "WHERE UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "')"
+             + "AND S2.ENTIDAD_ID='" + entidadUE.getId() + "'  AND S1.ID ='" + cargo.getId() + "'";       
+            
+            System.out.println("**********ABMX1"+consulta);
+                         
+            query = session.createSQLQuery(consulta);
+            String x = query.list().get(0).toString();
+            System.out.println("**********ABMX2"+x);
+           int disponibles = Integer.parseInt(x);
+            System.out.println("**********ABMX3"+disponibles);
+            System.out.println("**********ABMX4"+cantidadPuestos);          
+          //  if (cargo.getCtd_puestos_total() < disponibles)
+            if (Integer.parseInt(cantidadPuestos) < disponibles)    
+            {
+               formmensaje.recordError("LA CANTIDAD DE PUESTOS ES INFERIOR A LOS YA ASIGNADOS");
+               return zonasDatos();
+            }
+	}
+            
+            // IF (CANTIDAD CARGOS MODIFICADO > PLAZAS YA OCUPADAS)
+           // {}
+           // 
+           // *************************************************
+
+            
             if (cargo.getEsorganico() == null) {
                 formmensaje.recordError("Tiene que seleccionar una opción para ¿Es Orgánico?.");
                 return zonasDatos();
