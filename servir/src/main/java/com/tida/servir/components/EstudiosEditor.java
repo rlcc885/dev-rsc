@@ -232,7 +232,6 @@ public class EstudiosEditor {
     void onSelectedFromReset() {
         limpiar();
         formlistaestudios.clearErrors();
-        mensajes.getBody();
         editando = false;
         estudio = new Estudios();
         if (usua.getAccesoreport() == 0) {
@@ -288,7 +287,7 @@ public class EstudiosEditor {
                 return Busqueda.class;
             }
         } else if (elemento == 2) {
-            return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+            return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("mensajes", mensajes.getBody());
         } else if (elemento == 1) {
             formlistaestudios.clearErrors();
             Logger logger = new Logger();
