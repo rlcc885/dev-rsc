@@ -67,8 +67,8 @@
             <br class="clear" />
         </div>
         <div id="mainfiltros" class="pane">
-            <div t:type="zone" t:id="busquedaB">
-                <t:form t:id="formulariobusquedaB" zone="empleadoszone">
+            <div t:type="zone" t:id="busquedaB" id="busquedaB">
+                <t:form t:id="formulariobusquedaB" id="formulariobusquedaB" zone="empleadoszone">
                     <fieldset>
                         <div class="seccionfiltros f-wrap">
                             <div class="filtros">
@@ -108,11 +108,11 @@
                                     <legend>Ingreso a la Institución</legend>
                                     <div class="f-wrap">
                                         <label>Desde</label>
-                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" t:validate="regexp" />
+                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" t:validate="regexp" class="fechaingresodesde"/>
                                     </div>
                                     <div class="f-wrap">
                                         <label>Hasta</label>
-                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoa" size="30" t:validate="regexp" />
+                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoa" size="30" t:validate="regexp" class="fechaingresohasta"/>
                                     </div>
                                 </fieldset>
                             </div>
@@ -121,11 +121,11 @@
                                     <legend>Fecha de Nacimiento</legend>
                                     <div class="f-wrap">
                                         <label> Mayor o igual a</label>
-                                        <input t:type="TextField" t:id="fechadenacimientomayora" t:value="fecnacimientomayora" size="30" t:validate="regexp"/>
+                                        <input t:type="TextField" t:id="fechadenacimientomayora" t:value="fecnacimientomayora" size="30" t:validate="regexp" class="fechadenacimientomayora"/>
                                     </div>
                                     <div class="f-wrap">
                                         <label> Menor o igual a </label>
-                                        <input t:type="TextField" t:id="fechadenacimientomenora" t:value="fecnacimientomenora" size="30" t:validate="regexp"/>
+                                        <input t:type="TextField" t:id="fechadenacimientomenora" t:value="fecnacimientomenora" size="30" t:validate="regexp" class="fechadenacimientomenora"/>
                                     </div>
                                 </fieldset>
                             </div>
@@ -138,6 +138,16 @@
                         </div>
                     </t:if>
                 </t:form>
+                <div>
+                    <script>
+                        jQuery(document).ready(function() {
+                        jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
+                        jQuery('.fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
+                        jQuery('.fechadenacimientomayora').datepick({dateFormat: 'dd/mm/yyyy'});
+                        jQuery('.fechadenacimientomenora').datepick({dateFormat: 'dd/mm/yyyy'});
+                        });
+                    </script>
+                </div>
             </div>
             <br class="clear" />
         </div>
@@ -186,23 +196,11 @@
 <!--                    </t:form>-->
                 </t:zone>
             </div>
-            <br/>
-
         </div> <!-- Grillas-busqueda -->
     </t:if>
-
-    <br/>
-    <br/>
-
-    <SCRIPT LANGUAGE="JavaScript">
+    <script>
         function mostrarEsconder() {
         cach.visibility = "visible";
         }
-        jQuery(function() {
-        jQuery('#fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
-        jQuery('#fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
-        jQuery('#fechadenacimientomayora').datepick({dateFormat: 'dd/mm/yyyy'});
-        jQuery('#fechadenacimientomenora').datepick({dateFormat: 'dd/mm/yyyy'});
-        });
-    </SCRIPT>
+    </script>
 </html>
