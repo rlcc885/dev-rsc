@@ -36,8 +36,8 @@ public class Constantes {
    public static final String UNIDAD_ORGANICA_EXITO ="Unidades Organicas creados / modificadas exitosamente.";
    
    //modificado 10agosto
-   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada / modificada exitosamente.";
-   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica creada / modificada exitosamente.";
+   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
+   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica modificada exitosamente.";
    
    public static final String AUSENCIA_EXITO ="Ausencias licencias creadas / modificadas exitosamente.";
    public static final String REMUNERACION_EXITO ="Remuneraciones personales creadas / modificadas exitosamente.";
