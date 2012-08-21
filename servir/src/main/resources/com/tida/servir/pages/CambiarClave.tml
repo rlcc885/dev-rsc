@@ -3,15 +3,15 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <t:if test="cambioForzado" negate="true">
+     <!--<t:if test="cambioForzado" negate="true">
 
-        <t:if test="noEsAdmSystema">
+       <t:if test="noEsAdmSystema">
             <div class="organismo_titulo">
                 Entidad /U. Ejecutora: ${entidadUE.denominacion}
             </div>
         </t:if >
 
-    </t:if>
+    </t:if>-->
     <h2>Modificación de clave</h2>
 
     <div class="box-background-title" style="width:472px; margin:auto; margin-top:100px;">
