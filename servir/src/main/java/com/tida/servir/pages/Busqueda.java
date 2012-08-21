@@ -329,7 +329,7 @@ public class Busqueda extends GeneralPage {
             criterio.add(Restrictions.eq("formacionprofesional_id", valformacionprofe.getId()));
         }
 
-        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha;
         if (fecnacimientomayora==null){
             fecnacimientomayora="";
