@@ -35,7 +35,7 @@ import java.math.BigInteger;
  * Start page of application servir.
  */
 //@IncludeJavaScriptLibrary("context:layout/custom.js")
-public class Busqueda extends GeneralPage {
+public class TrabajadorBaja extends GeneralPage {
 
     @Inject
     private Session session;
@@ -201,7 +201,7 @@ public class Busqueda extends GeneralPage {
     @Persist
     @Property
     private String fecnacimientomayora;
-
+    
     @Log
     void setupRender() {
         limpiar();
@@ -478,7 +478,7 @@ public class Busqueda extends GeneralPage {
     }
 
     @Log
-    Busqueda onActionFromToggle_filtros() {
+    TrabajadorBaja onActionFromToggle_filtros() {
         if (mostrarFiltros) {
             mostrarFiltros = false;
             mostrarEsconder = "Mostrar";

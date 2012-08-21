@@ -22,7 +22,7 @@ public class ConceptoRemunerativo implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private String clasificacion;
+//    private String clasificacion;
     private String codigo;
 //    private String conceptoStd;
     private String descripcion;
@@ -77,13 +77,13 @@ public class ConceptoRemunerativo implements Serializable {
         this.entidad = entidadUE;
     }
 
-    public String getClasificacion() {
-        return clasificacion;
-    }
-
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
-    }
+//    public String getClasificacion() {
+//        return clasificacion;
+//    }
+//
+//    public void setClasificacion(String clasificacion) {
+//        this.clasificacion = clasificacion;
+//    }
 
 //    public String getConceptoStd() {
 //        return conceptoStd;

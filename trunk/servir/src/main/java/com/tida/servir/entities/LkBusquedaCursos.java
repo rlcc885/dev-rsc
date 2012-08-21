@@ -14,6 +14,14 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author Jurguen Zambrano
  */
 @Entity
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "callSpFucionMigracion",
+        query = "CALL SP_MIGRACIONFUCION(:as_entidad_id_origen,:as_entidad_id_destino,:an_unidad_origen,:an_unidad_destino,?)",
+        resultClass = LkBusquedaCursos.class,
+        hints = {
+            @QueryHint(name = "org.hibernate.callable", value = "true")
+    })
+})
 public class LkBusquedaCursos implements Serializable {
     @Id
     @NonVisual

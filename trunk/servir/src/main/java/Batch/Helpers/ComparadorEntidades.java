@@ -61,10 +61,10 @@ public class ComparadorEntidades {
         if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return lic;
         }
-        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClasificacion(), cdestino.getClasificacion()));
-        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lic;
-        }
+//        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getClasificacion(), cdestino.getClasificacion()));
+//        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lic;
+//        }
         //System.out.println("CONCEPTO REMUNERATIVO 3");
 //        lic.setResultado(ComparadorEntidades.comparadorDatos(corigen.getConceptoStd(), cdestino.getConceptoStd()));
 //        if (lic.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {

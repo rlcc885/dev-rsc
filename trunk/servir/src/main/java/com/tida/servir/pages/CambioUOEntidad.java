@@ -9,6 +9,7 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.LkBusquedaEntidad;
+import com.tida.servir.entities.LkBusquedaCursos;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UnidadOrganica;
 import com.tida.servir.services.GenericSelectModel;
@@ -36,6 +37,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
+import org.hibernate.Query;
 
 /**
  *
@@ -187,6 +189,10 @@ public class CambioUOEntidad extends GeneralPage{
     @Persist
     private Entidad entidad2;
     
+    @Property
+    @Persist
+    private LkBusquedaCursos lkcu;
+    
     @Log
     public List<String> getBopciones(){
         List<String> mod = new LinkedList<String>();
@@ -204,7 +210,6 @@ public class CambioUOEntidad extends GeneralPage{
         else{
             mostrarUO=false;
         }
-        
     }
     
     
@@ -331,13 +336,24 @@ public class CambioUOEntidad extends GeneralPage{
                     return botonZone.getBody();
                 }
                 if(entidad1==null){ //validar x usuario
-                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session);
+                    Query query = session.getNamedQuery("callSpFucionMigracion");
+                    query.setParameter("as_entidad_id_origen", entidadUE.getId());
+                    query.setParameter("as_entidad_id_destino", entidad2.getId());
+                    query.setParameter("an_unidad_origen", uoOrigen.getId());
+                    query.setParameter("an_unidad_destino", "");
+                    List result = query.list();               
+//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session);
                     session.flush();
                     formBotones.clearErrors();                    
-                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
+                    envelope.setContents("Unidad Orgánica Migrada Correctamente1");
                 }
-                else{
-                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
+                else{      
+                    Query query = session.getNamedQuery("callSpFucionMigracion");
+                    query.setParameter("as_entidad_id_origen", entidad1.getId());
+                    query.setParameter("as_entidad_id_destino", entidad2.getId());
+                    query.setParameter("an_unidad_origen", uoOrigen.getId());
+                    query.setParameter("an_unidad_destino", "");
+//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
                      session.flush();
                      formBotones.clearErrors();
                      envelope.setContents("Unidad Orgánica Migrada Correctamente");
@@ -359,7 +375,15 @@ public class CambioUOEntidad extends GeneralPage{
                 }
                 if(entidad1==null){ //validar x usuario
                     if(entidadUE.getId()==entidad2.getId()){
-                        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
+                        //System.out.println("sesionnnnn"+entidadUE.getId()+uoOrigen.getId()+uoDestino.getId());
+                        Query query = session.getNamedQuery("callSpFucionMigracion");
+                        query.setParameter("as_entidad_id_origen", entidadUE.getId());
+                        query.setParameter("as_entidad_id_destino", entidadUE.getId());
+                        query.setParameter("an_unidad_origen", uoOrigen.getId());
+                        query.setParameter("an_unidad_destino", uoDestino.getId());
+                        List result = query.list();
+                        
+//                        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
                         session.flush();
                         formBotones.clearErrors();
                         envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
@@ -371,7 +395,13 @@ public class CambioUOEntidad extends GeneralPage{
                 }
                 else{
                     if(entidad1.getId()==entidad2.getId()){
-                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
+                        Query query = session.getNamedQuery("callSpFucionMigracion");
+                        query.setParameter("as_entidad_id_origen", entidad1.getId());
+                        query.setParameter("as_entidad_id_destino", entidad2.getId());
+                        query.setParameter("an_unidad_origen", uoOrigen.getId());
+                        query.setParameter("an_unidad_destino", uoDestino.getId());
+                        List result = query.list();                        
+//                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
                         session.flush();
                         formBotones.clearErrors();
                         envelope.setContents("Unidad Orgánica Fusionada Correctamente");

@@ -7,6 +7,7 @@ package com.tida.servir.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
@@ -44,6 +45,8 @@ public class LkBusquedaTrabajador implements Serializable {
     private Date fechafin;
     @Temporal(TemporalType.DATE)
     private Date fechanacimiento;
+    @NonVisual
+    private Long caid;
 
     public long getEntidad_id() {
         return entidad_id;
@@ -246,6 +249,14 @@ public class LkBusquedaTrabajador implements Serializable {
 
     public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
+    }
+    
+    public long getCaid() {
+        return caid;
+    }
+
+    public void setCaid(long caid) {
+        this.caid = caid;
     }
     
 }
