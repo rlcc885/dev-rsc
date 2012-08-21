@@ -53,9 +53,6 @@ public class DatosPersonalesEditor {
     @Property
     @SessionState
     private Entidad _oi;
-//    @InjectComponent
-//    @Property
-//    private Zone ubigeoNacZone;
     @InjectComponent
     @Property
     private Zone ubigeoZone;
@@ -65,10 +62,6 @@ public class DatosPersonalesEditor {
     @InjectComponent
     @Property
     private Zone conadisZone;
-    //Datos del formulario (que son persistentes)
-//    @Property
-//    @Persist
-//    private Ubigeo ubigeoNacimiento;
     @Property
     @Persist
     private Ubigeo ubigeoDomicilio;
@@ -82,35 +75,15 @@ public class DatosPersonalesEditor {
     @Persist
     @Property
     private DatoAuxiliar valtipozona;
-//    @Persist
-//    @Property
-//    private DatoAuxiliar valtipodiscapacidad;
     @Persist
     @Property
     private String valconadis;
-//    @Persist
-//    @Property
-//    private String valessalud;
-//    @Persist
-//    @Property
-//    private DatoAuxiliar valsistemapensionario;
-//    @Persist
-//    @Property
-//    private DatoAuxiliar valregimenpensionario;
     @InjectComponent
     @Property
     private Zone zonaGeneral;
-//    @Persist
-//    @Property
-//    private String valcuspp;
-//    @InjectComponent
-//    @Property
-//    private Zone regimenZone;
     private int elemento = 0;
-//    @Property
-//    @Persist
-//    private Trabajador actual;
-@Property
+    @Persist
+    @Property
     private String fechanacimiento;
 
     @Log
@@ -131,28 +104,16 @@ public class DatosPersonalesEditor {
 
         domicilioCP = actual.getDomicilioCodigoPostal();
         domicilioDireccion = actual.getDomicilioDireccion();
-//        if (ubigeoDomicilio == null) {
-            ubigeoDomicilio = new Ubigeo();
-//        }
+        ubigeoDomicilio = new Ubigeo();
         ubigeoDomicilio.setDepartamento(actual.getCod_dom_dept());
         ubigeoDomicilio.setProvincia(actual.getCod_dom_prov());
         ubigeoDomicilio.setDistrito(actual.getCod_dom_dist());
-
-
-//        if (ubigeoNacimiento == null) {
-//            ubigeoNacimiento = new Ubigeo();
-//        }
-//        ubigeoNacimiento.setDepartamento(actual.getCod_ubi_dept());
-//        ubigeoNacimiento.setProvincia(actual.getCod_ubi_prov());
-//        ubigeoNacimiento.setDistrito(actual.getCod_ubi_dist());
         valtipovia = actual.getTipovia();
         valtipozona = actual.getTipozona();
-//        valtipodiscapacidad=actual.getTipodiscapacidad();
         valconadis = String.valueOf(actual.getNroCertificadoCONADIS());
-//        valessalud=actual.getEsSalud();
-//        valsistemapensionario=actual.getSistemapensionario();
-//        valregimenpensionario=actual.getRegimenpensionario();
-//        valcuspp=actual.getNumregimenpensionario();         
+       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+       fechanacimiento =  dateFormat.format(actual.getFechaNacimiento());
+        //fechanacimiento = actual.getFechaNacimiento().toString();
         validaciones();
         System.out.println("personallll");
         if (valconadis.equals("null")) {
@@ -160,35 +121,10 @@ public class DatosPersonalesEditor {
         }
     }
 
-//    
-//    @Log
-//    void onValidateFromformulariodatospersonales() {
-////        if(valconadis!=null){
-////                actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
-////            }
-////            else{
-////                actual.setNroCertificadoCONADIS(0);
-////        }
-//        System.out.println("validate cayoooooooooooooo");
-//        
-//    }
     @Log
     Object onFailureFromformulariodatospersonales() {
         return this;
     }
-
-//    @Log
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    @Log
-//    public boolean getEditable() {
-////        if(_usuario.getRol().getId()==1 ||_usuario.getRol().getId()==2 ||_usuario.getRol().getId()==3 ){
-////            
-////        }
-//        return Permisos.puedeEscribir(_usuario, _oi);
-//    }
 
     @Log
     void onSelectedFromSave() {
@@ -208,35 +144,6 @@ public class DatosPersonalesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariodatospersonales() throws ParseException {
-//        if (elemento == 4) {
-//            return Busqueda.class;
-//        } else if (elemento == 3) {
-//            return Busqueda.class;
-//        } else if (elemento == 1) {
-            //validaciones
-//            if(actual.getFechaNacimiento()!=null){
-//                if (actual.getFechaNacimiento().after(new Date())) {
-//                    Logger logger = new Logger();
-//                    logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-//                            Logger.CODIGO_ERROR_FECHA_PREVIA_ACTUAL,
-//                            Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TRABAJADOR);
-//
-//                    formulariodatospersonales.recordError(Errores.ERROR_FECHA_NACIMIENTO_PREVIA_ACTUAL);
-//                    return zonaGeneral.getBody();
-//                    } else {
-//                        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-//                        if (getAge(actual.getFechaNacimiento(), new Date()) < ca.getEdad_minima()) {
-//
-//                            Logger logger = new Logger();
-//                            logger.loguearError(session, _usuario, String.valueOf(actual.getId()),
-//                                    Logger.CODIGO_ERROR_EDAD_MAYOR_18,
-//                                    Errores.ERROR_EDAD_MAYOR, Logger.TIPO_OBJETO_TRABAJADOR);
-//
-//                            formulariodatospersonales.recordError(Errores.ERROR_EDAD_MAYOR + ca.getEdad_minima());
-//                            return zonaGeneral.getBody();
-//                        }
-//                    }
-//            }
 
             if (actual.getEmailPersonal() != null) {
                 if (!isEmail(actual.getEmailPersonal())) {
@@ -250,27 +157,7 @@ public class DatosPersonalesEditor {
                     return zonaGeneral.getBody();
                 }
             }
-
-
-            //        actual.setCod_ubi_dept(ubigeoNacimiento.getDepartamento());
-            //        actual.setCod_ubi_dist(ubigeoNacimiento.getDistrito());
-            //        actual.setCod_ubi_prov(ubigeoNacimiento.getProvincia());
-
-//            actual.setTipodiscapacidad(valtipodiscapacidad);
-//            actual.setEsSalud(valessalud);            
-//            actual.setSistemapensionario(valsistemapensionario);
-//            actual.setRegimenpensionario(valregimenpensionario);
-//            actual.setNumregimenpensionario(valcuspp);
-
-//            if(valsexo!=null){
-//                if(valsexo.equals("MASCULINO")){
-//                    actual.setSexo("M");
-//                }
-//                else{
-//                    actual.setSexo("F");
-//                }
-//            }
-            //para dni 
+ 
             List<Trabajador> lTrabajador = session.createCriteria(Trabajador.class).add(Restrictions.eq("nroDocumento", actual.getNroDocumento())).add(Restrictions.ne("id", actual.getId())).list();
 
             if (lTrabajador.size() > 0) {
@@ -295,17 +182,20 @@ public class DatosPersonalesEditor {
             if (valconadis != null && !valconadis.equals("") && !valconadis.equals("null")) {
                 actual.setNroCertificadoCONADIS(Integer.parseInt(valconadis));
             }
-
             actual.setCod_dom_dept(ubigeoDomicilio.getDepartamento());
             actual.setCod_dom_dist(ubigeoDomicilio.getDistrito());
             actual.setCod_dom_prov(ubigeoDomicilio.getProvincia());
+
             actual.setDomicilioCodigoPostal(domicilioCP);
             actual.setDomicilioDireccion(domicilioDireccion);
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println("*************DPE1 :"+actual+" "+fechanacimiento);
             Date fecha = dateFormat.parse(fechanacimiento);
+            System.out.println("*************DPE2 :"+actual);
             actual.setFechaNacimiento(fecha);
+            System.out.println("*************DPE3 :"+actual);
             session.saveOrUpdate(actual);
             session.flush();
             formulariodatospersonales.clearErrors();
@@ -322,29 +212,6 @@ public class DatosPersonalesEditor {
         //.add("regimenZone", regimenZone.getBody()); "ubigeoNacZone", ubigeoNacZone.getBody()).add(
         return mu;
     }
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormUbiNac() {
-//        if(valtipodiscapacidad != null && !valtipodiscapacidad.equals("")){
-//            if(valtipodiscapacidad.getValor().equals("NO TIENE") || valtipodiscapacidad.getValor().equals("")){
-//                vconadis=true;
-//                valconadis=null;
-//            }        
-//            else{
-//                vconadis=false;
-//            }
-//        }
-//        else{
-//            vconadis=true;
-//        }
-//        
-//        return ubigeoNacZone.getBody();
-//    }
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormregimen() {     
-//        return regimenZone.getBody();
-//    }
     @Inject
     private Request _request;
     @Property
@@ -525,12 +392,6 @@ public class DatosPersonalesEditor {
             list = Helpers.getDatoAuxiliar("REGPENSIONARIOS", "SISTEMAPENCIONARIO", 0, session);
         }
 
-
-//        DatoAuxiliar d;
-//       if (ubigeo.getDepartamento() != null) {
-//            lub = Helpers.getDatoAuxiliar("UBPROVINCIA", "UBDEPARTAMENTO",
-//                    ubigeo.getDepartamento().getCodigo(), session);
-
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
@@ -539,22 +400,10 @@ public class DatosPersonalesEditor {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SISTEMAPENSIONARIO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    /**
-     * Ve si se está en Perú. Si es así se pregunta por los datos de
-     * localización/Ubigeos
-     *
-     * @return
-     */
+
     @Inject
     private PropertyAccess _access;
 
-//    public Object onChangeOfPais() {
-//        pais = _request.getParameter("param");
-//        if (!pais.contains("PER")) {
-////            ubigeoNacimiento = new Ubigeo();
-//        }
-//        return ubigeoNacZone.getBody();
-//    }
     @Log
     public List<String> getTiposDoc() {
         Criteria c = session.createCriteria(DatoAuxiliar.class);
