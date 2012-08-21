@@ -161,6 +161,7 @@ public class AntecedentesEditor {
     @Log
     void resetRegistro() {
         ant_Laborales = new Ant_Laborales();
+        formulariomensajesantecedente.clearErrors();
         valfec_hasta = "";
         valfec_desde = "";
         editando = false;
@@ -169,7 +170,9 @@ public class AntecedentesEditor {
     @Log
     Object onReset() {
         resetRegistro();
-        return antLaboralZone.getBody();
+        formulariomensajesantecedente.clearErrors();
+        //return antLaboralZone.getBody();
+        return new MultiZoneUpdate("antLaboralZone", antLaboralZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
     @Log
