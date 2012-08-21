@@ -26,6 +26,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
         @QueryHint(name = "org.hibernate.callable", value = "true")
     })
   })
+ 
 
 @Entity
 public class BusquedaEvento implements Serializable {
@@ -61,7 +62,9 @@ public class BusquedaEvento implements Serializable {
     private String pagina;
     @Column(name = "TABLA_ID")
     @NonVisual
-    private long tabla;
+    private Long tabla;
+    @Column(name = "DESCTIPOEVENTO")
+    private String desctipo;
     
     public BusquedaEvento() {
     }
@@ -152,6 +155,14 @@ public class BusquedaEvento implements Serializable {
 
     public void setTabla(long tabla) {
         this.tabla = tabla;
+    }
+    
+    public String getDesctipo() {
+        return desctipo;
+    }
+
+    public void setDesctipo(String desctipo) {
+        this.desctipo = desctipo;
     }
  
 }
