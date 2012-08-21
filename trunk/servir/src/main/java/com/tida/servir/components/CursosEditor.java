@@ -305,6 +305,7 @@ public class CursosEditor {
 
     void onSelectedFromReset() {
         limpiar();
+        formlistacursos.clearErrors();
         editando = false;
         cursos = new Curso();
         if (usu.getAccesoreport() == 0) {
