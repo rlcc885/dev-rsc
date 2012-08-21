@@ -1,9 +1,7 @@
-
 <html t:type="layout" title="Editar Títulos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
-
     <t:content>
         <t:zone t:id="mensajes">
             <script>
@@ -76,7 +74,6 @@
             <t:zone t:id="tercerZone">
                 <t:if test="${vformulario}">
                     <t:form t:id="formulariobotones" t:zone="mensajes">            
-                        <!--                        <div id="periodoestudios">-->
                         <fieldset>
                             <legend>* Periodo</legend>
                             <div class="f-wrap">
@@ -86,11 +83,11 @@
                                 </div> 
                                 <div class="f-left">
                                     <label>Desde</label>
-                                    <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="15" t:disabled="${vdetalle}" t:readonly="readlony" t:validate="regexp" class="fec_inicio pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="15" t:disabled="${vdetalle}" t:validate="regexp" class="fec_inicio pictureInputDate"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Hasta</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:readonly="readlony" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:validate="regexp" class="fec_fin pictureInputDate"/>
                                 </div>                        
                             </div>
                         </fieldset>
@@ -100,17 +97,16 @@
                                 <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                             </div>
                         </t:if>
-                        <!--                        </div>-->
-                        <t:if test="${vbotones}">
-                            <div class="actions f-right">  
-                                <div class="f-left">                        
-                                    (*) Campos Obligatorios
-                                </div>
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
-                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/> 
+                        <div class="actions">
+                            <div class="f-left">                        
+                                (*) Campos Obligatorios
                             </div>
-                        </t:if>
+                            <t:if test="${vbotones}">
+                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
+                            </t:if>
+                            <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        </div>
                     </t:form>
                     <div>
                         <script>
@@ -132,8 +128,7 @@
         </fieldset>
 
         <div id = "tabla_oi">
-            <t:zone t:id="listaZone">  
-  
+            <t:zone t:id="listaZone">
                 <div id = "tabla_cargo">
                     <t:grid source="estudios" 
                             rowsPerPage="10" 
@@ -188,14 +183,14 @@
                             </t:if>
                         </p:estadoCell>
                         <p:validadoCell>
-<!--                            <t:if test="${vrevisado}"> -->
+                            <!--                            <t:if test="${vrevisado}"> -->
                             <t:if test="${listaestu.validado}">
                                 <label class="datofalse">SI</label>  
                             </t:if>
                             <t:if test="${listaestu.validado}" negate="true">
                                 <label class="datotrue">NO</label>  
                             </t:if>
-<!--                            </t:if>-->
+                            <!--                            </t:if>-->
                         </p:validadoCell>                       
                         <t:parameter name="empty">
                             <div class="no-info">No existen registros ingresados</div>
@@ -226,7 +221,6 @@
                         </p:accionesCell>
                     </t:grid>
                 </div>                
-         
             </t:zone>
         </div>
     </t:content>
