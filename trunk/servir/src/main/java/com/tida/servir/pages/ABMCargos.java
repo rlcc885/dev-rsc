@@ -671,11 +671,16 @@ public class ABMCargos extends GeneralPage {
             cargo = new Cargoxunidad();
             regimengruponivel = new RegimenGrupoNivel();
             mostrar = true;
-            editando = false;
-            formmensaje.clearErrors();
-            envelope.setContents(helpers.Constantes.CARGO_EXITO);
-
-
+//            if(editando){
+//                formmensaje.clearErrors();
+//                envelope.setContents(helpers.Constantes.CARGO_EDIT_EXITO);
+//            }else{
+//                formmensaje.clearErrors();
+//                envelope.setContents(helpers.Constantes.CARGO_EXITO);
+//            }
+                editando = false;
+                formmensaje.clearErrors();
+                envelope.setContents(helpers.Constantes.CARGO_EXITO);
             //return abmZone.getBody();
         }
         //RESTRICCION
