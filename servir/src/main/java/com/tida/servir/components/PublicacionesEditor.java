@@ -69,6 +69,9 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Date fecha_desde;
+    @Persist
+    @Property
+    private Boolean vbotones;
 
     //Inicio de lac carga de la pagina
     @Log
@@ -200,6 +203,7 @@ public class PublicacionesEditor {
     @Log
     Object onActionFromEditar1(Publicacion publi) {
         publicacion = publi;
+        vbotones = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         } else {
@@ -231,6 +235,7 @@ public class PublicacionesEditor {
     @Log
     Object onActionFromEditar2(Publicacion publi) {
         publicacion = publi;
+        vbotones = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         } else {

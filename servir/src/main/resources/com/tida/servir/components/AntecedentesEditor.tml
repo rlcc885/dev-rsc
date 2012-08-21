@@ -63,12 +63,14 @@
                                     </div>
                                 </t:if>          
                             </div>
-                            <t:if test="${vbotones}">
+                         <!--   <t:if test="${vbotones}">-->
                                 <div class="actions">
                                     <div class="f-left">                        
                                         (*) Campos Obligatorios
                                     </div>
-                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  />
+                                    <t:if test="${vbotones}">
+                                        <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  />
+                                    </t:if>
                                     <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="antLaboralZone">
                                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                             Limpiar Formulario
@@ -80,7 +82,7 @@
                                         </span> 
                                     </t:eventLink>
                                 </div>
-                            </t:if>
+                            <!--</t:if>-->
                         </t:form>
                     </t:if>
                     <div>
