@@ -63,20 +63,19 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean editando;
-
     @Persist
     @Property
     private String valfec_desde;
     @Persist
     @Property
     private Date fecha_desde;
-    
+
     //Inicio de lac carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
         publicacion = new Publicacion();
-        valfec_desde=null;
+        valfec_desde = null;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         } else {
@@ -106,33 +105,54 @@ public class PublicacionesEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    void onSelectedFromCancel() {
-        elemento = 2;
+//    void onSelectedFromCancel() {
+//        elemento = 2;
+//    }
+//
+//    void onSelectedFromReset() {
+//        elemento = 1;
+//    }
+    @Log
+    void resetRegistro() {
+        publicacion = new Publicacion();
+        editando = false;
+        valfec_desde = "";
+
     }
 
-    void onSelectedFromReset() {
-        elemento = 1;
+    @Log
+    Object onReset() {
+        resetRegistro();
+        return proIntelectualZone.getBody();
+    }
+
+    @Log
+    Object onCancel() {
+        return "Busqueda";
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromFormularioprointelectual() {
-        if(valfec_desde!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
+        if (valfec_desde != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+                publicacion.setFecha(fecha_desde);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
+            }
         }
-        publicacion.setFecha(fecha_desde);
+        
         Logger logger = new Logger();
         publicacion.setTrabajador(actual);
         publicacion.setEntidad(_oi);
+        
         if (!editando) {
             //guardando
             if (_usuario.getRolid() == 1) {
                 publicacion.setAgregadoTrabajador(true);
+                publicacion.setValidado(false);
             } else {
                 publicacion.setAgregadoTrabajador(false);
             }
@@ -156,26 +176,26 @@ public class PublicacionesEditor {
         editando = false;
         envelope.setContents(helpers.Constantes.PROD_INTELECTUAL_EXITO);
         publicacion = new Publicacion();
-        valfec_desde=null;
+        valfec_desde = null;
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
 
     }
 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormulariobotones() {
-        if (elemento == 1) {
-            publicacion = new Publicacion();
-            editando = false;
-            valfec_desde=null;
-            return proIntelectualZone.getBody();
-        } else if (elemento == 2) {
-            return "Busqueda";
-        } else {
-            return this;
-        }
-
-    }
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormulariobotones() {
+//        if (elemento == 1) {
+//            publicacion = new Publicacion();
+//            editando = false;
+//            valfec_desde = null;
+//            return proIntelectualZone.getBody();
+//        } else if (elemento == 2) {
+//            return "Busqueda";
+//        } else {
+//            return this;
+//        }
+//
+//    }
 
     @Log
     Object onActionFromEditar1(Publicacion publi) {
@@ -185,11 +205,11 @@ public class PublicacionesEditor {
         } else {
             bvalidausuario = false;
         }
-        if(publicacion.getFecha()!=null){
+        if (publicacion.getFecha() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(publicacion.getFecha());
+            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-                
+
         editando = true;
         return proIntelectualZone.getBody();
     }
@@ -204,10 +224,10 @@ public class PublicacionesEditor {
             bvalidausuario = false;
         }
         envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
-        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone",proIntelectualZone.getBody());
 
     }
-    
+
     @Log
     Object onActionFromEditar2(Publicacion publi) {
         publicacion = publi;
@@ -216,11 +236,11 @@ public class PublicacionesEditor {
         } else {
             bvalidausuario = false;
         }
-        if(publicacion.getFecha()!=null){
+        if (publicacion.getFecha() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(publicacion.getFecha());
+            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-                
+
         editando = true;
         return proIntelectualZone.getBody();
     }
@@ -234,8 +254,9 @@ public class PublicacionesEditor {
         } else {
             bvalidausuario = false;
         }
-        envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
-        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody());
+        envelope.setContents("Produción Intelectual eliminada exitosamente.");
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody())
+                .add("proIntelectualZone",proIntelectualZone.getBody());
 
     }
 }

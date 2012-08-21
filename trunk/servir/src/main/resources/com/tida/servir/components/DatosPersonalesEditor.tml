@@ -60,8 +60,7 @@
                         <div class="f-left">
                             <label>* Fecha de Nacimiento</label>
                             <input t:type="TextField" t:id="fechaNacimiento" t:clientId="fechaNacimiento"
-                                   t:value="fechanacimiento" t:validate="required" size="30" t:disabled="${vdatospersonales}" class="pictureInputDate"/>
-<!--                            <input t:type="TextField" t:id="fec_ingreso" id="fec_ingreso" t:value="valfec_desde"  size="25" />-->
+                                   t:value="fechanacimiento" t:validate="required,regexp" size="30" t:disabled="${vdatospersonales}" class="pictureInputDate"/>
                         </div>
                     </div>
                 </fieldset>

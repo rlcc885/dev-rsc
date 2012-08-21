@@ -5,11 +5,9 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
-
 import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -39,8 +37,8 @@ public class AntecedentesEditor {
     private Session session;
     @InjectComponent
     private Envelope envelope;
-    @Component(id = "formulariomensajes")
-    private Form formulariomensajes;
+    @Component(id = "formulariomensajesantecedente")
+    private Form formulariomensajesantecedente;
     @InjectComponent
     private Zone mensajesZone;
     @InjectComponent
@@ -61,7 +59,6 @@ public class AntecedentesEditor {
     @Persist
     @Property
     private Boolean editando;
-    
     @Persist
     @Property
     private String valfec_desde;
@@ -74,7 +71,6 @@ public class AntecedentesEditor {
     @Persist
     @Property
     private Date fecha_hasta;
-    
     //validaciones
     @Persist
     @Property
@@ -104,8 +100,8 @@ public class AntecedentesEditor {
     private void inicio() {
         ant_Laborales = new Ant_Laborales();
         bvalidausuario = false;
-        valfec_hasta=null;
-        valfec_desde=null;
+        valfec_hasta = null;
+        valfec_desde = null;
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             vbotones = true;
@@ -130,51 +126,82 @@ public class AntecedentesEditor {
     }
 
     @Log
+    public String getFechaIngreso() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(listaantlaborales.getFec_ingreso());
+    }
+    @Log
+    public String getFechaEgreso() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(listaantlaborales.getFec_egreso());
+    }
+
+    @Log
     public List<Ant_Laborales> getListadoAntLaborales() {
         Criteria c = session.createCriteria(Ant_Laborales.class);
         c.add(Restrictions.eq("trabajador", actual));
         return c.list();
     }
 
-    void onSelectedFromCancel() {
-        elemento = 2;
+//    @Log
+//    void onSelectedFromCancel() {
+//        elemento = 2;
+//    }
+//
+//    @Log
+//    void onSelectedFromReset() {
+//        elemento = 1;
+//        if (usua.getAccesoreport() == 0) {
+//            vformulario = false;
+//        }
+//    }
+
+    @Log
+    void resetRegistro() {
+        ant_Laborales = new Ant_Laborales();
+        valfec_hasta = "";
+        valfec_desde = "";
+        editando = false;
     }
 
-    void onSelectedFromReset() {
-        elemento = 1;
-        if (usua.getAccesoreport() == 0) {
-            vformulario = false;
-        }
+    @Log
+    Object onReset() {
+        resetRegistro();
+        return antLaboralZone.getBody();
+    }
+
+    @Log
+    Object onCancel() {
+        return "Busqueda";
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromFormularioantlaboral() {
-        
-        if(valfec_desde!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
+        if (valfec_desde != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+            } catch (ParseException ex) {
                 ex.printStackTrace();
-                }
             }
-          
-            if(valfec_hasta!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_hasta = (Date)formatoDelTexto.parse(valfec_hasta);
-                } catch (ParseException ex) {
-                ex.printStackTrace();
-                }
-            }
-            
-            ant_Laborales.setFec_ingreso(fecha_desde);
-            ant_Laborales.setFec_egreso(fecha_hasta);
-        
-        if (ant_Laborales.getFec_egreso().before(ant_Laborales.getFec_ingreso()) || ant_Laborales.getFec_egreso().equals(ant_Laborales.getFec_ingreso())) {
-            envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
+        }
 
+        if (valfec_hasta != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_hasta = (Date) formatoDelTexto.parse(valfec_hasta);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        ant_Laborales.setFec_ingreso(fecha_desde);
+        ant_Laborales.setFec_egreso(fecha_hasta);
+
+        if (ant_Laborales.getFec_egreso().before(ant_Laborales.getFec_ingreso()) || ant_Laborales.getFec_egreso().equals(ant_Laborales.getFec_ingreso())) {
+            formulariomensajesantecedente.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
+            return mensajesZone.getBody();
         } else {
             Logger logger = new Logger();
             ant_Laborales.setTrabajador(actual);
@@ -209,44 +236,52 @@ public class AntecedentesEditor {
             editando = false;
             envelope.setContents(helpers.Constantes.ANT_LABORAL_EXITO);
             ant_Laborales = new Ant_Laborales();
-            valfec_hasta=null;
-            valfec_desde=null;
+            valfec_hasta = null;
+            valfec_desde = null;
         }
+
+//        if (elemento == 2) {
+//            return "Busqueda";
+//        }
+
+        ant_Laborales = new Ant_Laborales();
+        editando = false;
+        valfec_hasta = null;
+        valfec_desde = null;
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaAntLoboralZone", listaAntLoboralZone.getBody()).add("antLaboralZone", antLaboralZone.getBody());
 
     }
 
-    @Log
-    @CommitAfter
-    Object onSuccessFromFormulariobotones() {
-        System.out.println("1: " + elemento);
-        if (elemento == 1) {
-            ant_Laborales = new Ant_Laborales();
-            editando = false;
-            valfec_hasta=null;
-            valfec_desde=null;
-            return antLaboralZone.getBody();
-        } else if (elemento == 2) {
-            return "Busqueda";
-        } else {
-            return this;
-        }
-
-    }
-
+//    @Log
+//    @CommitAfter
+//    Object onSuccessFromFormulariobotones() {
+//        System.out.println("1: " + elemento);
+//        if (elemento == 1) {
+//            ant_Laborales = new Ant_Laborales();
+//            editando = false;
+//            valfec_hasta=null;
+//            valfec_desde=null;
+//            return antLaboralZone.getBody();
+//        } else if (elemento == 2) {
+//            return "Busqueda";
+//        } else {
+//            return this;
+//        }
+//
+//    }
     @Log
     Object onActionFromEditar(Ant_Laborales antLab) {
         ant_Laborales = antLab;
-        
-        if(ant_Laborales.getFec_ingreso()!=null){
+
+        if (ant_Laborales.getFec_ingreso() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(ant_Laborales.getFec_ingreso());
+            valfec_desde = formatoDeFecha.format(ant_Laborales.getFec_ingreso());
         }
-        if(ant_Laborales.getFec_egreso()!=null){
+        if (ant_Laborales.getFec_egreso() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_hasta=formatoDeFecha.format(ant_Laborales.getFec_egreso());
+            valfec_hasta = formatoDeFecha.format(ant_Laborales.getFec_egreso());
         }
-        
+
         editando = true;
         vformulario = true;
         vdetalle = false;
