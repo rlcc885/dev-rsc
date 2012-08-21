@@ -70,10 +70,13 @@ public class CursosEditor {
     private Zone mensajescurso;
 //    @InjectComponent
 //    @Property
-//    private Zone segundaZone;  
+//    private Zone segundaZone;
+//    @InjectComponent
+//    @Property
+//    private Zone terceraZone;
     @InjectComponent
     @Property
-    private Zone terceraZone;
+    private Zone centroZone;
     @Component(id = "formlistacursos")
     private Form formlistacursos;
     @Inject
@@ -192,14 +195,15 @@ public class CursosEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    void onDenChanged() {
-        valdenominacion = _request.getParameter("param");
-    }
-
-    void onOtroChanged() {
-        valotrocentro = _request.getParameter("param");
-    }
-
+//    @Log
+//    void onDenChanged() {
+//        valdenominacion = _request.getParameter("param");
+//    }
+//
+//    @Log
+//    void onOtroChanged() {
+//        valotrocentro = _request.getParameter("param");
+//    }
     @Log
     Object onActionFromEditar(Curso c) {
         cursos = c;
@@ -218,7 +222,7 @@ public class CursosEditor {
             vfechahasta = false;
         }
         if (valcentroestudio != null) {
-            if (valcentroestudio.getCodigo() == 9999999) {
+            if (valcentroestudio.getCodigo() == 999999) {
                 votro = false;
             } else {
                 votro = true;
@@ -236,7 +240,8 @@ public class CursosEditor {
             valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
         }
 
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()); //.add("listadoZone", listadoZone.getBody());
+//.add("terceraZone", terceraZone.getBody());
     }
 
     @Log
@@ -248,7 +253,8 @@ public class CursosEditor {
         votro = true;
         vbotones = false;
         vformulario = true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("terceraZone", terceraZone.getBody());
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody());
+//.add("terceraZone", terceraZone.getBody());
     }
 
     @Log
@@ -260,7 +266,7 @@ public class CursosEditor {
         votro = true;
         vbotones = false;
         vformulario = true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("terceraZone", terceraZone.getBody());
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody());//.add("terceraZone", terceraZone.getBody());
     }
 
     @Log
@@ -268,41 +274,30 @@ public class CursosEditor {
     Object onBorrarDato(Curso dato) {
         session.delete(dato);
         envelope.setContents("Curso del Trabajador Eliminado");
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).add("terceraZone", terceraZone.getBody());
-    }
-
-    @Log
-    @CommitAfter
-    Object onSuccessFromformularioprimero() {
-        if (valcentroestudio != null) {
-            if (valcentroestudio.getCodigo() == 999999) {
-                votro = false;
-            } else {
-                votro = true;
-                valotrocentro = null;
-            }
-        } else {
-            votro = true;
-        }
-        return primeraZone.getBody();
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());//.add("terceraZone", terceraZone.getBody());
     }
 
 //    @Log
 //    @CommitAfter
-//    Object onSuccessFromformulariosegundo(){
-//        if(valestudiando){
-//            vfechahasta=true;
-//            valfec_hasta=null;
+//    Object onSuccessFromformularioprimero() {
+//        if (valcentroestudio != null) {
+//            if (valcentroestudio.getCodigo() == 999999) {
+//                votro = false;
+//            } else {
+//                votro = true;
+//                valotrocentro = null;
+//            }
+//        } else {
+//            votro = true;
 //        }
-//        else{
-//            vfechahasta=false;
-//        }
-//        return terceraZone.getBody();
+//        return primeraZone.getBody();
 //    }
+    @Log
     void onSelectedFromSave() {
         elemento = 1;
     }
 
+    @Log
     void onSelectedFromReset() {
         limpiar();
         formlistacursos.clearErrors();
@@ -314,14 +309,14 @@ public class CursosEditor {
         elemento = 2;
     }
 
+    @Log
     void onSelectedFromCancel() {
         elemento = 3;
     }
 
     @Log
     @CommitAfter
-    Object onSuccessFromformulariotercero() {
-
+    Object onSuccessFromformularioprimero() {
         if (valfec_desde != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -350,6 +345,7 @@ public class CursosEditor {
         } else {
             vfechahasta = false;
         }
+
         if (elemento == 3) {
             elemento = 0;
             if (_usuario.getRolid() == 1) {
@@ -363,17 +359,24 @@ public class CursosEditor {
             elemento = 0;
             formlistacursos.clearErrors();
             Logger logger = new Logger();
-            if (valdenominacion == null) {
-                formlistacursos.recordError("Tiene que ingresar la Denominación");
-                return mensajescurso.getBody();
-            }
             if (valtipoestudio == null) {
                 formlistacursos.recordError("Tiene que seleccionar el Tipo de Estudio");
+                return mensajescurso.getBody();
+            }
+            if (valdenominacion == null) {
+                formlistacursos.recordError("Tiene que ingresar la Denominación");
                 return mensajescurso.getBody();
             }
             if (valcentroestudio == null) {
                 formlistacursos.recordError("Tiene que seleccionar el Centro de Estudio");
                 return mensajescurso.getBody();
+            } else {
+                if (valcentroestudio.getCodigo() == 999999) {
+                    if ("".equals(valotrocentro) || valotrocentro == null) {
+                        formlistacursos.recordError("Ingrese denominación del Centro de Estudio");
+                        return mensajescurso.getBody();
+                    }
+                }
             }
             if (fecha_desde == null) {
                 formlistacursos.recordError("Tiene que ingresar Fecha de Inicio");
@@ -387,35 +390,26 @@ public class CursosEditor {
                 return mensajescurso.getBody();
             }
 
-            if (editando) {
-                //editando
-                if (usu.getAccesoreport() == 0) {
-                    vformulario = false;
-                }
-                System.out.println("fuerae" + valfuera);
-                cursos.setEstudiando(valestudiando);
-                cursos.setFueradelpais(valfuera);
-
-            } else {//guardando
-                //System.out.println("Trabajadorrr"+actual);                    
+            if (!editando) {
                 cursos.setTrabajador(actual);
                 cursos.setEntidad(_usuario.getTrabajador().getEntidad());
                 cursos.setValidado(false);
-                if (valestudiando == null) {
-                    cursos.setEstudiando(false);
-                } else {
-                    cursos.setEstudiando(valestudiando);
-                }
-                if (valfuera == null) {
-                    cursos.setFueradelpais(false);
-                } else {
-                    cursos.setFueradelpais(valfuera);
-                }
                 if (_usuario.getRolid() == 1) {
                     cursos.setAgregadotrabajador(true);
                 } else {
                     cursos.setAgregadotrabajador(false);
                 }
+            }
+            if (valestudiando == null) {
+                cursos.setEstudiando(false);
+            } else {
+                cursos.setEstudiando(valestudiando);
+                cursos.setFechafin(null);
+            }
+            if (valfuera == null) {
+                cursos.setFueradelpais(false);
+            } else {
+                cursos.setFueradelpais(valfuera);
             }
             if (vrevisado == true) {
                 if (valrevisado == null) {
@@ -429,12 +423,10 @@ public class CursosEditor {
             session.saveOrUpdate(cursos);
             session.flush();
             if (!editando) {
-                System.out.println("primerooooooo" + editando);
                 logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_CURSOS, cursos.getId());
             }
             if (valrevisado != null) {
                 if (valrevisado == true) {
-                    System.out.println("segundoooooo");
                     String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + cursos.getTrabajador().getId() + "' and tipoevento_id='" + logger.MODIFICACION_CURSOS + "' and tabla_id='" + cursos.getId() + "' and estadoevento=0";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
@@ -447,10 +439,11 @@ public class CursosEditor {
             envelope.setContents("Cursos del Trabajador Modificados Exitosamente");
         }
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody()).
-                add("terceraZone", terceraZone.getBody()).
+                //                add("terceraZone", terceraZone.getBody()).
                 add("mensajescurso", mensajescurso.getBody());
     }
 
+    @Log
     boolean validando() {
         boolean resultado = true;
         if (valestudiando != null) {
@@ -492,11 +485,10 @@ public class CursosEditor {
                 formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
-
-        System.out.println("resuuuuuu" + resultado);
         return resultado;
     }
 
+    @Log
     void mostrar() {
         valdenominacion = cursos.getDenominacion();
         valtipoestudio = cursos.getTipoestudio();
@@ -507,9 +499,9 @@ public class CursosEditor {
         valestudiando = cursos.getEstudiando();
         valrevisado = cursos.getValidado();
         valfuera = cursos.getFueradelpais();
-        System.out.println("fueram" + valfuera);
     }
 
+    @Log
     void seteo() {
         cursos.setDenominacion(valdenominacion);
         cursos.setTipoestudio(valtipoestudio);
@@ -519,12 +511,13 @@ public class CursosEditor {
         cursos.setFechafin(fecha_hasta);
     }
 
+    @Log
     void limpiar() {
         cursos = new Curso();
         valdenominacion = null;
         valtipoestudio = null;
         valcentroestudio = null;
-        valotrocentro = null;
+        valotrocentro = "";
         valfec_desde = null;
         valfec_hasta = null;
         valestudiando = null;
@@ -532,105 +525,19 @@ public class CursosEditor {
         valrevisado = null;
         vfechahasta = false;
     }
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.puedeEscribir(_usuario, _oi);
-//    }
-//    public boolean getEsTrabajadorEditable(){        
-//        if(curso != null){
-//            if((curso.getAgregadoTrabajador() == null)){
-//                return true;
-//            }
-//                
-//            if(curso.getAgregadoTrabajador() == false){
-//                return true;
-//            }
-//        }
-//        return _usuario.getTipo_usuario().equals(Usuario.TRABAJADOR);
-//    }
-//  public PrimaryKeyEncoder<Long, Curso> getEncoder()
-//  {
-//    return new PrimaryKeyEncoder<Long, Curso>()
-//    {
-//      public Long toKey(Curso value)
-//      {
-//        return value.getId();
-//      }
-//
-//      public void prepareForKeys(List<Long> keys)
-//      {
-//      }
-//
-//      public Curso toValue(Long key)
-//      {
-//        return (Curso) session.get(Curso.class, key);
-//      }
-//
-//            public Class<Long> getKeyType() {
-//                return Long.class;
-//            }
-//    };
-//  }
-//
-//  @Log
-//  @CommitAfter
-//  public Object onSuccess()
-//  {
-//      for(Curso cur : actual.cursos) {
-//              if(cur.getFec_emision().after(new Date())) {
-//
-//                  Logger logger = new Logger();
-//                  logger.loguearError(session, _usuario, cur.getId().toString(),
-//                      Logger.CODIGO_ERROR_FECHA_DICTADO_PREVIA_ACTUAL,
-//                      Errores.ERROR_FECHA_DICTADO_PREVIA_ACTUAL, Logger.TIPO_OBJETO_CURSO);
-//
-//                  _form.recordError(Errores.ERROR_FECHA_DICTADO_PREVIA_ACTUAL);
-//                  return this;
-//              }
-//	  }
-//
-//    envelope.setContents(helpers.Constantes.CURSO_EXITO);
-//	  //_form.clearErrors();
-//	  return this;
-//  }
-//
-//  @Log
-//  @CommitAfter
-//  Object onAddRow()
-//  {
-//    Curso cur = new Curso();
-//    if(actual.getCursos() == null){
-//        actual.setCursos(new ArrayList<Curso>());
-//    }
-//    cur.setTrabajador(actual);
-//    if(_usuario.getTipo_usuario().equals(Usuario.TRABAJADOR))
-//        cur.setAgregadoTrabajador(Boolean.TRUE);
-//    actual.getCursos().add(cur);
-//    session.saveOrUpdate(actual);
-//    new Logger().loguearOperacion(session, _usuario, String.valueOf(cur.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CURSO);
-//    return cur;
-//  }
-//
-//  @Log
-//  @CommitAfter
-//  void onRemoveRow(Curso curso)
-//  {
-//    actual.getCursos().remove(curso);
-//    session.delete(curso);
-//    new Logger().loguearOperacion(session, _usuario, String.valueOf(curso.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CURSO);
-//  }
-//
-//  @Log
-//    Object onFailure() {
-//          return this;
-//    }
 
-    /*
-     * @Log Object onValidate(){
-     *
-     * }
-     */
+    @Log
+    Object onValueChangedFromCentroestudio(DatoAuxiliar dato) {
+        if (dato != null) {
+            if (dato.getCodigo() == 999999) {
+                votro = false;
+            } else {
+                votro = true;
+                valotrocentro = "";
+            }
+        } else {
+            votro = true;
+        }
+        return new MultiZoneUpdate("centroZone", centroZone.getBody());
+    }
 }
