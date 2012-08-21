@@ -228,9 +228,11 @@ public class EstudiosEditor {
         elemento = 1;
     }
 
-    @Log
+    //@Log
     void onSelectedFromReset() {
         limpiar();
+        formlistaestudios.clearErrors();
+        mensajes.getBody();
         editando = false;
         estudio = new Estudios();
         if (usua.getAccesoreport() == 0) {
