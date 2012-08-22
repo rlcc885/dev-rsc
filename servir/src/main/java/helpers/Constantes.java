@@ -32,7 +32,7 @@ public class Constantes {
    public static final String CARGO_EXITO ="Cargos creados exitosamente.";
    public static final String CARGO_EDIT_EXITO ="Cargos modificados exitosamente.";
    public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado / modificado exitosamente.";
-   public static final String MERITO_DEMERITO_EXITO ="Meritos demeritos creados / modificados exitosamente.";
+   public static final String MERITO_DEMERITO_EXITO ="Méritos deméritos creados / modificados exitosamente.";
    public static final String UNIDAD_ORGANICA_EXITO ="Unidades Organicas creados / modificadas exitosamente.";
    
    //modificado 10agosto
