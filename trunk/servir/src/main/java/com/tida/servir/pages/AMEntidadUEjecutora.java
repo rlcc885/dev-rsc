@@ -616,13 +616,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
             // System.out.println(entidadUE.getTipoSubEntidad().toString());
 
             ///************ 17 agosto
+            if (entidadUE.getEsSubEntidad() == null)
+            {entidadUE.setEsSubEntidad(false);
+            }
          String x = ruc_anterior;   
             Criteria c = session.createCriteria(Entidad.class);
-            c.add(Restrictions.eq("ruc", x));
+            System.out.println("*********KC :"+entidadUE.getEsSubEntidad());
+         //   c.add(Restrictions.eq("ruc", x));
        if (!editando)    
        {  
+           c.add(Restrictions.eq("ruc",entidadUE.getRuc()));
             if (entidadUE.getEsSubEntidad()) 
-            {if (!c.list().isEmpty()) {
+            {
+                if (!c.list().isEmpty()) {
                     if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc())) {
                         envelope.setContents("RUC duplicado");
                         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
@@ -630,13 +636,23 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 }
             } 
             else 
-            {if (!c.list().isEmpty()) {
+            {
+                if (!c.list().isEmpty()) {
                     envelope.setContents("RUC duplicado");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                      }
             }
        }
- 
+       else  // modificacion
+       {
+         c.add(Restrictions.ne("ruc", x));
+         c.add(Restrictions.eq("ruc",entidadUE.getRuc()));
+            if (!c.list().isEmpty())
+            {
+                envelope.setContents("RUC duplicado");
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+            }
+       }
        
 
 
