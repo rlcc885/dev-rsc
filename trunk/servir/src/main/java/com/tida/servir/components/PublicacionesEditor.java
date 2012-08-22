@@ -71,20 +71,47 @@ public class PublicacionesEditor {
     private Date fecha_desde;
     @Persist
     @Property
+    private Boolean vinserta;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @SessionState
+    private UsuarioAcceso usua;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Persist
+    @Property
     private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean vdetalle;
 
     //Inicio de lac carga de la pagina
     @Log
-    @SetupRender
-    private void inicio() {
+    void setupRender() {
         publicacion = new Publicacion();
         valfec_desde = null;
+        veditar = false;
+        veliminar = false;
+        bvalidausuario = false;
+        vbotones = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
-        } else {
-            bvalidausuario = false;
         }
-        editando = false;
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
+            vbotones = true;
+        }
+        if (usua.getAccesodelete() == 1) {
+            veliminar = true;
+        }
+        if (usua.getAccesoreport() == 1) {
+            vinserta = true;
+        }
     }
 
     @Log
@@ -146,11 +173,11 @@ public class PublicacionesEditor {
                 ex.printStackTrace();
             }
         }
-        
+
         Logger logger = new Logger();
         publicacion.setTrabajador(actual);
         publicacion.setEntidad(_oi);
-        
+
         if (!editando) {
             //guardando
             if (_usuario.getRolid() == 1) {
@@ -199,69 +226,52 @@ public class PublicacionesEditor {
 //        }
 //
 //    }
-
     @Log
-    Object onActionFromEditar1(Publicacion publi) {
+    Object onActionFromEditar(Publicacion publi) {
         publicacion = publi;
-        vbotones = false;
-        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
-            bvalidausuario = true;
-        } else {
-            bvalidausuario = false;
-        }
         if (publicacion.getFecha() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-
         editando = true;
+        vdetalle = false;
+        return proIntelectualZone.getBody();
+    }
+    
+    @Log
+    Object onActionFromDetalle(Publicacion publi) {
+        publicacion = publi;
+        if (publicacion.getFecha() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
+        }
+        editando = false;
+        vdetalle = true;
         return proIntelectualZone.getBody();
     }
 
     @Log
     @CommitAfter
-    Object onActionFromEliminar1(Publicacion publi) {
+    Object onActionFromEliminar(Publicacion publi) {
         session.delete(publi);
-        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
-            bvalidausuario = true;
-        } else {
-            bvalidausuario = false;
-        }
-        envelope.setContents("Produciones Intelectuales eliminadas exitosamente.");
-        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone",proIntelectualZone.getBody());
-
+        envelope.setContents("Produción Intelectual eliminada exitosamente.");
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).
+                add("listaProIntelectualZone", listaProIntelectualZone.getBody()).
+                add("proIntelectualZone", proIntelectualZone.getBody());
     }
 
     @Log
     Object onActionFromEditar2(Publicacion publi) {
-        publicacion = publi;
-        vbotones = false;
-        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
-            bvalidausuario = true;
-        } else {
-            bvalidausuario = false;
-        }
-        if (publicacion.getFecha() != null) {
-            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
-        }
-
-        editando = true;
-        return proIntelectualZone.getBody();
+        return onActionFromEditar(publi);
     }
 
     @Log
-    @CommitAfter
-    Object onActionFromEliminar2(Publicacion publi) {
-        session.delete(publi);
-        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
-            bvalidausuario = true;
-        } else {
-            bvalidausuario = false;
-        }
-        envelope.setContents("Produción Intelectual eliminada exitosamente.");
-        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody())
-                .add("proIntelectualZone",proIntelectualZone.getBody());
+    Object onActionFromDetalle2(Publicacion publi) {
+        return onActionFromDetalle(publi);
+    }
 
+    @Log
+    Object onActionFromEliminar2(Publicacion publi) {
+        return onActionFromEliminar(publi);
     }
 }
