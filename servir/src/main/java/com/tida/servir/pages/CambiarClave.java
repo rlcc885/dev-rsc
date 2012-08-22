@@ -37,11 +37,14 @@ public class CambiarClave extends GeneralPage {
     @SessionState
     private Usuario _usuario;
     @Component(id = "formulariocambioclave")
-    private Form formulariocambioclave;
+    private Form formulariocambioclave; 
+    @Persist
     @Property
     private String oldPass;
+    @Persist
     @Property
     private String newPass1;
+    @Persist
     @Property
     private String newPass2;
     @Persist
@@ -86,6 +89,25 @@ public class CambiarClave extends GeneralPage {
             return  "CambiarClave";
         }
          else{ 
+             
+            if(oldPass == null){
+                formulariocambioclave.recordError("Tiene que Ingresa la Clave Actual");
+                return new MultiZoneUpdate("zone", zone.getBody())                             
+                    .add("zone2", zone2.getBody());
+            }
+            
+            if(newPass1 == null){
+                formulariocambioclave.recordError("Tiene que Ingresa una Clave Nueva");
+                return new MultiZoneUpdate("zone", zone.getBody())                             
+                    .add("zone2", zone2.getBody());
+            }
+            
+            if(newPass2 == null){
+                formulariocambioclave.recordError("Tiene que Ingresa una Clave Nueva");
+                return new MultiZoneUpdate("zone", zone.getBody())                             
+                    .add("zone2", zone2.getBody());
+            }
+            
             if (!Encriptacion.encriptaEnMD5(oldPass).equals(_usuario.getMd5Clave())) {
                 verificacion="";
                 formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
@@ -109,12 +131,12 @@ public class CambiarClave extends GeneralPage {
                 return new MultiZoneUpdate("zone", zone.getBody())                             
                     .add("zone2", zone2.getBody()); 
             }
-
-
+            
             envelope.setContents("Clave modificada con éxito.");
+            
             if (this.cambioForzado) {
                 envelope.setContents("Clave modificada con éxito. <a href='/servir'>Reingresar al sistema.</a>");
-            }
+            }     
             // formulariocambioclave.recordError("Clave modificada con éxito");
             _usuario.setMd5Clave(Encriptacion.encriptaEnMD5(newPass1));
 //            _usuario.setClave(newPass1);
