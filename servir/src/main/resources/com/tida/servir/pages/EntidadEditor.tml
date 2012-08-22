@@ -95,7 +95,7 @@
                         <div class="f-left">
                             <t:label for="direccion"/>
                             <input t:type="TextField" t:id="direccion" t:style="width: 500px;" 
-                                   t:value="entidadUE.direccion" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
+                                   t:value="entidadUE.descvia" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
                                    t:zone="ubigeoEntidadZone" t:disabled="${veditar}"/>
                         </div>
                     </div> 

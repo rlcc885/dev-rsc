@@ -386,7 +386,7 @@ public class EntidadEditor extends GeneralPage {
     }
 
     void onDireccionEntChanged() {
-        entidadUE.setDireccion(_request.getParameter("param"));
+        entidadUE.setDescvia(_request.getParameter("param"));
     }
 
     void onDescZonaEntChanged() {

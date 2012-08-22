@@ -964,7 +964,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE.setEsSubEntidad(true);
             entidadUE.setTipoVia(entidad.getTipoVia());
             entidadUE.setTipoZona(entidad.getTipoZona());
-            entidadUE.setDireccion(entidad.getDireccion());
+            entidadUE.setDescvia(entidad.getDescvia());
             entidadUE.setDescZona(entidad.getDescZona());
             entidadUE.setNivelGobierno(entidad.getNivelGobierno());
             entidadUE.setOrganizacionEstado(entidad.getOrganizacionEstado());
@@ -1051,7 +1051,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     void onDireccionChanged() {
-        entidadUE.setDireccion(_request.getParameter("param"));
+        entidadUE.setDescvia(_request.getParameter("param"));
     }
 
     @Log

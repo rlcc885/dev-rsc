@@ -772,7 +772,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
         unidadOrganica.setTipovia(entidadUE.getTipoVia());
         unidadOrganica.setTipozona(entidadUE.getTipoZona());
-        unidadOrganica.setLocalidad(entidadUE.getDireccion());
+        unidadOrganica.setLocalidad(entidadUE.getDescvia());
         unidadOrganica.setDesczona(entidadUE.getDescZona());
         if (unidadOrganica.getTipozona() != null) {
             if (unidadOrganica.getTipozona().getCodigo() == 14) {
