@@ -99,6 +99,7 @@ public class PublicacionesEditor {
         veliminar = false;
         bvalidausuario = false;
         vbotones = false;
+        editando = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
@@ -158,7 +159,11 @@ public class PublicacionesEditor {
 
     @Log
     Object onCancel() {
-        return "Busqueda";
+        if (_usuario.getRolid() == 1) { // Si es trabajador 
+            return "TrabajadorPersonal";
+        }else{
+            return "Busqueda";
+        }
     }
 
     @Log
@@ -178,20 +183,20 @@ public class PublicacionesEditor {
         publicacion.setTrabajador(actual);
         publicacion.setEntidad(_oi);
 
-        if (!editando) {
+        if (!editando) { // Si no edita, está insertando
             //guardando
-            if (_usuario.getRolid() == 1) {
+            if (_usuario.getRolid() == 1) { // Si es trabajador 
                 publicacion.setAgregadoTrabajador(true);
                 publicacion.setValidado(false);
-            } else {
-                publicacion.setAgregadoTrabajador(false);
+//            } else {
+//                publicacion.setAgregadoTrabajador(false);
             }
         }
 
         session.saveOrUpdate(publicacion);
         session.flush();
 
-        if (!editando) {
+        if (_usuario.getRolid() == 1) {
             logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_PRODUCCION, publicacion.getId());
         }
         if (publicacion.getValidado() != null) {
@@ -237,7 +242,7 @@ public class PublicacionesEditor {
         vdetalle = false;
         return proIntelectualZone.getBody();
     }
-    
+
     @Log
     Object onActionFromDetalle(Publicacion publi) {
         publicacion = publi;
@@ -267,6 +272,11 @@ public class PublicacionesEditor {
 
     @Log
     Object onActionFromDetalle2(Publicacion publi) {
+        return onActionFromDetalle(publi);
+    }
+
+    @Log
+    Object onActionFromDetalle3(Publicacion publi) {
         return onActionFromDetalle(publi);
     }
 

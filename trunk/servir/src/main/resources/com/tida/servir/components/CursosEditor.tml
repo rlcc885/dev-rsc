@@ -61,11 +61,11 @@
                                 </div> 
                                 <div class="f-left">
                                     <label>Desde</label>
-                                    <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="25" t:validate="regexp" t:disabled="${vdetalle}" t:readonly="readlony" class="fec_inicio pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_inicio_curso" t:value="valfec_desde" size="25" t:validate="regexp" t:disabled="${vdetalle}" t:readonly="readlony" class="fec_inicio_curso pictureInputDate"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Hasta</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="25" t:validate="regexp" t:disabled="${vfechahasta}" t:readonly="readlony" class="fec_fin pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin_curso" t:value="valfec_hasta" size="25" t:validate="regexp" t:disabled="${vfechahasta}" t:readonly="readlony" class="fec_fin_curso pictureInputDate"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -93,14 +93,14 @@
             <div>
                 <script>
                     jQuery(document).ready(function() {
-                    jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
-                    jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fec_inicio_curso').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fec_fin_curso').datepick({dateFormat: 'dd/mm/yyyy'});
                     });
                     function toggleStatus() {
                     if (jQuery('.idestudiando').is(':checked')) {
-                    jQuery('.fec_fin').attr('disabled', true);
+                    jQuery('.fec_fin_curso').attr('disabled', true);
                     } else {
-                    jQuery('.fec_fin').removeAttr('disabled');
+                    jQuery('.fec_fin_curso').removeAttr('disabled');
                     }
                     }
                 </script>

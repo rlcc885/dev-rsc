@@ -40,8 +40,8 @@
                                 </div>
                                 <div class="f-left">
                                     <label>Fecha: </label>
-                                    <input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde" size="25" t:validate="regexp" 
-                                           t:disabled="${vdetalle}" class="fec_ingreso pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_publicacion" t:value="valfec_desde" size="25" t:validate="regexp" 
+                                           t:disabled="${vdetalle}" class="fec_publicacion pictureInputDate"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
@@ -84,7 +84,7 @@
                     <div>
                         <script>
                             jQuery(document).ready(function() {
-                            jQuery('.fec_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_publicacion').datepick({dateFormat: 'dd/mm/yyyy'});
                             });
                         </script>
                     </div>
@@ -141,13 +141,18 @@
                     </p:revisadoCell>
                     <p:accionesCell>
                         <t:if test="${bvalidausuario}" negate="true">
-                            <t:if test="${listaprointelectual.validado}" negate="true">
-                                <t:if test="${veditar}">
+                            <t:if test="${listaprointelectual.validado}" negate="true"> <!-- no validado -->
+                                <t:if test="${veditar}"> <!-- si edita -->
                                     <t:actionlink t:id="editar" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
                                 </t:if>
-                                <t:if test="${veditar}" negate="true">
-                                    <t:actionlink t:id="detalle" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
+                                <t:if test="${veditar}" negate="true"> <!-- si no edita -->
+                                    <t:actionlink t:id="detalle3" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
                                 </t:if>
+                            </t:if>
+                            <t:if test="${listaprointelectual.validado}"> <!-- validado -->
+                                <t:actionlink t:id="detalle" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
+                            </t:if>
+                            <t:if test="${listaprointelectual.validado}" negate="true">
                                 <t:if test="${veliminar}">
                                     <t:actionlink t:id="eliminar" zone="listaProIntelectualZone" context="listaprointelectual"> 
                                         <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
