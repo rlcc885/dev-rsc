@@ -44,6 +44,9 @@ public class MeritosDemeritosEditor {
     private Session session;
     @InjectComponent
     private Envelope envelope;
+    @Persist
+    @Property
+    private Boolean vdetalle;
    
     
     @Component(id = "formulariomensajesME")
@@ -90,6 +93,9 @@ public class MeritosDemeritosEditor {
     @Property
     private MeritoDemerito listaMeritos;
     
+    @Persist
+    @Property
+    private Boolean vformulario;
  
     @Inject
     private PropertyAccess _access;
@@ -102,6 +108,12 @@ public class MeritosDemeritosEditor {
             listaMeritos=new MeritoDemerito();
             btipo=false;
             valfec_desde=null;
+            if(_usuario.getRolid() == 1)
+            {
+                vformulario = false;
+            }else{
+                vformulario = true;
+            }
     }
     
     @Log
@@ -177,7 +189,8 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         
         if(merito.getTipomeritodemerito()==null)
         {
-            envelope.setContents("Debe ingresar el Tipo");
+//            envelope.setContents("Debe ingresar el Tipo");
+            formulariomensajesME.recordError("Debe ingresar el Tipo");
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
@@ -193,6 +206,16 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
                 ex.printStackTrace();
                 }
         }
+        
+        if(_usuario.getRolid() == 1)
+        {
+            formulariomensajesME.recordError("Ud, no tiene permisos para Insertar Datos");
+//            envelope.setContents("Ud, no tiene permisos para Insertar Datos");
+             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
+        }
+        
         merito.setFecha(fecha_desde);
         System.out.println("*************MDE :"+merito.getClasemeritodemerito());
         merito.setTrabajador(actual);
