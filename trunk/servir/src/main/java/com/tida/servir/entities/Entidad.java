@@ -39,6 +39,7 @@ public class Entidad implements Serializable {
     private String ruc;
     Boolean proc_Batch;
     private DatoAuxiliar tipoVia;
+    @Column(name = "DESCVIA")
     private String direccion;
     private DatoAuxiliar tipozona;
 

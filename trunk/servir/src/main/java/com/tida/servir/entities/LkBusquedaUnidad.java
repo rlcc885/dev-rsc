@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Jurguen Zambrano
  */
 @Entity
-@Table(name = "LKBUSQUEDAUNIDAD", catalog = "", schema = "RNSC")
+@Table(name = "LKBUSQUEDAUNIDAD", catalog = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LkBusquedaUnidad.findAll", query = "SELECT l FROM LkBusquedaUnidad l"),

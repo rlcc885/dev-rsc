@@ -7,16 +7,20 @@
             <script>
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
             </script>
-            <t:form t:id="formulariomensajespi"  zone="mensajesPIZone"> 
+            <t:form t:id="formulariomensajespi"  zone="mensajesPIZone">
                 <t:envelope t:id="envelope"/>
                 <t:errors/>
-            </t:form> 
+            </t:form>
         </div>
-        
+        <script>
+            jQuery(document).ready(function() {
+            jQuery('.fec_publicacion').datepick({dateFormat: 'dd/mm/yyyy'});
+            });
+        </script>
         <div class="f-wrap">  
             <div t:type="zone" t:id="proIntelectualZone" >
                 <t:form t:id="formularioprointelectual" zone="proIntelectualZone">
-                    <t:if test="${vbotones}">
+                    <t:if test="${vformulario}">
                         <fieldset>
                             <div class="f-wrap">
                                 <div class="f-left">
@@ -60,7 +64,7 @@
                                 </t:if>
                             </div>
                         </fieldset>
-                    </t:if>
+                    
                     <div class="actions">
                         <div class="f-left">                        
                             (*) Campos Obligatorios
@@ -88,6 +92,7 @@
                             });
                         </script>
                     </div>
+                    </t:if>
                 </t:form>
             </div>    
         </div> 
