@@ -97,7 +97,7 @@
                             <t:actionlink t:id="detalle" zone="listaConceptosRemunerativosZone" context="cr">Detalle</t:actionlink>
                         </t:if>
                         <t:if test="${veliminar}">
-                        <!--<t:if test="esBorrable">-->
+                          <t:if test="esBorrable">
                             | 
                             <a t:type="eventLink" t:event="borrarDato" t:context="cr"
                                         t:zone="listaConceptosRemunerativosZone" href="#">
@@ -105,7 +105,9 @@
                                     Eliminar
                                 </span> 
                             </a>
+                          </t:if>
                         </t:if>
+                            
                     </p:accionesCell>
                 </t:grid>
             </div>

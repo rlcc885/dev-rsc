@@ -21,6 +21,7 @@ public class ConceptoRemunerativo implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @NonVisual
     private String codigo;
     private String descripcion;
     private String sustento_legal;

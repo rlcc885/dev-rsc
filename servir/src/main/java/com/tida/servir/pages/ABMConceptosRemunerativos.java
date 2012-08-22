@@ -275,24 +275,25 @@ public class ABMConceptosRemunerativos extends GeneralPage {
          *
          */
 
-//        Criteria c;
-//        c = session.createCriteria(RemuneracionPersonal.class);
-//        c.add(Restrictions.eq("conceptoRemunerativo", cr));
-//
-//        if (c.list().size() > 0) {
-//            return false;
-//        }
+        Criteria c;
+        c = session.createCriteria(RemuneracionPersonal.class);
+        c.add(Restrictions.eq("conceptoRemunerativo", cr));
+
+        if (c.list().size() > 0) {
+            return false;
+        }
         return true;
     }
 
     @Log
     @CommitAfter
     Object onBorrarDato(ConceptoRemunerativo dato) {
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()),
-                Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
+//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()),
+//                Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
 
         session.delete(dato);
-        return listaConceptosRemunerativosZone.getBody();// La/a zona a actualizar
+        envelope.setContents("Concepto Remunerativo Eliminado");
+        return zonas();// La/a zona a actualizar
     }
     
     @Log
