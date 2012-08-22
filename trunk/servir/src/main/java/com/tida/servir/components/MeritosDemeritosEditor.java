@@ -1,19 +1,14 @@
 package com.tida.servir.components;
 
-import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 
-import helpers.Errores;
 import helpers.Helpers;
-import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
-import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.PrimaryKeyEncoder;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.InjectComponent;
@@ -26,12 +21,10 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.hibernate.criterion.CriteriaSpecification;
 
 
 
@@ -109,7 +102,6 @@ public class MeritosDemeritosEditor {
             listaMeritos=new MeritoDemerito();
             btipo=false;
             valfec_desde=null;
-           
     }
     
     @Log
@@ -122,7 +114,7 @@ public class MeritosDemeritosEditor {
      //para obtener datos de la Clase de Merito
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
+List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -135,7 +127,7 @@ public class MeritosDemeritosEditor {
     
         //para obtener datos del Tipo de DMerito
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {        
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSDEMERITO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
@@ -167,23 +159,33 @@ public class MeritosDemeritosEditor {
 
     }
     
+    public String getFechaMD()
+    {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(listaMeritos.getFecha());
+    }
         @Log
     @CommitAfter    
     Object onSuccessFromFormulariomeritos() {
-        
-        if(merito.getClasemeritodemerito()==null){
+        if(merito.getClasemeritodemerito()==null)
+        {
             envelope.setContents("Debe ingresar la Clase");
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
-        }else if(merito.getTipomeritodemerito()==null){
+        }
+        
+        if(merito.getTipomeritodemerito()==null)
+        {
             envelope.setContents("Debe ingresar el Tipo");
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
-        }else{
+        }else
+        {
             
-        if(valfec_desde!=null){
+        if(valfec_desde!=null)
+        {
                 SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                 try {
                 fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
@@ -192,7 +194,7 @@ public class MeritosDemeritosEditor {
                 }
         }
         merito.setFecha(fecha_desde);
-        
+        System.out.println("*************MDE :"+merito.getClasemeritodemerito());
         merito.setTrabajador(actual);
         merito.setEntidad(_oi);
         session.saveOrUpdate(merito);
