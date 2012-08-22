@@ -23,7 +23,7 @@ public class Constantes {
    public static final String CURSO_EXITO ="Cursos creados / modificados exitosamente.";
    public static final String FAMILIAR_EXITO ="Familiares creados / modificados exitosamente.";
    public static final String ANT_LABORAL_EXITO ="Antecedentes Laborales creados / modificados exitosamente.";
-   public static final String PROD_INTELECTUAL_EXITO ="Produciones Intelectuales modificados exitosamente.";
+   public static final String PROD_INTELECTUAL_EXITO ="Producciones Intelectuales creadas / modificados exitosamente.";
    public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado / modificados exitosamente.";
    public static final String EUE_EXITO ="Entidades Unidad Ejecutora modificadas exitosamente.";
    public static final String USUARIO_EXITO ="Usuarios creaods / modificados exitosamente.";
