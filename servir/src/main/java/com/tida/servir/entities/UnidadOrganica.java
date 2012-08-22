@@ -4,6 +4,7 @@
  */
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import org.apache.tapestry5.beaneditor.Validate;
  */
 @Entity
 @Table(name = "RSC_UNIDADORGANICA")
-public class UnidadOrganica {
+public class UnidadOrganica implements Serializable {
 
     public static Boolean ESTADO_BAJA = false;
     public static Boolean ESTADO_ALTA = true;
@@ -40,6 +41,7 @@ public class UnidadOrganica {
     @Validate("required")
     private String den_und_organica; //Denominación del órgano
     @NonVisual
+    @Column(name = "DESCVIA")
     private String localidad;
     @ManyToOne
     private DatoAuxiliar cod_ubi_dist; //ubigeo distrito
@@ -49,8 +51,6 @@ public class UnidadOrganica {
     private DatoAuxiliar cod_ubi_dept; //ubigeo depto
     @NonVisual
     private Boolean estado; // para manejo del borrado lógico
-    @NonVisual
-    private String cue;
     private String sigla;
     @Validate("required")
     private Integer nivel;
@@ -193,14 +193,6 @@ public class UnidadOrganica {
             return false;
         }
         return true;
-    }
-
-    public String getCue() {
-        return cue;
-    }
-
-    public void setCue(String cue) {
-        this.cue = cue;
     }
 
     public DatoAuxiliar getCategoriauo() {

@@ -113,9 +113,9 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar documentoIdentidadEdit;
-    @Property
-    @Persist
-    private LkEstadoUsuario estadoUsuarioEdit;
+//    @Property
+//    @Persist
+//    private LkEstadoUsuario estadoUsuarioEdit;
     @Property
     @Persist
     private Rol rolUsuarioEdit;
@@ -481,7 +481,7 @@ public class ABMUsuario extends GeneralPage {
             enviacorreo = true;
         }
 
-        if (estadoUsuarioEdit.getId()==1) {
+        if (usuariotrabajadoredit.getEstado()==1) {
             usuario.setIntentos_fallidos(0L);
         }
 
@@ -501,7 +501,7 @@ public class ABMUsuario extends GeneralPage {
         usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
         usuario.setDocumentoId(documentoIdentidadEdit.getId());
         usuario.setLogin(usuariotrabajadoredit.getLogin());
-        usuario.setEstado(estadoUsuarioEdit.getId());
+        usuario.setEstado(usuariotrabajadoredit.getEstado());
         usuario.setRolid(rolUsuarioEdit.getId());
         System.out.println("==============================================================================");
         System.out.println(rolUsuarioEdit.getId());
@@ -622,7 +622,7 @@ public class ABMUsuario extends GeneralPage {
 //        
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
-        estadoUsuarioEdit = (LkEstadoUsuario) session.get(LkEstadoUsuario.class, lusuariotrabajador.getEstado());
+//        estadoUsuarioEdit = (LkEstadoUsuario) session.get(LkEstadoUsuario.class, lusuariotrabajador.getEstado());
         if (lusuariotrabajador.getTrabajadorid() == null) {
             noEditaUsuario = false;
         } else {

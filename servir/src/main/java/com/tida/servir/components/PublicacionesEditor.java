@@ -83,9 +83,9 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean veditar;
-    @Persist
-    @Property
-    private Boolean vbotones;
+//    @Persist
+//    @Property
+//    private Boolean vbotones;
     @Persist
     @Property
     private Boolean vdetalle;
@@ -98,20 +98,20 @@ public class PublicacionesEditor {
         veditar = false;
         veliminar = false;
         bvalidausuario = false;
-        vbotones = false;
+        vformulario = false;
         editando = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
-            vbotones = true;
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
+            vformulario = true;
         }
     }
 
@@ -240,6 +240,7 @@ public class PublicacionesEditor {
         }
         editando = true;
         vdetalle = false;
+        vformulario = true;
         return proIntelectualZone.getBody();
     }
 
@@ -252,6 +253,7 @@ public class PublicacionesEditor {
         }
         editando = false;
         vdetalle = true;
+        vformulario = true;
         return proIntelectualZone.getBody();
     }
 

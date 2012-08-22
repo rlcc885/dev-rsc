@@ -210,8 +210,13 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="estadoUsuarioEdit" />
-                                <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" t:value="estadoUsuarioEdit" 
-                                          t:validate="required" onChange="this.form.fire()" t:zone="editarUsuarioZone" style="width:100px;"/>
+                                <input t:type="Select"
+                                   t:id="bEstado"
+                                   t:value="usuariotrabajadoredit.estado" 
+                                   t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
+                                   t:style="width: 100px;" />
+<!--                                <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" t:value="estadoUsuarioEdit" 
+                                          t:validate="required" onChange="this.form.fire()" t:zone="editarUsuarioZone" style="width:100px;"/>-->
                             </div>
                             <div class="f-left">
                                 <t:label for="fechacreacionedit" />
