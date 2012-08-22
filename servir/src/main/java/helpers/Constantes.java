@@ -29,7 +29,7 @@ public class Constantes {
    public static final String USUARIO_EXITO ="Usuarios creaods / modificados exitosamente.";
    public static final String TRABAJADOR_EXITO ="Trabajador agregado / modificado exitosamente.";
    public static final String TRABAJADOR_EDIT_EXITO ="Trabajador creado / modificado exitosamente.";
-   public static final String CARGO_EXITO ="Cargos creados exitosamente.";
+   public static final String CARGO_EXITO ="Cargos creados / modificados exitosamente.";
    public static final String CARGO_EDIT_EXITO ="Cargos modificados exitosamente.";
    public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado / modificado exitosamente.";
    public static final String MERITO_DEMERITO_EXITO ="Méritos deméritos creados / modificados exitosamente.";
