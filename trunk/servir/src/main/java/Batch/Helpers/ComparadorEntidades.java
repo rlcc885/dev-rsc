@@ -144,7 +144,7 @@ public class ComparadorEntidades {
         if (resultado.equals(ResultadoOperacionCSV.MODIFICADO)) {
             return resultado;
         }
-        resultado = ComparadorEntidades.comparadorDatos(eueOrigen.getDireccion(), eueDestino.getDireccion());
+        resultado = ComparadorEntidades.comparadorDatos(eueOrigen.getDescvia(), eueDestino.getDescvia());
         if (resultado.equals(ResultadoOperacionCSV.MODIFICADO)) {
             return resultado;
         }

@@ -272,7 +272,7 @@
                             </div>
                             <div class="f-left">
                                 <t:label for="direccion"/>
-                                <input t:type="TextField" t:id="direccion" t:value="entidadUE.direccion" t:style="width: 200px;"
+                                <input t:type="TextField" t:id="direccion" t:value="entidadUE.descvia" t:style="width: 200px;"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
                                    t:zone="ubigeoEntidadZone" t:disabled="${vdetalle}"/>
                             </div>

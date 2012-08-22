@@ -39,8 +39,7 @@ public class Entidad implements Serializable {
     private String ruc;
     Boolean proc_Batch;
     private DatoAuxiliar tipoVia;
-    @Column(name = "DESCVIA")
-    private String direccion;
+    private String descvia;
     private DatoAuxiliar tipozona;
 
     private String descZona;
@@ -132,12 +131,12 @@ public class Entidad implements Serializable {
         this.denominacion = denominacion;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getDescvia() {
+        return descvia;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDescvia(String descvia) {
+        this.descvia = descvia;
     }
 
     public String getRuc() {
