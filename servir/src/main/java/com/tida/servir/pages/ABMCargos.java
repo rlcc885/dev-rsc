@@ -160,7 +160,7 @@ public class ABMCargos extends GeneralPage {
     @SetupRender
     private void inicio() {
         onSelectedFromClear();
-        onSelectedFromReset();
+//        onSelectedFromReset();
         mostrar = true;
         vbotones = false;
         vformulario = false;
@@ -272,18 +272,14 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicas() {
-        String consulta = "SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"
-                + " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"
-                + " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"
-                + " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO!=0 AND S1.ENTIDAD_ID='" + entidadUE.getId() + "'";
+         Criteria c;
+        c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.eq("entidadId", entidadUE.getId()));
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         if (nivel != null) {
-            consulta += " AND S1.NIVEL='" + nivel + "'";
+            c.add(Restrictions.eq("nivel", nivel));
         }
-        consulta += "ORDER BY(DENOMINACION)";
-        List<LkBusquedaUnidad> list;
-        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
-        list = query.list();
-        _beanUOrganicas = new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
+        _beanUOrganicas = new GenericSelectModel<LkBusquedaUnidad>(c.list(), LkBusquedaUnidad.class, "denominacion", "id", _access);
         return _beanUOrganicas;
     }
 
@@ -398,6 +394,7 @@ public class ABMCargos extends GeneralPage {
         errorBorrar = null;
         vbotones = false;
         vformulario = true;
+        vNoedita = false;
         return zonasDatos();
     }
 
@@ -486,7 +483,8 @@ public class ABMCargos extends GeneralPage {
             new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             envelope.setContents("Cargo Eliminado");
         }
-        onSelectedFromReset();
+        onReset();
+//        onSelectedFromReset();
         return zonasDatos();// La/a zona a actualizar
     }
 
@@ -500,24 +498,21 @@ public class ABMCargos extends GeneralPage {
 //        regimengruponivel = new RegimenGrupoNivel();
 //        return zonasDatos();
 //    }
-    void onSelectedFromReset() {
-        num = 2;
-        cargo = new Cargoxunidad();
-        editando = false;
-        regimengruponivel = new RegimenGrupoNivel();
-    }
+//    void onSelectedFromReset() {
+//        num = 2;
+//        cargo = new Cargoxunidad();
+//        editando = false;
+//        regimengruponivel = new RegimenGrupoNivel();
+//    }
 
-    void onSelectedFromCancel() {
-        num = 3;
-        if (!vbotones) {
-            vformulario = false;
-        } else {
-            cargo = new Cargoxunidad();
-            editando = false;
-            regimengruponivel = new RegimenGrupoNivel();
-        }
-
-    }
+//    void onSelectedFromCancel() {
+//        num = 3;
+//             cargo = new Cargoxunidad();
+//            editando = false;
+//            regimengruponivel = new RegimenGrupoNivel();
+//
+//
+//    }
 
     @Log
     public Integer getCantPuestosOcupados() {
@@ -559,18 +554,33 @@ public class ABMCargos extends GeneralPage {
         cargo = new Cargoxunidad();
         vNoedita = true;
         vdetalle2 = false;
+        regimengruponivel = new RegimenGrupoNivel();
     }
     @Log
     Object onReset(){
         resetCargo();
-        cantidadPuestos = "";
-        return abmZone.getBody();
-        
+        cantidadPuestos = null;
+        return new MultiZoneUpdate("abmZone",abmZone.getBody()).add("OcupacionalesZone",OcupacionalesZone.getBody());        
     }
     @Log
     Object onCancel(){
-        resetCargo();
-        return abmZone.getBody();
+        if(vdetalle){
+            vformulario=false; 
+            if (usua.getAccesoreport() == 1) {
+                vformulario=true;
+                vdetalle=false;
+                vbotones=true;
+                vNoedita=true;
+                cargo = new Cargoxunidad();
+                editando = false;
+                regimengruponivel = new RegimenGrupoNivel();
+                cantidadPuestos = null;
+            }
+        }
+        else{
+            resetCargo();
+        }
+        return new MultiZoneUpdate("abmZone",abmZone.getBody()).add("OcupacionalesZone",OcupacionalesZone.getBody());
     }
     @Log
     @CommitAfter

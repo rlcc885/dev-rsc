@@ -206,15 +206,15 @@
                                     </span> 
                                 </t:eventLink>
                             </t:if>
-                            <t:if test="vNoedita" negate="true">
-                                <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="abmZone">
-                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                        Cancelar
-                                    </span> 
-                                </t:eventLink>
-                            </t:if>
-                            
                         </t:if>
+                        <t:if test="vNoedita" negate="true">
+                            <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="abmZone">
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                    Cancelar
+                                </span> 
+                            </t:eventLink>
+                        </t:if>
+                        
                     </div>
                     <br style="clear: both;" />
                 </t:form> 
