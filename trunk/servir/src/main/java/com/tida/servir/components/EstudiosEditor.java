@@ -282,7 +282,7 @@ public class EstudiosEditor {
         }
         if (elemento == 3) {
             if (_usuario.getRolid() == 1) {
-                return "Alerta";
+                return "TrabajadorPersonal";
             } else {
                 return Busqueda.class;
             }

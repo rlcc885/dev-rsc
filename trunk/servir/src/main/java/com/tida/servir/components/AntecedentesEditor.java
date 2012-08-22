@@ -177,7 +177,11 @@ public class AntecedentesEditor {
 
     @Log
     Object onCancel() {
-        return "Busqueda";
+         if (usua.getRolid() == 1) {
+             return "TrabajadorPersonal";
+         }else{
+            return "Busqueda";
+         }
     }
 
     @Log

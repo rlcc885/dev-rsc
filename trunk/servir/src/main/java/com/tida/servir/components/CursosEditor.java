@@ -349,7 +349,7 @@ public class CursosEditor {
         if (elemento == 3) {
             elemento = 0;
             if (_usuario.getRolid() == 1) {
-                return "Alerta";
+                return "TrabajadorPersonal";
             } else {
                 return Busqueda.class;
             }
@@ -539,5 +539,5 @@ public class CursosEditor {
             votro = true;
         }
         return new MultiZoneUpdate("centroZone", centroZone.getBody());
-    }
+    }   
 }
