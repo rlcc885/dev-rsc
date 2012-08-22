@@ -176,12 +176,15 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(listaMeritos.getFecha());
     }
-        @Log
+    
+    @Log
     @CommitAfter    
     Object onSuccessFromFormulariomeritos() {
+        formulariomensajesME.clearErrors();
         if(merito.getClasemeritodemerito()==null)
         {
-            envelope.setContents("Debe ingresar la Clase");
+            formulariomensajesME.recordError("Debe ingresar la Clase");
+            //envelope.setContents("Debe ingresar la Clase");
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
@@ -205,6 +208,11 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
                 } catch (ParseException ex) {
                 ex.printStackTrace();
                 }
+        }else{
+            formulariomensajesME.recordError("Debe de Ingresar una Fecha");
+            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
         }
         
         if(_usuario.getRolid() == 1)
