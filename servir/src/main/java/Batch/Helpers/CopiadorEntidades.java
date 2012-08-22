@@ -73,7 +73,7 @@ public class CopiadorEntidades {
         destino.setDen_und_organica(CopiadorEntidades.verifacionNull(origen.getDen_und_organica()));
         destino.setLocalidad(CopiadorEntidades.verifacionNull(origen.getLocalidad()));
         destino.setEntidad(origen.getEntidad());
-        destino.setCue(CopiadorEntidades.verifacionNull(origen.getCue()));
+//        destino.setCue(CopiadorEntidades.verifacionNull(origen.getCue()));
         destino.setSigla(CopiadorEntidades.verifacionNull(origen.getSigla()));
         //destino.setTipoActividad(CopiadorEntidades.verifacionNull(origen.getTipoActividad()));
         destino.setUnidadorganica(origen.getUnidadorganica());
