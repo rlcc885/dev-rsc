@@ -1972,8 +1972,8 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.datoAuxiliarToString(uo.getCod_ubi_dept()));
                 escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(uo.getCue()));
-                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(uo.getCue()));
+//                escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(uo.getSigla()));
                 escribir.print("|");
                 escribir.print(InformeXLS.numberToString(uo.getNivel()));

@@ -156,7 +156,7 @@ public class CreadorDesdeCsv {
             nuevaUnidadOrganica.setCod_und_organica(UnidadOrganica.CODIGO_DEFAULT);
             nuevaUnidadOrganica.setDen_und_organica(UnidadOrganica.NOMBRE_DEFAULT);
             nuevaUnidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
-            nuevaUnidadOrganica.setCue(UnidadOrganica.CUE_DEFAULT);
+//            nuevaUnidadOrganica.setCue(UnidadOrganica.CUE_DEFAULT);
             nuevaUnidadOrganica.setNivel(UnidadOrganica.NIVEL_DEFAULT);
             nuevaUnidadOrganica.setSigla(UnidadOrganica.SIGLA_DEFAULT);
             myTratamiento.getUnidadOrganica().add(nuevaUnidadOrganica);

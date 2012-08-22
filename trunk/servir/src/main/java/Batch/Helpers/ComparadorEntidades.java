@@ -328,10 +328,10 @@ public class ComparadorEntidades {
         if (liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return liuo;
         }
-        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCue(), cdestino.getCue()));
-        if (liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return liuo;
-        }
+//        liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCue(), cdestino.getCue()));
+//        if (liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return liuo;
+//        }
         liuo.setResultado(ComparadorEntidades.comparadorDatos(corigen.getSigla(), cdestino.getSigla()));
         if (liuo.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
             return liuo;
