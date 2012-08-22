@@ -29,6 +29,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  
 
 @Entity
+@Table(name = "LkBusquedaEvento")
 public class BusquedaEvento implements Serializable {
 
     @Basic(optional = false)
