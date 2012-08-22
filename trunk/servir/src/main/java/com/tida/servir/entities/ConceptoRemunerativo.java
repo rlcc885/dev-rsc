@@ -16,17 +16,13 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 @Entity
 @Table(name = "RSC_CONCEPTOREMUNERATIVO")
 //@Table(name="CON_REMUNERATIVOS")
-public class ConceptoRemunerativo implements Serializable {
-    public static List<String> PERIODICIDADES = Arrays.asList(new String[]{"Mensual", "Semestral", "Anual", "Única vez"});
+public class ConceptoRemunerativo implements Serializable {    
     @NonVisual
     @Id
     @GeneratedValue
     private Long id;
-//    private String clasificacion;
     private String codigo;
-//    private String conceptoStd;
     private String descripcion;
-//    private String periodicidad;
     private String sustento_legal;
     @ManyToOne
     private DatoAuxiliar tiporemuneracion;
@@ -77,21 +73,6 @@ public class ConceptoRemunerativo implements Serializable {
         this.entidad = entidadUE;
     }
 
-//    public String getClasificacion() {
-//        return clasificacion;
-//    }
-//
-//    public void setClasificacion(String clasificacion) {
-//        this.clasificacion = clasificacion;
-//    }
-
-//    public String getConceptoStd() {
-//        return conceptoStd;
-//    }
-//
-//    public void setConceptoStd(String conceptoStd) {
-//        this.conceptoStd = conceptoStd;
-//    }
     public String getCodigo() {
         return codigo;
     }
@@ -108,13 +89,6 @@ public class ConceptoRemunerativo implements Serializable {
         this.descripcion = descripcion;
     }
 
-//    public String getPeriodicidad() {
-//        return periodicidad;
-//    }
-//
-//    public void setPeriodicidad(String periodicidad) {
-//        this.periodicidad = periodicidad;
-//    }
     public String getSustento_legal() {
         return sustento_legal;
     }
