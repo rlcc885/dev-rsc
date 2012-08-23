@@ -174,7 +174,12 @@ public class ABMConceptosRemunerativos extends GeneralPage {
             }
             conceptoRemunerativo.setEntidad(_oi);
             session.saveOrUpdate(conceptoRemunerativo);
-            envelope.setContents("Conceptos Remunerativos Modificados Exitosamente");
+            if(editando){
+                envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EDIT_EXITO);
+            }
+            else{
+                envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EXITO);
+            }
             //new Logger().loguearOperacion(session, loggedUser, String.valueOf(conceptoRemunerativo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
             if(editando){
                 if (usua.getAccesoreport() == 0) {
