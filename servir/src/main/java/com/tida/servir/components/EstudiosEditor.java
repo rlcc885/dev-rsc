@@ -147,6 +147,9 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean vrevisado;
+    @Persist
+    @Property
+    private Boolean vNoedita;
     private int elemento = 0;
     @Persist
     @Property
@@ -230,14 +233,36 @@ public class EstudiosEditor {
 
     //@Log
     void onSelectedFromReset() {
-        limpiar();
-        formlistaestudios.clearErrors();
-        editando = false;
-        estudio = new Estudios();
-        if (usua.getAccesoreport() == 0) {
-            vformulario = false;
-        }
+              
         elemento = 2;
+        if(vdetalle){
+            vformulario = false;
+            vNoedita=false;
+            if (usua.getAccesoreport() == 1) {
+                vformulario=true;
+                vdetalle=false;
+                vbotones=true;
+                limpiar();
+                formlistaestudios.clearErrors();
+                editando = false;
+                estudio = new Estudios();
+                vNoedita=true;
+            }
+        }
+        else{
+            if (usua.getAccesoreport() == 0) {
+                vformulario=false;
+                vdetalle=false;
+                vbotones=false;
+                vNoedita=false;
+            }
+            else{
+                limpiar();
+                formlistaestudios.clearErrors();
+                editando = false;
+                estudio = new Estudios();  
+            }            
+        }
     }
 
     @Log
@@ -282,7 +307,6 @@ public class EstudiosEditor {
                 ex.printStackTrace();
             }
         }
-
         
         if (elemento == 3) {
             if (_usuario.getRolid() == 1) {
@@ -322,10 +346,12 @@ public class EstudiosEditor {
                 //editando
                 if (usua.getAccesoreport() == 0) {
                     vformulario = false;
+                    vbotones=false;
+                    vNoedita=false;
                 }
                 estudio.setEstudiando(valestudiando);
             } else {//guardando
-
+              
                 estudio = new Estudios();
 //                System.out.println("Trabajadorrr"+actual);
                 estudio.setTrabajador(actual);
@@ -353,6 +379,9 @@ public class EstudiosEditor {
 
             }
             seteo();
+            if(valestudiando==null){
+                valestudiando=false;
+            }
             session.saveOrUpdate(estudio);
             session.flush();
             if (!editando) {
@@ -368,8 +397,7 @@ public class EstudiosEditor {
             }
             editando = false;
             limpiar();
-            formlistaestudios.clearErrors();
-            envelope.setContents("Estudios del Trabajador Modificados Exitosamente");
+            envelope.setContents(helpers.Constantes.ESTUDIO_EXITO);
         }
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("mensajes", mensajes.getBody()).
@@ -446,6 +474,7 @@ public class EstudiosEditor {
         editando = true;
         vdetalle = false;
         vbotones = true;
+        vNoedita=true;
         mostrar();
         if (valestudiando != null) {
             if (valestudiando) {
@@ -475,7 +504,7 @@ public class EstudiosEditor {
             valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
 
     @Log
@@ -487,8 +516,9 @@ public class EstudiosEditor {
         vfechahasta = true;
         votro = true;
         vbotones = false;
+        vNoedita=true;
         vformulario = true;
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
 
     @Log
@@ -500,8 +530,9 @@ public class EstudiosEditor {
         vfechahasta = true;
         votro = true;
         vbotones = false;
+        vNoedita=true;
         vformulario = true;
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
 
     @Log
@@ -516,9 +547,12 @@ public class EstudiosEditor {
 //    @SetupRender
     void setupRender() {
         vrevisado = false;
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
-            vbotones = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
@@ -532,6 +566,7 @@ public class EstudiosEditor {
         if (usua.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
+            vNoedita=true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }

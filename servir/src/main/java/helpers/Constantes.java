@@ -20,6 +20,7 @@ public class Constantes {
    //MACL
    public static final String TITULO_EXITO ="Titulos creados / modificados exitosamente.";
    public static final String CERTIFICACION_EXITO ="Certificaciones creados / modificados exitosamente.";
+   public static final String ESTUDIO_EXITO ="Estudios creados / modificados exitosamente.";
    public static final String CURSO_EXITO ="Cursos creados / modificados exitosamente.";
    public static final String FAMILIAR_EXITO ="Familiar creado / modificado exitosamente.";
    public static final String ANT_LABORAL_EXITO ="Antecedentes Laborales creados / modificados exitosamente.";
@@ -30,7 +31,7 @@ public class Constantes {
    public static final String TRABAJADOR_EXITO ="Trabajador agregado exitosamente.";
    public static final String TRABAJADOR_EDIT_EXITO ="Trabajador  modificado exitosamente.";
    public static final String CARGO_EXITO ="Cargo creado exitosamente.";
-   public static final String CARGO_EDIT_EXITO ="Cargos modificados exitosamente.";
+   public static final String CARGO_EDIT_EXITO ="Cargo modificado exitosamente.";
    public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado / modificado exitosamente.";
    public static final String MERITO_DEMERITO_EXITO ="Mérito demérito creado / modificado exitosamente.";
    public static final String UNIDAD_ORGANICA_EXITO ="Unidade Organica creada / modificada exitosamente.";
@@ -38,6 +39,8 @@ public class Constantes {
    //modificado 10agosto
    public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
    public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica modificada exitosamente.";
+   public static final String CONREMUNERATIVO_EXITO ="Concepto Remunerativo creado exitosamente.";
+   public static final String CONREMUNERATIVO_EDIT_EXITO ="Concepto Remunerativo modificado exitosamente.";
    
    public static final String AUSENCIA_EXITO ="Ausencias licencias creadas / modificadas exitosamente.";
    public static final String REMUNERACION_EXITO ="Remuneraciones personales creadas / modificadas exitosamente.";

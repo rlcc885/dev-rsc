@@ -45,9 +45,9 @@
                                    t:disabled="${vdetalle}"/>
                         </div>
                         <div class="f-left">
-                            <label>Sustento Legal</label>
+                            <label>* Sustento Legal</label>
                             <input t:type="TextField" t:id="des_sustento_legal" 
-                                       t:value="conceptoRemunerativo.sustento_legal" t:validate="maxlength=255" size="30" t:disabled="${vdetalle}"/>
+                                       t:value="conceptoRemunerativo.sustento_legal" t:validate="required,maxlength=255" size="30" t:disabled="${vdetalle}"/>
                         </div>
                         <div class="f-left">
                             <label>* Concepto Std</label>
