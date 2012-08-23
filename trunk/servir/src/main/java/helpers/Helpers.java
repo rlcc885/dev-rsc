@@ -213,8 +213,8 @@ public class Helpers {
     public static Integer maxNivelUO(Entidad eue, Session session) {
         Criteria c;
         Integer nivelMax;
-        c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.eq("entidad", eue));
+        c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.eq("entidadId", eue.getId()));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
         ProjectionList projList = Projections.projectionList();
         projList.add(Projections.max("nivel"));

@@ -62,6 +62,9 @@ public class RemuneracionesPersonalesEditor {
     private RemuneracionPersonal listaRemuneraciones;
     @Inject
     private PropertyAccess _access;
+    
+    
+    
 
     //Inicio de la carga de la pagina
     @Log

@@ -68,13 +68,7 @@
                                 <input t:type="TextField" t:id="colegiatura" t:value="valcolegiatura" size="33" t:disabled="${vdetalle}"
                                        t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="colegChanged"  t:zone="segundoZone"/>
                             </div>                    
-                        </div>
-                        <t:if test="${vrevisado}">
-                            <div class="f-wrap">
-                                Revisado 
-                                <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
-                            </div>
-                        </t:if>  
+                        </div>                        
                     </t:form>
                 </t:if>
             </t:zone>
@@ -97,6 +91,12 @@
                     
                     <t:form t:id="formulariobotones" t:zone="mensajes">  
                       <t:if test="${vformulario}">  
+                        <t:if test="${vrevisado}">
+                            <div class="f-wrap">
+                                Revisado 
+                                <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
+                            </div>
+                        </t:if>
                         <div class="logoentidad" style="position:relative; top:-70px; left:440px; width: 200px; height: 100px;">
                             <fieldset>
                                 <legend>* Periodo</legend>
@@ -118,7 +118,8 @@
                         </div>
                                                 
                       </t:if>
-                        <div class="actions">                            
+                        <div class="actions">
+                              
                             <t:if test="${vbotones}">
                                 <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
                             </t:if>
