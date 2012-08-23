@@ -85,14 +85,14 @@
                             <!--</t:if>-->
                         </t:form>
                     </t:if>
-                    <div>
+<!--                    <div>
                         <script>
                             jQuery(document).ready(function() {
                             jQuery('.fec_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
                             jQuery('.fec_egreso').datepick({dateFormat: 'dd/mm/yyyy'});
                             });
                         </script>
-                    </div>
+                    </div>-->
                 </div>    
             </div> 
      

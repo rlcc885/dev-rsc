@@ -57,15 +57,15 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <label>Actualmente estudiando</label>
-                                    <input t:type="Checkbox" t:id="estudiando" t:value="valestudiando" onChange="toggleStatus()" t:disabled="${vdetalle}" t:zone="terceraZone" class="idestudiando"/>
+                                    <input t:type="Checkbox" t:id="estudiando" t:value="valestudiando" onChange="toggleStatusCurso()" t:disabled="${vdetalle}" t:zone="terceraZone" class="idestudiando"/>
                                 </div> 
                                 <div class="f-left">
                                     <label>Desde</label>
-                                    <input t:type="TextField" t:id="fec_inicio_curso" t:value="valfec_desde" size="25" t:validate="regexp" t:disabled="${vdetalle}" t:readonly="readlony" class="fec_inicio_curso pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_inicio_curso" t:value="valfec_desde" size="25" t:validate="regexp" t:disabled="${vdetalle}" class="fec_inicio_curso pictureInputDate"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Hasta</label>
-                                    <input t:type="TextField" t:id="fec_fin_curso" t:value="valfec_hasta" size="25" t:validate="regexp" t:disabled="${vfechahasta}" t:readonly="readlony" class="fec_fin_curso pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin_curso" t:value="valfec_hasta" size="25" t:validate="regexp" t:disabled="${vfechahasta}" class="fec_fin_curso pictureInputDate"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -91,19 +91,7 @@
                 </t:form>
             </t:if>
             <div>
-                <script>
-                    jQuery(document).ready(function() {
-                    jQuery('.fec_inicio_curso').datepick({dateFormat: 'dd/mm/yyyy'});
-                    jQuery('.fec_fin_curso').datepick({dateFormat: 'dd/mm/yyyy'});
-                    });
-                    function toggleStatus() {
-                    if (jQuery('.idestudiando').is(':checked')) {
-                    jQuery('.fec_fin_curso').attr('disabled', true);
-                    } else {
-                    jQuery('.fec_fin_curso').removeAttr('disabled');
-                    }
-                    }
-                </script>
+                
             </div>
         </t:zone>
 
@@ -198,6 +186,20 @@
                     </t:grid>
                 </div>               
             </t:zone>
-        </div> 
+        </div>
+        
+<!--        <script>
+            jQuery(document).ready(function() {
+            jQuery('.fec_inicio_curso').datepick({dateFormat: 'dd/mm/yyyy'});
+            jQuery('.fec_fin_curso').datepick({dateFormat: 'dd/mm/yyyy'});
+            });
+            function toggleStatusCurso() {
+            if (jQuery('.idestudiando').is(':checked')) {
+            jQuery('.fec_fin_curso').attr('disabled', true);
+            } else {
+            jQuery('.fec_fin_curso').removeAttr('disabled');
+            }
+            }
+        </script>-->
     </t:content>
 </html>

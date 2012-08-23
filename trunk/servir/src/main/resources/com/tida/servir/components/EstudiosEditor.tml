@@ -79,7 +79,7 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <label>Actualmente estudiando</label>
-                                    <input t:type="Checkbox" t:id="estudiando" class="idestudiando" t:value="valestudiando" t:disabled="${vdetalle}" t:zone="tercerZone" onchange="toggleStatus()"/><!--</span>-->
+                                    <input t:type="Checkbox" t:id="estudiando" class="idestudiando" t:value="valestudiando" t:disabled="${vdetalle}" t:zone="tercerZone" onchange="toggleStatusEstudio()"/><!--</span>-->
                                 </div> 
                                 <div class="f-left">
                                     <label>Desde</label>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="f-left">
                                     <label>Hasta</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="true" t:validate="regexp" class="fec_fin pictureInputDate"/>
                                 </div>                        
                             </div>
                         </fieldset>
@@ -114,7 +114,8 @@
                             jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
                             jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
                             });
-                            function toggleStatus() {
+                            function toggleStatusEstudio() {
+                            
                             if (jQuery('.idestudiando').is(':checked')) {
                             jQuery('.fec_fin').attr('disabled', true);
                             } else {
@@ -126,7 +127,7 @@
                 </t:if>
             </t:zone>
         </fieldset>
-
+                    
         <div id = "tabla_oi">
             <t:zone t:id="listaZone">
                 <div id = "tabla_cargo">

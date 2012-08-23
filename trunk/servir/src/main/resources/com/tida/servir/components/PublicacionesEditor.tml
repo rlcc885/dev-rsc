@@ -12,13 +12,8 @@
                 <t:errors/>
             </t:form>
         </div>
-        <script>
-            jQuery(document).ready(function() {
-            jQuery('.fec_publicacion').datepick({dateFormat: 'dd/mm/yyyy'});
-            });
-        </script>
-        <div class="f-wrap">  
-            <div t:type="zone" t:id="proIntelectualZone" >
+
+            <div t:type="zone" t:id="proIntelectualZone" id="proIntelectualZone">
                 <t:form t:id="formularioprointelectual" zone="proIntelectualZone">
                     <t:if test="${vformulario}">
                         <fieldset>
@@ -65,38 +60,31 @@
                             </div>
                         </fieldset>
                     
-                    <div class="actions">
-                        <div class="f-left">                        
-                            (*) Campos Obligatorios
-                        </div>
-                        <t:if test="${veditar}">
-                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                        </t:if>
-                        <t:if test="${vinserta}">
-                            <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="proIntelectualZone">
+                        <div class="actions">
+                            <div class="f-left">                        
+                                (*) Campos Obligatorios
+                            </div>
+                            <t:if test="${veditar}">
+                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                            </t:if>
+                            <t:if test="${vinserta}">
+                                <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="proIntelectualZone">
+                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Limpiar Formulario
+                                    </span> 
+                                </t:eventLink>
+                            </t:if>
+                            <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="proIntelectualZone">
                                 <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                    Limpiar Formulario
+                                    Cancelar
                                 </span> 
                             </t:eventLink>
-                        </t:if>
-                        <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="proIntelectualZone">
-                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                Cancelar
-                            </span> 
-                        </t:eventLink>
-                    </div>
-                    <div>
-                        <script>
-                            jQuery(document).ready(function() {
-                            jQuery('.fec_publicacion').datepick({dateFormat: 'dd/mm/yyyy'});
-                            });
-                        </script>
-                    </div>
+                        </div>
                     </t:if>
                 </t:form>
+                <br class="clear" />
             </div>    
-        </div> 
-        
+
         <div id = "tabla_oi">
             <t:zone t:id="listaProIntelectualZone">   
                 <t:grid source="listadoProIntelectual" 
@@ -151,11 +139,11 @@
                                     <t:actionlink t:id="editar" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
                                 </t:if>
                                 <t:if test="${veditar}" negate="true"> <!-- si no edita -->
-                                    <t:actionlink t:id="detalle3" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
+                                    <t:actionlink t:id="detalle3" zone="proIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
                                 </t:if>
                             </t:if>
                             <t:if test="${listaprointelectual.validado}"> <!-- validado -->
-                                <t:actionlink t:id="detalle" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle" zone="proIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
                             </t:if>
                             <t:if test="${listaprointelectual.validado}" negate="true">
                                 <t:if test="${veliminar}">
@@ -172,7 +160,7 @@
                                 <t:actionlink t:id="editar2" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> |
                             </t:if>
                             <t:if test="${veditar}" negate="true">
-                                <t:actionlink t:id="detalle2" zone="listaProIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
+                                <t:actionlink t:id="detalle2" zone="proIntelectualZone" context="listaprointelectual">Detalle</t:actionlink>
                             </t:if>
                             <t:if test="${veliminar}">
                                 <t:actionlink t:id="eliminar2" zone="listaProIntelectualZone" context="listaprointelectual"> 

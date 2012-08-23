@@ -1661,7 +1661,7 @@ $.extend(Datepicker.prototype, {
 	   @param  elem    (element) the selected datepicker element */
 	selectDate: function(target, elem) {
 		var inst = $.data(target, this.dataName);
-		if (inst && !this.isDisabled(target)) {
+		if (inst) {
 			var date = this.retrieveDate(target, elem);
 			var multiSelect = inst.get('multiSelect');
 			var rangeSelect = inst.get('rangeSelect');
