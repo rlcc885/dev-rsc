@@ -18,22 +18,22 @@ public class Constantes {
    
    //modificado 20/08/2012 
    //MACL
-   public static final String TITULO_EXITO ="Titulos creaods / modificados exitosamente.";
+   public static final String TITULO_EXITO ="Titulos creados / modificados exitosamente.";
    public static final String CERTIFICACION_EXITO ="Certificaciones creados / modificados exitosamente.";
    public static final String CURSO_EXITO ="Cursos creados / modificados exitosamente.";
-   public static final String FAMILIAR_EXITO ="Familiares creados / modificados exitosamente.";
+   public static final String FAMILIAR_EXITO ="Familiar creado / modificado exitosamente.";
    public static final String ANT_LABORAL_EXITO ="Antecedentes Laborales creados / modificados exitosamente.";
    public static final String PROD_INTELECTUAL_EXITO ="Produccion Intelectual creado/modificado exitosamente.";
-   public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado / modificados exitosamente.";
-   public static final String EUE_EXITO ="Entidades Unidad Ejecutora modificadas exitosamente.";
-   public static final String USUARIO_EXITO ="Usuarios creaods / modificados exitosamente.";
-   public static final String TRABAJADOR_EXITO ="Trabajador agregado / modificado exitosamente.";
-   public static final String TRABAJADOR_EDIT_EXITO ="Trabajador creado / modificado exitosamente.";
-   public static final String CARGO_EXITO ="Cargos creados / modificados exitosamente.";
+   public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado / modificado exitosamente.";
+   public static final String EUE_EXITO ="Entidades Unidad Ejecutora creadas / modificadas exitosamente.";
+   public static final String USUARIO_EXITO ="Usuario creado / modificado exitosamente.";
+   public static final String TRABAJADOR_EXITO ="Trabajador agregado exitosamente.";
+   public static final String TRABAJADOR_EDIT_EXITO ="Trabajador  modificado exitosamente.";
+   public static final String CARGO_EXITO ="Cargo creado exitosamente.";
    public static final String CARGO_EDIT_EXITO ="Cargos modificados exitosamente.";
    public static final String CARGO_ASIGNADO_EXITO ="Cargo asignado / modificado exitosamente.";
-   public static final String MERITO_DEMERITO_EXITO ="Méritos deméritos creados / modificados exitosamente.";
-   public static final String UNIDAD_ORGANICA_EXITO ="Unidades Organicas creados / modificadas exitosamente.";
+   public static final String MERITO_DEMERITO_EXITO ="Mérito demérito creado / modificado exitosamente.";
+   public static final String UNIDAD_ORGANICA_EXITO ="Unidade Organica creada / modificada exitosamente.";
    
    //modificado 10agosto
    public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
