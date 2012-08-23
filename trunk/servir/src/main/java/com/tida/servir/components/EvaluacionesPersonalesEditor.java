@@ -131,6 +131,8 @@ public class EvaluacionesPersonalesEditor {
     @Log
     public List<EvaluacionPersonal> getListadoEvaluciones() {
         Criteria c = session.createCriteria(EvaluacionPersonal.class);
+        System.out.println("aaaaaaaaaaaaaa"+cargoasignado);
+        c.add(Restrictions.eq("cargoasignado",cargoasignado));
         return c.list();
     }
     
