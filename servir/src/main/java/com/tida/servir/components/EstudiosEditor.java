@@ -253,7 +253,18 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() {
-
+        
+        if (valestudiando != null) {
+            if (valestudiando) {
+                System.out.println("esta estudiando");
+                vfechahasta = true;
+                valfec_hasta = null;
+                fecha_hasta = null; // JZM Si está estudiando, debe estar en blanco(null) el campo de fecha fin de estudio
+            } else {
+                vfechahasta = false;
+            }
+        }
+        
         if (valfec_desde != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -272,14 +283,7 @@ public class EstudiosEditor {
             }
         }
 
-        if (valestudiando != null) {
-            if (valestudiando) {
-                vfechahasta = true;
-                valfec_hasta = null;
-            } else {
-                vfechahasta = false;
-            }
-        }
+        
         if (elemento == 3) {
             if (_usuario.getRolid() == 1) {
                 return "TrabajadorPersonal";

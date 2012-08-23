@@ -180,7 +180,7 @@ public class ABMUsuario extends GeneralPage {
         System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
         resetBuscar();
         usuariotrabajadoredit = new UsuarioTrabajador();
-//        usuario = new Usuario();
+        usuario = new Usuario();
         perfil = new Perfil();
         // primera vez, se setea la entidad
         bEntidad = entidad;
@@ -450,7 +450,7 @@ public class ABMUsuario extends GeneralPage {
     Object onSuccessFromFormularioPersonal() {
 //        if (!cancelaEditUsuario) {
         ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-        usuario = new Usuario();
+//        usuario = new Usuario();
         String password = null;
         String subject = null;
         String body = null;
@@ -460,7 +460,7 @@ public class ABMUsuario extends GeneralPage {
         password = new BigInteger(50, random).toString(32);
 
         if (usuariotrabajadoredit.getTrabajadorid() != null) {
-            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
+//            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
             correo = usuario.getTrabajador().getEmailLaboral();
         } else {
@@ -502,6 +502,7 @@ public class ABMUsuario extends GeneralPage {
         usuario.setDocumentoId(documentoIdentidadEdit.getId());
         usuario.setLogin(usuariotrabajadoredit.getLogin());
         usuario.setEstado(usuariotrabajadoredit.getEstado());
+        System.out.print(rolUsuarioEdit.getId());
         usuario.setRolid(rolUsuarioEdit.getId());
         System.out.println("==============================================================================");
         System.out.println(rolUsuarioEdit.getId());
@@ -620,6 +621,7 @@ public class ABMUsuario extends GeneralPage {
 //    @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
 //        
+        usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
 //        estadoUsuarioEdit = (LkEstadoUsuario) session.get(LkEstadoUsuario.class, lusuariotrabajador.getEstado());
@@ -682,7 +684,8 @@ public class ABMUsuario extends GeneralPage {
     }
     
     @Log
-    Object onValueChangedFromRolUsuarioEdit(Rol editRol){
+    Object onValueChanged(Rol editRol){
+        System.err.println("onValueChangedFromRolUsuarioEdit");
         rolUsuarioEdit = editRol;
         return idValidaLogin.getBody();
     }

@@ -16,6 +16,14 @@
         <fieldset>
             <div class="f-wrap">  
                 <div t:type="zone" t:id="antLaboralZone" >
+                    <div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_egreso').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                        </script>
+                    </div>
                     <t:if test="${vformulario}">
                         <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
                             <div class="f-wrap">

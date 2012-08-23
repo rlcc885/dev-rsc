@@ -71,7 +71,7 @@
                     </div>
                 </fieldset>
                 <div class="f-wrap">
-                    <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button f-right" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button f-right" />
                     <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button f-right" t:message="Esta seguro de realizar esta acción?"/>
                 </div>
             </t:form>
@@ -117,12 +117,15 @@
 
     <t:zone t:id="editarUsuarioZone" id="editarUsuarioZone">
         <h3>Datos del Usuario</h3>
+        <script>
+                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            </script>
         <div class="box" id="box_u">
             <t:envelope t:id="envelope"/>
             <div id="form_usuario" class="abmform">
                 <fieldset>
                     <legend> Datos de la Cuenta </legend>
-                    <t:form  t:id="formularioCuenta" t:zone="idValidaLogin">
+                    <t:form t:id="formularioCuenta" t:zone="idValidaLogin">
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="loginedit" />
@@ -130,11 +133,10 @@
                                        t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaUsuario}"
                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
                                 <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>
-                                
                             </div>
                             <div class="f-left">
-                                <t:label for="rolUsuarioEdit"/>
-                                <select t:type="Select" t:id="rolUsuarioEdit" model="rolUsuario" encoder="rolUsuario" t:validate="required" t:value="rolUsuarioEdit" />
+                                <t:label for="rolusuarioedit"/>
+                                <select t:type="select" t:id="rolusuarioedit" model="rolUsuario" t:value="rolUsuarioEdit" />
                             </div>
                         </div>
                     </t:form>
@@ -211,7 +213,7 @@
                             <div class="f-left">
                                 <t:label for="estadoUsuarioEdit" />
                                 <input t:type="Select"
-                                   t:id="bEstado"
+                                   t:id="estadoUsuarioEdit"
                                    t:value="usuariotrabajadoredit.estado" 
                                    t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
                                    t:style="width: 100px;" />

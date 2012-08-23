@@ -12,6 +12,7 @@
                 <t:errors/>
             </t:form>
         </t:zone>
+
         <fieldset>
             <t:zone t:id="primerZone">
                 <t:if test="vformulario">
@@ -72,6 +73,21 @@
                 </t:if>
             </t:zone>
             <t:zone t:id="tercerZone">
+                        <div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                            function toggleStatusEstudio() {
+                            if (jQuery('.idestudiando').is(':checked')) {
+                            jQuery('.fec_fin').attr('disabled', true);
+                            } else {
+                            jQuery('.fec_fin').removeAttr('disabled');
+                            }
+                            }
+                        </script>
+                    </div>
                 <t:if test="${vformulario}">
                     <t:form t:id="formulariobotones" t:zone="mensajes">            
                         <fieldset>
@@ -87,7 +103,7 @@
                                 </div>
                                 <div class="f-left">
                                     <label>Hasta</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="true" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:validate="regexp" class="fec_fin pictureInputDate"/>
                                 </div>                        
                             </div>
                         </fieldset>
@@ -108,22 +124,6 @@
                             <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         </div>
                     </t:form>
-                    <div>
-                        <script>
-                            jQuery(document).ready(function() {
-                            jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
-                            jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
-                            });
-                            function toggleStatusEstudio() {
-                            
-                            if (jQuery('.idestudiando').is(':checked')) {
-                            jQuery('.fec_fin').attr('disabled', true);
-                            } else {
-                            jQuery('.fec_fin').removeAttr('disabled');
-                            }
-                            }
-                        </script>
-                    </div>
                 </t:if>
             </t:zone>
         </fieldset>

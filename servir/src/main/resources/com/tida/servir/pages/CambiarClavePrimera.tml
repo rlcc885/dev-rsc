@@ -4,11 +4,11 @@
 
     <t:if test="cambioForzado" negate="true">
 
-        <t:if test="noEsAdmSystema">
+<!--        <t:if test="noEsAdmSystema">
             <div class="organismo_titulo">
                 Entidad /U. Ejecutora: ${entidadUE.denominacion}
             </div>
-        </t:if >
+        </t:if >-->
 
     </t:if>
 

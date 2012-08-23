@@ -86,37 +86,42 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean vdetalle;
+    @Persist
+    @Property
+    private Boolean vguardar;
 
     //Inicio de lac carga de la pagina
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
-        publicacion = new Publicacion();
-        valfec_desde = null;
-        veditar = false;
-        veliminar = false;
-        bvalidausuario = false;
-        vformulario = false;
         editando = false;
-        vinserta = false;
-        vdetalle = false;
-        accesos();
+        resetRegistro();
+        //accesos();
     }
     public void accesos(){
+        bvalidausuario = false;
+        vformulario = true;
+        vinserta = false;
+        veditar = false;
+        veliminar = false;
+        vdetalle = true;
+        vguardar = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             vdetalle = false;
+            vguardar = true;
+            //vformulario = true;
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
-            vformulario = true;
-            veditar = true;
+            //vformulario = true;
+            vguardar = true;
             vdetalle = false;
         }
     }
@@ -141,19 +146,14 @@ public class PublicacionesEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-//    void onSelectedFromCancel() {
-//        elemento = 2;
-//    }
-//
-//    void onSelectedFromReset() {
-//        elemento = 1;
-//    }
     @Log
     void resetRegistro() {
         publicacion = new Publicacion();
         editando = false;
         valfec_desde = "";
-
+//        vguardar = true;
+//        vdetalle = false;
+        accesos();
     }
 
     @Log
@@ -164,6 +164,7 @@ public class PublicacionesEditor {
 
     @Log
     Object onCancel() {
+        System.out.println(_usuario.getRolid());
         if (_usuario.getRolid() == 1) { // Si es trabajador 
             return "TrabajadorPersonal";
         }else{
@@ -189,12 +190,9 @@ public class PublicacionesEditor {
         publicacion.setEntidad(_oi);
 
         if (!editando) { // Si no edita, está insertando
-            //guardando
             if (_usuario.getRolid() == 1) { // Si es trabajador 
                 publicacion.setAgregadoTrabajador(true);
                 publicacion.setValidado(false);
-//            } else {
-//                publicacion.setAgregadoTrabajador(false);
             }
         }
 
@@ -218,28 +216,13 @@ public class PublicacionesEditor {
         publicacion = new Publicacion();
         valfec_desde = null;
         // Verifica que, si no tiene acceso a insertar, no muestra el formulario
-        if (!vinserta){
-            vformulario = false;
-        }
+//        if (!vinserta){
+//            vformulario = false;
+//        }
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
 
     }
 
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormulariobotones() {
-//        if (elemento == 1) {
-//            publicacion = new Publicacion();
-//            editando = false;
-//            valfec_desde = null;
-//            return proIntelectualZone.getBody();
-//        } else if (elemento == 2) {
-//            return "Busqueda";
-//        } else {
-//            return this;
-//        }
-//
-//    }
     @Log
     Object onActionFromEditar(Publicacion publi) {
         publicacion = publi;
@@ -248,13 +231,9 @@ public class PublicacionesEditor {
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
         editando = true;
-        vdetalle = false;
-        vformulario = true;
-//        if (usua.getAccesoupdate() == 1) {
-//            veditar = true;
-//        }else{
-//            veditar = false;
-//        }
+//        vdetalle = false;
+//        vformulario = true;
+//        vguardar = true;
         accesos();
         return proIntelectualZone.getBody();
     }
@@ -267,12 +246,10 @@ public class PublicacionesEditor {
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
         editando = false;
-        vdetalle = true;
-        vformulario = true;
-        // Si esta revisado el registro no puede guardarse
-//        if (publicacion.getValidado()){
-            veditar = false;
-//        }
+//        vdetalle = true;
+//        vformulario = true;
+//        vguardar = false;
+        accesos();
         return proIntelectualZone.getBody();
     }
 
@@ -281,6 +258,8 @@ public class PublicacionesEditor {
     Object onActionFromEliminar(Publicacion publi) {
         session.delete(publi);
         envelope.setContents("Produción Intelectual eliminada exitosamente.");
+        resetRegistro();
+        accesos();
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).
                 add("listaProIntelectualZone", listaProIntelectualZone.getBody()).
                 add("proIntelectualZone", proIntelectualZone.getBody());
