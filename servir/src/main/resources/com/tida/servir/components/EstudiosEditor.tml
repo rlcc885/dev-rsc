@@ -97,6 +97,10 @@
                                 <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                             </div>
                         </t:if>
+                        <t:if test="${vrevisado}" negate="true">
+                            <br/>
+                            <br/>
+                        </t:if>
                         <div class="logoentidad" style="position:relative; top:-70px; left:440px; width: 200px; height: 100px;">
                             <fieldset>
                                 <legend>* Periodo</legend>
