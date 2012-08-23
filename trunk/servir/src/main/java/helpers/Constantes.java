@@ -44,7 +44,7 @@ public class Constantes {
    
    public static final String AUSENCIA_EXITO ="Ausencias licencias creadas / modificadas exitosamente.";
    public static final String REMUNERACION_EXITO ="Remuneraciones personales creadas / modificadas exitosamente.";
-   public static final String EVALUACION_EXITO ="Evaluaciones personales creadas / modificadas exitosamente.";
+   public static final String EVALUACION_EXITO ="Evaluacion personal creada / modificada exitosamente.";
    public static final String CONSTANCIAS_DOCUMENTALES_EXITO ="Modificados exitosamente.";
    public static final String CONFIGURAR_ACCESO_EXITO ="Parametros creados / modificados exitosamente.";
    

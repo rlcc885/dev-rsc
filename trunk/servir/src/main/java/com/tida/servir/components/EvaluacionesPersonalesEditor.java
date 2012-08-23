@@ -96,6 +96,10 @@ public class EvaluacionesPersonalesEditor {
     @Inject
     private PropertyAccess _access;
     
+    @Persist
+    @Property
+    private Boolean vdetalle;
+    
     //Inicio de lac carga de la pagina
     @Log
     @SetupRender
@@ -156,6 +160,7 @@ public class EvaluacionesPersonalesEditor {
     @Log
     @CommitAfter    
     Object onSuccessFromFormularioevaluaciones() {
+        formulariomensajese.clearErrors();
         if(valfec_desde!=null){
                 SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                 try {
@@ -163,7 +168,12 @@ public class EvaluacionesPersonalesEditor {
                 } catch (ParseException ex) {
                 ex.printStackTrace();
                 }
-            }
+            }else{
+                  formulariomensajese.recordError("Debe ingresar una fecha de Ingreso");  
+                  return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
+                    .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
+                    .add("evaluacionesZone", evaluacionesZone.getBody());
+            }   
           
             if(valfec_hasta!=null){
                 SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
@@ -172,13 +182,18 @@ public class EvaluacionesPersonalesEditor {
                 } catch (ParseException ex) {
                 ex.printStackTrace();
                 }
-            }
+            }else{
+                  formulariomensajese.recordError("Debe ingresar una fecha de Egreso");  
+                  return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
+                    .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
+                    .add("evaluacionesZone", evaluacionesZone.getBody());
+            } 
             
             evaluacion.setFec_desde(fecha_desde);
             evaluacion.setFec_hasta(fecha_hasta);
         if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
-            envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
-
+            //envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
+            formulariomensajese.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
         } else {
         evaluacion.setCargoasignado(getCargosAsignados());
         session.saveOrUpdate(evaluacion);
