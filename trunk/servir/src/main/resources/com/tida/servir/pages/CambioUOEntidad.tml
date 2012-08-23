@@ -12,95 +12,79 @@
        
     <h2>Migración / Fusión de Registros</h2>
        
-    <h3> Opciones / Fuente de Origen</h3>
-    <div id= "datosOrigen" class="box">
+        <form t:type="form" t:id="formOpciones" t:zone="EDestiZone">            
+            <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="migras" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)">
+                <t:if test="mostrarUO"> 
+                    <t:radio t:id="pa1" t:value="true" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>Migración
+                </t:if>
+                <t:radio t:id="pa2" t:value="false" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/> Fusión
+            </t:radiogroup> 
             
-        <div class="f-wrap">                  
-                    
-                              
-            <t:zone t:id="EOrigenZone" t:update="show">
-                <form t:type="form" t:id="formUOO" t:zone="EOrigenZone">
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <label>Opciones</label>
-                            <input t:type="Select" t:id="cambio_opciones"
-                                           t:value="opcion" model="bopciones"
-                                           onChange="this.form.fire()" t:zone="EOrigenZone"/>
-                        </div>                                                      
-                        <div class="f-left">
-                            <label>Unidad Orgánica Origen</label>
-                            <select t:type="select" t:id="select_unidadOrganicaOrigen"
-                                            model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
-                                            onChange="this.form.fire()" t:zone="EOrigenZone"/>    
-                        </div>
-                    </div>                            
-                    <t:if test="mostrarUO">
-                        <div class="f-left">    
-                            <label>Entidad Origen</label>
-                            <input t:type="TextField" t:id="entidad_den"
-                                       t:value="entidad_origen" t:readonly="readonly" style="width: 450px;"/>                            
-                        </div>                                
-                    </t:if>                                                       
-                </form>                             
-                <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">  
+        </form>  
+        <br/>
+        <br/>
+        <t:zone t:id="EOrigenZone">
+            <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">
+  
+             <fieldset>
+               <legend>Origen</legend> 
                     <t:if test="mostrarUO"> 
-                        <div class="f-wrap">  
-                            <input id="buscarsubmit" type="submit" value="Buscar" class="button f-right" onClick="javascript: mostrar();" />
-                        </div> 
-                    </t:if>
-                </form>
-                        
-            </t:zone>
-        </div>
-    </div>
-          
-<!--
-        <div id="mainfiltros" class="pane">
-                              
-                    <t:zone t:id="UOOrigenZone">
-                        <form t:type="form" t:id="formUOOrigen" t:zone="UOChangeZone">
-                           
-                                <div t:type="zone" t:id="selectUOZone" class="selectform t-zone f-left" >
-                                    * Unidad Orgánica
-                                    <select t:type="select" t:id="select_unidadOrganicaOrigen"
-                                    model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
-                                    t:validate="required"/>
-                                </div>                                
-                        </form>
-                    </t:zone>
-        </div> -->
-    <div class="f-wrap">  
-                 
-    </div> 
-        
-    <h3> Seleccione destino</h3>
-    <div id= "datosDestinox" class="box">
-            
-        <div class="f-wrap">
-            <t:zone t:id="EDestiZone" t:update="show">            
-                <form t:type="form" t:id="formEDestino" t:zone="EDestiZone">                    
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            <if test="mostrarUOD">                        
-                                <label>Unidad Orgánica Destino</label>
-                        <!--<select t:type="select" t:id="select_unidadOrganicaDestino"
-                        model="beanUOrganicasDestino"  value="uoDestino"/>-->
-                                <input t:type="Select" t:id="select_unidadOrganicaDestino"                         
-                                t:value="uoDestino" model="beanUOrganicasDestino"
-                                onChange="this.form.fire()" t:zone="EDestiZone"/>                        
-                            </if>
-                        </div>                    
                         <div class="f-left">    
-                            <label>Entidad Destino</label>
-                            <input t:type="TextField" t:id="entidad_den_des"
-                               t:value="entidad_destino" t:readonly="readonly" style="width: 400px;"/>                            
+                            <label>Entidad/Sub Entidad</label>
+                            <input t:type="TextField" t:id="entidad_den"
+                                        t:value="entidad_origen" t:disabled="true" style="width: 350px;"/>                            
                         </div>
+                        <div class="f-left">
+                            <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
+                        </div>
+                    </t:if>
+                    <div class="f-left">
+                        <label>Nivel Organizacional</label>
+                        <input t:type="Select" t:id="uo_nivelo"                                
+                               t:value="nivelo" model="beanNivelOrigen" t:zone="EOrigenZone"/>  
                     </div>
-                    <div class="f-wrap">  
-                        <input id="buscar2submit" type="submit" value="Buscar" class="button f-right" onClick="javascript: mostrar();" />
-                    </div>              
-                </form>
-            </t:zone>
+                    <div class="f-left">
+                        <label>Unidad Orgánica</label>
+                        <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                                model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                                onChange="this.form.fire()" t:zone="EOrigenZone"/>    
+                    </div>
+             </fieldset>
+            </form>                             
+          </t:zone>
+        
+        <t:zone t:id="EDestiZone" >            
+            <form t:type="form" t:id="formEDestino" t:zone="EDestiZone"> 
+              <fieldset>
+               <legend>Destino</legend>  
+                <div class="f-wrap">
+                   <t:if test="mostrarUO"> 
+                    <div class="f-left">    
+                        <label>Entidad/Sub Entidad</label>
+                        <input t:type="TextField" t:id="entidad_den_des"
+                            t:value="entidad_destino" t:disabled="true" style="width: 400px;"/>                            
+                    </div>
+                    <div class="f-left">
+                        <input id="buscar2submit" type="submit" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                    </div>
+                   </t:if>
+                    <div class="f-left">
+                        <label>Nivel Organizacional</label>
+                        <input t:type="Select" t:id="uo_niveld"                                
+                               t:value="niveld" model="beanNivelDestino" t:zone="EDestiZone"/>  
+                    </div>
+                    <div class="f-left">
+                        <if test="mostrarUO">                        
+                            <label>Unidad Orgánica</label>
+                       <select t:type="select" t:id="select_unidadOrganicaDestino"
+                                model="beanUOrganicasDestino" encoder="beanUOrganicasDestino" value="uoDestino"
+                                onChange="this.form.fire()" t:zone="EDestiZone"/>                       
+                        </if>
+                    </div>
+                </div>
+               </fieldset>
+            </form>
+        </t:zone>
             
             <!--
             <div class="f-wrap datosDestinos">
@@ -152,10 +136,7 @@
                              </t:if>
                         </t:zone>
                     </div>-->
-        </div>
-    </div> 
-            
-            
+ 
     <div t:type="zone" t:id="botonZone" > 
         <form t:type="form" t:id="formBotones" t:zone ="botonZone">
             <t:errors/>
@@ -167,70 +148,6 @@
             </div>               
         </form>
     </div>  
-<!--        
-<script type="text/javascript">
-function popup(url,ancho,alto) {
-var posicion_x; 
-var posicion_y; 
-posicion_x=(screen.width/2)-(ancho/2); 
-posicion_y=(screen.height/2)-(alto/2); 
-window.open(url, "", "width="+ancho+",height="+alto+",menubar=0,toolbar=0,directories=0,scrollbars=no,resizable=no,left="+posicion_x+",top="+posicion_y+"");
-}
-function datos(val1,val2){
-    document.getElementById('entidad_den').value = val1;
-    document.getElementById('entidad_id').value = val2;
-}
-
-</script>-->
-     <!--   
-        <div id="fade" class="overlay" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'"></div>
-        <div id="light" class="modal">
-    	<p>Aqui; esta; el contenido que quieras mostrar. Para <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">cerrar</a> basta un simple JS. El estilo lo puede definir dentro de <strong>.contenido</strong></p>
-    </div>
-          <p>Con un <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">simple click</a> podra desplegar la ventana modal.</p>
--->
-<!--    
-<style type="text/css">
-	
-	/* base semi-transparente */
-    .overlay{
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        z-index:1001;
-		opacity:.75;
-        -moz-opacity: 0.75;
-        filter: alpha(opacity=75);
-    }
-	
-    /* estilo para lo q este dentro de la ventana modal */
-    .modal {
-        display: none;
-        position: absolute;
-        top: 25%;
-        left: 25%;
-        width: 50%;
-        height: 50%;
-        padding: 16px;
-        background: #fff;
-		color: #333;
-        z-index:1002;
-        overflow: auto;
-    }
-    </style>        
--->
-   <!-- <style type="text/css">
-        body { margin: 0; }
-        #shade, #modal { display: none; }
-        #shade { position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; }
-        #modal { position: absolute; z-index:1002; top: 20%; left: 20%; width: 50%; height: 55%; padding: 16px; background: #fff; overflow: auto; color: #333;}
-        #shade { background: silver; opacity: 0.8; filter: alpha(opacity=80); }
-    </style>-->
-
     <div id="shade"></div>
     <div id="modal">           
         <h1>Selección de entidad</h1>

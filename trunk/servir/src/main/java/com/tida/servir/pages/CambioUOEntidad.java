@@ -7,11 +7,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.LkBusquedaEntidad;
-import com.tida.servir.entities.LkBusquedaCursos;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UnidadOrganica;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
@@ -78,10 +74,10 @@ public class CambioUOEntidad extends GeneralPage{
 //    private Entidad entidadDestino;
 
     @Persist
-    private GenericSelectModel<UnidadOrganica> _beanUOrganicasOrigen;
+    private GenericSelectModel<LkBusquedaUnidad> _beanUOrganicasOrigen;
 
     @Persist
-    private GenericSelectModel<UnidadOrganica> _beanUOrganicasDestino;
+    private GenericSelectModel<LkBusquedaUnidad> _beanUOrganicasDestino;
 
 
     @Inject
@@ -112,35 +108,23 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Inject
     private ComponentResources _resources;
-
-    
-//    @Component(id = "formUOFusionar")
-//    private Form formUOFusionar;
     
     @Persist
     @Property
-    private String opcion;
-    
+    private String entidad_origen;    
     @Persist
     @Property
-    private String entidad_origen;
-    
+    private String entidad_destino;    
     @Persist
     @Property
-    private String entidad_destino;
-    
-    @Persist
-    @Property
-    private String bdenoentidad;
-    
+    private String bdenoentidad;    
     @Property
     @Persist
     private boolean mostrar;
     
     @Property
     @Persist
-    private LkBusquedaEntidad entio;
-    
+    private LkBusquedaEntidad entio;   
     
     @Property
     @Persist
@@ -148,30 +132,20 @@ public class CambioUOEntidad extends GeneralPage{
     
     @Property
     @Persist
-    private boolean entixo;
-    
+    private boolean entixo;    
     @Property
     @Persist
-    private boolean entixd;
-    
+    private boolean entixd; 
     @Property
     @Persist
-    private boolean mostrarUOD;
-    
-    @Property
-    @Persist
-    private boolean mostrarUO;
-    
+    private boolean mostrarUO;  
     
     @InjectComponent
-    private Zone entiZone;
-    
+    private Zone entiZone;    
     @InjectComponent
-    private Zone busZone;
-    
+    private Zone busZone;    
     @InjectComponent
-    private Envelope envelope;
-    
+    private Envelope envelope;    
     @Component(id = "formBotones")
     private Form formBotones;
     
@@ -179,31 +153,30 @@ public class CambioUOEntidad extends GeneralPage{
     private Zone botonZone;
     
     private int num=0,num2=0;
-    private Object retorno;
     
     @Property
     @Persist
-    private Entidad entidad1;
-    
+    private Entidad entidad1;    
     @Property
     @Persist
-    private Entidad entidad2;
-    
+    private Entidad entidad2;    
     @Property
     @Persist
-    private LkBusquedaCursos lkcu;
-    
-    @Log
-    public List<String> getBopciones(){
-        List<String> mod = new LinkedList<String>();
-        mod.add("MIGRAR");
-        mod.add("FUSIONAR");
-        return mod; 
-    }
-    
+    private LkBusquedaCursos lkcu;    
+    @Property
+    @Persist
+    private boolean migras;    
+    @Property
+    @Persist
+    private Integer nivelo;
+    @Property
+    @Persist
+    private Integer niveld;
+      
     @Log
     @SetupRender
     private void inicio() {
+        migras=false;
         if(usuario.getRolid()==3){
             mostrarUO=true;
         }
@@ -212,20 +185,23 @@ public class CambioUOEntidad extends GeneralPage{
         }
     }
     
-    
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformOpciones(){
-//        
-//        
-//        return new MultiZoneUpdate("UOOrigenZone",UOOrigenZone.getBody())
-//                    .add("UOChangeZone", UOChangeZone.getBody());
-//    }
-    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformOpciones(){
+        if(migras){
+            migras=true;
+        }
+        else{
+            migras=false;
+        }
+        return EDestiZone.getBody();
+    }
+        
     @Log
     @CommitAfter
     Object onSuccessFromformEOrigen(){
         entixo=true; 
+        System.out.println("Opcionnnnn"+migras);
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody())                             
                     .add("entiZone", entiZone.getBody());
     }
@@ -263,7 +239,7 @@ public class CambioUOEntidad extends GeneralPage{
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
         if (bdenoentidad != null && !bdenoentidad.equals("")) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));      
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()));
         }        
         return c.list();
     }
@@ -283,7 +259,6 @@ public class CambioUOEntidad extends GeneralPage{
     Object onActionFromSelec (Entidad enti2) {        
         entidad2 = enti2;
         entidad_destino=entidad2.getDenominacion();
-        mostrarUOD=true;
 //        entidad2.setId(entid.getId());
         entixd=false;
         uoDestino=null;
@@ -296,7 +271,7 @@ public class CambioUOEntidad extends GeneralPage{
     
     void onSelectedFromReset() {        
         num=2;   
-        opcion=null;        
+        migras=true;        
         entid=null;
         uoDestino=null;
         entidad_destino=null;
@@ -304,12 +279,12 @@ public class CambioUOEntidad extends GeneralPage{
         if(entio!=null){
             entio=null;
             entidad1=null;
-            List<UnidadOrganica> list;
-            Criteria c = session.createCriteria(UnidadOrganica.class);
+            List<LkBusquedaUnidad> list;
+            Criteria c = session.createCriteria(LkBusquedaUnidad.class);
             c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-            c.add(Restrictions.eq("entidad", entidadUE ));        
+            c.add(Restrictions.eq("entidadId", entidadUE.getId() ));        
             list = c.list();
-            _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);       
+            _beanUOrganicasOrigen = new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);       
         }
         uoOrigen=null;
         entidad_origen=null;
@@ -325,256 +300,155 @@ public class CambioUOEntidad extends GeneralPage{
         return CambioEntidad.class;
     }
     else{
-        if (opcion != null && !opcion.equals("")) {
-           if(opcion.equalsIgnoreCase("MIGRAR")){//migrar
-                if(uoOrigen==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
-                    return botonZone.getBody();
-                }
-                if(entidad2==null){
-                    formBotones.recordError("Debe seleccionar Entidad Destino");
-                    return botonZone.getBody();
-                }
-                if(entidad1==null){ //validar x usuario
-                    Query query = session.getNamedQuery("callSpFucionMigracion");
-                    query.setParameter("as_entidad_id_origen", entidadUE.getId());
-                    query.setParameter("as_entidad_id_destino", entidad2.getId());
-                    query.setParameter("an_unidad_origen", uoOrigen.getId());
-                    query.setParameter("an_unidad_destino", "");
-                    List result = query.list();               
-//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session);
-                    session.flush();
-                    formBotones.clearErrors();                    
-                    envelope.setContents("Unidad Orgánica Migrada Correctamente1");
-                }
-                else{      
-                    Query query = session.getNamedQuery("callSpFucionMigracion");
-                    query.setParameter("as_entidad_id_origen", entidad1.getId());
-                    query.setParameter("as_entidad_id_destino", entidad2.getId());
-                    query.setParameter("an_unidad_origen", uoOrigen.getId());
-                    query.setParameter("an_unidad_destino", "");
-//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
-                     session.flush();
-                     formBotones.clearErrors();
-                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
-                }           
-
-           }
-           else if(opcion.equalsIgnoreCase("FUSIONAR")){//fusionar                   
-                if(uoOrigen==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Origen");
-                    return botonZone.getBody();
-                }
-                if(uoDestino==null){
-                    formBotones.recordError("Debe seleccionar U. Orgánica Destino");
-                    return botonZone.getBody();
-                }            
-                if(uoOrigen.getId()==uoDestino.getId()){
-                    formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
-                    return botonZone.getBody();
-                }
-                if(entidad1==null){ //validar x usuario
-                    if(entidadUE.getId()==entidad2.getId()){
-                        //System.out.println("sesionnnnn"+entidadUE.getId()+uoOrigen.getId()+uoDestino.getId());
-                        Query query = session.getNamedQuery("callSpFucionMigracion");
-                        query.setParameter("as_entidad_id_origen", entidadUE.getId());
-                        query.setParameter("as_entidad_id_destino", entidadUE.getId());
-                        query.setParameter("an_unidad_origen", uoOrigen.getId());
-                        query.setParameter("an_unidad_destino", uoDestino.getId());
-                        List result = query.list();
-                        
-//                        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
-                        session.flush();
-                        formBotones.clearErrors();
-                        envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
-                    }
-                    else{
-                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");
-                        return botonZone.getBody();
-                    }
-                }
-                else{
-                    if(entidad1.getId()==entidad2.getId()){
-                        Query query = session.getNamedQuery("callSpFucionMigracion");
-                        query.setParameter("as_entidad_id_origen", entidad1.getId());
-                        query.setParameter("as_entidad_id_destino", entidad2.getId());
-                        query.setParameter("an_unidad_origen", uoOrigen.getId());
-                        query.setParameter("an_unidad_destino", uoDestino.getId());
-                        List result = query.list();                        
-//                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
-                        session.flush();
-                        formBotones.clearErrors();
-                        envelope.setContents("Unidad Orgánica Fusionada Correctamente");
-                    }
-                    else{
-                        formBotones.recordError("La Entidad Origen debe ser igual a la Entidad Destino");                    
-                        return botonZone.getBody(); 
-                    }
-                }            
+        formBotones.clearErrors();
+        if(migras){//migrar
+            if(uoOrigen==null){
+                formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+                return botonZone.getBody();
             }
-           
+            if(entidad2==null){
+                formBotones.recordError("Debe seleccionar Entidad Destino");
+                return botonZone.getBody();
+            }
+            if(entidad1==null){ //validar x usuario 
+                if(entidadUE==entidad2){
+                    formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
+                }
+//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session);              
+                envelope.setContents("Unidad Orgánica Migrada Correctamente1");
+            }
+            else{      
+//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
+                if(entidad1==entidad2){
+                    formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
+                }
+                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
+            }           
+
         }
-        else{
-           formBotones.recordError("Debe seleccionar una Opción");
-           return botonZone.getBody(); 
+        else{//fusionar                   
+            if(uoOrigen==null){
+                formBotones.recordError("Debe seleccionar U. Orgánica Origen");
+                return botonZone.getBody();
+            }
+            if(uoDestino==null){
+                formBotones.recordError("Debe seleccionar U. Orgánica Destino");
+                return botonZone.getBody();
+            }            
+            if(uoOrigen.getId()==uoDestino.getId()){
+                formBotones.recordError("La U. Orgánica Origen no debe ser igual a la U. Orgánica Destino");
+                return botonZone.getBody();
+            }
+            if(entidad1==null){ //validar x usuario                
+//                  Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
+                envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
+
+            }
+            else{                  
+//                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
+                envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+
+            }            
         }
+
     }
     onSelectedFromReset();
 //    envelope.setContents(String.valueOf(entidad1)+String.valueOf(uoOrigen)+String.valueOf(entidad2)+String.valueOf(uoDestino));
     return zonasDatos();
     }
 
-//    @Log
-//    public boolean getHayNivelOrigen() {
-//        return !(nivelOrigen == null) ;
-//    }
-//
-//    @Log
-//    public boolean getHayNivelDestino() {
-//        return !(nivelDestino == null)&& (nivelDestino > 0);
-//    }
+    void ejecutar(Entidad eo,Entidad ed,UnidadOrganica uoo,UnidadOrganica uod){
+        Query query = session.getNamedQuery("callSpFucionMigracion");
+        query.setParameter("as_entidad_id_origen", eo.getId());
+        query.setParameter("as_entidad_id_destino", ed.getId());
+        query.setParameter("an_unidad_origen", uoo.getId());
+        query.setParameter("an_unidad_destino", uod.getId());
+        List result = query.list();
+        session.flush();
+    }
+    
+    
+    public List<Integer> getBeanNivel(Entidad eUE, Integer first){
+        List<Integer> nivel = new LinkedList<Integer>();
+        Integer nivelMax = 0;
 
+        nivelMax = Helpers.maxNivelUO(eUE, session);
 
-//    public boolean getHayEntidadDestino() {
-//        return entidadDestino != null;
-//    }
-//
-//    @Log
-//    public boolean getActivoSubmit() {
-//        boolean salida = getHayEntidadDestino() && (uoOrigen != null);
-//        return salida;
-//    }
+        for(int i=first; i <= nivelMax; i++){
+            // Es mas uno porque agregamos hasta un nivel mas
+            nivel.add(i);
+        }
 
-    /**
-     * El parámetro first es porque la unidad origen no puede ser nivel 0, pero si la destino
-     * @param eUE
-     * @param first
-     * @return
-     */
-//    public List<Integer> getBeanNivel(Entidad_BK eUE, Integer first){
-//        List<Integer> nivel = new LinkedList<Integer>();
-//        Integer nivelMax = 0;
-//
-//        nivelMax = Helpers.maxNivelUO(eUE, session);
-//
-//        for(int i=first; i <= nivelMax; i++){
-//            // Es mas uno porque agregamos hasta un nivel mas
-//            nivel.add(i);
-//        }
-//
-//        return nivel; // nivel 0 van asociadas a las entidades directamente
-//    }
-
-//    @Log
-//    public List<Integer> getBeanNivelOrigen(){
-//        return getBeanNivel(entidadUE, 1);
-//    }
-//
-//    @Log
-//    public List<Integer> getBeanNivelDestino(){
-//        return getBeanNivel(entidadDestino, 0); // las Entidades (sin uo) pueden ser válidas, luego hay de nivel 0
-//
-//    }
+        return nivel; // nivel 0 van asociadas a las entidades directamente
+    }
 
     @Log
-    public GenericSelectModel<UnidadOrganica> getBeanUOrganicasOrigen(){
-        List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-        //c.add(Restrictions.eq("nivel", nivelOrigen));
+    public List<Integer> getBeanNivelOrigen(){
         if(entidad1==null){
-            c.add(Restrictions.eq("entidad", entidadUE ));
+            return getBeanNivel(entidadUE, 1);
         }
         else{
-            c.add(Restrictions.eq("entidad", entidad1 ));
+            return getBeanNivel(entidad1, 1);
+        }
+        
+    }
+
+    @Log
+    public List<Integer> getBeanNivelDestino(){
+        if(entidad2==null){
+            return getBeanNivel(entidadUE,1);
+        }
+        else{
+            return getBeanNivel(entidad2, 1);
+        }
+
+    }
+     
+    @Log
+    public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicasOrigen(){
+        List<LkBusquedaUnidad> list;
+        Criteria c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));        
+        if (nivelo != null) {
+            c.add(Restrictions.eq("nivel", nivelo));
+        }
+        if(entidad1==null){
+            c.add(Restrictions.eq("entidadId", entidadUE.getId() ));
+        }
+        else{
+            c.add(Restrictions.eq("entidadId", entidad1.getId() ));
         }        
         list = c.list();
-        _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);       
+        _beanUOrganicasOrigen = new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);       
         return _beanUOrganicasOrigen;
     }
 
     @Log
-    public GenericSelectModel<UnidadOrganica> getBeanUOrganicasDestino(){  
-        List<UnidadOrganica> list;
-        Criteria c = session.createCriteria(UnidadOrganica.class);
-        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));        
-        c.add(Restrictions.eq("entidad", entidad2));
+    public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicasDestino(){  
+        List<LkBusquedaUnidad> list;
+        Criteria c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));   
+        
+        if(migras){
+            if (niveld != null) {
+                c.add(Restrictions.eq("nivel", niveld-1));
+            }
+        }
+        else{
+           if (niveld != null) {
+              c.add(Restrictions.eq("nivel", niveld));
+           } 
+        }
+        
+        if(entidad2==null){
+            c.add(Restrictions.eq("entidadId", entidadUE.getId() ));
+        }
+        else{
+            c.add(Restrictions.eq("entidadId", entidad2.getId()));
+        }    
         list = c.list();        
-        return new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
+        return new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);
     }
-
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformNivelUOOrigen(){
-//        List<UnidadOrganica> list;
-//        Criteria c = session.createCriteria(UnidadOrganica.class);
-//        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-//        c.add(Restrictions.eq("nivel", nivelOrigen));
-//        c.add(Restrictions.eq("entidad", entidadUE ));
-//        list = c.list();
-//        _beanUOrganicasOrigen = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
-//        uoOrigen = null;
-//        return new MultiZoneUpdate("EOrigenZone",EOrigenZone.getBody())
-//                    .add("UOChangeZone", UOChangeZone.getBody());
-//    }
-
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormNivelUODestino(){
-//
-//        List<UnidadOrganica> list;
-//        Criteria c = session.createCriteria(UnidadOrganica.class);
-//        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-//        c.add(Restrictions.eq("nivel", nivelDestino));
-//        c.add(Restrictions.eq("entidad", entidadDestino ));
-//        list = c.list();
-//        _beanUOrganicasDestino = new GenericSelectModel<UnidadOrganica>(list,UnidadOrganica.class,"den_und_organica","id",_access);
-//        uoDestino = null;
-//        return new MultiZoneUpdate("UODestinoZone",UODestinoZone.getBody())
-//                    .add("UOChangeZone", UOChangeZone.getBody());
-//    }
-
-//    Object onSuccessFromformUODestino() {
-//        return UOChangeZone.getBody();
-//    }
-
-//    Object onSuccessFromFormEOrigen() {
-//        return EOrigenZone.getBody();
-//    }
-
-
-//    @CommitAfter
-//    Object onSuccessFromFormUOChange() {
-////        Helpers.migrarUOBase(uoOrigen, entidadUE, entidadDestino, session);
-//        session.flush();
-//        uoOrigen = null;
-//        uoDestino = null;
-////        nivelOrigen = null;
-////        nivelDestino = null;
-//        envelope.setContents("Unidad Orgánica migrada exitosamente");
-//        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                
-//                    .add("EOrigenZone", EOrigenZone.getBody())
-//                    .add("EDestiZone", EDestiZone.getBody());
-//                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
-//
-//    }
-
-
-//    @CommitAfter
-//    Object onSuccessFromFormUOFusionar() {
-////        Helpers.fusionarUOBase(uoOrigen, entidadUE, entidadDestino, uoDestino, session);
-//        session.flush();
-//        uoOrigen = null;
-//        uoDestino = null;
-////        nivelOrigen = null;
-////        nivelDestino = null;
-//        envelope.setContents("Unidad Orgánica fusionada exitosamente");
-//        return new MultiZoneUpdate("UOChangeZone",UOChangeZone.getBody())                                      
-//                    .add("EOrigenZone", EOrigenZone.getBody())
-//                    .add("EDestiZone", EDestiZone.getBody());
-//                    //.add("UOOrigenNivelZone", UOOrigenNivelZone.getBody());
-//
-//    }
     
     @Log
     private MultiZoneUpdate zonasDatos() {
@@ -586,9 +460,19 @@ public class CambioUOEntidad extends GeneralPage{
 
     }
 
-
-//    @SetupRender
-//    void initValues() {
-//        entidadDestino = null;
-//    }
+    @Log
+    Object onValueChangedFromUo_nivelo(Integer dato) {
+        if (dato != null) {
+            nivelo = dato;
+        }
+        return EOrigenZone.getBody();
+    }
+    
+    @Log
+    Object onValueChangedFromUo_niveld(Integer dato) {
+        if (dato != null) {
+            niveld = dato;
+        }
+        return EDestiZone.getBody();
+    }
 }

@@ -349,7 +349,6 @@ public class EstudiosEditor {
                     vbotones=false;
                     vNoedita=false;
                 }
-                estudio.setEstudiando(valestudiando);
             } else {//guardando
               
                 estudio = new Estudios();
@@ -379,9 +378,6 @@ public class EstudiosEditor {
 
             }
             seteo();
-            if(valestudiando==null){
-                valestudiando=false;
-            }
             session.saveOrUpdate(estudio);
             session.flush();
             if (!editando) {
