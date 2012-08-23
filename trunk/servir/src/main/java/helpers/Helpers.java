@@ -113,22 +113,6 @@ public class Helpers {
         return c.list();
     }
 
-    // RESTRICCION DE SOLO TRABAJADOR PUEDE AGREGAR PARIENTE QUE NO SEA HIJO Y CONYUGE
-    public static List<DatoAuxiliar> getDatoAuxiliar2(String tabla, String tablaRelacion, long relacionCodigo, Session session) {
-        Criteria c = session.createCriteria(DatoAuxiliar.class);
-        c.add(Restrictions.like("nombreTabla", tabla));
-        if (tablaRelacion != null) {
-            if (!tablaRelacion.equals("")) {
-                c.add(Restrictions.like("tablaRelacion", tablaRelacion));
-                c.add(Restrictions.eq("relacionCodigo", relacionCodigo));
-            }
-        }
-        c.add(Restrictions.ne("valor", "HIJO"));
-        c.add(Restrictions.ne("valor", "CÓNYUGE"));
-        c.addOrder( Order.asc("valor") );
-        return c.list();
-    }
-    //**********************
        
     /**
      * Obtiene el dato auxiliar de la tabla y códigos dados

@@ -163,17 +163,17 @@ public class FamiliaresEditor {
     //para obtener datos del Parentesco
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanParentesco() {
-//        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("GRADOPARENTESCO", null, 0, session);
-//        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("GRADOPARENTESCO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
         
         //
-        List<DatoAuxiliar> list;
+    /*    List<DatoAuxiliar> list;
         if (_usuario.getRolid() == 1)
         { list = Helpers.getDatoAuxiliar2("GRADOPARENTESCO", null, 0, session);System.out.println("********BEANX1");}
         else
         { list = Helpers.getDatoAuxiliar("GRADOPARENTESCO", null, 0, session);System.out.println("********BEANX2");}
         
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);        
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);        */
         //
     }
 
@@ -295,6 +295,17 @@ public class FamiliaresEditor {
                 familiarActual.setEntidad(_oi);
 
           //-------------------------------------
+ 
+         if (_usuario.getRolid() == 1)
+         {
+             if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3)
+             {
+                 envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
+                return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());            
+                 
+             }
+         
+         }                
                 
      //    Query q = session.createSQLQuery("SELECT COUNT(*) FROM RSC_FAMILIAR WHERE PARENTESCO_ID = 2504 AND TRABAJADOR_ID ='"+actual.getId()+"'");
          Query q1 = session.createSQLQuery("SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
@@ -308,7 +319,9 @@ public class FamiliaresEditor {
          return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());            
         }
         
+
         /*
+         * 
         int numConyugue = Integer.parseInt(q.list().get(0).toString());
         System.out.println("*************FE"+numConyugue);
         System.out.println("*************FE"+familiarActual.getParentesco().getCodigo());
@@ -409,7 +422,7 @@ public class FamiliaresEditor {
         accesos();
         vdetalle = true;
         bdni = true;
-        
+        vguardar=false;
         return familiaresZone.getBody();    
     }
             
