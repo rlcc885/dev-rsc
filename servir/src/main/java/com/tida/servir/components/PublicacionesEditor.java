@@ -83,9 +83,6 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean veditar;
-//    @Persist
-//    @Property
-//    private Boolean vbotones;
     @Persist
     @Property
     private Boolean vdetalle;
@@ -93,6 +90,7 @@ public class PublicacionesEditor {
     //Inicio de lac carga de la pagina
     @Log
     void setupRender() {
+        // No mover la inicializacion de variables
         publicacion = new Publicacion();
         valfec_desde = null;
         veditar = false;
@@ -100,11 +98,17 @@ public class PublicacionesEditor {
         bvalidausuario = false;
         vformulario = false;
         editando = false;
+        vinserta = false;
+        vdetalle = false;
+        accesos();
+    }
+    public void accesos(){
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
+            vdetalle = false;
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
@@ -112,9 +116,10 @@ public class PublicacionesEditor {
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
             vformulario = true;
+            veditar = true;
+            vdetalle = false;
         }
     }
-
     @Log
     public List<Publicacion> getListadoProIntelectual() {
         Criteria c = session.createCriteria(Publicacion.class);
@@ -212,6 +217,10 @@ public class PublicacionesEditor {
         envelope.setContents(helpers.Constantes.PROD_INTELECTUAL_EXITO);
         publicacion = new Publicacion();
         valfec_desde = null;
+        // Verifica que, si no tiene acceso a insertar, no muestra el formulario
+        if (!vinserta){
+            vformulario = false;
+        }
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
 
     }
@@ -241,6 +250,12 @@ public class PublicacionesEditor {
         editando = true;
         vdetalle = false;
         vformulario = true;
+//        if (usua.getAccesoupdate() == 1) {
+//            veditar = true;
+//        }else{
+//            veditar = false;
+//        }
+        accesos();
         return proIntelectualZone.getBody();
     }
 
@@ -254,6 +269,10 @@ public class PublicacionesEditor {
         editando = false;
         vdetalle = true;
         vformulario = true;
+        // Si esta revisado el registro no puede guardarse
+//        if (publicacion.getValidado()){
+            veditar = false;
+//        }
         return proIntelectualZone.getBody();
     }
 
