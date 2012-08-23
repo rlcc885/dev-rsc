@@ -56,7 +56,7 @@ public class CursosEditor {
     private Envelope envelope;
     @Property
     @SessionState
-    private UsuarioAcceso usu;
+    private UsuarioAcceso usua;
     @Inject
     private PropertyAccess _access;
     //zonas
@@ -142,37 +142,46 @@ public class CursosEditor {
     private Boolean veditar;
     @Persist
     @Property
+    private Boolean vNoedita;
+    @Persist
+    @Property
     private Boolean vrevisado;
     private int elemento = 0;
 
     @Log
     @SetupRender
     private void inicio() {
-        vrevisado = false;
-        if (usu.getAccesoupdate() == 1) {
+       vrevisado = false;
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
+        if (usua.getAccesoupdate() == 1) {
             veditar = true;
-            vbotones = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
-        if (usu.getAccesodelete() == 1) {
+        if (usua.getAccesodelete() == 1) {
             veliminar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
-        if (usu.getAccesoreport() == 1) {
+        if (usua.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
+            vNoedita=true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
         }
-        cursos = new Curso();
+
         votro = true;
         editando = false;
-        System.out.println("Eliminar2" + usu.getAccesodelete() + usu.getAccesoreport() + usu.getAccesoupdate());
+        cursos = new Curso();
+        editando = false;
+        System.out.println("Eliminar2" + usua.getAccesodelete() + usua.getAccesoreport() + usua.getAccesoupdate());
         //limpiar();
     }
 
@@ -211,6 +220,7 @@ public class CursosEditor {
         editando = true;
         vdetalle = false;
         vbotones = true;
+        vNoedita=true;
         mostrar();
         if (valestudiando != null) {
             if (valestudiando) {
@@ -240,7 +250,7 @@ public class CursosEditor {
             valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
         }
 
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()); //.add("listadoZone", listadoZone.getBody());
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
 //.add("terceraZone", terceraZone.getBody());
     }
 
@@ -253,7 +263,8 @@ public class CursosEditor {
         votro = true;
         vbotones = false;
         vformulario = true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody());
+        vNoedita=true;
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
 //.add("terceraZone", terceraZone.getBody());
     }
 
@@ -266,7 +277,8 @@ public class CursosEditor {
         votro = true;
         vbotones = false;
         vformulario = true;
-        return new MultiZoneUpdate("primeraZone", primeraZone.getBody());//.add("terceraZone", terceraZone.getBody());
+        vNoedita=true;
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());//.add("terceraZone", terceraZone.getBody());
     }
 
     @Log
@@ -299,14 +311,35 @@ public class CursosEditor {
 
     @Log
     void onSelectedFromReset() {
-        limpiar();
-        formlistacursos.clearErrors();
-        editando = false;
-        cursos = new Curso();
-        if (usu.getAccesoreport() == 0) {
-            vformulario = false;
-        }
         elemento = 2;
+        if(vdetalle){
+            vformulario = false;
+            vNoedita=false;
+            if (usua.getAccesoreport() == 1) {
+                vformulario=true;
+                vdetalle=false;
+                vbotones=true;
+                limpiar();
+                formlistacursos.clearErrors();
+                editando = false;
+                cursos = new Curso();
+                vNoedita=true;
+            }
+        }
+        else{
+            if (usua.getAccesoreport() == 0) {
+                vformulario=false;
+                vdetalle=false;
+                vbotones=false;
+                vNoedita=false;
+            }
+            else{
+                limpiar();
+                formlistacursos.clearErrors();
+                editando = false;
+                cursos = new Curso(); 
+            }            
+        }
     }
 
     @Log
@@ -398,6 +431,13 @@ public class CursosEditor {
                     cursos.setAgregadotrabajador(true);
                 } else {
                     cursos.setAgregadotrabajador(false);
+                }
+            }
+            else{
+                if (usua.getAccesoreport() == 0) {
+                    vformulario = false;
+                    vbotones=false;
+                    vNoedita=false;
                 }
             }
             if (valestudiando == null) {
