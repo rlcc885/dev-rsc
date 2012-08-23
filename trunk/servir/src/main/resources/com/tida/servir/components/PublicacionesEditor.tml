@@ -14,8 +14,15 @@
         </div>
 
         <div t:type="zone" t:id="proIntelectualZone" id="proIntelectualZone">
+<div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_publicacion').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                        </script>
+                    </div>
             <t:form t:id="formularioprointelectual" zone="proIntelectualZone">
-                <t:if test="${vformulario}">
+<!--                <t:if test="${vformulario}">-->
                     <fieldset>
                         <div class="f-wrap">
                             <div class="f-left">
@@ -59,14 +66,14 @@
                             </t:if>
                         </div>
                     </fieldset>
-                </t:if>
+<!--                </t:if>-->
                 <div class="actions">
                     <t:if test="${vformulario}">
                         <div class="f-left">                        
                             (*) Campos Obligatorios
                         </div>
                     </t:if>
-                    <t:if test="${veditar}">
+                    <t:if test="${vguardar}">
                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                     </t:if>
                     <t:if test="${vinserta}">

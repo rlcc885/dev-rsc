@@ -13,7 +13,22 @@
                 <t:errors/>
             </t:form>
         </t:zone>
-        <t:zone t:id="primeraZone">         
+        <t:zone t:id="primeraZone">
+            <div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_inicio_curso').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_fin_curso').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                            function toggleStatusCurso() {
+                            if (jQuery('.idcursando').is(':checked')) {
+                            jQuery('.fec_fin_curso').attr('disabled', true);
+                            } else {
+                            jQuery('.fec_fin_curso').removeAttr('disabled');
+                            }
+                            }
+                        </script>
+                    </div>
             <t:if test="${vformulario}">
                 <t:form t:id="formularioprimero" zone="mensajescurso">
                     <fieldset>             
@@ -57,7 +72,7 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <label>Actualmente estudiando</label>
-                                    <input t:type="Checkbox" t:id="estudiando" t:value="valestudiando" onChange="toggleStatusCurso()" t:disabled="${vdetalle}" t:zone="terceraZone" class="idestudiando"/>
+                                    <input t:type="Checkbox" t:id="idcursando" t:value="valestudiando" onChange="toggleStatusCurso()" t:disabled="${vdetalle}" t:zone="terceraZone" class="idcursando"/>
                                 </div> 
                                 <div class="f-left">
                                     <label>Desde</label>
