@@ -250,6 +250,7 @@ public class PublicacionesEditor {
 //        vformulario = true;
 //        vguardar = false;
         accesos();
+        vdetalle = true;
         return proIntelectualZone.getBody();
     }
 
