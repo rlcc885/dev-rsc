@@ -117,14 +117,14 @@ public class DatoAuxiliar implements Serializable {
         this.tipoDeAcceso = tipoDeAcceso;
     }
     
-    public boolean getFlg_AltaTrabajador(){
+    public Boolean getFlg_AltaTrabajador(){
         return flg_altatrabajador;
     }
     
     public void setFlg_AltaTrabajador(Boolean flg_altatrabajador) {
         this.flg_altatrabajador = flg_altatrabajador;
     }
-    public boolean getFlg_CreaUsuario(){
+    public Boolean getFlg_CreaUsuario(){
         return flg_creausuario;
     }
     
