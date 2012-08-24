@@ -29,7 +29,7 @@ public class DatoAuxiliar implements Serializable {
     private Long id;
 //    @ManyToOne(optional = false)
     private String nombreTabla;
-    private Boolean flg_altatrabajador;
+    private Boolean flg_altatrabajador; //flag 
     private Boolean flg_creausuario;
     private String tablaRelacion; // si lo relacionamos con otra tabla
     private long relacionCodigo; // el valor a matchear en la tabla relacio
@@ -116,20 +116,22 @@ public class DatoAuxiliar implements Serializable {
     public void setTipoDeAcceso(TipoDeAcceso tipoDeAcceso) {
         this.tipoDeAcceso = tipoDeAcceso;
     }
-    
-    public Boolean getFlg_AltaTrabajador(){
+
+    public Boolean getFlg_altatrabajador() {
         return flg_altatrabajador;
     }
-    
-    public void setFlg_AltaTrabajador(Boolean flg_altatrabajador) {
+
+    public void setFlg_altatrabajador(Boolean flg_altatrabajador) {
         this.flg_altatrabajador = flg_altatrabajador;
     }
-    public Boolean getFlg_CreaUsuario(){
+
+    public Boolean getFlg_creausuario() {
         return flg_creausuario;
     }
-    
-    public void setFlg_CreaUsuario(Boolean flg_creausuario) {
+
+    public void setFlg_creausuario(Boolean flg_creausuario) {
         this.flg_creausuario = flg_creausuario;
     }
+    
 
 }
