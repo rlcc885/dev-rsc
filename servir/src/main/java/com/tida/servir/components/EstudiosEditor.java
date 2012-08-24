@@ -465,6 +465,7 @@ public class EstudiosEditor {
 
     @Log
     Object onActionFromEditar(Estudios estu) {
+        limpiar();
         estudio = estu;
         vformulario = true;
         editando = true;
@@ -505,7 +506,8 @@ public class EstudiosEditor {
 
     @Log
     Object onActionFromDetalle(Estudios estu) {
-        estudio = estu;
+        limpiar();
+        estudio = estu;        
         mostrar();
         vdetalle = true;
         ingresaubigeo = true;
@@ -514,11 +516,20 @@ public class EstudiosEditor {
         vbotones = false;
         vNoedita=true;
         vformulario = true;
+        if (estudio.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(estudio.getFechainicio());
+        }
+        if (estudio.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
+        }
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
 
     @Log
     Object onActionFromDetalles(Estudios estu) {
+        limpiar();
         estudio = estu;
         mostrar();
         vdetalle = true;
@@ -528,6 +539,14 @@ public class EstudiosEditor {
         vbotones = false;
         vNoedita=true;
         vformulario = true;
+        if (estudio.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(estudio.getFechainicio());
+        }
+        if (estudio.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
+        }
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
 
