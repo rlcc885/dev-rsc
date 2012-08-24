@@ -31,21 +31,21 @@
                                 <div class="f-left">
                                     <t:label for="nuevo_nroDocumento"/>
                                     <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="DNIChanged"  t:zone="trabajadorNuevoZone"
-                                           size="12" t:validate="required, regexp"/>
+                                           size="20" t:validate="required, regexp"/>
                                 </div>                         
                             </div>
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nuevo_nombres"/>
-                                    <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="30" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="nuevo_apellidoPaterno" />
-                                    <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="30" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="nuevo_apellidoMaterno" />
-                                    <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="30" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                             </div>                    
                         </fieldset>
@@ -59,25 +59,17 @@
                             <t:zone t:id="unidadOrganicaZone" id="unidadOrganicaZone">
                                 <!--                            <t:form t:id="formulariounidadorganica" zone="nuevaUnidadOrganicaZone">-->
                                 <div class ="f-left">
-                                    <t:label for="unidadorganica" />
+                                    <label>Unidad Organica</label>
                                     <select t:type="Select"
-                                            t:id="unidadorganica"
+                                            t:id="bunidadorganica"
                                             t:value="unidadorganica"   
-                                            model="beanUOrganicas"
-                                            t:blankOption="ALWAYS" 
+                                            model="beanUOrganicas" 
                                             t:zone="cargosZone"/>
                                     <!--                                <input t:type="Submit" t:id="nuevaUO" value="..." class="button" />-->
                                     <a onClick="javascript: mostrar();" class="button">...</a>
-                                    <!--                                <t:actionlink t:id="nuevaUnidadOrganica" 
-                                                  t:zone="nuevaUnidadCargoZone" 
-                                                  onClick="javascript: mostrar();"
-                                                  href="#"
-                                                  t:class="button">...
-                                    </t:actionlink>-->
-                                </div>
-                                <!--                            </t:form>-->
-                            </t:zone>
 
+                                </div>
+                            </t:zone>
                             <t:zone t:id="cargosZone" id="cargosZone">
                                 <!--                            <t:form t:id="formulariocargo" zone="nuevoCargosZone">-->
                                 <div class ="f-right">
@@ -90,9 +82,8 @@
                                 </div>
                                 <!--                            </t:form>-->
                             </t:zone>
-                        
                         </div>
-                
+                        <br/>
                         <div class = "f-wrap">
                             <!--                    <t:zone t:id="tipoVinculoZone">-->
                             <div class ="f-left">
@@ -102,7 +93,7 @@
                                        t:validate="required" t:blankOption="ALWAYS"/>
                             </div>
                             <div class="f-left">
-                                <t:label for ="puestoconfianza">Puesto Confianza: </t:label>
+                                <t:label for ="puestoconfianza">Puesto Confianza </t:label>
                                 <input t:type="Checkbox" t:id="puestoconfianza"
                                        t:value="puestoconfianza" />
                             </div>                           
@@ -182,35 +173,49 @@
     </t:if>
     
     <div id="shade"></div>
-    <div id="modalNuevaUnidadOrganica">
+    <div id="modalNuevaUnidadOrganica" style="height: 100px;">
         <t:zone t:id="nuevaUnidadZone">
             <t:form t:id="formularionuevaunidadorganica" t:zone="nuevaUnidadZone">
                 <t:errors/>
                 <div class="f-wrap">
                     <t:label for="unidadorganica2"/>
-                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="65"/>
+                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="33"/>
                 </div>
+                <br/>
                 <div class ="f-wrap">
                     <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button f-right" onClick="javascript: ocultar();"/>
                     <a onClick="javascript: ocultar();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
         </t:zone>
+        <br/>
+        <br/>
+        <br/>
     </div>
     <div id="shade2"></div>
-    <div id="modalNuevoCargo">
+    <div id="modalNuevoCargo" style="height: 100px; width: 300px;">
         <t:zone t:id="nuevoCargoZone">
             <t:form t:id="formularionuevocargo" t:zone="nuevoCargoZone">
                 <div class ="f-wrap">
-                    <t:label for="cargo2"/>
-                    <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="65"/>
+                    <div class="f-left">
+                        <t:label for="cargo2"/>
+                        <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="33"/>                        
+                    </div>
+                    <div class="f-left">
+                        <label>*Regimen Laboral</label>
+                        <input t:type="Select" t:id="regimen" t:value="regimenla" 
+                                model="beanregimen" encoder="beanregimen" onChange="this.form.fire()" t:validate="required"/>
+                    </div>
+                    
                 </div>
+                <br/>
                 <div class ="f-wrap">
                     <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right" onClick="javascript: ocultarCargo();"/>
                     <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
         </t:zone>
+        <br/>
     </div>
     <script type="text/javascript">
         var modal= document.getElementById('modalNuevaUnidadOrganica');
