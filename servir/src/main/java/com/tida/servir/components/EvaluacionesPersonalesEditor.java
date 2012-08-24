@@ -68,7 +68,10 @@ public class EvaluacionesPersonalesEditor {
     @Persist
     private boolean bvalidausuario;
     
-   
+    @Persist
+    @Property
+    private Boolean veditar;
+    
     @Persist
     @Property
     private String valfec_desde;
