@@ -207,12 +207,14 @@ public class DatosPersonalesEditor {
             actual.setDomicilioDireccion(domicilioDireccion);
             actual.setTipovia(valtipovia);
             actual.setTipozona(valtipozona);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println("*************DPE1 :"+actual+" "+fechanacimiento);
-            Date fecha = dateFormat.parse(fechanacimiento);
-            System.out.println("*************DPE2 :"+actual);
-            actual.setFechaNacimiento(fecha);
-            System.out.println("*************DPE3 :"+actual);
+            if(fechanacimiento!=null){
+                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                System.out.println("*************DPE1 :"+actual+" "+fechanacimiento);
+                Date fecha = dateFormat.parse(fechanacimiento);
+                System.out.println("*************DPE2 :"+actual);
+                actual.setFechaNacimiento(fecha);
+                System.out.println("*************DPE3 :"+actual);
+            }           
             session.saveOrUpdate(actual);
             session.flush();
             formulariodatospersonales.clearErrors();
