@@ -30,10 +30,7 @@
         </ul>
         <div class= "pane" id='datosdemetiro' name='datosdemerito'>             
               <t:MeritosDemeritosEditor t:id="meritosDemeritosEditor" actual= "actual" />   
-              <br/>
-              <br/>
         </div>
-
         <div class= "pane" id='datosPersonales' name='cargos'>    
                 <t:CargoTabs t:id="cargosTabs" actual= "actual" />              
         </div>  
@@ -43,11 +40,11 @@
      <script>
         <!--
 
-// perform JavaScript after the document is scriptable.
-        jQuery(function() {
-            jQuery("ul.tabs").tabs("> .pane");
-        });
-     -->
-     </script>
+   // perform JavaScript after the document is scriptable.
+           jQuery(function() {
+               jQuery("ul.tabs").tabs("> .pane");
+           });
+        -->
+    </script>
 
 </html>
