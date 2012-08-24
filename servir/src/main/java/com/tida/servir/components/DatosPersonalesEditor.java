@@ -1,6 +1,7 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
+import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
@@ -111,8 +112,10 @@ public class DatosPersonalesEditor {
         valtipovia = actual.getTipovia();
         valtipozona = actual.getTipozona();
         valconadis = String.valueOf(actual.getNroCertificadoCONADIS());
-       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-       fechanacimiento =  dateFormat.format(actual.getFechaNacimiento());
+        if(actual.getFechaNacimiento()!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            fechanacimiento =  dateFormat.format(actual.getFechaNacimiento());
+        }       
         //fechanacimiento = actual.getFechaNacimiento().toString();
         validaciones();
         System.out.println("personallll");
@@ -144,7 +147,21 @@ public class DatosPersonalesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariodatospersonales() throws ParseException {
-
+        if(elemento==3){
+            if (_usuario.getRolid() == 1) {
+                return "TrabajadorPersonal";
+            } else {
+                return Busqueda.class;
+            }
+        }
+        else if(elemento==4){
+            if (_usuario.getRolid() == 1) {
+                return "TrabajadorPersonal";
+            } else {
+                return Busqueda.class;
+            }
+        }
+        else{
             if (actual.getEmailPersonal() != null) {
                 if (!isEmail(actual.getEmailPersonal())) {
                     formulariodatospersonales.recordError("Email Personal Formato incorrecto");
@@ -201,7 +218,7 @@ public class DatosPersonalesEditor {
             formulariodatospersonales.clearErrors();
             envelope.setContents(helpers.Constantes.TRABAJADOR_EDIT_EXITO);
             validaciones();
-//        }
+        }
         return tresZonas();
     }
 
