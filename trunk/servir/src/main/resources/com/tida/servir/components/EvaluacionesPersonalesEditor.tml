@@ -100,7 +100,7 @@
 <div id = "tabla_oi">
             <t:zone t:id="listaEvaluacionZone">   
                 <t:grid source="listadoEvaluciones" rowsPerPage="10" t:add="Tipo,Motivo,Acciones" pagerPosition="bottom"
-                row="listaEvaluacion" include="fec_desde,fec_hasta" inPlace="true" >
+                     row="listaEvaluacion" include="fec_desde,fec_hasta" inPlace="true" >
                     <t:parameter name="empty">
                     <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
