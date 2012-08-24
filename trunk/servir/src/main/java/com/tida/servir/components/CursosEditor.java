@@ -215,12 +215,13 @@ public class CursosEditor {
 //    }
     @Log
     Object onActionFromEditar(Curso c) {
+        limpiar();
         cursos = c;
         vformulario = true;
         editando = true;
         vdetalle = false;
         vbotones = true;
-        vNoedita=true;
+        vNoedita=true;        
         mostrar();
         if (valestudiando != null) {
             if (valestudiando) {
@@ -256,7 +257,8 @@ public class CursosEditor {
 
     @Log
     Object onActionFromDetalle(Curso c) {
-        cursos = c;
+        limpiar();
+        cursos = c;        
         mostrar();
         vdetalle = true;
         vfechahasta = true;
@@ -264,12 +266,22 @@ public class CursosEditor {
         vbotones = false;
         vformulario = true;
         vNoedita=true;
+
+        if (cursos.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(cursos.getFechainicio());
+        }
+        if (cursos.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
+        }
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
 //.add("terceraZone", terceraZone.getBody());
     }
 
     @Log
     Object onActionFromDetalles(Curso c) {
+        limpiar();
         cursos = c;
         mostrar();
         vdetalle = true;
@@ -278,6 +290,15 @@ public class CursosEditor {
         vbotones = false;
         vformulario = true;
         vNoedita=true;
+
+        if (cursos.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(cursos.getFechainicio());
+        }
+        if (cursos.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
+        }
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());//.add("terceraZone", terceraZone.getBody());
     }
 
