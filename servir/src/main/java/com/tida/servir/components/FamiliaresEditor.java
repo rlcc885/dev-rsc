@@ -165,16 +165,6 @@ public class FamiliaresEditor {
     public GenericSelectModel<DatoAuxiliar> getBeanParentesco() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("GRADOPARENTESCO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-        
-        //
-    /*    List<DatoAuxiliar> list;
-        if (_usuario.getRolid() == 1)
-        { list = Helpers.getDatoAuxiliar2("GRADOPARENTESCO", null, 0, session);System.out.println("********BEANX1");}
-        else
-        { list = Helpers.getDatoAuxiliar("GRADOPARENTESCO", null, 0, session);System.out.println("********BEANX2");}
-        
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);        */
-        //
     }
 
     //para obtener datos del sexo
@@ -253,7 +243,9 @@ public class FamiliaresEditor {
                 }
 //        if(elemento==3){
         Logger logger = new Logger();
-
+         String consulta = "SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
+                                            +"WHERE DA.CODIGO = "+familiarActual.getParentesco().getCodigo()+" AND F.TRABAJADOR_ID = '"+actual.getId()+"'";
+         
         if (!editando) { // Si no edita, está insertando
              //Codigo de Progenitor = 4
             if (familiarActual.getParentesco().getCodigo() == 4) {
@@ -273,75 +265,82 @@ public class FamiliaresEditor {
               familiarActual.setAgregadoTrabajador(true);
               familiarActual.setValidado(false);
             }
+            
+            
+          if (_usuario.getRolid() == 1)
+         {
+             if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3)
+             {
+                 envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
+                  return actualizar();                 
+             }
+         
+         }
+          
+        Query q1 = session.createSQLQuery(consulta);
+       
+        int numFamDupl = Integer.parseInt(q1.list().get(0).toString());         
+         
+        if (numFamDupl >0 && familiarActual.getParentesco().getCodigo() != 3 )
+        {
+         envelope.setContents("No es posible registrar mas de un Pariente que no sea un hijo");
+        return actualizar();   
         }
-        //--------------------------------------------
+        
+        Criteria c = session.createCriteria(Familiar.class);
+        c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
+        
+        if (!c.list().isEmpty())
+        {
+         envelope.setContents("nro de dni duplicado");
+        return actualizar();
+        }     
+        }
+        else
+        {
+            
+          if (_usuario.getRolid() == 1)
+         {
+             if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3)
+             {
+                 envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
+               return actualizar();
+                 
+             }
+         
+         }                
+         Query q1 = session.createSQLQuery(consulta + "AND F.ID !='"+idVerificacion+"'");
+       
+        int numFamDupl = Integer.parseInt(q1.list().get(0).toString());         
+         
+        if (numFamDupl >0 && familiarActual.getParentesco().getCodigo() != 3 )
+        {
+         envelope.setContents("No es posible registrar mas de un Pariente que no sea un hijo");
+        return actualizar();       
+        }
+        
+        Criteria c = session.createCriteria(Familiar.class);
+        c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
+        c.add(Restrictions.ne("id", idVerificacion));
+        
+        if (!c.list().isEmpty())
+        {
+         envelope.setContents("nro de dni duplicado");
+                 return actualizar();
+        }
+        
+        }
 
 
-/*        if (listaParentescoP != null && listaParentescoP.size() > 0 && familiarActual.getParentesco().getCodigo() == 4 && !editando) {
-            envelope.setContents("No es posible registrar mas de un Progenitor");
-            return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("familiaresZone", familiaresZone.getBody());
-        } else if (listaParentescoC != null && listaParentescoC.size() > 0 && familiarActual.getParentesco().getCodigo() == 2 && !editando) {
-            envelope.setContents("No es posible registrar mas de un Conviviente");
-            return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("familiaresZone", familiaresZone.getBody());
-
-        } else {
-*/
             if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
                 envelope.setContents("Debe ingresar la fecha");
-                return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
+                        return actualizar();
             } else {
 
                 familiarActual.setTrabajador(actual);
                 familiarActual.setEntidad(_oi);
 
-          //-------------------------------------
- 
-         if (_usuario.getRolid() == 1)
-         {
-             if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3)
-             {
-                 envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
-                return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());            
-                 
-             }
-         
-         }                
                 
-     //    Query q = session.createSQLQuery("SELECT COUNT(*) FROM RSC_FAMILIAR WHERE PARENTESCO_ID = 2504 AND TRABAJADOR_ID ='"+actual.getId()+"'");
-         Query q1 = session.createSQLQuery("SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
-                                            +"WHERE DA.CODIGO = "+familiarActual.getParentesco().getCodigo()+" AND F.TRABAJADOR_ID = '"+actual.getId()+"'");
-       
-        int numConyugue1 = Integer.parseInt(q1.list().get(0).toString());         
-         
-        if (numConyugue1 >0 && familiarActual.getParentesco().getCodigo() != 3 )
-        {
-         envelope.setContents("No es posible registrar mas de un Pariente que no sea un hijo");
-         return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());            
-        }
-        
-
-        /*
-         * 
-        int numConyugue = Integer.parseInt(q.list().get(0).toString());
-        System.out.println("*************FE"+numConyugue);
-        System.out.println("*************FE"+familiarActual.getParentesco().getCodigo());
-
-        if (numConyugue >0 && familiarActual.getParentesco().getCodigo() == 1 )
-        {
-         envelope.setContents("No es posible registrar mas de un Conviviente");
-         return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());            
-        }
-        
-        */
-        
-   /*     if (!editando)
-        {
-        }    
-        else
-        {
-        }
-   */     
-        //----------------------------------------------
         session.saveOrUpdate(familiarActual);
         session.flush();
         
@@ -365,17 +364,27 @@ public class FamiliaresEditor {
         familiarActual = new Familiar();
         nuevafecha = "";
         valsexo = null;
-        
-        return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
+
+        return actualizar();
         
 
                   }
       //  }
     }
 
-    @Log
+    
+    private MultiZoneUpdate actualizar()
+    {
+    return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
+    }
+
+   @Persist 
+   private Long idVerificacion; 
+   
+   @Log
     Object onActionFromEditar(Familiar fami) {
         familiarActual = fami;
+        idVerificacion = familiarActual.getId();
         if (familiarActual.getFechaNacimiento() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             nuevafecha = formatoDeFecha.format(familiarActual.getFechaNacimiento());
