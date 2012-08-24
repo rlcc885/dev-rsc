@@ -181,6 +181,9 @@ public class Busqueda extends GeneralPage {
     @Property
     @Persist
     private Boolean vselect;
+    @Property
+    @Persist
+    private Boolean flg_altatrabajador;
 //    @Component(id = "xxx")
 //    private Form xxx;
     @Property
@@ -204,6 +207,7 @@ public class Busqueda extends GeneralPage {
         limpiar();
         // MODIFICACION 13 AGOSTO
         vselect = true;
+        flg_altatrabajador = true;
         fechaingresode = "";
         fechaingresoa = "";
         fecnacimientomenora = "";
@@ -239,7 +243,7 @@ public class Busqueda extends GeneralPage {
 //    }
     @Log
     public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 

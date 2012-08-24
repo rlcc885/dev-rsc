@@ -343,6 +343,7 @@ public class Helpers {
 
     }
 
+
     /**
      * Migra los cargos de un lado al otro. Para eso sólo hace falta cambiarle a
      * cada uno de ellos el código del cargo Migra los cargos asignados también
@@ -398,4 +399,29 @@ public class Helpers {
 
 
     }
+    
+    /**
+     * Obtiene las tablas en forma de objeto de tablas auxiliares.
+     *
+     * @param tabla
+     * @param tablaRelacion
+     * @param relacionCodigo
+     * @param flg_altatrabajador
+     * @return
+     */
+    public static List<DatoAuxiliar> getDatoAuxiliar_td(String tabla, String tablaRelacion, long relacionCodigo, Session session ) {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.like("nombreTabla", tabla));
+        c.add(Restrictions.like("flg_altatrabajador", true));
+//        if (tablaRelacion != null) {
+//            if (!tablaRelacion.equals("")) {
+//                c.add(Restrictions.like("tablaRelacion", tablaRelacion));
+//                c.add(Restrictions.eq("relacionCodigo", relacionCodigo));
+//
+//            }
+//        }
+        c.addOrder( Order.asc("valor") );
+        return c.list();
+    }  
+    
 }
