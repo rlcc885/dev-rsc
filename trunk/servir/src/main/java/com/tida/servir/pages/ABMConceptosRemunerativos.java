@@ -172,7 +172,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
             if(!validando()){
                 return zonas();
             }
-            conceptoRemunerativo.setEntidad(_oi);
+            conceptoRemunerativo.setEntidad_id(_oi.getId());
             session.saveOrUpdate(conceptoRemunerativo);
             if(editando){
                 envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EDIT_EXITO);

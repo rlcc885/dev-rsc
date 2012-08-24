@@ -29,7 +29,7 @@ input, select, textarea {
     padding:4px;
     color:#555454;
     font-size:11px;
-    text-transform: uppercase;
+/*    text-transform: uppercase;*/
 }
 input[disabled], select[disabled] {
     border: 1px solid #999;
@@ -1641,4 +1641,7 @@ table.t-data-grid tbody tr td.login {width:80px;}
 
 #proIntelectualZone{
     margin-bottom : 10px;
+}
+#remuneracionesZone{
+    padding-bottom:10px;
 }
