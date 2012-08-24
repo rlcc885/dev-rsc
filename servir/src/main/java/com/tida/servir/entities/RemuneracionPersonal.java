@@ -1,12 +1,10 @@
 package com.tida.servir.entities;
 
-
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -16,15 +14,15 @@ import org.apache.tapestry5.beaneditor.Validate;
  */
 @Entity
 @Table(name = "RSC_REMUNERACIONPERSONAL")
-public class RemuneracionPersonal {
+public class RemuneracionPersonal implements Serializable {
 
     @NonVisual
     private Long id;
     @Validate("required")
     private String importe;
     @Validate("required")
-    private ConceptoRemunerativo conceptoRemunerativo;
-    private CargoAsignado cargoAsignado;
+    private Long conceptoremunerativo_id;
+    private Long cargoasignado_id;
 
     @Id
     @GeneratedValue
@@ -36,22 +34,20 @@ public class RemuneracionPersonal {
         this.id = id;
     }
 
-    @ManyToOne
-    public ConceptoRemunerativo getConceptoRemunerativo() {
-        return conceptoRemunerativo;
+    public long getConceptoremunerativo_id() {
+        return conceptoremunerativo_id;
     }
 
-    public void setConceptoRemunerativo(ConceptoRemunerativo conceptoRemunerativo) {
-        this.conceptoRemunerativo = conceptoRemunerativo;
-    }
-    
-    @ManyToOne
-    public CargoAsignado getCargoAsignado() {
-        return cargoAsignado;
+    public void setConceptoremunerativo_id(long conceptoremunerativo_id) {
+        this.conceptoremunerativo_id = conceptoremunerativo_id;
     }
 
-    public void setCargoAsignado(CargoAsignado cargoAsignado) {
-        this.cargoAsignado = cargoAsignado;
+    public long getCargoasignado_id() {
+        return cargoasignado_id;
+    }
+
+    public void setCargoasignado_id(long cargoasignado_id) {
+        this.cargoasignado_id = cargoasignado_id;
     }
 
     public String getImporte() {

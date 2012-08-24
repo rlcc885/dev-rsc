@@ -3,9 +3,9 @@
       xmlns:p="tapestry:parameter">
 
     <t:content>
-        <div t:type="zone" t:id="remuneracionesZone" >
-            <div t:type="zone" t:id="mensajesCRZone" >
-                <t:form t:id="formulariomensajesCR"  zone="mensajesCRZone"> 
+        <div t:type="zone" t:id="remuneracionesZone" id="remuneracionesZone">
+            <div t:type="zone" t:id="mensajesCRZone" id="mensajesCRZone">
+                <t:form t:id="formulariomensajesCR" zone="mensajesCRZone"> 
                     <t:envelope t:id="envelope"/>
                     <t:errors/>
                 </t:form> 
@@ -15,7 +15,7 @@
                     <div class="f-wrap">
                         <div class="f-left" >
                             <t:label for="concepto"/>
-                            <input t:type="Select" t:id="concepto" t:value="remuneracion.conceptoRemunerativo"
+                            <input t:type="Select" t:id="concepto" t:value="conceptoseleccionado"
                                    model="beanConceptoRemunerativo"
                                    t:blankOption="ALWAYS"  t:validate="required" />
                         </div>
@@ -54,10 +54,6 @@
                     <t:parameter name="empty">
                         <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    <p:conceptoRemunerativoCell>
-                        <label class="datofalse">${listaRemuneraciones.conceptoRemunerativo.descripcion}</label>  
-                    </p:conceptoRemunerativoCell>
-                    
                     <p:accionesCell>
                         <t:actionlink t:id="editarCR" zone="remuneracionesZone" context="listaRemuneraciones">Editar</t:actionlink> | 
                         <t:actionlink t:id="eliminarCR" zone="listaRemuneracionesZone" context="listaRemuneraciones"> 
