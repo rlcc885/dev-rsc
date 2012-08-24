@@ -2,63 +2,53 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-     <t:content>
-      
-<div t:type="zone" t:id="remuneracionesZone" >  
-                    <t:form t:id="formulariobotonesCR"  zone="remuneracionesZone">
-          <fieldset>
-                         <div class="f-wrap">
-                           <div class="f-left" >
-                                <t:label for="concepto"/>
-                                <input t:type="Select" t:id="concepto" t:value="remuneracion.conceptoRemunerativo"
-                                       model="beanConceptoRemunerativo"
-                                       t:blankOption="ALWAYS"  t:validate="required" />
-                               
-                            </div>
-                            <div class="f-left">
-                                <t:label for="importe"/>
-                                <input t:type="TextField" t:id="importe" t:value="remuneracion.importe"
-                                         t:validate="required, regexp" />                               
-                            </div>      
+    <t:content>
+        <div t:type="zone" t:id="remuneracionesZone" >
+            <div t:type="zone" t:id="mensajesCRZone" >
+                <t:form t:id="formulariomensajesCR"  zone="mensajesCRZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+            </div>
+            <t:form t:id="formulariobotonesCR"  zone="remuneracionesZone">
+                <fieldset>
+                    <div class="f-wrap">
+                        <div class="f-left" >
+                            <t:label for="concepto"/>
+                            <input t:type="Select" t:id="concepto" t:value="remuneracion.conceptoRemunerativo"
+                                   model="beanConceptoRemunerativo"
+                                   t:blankOption="ALWAYS"  t:validate="required" />
                         </div>
-                        </fieldset>
-                        
-                        
-<!--                
+                        <div class="f-left">
+                            <t:label for="importe"/>
+                            <input t:type="TextField" t:id="importe" t:value="remuneracion.importe"
+                                   t:validate="required, regexp" />                               
+                        </div>      
+                    </div>
+                </fieldset>
+                <!--                
                     </t:form>  
             </div> 
-
-                <div t:type="zone" t:id="botonesCRZone" >
-                    <t:form t:id="formulariobotonesCR"  zone="remuneracionesZone">-->
-                    <div class="f-wrap">
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="guardarCR" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                        </div>
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="cancelCR" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                        </div>
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="resetCR" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                        </div>
+            <div t:type="zone" t:id="botonesCRZone" >
+                <t:form t:id="formulariobotonesCR"  zone="remuneracionesZone">-->
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="guardarCR" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                     </div>
-                </t:form>
-            </div>
-        
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancelCR" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="resetCR" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                    </div>
+                </div>
+            </t:form>
+        </div>
         <div class="f-wrap">                        
             (*) Campos Obligatorios
         </div>
-        <br/>
-        <div t:type="zone" t:id="mensajesCRZone" >
-            <t:form t:id="formulariomensajesCR"  zone="mensajesCRZone"> 
-                <t:envelope t:id="envelope"/>
-                <t:errors/>
-            </t:form> 
-        </div>
-        <br/> 
-    
         <div id = "tabla_oi">
             <t:zone t:id="listaRemuneracionesZone"> 
-             
                 <t:grid source="listadoRemuneraciones" rowsPerPage="10" t:add="ConceptoRemunerativo,Acciones" pagerPosition="bottom"
                         row="listaRemuneraciones" include="importe" inPlace="true" >
                     <t:parameter name="empty">
@@ -77,9 +67,7 @@
                         </t:actionlink>   
                     </p:accionesCell>
                 </t:grid>
-               
             </t:zone>
         </div>
-       
     </t:content>
 </html>

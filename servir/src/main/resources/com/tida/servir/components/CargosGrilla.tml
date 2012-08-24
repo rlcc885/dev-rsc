@@ -3,32 +3,19 @@
       xmlns:p="tapestry:parameter">
 
 <t:content>
-    
      <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Acciones, Den_Cargo"            
             reorder="Den_Cargo,fec_inicio,fec_fin,Acciones" exclude="tipoVinculo,ctd_per_superv,motivo_cese,estado,puestoconfianza">
             <t:parameter name="empty">
                 El trabajador no contiene cargos asignados.
             </t:parameter>
-
         <p:den_cargoCell>
             ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>
-
         <p:accionesCell>
         <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>
-         |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Baja</a>         
-       <!-- | <a t:type="actionlink" t:id="reporteTrabajos" t:context="ca.legajo.id" href="#">Certificado de trabajo</a>-->
+         |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Baja</a>
         </p:accionesCell>
-
      </t:grid>
-    <br/>    
-    <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar Nuevo Cargo</a>
-    <!--
-    <t:if test="busqueda">
-         <t:if test = "editable">
-            <a t:type="pagelink" t:class="asignar" t:page="AsignarNuevoCargo" t:context="actual" href="#">Asignar Nuevo Cargo</a>
-         </t:if>
-     </t:if>-->
-
+<!--    <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar Nuevo Cargo</a>-->
 </t:content>
 </html>
