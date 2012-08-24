@@ -387,10 +387,10 @@ public class CreadorDesdeDB {
                 rpcsv.setCodigo_cargo("");
 //            rpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
             rpcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
-            if(rp.getConceptoRemunerativo() != null)
-                rpcsv.setCodigo_concepto_remunerativo(rp.getConceptoRemunerativo().getCodigo());
-            else
-                rpcsv.setCodigo_concepto_remunerativo("");
+//            if(rp.getConceptoRemunerativo() != null)
+//                rpcsv.setCodigo_concepto_remunerativo(rp.getConceptoRemunerativo().getCodigo());
+//            else
+//                rpcsv.setCodigo_concepto_remunerativo("");
             rpcsv.setImporte(rp.getImporte().toString());
             lrpcsv.add(rpcsv);
         }

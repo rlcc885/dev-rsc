@@ -285,10 +285,10 @@ public class CopiadorEntidades {
         destino.setValidado(CopiadorEntidades.verifacionNull(origen.getValidado()));
     }
     
-    public static void remuneracionPersonal(RemuneracionPersonal origen, RemuneracionPersonal destino){
-        destino.setConceptoRemunerativo(origen.getConceptoRemunerativo());
-//        destino.setImporte((Double) CopiadorEntidades.verifacionNull(origen.getImporte()));
-    }
+//    public static void remuneracionPersonal(RemuneracionPersonal origen, RemuneracionPersonal destino){
+//        destino.setConceptoRemunerativo(origen.getConceptoRemunerativo());
+////        destino.setImporte((Double) CopiadorEntidades.verifacionNull(origen.getImporte()));
+//    }
     
     public static void evaluacionPersonal(EvaluacionPersonal origen, EvaluacionPersonal destino){
         destino.setCalificacion(CopiadorEntidades.verifacionNull(origen.getCalificacion()));

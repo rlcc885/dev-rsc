@@ -901,10 +901,10 @@ public class ComparadorEntidades {
         lirp.setNumeroDocumento(numeroDocumento);
         lirp.setTipoDocumento(tipoDocumento);
 
-        lirp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getConceptoRemunerativo(), cdestino.getConceptoRemunerativo()));
-        if (lirp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lirp;
-        }
+//        lirp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getConceptoRemunerativo(), cdestino.getConceptoRemunerativo()));
+//        if (lirp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lirp;
+//        }
 
         lirp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getImporte(), cdestino.getImporte()));
         if (lirp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {

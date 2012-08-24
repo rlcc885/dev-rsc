@@ -59,16 +59,19 @@ public class RemuneracionesPersonalesEditor {
     private Zone listaRemuneracionesZone;
     @Persist
     @Property
-    private RemuneracionPersonal listaRemuneraciones;
+    private LkBusquedaRemuneracion listaRemuneraciones;
     @Inject
     private PropertyAccess _access;
+    @Persist
+    @Property
+    private ConceptoRemunerativo conceptoseleccionado;
 
     //Inicio de la carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
         remuneracion = new RemuneracionPersonal();
-        listaRemuneraciones = new RemuneracionPersonal();
+        //listaRemuneraciones = new RemuneracionPersonal();
         getCargosAsignados();
         elemento = 0;
     }
@@ -83,9 +86,9 @@ public class RemuneracionesPersonalesEditor {
     }
 
     @Log
-    public List<RemuneracionPersonal> getListadoRemuneraciones() {
-        Criteria c2 = session.createCriteria(RemuneracionPersonal.class);
-        c2.add(Restrictions.eq("cargoAsignado", cargoAsignado));
+    public List<LkBusquedaRemuneracion> getListadoRemuneraciones() {
+        Criteria c2 = session.createCriteria(LkBusquedaRemuneracion.class);
+        c2.add(Restrictions.eq("cargoasignado_id", cargoAsignado.getId()));
         return c2.list();
     }
 
@@ -130,7 +133,7 @@ public class RemuneracionesPersonalesEditor {
         } else if (elemento == 3) {
             System.out.println("aaaa111: " + remuneracion.getImporte());
 
-            remuneracion.setCargoAsignado(getCargosAsignados());
+            remuneracion.setCargoasignado_id(getCargosAsignados().getId());
 
             session.saveOrUpdate(remuneracion);
             envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
