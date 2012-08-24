@@ -29,6 +29,7 @@ public class DatoAuxiliar implements Serializable {
     private Long id;
 //    @ManyToOne(optional = false)
     private String nombreTabla;
+    private String flg_altatrabajador;
     private String tablaRelacion; // si lo relacionamos con otra tabla
     private long relacionCodigo; // el valor a matchear en la tabla relacio
     private String valor; // El valor del campo
@@ -113,6 +114,14 @@ public class DatoAuxiliar implements Serializable {
 
     public void setTipoDeAcceso(TipoDeAcceso tipoDeAcceso) {
         this.tipoDeAcceso = tipoDeAcceso;
+    }
+    
+    public String getFlg_AltaTrabajador(){
+        return flg_altatrabajador;
+    }
+    
+    public void setFlg_AltaTrabajador(String flg_altatrabajador) {
+        this.flg_altatrabajador = flg_altatrabajador;
     }
 
 }
