@@ -32,6 +32,8 @@ public class PublicacionesEditor {
     @Property
     @SessionState
     private Entidad _oi;
+    @SessionState
+    private UsuarioAcceso usua;
     @Inject
     private Session session;
     @InjectComponent
@@ -62,21 +64,16 @@ public class PublicacionesEditor {
     private PropertyAccess _access;
     @Persist
     @Property
-    private Boolean editando;
-    @Persist
-    @Property
     private String valfec_desde;
     @Persist
     @Property
     private Date fecha_desde;
+//    @Persist
+//    @Property
+//    private Boolean vformulario;
     @Persist
     @Property
-    private Boolean vinserta;
-    @Persist
-    @Property
-    private Boolean vformulario;
-    @SessionState
-    private UsuarioAcceso usua;
+    private Boolean editando;
     @Persist
     @Property
     private Boolean veliminar;
@@ -89,8 +86,10 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean vguardar;
+    @Persist
+    @Property
+    private Boolean vinserta;
 
-    //Inicio de lac carga de la pagina
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
@@ -98,9 +97,11 @@ public class PublicacionesEditor {
         resetRegistro();
         //accesos();
     }
-    public void accesos(){
+
+    @Log
+    public void accesos() {
         bvalidausuario = false;
-        vformulario = true;
+//        vformulario = true;
         vinserta = false;
         veditar = false;
         veliminar = false;
@@ -125,6 +126,7 @@ public class PublicacionesEditor {
             vdetalle = false;
         }
     }
+
     @Log
     public List<Publicacion> getListadoProIntelectual() {
         Criteria c = session.createCriteria(Publicacion.class);
@@ -151,8 +153,6 @@ public class PublicacionesEditor {
         publicacion = new Publicacion();
         editando = false;
         valfec_desde = "";
-//        vguardar = true;
-//        vdetalle = false;
         accesos();
     }
 
@@ -167,7 +167,7 @@ public class PublicacionesEditor {
         System.out.println(_usuario.getRolid());
         if (_usuario.getRolid() == 1) { // Si es trabajador 
             return "TrabajadorPersonal";
-        }else{
+        } else {
             return "Busqueda";
         }
     }
@@ -230,11 +230,8 @@ public class PublicacionesEditor {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-        editando = true;
-//        vdetalle = false;
-//        vformulario = true;
-//        vguardar = true;
         accesos();
+        editando = true;
         return proIntelectualZone.getBody();
     }
 
@@ -245,12 +242,9 @@ public class PublicacionesEditor {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-        editando = false;
-//        vdetalle = true;
-//        vformulario = true;
-//        vguardar = false;
         accesos();
         vdetalle = true;
+        vguardar = false;
         return proIntelectualZone.getBody();
     }
 

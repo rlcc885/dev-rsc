@@ -1909,8 +1909,8 @@ public class InformeXLS {
         try {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (ConceptoRemunerativo cr : lcr) {
-                if(cr.getEntidad() != null)
-                    escribir.print(InformeXLS.leoCampo(cr.getEntidad().getCue_entidad()));
+//                if(cr.getEntidad_id() != null)
+//                    escribir.print(InformeXLS.leoCampo(cr.getEntidad_id().getCue_entidad()));
                 escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(cr.getCodigo()));
                 escribir.print("|");

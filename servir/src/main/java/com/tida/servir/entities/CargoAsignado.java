@@ -5,18 +5,9 @@ package com.tida.servir.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
-import javax.persistence.*;
 /**
  *
  * @author ale
@@ -28,30 +19,38 @@ public class CargoAsignado implements Serializable {
     public static boolean ESTADO_BAJA = false;
     public static boolean ESTADO_ALTA = true;
     
+    @Id
+    @GeneratedValue
     @NonVisual
     private Long id;
 
+    @ManyToOne
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
 //  @PrimaryKeyJoinColumn
     private Trabajador trabajador;
 
+    @ManyToOne
     @Validate("required")
 //  @ManyToOne(cascade = CascadeType.PERSIST)
     private Cargoxunidad cargoxunidad;
 
+    @OneToMany(cascade=CascadeType.ALL)
     @Validate("required")
 //  @OneToMany(cascade=CascadeType.ALL)
     private List<RemuneracionPersonal> remuneracionesPersonales;
 
+    @OneToMany(cascade=CascadeType.ALL)
     @Validate("required")
 //  @OneToMany(cascade=CascadeType.ALL)
     private List<EvaluacionPersonal> evaluacionesPersonales;
     
+    @OneToMany(cascade=CascadeType.ALL)
     @Validate("required")
 //   @OneToMany(cascade=CascadeType.ALL)
     private List<AusLicPersonal> ausLicPersonales;
 
+    @ManyToOne
     @Validate("required")
 //    @ManyToOne(cascade = CascadeType.PERSIST)
     private Legajo legajo;
@@ -69,10 +68,10 @@ public class CargoAsignado implements Serializable {
 //    private Integer ctd_per_superv;
     private String motivo_cese;
     //private String tipoVinculo;
+    @ManyToOne
     private DatoAuxiliar tipovinculo;
 
-    @ManyToOne
-    public DatoAuxiliar getTipovinculo() {
+        public DatoAuxiliar getTipovinculo() {
         return tipovinculo;
     }
 
@@ -80,8 +79,7 @@ public class CargoAsignado implements Serializable {
         this.tipovinculo = tipovinculo;
     }
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public List<AusLicPersonal> getAusLicPersonales() {
+        public List<AusLicPersonal> getAusLicPersonales() {
         return ausLicPersonales;
     }
 
@@ -89,8 +87,7 @@ public class CargoAsignado implements Serializable {
         this.ausLicPersonales = ausLicPersonales;
     }
 
-    @ManyToOne
-    public Cargoxunidad getCargoxunidad() {
+        public Cargoxunidad getCargoxunidad() {
         return cargoxunidad;
     }
 
@@ -122,8 +119,7 @@ public class CargoAsignado implements Serializable {
         this.puestoconfianza = puestoconfianza;
     }
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public List<EvaluacionPersonal> getEvaluacionesPersonales() {
+        public List<EvaluacionPersonal> getEvaluacionesPersonales() {
         return evaluacionesPersonales;
     }
 
@@ -147,9 +143,7 @@ public class CargoAsignado implements Serializable {
         this.fec_inicio = fec_inicio;
     }
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
+        public Long getId() {
         return id;
     }
 
@@ -157,8 +151,7 @@ public class CargoAsignado implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne
-    public Legajo getLegajo() {
+        public Legajo getLegajo() {
         return legajo;
     }
 
@@ -174,8 +167,7 @@ public class CargoAsignado implements Serializable {
         this.motivo_cese = motivo_cese;
     }
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public List<RemuneracionPersonal> getRemuneracionesPersonales() {
+        public List<RemuneracionPersonal> getRemuneracionesPersonales() {
         return remuneracionesPersonales;
     }
 
@@ -183,8 +175,7 @@ public class CargoAsignado implements Serializable {
         this.remuneracionesPersonales = remuneracionesPersonales;
     }
     
-    @ManyToOne
-    public Trabajador getTrabajador() {
+        public Trabajador getTrabajador() {
         return trabajador;
     }
 

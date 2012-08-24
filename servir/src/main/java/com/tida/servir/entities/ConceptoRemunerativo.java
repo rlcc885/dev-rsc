@@ -16,7 +16,8 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 @Entity
 @Table(name = "RSC_CONCEPTOREMUNERATIVO")
 //@Table(name="CON_REMUNERATIVOS")
-public class ConceptoRemunerativo implements Serializable {    
+public class ConceptoRemunerativo implements Serializable {
+
     @NonVisual
     @Id
     @GeneratedValue
@@ -29,16 +30,15 @@ public class ConceptoRemunerativo implements Serializable {
     private DatoAuxiliar tiporemuneracion;
     @ManyToOne
     private DatoAuxiliar tiporemuneracionstd;
-    @ManyToOne
-    private Entidad entidad;
+    private Long entidad_id;
     @ManyToOne
     private DatoAuxiliar periodicidad;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -66,12 +66,12 @@ public class ConceptoRemunerativo implements Serializable {
         this.periodicidad = periodicidad;
     }
 
-    public Entidad getEntidad() {
-        return entidad;
+    public long getEntidad_id() {
+        return entidad_id;
     }
 
-    public void setEntidad(Entidad entidadUE) {
-        this.entidad = entidadUE;
+    public void setEntidad_id(long entidad_id) {
+        this.entidad_id = entidad_id;
     }
 
     public String getCodigo() {

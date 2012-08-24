@@ -98,7 +98,7 @@ public class CopiadorEntidades {
     }
     
     public static void conceptoRemunerativo(ConceptoRemunerativo origen, ConceptoRemunerativo destino) {
-        destino.setEntidad(origen.getEntidad());
+        destino.setEntidad_id(origen.getEntidad_id());
         destino.setCodigo(CopiadorEntidades.verifacionNull(origen.getCodigo()));
         destino.setDescripcion(CopiadorEntidades.verifacionNull(origen.getDescripcion()));
 //        destino.setConceptoStd(CopiadorEntidades.verifacionNull(origen.getConceptoStd()));

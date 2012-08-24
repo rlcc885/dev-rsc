@@ -1,50 +1,37 @@
 <html t:type="layout" title="Sistema SERVIR"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-
-
-        <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${oi.denominacion}
-        </div>
-<!--
-        <t:if test = "haymensajes">
-            <div id="Mensajes">
-                ${mensajes}
-            </div>
-        </t:if>-->
-
-      <div id = "Datos_Generales">
-           <h2> Legajo - Datos Laborales </h2>
-           <div id= "basicosTrabajador">
-               <h3><!--${actual.tipoDocumento}: ${actual.nroDocumento}-->
-               ${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
-           </div>
-      </div>
- <div class="wrap">
-
-    <div>
-        <ul id="tabs-Personales" class="tabs">
-            <li><a href="#"> Méritos/Deméritos</a></li>
-            <li><a href="#"> Cargo/Puesto</a></li>
-            <!--<li><a href="#"> Remuneraciones</a></li>-->
-        </ul>
-        <div class= "pane" id='datosdemetiro' name='datosdemerito'>             
-              <t:MeritosDemeritosEditor t:id="meritosDemeritosEditor" actual= "actual" />   
-        </div>
-        <div class= "pane" id='datosPersonales' name='cargos'>    
-                <t:CargoTabs t:id="cargosTabs" actual= "actual" />              
-        </div>  
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${oi.denominacion}
     </div>
- </div>
-           
-     <script>
+    <div id = "Datos_Generales">
+        <h2> Legajo - Datos Laborales </h2>
+    </div>
+    <div class="wrap">
+        <div>
+            <ul id="tabs-Personales" class="tabs">
+                <li>
+                    <a href="#"> Méritos/Deméritos</a>
+                </li>
+                <li>
+                    <a href="#"> Cargo/Puesto</a>
+                </li>
+                <!--<li><a href="#"> Remuneraciones</a></li>-->
+            </ul>
+            <div class= "pane" id='datosdemetiro' name='datosdemerito'>             
+                <t:MeritosDemeritosEditor t:id="meritosDemeritosEditor" actual= "actual" />   
+            </div>
+            <div class= "pane" id='datosPersonales' name='cargos'>    
+                <t:CargoTabs t:id="cargosTabs" actual= "actual" />              
+            </div>  
+        </div>
+    </div>
+    <script>
         <!--
-
    // perform JavaScript after the document is scriptable.
            jQuery(function() {
                jQuery("ul.tabs").tabs("> .pane");
            });
         -->
     </script>
-
 </html>
