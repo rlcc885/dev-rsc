@@ -239,7 +239,7 @@
                         <div class="f-left" id="ubigeo_dpe">            -->
                     <t:zone t:id="ubigeoZone" id="ubigeoZone">
                         <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                   t:zone="ubigeoZone" t:zoneName="ubigeoZone" t:label="Holamundo"/>
+                                   t:zone="ubigeoZone" t:zoneName="ubigeoZone" t:label="Holamundo" t:disabled="${vdatosubicacion}"/>
                     </t:zone>
 <!--                        </div>
                     </div>-->
