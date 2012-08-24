@@ -576,6 +576,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
+        formulariomensajes.clearErrors();
         if (bCancelFormulario) {
             nuevoRegistro();
             if (!vbotones) {
@@ -628,17 +629,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
            c.add(Restrictions.eq("ruc",entidadUE.getRuc()));
             if (entidadUE.getEsSubEntidad()) 
             {
-                if (!c.list().isEmpty()) {
-                    if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc())) {
-                        envelope.setContents("RUC duplicado");
-                        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-                    }
-                }
+//                if (!c.list().isEmpty()) {
+//                    if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc())) {
+//                        //envelope.setContents("RUC duplicado");
+//                        formulariomensajes.recordError("RUC duplicado");
+//                        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+//                    }
+//                }
             } 
             else 
             {
-                if (!c.list().isEmpty()) {
-                    envelope.setContents("RUC duplicado");
+                    if (!c.list().isEmpty()) {
+                    //envelope.setContents("RUC duplicado");
+                     formulariomensajes.recordError("RUC duplicado");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                      }
             }
@@ -647,11 +650,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
        {
          c.add(Restrictions.ne("ruc", x));
          c.add(Restrictions.eq("ruc",entidadUE.getRuc()));
-            if (!c.list().isEmpty())
-            {
-                envelope.setContents("RUC duplicado");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-            }
+         
+         if (entidadUE.getEsSubEntidad()) {
+            }else{
+              if (!c.list().isEmpty())
+                {
+                    formulariomensajes.recordError("RUC duplicado");
+                    //envelope.setContents("RUC duplicado");
+                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                }
+         }
        }
        
 
