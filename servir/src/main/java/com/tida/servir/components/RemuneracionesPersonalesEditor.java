@@ -166,7 +166,6 @@ public class RemuneracionesPersonalesEditor {
     @CommitAfter
     Object onSuccess() {
         remuneracion.setCargoasignado_id(cargoAsignado);
-        System.out.println(conceptoseleccionado.getId());
         remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
         session.saveOrUpdate(remuneracion);
         envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
