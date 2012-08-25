@@ -48,6 +48,7 @@ label { display:block; width:auto; background-color: transparent; cursor: pointe
     padding:4px 8px;
     width:auto !important;
     overflow:visible;
+    margin:0px;
     margin-left: 2px;
     text-transform: none;
 }
@@ -1620,6 +1621,7 @@ table.t-data-grid tbody tr td.login {width:80px;}
 .actions a{
     color: #FFFFFF;
     padding: 5px 8px;
+    padding-bottom: 4px;
 }
 .errormsg{
     color: #DD4B39;

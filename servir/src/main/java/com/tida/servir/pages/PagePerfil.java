@@ -61,6 +61,8 @@ public class PagePerfil {
     private Zone editZone;
     @InjectComponent
     private Zone listaPermisoZone;
+    @InjectComponent
+    private Zone editPermisoZone;
     @Inject
     private PropertyAccess _access;
     @Persist
@@ -141,7 +143,8 @@ public class PagePerfil {
 
     @Log
     public boolean isEliminaPerfil() {
-        if (rowPerfil.getId() > 8 && rowPerfil.getMenuCollection().isEmpty() && rowPerfil.getUsuarioCollection().isEmpty()) {
+        //  && rowPerfil.getMenuCollection().isEmpty() && rowPerfil.getUsuarioCollection().isEmpty()
+        if (rowPerfil.getId() > 8 ) {
             return true;
         } else {
             return false;
@@ -151,6 +154,7 @@ public class PagePerfil {
     @Log
     public GenericSelectModel<Menu> getBeanOpciones() {
         List<Menu> list;
+        System.out.println(perfil.getId());
         if (editPermiso) {
             list = Helpers.getOpcionesDelMenu(0, session);
         } else {
@@ -202,31 +206,32 @@ public class PagePerfil {
     // EDITA EL PERFIL
 
     @Log
-    void onActionFromEditaPerfil(Perfil lperfil) {
+    Object onActionFromEditaPerfil(Perfil lperfil) {
         perfil = lperfil;
         mostrarNew = true;
         mostrarPermiso = false;
-        errorMessageSavePerfil = null;
-        okMessageSavePerfil = null;
-        mostrarEdicionPerfil = true;
+        errorMessageSavePerfil = "";
+        okMessageSavePerfil = "";
         editaPerfil = true;
         if (perfil.getId() <= 8) {
             vNoeditaperfil = true;
         } else {
             vNoeditaperfil = false;
         }
+        return zonasTotal();
     }
 
     // Si pulsa el enlace de PERMISOS
     @Log
-    void onActionFromPermisoPerfil(Perfil lperfil) {
+    Object onActionFromPermisoPerfil(Perfil lperfil) {
         perfil = lperfil;
-        mostrarNew = true;
+        mostrarNew = false;
         mostrarPermiso = true;
-        errorMessageSavePerfil = null;
-        okMessageSavePerfil = null;
-        mostrarEdicionPerfil = false;
+        errorMessageSavePerfil = "";
+        okMessageSavePerfil = "";
+        editaPerfil = false;
         nuevoPermiso();
+        return zonasTotal();
     }
 
     // Si elimina un PERMISO del perfil
@@ -238,7 +243,7 @@ public class PagePerfil {
         session.delete(permiso);
         mostrarPermiso = true;
         nuevoPermiso();
-        return this;
+        return zonasTotal();
     }
 
     @Log
@@ -255,15 +260,21 @@ public class PagePerfil {
         } else {
             vNoeditaperfil = false;
         }
-        return this;
+        return editPermisoZone.getBody();
     }
 
-    void onSelectedFromReset() {
-        bResetFormulario = true;
-        mostrarPermiso = false;
-        vNoeditaperfil = false;
-        editaPerfil = false;
-        vNoeditaperfil = false;
+//    void onSelectedFromReset() {
+//        bResetFormulario = true;
+//        mostrarPermiso = false;
+//        vNoeditaperfil = false;
+//        editaPerfil = false;
+//        vNoeditaperfil = false;
+//    }
+
+    @Log
+    Object onReset() {
+        nuevoPerfil();
+        return editZone.getBody();
     }
 
     void onSelectedFromCancel() {
@@ -279,52 +290,55 @@ public class PagePerfil {
         permiso = new Menuperfil();
         menu = new Menu();
         menu.setId(0);
-        errorMessageSavePerfil = null;
-        okMessageSavePerfil = null;
+        errorMessageSavePerfil = "";
+        okMessageSavePerfil = "";
     }
 
     void nuevoPerfil() {
-        mostrarNew = false;
+        mostrarNew = true;
         perfil = new Perfil();
         perfil.setFechacreacion(new Date());
         perfil.setEstado(true);
-        errorMessageSavePerfil = null;
-        okMessageSavePerfil = null;
+        
+        errorMessageSavePerfil = "";
+        okMessageSavePerfil = "";
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
         errorMessage = "";
-        if (bCancelFormulario || bResetFormulario) {
-            bCancelFormulario = false;
-            bResetFormulario = false;
-            nuevoPerfil();
-            return this;
-        } else {
-            if (perfil.getDescperfil() == null || perfil.getDescperfil().isEmpty()) {
-                errorMessageSavePerfil = "Ingrese descripción del perfil.";
-                return editZone;
-            }
-            Criteria c = session.createCriteria(Perfil.class);
-            c.add(Restrictions.eq("descperfil", perfil.getDescperfil().toUpperCase()));
-            c.add(Restrictions.ne("id", perfil.getId()));
-            if (c.list().size() > 0) {
-                errorMessageSavePerfil = "Ya existe un perfil con la misma descripción.";
-                return editZone;
-            }
-            okMessageSavePerfil = "Perfil creado satisfactoriamente.";
-            perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
-            session.saveOrUpdate(perfil);
-            if (!mostrarNew) {
-                mostrarPermiso = true;
-                mostrarNew = true;
-                nuevoPermiso();
-                return this;
-            } else {
-                return listaPermisoZone;
-            }
+//        if (bCancelFormulario || bResetFormulario) {
+//            bCancelFormulario = false;
+//            bResetFormulario = false;
+//            nuevoPerfil();
+//            return this;
+//        } else {
+        if (perfil.getDescperfil() == null || perfil.getDescperfil().isEmpty()) {
+            errorMessageSavePerfil = "Ingrese descripción del perfil.";
+            return editZone.getBody();
         }
+        Criteria c = session.createCriteria(Perfil.class);
+        c.add(Restrictions.eq("descperfil", perfil.getDescperfil().toUpperCase()));
+        c.add(Restrictions.ne("id", perfil.getId()));
+        if (c.list().size() > 0) {
+            errorMessageSavePerfil = "Ya existe un perfil con la misma descripción.";
+            return editZone.getBody();
+        }
+        okMessageSavePerfil = "Perfil creado satisfactoriamente.";
+        perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
+        session.saveOrUpdate(perfil);
+//        if (!mostrarNew) {
+//            mostrarPermiso = true;
+//            mostrarNew = true;
+//            nuevoPermiso();
+//            return editZone.getBody();
+////            } else {
+////                return listaPermisoZone;
+//        }
+        nuevoPerfil();
+        return zonasPerfil();
+//        }
     }
 
     @Log
@@ -332,7 +346,7 @@ public class PagePerfil {
     void onSelectedFromResetNewPermiso() {
         cancelaNewPermiso = true;
         mostrarEdicionPerfil = true;
-        mostrarPermiso = false;
+//        mostrarPermiso = false;
         editaPerfil = false;
         mostrarNew = false;
     }
@@ -340,14 +354,14 @@ public class PagePerfil {
     @Log
     @CommitAfter
     void onSelectedFromSaveNewPermiso() {
-        mostrarPermiso = true;
+//        mostrarPermiso = true;
         bcontrolTotal = false;
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
-        if (!cancelaNewPermiso) {
+//        if (!cancelaNewPermiso) {
             if (!editPermiso) {
                 MenuperfilPK menuperfilpk = new MenuperfilPK();
                 menuperfilpk.setMenuId(menu.getId());
@@ -355,14 +369,21 @@ public class PagePerfil {
                 permiso.setMenuperfilPK(menuperfilpk);
             }
             session.saveOrUpdate(permiso);
-        }
+//        }
         nuevoPermiso();
-        cancelaNewPermiso = false;
-        return this;
+//        cancelaNewPermiso = false;
+        return zonasTotal();
     }
 
     @Log
     private MultiZoneUpdate zonasTotal() {
+        MultiZoneUpdate mu;
+        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaZone", listaZone.getBody()).add("listaPermisoZone",listaPermisoZone.getBody()).add("editPermisoZone",editPermisoZone.getBody());
+        return mu;
+    }
+
+    @Log
+    private MultiZoneUpdate zonasPerfil() {
         MultiZoneUpdate mu;
         mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaZone", listaZone.getBody());
         return mu;

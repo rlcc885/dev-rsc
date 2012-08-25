@@ -133,7 +133,7 @@
                         </t:if>
                     </p:revisadoCell>
                     <p:accionesCell>
-                        <t:if test="${bvalidausuario}" negate="true">
+<!--                        <t:if test="${bvalidausuario}" negate="true">-->
                             <t:if test="${listaprointelectual.validado}" negate="true"> <!-- no validado -->
                                 <t:if test="${veditar}"> <!-- si edita -->
                                     <t:actionlink t:id="editar" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> | 
@@ -154,8 +154,8 @@
                                     </t:actionlink>
                                 </t:if>
                             </t:if>
-                        </t:if>
-                        <t:if test="${bvalidausuario}">
+<!--                        </t:if>-->
+<!--                        <t:if test="${bvalidausuario}">
                             <t:if test="${veditar}">
                                 <t:actionlink t:id="editar2" zone="proIntelectualZone" context="listaprointelectual">Editar</t:actionlink> |
                             </t:if>
@@ -169,7 +169,7 @@
                                     </span>
                                 </t:actionlink>
                             </t:if>
-                        </t:if>
+                        </t:if>-->
                     </p:accionesCell>
                 </t:grid>
             </t:zone>
