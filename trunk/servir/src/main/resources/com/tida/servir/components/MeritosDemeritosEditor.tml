@@ -85,20 +85,6 @@
                     
             </div> 
 
-      <!--      <div t:type="zone" t:id="botonesMEZone" >
-                <t:form t:id="formulariobotonesME"  zone="meritosZone">
-                <div class="f-wrap">
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="cancelME" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="resetME" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                    </div>
-                </div>
-                </t:form>
-
-
-            </div>-->
   </fieldset>
             <div class="f-wrap">                        
                 (*) Campos Obligatorios
