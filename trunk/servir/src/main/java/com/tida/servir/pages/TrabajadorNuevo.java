@@ -454,10 +454,12 @@ public class TrabajadorNuevo extends GeneralPage {
                        if(cargo2.getRegimenlaboral()!=null){
                            System.out.println("aquiiiiiiusuarioo");
                          if(cargo2.getRegimenlaboral().getFlg_creausuario()==true){ 
-                           if(getListadoTrabajadores().size()>0){
+                           if(getListadoUsuario().size()>0){
+                               System.out.println("aquiiifinallll");
                                usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
                                usuarionuevo.setEntidad(oi);
                                usuarionuevo.setEstado(1);
+                               usuarionuevo.setFecha_creacion(new Date());
                            }
                            else{
                                seteanuevousuario(usuarionuevo);                               
@@ -545,10 +547,10 @@ public class TrabajadorNuevo extends GeneralPage {
     }
     
     @Log
-    public List<Usuario> getListadoUsuario() {
-        Criteria c = session.createCriteria(Usuario.class);
-        c.add(Restrictions.eq("trabajador", nuevo));
-        return c.list();
+    public List<UsuarioTrabajador> getListadoUsuario() {
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
+        query.setParameter("login", nuevo.getNroDocumento());
+        return query.list();
     }
             
     @Log

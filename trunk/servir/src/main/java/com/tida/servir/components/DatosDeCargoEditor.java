@@ -18,6 +18,7 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 
@@ -101,10 +102,10 @@ public class DatosDeCargoEditor {
 //       return Permisos.puedeEscribir(_usuario, _oi);
 //    }
 
-    public Integer getCantPuestosOcupados(){
-
-        return Helpers.getCantPuestosOcupadosCargo(session, actual);
-    }
+//    public Integer getCantPuestosOcupados(){
+//
+//        return Helpers.getCantPuestosOcupadosCargo(session, actual);
+//    }
 
     public boolean getAsignadoBaja() {
         /*
@@ -137,20 +138,20 @@ public class DatosDeCargoEditor {
 //    	return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
 //    }    
     
-    public List<String> getEstados() {
-    	ArrayList<String> estados = new ArrayList<String>();
-        /*
-         * TODO JZM verificar linea de codigo
-        
-        estados.add(Constantes.ESTADO_ACTIVO);
-        estados.add(Constantes.ESTADO_BAJA);
-        */
-        
-        estados.add("Activo");
-        estados.add("Baja");
-        
-        return estados;
-    }    
+//    public List<String> getEstados() {
+//    	ArrayList<String> estados = new ArrayList<String>();
+//        /*
+//         * TODO JZM verificar linea de codigo
+//        
+//        estados.add(Constantes.ESTADO_ACTIVO);
+//        estados.add(Constantes.ESTADO_BAJA);
+//        */
+//        
+//        estados.add("Activo");
+//        estados.add("Baja");
+//        
+//        return estados;
+//    }    
     
     void onSelectedFromSave() {        
         elemento=1;   
@@ -182,6 +183,7 @@ public class DatosDeCargoEditor {
                         return datosDeCargoZone.getBody();
                     }
                     registrar(false);
+                    
                     return datosDeCargoZone.getBody();
                 }
                 else{
@@ -227,48 +229,22 @@ public class DatosDeCargoEditor {
        session.flush();
        formulariodatosdecargoasignado.clearErrors();
        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
+       
+       if(!e){
+         Usuario usuarionuevo=new Usuario();
+         if(getListadoUsuario().size()>0){
+            usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+            usuarionuevo.setEstado(0);
+         }
+       }
     }
     
-//     void onSelectedFromSave() {        
-//         elemento=2;
-//    }     
-                 
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormulariobotones(){
-//        
-////        if(actual_asignado.getMotivo_cese()==null){           
-////                formulariodatosdecargoasignado.recordError("Debe ingresar el motivo de Cese");
-////                return datosDeCargoZone.getBody();
-////
-////        }
-//        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
-//        //envelope.setContents(String.valueOf(actual_asignado.getFec_fin())+String.valueOf(actual_asignado.getFec_inicio()));   
-//        return datosDeCargoZone.getBody();
-//    }
-//    
-//    @Log
-//    void onValidateFromformulariodatosdecargoasignado() {
-//        if(valmotivo==null){            
-//                formulariodatosdecargoasignado.recordError("Debe ingresar el motivo de Cese");
-//        }
-//        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);
-//    }
-     
+    @Log
+    public List<UsuarioTrabajador> getListadoUsuario() {
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
+        query.setParameter("login", actual_asignado.getTrabajador().getNroDocumento());
+        return query.list();
+    }
     
-/*	@Log
-	Object onValidateFromformularioDatosDeCargoAsignado()
-	{
-        if (actual_asignado.getFec_fin().before(actual_asignado.getFec_inicio())) {
-            formularioDatosDeCargoAsignado.recordError("Las fechas de fin no pueden ser menores a las de inicio");
-            return this;
-        }
-  	  	if(actual_asignado.getFec_inicio().after(new Date())) {
-  	  		formularioDatosDeCargoAsignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
-			return this;
-		}
-		
-		return this;
-	}
-*/
+
 }
