@@ -60,6 +60,7 @@ public class ComponenteMenu {
     public Object onSalir()
     {
      _usuario=null;
+     entidad = null;
      return "Index";
     }
     
