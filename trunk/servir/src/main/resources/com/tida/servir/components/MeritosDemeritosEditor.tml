@@ -27,7 +27,13 @@
                                        model="beanTipoDemerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
                                       t:blankOption="ALWAYS" />
                                 </t:if>
-                            </div>             
+                            </div>  
+                            <div class ="f-left">
+                                 <t:label for="tipoDocumento"/>
+                                  <select t:type="Select" t:id="tipoDocumento" value="merito.tipodocumento"
+                                       model="beanTipoDocumento" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                       t:blankOption="ALWAYS" />
+                            </div>
                     </t:form> 
             </div>
            </div>
@@ -53,13 +59,21 @@
                              </div> 
                              
                         </div>
+                        <div class="f-wrap">
                          <t:if test="${vformulario}">
-                            <div class="f-wrap">
                                 <div class="f-right">
-                                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                                 </div>
-                            </div>
-                        </t:if>
+                                 </t:if>
+                           
+                       
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="cancelME" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                        </div>
+                        <div class="f-right">
+                            <input t:type="Submit" t:id="resetME" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                        </div>
+                         </div>
                     </t:form>  
                     <div>
                         <script>
@@ -71,7 +85,7 @@
                     
             </div> 
 
-            <div t:type="zone" t:id="botonesMEZone" >
+      <!--      <div t:type="zone" t:id="botonesMEZone" >
                 <t:form t:id="formulariobotonesME"  zone="meritosZone">
                 <div class="f-wrap">
                     <div class="f-right">
@@ -84,7 +98,7 @@
                 </t:form>
 
 
-            </div>
+            </div>-->
   </fieldset>
             <div class="f-wrap">                        
                 (*) Campos Obligatorios

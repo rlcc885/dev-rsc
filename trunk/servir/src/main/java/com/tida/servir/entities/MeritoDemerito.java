@@ -30,6 +30,8 @@ public class MeritoDemerito {
     private DatoAuxiliar clasemeritodemerito;
     @ManyToOne
     private DatoAuxiliar tipomeritodemerito;
+    @ManyToOne
+    private DatoAuxiliar tipodocumento;
     @Validate("required")
     private String motivo; 
     @Validate("required")
@@ -50,8 +52,8 @@ public class MeritoDemerito {
         this.id = id;
     }
     
-        public DatoAuxiliar getClasemeritodemerito() {
-        return clasemeritodemerito;
+    public DatoAuxiliar getClasemeritodemerito() {
+    return clasemeritodemerito;
     }
 
     public void setClasemeritodemerito(DatoAuxiliar clasemeritodemerito) {
@@ -96,6 +98,14 @@ public class MeritoDemerito {
 
     public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
+    }
+    
+     public DatoAuxiliar getTipodocumento() {
+        return tipodocumento;
+     }
+     
+    public void setTipodocumento(DatoAuxiliar tipodocumento) {
+        this.tipodocumento = tipodocumento;
     }
     
   @Override
