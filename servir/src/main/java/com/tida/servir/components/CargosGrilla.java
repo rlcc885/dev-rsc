@@ -67,14 +67,6 @@ public class CargosGrilla {
    private Context context;
    
 
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.puedeEscribir(_usuario, _oi);
-//    }
-
     
     public boolean getEvaluodesasignar() {
         return ca.getFec_fin() == null;
@@ -85,15 +77,6 @@ public class CargosGrilla {
             actual = new Trabajador();
         } 
     }
- 
-//
-//    StreamResponse onActionFromReportetrabajos(Long idLegajo) {
-//        Reportes rep = new Reportes();
-//        Map<String, Object> parametros = new HashMap<String, Object>();
-//        parametros.put("MandatoryParameter_LegajoID", idLegajo); 
-//        return rep.callReporte(Reportes.REPORTE.A1, Reportes.TIPO.PDF,  parametros ,context);
-//        
-//    }
 
     public List<CargoAsignado> getCargosAsignados() {
           Criteria c = session.createCriteria(CargoAsignado.class);
@@ -105,11 +88,6 @@ public class CargosGrilla {
           return c.list();
           
     }
-/*
-    void onActionFromReportetrabajos() {
-        PentahoTest pt = new PentahoTest();
-        pt.prueba();
-    }
- * */
+
 
 }
