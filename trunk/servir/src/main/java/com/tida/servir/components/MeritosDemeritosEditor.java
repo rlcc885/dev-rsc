@@ -225,17 +225,19 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         }
         
         merito.setFecha(fecha_desde);
-        System.out.println("*************MDE :"+merito.getClasemeritodemerito());
+     //   System.out.println("*************MDE :"+merito.getClasemeritodemerito());
         merito.setTrabajador(actual);
         merito.setEntidad(_oi);
         session.saveOrUpdate(merito);
         envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
+        //envelope.setContents("Mérito demérito creado / modificado exitosamente.");
         merito=new MeritoDemerito();
         valfec_desde=null;
         return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("listaMeritosZone",listaMeritosZone.getBody())
                 .add("meritosZone", meritosZone.getBody())
                 .add("claseZone", claseZone.getBody());
+
         }
   
     }
@@ -246,9 +248,10 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         if(elemento==1){
             merito=new MeritoDemerito();
             valfec_desde=null;
-            return  new MultiZoneUpdate("meritosZone", meritosZone.getBody())
-                 .add("mensajesMEZone", mensajesMEZone.getBody())
-                .add("claseZone", claseZone.getBody());   
+           return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("listaMeritosZone",listaMeritosZone.getBody())
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody());
         }else if(elemento==2){
             return "Busqueda";
         }else{    
@@ -278,7 +281,8 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
     @Log
     @CommitAfter        
     Object onActionFromEliminarME(MeritoDemerito meri) {
-        session.delete(meri);
+         formulariomensajesME.clearErrors();
+         session.delete(meri);
          envelope.setContents("Meritos demeritos eliminadas exitosamente.");
         return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                     .add("listaMeritosZone", listaMeritosZone.getBody());
