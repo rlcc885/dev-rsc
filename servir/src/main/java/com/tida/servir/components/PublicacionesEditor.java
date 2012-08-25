@@ -95,7 +95,7 @@ public class PublicacionesEditor {
         // No mover la inicializacion de variables
         editando = false;
         resetRegistro();
-        //accesos();
+        accesos();
     }
 
     @Log
