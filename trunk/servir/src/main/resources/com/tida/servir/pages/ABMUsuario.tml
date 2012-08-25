@@ -245,7 +245,7 @@
                             
                         </div>
                     </fieldset>
-                    <div class="f-wrap">
+                    <div class="actions">
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Confirmo, en calidad de Declaración Jurada, la veracidad y exactitud de la información registrada y autorizo la verificación de lo declarado; asumiendo las responsabilidades a que hubiere lugar." class="button f-right"/>
                         <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
