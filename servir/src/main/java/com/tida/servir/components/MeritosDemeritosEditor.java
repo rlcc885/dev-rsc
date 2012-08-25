@@ -126,7 +126,7 @@ public class MeritosDemeritosEditor {
      //para obtener datos de la Clase de Merito
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {        
-List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
+    List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -141,6 +141,12 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {        
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSDEMERITO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+         //para obtener datos del documento
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {        
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -184,6 +190,15 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         if(merito.getClasemeritodemerito()==null)
         {
             formulariomensajesME.recordError("Debe ingresar la Clase");
+            //envelope.setContents("Debe ingresar la Clase");
+             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                .add("meritosZone", meritosZone.getBody())
+                .add("claseZone", claseZone.getBody())
+                     ;
+        }
+        if(merito.getTipodocumento()==null)
+        {
+            formulariomensajesME.recordError("Debe ingresar el Documento");
             //envelope.setContents("Debe ingresar la Clase");
              return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
                 .add("meritosZone", meritosZone.getBody())
@@ -248,10 +263,8 @@ List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null,
         if(elemento==1){
             merito=new MeritoDemerito();
             valfec_desde=null;
-           return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("listaMeritosZone",listaMeritosZone.getBody())
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
+          return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+                    .add("listaMeritosZone", listaMeritosZone.getBody());
         }else if(elemento==2){
             return "Busqueda";
         }else{    
