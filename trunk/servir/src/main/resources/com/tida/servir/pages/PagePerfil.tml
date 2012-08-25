@@ -1,11 +1,10 @@
-
 <html t:type="layout" title="Administración de Perfiles"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
     <h2>Administración de Perfiles</h2>
      
-    <t:zone t:id="listaZone" t:update="show">
+    <t:zone t:id="listaZone">
         <t:if test="errorMessage">
             <script>
                 setTimeout(function(){ jQuery(".mensajes").fadeOut(1000);}, 4000);
@@ -95,9 +94,8 @@
         </t:if>
     </t:zone>
     
-    
-    <t:zone t:id="listaPermisoZone" id="listaPermisoZone">
-        <t:if test = "mostrarPermiso">
+    <t:zone t:id="listaPermisoZone">
+        <t:if test = "mostrarNew" negate="true">
             <h3>Permisos del Perfil ${perfil.descperfil}</h3>
             <t:grid t:source="allPermisos" 
                     inPlace="true" 
@@ -157,12 +155,12 @@
             </t:grid>
         </t:if>
     </t:zone>
-    <t:zone t:id="editPermisoZone" id="editPermisoZone">
-        <t:if test = "mostrarPermiso">
+    <t:zone t:id="editPermisoZone">
+        <t:if test = "mostrarNew" negate="true">
             <h3>Asignar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
                 <t:form t:id="permisoInputForm" t:zone="editPermisoZone">
-                    <fieldset>
+                                        <fieldset>
                         <legend>Seleccione Opción:</legend>
                         <div class ="f-wrap">
                             <div class="f-left">
@@ -202,7 +200,7 @@
                     </fieldset>
                     <div id="bouttons" class="f-right">
                         <input t:type="Submit" t:id="saveNewPermiso" value="Guardar" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
-                        <!--                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>-->
+<!--                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>-->
                         <t:eventLink t:event="resetNewPermiso" href="#" class="button f-right" t:zone="editPermisoZone">
                             <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Cancelar
@@ -214,5 +212,4 @@
             </div>
         </t:if>
     </t:zone>
-    
 </html>

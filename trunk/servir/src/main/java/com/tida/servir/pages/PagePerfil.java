@@ -10,6 +10,7 @@ import helpers.Helpers;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.Persist;
@@ -29,6 +30,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Jurguen Zambrano
  */
+@Import(stack="jquery")
 public class PagePerfil {
 
     @Inject
@@ -49,9 +51,6 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean mostrarNew;
-    @Persist
-    @Property
-    private boolean mostrarPermiso;
     @Persist
     @Property
     private boolean editPermiso;
@@ -109,27 +108,25 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean vNoeditaperfil;
-    @Persist
-    @Property
-    private Boolean mostrarEdicionPerfil;
-//    @Persist
-//    @Property
-//    private Boolean editaPerfil;
-
-    public PagePerfil() {
-    }
 
     @Log
-    void SetupRender() {
-        if (mostrarEdicionPerfil == null) {
-            mostrarEdicionPerfil = true;
-        }
+    void setupRender() {
         if (editaPerfil == null) {
             editaPerfil = false;
         }
-        if (!mostrarNew) {
-            nuevoPerfil();
-        }
+        nuevoPerfil();
+        vNoeditaperfil = false;
+    }
+
+    @Log
+    void nuevoPerfil() {
+        mostrarNew = true;
+        perfil = new Perfil();
+        perfil.setFechacreacion(new Date());
+        perfil.setEstado(true);
+        errorMessage = "";
+        errorMessageSavePerfil = "";
+        okMessageSavePerfil = "";
     }
 
     @Log
@@ -144,7 +141,7 @@ public class PagePerfil {
     @Log
     public boolean isEliminaPerfil() {
         //  && rowPerfil.getMenuCollection().isEmpty() && rowPerfil.getUsuarioCollection().isEmpty()
-        if (rowPerfil.getId() > 8 ) {
+        if (rowPerfil.getId() > 8) {
             return true;
         } else {
             return false;
@@ -195,7 +192,6 @@ public class PagePerfil {
                 try {
                     session.delete(lperfil);
                     nuevoPerfil();
-                    mostrarPermiso = false;
                 } catch (Exception e) {
                     errorMessage = "Otro error que pueda suceder :) ";
                 }
@@ -209,7 +205,6 @@ public class PagePerfil {
     Object onActionFromEditaPerfil(Perfil lperfil) {
         perfil = lperfil;
         mostrarNew = true;
-        mostrarPermiso = false;
         errorMessageSavePerfil = "";
         okMessageSavePerfil = "";
         editaPerfil = true;
@@ -224,9 +219,9 @@ public class PagePerfil {
     // Si pulsa el enlace de PERMISOS
     @Log
     Object onActionFromPermisoPerfil(Perfil lperfil) {
+        System.out.println("--------------------------------------------------");
         perfil = lperfil;
         mostrarNew = false;
-        mostrarPermiso = true;
         errorMessageSavePerfil = "";
         okMessageSavePerfil = "";
         editaPerfil = false;
@@ -241,13 +236,11 @@ public class PagePerfil {
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.get(Menuperfil.class, menuperfilpk);
         session.delete(permiso);
-        mostrarPermiso = true;
         nuevoPermiso();
         return zonasTotal();
     }
 
     @Log
-    //void onActionFromEditaPermiso(MenuPorPerfil lPermiso) {
     Object onEditaPermiso(MenuPorPerfil lPermiso) {
         Criteria c = session.createCriteria(Menu.class);
         c.add(Restrictions.eq("id", lPermiso.getMenuId()));
@@ -263,14 +256,6 @@ public class PagePerfil {
         return editPermisoZone.getBody();
     }
 
-//    void onSelectedFromReset() {
-//        bResetFormulario = true;
-//        mostrarPermiso = false;
-//        vNoeditaperfil = false;
-//        editaPerfil = false;
-//        vNoeditaperfil = false;
-//    }
-
     @Log
     Object onReset() {
         nuevoPerfil();
@@ -278,7 +263,6 @@ public class PagePerfil {
     }
 
     void onSelectedFromCancel() {
-        mostrarPermiso = false;
         editaPerfil = false;
         editPermiso = false;
         bCancelFormulario = true;
@@ -294,26 +278,10 @@ public class PagePerfil {
         okMessageSavePerfil = "";
     }
 
-    void nuevoPerfil() {
-        mostrarNew = true;
-        perfil = new Perfil();
-        perfil.setFechacreacion(new Date());
-        perfil.setEstado(true);
-        
-        errorMessageSavePerfil = "";
-        okMessageSavePerfil = "";
-    }
-
     @Log
     @CommitAfter
     Object onSuccessFromPerfilInputForm() {
         errorMessage = "";
-//        if (bCancelFormulario || bResetFormulario) {
-//            bCancelFormulario = false;
-//            bResetFormulario = false;
-//            nuevoPerfil();
-//            return this;
-//        } else {
         if (perfil.getDescperfil() == null || perfil.getDescperfil().isEmpty()) {
             errorMessageSavePerfil = "Ingrese descripción del perfil.";
             return editZone.getBody();
@@ -328,71 +296,48 @@ public class PagePerfil {
         okMessageSavePerfil = "Perfil creado satisfactoriamente.";
         perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
         session.saveOrUpdate(perfil);
-//        if (!mostrarNew) {
-//            mostrarPermiso = true;
-//            mostrarNew = true;
-//            nuevoPermiso();
-//            return editZone.getBody();
-////            } else {
-////                return listaPermisoZone;
-//        }
         nuevoPerfil();
-        return zonasPerfil();
-//        }
+        return zonasTotal();
     }
 
     @Log
     @CommitAfter
-    void onSelectedFromResetNewPermiso() {
+    Object onResetNewPermiso() {
         cancelaNewPermiso = true;
-        mostrarEdicionPerfil = true;
-//        mostrarPermiso = false;
         editaPerfil = false;
-        mostrarNew = false;
+        mostrarNew = true;
+        nuevoPerfil();
+        return zonasTotal();
     }
 
     @Log
     @CommitAfter
     void onSelectedFromSaveNewPermiso() {
-//        mostrarPermiso = true;
         bcontrolTotal = false;
     }
 
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
-//        if (!cancelaNewPermiso) {
-            if (!editPermiso) {
-                MenuperfilPK menuperfilpk = new MenuperfilPK();
-                menuperfilpk.setMenuId(menu.getId());
-                menuperfilpk.setPerfilId(perfil.getId());
-                permiso.setMenuperfilPK(menuperfilpk);
-            }
-            session.saveOrUpdate(permiso);
-//        }
+        if (!editPermiso) {
+            MenuperfilPK menuperfilpk = new MenuperfilPK();
+            menuperfilpk.setMenuId(menu.getId());
+            menuperfilpk.setPerfilId(perfil.getId());
+            permiso.setMenuperfilPK(menuperfilpk);
+        }
+        session.saveOrUpdate(permiso);
         nuevoPermiso();
-//        cancelaNewPermiso = false;
         return zonasTotal();
     }
 
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaZone", listaZone.getBody()).add("listaPermisoZone",listaPermisoZone.getBody()).add("editPermisoZone",editPermisoZone.getBody());
+        mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).
+                add("editZone", editZone.getBody()).
+                add("listaPermisoZone", listaPermisoZone.getBody()).
+                add("editPermisoZone", editPermisoZone.getBody());
         return mu;
     }
 
-    @Log
-    private MultiZoneUpdate zonasPerfil() {
-        MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editZone", editZone.getBody()).add("listaZone", listaZone.getBody());
-        return mu;
-    }
-
-    @Log
-    private MultiZoneUpdate zonasPermiso() {
-        MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("listaZone", listaZone.getBody());
-        return mu;
-    }
 }
