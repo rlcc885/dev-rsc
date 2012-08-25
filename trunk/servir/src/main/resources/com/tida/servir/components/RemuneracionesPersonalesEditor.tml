@@ -4,6 +4,9 @@
 
     <t:content>
         <div t:type="zone" t:id="mensajesCRZone" id="mensajesCRZone">
+            <script>
+                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            </script>
             <t:form t:id="formulariomensajesCR" zone="mensajesCRZone"> 
                 <t:envelope t:id="envelope"/>
                 <t:errors/>

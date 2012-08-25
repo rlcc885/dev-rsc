@@ -89,15 +89,6 @@ public class RemuneracionesPersonalesEditor {
     @Property
     private long cargoAsignado;
 
-//    //Inicio de la carga de la pagina
-//    @Log
-//    @SetupRender
-//    private void inicio() {
-//        remuneracion = new RemuneracionPersonal();
-//        //listaRemuneraciones = new RemuneracionPersonal();
-//        getCargosAsignados();
-//        elemento = 0;
-//    }
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
@@ -107,16 +98,18 @@ public class RemuneracionesPersonalesEditor {
         cargoAsignado = result.get(0).getCaid();
         editando = false;
         resetRegistro();
-        //accesos();
+        accesos();
     }
+
     @Log
     void resetRegistro() {
         remuneracion = new RemuneracionPersonal();
         editando = false;
         accesos();
     }
+
     @Log
-    public void accesos(){
+    public void accesos() {
         vinserta = false;
         veditar = false;
         veliminar = false;
@@ -126,19 +119,33 @@ public class RemuneracionesPersonalesEditor {
             veditar = true;
             vdetalle = false;
             vguardar = true;
-            //vformulario = true;
         }
         if (usuarioAcceso.getAccesodelete() == 1) {
             veliminar = true;
         }
         if (usuarioAcceso.getAccesoreport() == 1) {
             vinserta = true;
-            //vformulario = true;
             vguardar = true;
             vdetalle = false;
         }
     }
-    
+
+    @Log
+    Object onReset() {
+        resetRegistro();
+        return remuneracionesZone.getBody();
+    }
+
+    @Log
+    Object onCancel() {
+        System.out.println(_usuario.getRolid());
+        if (_usuario.getRolid() == 1) { // Si es trabajador 
+            return "Meritos";
+        } else {
+            return "Busqueda";
+        }
+    }
+
     @Log
     public GenericSelectModel<ConceptoRemunerativo> getBeanConceptoRemunerativo() {
         List<ConceptoRemunerativo> list1;
@@ -155,62 +162,25 @@ public class RemuneracionesPersonalesEditor {
         return c2.list();
     }
 
-//    @Log
-//    public CargoAsignado getCargosAsignados() {
-//        Criteria c3 = session.createCriteria(CargoAsignado.class);
-//        c3.add(Restrictions.eq("trabajador", actual));
-//        List result3 = c3.list();
-//        cargoAsignado = (CargoAsignado) result3.get(0);
-//
-//        return cargoAsignado;
-//    }
-
-    @Log
-    void onSelectedFromCancelCR() {
-        elemento = 2;
-    }
-
-    @Log
-    void onSelectedFromResetCR() {
-        elemento = 1;
-    }
-
-    @Log
-    void onSelectedFromGuardarCR() {
-        elemento = 3;
-
-    }
-
     @Log
     @CommitAfter
     Object onSuccess() {
-//        if (elemento == 1) {
-//            remuneracion = new RemuneracionPersonal();
-//            elemento = 0;
-//            //conceptoremun = null;
-//            return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody());
-//        } else if (elemento == 2) {
-//            elemento = 0;
-//            return "Busqueda";
-//        } else if (elemento == 3) {
-            remuneracion.setCargoasignado_id(cargoAsignado);
-            System.out.println(conceptoseleccionado.getId());
-            remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
-            session.saveOrUpdate(remuneracion);
-            envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
-            resetRegistro();
-            return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
-                    .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
-                    .add("remuneracionesZone", remuneracionesZone.getBody());
-//        } else {
-//            return this;
-//        }
-
+        remuneracion.setCargoasignado_id(cargoAsignado);
+        System.out.println(conceptoseleccionado.getId());
+        remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
+        session.saveOrUpdate(remuneracion);
+        envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
+        resetRegistro();
+        return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
+                .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
+                .add("remuneracionesZone", remuneracionesZone.getBody());
     }
 
     @Log
     Object onActionFromEditar(RemuneracionPersonal remu) {
         remuneracion = remu;
+        accesos();
+        editando = true;
         return new MultiZoneUpdate("remuneracionesZone", remuneracionesZone.getBody());
     }
 
@@ -218,8 +188,19 @@ public class RemuneracionesPersonalesEditor {
     @CommitAfter
     Object onActionFromEliminar(RemuneracionPersonal remu) {
         session.delete(remu);
+        resetRegistro();
+        accesos();
         envelope.setContents("Remuneraciones personales elimanadas exitosamente.");
         return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
                 .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody());
+    }
+
+    @Log
+    Object onActionFromDetalle(RemuneracionPersonal remu) {
+        remuneracion = remu;
+        accesos();
+        vdetalle = true;
+        vguardar = false;
+        return remuneracionesZone.getBody();
     }
 }
