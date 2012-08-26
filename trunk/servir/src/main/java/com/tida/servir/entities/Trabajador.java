@@ -8,24 +8,16 @@ import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
-/**
- *
- * @author ale
- */
 @Entity
 @Table(name = "RSC_TRABAJADOR")
 public class Trabajador implements Serializable // extends Persona 
 {
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    ///cosas de la clase PERSONA
 
     private static final String DNI = "DNI";
     @Id
     @GeneratedValue
     @NonVisual
     private Long id;
-//    @Validate("required")
-//    private String tipoDocumento;
     @Validate("required")
     private String nroDocumento;
     @Validate("required")
@@ -42,8 +34,6 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private DatoAuxiliar pais;
-//    @NonVisual
-//    private String nacionalidad;
     @ManyToOne
     @NonVisual
     private DatoAuxiliar estadocivil;
@@ -64,7 +54,7 @@ public class Trabajador implements Serializable // extends Persona
     private String esSalud;
     @ManyToOne
     @NonVisual
-    private DatoAuxiliar  gruposanguineo;
+    private DatoAuxiliar gruposanguineo;
     @ManyToOne
     @NonVisual
     private DatoAuxiliar tipodiscapacidad;
@@ -81,8 +71,6 @@ public class Trabajador implements Serializable // extends Persona
     private String emergenciaNombre;
     @NonVisual
     private String emergenciaDomicilio;
-//    @NonVisual
-//    private String emergenciaTelefonos;
     @NonVisual
     private String emergenciaTelefonoAlternativo1;
     @NonVisual
@@ -125,15 +113,15 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private Entidad entidad;
-    
+
     public Entidad getEntidad() {
         return entidad;
     }
-    
+
     public void setEntidad(Entidad entidad) {
         this.entidad = entidad;
     }
-    
+
     public Boolean getRecibepension() {
         return recibepension;
     }
@@ -141,7 +129,7 @@ public class Trabajador implements Serializable // extends Persona
     public void setRecibepension(Boolean recibepension) {
         this.recibepension = recibepension;
     }
-    
+
     public Boolean getEps() {
         return eps;
     }
@@ -149,27 +137,27 @@ public class Trabajador implements Serializable // extends Persona
     public void setEps(Boolean eps) {
         this.eps = eps;
     }
-    
+
     public String getNombreeps() {
         return nombreeps;
     }
-    
+
     public void setNombreeps(String nombreeps) {
         this.nombreeps = nombreeps;
     }
-    
+
     public String getNumregimenpensionario() {
         return numregimenpensionario;
     }
-    
+
     public void setNumregimenpensionario(String numregimenpensionario) {
         this.numregimenpensionario = numregimenpensionario;
     }
-    
+
     public DatoAuxiliar getTipovia() {
         return tipovia;
     }
-    
+
     public void setTipovia(DatoAuxiliar tipovia) {
         this.tipovia = tipovia;
     }
@@ -181,7 +169,7 @@ public class Trabajador implements Serializable // extends Persona
     public void setTipozona(DatoAuxiliar tipozona) {
         this.tipozona = tipozona;
     }
-    
+
     public void setTelefonocelular(String telefonocelular) {
         this.telefonocelular = telefonocelular;
     }
@@ -189,7 +177,7 @@ public class Trabajador implements Serializable // extends Persona
     public String getTelefonocelular() {
         return telefonocelular;
     }
-    
+
     public void setTelefonofijo(String telefonofijo) {
         this.telefonofijo = telefonofijo;
     }
@@ -205,7 +193,7 @@ public class Trabajador implements Serializable // extends Persona
     public void setDocumentoidentidad(DatoAuxiliar documentoidentidad) {
         this.documentoidentidad = documentoidentidad;
     }
-    
+
     public DatoAuxiliar getFormacionprofesional() {
         return formacionprofesional;
     }
@@ -274,14 +262,6 @@ public class Trabajador implements Serializable // extends Persona
         this.fechaNacimiento = fechaNacimiento;
     }
 
-//    public DatoAuxiliar getFormacionProfesional() {
-//        return formacionProfesional;
-//    }
-//
-//    public void setFormacionProfesional(DatoAuxiliar formacionProfesional) {
-//        this.formacionProfesional = formacionProfesional;
-//    }
-
     public DatoAuxiliar getGruposanguineo() {
         return gruposanguineo;
     }
@@ -298,14 +278,6 @@ public class Trabajador implements Serializable // extends Persona
     public void setId(long id) {
         this.id = id;
     }
-
-//    public String getNacionalidad() {
-//        return nacionalidad;
-//    }
-//
-//    public void setNacionalidad(String nacionalidad) {
-//        this.nacionalidad = nacionalidad;
-//    }
 
     public DatoAuxiliar getNivelinstruccion() {
         return nivelinstruccion;
@@ -365,14 +337,6 @@ public class Trabajador implements Serializable // extends Persona
         this.tipodiscapacidad = tipodiscapacidad;
     }
 
-//    public String getTipoDocumento() {
-//        return tipoDocumento;
-//    }
-//
-//    public void setTipoDocumento(String tipoDocumento) {
-//        this.tipoDocumento = tipoDocumento;
-//    }
-
     public DatoAuxiliar getCod_dom_dist() {
         return cod_dom_dist;
     }
@@ -396,9 +360,6 @@ public class Trabajador implements Serializable // extends Persona
     public void setCod_dom_dept(DatoAuxiliar codDomDept) {
         cod_dom_dept = codDomDept;
     }
-//      @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
     public String getFormacionInfAdicional() {
         return formacionInfAdicional;
@@ -408,7 +369,6 @@ public class Trabajador implements Serializable // extends Persona
         this.formacionInfAdicional = formacionInfAdicional;
     }
 
-    /// cosas de la clase PERSONA
     public String getEmergenciaNombre() {
         return emergenciaNombre;
     }
@@ -433,14 +393,6 @@ public class Trabajador implements Serializable // extends Persona
         this.emergenciaDomicilio = emergenciaDomicilio;
     }
 
-//    public String getEmergenciaTelefonos() {
-//        return emergenciaTelefonos;
-//    }
-//
-//    public void setEmergenciaTelefonos(String emergenciaTelefonos) {
-//        this.emergenciaTelefonos = emergenciaTelefonos;
-//    }
-
     public DatoAuxiliar getSistemapensionario() {
         return sistemapensionario;
     }
@@ -448,7 +400,7 @@ public class Trabajador implements Serializable // extends Persona
     public void setSistemapensionario(DatoAuxiliar sistemapensionario) {
         this.sistemapensionario = sistemapensionario;
     }
-    
+
     public DatoAuxiliar getRegimenpensionario() {
         return regimenpensionario;
     }
@@ -520,53 +472,26 @@ public class Trabajador implements Serializable // extends Persona
      */
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Ant_Laborales> ant_Laborales = new ArrayList<Ant_Laborales>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Publicacion> publicaciones = new ArrayList<Publicacion>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    public List<MeritoDemerito> meritosdemeritos = new ArrayList<MeritoDemerito>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Titulo> titulos = new ArrayList<Titulo>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @ManyToMany(cascade = CascadeType.ALL,targetEntity=Familiar.class)
     public List<Familiar> familiares = new ArrayList<Familiar>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<CargoAsignado> cargosAsignados = new ArrayList<CargoAsignado>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
-//  @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     public List<Curso> cursos = new ArrayList<Curso>();
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-//    @NonVisual
-//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-//    public List<LkBusquedaEstudios> lkbusquedaestudios = new ArrayList<LkBusquedaEstudios>();
 
-    /*
-     * A los legajos se acceden según los cargos @NonVisual @OneToMany(mappedBy
-     * = "trabajador", cascade = CascadeType.ALL) public List<Legajo> legajos =
-     * new ArrayList<Legajo>();
-     */
-//    public List<LkBusquedaEstudios> getLkbusquedaestudios() {
-//        return lkbusquedaestudios;
-//    }
-//    public void setLkbusquedaestudios(List<LkBusquedaEstudios> lkbusquedaestudios) {
-//        this.lkbusquedaestudios = lkbusquedaestudios;
-//    }
-    
     public List<CargoAsignado> getCargosAsignados() {
         return cargosAsignados;
     }
@@ -589,14 +514,6 @@ public class Trabajador implements Serializable // extends Persona
 
     public void setTitulos(List<Titulo> titulos) {
         this.titulos = titulos;
-    }
-
-    public List<MeritoDemerito> getMeritosdemeritos() {
-        return meritosdemeritos;
-    }
-
-    public void setMeritosdemeritos(List<MeritoDemerito> meritosdemeritos) {
-        this.meritosdemeritos = meritosdemeritos;
     }
 
     public List<Publicacion> getPublicaciones() {
@@ -636,5 +553,4 @@ public class Trabajador implements Serializable // extends Persona
         hash = 29 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
-
 }

@@ -78,6 +78,11 @@
                             jQuery(document).ready(function() {
                             jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
                             jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                            if (jQuery('.idestudiando').is(':checked')) {
+                            jQuery('.fec_fin').datepick('disable');
+                            }else {
+                            jQuery('.fec_fin').datepick('enable');
+                            }
                             });
                             function toggleStatusEstudio() {
                             if (jQuery('.idestudiando').is(':checked')) {
@@ -115,7 +120,7 @@
                                     </div>
                                     <div class="f-left">
                                         <label>Hasta</label>
-                                        <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                        <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vdetalle}" t:validate="regexp" class="fec_fin pictureInputDate"/>
                                     </div>                        
                                 </div>
                             </fieldset>

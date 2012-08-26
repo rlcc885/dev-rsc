@@ -1,125 +1,123 @@
+
 <html t:type="layout" title="Meritos y Demeritos del Trabajador"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-
     <t:content>
-
-      <fieldset>
-          <div class="f-wrap">  
-            <div t:type="zone" t:id="claseZone" >               
-                    <t:form t:id="formularioclase"  zone="claseZone">                         
-                           <div class="f-left" >
-                                <t:label for="clase"/>
-                                <select t:type="Select" t:id="clase" value="merito.clasemeritodemerito"
-                                       model="beanClaseMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS" />
-                            </div>
-                            <div class="f-left" >
-                                <t:if test="btipo" negate="true">
+        <div t:type="zone" t:id="mensajesMEZone" >
+            <script>
+                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            </script>
+            <t:form t:id="formulariomensajesME"  zone="mensajesMEZone"> 
+                <t:envelope t:id="envelope"/>
+                <t:errors/>
+            </t:form> 
+        </div>
+        <div t:type="zone" t:id="claseZone" >
+            <div>
+                <script>
+                    jQuery(document).ready(function() {
+                    jQuery('.fec_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
+                    });
+                </script>
+            </div>
+            <t:form t:id="formularioclase" zone="claseZone">
+                <fieldset>
+                    <div class="f-wrap">
+                        <div class="f-left" >
+                            <t:label for="clase"/>
+                            <select t:type="Select" t:id="clase" value="clase" t:model="literal:1=MERITO,2=DEMERITO" t:blankOption="NEVER" t:disabled="${vdetalle}" t:zone="tipoZone"/>                         
+                        </div>
+                        <div class="f-left" >
+                            <t:zone t:id="tipoZone" id="tipoZone">
+                                <t:if test="btipo">
                                     <t:label for="tipoMerito"/>
-                                <select t:type="Select" t:id="tipoMerito" value="merito.tipomeritodemerito" 
-                                       model="beanTipoMerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                      t:blankOption="ALWAYS" />
+                                    <select t:type="Select" t:id="tipoMerito" value="merito.tipomeritodemerito" model="beanTipoMerito" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                                 </t:if>
-                                <t:if test="btipo" >
+                                <t:if test="btipo" negate="true">
                                     <t:label for="tipoDemerito"/>
-                                <select t:type="Select" t:id="tipoDemerito" value="merito.tipomeritodemerito"
-                                       model="beanTipoDemerito" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                      t:blankOption="ALWAYS" />
+                                    <select t:type="Select" t:id="tipoDemerito" value="merito.tipomeritodemerito" model="beanTipoDemerito" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                                 </t:if>
-                            </div>  
-                            <div class ="f-left">
-                                 <t:label for="tipoDocumento"/>
-                                  <select t:type="Select" t:id="tipoDocumento" value="merito.tipodocumento"
-                                       model="beanTipoDocumento" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
-                                       t:blankOption="ALWAYS" />
-                            </div>
-                    </t:form> 
-            </div>
-           </div>
-          <br/>
-              <div t:type="zone" t:id="meritosZone" >  
-              
-                    <t:form t:id="formulariomeritos"  zone="meritosZone">
-          
-                         <div class="f-wrap">
-                           
-                            <div class="f-left">
-                                <label>* Motivo</label>
-                                <input t:type="TextArea" t:id="motivo" 
-                                         t:validate="required" t:value="merito.motivo" maxlength="255" cols="30" />
-                                <label><i>(Máximo 250 caracteres)</i></label>
-                                
-                            </div>
-                             <div class="f-left">	
-                                <label>* Fecha</label>
-                                <!--<input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde"  t:validate="required" size="25" />-->
-                               <!-- <img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formulariomeritos.fec_ingreso, 'dd/mm/yyyy');" style="cursor:hand;"></img>-->
-                                <input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde" size="25" t:disabled="${vdetalle}" t:validate="regexp" class="fec_ingreso pictureInputDate"/>
-                             </div> 
-                             
+                            </t:zone>
+                        </div>  
+                        <div class ="f-left">
+                            <t:label for="tipoDocumento"/>
+                            <select t:type="Select" t:id="tipoDocumento" value="merito.tipodocumento" model="beanTipoDocumento" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                         </div>
-                        <div class="f-wrap">
-                         <t:if test="${vformulario}">
-                                <div class="f-right">
-                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                                </div>
-                                 </t:if>
-                           
-                       
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="cancelME" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                        </div>
-                        <div class="f-right">
-                            <input t:type="Submit" t:id="resetME" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                        </div>
-                         </div>
-                    </t:form>  
-                    <div>
-                        <script>
-                            jQuery(document).ready(function() {
-                            jQuery('.fec_ingreso').datepick({dateFormat: 'dd/mm/yyyy'});
-                            });
-                        </script>
                     </div>
-                    
-            </div> 
-
-  </fieldset>
-            <div class="f-wrap">                        
-                (*) Campos Obligatorios
-            </div>
-     <br/>
-     <div t:type="zone" t:id="mensajesMEZone" >
-                <t:form t:id="formulariomensajesME"  zone="mensajesMEZone"> 
-                    <t:envelope t:id="envelope"/>
-                    <t:errors/>
-                </t:form> 
-     </div>
-     <br/>   
- <div id = "tabla_oi">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Motivo</label>
+                            <input t:type="TextArea" t:id="motivo" t:validate="required" t:value="merito.motivo" maxlength="255" cols="30" t:disabled="${vdetalle}"/>
+                            <label>
+                                <i>(Máximo 250 caracteres)</i>
+                            </label>
+                        </div>
+                        <div class="f-left">	
+                            <label>* Fecha</label>
+                            <input t:type="TextField" t:id="fec_ingreso" t:value="valfec_desde" size="25" t:disabled="${vdetalle}" 
+                                   t:validate="regexp" class="fec_ingreso pictureInputDate"/>
+                        </div> 
+                    </div>
+                    <div class="actions">
+                        <div class="f-left">                        
+                            (*) Campos Obligatorios
+                        </div>
+<!--                        <t:if test="${vformulario}">
+                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                        </t:if>
+                        <input t:type="Submit" t:id="cancelME" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                        <input t:type="Submit" t:id="resetME" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  -->
+                        <t:if test="${vguardar}">
+                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                        </t:if>
+                        <t:if test="${vinserta}">
+                            <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="claseZone">
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                    Limpiar Formulario
+                                </span> 
+                            </t:eventLink>
+                        </t:if>
+                        <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="claseZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Cancelar
+                            </span> 
+                        </t:eventLink>
+                    </div>
+                </fieldset>
+            </t:form>  
+        </div> 
+        
+        <div id = "tabla_oi">
             <t:zone t:id="listaMeritosZone">   
-                <t:grid source="listadoMeritos" rowsPerPage="10" t:add="Tipo,Documento,_Fecha ,Acciones" pagerPosition="bottom"
-                row="listaMeritos" exclude="id,tipomeritodemerito,clasemeritodemerito,motivo,fecha,entidad,trabajador" inPlace="true" >
+                <t:grid source="listadoMeritos" 
+                        rowsPerPage="10" 
+                        t:add="Acciones" 
+                        pagerPosition="bottom"
+                        row="listaMeritos" 
+                        exclude="id,tipomeritodemerito_id,clasemeritodemerito_id,motivo,entidad_id,trabajador_id,tipodocumento_id" 
+                        inPlace="true"
+                        reorder="descclasemeritodemerito,desctipomeritodemerito,desctipodocumento,fecha">
                     <t:parameter name="empty">
-                    <div class="no-info">No se encontraron registros</div>
+                        <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    <p:tipoCell>
-                               <label class="datofalse">${listaMeritos.clasemeritodemerito.valor}</label>  
-                    </p:tipoCell>
-                    <p:documentoCell>
-                               <label class="datofalse">${listaMeritos.tipomeritodemerito.valor}</label>  
-                    </p:documentoCell>
-                    <p:_fechaCell>
-                               <label class="datofalse">${fechaMD}</label>  
-                    </p:_fechaCell>
+                    <p:fechaCell>
+                        <label class="datofalse">${fecha}</label>  
+                    </p:fechaCell>
                     <p:accionesCell>
-                           <t:actionlink t:id="editarME" zone="meritosZone" context="listaMeritos">Editar</t:actionlink> | 
-                           <t:actionlink t:id="eliminarME" zone="listaMeritosZone" context="listaMeritos"> 
-                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
-                                Eliminar
-                            </span>
-                           </t:actionlink>   
+                        <t:if test="${veditar}">
+                            <t:actionlink t:id="editarME" zone="claseZone" context="listaMeritos">Editar</t:actionlink>
+                        </t:if>
+                        <t:if test="${veditar}" negate="true">
+                            <t:actionlink t:id="detalleME" zone="claseZone" context="listaMeritos">Detalle</t:actionlink>
+                        </t:if>
+                        <t:if test="${veliminar}">
+                            |
+                            <t:actionlink t:id="eliminarME" zone="listaMeritosZone" context="listaMeritos"> 
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                    Eliminar
+                                </span>
+                            </t:actionlink>
+                        </t:if>
                     </p:accionesCell>
                 </t:grid>
             </t:zone>
