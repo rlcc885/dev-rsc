@@ -19,10 +19,10 @@
   <session-factory>
     <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
     <property name="hibernate.default_schema">rnsc</property>
-	<property name="hibernate.connection.url">jdbc:oracle:thin:@172.16.19.33:1521:bdprueba2</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.1.108:1521:XE</property>
     <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
     <property name="hibernate.connection.username">rnsc</property>
-    <property name="hibernate.connection.password">rnsc123</property>
+    <property name="hibernate.connection.password">rnsc</property>
     <!-- <property name="hbm2ddl.auto">update</property> -->
     <!-- <property name="hbm2ddl.auto">create</property> -->
     <property name="hbm2ddl.auto">none</property>
@@ -39,6 +39,7 @@
     <property name="hibernate.c3p0.max_size">20</property>
     <property name="hibernate.c3p0.timeout">5800</property>
     <property name="hibernate.c3p0.max_statements">5</property>
+
     <!--
     <property name="hibernate.validator.autoregister_listeners">false</property>
     <property name="hibernate.search.autoregister_listeners">false</property>
