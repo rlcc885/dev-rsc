@@ -68,6 +68,8 @@ public class ABMUsuario extends GeneralPage {
     private Form formulariobusqueda;
     @Component(id = "formularioRol")
     private Form formularioRol;
+    @Component(id = "formularioEntidad")
+    private Form formularioEntidad;
     @Property
     private boolean blanquearIntentosFallidos;
     @Property
@@ -146,6 +148,9 @@ public class ABMUsuario extends GeneralPage {
     private Perfil bselectPerfil;
     @Property
     @Persist
+    private Rol bselectRol;
+    @Property
+    @Persist
     private boolean mostrar;
     @Persist
     @Property
@@ -158,6 +163,8 @@ public class ABMUsuario extends GeneralPage {
     private Zone zonaFormularioBusqueda;
     @InjectComponent
     private Zone idValidaLogin;
+    @InjectComponent
+    private Zone formularioEntidadZone;
     @Persist
     @Property
     private boolean bBuscarReset;
@@ -173,7 +180,14 @@ public class ABMUsuario extends GeneralPage {
     @Inject
     private Request request;
     @Persist
-    @Property long intentosFallidos;
+    @Property
+    long intentosFallidos;
+    @Persist
+    @Property
+    private String nombreEntidadEdit;
+    @Persist
+    @Property
+    private boolean seleccionaEntidadUsuario;
 
     @Log
     void setupRender() {
@@ -184,10 +198,10 @@ public class ABMUsuario extends GeneralPage {
         int anyo = c.get(Calendar.YEAR);
         System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
         resetBuscar();
-         // primera vez, se setea la entidad
+        // primera vez, se setea la entidad
         bEntidad = entidad;
         bNombreEntidad = bEntidad.getDenominacion();
-        resetUsuario(); 
+        resetUsuario();
     }
 
     @Log
@@ -247,25 +261,6 @@ public class ABMUsuario extends GeneralPage {
         list = c.list();
         return new GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
     }
-//
-//    @Log
-//    public List<String> getTiposUsuarios() {
-//        List<String> tc = new ArrayList<String>();
-//        // Sólo los usuarios admin_graal pueden generar administradores generales y locales
-//        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)) {
-//            tc.add(Usuario.ADMINGRAL);
-//            tc.add(Usuario.ADMINLOCAL);
-//            tc.add(Usuario.OPERADORABMSERVIR);
-//            tc.add(Usuario.OPERADORANALISTA);
-//            tc.add(Usuario.ADMINSISTEMA);
-//        }
-//        if (loggedUser.getTipo_usuario().equals(Usuario.ADMINLOCAL)) {
-//            tc.add(Usuario.OPERADORABMLOCAL);
-//            tc.add(Usuario.OPERADORLECTURALOCAL);
-//            tc.add(Usuario.TRABAJADOR);
-//        }
-//        return tc;
-//    }
 
     @Log
     public List<UsuarioTrabajador> getUsuarios() {
@@ -325,22 +320,6 @@ public class ABMUsuario extends GeneralPage {
         lista = query.list();
         return lista;
     }
-//    @Log
-//    //Object onActionFromValidalogin(String login){
-//    Object onValidalogin(String login){
-//        List<Perfilporusuario> lista = null;
-//        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
-//        query.setParameter("login", "04433155" );
-//        lista = query.list();
-//        muestraValidaLogin = true;
-//        if (lista.isEmpty()){
-//            bLoginValido = true;
-//        }else{
-//            bLoginValido = false;
-//        }
-//        //return new MultiZoneUpdate("validaLogin", validaLogin.getBody());
-//        return request.isXHR() ? idValidaLogin.getBody() : null;
-//    }
 
     @Log
     Object onSuccessFromFormularioCuenta() {
@@ -360,6 +339,17 @@ public class ABMUsuario extends GeneralPage {
     @Log
     void onSuccessFromFormularioRol() {
         return;
+    }
+
+    @Log
+    void onSelectedFromBuscarEntidadUsuario() {
+        seleccionaEntidadUsuario = true;
+        mostrar = false;
+    }
+
+    @Log
+    Object onSuccessFromFormularioEntidad() {
+        return formularioEntidadZone.getBody();
     }
 
     @Log
@@ -606,10 +596,13 @@ public class ABMUsuario extends GeneralPage {
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
         if (lusuariotrabajador.getTrabajadorid() == null) {
             noEditaUsuario = false;
+            nombreEntidadEdit = "";
         } else {
             usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
+            nombreEntidadEdit = usuario.getTrabajador().getEntidad().getDenominacion();
             noEditaUsuario = true;
         }
+
         usuariotrabajadoredit = lusuariotrabajador;
         intentosFallidos = usuariotrabajadoredit.getIntentosFallidos();
         muestraEditorUsuario = true;
@@ -617,6 +610,7 @@ public class ABMUsuario extends GeneralPage {
         bLoginValido = true;
         return zonasTotal();
     }
+
     @Log
     Object onEditaPerfil(UsuarioTrabajador lusuariotrabajador) {
         usuariotrabajadoredit = lusuariotrabajador;
@@ -655,6 +649,15 @@ public class ABMUsuario extends GeneralPage {
     }
 
     @Log
+    Object onActionFromSeleccionaEntidadUsuario(Entidad entidad) {
+        if (entidad != null) {
+            nombreEntidadEdit = entidad.getDenominacion();
+        }
+        mostrar = false;
+        return formularioEntidadZone.getBody();
+    }
+
+    @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
         if (bdenoentidad != null) {
@@ -663,5 +666,4 @@ public class ABMUsuario extends GeneralPage {
         }
         return c.list();
     }
-
 }

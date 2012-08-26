@@ -905,8 +905,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioEntidadOrigen() {
-        System.err.println("onSuccessFromFormularioEntidadOrigen");
-        System.err.println(entidadUE.getEsSubEntidad());
         if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
         } else {
