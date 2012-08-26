@@ -99,8 +99,8 @@
                     t:add="acciones" 
                     t:pagerPosition="bottom" 
                     t:row="u" 
-                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,intentosfallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
-                    t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc">
+                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
+                    t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc,intentosFallidos">
                 <t:parameter name="empty">
                     No se han encontrado coincidencias.
                 </t:parameter>
@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="f-left">
                                     <t:label for="intentosFallidos" />
-                                    <input t:type="TextField" t:id="intentosFallidos" t:value="usuariotrabajadoredit.intentosFallidos" t:disabled="true" size="1"/>
+                                    <input t:type="TextField" t:id="intentosFallidos" t:value="intentosFallidos" t:disabled="true" size="1"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Blanquear los intentos fallidos</label>

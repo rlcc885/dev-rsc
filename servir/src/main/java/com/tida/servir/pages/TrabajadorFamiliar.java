@@ -1,34 +1,16 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad;
-import java.util.List;
-
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.UsuarioAcceso;
-import com.tida.servir.entities.FormacionProfesional;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
-import helpers.Constantes;
+import com.tida.servir.entities.*;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 /**
@@ -71,9 +53,6 @@ public class TrabajadorFamiliar  extends GeneralPage
     @SessionState
     private Entidad _oi;
 
-    /**
-     * Hasta acá
-     */
     @Inject
     private Session session;
 
@@ -86,47 +65,7 @@ public class TrabajadorFamiliar  extends GeneralPage
 
     @PageActivationContext
     private Trabajador actual;
-    
-        
-        /*
-     * Código de grillas
-     */
-
-    // Grilla de Antecedentes laborales
-//    @InjectComponent
-//    private Zone antecedentesZone;
-//
-//    @InjectComponent
-//    private Zone publicacionesZone;
-//
-//    @InjectComponent
-//    private Zone trabajosZone;
-
-    // Código generales de la grilla, cada uno tendrá que agregar su código acá
-    // Cófigo necesario antes de procesar
-//    @InjectComponent
-//    private Zone meritosZone;
-//
-//    @InjectComponent
-//    private Zone demeritosZone;
-//
-//    @InjectComponent
-//    private Zone titulosZone;
-//
-//    @InjectComponent
-//    private Zone certificacionesZone;
-//
-//    @InjectComponent
-//    private Zone cursosZone;
-//
-//    @Property
-//    @InjectComponent
-//    private Zone instruccionZone;
-
-    /*
-     * Hasta acá código de grillas
-     */
-
+            
     @Property
     @Persist
     private FormacionProfesional formacionProfesional;
@@ -141,15 +80,6 @@ public class TrabajadorFamiliar  extends GeneralPage
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
 
-
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.puedeEscribir(_usuario, _oi);
-//    }
-//    
     public TrabajadorFamiliar()
     {
     }
@@ -192,73 +122,6 @@ public class TrabajadorFamiliar  extends GeneralPage
             actual=_usuario.getTrabajador();
         }        
     }
-    
-//    @Component(id = "instruccion")
-//    private Form formInstruccion;
-
-//    @Log
-//    @SetupRender
-//    void loadFormacion() {
-//        if (formacionProfesional == null)
-//            formacionProfesional = new FormacionProfesional();
-//        formacionProfesional.setFormacion(actual.getFormacionprofesional());
-//        Criteria c = session.createCriteria(CargoAsignado.class);
-//        c.createAlias("trabajador", "trabajador");
-//        c.createAlias("legajo", "legajo");
-//        c.createAlias("cargo", "cargo");
-//        c.add(Restrictions.eq("legajo.entidadUE", _oi));
-//        c.add(Restrictions.eq("trabajador", actual));
-//        c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
-//        if (c.list().size() > 0)
-//            _ca = (CargoAsignado) c.list().get(0);
-//        else _ca = null;
-//    }
-
-// 
-//    @CommitAfter
-//    Object onSuccessFromInstruccion(){
-//        actual.setTipoDocumento("01");
-//        actual.setFormacionprofesional(formacionProfesional.getFormacion());
-//        session.saveOrUpdate(actual);
-//        return instruccionZone;
-//    }
-
-//    public String getClasePublicacion() {
-//        return Publicacion.CLASE_PUBLICACION;
-//    }
-//
-//    public String getClaseTrabajo() {
-//        return Publicacion.CLASE_INVESTIGACION;
-//    }
-//
-//
-//    public String getClaseMeritos() {
-//        return MeritoDemerito.CLASE_MERITO;
-//    }
-//
-//
-//    public String getClaseDeMeritos() {
-//        return MeritoDemerito.CLASE_DEMERITO;
-//    }
-
-//    public List<String> getValorTablaAuxiliar(String tabla) 
-//    {
-//        // TODO: este codigo esta duplicado
-//        Criteria c = session.createCriteria(DatoAuxiliar.class);
-//        c.add(Restrictions.eq("nombreTabla", tabla));
-//        c.setProjection(Projections.property("valor"));
-//        return c.list();
-//    }
-//
-//    public List<String> getNivelInstruccion() 
-//    {
-//        return getValorTablaAuxiliar("NivelInstrucción");
-//    }
-//
-//
-//    public boolean getHayCargosAsignados() {
-//        return _ca != null;
-//    }
 
 
 }

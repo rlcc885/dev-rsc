@@ -4,27 +4,8 @@
  */
 package Batch.Helpers;
 
-import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.Certificacion;
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Familiar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.Titulo;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.UnidadOrganica;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.tida.servir.entities.*;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,16 +15,9 @@ import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
-import jxl.format.ScriptStyle;
-import jxl.format.UnderlineStyle;
+import jxl.format.*;
 import jxl.format.VerticalAlignment;
-import jxl.write.Label;
-import jxl.write.WritableCell;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
+import jxl.write.*;
 import org.hibernate.Session;
 
 /**
@@ -1859,7 +1833,7 @@ public class InformeXLS {
             escribir.print("|");
             escribir.print(InformeXLS.leoCampo(oi.getCue_elemento()));
             escribir.print("|");
-            escribir.print(InformeXLS.numberToString(oi.getCod_mef_ue()));
+//            escribir.print(InformeXLS.numberToString(oi.getCod_mef_ue()));
             escribir.print("|");
             escribir.print(InformeXLS.leoCampo(oi.getRuc()));
             escribir.print("|");
@@ -1976,7 +1950,7 @@ public class InformeXLS {
 //                escribir.print("|");
                 escribir.print(InformeXLS.leoCampo(uo.getSigla()));
                 escribir.print("|");
-                escribir.print(InformeXLS.numberToString(uo.getNivel()));
+//                escribir.print(InformeXLS.numberToString(uo.getNivel()));
                 escribir.print("|");
                 //escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoActividad", InformeXLS.leoCampo(uo.getTipoActividad()), errores, session));
                 //escribir.print("|");
@@ -2028,10 +2002,10 @@ public class InformeXLS {
 //                escribir.print(InformeXLS.datoAuxiliarToString(c.getClasificacion_funcional()));
 //                escribir.print("|");
 //                escribir.print(InformeXLS.booleanToString(c.getReq_hab_profesional()));
-                escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(c.getDec_jurada_byr()));
-                escribir.print("|");
-                escribir.print(InformeXLS.booleanToString(c.getPresupuestado_PAP()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.booleanToString(c.getDec_jurada_byr()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.booleanToString(c.getPresupuestado_PAP()));
                 escribir.print("|");
                 escribir.print(InformeXLS.datoAuxiliarToString(c.getGrupoOcupacional()));
                 escribir.print("|");
@@ -2102,7 +2076,7 @@ public class InformeXLS {
                 escribir.print("|");
 //                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDiscapacidad", InformeXLS.leoCampo(t.getTipoDiscapacidad()), errores, session));
                 escribir.print("|");
-                escribir.print(InformeXLS.numberToString(t.getNroCertificadoCONADIS()));
+//                escribir.print(InformeXLS.numberToString(t.getNroCertificadoCONADIS()));
                 escribir.print("|");
      //           escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("NivelInstrucción", InformeXLS.leoCampo(t.getNivelInstruccion()), errores, session));
                 escribir.print("|");
@@ -2562,7 +2536,7 @@ public class InformeXLS {
                 escribir.print("|");
                 escribir.print(InformeXLS.datetoString(epcsv.getFecha_hasta()));
                 escribir.print("|");
-                escribir.print(InformeXLS.numberToString(epcsv.getCalificacion_procentaje()));
+//                escribir.print(InformeXLS.numberToString(epcsv.getCalificacion_procentaje()));
                 escribir.println();
             }
             escribir.close();
@@ -2674,23 +2648,23 @@ public class InformeXLS {
         return sdf.format(valor);
     }
 
-    public static String numberToString(Number valor) {
+//    public static String numberToString(Number valor) {
+//
+//        if (valor == null) {
+//            return "";
+//        }
+//
+//        return valor.toString();
+//    }
 
-        if (valor == null) {
-            return "";
-        }
-
-        return valor.toString();
-    }
-
-    public static String booleanToString(Boolean valor) {
-
-        if (valor == null || valor.toString().equals("") || valor.toString().equals("F") || valor == false) {
-            return FALSE_ARCHIVO;
-        }
-
-        return TRUE_ARCHIVO;
-    }
+//    public static String booleanToString(Boolean valor) {
+//
+//        if (valor == null || valor.toString().equals("") || valor.toString().equals("F") || valor == false) {
+//            return FALSE_ARCHIVO;
+//        }
+//
+//        return TRUE_ARCHIVO;
+//    }
     
        private static String getBoolStrFromEstado(String estado){
         if ((estado != null) || (!estado.trim().equals(""))) {

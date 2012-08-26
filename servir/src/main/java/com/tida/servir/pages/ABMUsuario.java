@@ -172,26 +172,22 @@ public class ABMUsuario extends GeneralPage {
     private boolean muestraValidaLogin;
     @Inject
     private Request request;
+    @Persist
+    @Property long intentosFallidos;
 
     @Log
     void setupRender() {
         muestraEditorUsuario = true;
-        editaUsuario = false;
         Calendar c = Calendar.getInstance();
         int dia = c.get(Calendar.DAY_OF_MONTH);
         int mes = c.get(Calendar.MONTH) + 1;
         int anyo = c.get(Calendar.YEAR);
         System.out.println("hoy es:  " + dia + "/" + mes + "/" + anyo);
         resetBuscar();
-        usuariotrabajadoredit = new UsuarioTrabajador();
-        usuario = new Usuario();
-        perfil = new Perfil();
-        // primera vez, se setea la entidad
+         // primera vez, se setea la entidad
         bEntidad = entidad;
         bNombreEntidad = bEntidad.getDenominacion();
-        muestraValidaLogin = false;
-        bLoginValido = false;
-        noEditaUsuario = false;
+        resetUsuario(); 
     }
 
     @Log
@@ -414,6 +410,7 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     void resetUsuario() {
+        usuario = new Usuario();
         usuariotrabajadoredit = new UsuarioTrabajador();
         usuariotrabajadoredit.setFechacreacion(new Date());
         usuariotrabajadoredit.setEstado(1);
@@ -422,6 +419,7 @@ public class ABMUsuario extends GeneralPage {
         noEditaUsuario = false;
         muestraValidaLogin = false;
         bLoginValido = false;
+        intentosFallidos = 0;
     }
 
     @Log
@@ -472,7 +470,7 @@ public class ABMUsuario extends GeneralPage {
                 enviacorreo = true;
             }
 
-            if (usuariotrabajadoredit.getEstado() == 1) {
+            if (blanquearIntentosFallidos) {
                 usuario.setIntentos_fallidos(0L);
             }
 
@@ -493,10 +491,7 @@ public class ABMUsuario extends GeneralPage {
             usuario.setDocumentoId(documentoIdentidadEdit.getId());
             usuario.setLogin(usuariotrabajadoredit.getLogin());
             usuario.setEstado(usuariotrabajadoredit.getEstado());
-            System.out.print(rolUsuarioEdit.getId());
             usuario.setRolid(rolUsuarioEdit.getId());
-            System.out.println("==============================================================================");
-            System.out.println(rolUsuarioEdit.getId());
             usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
             usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
             usuario.setTelefono(usuariotrabajadoredit.getTelefono());
@@ -505,13 +500,9 @@ public class ABMUsuario extends GeneralPage {
 
             session.saveOrUpdate(usuario);
             envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-            editaUsuario = false;
-//        usuario = createNewUsuario();
-//        }
-//        cancelaEditUsuario = false;
+            resetUsuario();
         }
         return zonasTotal();
-        //return editarUsuarioZone.getBody();
     }
 
     @Log
@@ -620,7 +611,7 @@ public class ABMUsuario extends GeneralPage {
             noEditaUsuario = true;
         }
         usuariotrabajadoredit = lusuariotrabajador;
-//        usuariotrabajadoredit.setIntentosfallidos(0);
+        intentosFallidos = usuariotrabajadoredit.getIntentosFallidos();
         muestraEditorUsuario = true;
         editaUsuario = true;
         bLoginValido = true;
@@ -672,10 +663,5 @@ public class ABMUsuario extends GeneralPage {
         }
         return c.list();
     }
-//    @Log
-//    Object onValueChangedRolusuarioedit(Rol editRol){
-//        System.err.println("onValueChangedFromRolUsuarioEdit");
-//        rolUsuarioEdit = editRol;
-//        return idValidaLogin.getBody();
-//    }
+
 }

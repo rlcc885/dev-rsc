@@ -4,25 +4,7 @@
  */
 package Batch.Helpers;
 
-import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Certificacion;
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.EvaluacionPersonal;
-import com.tida.servir.entities.Familiar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.RemuneracionPersonal;
-import com.tida.servir.entities.Titulo;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.UnidadOrganica;
+import com.tida.servir.entities.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
