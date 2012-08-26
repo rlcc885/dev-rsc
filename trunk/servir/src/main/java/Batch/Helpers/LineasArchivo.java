@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Batch.Helpers;
 
 /**
@@ -10,26 +9,27 @@ package Batch.Helpers;
  * @author Morgan
  */
 public class LineasArchivo {
-    private static int entidadUE =0;
-    private static int concepto =0;
-    private static int esquema =0;
+
+    private static int entidadUE = 0;
+    private static int concepto = 0;
+    private static int esquema = 0;
     //private static int organo =0;
-    private static int unidadorganica =0;
-    private static int cargo =0;
-    private static int trabajador =0;
-    private static int legajo =0;
-    private static int cargoasignado =0;
-    private static int familiar =0;
-    private static int titulo =0;
-    private static int certificacion =0;
-    private static int curso =0;
-    private static int antecedentlaboral =0;
-    private static int meritodemerito =0;
-    private static int produccionintelectual =0;
-    private static int remuneracionpersonal =0;
-    private static int evaluacion =0;
-    private static int ausencialicencia =0;
-    private static int constanciadocumental =0;
+    private static int unidadorganica = 0;
+    private static int cargo = 0;
+    private static int trabajador = 0;
+    private static int legajo = 0;
+    private static int cargoasignado = 0;
+    private static int familiar = 0;
+    private static int titulo = 0;
+    private static int certificacion = 0;
+    private static int curso = 0;
+    private static int antecedentlaboral = 0;
+    private static int meritodemerito = 0;
+    private static int produccionintelectual = 0;
+    private static int remuneracionpersonal = 0;
+    private static int evaluacion = 0;
+    private static int ausencialicencia = 0;
+    private static int constanciadocumental = 0;
 
     public static int getAntecedentlaboral() {
         return antecedentlaboral;
@@ -143,14 +143,6 @@ public class LineasArchivo {
         LineasArchivo.entidadUE = entidadUE;
     }
 
-    /*public static int getOrgano() {
-        return organo;
-    }
-
-    public static void setOrgano(int organo) {
-        LineasArchivo.organo = organo;
-    }*/
-
     public static int getProduccionintelectual() {
         return produccionintelectual;
     }
@@ -190,5 +182,4 @@ public class LineasArchivo {
     public static void setUnidadorganica(int unidadorganica) {
         LineasArchivo.unidadorganica = unidadorganica;
     }
-
 }

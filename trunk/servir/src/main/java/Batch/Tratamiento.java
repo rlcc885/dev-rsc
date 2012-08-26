@@ -5,33 +5,9 @@
 //prueb
 package Batch;
 // Esto es un comentario
-import Batch.Helpers.CreadorDesdeCsv;
-import Batch.Helpers.InformeSalida;
-import Batch.Helpers.LineaInformeCodigo;
-import Batch.Helpers.LineaInformeTipoNumeroDocumento;
-import Batch.Helpers.LineasArchivos;
-import Batch.Helpers.ListLineaEntidadUE;
-import Batch.Helpers.OrigenArchivos;
+import Batch.Helpers.*;
 import au.com.bytecode.opencsv.CSVReader;
-import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Certificacion;
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.EvaluacionPersonal;
-import com.tida.servir.entities.Familiar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.RemuneracionPersonal;
-import com.tida.servir.entities.Titulo;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.UnidadOrganica;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -43,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 /**

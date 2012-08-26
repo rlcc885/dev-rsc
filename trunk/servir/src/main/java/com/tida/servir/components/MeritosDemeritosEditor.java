@@ -47,8 +47,6 @@ public class MeritosDemeritosEditor {
     private int elemento = 0;
     @Component(id = "formularioclase")
     private Form formularioclase;
-//    @Component(id = "formulariomeritos")
-//    private Form formulariomeritos;
     @Component(id = "formulariomensajesME")
     private Form formulariomensajesME;
     @Persist
@@ -202,11 +200,6 @@ public class MeritosDemeritosEditor {
     @CommitAfter
     Object onSuccessFromFormularioclase() {
         formulariomensajesME.clearErrors();
-//        if (merito.getClasemeritodemerito() == null) {
-//            formulariomensajesME.recordError("Debe ingresar la Clase");
-//            //envelope.setContents("Debe ingresar la Clase");
-//            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
-//        }
         if (merito.getTipodocumento() == null) {
             formulariomensajesME.recordError("Debe ingresar el Documento");
             //envelope.setContents("Debe ingresar la Clase");
@@ -214,7 +207,6 @@ public class MeritosDemeritosEditor {
         }
 
         if (merito.getTipomeritodemerito() == null) {
-//            envelope.setContents("Debe ingresar el Tipo");
             formulariomensajesME.recordError("Debe ingresar el Tipo");
             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
         } else {
@@ -238,12 +230,10 @@ public class MeritosDemeritosEditor {
             }
 
             merito.setFecha(fecha_desde);
-            //   System.out.println("*************MDE :"+merito.getClasemeritodemerito());
             merito.setTrabajador_id(actual.getId());
             merito.setEntidad_id(_oi.getId());
             session.saveOrUpdate(merito);
             envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
-            //envelope.setContents("Mérito demérito creado / modificado exitosamente.");
             resetRegistro();
             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("listaMeritosZone", listaMeritosZone.getBody()).add("claseZone", claseZone.getBody());
         }
