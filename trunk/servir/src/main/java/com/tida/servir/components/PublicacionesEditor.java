@@ -260,23 +260,23 @@ public class PublicacionesEditor {
                 add("proIntelectualZone", proIntelectualZone.getBody());
     }
 
-    @Log
-    Object onActionFromEditar2(Publicacion publi) {
-        return onActionFromEditar(publi);
-    }
+//    @Log
+//    Object onActionFromEditar2(Publicacion publi) {
+//        return onActionFromEditar(publi);
+//    }
 
-    @Log
-    Object onActionFromDetalle2(Publicacion publi) {
-        return onActionFromDetalle(publi);
-    }
+//    @Log
+//    Object onActionFromDetalle2(Publicacion publi) {
+//        return onActionFromDetalle(publi);
+//    }
 
     @Log
     Object onActionFromDetalle3(Publicacion publi) {
         return onActionFromDetalle(publi);
     }
 
-    @Log
-    Object onActionFromEliminar2(Publicacion publi) {
-        return onActionFromEliminar(publi);
-    }
+//    @Log
+//    Object onActionFromEliminar2(Publicacion publi) {
+//        return onActionFromEliminar(publi);
+//    }
 }

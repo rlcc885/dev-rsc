@@ -53,7 +53,6 @@ public class ABMCargos extends GeneralPage {
 //    @InjectComponent
 //    @Property
 //    private Zone nivelCargoZone;
-    @Property
     @SessionState
     private Usuario loggedUser;
     @InjectComponent

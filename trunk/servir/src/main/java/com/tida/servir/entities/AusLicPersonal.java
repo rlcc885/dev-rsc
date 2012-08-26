@@ -1,12 +1,8 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -14,11 +10,13 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author ale
  */
 @Entity
-public class AusLicPersonal {
+public class AusLicPersonal implements Serializable {
 
 //	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Id
+    @GeneratedValue
     @NonVisual
     private Long id;
     
@@ -57,9 +55,7 @@ public class AusLicPersonal {
         this.fec_hasta = fec_hasta;
     }
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
+        public Long getId() {
         return id;
     }
 

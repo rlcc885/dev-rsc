@@ -36,7 +36,6 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @Property
     @Persist
     private ConceptoRemunerativo conceptoRemunerativo;
-    @Property
     @SessionState
     private Usuario loggedUser;
     @Property

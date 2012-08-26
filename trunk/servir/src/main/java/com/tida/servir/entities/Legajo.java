@@ -1,16 +1,15 @@
 package com.tida.servir.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.persistence.Table;
-
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
 @Entity
 @Table(name = "RSC_LEGAJO")
-public class Legajo {
+public class Legajo implements Serializable {
 //	@Id
 //  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //  @GenericGenerator(name = "system-uuid", strategy = "uuid")

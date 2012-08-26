@@ -10,14 +10,14 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.RenderSupport;
 import org.apache.tapestry5.annotations.Environmental;
-import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
 
 //This annotation tells Tapestry to declare the js file in the page so that the browser will pull it in.
-@IncludeJavaScriptLibrary("context:client/js/zone_updater.js")
+@Import(library={"context:client/js/zone_updater.js"})
 public class ZoneUpdater {
 
 	// Parameters

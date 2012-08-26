@@ -9,7 +9,7 @@ import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.RenderSupport;
 import org.apache.tapestry5.annotations.AfterRender;
-import org.apache.tapestry5.annotations.IncludeJavaScriptLibrary;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -19,7 +19,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  * event of any component that implements ClientElement.
  *
  */
-@IncludeJavaScriptLibrary("context:client/js/confirm.js")
+@Import(library={"context:client/js/confirm.js"})
 
 public class Confirm {
 

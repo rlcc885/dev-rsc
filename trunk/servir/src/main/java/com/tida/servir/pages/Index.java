@@ -288,45 +288,45 @@ public class Index {
         //return ip_Adress;
     }
 
-    StreamResponse onActionFromReturnStreamResponse() {
-        return new StreamResponse() {
-            InputStream inputStream;
-
-            @Override
-            public void prepareResponse(Response response) {
-                String reportesPath = "";
-                try {
-                    reportesPath = context.getRealFile("/").getCanonicalPath();
-                } catch (IOException ex) {
-                    java.util.logging.Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                File fileADescargar = new File(reportesPath + "/Manual del RNSC.pdf");
-
-                try {
-                    inputStream = new FileInputStream(fileADescargar);
-                } catch (FileNotFoundException ex) {
-//                                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                try {
-                    response.setHeader("Content-Type", "application/x-pdf");
-                    response.setHeader("Content-Disposition", "attachment; filename=" + fileADescargar.getName());
-                    response.setHeader("Content-Length", "" + inputStream.available());
-                } catch (IOException e) {
-                    // Ignore the exception in this simple example.
-                }
-            }
-
-            @Override
-            public String getContentType() {
-                return "text/plain";
-            }
-
-            @Override
-            public InputStream getStream() throws IOException {
-                return inputStream;
-            }
-        };
-    }
+//    StreamResponse onActionFromReturnStreamResponse() {
+//        return new StreamResponse() {
+//            InputStream inputStream;
+//
+//            @Override
+//            public void prepareResponse(Response response) {
+//                String reportesPath = "";
+//                try {
+//                    reportesPath = context.getRealFile("/").getCanonicalPath();
+//                } catch (IOException ex) {
+//                    java.util.logging.Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
+//                File fileADescargar = new File(reportesPath + "/Manual del RNSC.pdf");
+//
+//                try {
+//                    inputStream = new FileInputStream(fileADescargar);
+//                } catch (FileNotFoundException ex) {
+////                                    Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
+//                try {
+//                    response.setHeader("Content-Type", "application/x-pdf");
+//                    response.setHeader("Content-Disposition", "attachment; filename=" + fileADescargar.getName());
+//                    response.setHeader("Content-Length", "" + inputStream.available());
+//                } catch (IOException e) {
+//                    // Ignore the exception in this simple example.
+//                }
+//            }
+//
+//            @Override
+//            public String getContentType() {
+//                return "text/plain";
+//            }
+//
+//            @Override
+//            public InputStream getStream() throws IOException {
+//                return inputStream;
+//            }
+//        };
+//    }
 }

@@ -7,8 +7,8 @@ package com.tida.servir.base;
 
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.pages.SesionTimeout;
-import org.apache.tapestry5.annotations.ApplicationState;
 import org.apache.tapestry5.annotations.InjectPage;
+import org.apache.tapestry5.annotations.SessionState;
 
 /**
  * Página general de la que heredan las otras. Para manejar excepciones de session, etc
@@ -17,7 +17,7 @@ import org.apache.tapestry5.annotations.InjectPage;
  */
 public class GeneralPage {
 ;
-        @ApplicationState
+        @SessionState
         private Usuario _loggedUser;
         private boolean _loggedUserExists;
 

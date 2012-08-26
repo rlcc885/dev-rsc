@@ -3,31 +3,29 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Entidad_BK;
-import helpers.Errores;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
+import helpers.Errores;
 import helpers.Reportes;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 
-@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
+@Import(stylesheet ={"context:layout/trabajadornuevo.css"})
 /**
  * Clase que maneja la pagina de creacion de Trabajador
  */

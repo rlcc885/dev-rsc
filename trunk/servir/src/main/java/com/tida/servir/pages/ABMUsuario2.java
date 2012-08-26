@@ -27,7 +27,6 @@ public class ABMUsuario2 {
     private Usuario usuario;
     @Property
     private Usuario u;
-    @Property
     @SessionState
     private Usuario loggedUser;
     @Property
