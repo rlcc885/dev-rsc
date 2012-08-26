@@ -228,7 +228,7 @@ public class MeritosDemeritosEditor {
 //            envelope.setContents("Ud, no tiene permisos para Insertar Datos");
                 return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
             }
-
+            merito.setClasemeritodemerito_id(Long.parseLong(clase));
             merito.setFecha(fecha_desde);
             merito.setTrabajador_id(actual.getId());
             merito.setEntidad_id(_oi.getId());

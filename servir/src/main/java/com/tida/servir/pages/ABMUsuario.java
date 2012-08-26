@@ -654,7 +654,7 @@ public class ABMUsuario extends GeneralPage {
             nombreEntidadEdit = entidad.getDenominacion();
         }
         mostrar = false;
-        return formularioEntidadZone.getBody();
+        return new MultiZoneUpdate("formularioEntidadZone",formularioEntidadZone.getBody()).add("busZone",busZone.getBody()).add("entiZone",entiZone.getBody());
     }
 
     @Log
