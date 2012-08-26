@@ -64,9 +64,13 @@
                             <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
                             <a onClick="javascript: mostrar();" class="button f-right">...</a>
                         </div>
-                        <div class="f-left">
+<!--                        <div class="f-left">
                             <t:label for="bselectPerfil"/>
                             <t:select t:id="bselectPerfil" model="selectPerfiles" encoder="selectPerfiles" t:value="bselectPerfil" style="width: 285px;" />
+                        </div>-->
+                        <div class="f-left">
+                            <t:label for="bselectRol"/>
+                            <t:select t:id="bselectRol" model="rolUsuario" t:value="bselectRol" style="width: 285px;" />
                         </div>
                     </div>
                 </fieldset>
@@ -148,17 +152,33 @@
                                     <select t:type="select" t:id="rolusuarioedit" t:model="rolUsuario" value="rolUsuarioEdit" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
                                 </t:form>
                             </div>
-                        </div>
-                        <t:zone t:id="idValidaLogin" id="idValidaLogin">
-                            <t:if test="${muestraValidaLogin}">
-                                <t:if test="${bLoginValido}">
-                                    <span class="okmsg">Login de usuario válido.</span>
-                                    <p:else>
-                                        <span class="errormsg">Ya existe el login de usuario.</span>
-                                    </p:else>
+                            <t:zone t:id="idValidaLogin" id="idValidaLogin">
+                                <t:if test="${muestraValidaLogin}">
+                                    <div class="clear">
+                                        <t:if test="${bLoginValido}">
+                                            <span class="okmsg">Login de usuario válido.</span>
+                                            <p:else>
+                                                <span class="errormsg">Ya existe el login de usuario.</span>
+                                            </p:else>
+                                        </t:if>
+                                    </div>
                                 </t:if>
-                            </t:if>
-                        </t:zone>
+                            </t:zone>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:zone t:id="formularioEntidadZone" id="formularioEntidadZone">
+                                    <t:form t:id="formularioEntidad" t:zone="formularioEntidadZone">
+                                        <t:label for ="nombreEntidadEdit"/>
+                                        <input t:type="TextField" t:id="nombreEntidadEdit" t:value="nombreEntidadEdit" t:readonly="readonly" size="85" t:disabled="true"/>
+                                        <t:if test="${noEditaUsuario}" negate="true">
+<!--                                        <a onClick="javascript: mostrar();" class="button f-right">...</a>-->
+                                            <input t:type="submit" t:id="buscarEntidadUsuario" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                                        </t:if>
+                                    </t:form>
+                                </t:zone>
+                            </div>
+                        </div>
                     </fieldset>
                     <t:form  t:id="formularioPersonal" t:zone="editarUsuarioZone">
                         <fieldset>
@@ -384,8 +404,13 @@
                         <t:parameter name="empty">
                             <div class="no-info">No hay entidades con los criterios de búsqueda.</div>
                         </t:parameter>
-                        <p:accionesCell>                            
-                            <t:actionlink t:id="seleccionaEntidad" zone="zonaFormularioBusqueda" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        <p:accionesCell>
+                            <t:if test="seleccionaEntidadUsuario" negate="true">
+                                <t:actionlink t:id="seleccionaEntidad" zone="zonaFormularioBusqueda" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>
+                            </t:if>
+                            <t:if test="seleccionaEntidadUsuario">
+                                <t:actionlink t:id="seleccionaEntidadUsuario" zone="formularioEntidadZone" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar Entidad</t:actionlink>
+                            </t:if>
                         </p:accionesCell>
                     </t:grid>
                 </div>
