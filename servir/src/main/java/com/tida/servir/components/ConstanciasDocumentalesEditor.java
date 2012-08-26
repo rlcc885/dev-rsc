@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
+import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,96 +16,122 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author LFL
+ * @author ale
  */
 public class ConstanciasDocumentalesEditor {
-    @Property
-    @SessionState
-    private Usuario _usuario;
-    @Property
-    @SessionState
-    private Entidad _oi;
+//Parameters of component
+
     @Inject
     private Session session;
-    @InjectComponent
-    private Envelope envelope;
-   
-    
-    @Component(id = "formulariomensajesDT")
-    private Form formulariomensajesDT;
-    @InjectComponent
-    private Zone mensajesDTZone;  
-       
-    @InjectComponent
-    private Zone documentosZone;
-    
-    private int elemento=0;
-     
     @Parameter
     @Property
     private Trabajador actual;
-    
+    @Property
+    @SessionState
+    private Entidad _oi;
+    @InjectComponent
+    private Envelope envelope;
     @Persist
     @Property
     private ConstanciaDocumental constancia;
-    
+    @Persist
+    @Property
+    private ConstanciaDocumental documento;
+    @Property
+    @SessionState
+    private Usuario _usuario;
+    @Inject
+    private PropertyAccess _access;
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
+    //zonas
+    @InjectComponent
+    private Zone listaDocumentosZone;
+    @InjectComponent
+    @Property
+    private Zone primerZone;
+    @InjectComponent
+    @Property
+    private Zone mensajesZone;
+    @Component(id = "formularioMensajes")
+    private Form formularioMensajes;
+    @Inject
+    private Request _request;
+    @Persist
+    @Property
+    private DatoAuxiliar valcategoriaconstancia;
+    @Persist
+    @Property
+    private DatoAuxiliar valtipoconstancia;
+//    @Persist
+//    @Property
+//    private DatoAuxiliar valcargoasignado;
+    @Property
+    @Persist
+    private String valobligatorio;
     @Persist
     @Property
     private String valfec_desde;
     @Persist
     @Property
     private Date fecha_desde;
-
-    @Persist
-    private GenericSelectModel<CargoAsignado> _cargoasignado;
-    
-   
-    //Listado de familiares
-    @InjectComponent
-    private Zone listaDocumentosZone;
     @Persist
     @Property
-    private ConstanciaDocumental listaDocumentos;
-    
+    private Boolean valentregado;
+    @Persist
+    @Property
+    private Boolean opcionADM;
+    //validaciones
+    @Persist
+    @Property
+    private Boolean vdetalle;
+    @Persist
+    @Property
+    private Boolean editando;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Persist
+    @Property
+    private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Persist
+    @Property
+    private Boolean vrevisado;
+    @Persist
+    @Property
+    private Boolean vNoedita;
+    private int elemento = 0;
     @Persist
     @Property
     private CargoAsignado cargoasignado;
     @Persist
     @Property
     private Legajo lega;
-    @Persist
-    @Property
-    private String bobligatorio;
-    @Persist
-    @Property
-    private String bentrego;
-    
-        @Property
-    @Persist
-    private boolean beditar;
- 
-    @Inject
-    private PropertyAccess _access;
-    
-    //Inicio de lac carga de la pagina
     @Log
-    @SetupRender
-    private void inicio() {
-            constancia=new ConstanciaDocumental();
-            listaDocumentos=new ConstanciaDocumental();
-            bentrego="";
-            bobligatorio="";
-            beditar=false;
-            valfec_desde=null;
-           
+    public List<ConstanciaDocumental> getListadoDocumentos() {
+        Criteria c2 = session.createCriteria(ConstanciaDocumental.class);
+        c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
+        c2.add(Restrictions.eq("legajo",buscarlegajo()));
+        c2.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return c2.list();
     }
     
+    @Log
     public Legajo buscarlegajo(){
          Criteria c1 = session.createCriteria(Legajo.class);  
          c1.add(Restrictions.eq("trabajador", actual));
@@ -118,17 +141,6 @@ public class ConstanciasDocumentalesEditor {
          return lega;
          
    }
-    
-    
-    @Log
-    public List<ConstanciaDocumental> getListadoDocumentos() {
-        Criteria c2 = session.createCriteria(ConstanciaDocumental.class);
-        //c.add(Restrictions.eq("entrego",true));
-        c2.add(Restrictions.eq("legajo",buscarlegajo()));
-        c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
-        return c2.list();
-    }
-   
     @Log
    public CargoAsignado getCargosAsignados() {
        Criteria c3 = session.createCriteria(CargoAsignado.class);
@@ -138,132 +150,387 @@ public class ConstanciasDocumentalesEditor {
          
        return cargoasignado;
    }
-     //para obtener datos de la Categoria
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanCategoria() {        
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIACONSTANCIA", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
-    //para obtener datos del TipoDocumento
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {
             List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
+
+  /*  Log
+    public GenericSelectModel<LkBusquedaCargo> getCargosAsignados()
+    {   Criteria c;
+       c =  session.createCriteria(LkBusquedaCargo.class);
+       c.add(Restrictions.eq("", usua));
+       
+       return new GenericSelectModel<LkBusquedaCargo>(list, DatoAuxiliar.class, "valor", "id", _access);        
+    }*/
+   /* @Log
+    public GenericSelectModel<CargoAsignado> getCargosAsignados2()
+    {   Criteria c;
+    c = session.createCriteria(CargoAsignado.class);
+    c.add(Restrictions.eq("trabajador", actual));
     
-    
-    void onSelectedFromCancel() {
-        elemento=2;
+        return new GenericSelectModel<CargoAsignado>(c.list(), CargoAsignado.class, "id","valor" , _access);
     }
-    
+    */
+
+
+    //@Log
     void onSelectedFromReset() {
-         elemento=1;
+              
+        elemento = 2;
+        if(vdetalle){
+            vformulario = false;
+            vNoedita=false;
+            if (usua.getAccesoreport() == 1) {
+                vformulario=true;
+                vdetalle=false;
+                vbotones=true;
+                limpiar();
+                formularioMensajes.clearErrors();
+                editando = false;
+                constancia = new ConstanciaDocumental();
+                vNoedita=true;
+            }
+        }
+        else{
+            if (usua.getAccesoreport() == 0) {
+                vformulario=false;
+                vdetalle=false;
+                vbotones=false;
+                vNoedita=false;
+            }
+            else{
+                limpiar();
+                formularioMensajes.clearErrors();
+                editando = false;
+                constancia = new ConstanciaDocumental();  
+            }            
+        }
     }
-    
+
     @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariodocumentos() {
-        if(!beditar){
+    void onSelectedFromSave() {
+        elemento = 1;
+    }
+
+    @Log
+    void onSelectedFromCancel() {
+        elemento = 3;
+    }
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariobotones() throws ParseException {     
+   this.seguimiento();
+        if (valfec_desde != null) 
+        {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+            } catch (ParseException ex) {}
+        }
+        
+        
+        if (elemento == 3) 
+        {
+            if (_usuario.getRolid() == 1) {
+                return "TrabajadorPersonal";
+            } else {
+                return Busqueda.class;
+            }
+        } 
+        else if (elemento == 2) 
+        {
+            return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+                    add("mensajesZone", mensajesZone.getBody());
+        } 
+        else if (elemento == 1) 
+        {
+            formularioMensajes.clearErrors();
+            Logger logger = new Logger();
+            if (fecha_desde == null) 
+            {
+                formularioMensajes.recordError("Tiene que ingresar Fecha de Inicio");
+                return mensajesZone.getBody();
+            }
+            if (fecha_desde.after(new Date())) 
+            {
+                formularioMensajes.recordError("La fecha debe ser previa a la fecha actual.");
+                return mensajesZone.getBody();
+            }
+            if (valtipoconstancia == null)
+            {
+                formularioMensajes.recordError("Tiene que ingresar el tipo de documento.");
+                return mensajesZone.getBody();                
+            }
+            if (valcategoriaconstancia == null)
+            {
+                formularioMensajes.recordError("Tiene que ingresar la categoria al cual pertenece el documento.");
+                return mensajesZone.getBody();                
+            }
+            if (editando) 
+            {
+                //editando
+                if (usua.getAccesoreport() == 0) 
+                {
+                    vformulario = false;
+                    vbotones=false;
+                    vNoedita=false;
+                }
+            } 
+            else 
+            {//guardando
+              
+                constancia = new ConstanciaDocumental();
+            }
+            if (vrevisado == true) 
+            {
+                if (valentregado == null) 
+                {
+                    constancia.setEntrego(false);
+                } 
+                else 
+                {
+                    constancia.setEntrego(valentregado);
+                }
+
+            }
+            seteo();
+            if(!editando)
+            {
             constancia.setLegajo(buscarlegajo());
             constancia.setCargoasignado(getCargosAsignados());
-        }
-            
-            if(bentrego.equalsIgnoreCase("SI")){
-                constancia.setEntrego(Boolean.TRUE);
-            }else if(bentrego.equalsIgnoreCase("NO")){
-                constancia.setEntrego(Boolean.FALSE);
-            }else{
-                constancia.setEntrego(null);
             }
-            if(bobligatorio.equalsIgnoreCase("SI")){
-                constancia.setObligatorio(Boolean.TRUE);
-            }else if(bobligatorio.equalsIgnoreCase("NO")){
-                constancia.setObligatorio(Boolean.FALSE);
-            }else{
-                 constancia.setObligatorio(null);
-            }
-            
-            if(valfec_desde!=null){
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
-                ex.printStackTrace();
-                }
-            }
-            constancia.setFecha(fecha_desde);
-            
             
             session.saveOrUpdate(constancia);
-            envelope.setContents(helpers.Constantes.CONSTANCIAS_DOCUMENTALES_EXITO);
-            constancia=new ConstanciaDocumental();
-            valfec_desde=null;
-            bentrego="";
-            bobligatorio="";
-            beditar=false;
-            return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
-                    .add("listaDocumentosZone", listaDocumentosZone.getBody())
-                    .add("documentosZone", documentosZone.getBody());  
-  
-    }
-    
-    @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariobotones() {
-        if(elemento==1){
-            constancia=new ConstanciaDocumental();
-            valfec_desde=null;
-            bentrego="";
-            bobligatorio="";
-            return  documentosZone.getBody();
-        }else if(elemento==2){
-            return "Busqueda";
-        }else{    
-           return this;
+            session.flush();
+     // INICIO acciones de auditoria        
+            if (!editando) 
+            {
+                logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
+            }
+            
+            if (valentregado != null) 
+            {
+                if (valentregado == true) 
+                {
+                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + constancia.getCargoasignado().getTrabajador().getId() + "' and tipoevento_id='" + Logger.MODIFICACION_DOCUMENTOS + "' and tabla_id='" + constancia.getId() + "' and estadoevento=0";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+                    session.flush();
+                }
+            }
+     // FIN acciones de auditoria       
+            editando = false;
+            limpiar();
+            envelope.setContents("Documento creado / modificado con exito");
         }
-        
-    }
-    
-    @Log
-    Object onActionFromEditar(ConstanciaDocumental consta) {        
-        constancia=consta;
-        
-        if(constancia.getFecha()!=null){
-            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(constancia.getFecha());
-        }
-        
-        beditar=true;
-        if(constancia.getEntrego()==true){ 
-            bentrego="SI";
-        }else if(constancia.getEntrego()==false){
-            bentrego="NO";
-        }else{
-            bentrego="";
-        }
-        if(constancia.getObligatorio()==true){ 
-            bobligatorio="SI";
-        }else if(constancia.getObligatorio()==false){
-            bobligatorio="NO";
-        }else{
-            bobligatorio="";
-        }
-           return documentosZone.getBody(); 
-    }
-    
-    @Log
-    @CommitAfter        
-    Object onActionFromEliminar(ConstanciaDocumental consta) {
-        session.delete(consta);
-         envelope.setContents("Constancias Documentales eliminadas exitosamente.");
-        return new MultiZoneUpdate("mensajesDTZone", mensajesDTZone.getBody())                             
-                    .add("listaDocumentosZone", listaDocumentosZone.getBody());
 
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+                add("mensajesZone", mensajesZone.getBody()).
+                add("listaDocumentosZone", listaDocumentosZone.getBody());
+    }
+
+    @Log
+    Object onActionFromEditar(ConstanciaDocumental cons) {
+        constancia = cons;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
+        vNoedita=true;
+        mostrar();
+        return actualizarZonas();
+    }
+
+    @Log
+    Object onActionFromDetalle(ConstanciaDocumental cons) {
+        constancia = cons;
+        mostrar();
+        vdetalle = true;
+        vbotones = false;
+        vNoedita=true;
+        vformulario = true;
+        return actualizarZonas();
+    }
+
+    @Log
+    Object onActionFromDetalles(ConstanciaDocumental cons) {
+        constancia = cons;
+        mostrar();
+        vdetalle = true;
+        vbotones = false;
+        vNoedita=true;
+        vformulario = true;
+        return actualizarZonas();
+    }
+
+    @Log
+    @CommitAfter
+    Object onBorrarDato(ConstanciaDocumental dato) {
+        
+        dato.getId();System.out.println("OBJETO A ELIMINAR: "+dato.getId());
+        Query query = session.createSQLQuery("DELETE FROM RSC_CONSTANCIADOCUMENTAL WHERE ID = '"+dato.getId()+"'");
+        int resultado = query.executeUpdate();
+        session.flush();
+        envelope.setContents("Documento del Trabajador Eliminado");
+        
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+                add("mensajesZone", mensajesZone.getBody()).
+                add("listaDocumentosZone", listaDocumentosZone.getBody());
+    }
+
+    @Log
+//    @SetupRender
+    void setupRender() {
+        vrevisado = false;
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
+        opcionADM=false;
+        if (usua.getAccesoupdate() == 1) 
+        {
+            veditar = true;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
+            {
+                vrevisado = true;
+            }
+        }
+        if (usua.getAccesodelete() == 1) 
+        {
+            veliminar = true;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
+            {
+                vrevisado = true;
+            }
+        }
+        if (usua.getAccesoreport() == 1) 
+        {
+            vformulario = true;
+            vbotones = true;
+            vNoedita=true;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
+            {
+                vrevisado = true;
+            }
+        }
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
+        {
+          opcionADM = true;
+        }
+        
+        
+        editando = false;
+        limpiar();
+    }
+
+    @Log
+    MultiZoneUpdate actualizarZonas(){
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+                add("listaDocumentosZone", listaDocumentosZone.getBody());
     }
     
+    @Log
+    void seteo() throws ParseException {
+        this.seguimiento();
+        constancia.setCategoriaconstancia(valcategoriaconstancia);
+        constancia.setTipoconstancia(valtipoconstancia);
+        constancia.setFecha(convertirFecha(valfec_desde));
+        constancia.setObligatorio(esObligatorio(valobligatorio));
+        constancia.setEntrego(valentregado);
+//      constancia.setCargoasignado(valcargoasignado);
+    }
     
+    void seguimiento()
+    {
+        System.out.println("***CDE: "+valcategoriaconstancia);
+        System.out.println("***CDE: "+valtipoconstancia);    
+        System.out.println("***CDE: "+valfec_desde);
+        System.out.println("***CDE: "+valobligatorio);
+        System.out.println("***CDE: "+valentregado);
+    }
     
-    
+    @Log
+    void mostrar() {
+        valcategoriaconstancia = constancia.getCategoriaconstancia();
+        valtipoconstancia = constancia.getTipoconstancia();
+        valfec_desde= mostrarFecha(constancia.getFecha());
+        valobligatorio = valorObligatorio(constancia.getObligatorio());
+        valentregado = constancia.getEntrego();
+   //   valcargoasignado = constancia.getCargoasignado();
+    }
+ 
+    @Log
+    String mostrarFecha(Date fecha){
+      String resultado;
+      SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+      resultado = formatoDeFecha.format(fecha);
+      return resultado;
+    }
+ 
+    @Log
+    Date convertirFecha(String fecha) throws ParseException{
+      Date resultado;
+      SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+      resultado = (Date) formatoDelTexto.parse(fecha);
+      return  resultado;   
+   }
    
+    @Log
+    Boolean esObligatorio(String opcion){
+        
+        if (opcion == null){opcion = "X";}
+        
+        if(opcion.equalsIgnoreCase("SI"))
+        {
+         return Boolean.TRUE;
+        }
+        else if(opcion.equalsIgnoreCase("NO"))
+        {
+            return Boolean.FALSE;
+        }
+        else
+        {
+            return Boolean.FALSE;
+        }
+
+    }        
+
+    @Log
+    String valorObligatorio(Boolean opcion){
+       if(opcion==true)
+       { 
+            return "SI";
+        }
+       else if(opcion==false)
+       {
+            return "NO";
+        }
+       else
+       {
+            return "";
+        }   
+    }
+    
+    @Log
+    void limpiar() {
+        this.seguimiento();
+       constancia = new ConstanciaDocumental();
+//     documento = new ConstanciaDocumental();
+       valcategoriaconstancia = null;
+       valtipoconstancia = null;
+       valfec_desde = "";
+       valentregado = null;
+       valobligatorio = "";
+//     valcargoasignado = null;
+    }
 }
