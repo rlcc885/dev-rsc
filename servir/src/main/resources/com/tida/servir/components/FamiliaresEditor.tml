@@ -3,6 +3,16 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">        
     <t:content>
+        <div>
+                            <script>
+                                jQuery(document).ready(function() {
+                                //
+                                //jQuery(function() {
+                                jQuery('.fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
+                                //jQuery('.fechaNacimiento').datepicker();
+                                });
+                            </script>
+                        </div>
         <div t:type="zone" t:id="mensajesFZone" >
             <script>
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
@@ -15,6 +25,7 @@
         <fieldset>
             <div class="f-wrap">  
                 <div t:type="zone" t:id="familiaresZone" >
+                    
                     <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
                         <div class="f-wrap">                             
                             <div class="f-left" >
@@ -98,13 +109,7 @@
                                 </span> 
                             </t:eventLink>
                         </div>
-                        <div>
-                            <script>
-                                jQuery(document).ready(function() {
-                                jQuery('.fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
-                                });
-                            </script>
-                        </div>
+                        
                     </t:form>  
                 </div>
             </div>
