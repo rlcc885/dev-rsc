@@ -1,0 +1,530 @@
+
+<html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <h1>Administración de Entidades</h1>
+    <t:if test="${arroja}">
+        <div class="t-error">
+            Usted no tiene acceso
+        </div>
+        <META HTTP-EQUIV="Refresh" CONTENT="0;URL=alerta" />
+    </t:if>
+<!--    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>-->
+    <ul id="tabs-topb" class="tabs">
+        <li>
+            <a href="#"> Entidad</a>
+        </li>
+        <li>
+            <a href="#"> Subentidad</a>
+        </li>
+    </ul>
+    <div id="busquedasenti" class="pane">
+        <div t:type="zone" t:id="busquedacombosZone">
+            <script>
+                sortAllSelects();
+            </script>
+            <t:form t:id="formBusqueda" t:zone="listaentidadZone"> 
+                <fieldset>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="bnivelGobierno">Nivel de Gobierno:</t:label>
+                            <select t:type="Select" t:id="bnivelGobierno" t:value="bnivelGobierno" model="NivelGobierno" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:120px;"/>
+                        </div>
+                        <div class="f-left"> 
+                            <t:label for="borganizacionEstado"/>
+                            <input t:type="Select" t:id="borganizacionEstado" t:value="borganizacionEstado" model="OrganizacionEstado" t:zone="busquedacombosZone" t:blankOption="ALWAYS"/>
+                        </div>
+                        <t:if test="bMuestraSector">
+                            <div class="f-left"> 
+                                <t:label for="bsectorGobierno"/>
+                                <input t:type="Select" t:id="bsectorGobierno" t:value="bsectorGobierno" model="SectorGobierno" t:zone="busquedacombosZone" t:blankOption="ALWAYS"/>
+                            </div>
+                            <div class="f-left"> 
+                                <t:label for="btipoOrganismo"/>
+                                <input t:type="Select" t:id="btipoOrganismo" t:value="btipoOrganismo" model="TipoOrganismo" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:335px;"/>
+                            </div>
+                        </t:if>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for ="busdenominacion"/>
+                            <input t:type="TextField" t:id="busdenominacion" t:value="busdenominacion" t:validate="maxlength=255" size="75"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="busdenominacionChanged"  t:zone="busquedasubcombosZone"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for ="busestado"/>
+                            <input t:type="Select" t:id="busestado" t:value="busestado"  model="literal:Activo,Inactivo" t:zone="busquedasubcombosZone" />
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left" id="ubigeo_busentidadUE"> 
+                            <input t:type="Ubigeos" t:id="ubigeo_busentidadUE" t:ubigeo="ubigeobusEntidadUE"
+                                   t:zone="busquedacombosZone" t:zoneName="busquedacombosZone" />         
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="f-wrap">
+                    <input t:type="Submit" t:id="busenviar" value="Buscar" class="button f-right" />
+                    <input t:type="Submit" t:id="busreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
+                </div>
+            </t:form>
+        </div>
+    </div>
+    <div id="busquedassubenti" class="pane">
+        <div t:type="zone" t:id="busquedasubcombosZone" id="busquedasubcombosZone">
+            <script>
+                sortAllSelects();
+            </script>
+            <t:form t:id="formulariosubcombosbusqueda" id="formulariosubcombosbusqueda" t:zone="listaentidadZone"> 
+                <fieldset>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="btiposubentidad"/>
+                            <select t:type="Select" t:id="btiposubentidad" t:value="btiposubentidad" 
+                                   model="TipoSubEntidad" 
+                                   t:blankOption="ALWAYS"
+                                    t:zone="busquedasubcombosZone" />
+                        </div> 
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for ="bussubdenominacion"/>
+                            <input t:type="TextField" t:id="bussubdenominacion"
+                                   t:value="bussubdenominacion" t:validate="maxlength=255" size="75"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bussubdenominacionChanged"  t:zone="busquedasubcombosZone"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for ="bussubestado"/>
+                            <select t:type="Select" t:id="bussubestado" id="bussubestado"
+                                   t:value="bussubestado"  model="literal:Activo,Inactivo" t:zone="busquedasubcombosZone"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left" id="ubigeo_bussubentidadUE"> 
+                            <input t:type="Ubigeos" t:id="ubigeo_bussubentidadUE" t:ubigeo="ubigeobusSubEntidadUE"
+                                   t:zone="busquedasubcombosZone" t:zoneName="busquedasubcombosZone" />         
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="f-wrap">
+                    <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?" />  
+                </div>
+            </t:form>
+        </div>
+    </div> 
+    
+    <div class="box-background-title">
+        <span class="box-title">Listado de Entidades</span>
+    </div>
+    <div class="box">
+        <t:zone t:id="listaentidadZone">
+            <t:grid source="listadoEntidades" 
+                    rowsPerPage="10" 
+                    pagerPosition="bottom"
+                    row="listaentidad" 
+                    exclude="id,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
+                    reorder="ruc,denominacion,sigla,cue_entidad,departamento,acciones"
+                    inPlace="true" 
+                    t:add="Acciones">
+                <t:parameter name="empty">
+                    <div class="no-info">No se encontraron coincidencias</div>
+                </t:parameter>
+                <p:accionesCell>
+                    <t:if test="${veditar}">
+                        <a t:type="eventLink" t:event="editarSeleccion" t:context="listaentidad" href="#" t:zone="listaentidadZone">Editar</a> 
+                    </t:if>
+                    <t:if test="${veditar}" negate="true">
+                        <t:actionlink t:id="detalle" zone="listaentidadZone" context="listaentidad">Detalle</t:actionlink>
+                    </t:if>
+                    <t:if test="${veliminar}">
+<!--                    <t:actionlink t:id="editarSeleccion" context="listaentidad">Editar</t:actionlink> | -->
+                        <t:actionlink t:id="eliminarSeleccion" zone="listaentidadZone" context="listaentidad">
+                            <t:if test="${listaentidad.estado}">
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                    | Eliminar
+                                </span>
+                            </t:if>    
+                            <t:if test="${listaentidad.estado}" negate="true">
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea revertir el registro?">
+                                    | Revertir
+                                </span>
+                            </t:if>   
+                        </t:actionlink> 
+                    </t:if>
+                </p:accionesCell>
+            </t:grid>  
+        </t:zone>
+    </div>
+             
+    <div class="box-background-title">
+        <span class="box-title">Crear / Editar Registro de Entidad</span>
+    </div>
+    <div class="box">
+        <fieldset>
+            <legend> Datos </legend>
+            <t:zone t:id="EOrigenZone" t:update="show">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formularioEntidadOrigen" zone="EOrigenZone" >
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="esSubEntidad"/>
+                                <input t:type="Checkbox" t:id="esSubEntidad" t:value="entidadUE.esSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:disabled="${vdetalle}"/>
+                            </div>
+                            <t:if test="bessubentidad">
+                                <div class="f-left">
+                                    <t:label for ="entidad_origen"/>
+                                    <input t:type="TextField" t:id="entidad_origen" t:value="entidad_origen" t:readonly="readonly" size="85" t:disabled="${vdetalle}"/>
+                                    <t:if test="${vdetalle}" negate="true">
+                                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                                    </t:if>
+                                </div>
+                                <div class="f-left"> 
+                                    <t:label for="tiposubentidad"/>
+                                    <input t:type="Select" t:id="tiposubentidad" t:disabled="${vdetalle}" t:value="entidadUE.tiposubentidad" 
+                                       model="TipoSubEntidad" t:blankOption="ALWAYS" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                </div>
+                            </t:if>
+                        </div>
+                    </t:form>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="zoneDatos" t:update="show">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formDatos">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="NivelGobierno"/>
+                                <select t:type="Select" t:id="NivelGobierno" t:value="entidadUE.nivelgobierno" model="NivelGobierno" 
+                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" t:style="width:120px;" disabled="${bessubentidad}" />                     
+                            </div>
+                            <div class="f-left"> 
+                                <t:label for="organizacionEdicion"/>
+                                <select t:type="Select" t:id="organizacionEdicion" t:value="entidadUE.organizacionestado" model="OrganizacionEstadoEdicion" 
+                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" disabled="${bessubentidad}" />
+                            </div>
+                            <t:if test="bMuestraSectorEdicion">
+                                <div class="f-left"> 
+                                    <t:label for="sectorgobierno"/>
+                                    <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno"
+                                       model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zoneDatos"
+                                       t:validate="required" t:blankOption="ALWAYS" disabled="${bessubentidad}" />
+                                </div>
+                                <div class="f-left"> 
+                                    <t:label for="tipoorganismo"/>
+                                    <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
+                                       model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zoneDatos"
+                                       t:validate="required" t:blankOption="ALWAYS" t:style="width:335px;" disabled="${bessubentidad}" />
+                                </div>
+                            </t:if>  
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for ="denominacionedit"/>
+                                <input t:type="TextField" t:id="denominacionedit" t:disabled="${vdetalle}"
+                                   t:value="entidadUE.denominacion" t:validate="required, maxlength=255" size="85"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denominacionChanged"  t:zone="zoneDatos" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="siglaedit"/>
+                                <input t:type="TextField" t:id="siglaedit"  t:disabled="${vdetalle}"
+                                   t:value="entidadUE.sigla" t:validate="maxlength=20" size="12" 
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="siglaChanged"  t:zone="zoneDatos" />
+                            </div>
+                        </div>
+
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="rucedit"/>
+                                <input t:type="TextField" t:id="rucedit" t:disabled="${vdetalle}"
+                                   t:value="entidadUE.ruc" t:validate="regexp"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zoneDatos"/>
+                            </div>
+                            <div class="f-left">
+                                <t:label for="cueedit"/>
+                                <input t:type="TextField" t:id="cueedit" t:disabled="${vdetalle}"
+                                   t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" 
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cue_entidadChanged" t:zone="zoneDatos" />
+                            </div>
+
+                            <div class="f-left">
+                                <t:label for ="proc_batch"/>
+                                <input t:type="Checkbox" t:id="proc_batch" 
+                                   t:value="entidadUE.proc_batch" t:disabled="${vdetalle}"/>
+                            </div>
+                        </div>
+                    </t:form>
+                </t:if>
+            </t:zone>
+        </fieldset>
+        <fieldset>
+            <legend> Ubicación </legend>
+            <t:zone t:id="ubigeoEntidadZone" t:update="show">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formUbicacion"  zone="ubigeoEntidadZone">  
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="tipovia"/>
+                                <input t:type="Select" t:id="tipovia" t:value="entidadUE.tipovia" 
+                                   model="TipoVia" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                   t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
+                            </div>
+                            <div class="f-left">
+                                <t:label for="direccion"/>
+                                <input t:type="TextField" t:id="direccion" t:value="entidadUE.descvia" t:style="width: 200px;"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
+                                   t:zone="ubigeoEntidadZone" t:disabled="${vdetalle}"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="tipozona"/>
+                                <input t:type="Select" t:id="tipozona" t:value="entidadUE.tipozona" 
+                                   model="TipoZona" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" 
+                                   t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
+                            </div> 
+                            <div class="f-left">
+                                <t:label for="desczona"/>
+                                <input t:type="TextField" t:id="desczona" t:value="entidadUE.descZona" t:style="width: 500px;"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descZonaChanged"  
+                                   t:zone="ubigeoEntidadZone" t:disabled="${vdetalle}"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left" id="ubigeo_entidadUE"> 
+                                <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="ubigeoEntidadZone" t:zoneName="ubigeoEntidadZone" t:disabled="${vdetalle}"/>
+                            </div>
+                        </div>               
+                    </t:form>
+                </t:if>
+            </t:zone>
+        </fieldset>
+        <fieldset>
+            <legend> Otros Datos </legend>
+            <t:zone t:id="zoneOtrosDatos" t:update="show">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formOtrosDatos"  zone="zoneOtrosDatos">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="emailinstitucional"/>
+                                <input t:type="TextField" t:id="emailinstitucional"
+                                   t:value="entidadUE.emailInstitucional" t:disabled="${vdetalle}"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="emailInstitucionalChanged"  t:zone="zoneOtrosDatos" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="urlentidad"/>
+                                <input t:type="TextField" t:id="urlentidad"
+                                   t:value="entidadUE.urlEntidad" t:disabled="${vdetalle}"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urlEntidadChanged"  t:zone="zoneOtrosDatos" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="telefonoEntidad"/>
+                                <input t:type="TextField" t:id="telefonoEntidad"
+                                   t:value="entidadUE.telefonoEntidad" t:disabled="${vdetalle}"
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="telefonoEntidadChanged"  t:zone="zoneOtrosDatos" />
+                            </div>
+                        </div>
+                    </t:form>
+                </t:if>
+            </t:zone>
+        </fieldset>
+        <fieldset>
+            <legend> Autoridades </legend>
+            <div class="f-wrap">                             
+                <t:zone t:id="TitularZone" t:update="show">
+                    <t:if test="${vformulario}">
+                        <t:form t:id="formulariotitular"  zone="TitularZone">
+                            <div class="f-left">
+                                <t:label for ="titular"/>
+                                <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" t:disabled="${vdetalle}"/> 
+                                <t:if test="${vdetalle}" negate="true">
+                                    <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                                </t:if>
+                            </div>
+                        </t:form>
+                    </t:if>
+                </t:zone>
+            </div>
+            <div class="f-wrap">
+                <t:zone t:id="JefeRRHHZone" t:update="show">
+                    <t:if test="${vformulario}">
+                        <t:form t:id="formulariojeferrhh"  zone="JefeRRHHZone">
+                            <div class="f-left">
+                                <t:label for ="jefeRRHH"/>
+                                <input t:type="TextField" t:id="jefeRRHH" t:style="width:600px;" t:value="jefeRRHH" t:readonly="readonly" t:disabled="${vdetalle}"/>
+                                <t:if test="${vdetalle}" negate="true">
+                                    <input t:type="submit" t:id="buscarJefeRRHH" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                                </t:if>
+                            </div>
+                        </t:form>
+                    </t:if>
+                </t:zone>
+            </div>
+            <div class="f-wrap">
+                <t:zone t:id="JefeOGAZone" t:update="show">
+                    <t:if test="${vformulario}">
+                        <t:form t:id="formulariojefeoga"  zone="JefeOGAZone">
+                            <div class="f-left">
+                                <t:label for ="jefeOGA"/>
+                                <input t:type="TextField" t:id="jefeOGA" t:style="width:600px;" t:value="jefeOGA" t:readonly="readonly" t:disabled="${vdetalle}"/>
+                                <t:if test="${vdetalle}" negate="true">
+                                    <input t:type="submit" t:id="buscarJefeOGA" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                                </t:if>
+                            </div>
+                        </t:form>
+                    </t:if>
+                </t:zone>
+            </div>
+        </fieldset>
+        <div t:type="zone" t:id="botonesZone" t:update="show">
+            <t:if test="${vformulario}">
+                <t:form t:id="formulariobotones"  zone="botonesZone">
+                    <div class="f-wrap">                    
+                        <t:if test="${vbotones}">
+                                <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                                <t:if test="${editando}" negate="true">
+                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>  
+                                </t:if>
+                                <t:if test="${editando}">
+                                <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                                </t:if>
+                        </t:if>
+                    </div>
+                </t:form>
+            </t:if>
+        </div>
+        <div t:type="zone" t:id="mensajesZone" >
+            <script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
+            <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+                <t:envelope t:id="envelope"/>
+                <t:errors t:id="errores"/>
+            </t:form>
+        </div>
+    </div>
+
+<!--    <SCRIPT LANGUAGE="JavaScript"> 
+        function mostrarEsconder() { 
+        cach.visibility = "visible";
+        } 
+    </SCRIPT>-->
+
+    <script>
+        <!--
+
+        // perform JavaScript after the document is scriptable.
+        jQuery(function() {
+            jQuery("ul.tabs").tabs("> .pane");
+        });
+        -->
+    </script>
+   
+    <div id="shade"></div>
+    <div id="modal">
+        <t:zone t:id="busZone2" t:update="show" >
+            <t:if test="bSeleccionaPersonal">
+                <h1>Selección de Trabajador</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone2">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Nombre completo: 
+                                <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                            </div>                   
+                            <div class="actions f-right">
+                                <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
+                                <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t:if>
+        </t:zone>
+        <t:zone t:id="trabajadorZone" t:update="show">
+            <t:if test="bSeleccionaPersonal">
+                <t:if test="mostrar">
+                    <t:if test="btitulari">
+                        <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
+                            <t:parameter name="empty">
+                                <div class="no-info">No hay Trabajadores encontrados.</div>
+                            </t:parameter>
+                            <p:accionesCell> 
+                                <t:actionlink t:id="seleccionaTitular" zone="TitularZone" context="titulart" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            </p:accionesCell>
+                        </t:grid>
+                    </t:if>
+                    <t:if test="bjefeRRHHi">
+                        <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jeferrhht" include="nombretrabajador" inPlace="true">
+                            <t:parameter name="empty">
+                                <div class="no-info">No hay Trabajadores encontrados.</div>
+                            </t:parameter>
+                            <p:accionesCell> 
+                                <t:actionlink t:id="seleccionaJefeRRHH" zone="JefeRRHHZone" context="jeferrhht" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            </p:accionesCell>
+                        </t:grid> 
+                    </t:if>
+                    <t:if test="bjefeOGAi">
+                        <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jefeogat" include="nombretrabajador" inPlace="true">
+                            <t:parameter name="empty">
+                                <div class="no-info">No hay Trabajadores encontrados.</div>
+                            </t:parameter>
+                            <p:accionesCell>          
+                                <t:actionlink t:id="seleccionaJefeOGA" zone="JefeOGAZone" context="jefeogat" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            </p:accionesCell>
+                        </t:grid>
+                    </t:if>
+                </t:if>
+            </t:if>
+        </t:zone>
+        <t:zone t:id="busZone" t:update="show">
+            <t:if test="bSeleccionaEntidad">
+                <h1>Selección de entidad</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Denominación
+                                <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 300px;"/> 
+                            </div>                   
+                        
+                            <div class="actions f-right">
+                                <t:actionlink t:id="cancelFormFindEntidad" t:zone="EOrigenZone" href="#" t:class="button" t:onClick="javascript: ocultar();">Cancelar</t:actionlink>
+                                <!--                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>-->
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t:if>
+        </t:zone>
+        <div t:type="zone" t:id="entiZone" t:update="show">
+            <t:if test="bSeleccionaEntidad">
+                <t:if test="mostrar">
+                    <t:grid source="entidades" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowEntidad" include="denominacion" inPlace="true" >
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades con los criterios de búsqueda.</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="seleccionaEntidad" zone="EOrigenZone" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>  
+                </t:if>
+            </t:if>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
+
+</html>

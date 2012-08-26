@@ -1,0 +1,13 @@
+.wrap .pane {
+    background-color:#fff ;
+    display:none;
+    padding:10px;
+    border:1px solid #999;
+    color:#456;
+    _background-image:none;
+}
+
+.wrap .pane p {
+    font-size:20px;
+    color:#578;
+} 

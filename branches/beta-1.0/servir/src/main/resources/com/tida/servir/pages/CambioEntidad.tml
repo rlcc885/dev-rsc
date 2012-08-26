@@ -1,0 +1,9 @@
+<html t:type="layout" title="Servir - Cambiar Entidad"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<!--     <h2> Selección de Entidad /U. Ejecutora </h2>-->
+     <div class="box-background-title"><span class="box-title">Selección de Entidad / Sub Entidad</span></div>
+     <div class="box">
+     <t:EntidadSelect  t:id="entidad" t:entidad="eue"/>
+     </div>
+</html>

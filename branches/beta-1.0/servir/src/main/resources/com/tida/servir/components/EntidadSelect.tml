@@ -1,0 +1,149 @@
+
+<html title="Editar Ubigeos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <fieldset>
+            <legend> Entidad </legend>
+            <form t:type="form" t:id="formNivelGobierno" >
+                <div class="f-wrap">
+                    <script>
+                        sortAllSelects();
+                    </script>
+                    <div class="f-left">
+                        <t:label for="snivelGobierno">Nivel de Gobierno</t:label>
+                        <select t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno"
+                                model="NivelGobierno" 
+                                t:zone="OrganizacionZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS" />
+                    </div>
+                    <t:zone t:id="OrganizacionZone" class="f-left" t:update="show">
+                        <t:if test="borganizacionestado">
+                            <script>
+                                sortAllSelects();
+                            </script>
+                            <div class="f-left">
+                                <t:label for="sorganizacionestado">Organización Estado</t:label>
+                                <select t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado"
+                                        model="OrganizacionEstado" 
+                                        t:zone="SectorZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                            </div>
+                        </t:if>
+                    </t:zone> 
+    
+                    <t:zone t:id="SectorZone" class="f-left" t:update="show">
+                        <t:if test="bsectorgobierno">  
+                            <script>
+                                sortAllSelects();
+                            </script>
+                            <div class="f-left">
+                                <t:label for="ssectorgobierno">Sector</t:label>
+                                <select t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno"
+                                        model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:zone="TipoOrganismoZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                            </div>
+                        </t:if>    
+                    </t:zone>
+                
+                    <t:zone t:id="TipoOrganismoZone" class="f-left" t:update="show">
+                        <t:if test="btipoorganismo">  
+                            <script>
+                                sortAllSelects();
+                            </script>
+                            <div class="f-left">
+                                <t:label for="stipoOrganismo">Tipo Organismo</t:label>
+                                <select t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo"
+                                        model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:zone="EntidadZone" t:blankOption="ALWAYS" t:blankLabel="...TODOS"/>
+                            </div>
+                        </t:if>
+                    </t:zone>
+                </div>
+                <div class="f-wrap">
+                    <t:zone t:id="EntidadZone" t:update="show">     
+                        <script>
+                            sortAllSelects();
+                        </script>
+                        <div class="f-left">
+                            <t:label for="sentidad">Entidad</t:label>
+                            <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
+                                    t:model="Entidades" t:encoder="Entidades" t:blankOption="NEVER" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:zone="EntidadZone"/>
+                        </div>
+                    </t:zone>
+                </div>
+            </form>
+        </fieldset>
+        
+        <fieldset>
+            <legend> Sub Entidad </legend>
+            <div class="f-wrap">
+                <t:zone t:id="EsSubEntidadZone" t:update="show">     
+                    <script>
+                        sortAllSelects();
+                    </script>
+                    <form t:type="form" t:id="formEsSubEntidad" t:zone="TipoSubEntidadZone" class="f-left">
+                        <div class="f-left">
+                            <t:label for ="sessubentidad">Es Sub-Entidad</t:label>
+                            <input t:type="Checkbox" t:id="sessubentidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                   t:value="sessubentidad" />
+                        </div>
+                    </form>            
+                </t:zone>   
+
+                <t:zone t:id="TipoSubEntidadZone" class="f-left" t:update="show">
+                    <t:if test="bessubentidad">  
+                        <script>
+                            sortAllSelects();
+                        </script>
+                        <form t:type="form" t:id="formTipoSubEntidad" t:zone="SubEntidadZone" class="f-left">
+                            <div class="f-left">
+                                <t:label for="stipoSubEntidad">Tipo Sub-Entidad</t:label>
+                                <select t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad"
+                                        model="TipoSubEntidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:validate="required" t:zone="SubEntidadZone" t:blankOption="ALWAYS" />
+                            </div>
+                        </form>
+                    </t:if>
+                </t:zone>
+            </div>
+            <div class="f-wrap">
+                <t:zone t:id="SubEntidadZone"  t:update="show">
+                    <t:if test="bessubentidad">  
+                        <script>
+                            sortAllSelects();
+                        </script>
+                        <form t:type="form" t:id="formSubEntidad" t:zone="SubEntidadZone">
+                            <div class="f-left">
+                                <t:label for="ssubentidad">Sub-Entidad</t:label>
+                                <select t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;"
+                                        model="SubEntidades" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:blankOption="NEVER"
+                                        t:zone="SubEntidadZone"/>
+                            </div>
+                        </form>
+                    </t:if>
+                </t:zone>
+            </div>
+        </fieldset>
+ 
+        <t:zone t:id="UnidadEjecutoraZone" class = "clear" t:update="show">
+            <script>
+                sortAllSelects();
+            </script>
+            <div t:type="zone" t:id="botonesZone" >
+                <t:form t:id="formulariobotones"  zone="botonesZone">
+                    <t:errors/>
+                    <input t:type="Submit" t:id="seleccionarentidad" value="Seleccionar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>
+                    <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?"/>  
+                    <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de realizar la acción?" /> 
+                </t:form>
+            </div>
+            <br class="clear" />
+            <t:if test="vistaCorta" negate = "true">
+                <t:envelope t:id="envelope"/>
+            </t:if>
+        </t:zone>
+
+    </t:content>
+</html>

@@ -1,0 +1,241 @@
+<html t:type="layout" title="Editar Títulos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <t:content>
+        <t:zone t:id="mensajes">
+            <script>
+                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            </script>
+            <t:form t:id="formlistaestudios">
+                <t:envelope t:id="envelope"/>   
+                <t:errors/>
+            </t:form>
+        </t:zone>
+
+        <fieldset>
+            <t:zone t:id="primerZone">
+                <t:if test="vformulario">
+                    <t:form t:id="formularioaltaestudio" t:zone="primerZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>* Tipo de Estudios</label>
+                                <input t:type="Select" t:id="tipoestudio" model="tipoestudios" t:value="valtipoestudio" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:disabled="${vdetalle}" t:zone="segundoZone"/>
+                            </div> 
+                            <div class="f-left">
+                                <label>* Denominación</label>
+                                <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="75" t:disabled="${vdetalle}"
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denChanged"  t:zone="primerZone" />
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>* Centro de Estudios</label>
+                                <input t:type="Select" t:id="centroestudio" model="centroestudios" t:value="valcentroestudio" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  t:disabled="${vdetalle}" t:zone="primerZone"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Otro Centro Especificar</label>
+                                <input t:type="TextField" t:id="otrocentro" t:value="valotrocentro" size="33" t:disabled="${votro}"
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otroChanged"  t:zone="primerZone"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Pais</label>
+                                <input t:type="Select" t:id="pais"
+                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:disabled="${vdetalle}"
+                                       t:value="valpais" model="paises" t:zone="primerZone"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <div class="f-left" id="ubigeo_dpe">
+                                <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
+                                       t:zone="primerZone" t:zoneName="primerZone" t:disabled="${ingresaubigeo}"/>
+                            </div>
+                        </div>
+                    </t:form>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="segundoZone">
+                <t:if test="${vformulario}">
+                    <t:form t:id="formulariodos" t:zone="tercerZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>Colegio Profesional</label>
+                                <input t:type="TextField" t:id="colegio" t:value="valcolegio" size="33" t:disabled="${vdetalle}"
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="coleChanged"  t:zone="segundoZone"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Número de Colegiatura</label>
+                                <input t:type="TextField" t:id="colegiatura" t:value="valcolegiatura" size="33" t:disabled="${vdetalle}"
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="colegChanged"  t:zone="segundoZone"/>
+                            </div>                    
+                        </div>                        
+                    </t:form>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="tercerZone">
+                        <div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                            function toggleStatusEstudio() {
+                            if (jQuery('.idestudiando').is(':checked')) {
+                            jQuery('.fec_fin').datepick('disable');
+                            } else {
+                            jQuery('.fec_fin').datepick('enable');
+                            }
+                            }
+                        </script>
+                    </div>
+                    
+                    <t:form t:id="formulariobotones" t:zone="mensajes">  
+                      <t:if test="${vformulario}">  
+                        <t:if test="${vrevisado}">
+                            <div class="f-wrap">
+                                Revisado 
+                                <input t:type="Checkbox" t:id="revisado" t:value="valrevisado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
+                            </div>
+                        </t:if>
+                        <t:if test="${vrevisado}" negate="true">
+                            <br/>
+                            <br/>
+                        </t:if>
+                        <div class="logoentidad" style="position:relative; top:-70px; left:440px; width: 200px; height: 100px;">
+                            <fieldset>
+                                <legend>* Periodo</legend>
+                                <div class="f-wrap">
+                                    <div class="f-left">
+                                        <label>Actualmente estudiando</label>
+                                        <input t:type="Checkbox" t:id="estudiando" class="idestudiando" t:value="valestudiando" t:disabled="${vdetalle}" t:zone="tercerZone" onchange="toggleStatusEstudio()"/><!--</span>-->
+                                    </div> 
+                                    <div class="f-left">
+                                        <label>Desde</label>
+                                        <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="15" t:disabled="${vdetalle}" t:validate="regexp" class="fec_inicio pictureInputDate"/>
+                                    </div>
+                                    <div class="f-left">
+                                        <label>Hasta</label>
+                                        <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="15" t:disabled="${vfechahasta}" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                    </div>                        
+                                </div>
+                            </fieldset>
+                        </div>
+                                                
+                      </t:if>
+                        <div class="actions">
+                              
+                            <t:if test="${vbotones}">
+                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
+                            </t:if>
+                            <t:if test="vNoedita">
+                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            </t:if>
+                            <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        </div>
+                    </t:form>
+            </t:zone>
+        </fieldset>
+         <div id = "tabla_oi">
+            <t:zone t:id="listaZone">
+               <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>
+                <div id = "tabla_cargo">
+                    <t:grid source="estudios" 
+                            rowsPerPage="10" 
+                            t:add="Acciones" 
+                            pagerPosition="bottom"
+                            row="listaestu" 
+                            inPlace="true"> 
+                        <p:tipo_estudioCell>
+                            <t:if test="${listaestu.validado}">
+                                <label class="datofalse">${listaestu.tipo_estudio}</label>  
+                            </t:if>
+                            <t:if test="${listaestu.validado}" negate="true">
+                                <label class="datotrue">${listaestu.tipo_estudio}</label>  
+                            </t:if>
+                        </p:tipo_estudioCell>                        
+                        <p:denominacionCell>
+                            <t:if test="${listaestu.validado}">
+                                <label class="datofalse">${listaestu.denominacion}</label>  
+                            </t:if>
+                            <t:if test="${listaestu.validado}" negate="true">
+                                <label class="datotrue">${listaestu.denominacion}</label>  
+                            </t:if>
+                        </p:denominacionCell>
+                        <p:centro_estudioCell>
+                            <t:if test="${listaestu.validado}">
+                                <label class="datofalse">${listaestu.centro_estudio}</label>  
+                            </t:if>
+                            <t:if test="${listaestu.validado}" negate="true">
+                                <label class="datotrue">${listaestu.centro_estudio}</label>  
+                            </t:if>
+                        </p:centro_estudioCell>
+                        <p:estadoCell>
+                            <t:if test="${listaestu.validado}">
+                                <label class="datofalse">
+                                    <t:if test="${listaestu.estado}">
+                                        Culminado
+                                    </t:if>
+                                    <t:if test="${listaestu.estado}" negate="true">
+                                        Incompleto
+                                    </t:if>
+                                </label>  
+                            </t:if>
+                            <t:if test="${listaestu.validado}" negate="true">
+                                <label class="datotrue">
+                                    <t:if test="${listaestu.estado}">
+                                        Culminado
+                                    </t:if>
+                                    <t:if test="${listaestu.estado}" negate="true">
+                                        Incompleto
+                                    </t:if>
+                                </label>  
+                            </t:if>
+                        </p:estadoCell>
+                        <p:validadoCell>
+                            <!--                            <t:if test="${vrevisado}"> -->
+                            <t:if test="${listaestu.validado}">
+                                <label class="datofalse">SI</label>  
+                            </t:if>
+                            <t:if test="${listaestu.validado}" negate="true">
+                                <label class="datotrue">NO</label>  
+                            </t:if>
+                            <!--                            </t:if>-->
+                        </p:validadoCell>                       
+                        <t:parameter name="empty">
+                            <div class="no-info">No existen registros ingresados</div>
+                        </t:parameter>
+                        <p:accionesCell>
+                            <t:if test="${veditar}">
+                                <t:if test="${listaestu.validado}" negate="true" >
+                                    <t:actionlink t:id="editar" zone="listaZone" context="listaestu">Editar</t:actionlink>
+                                </t:if>
+                                <t:if test="${listaestu.validado}">
+                                    <t:actionlink t:id="detalles" zone="listaZone" context="listaestu">Detalle</t:actionlink>
+                                </t:if>
+                            </t:if>
+                            <t:if test="${veditar}" negate="true">
+                                <t:actionlink t:id="detalle" zone="listaZone" context="listaestu">Detalle</t:actionlink>
+                            </t:if>
+                            <t:if test="${veliminar}">
+                                <t:if test="${listaestu.validado}" negate="true">
+                                    | 
+                                    <a t:type="eventLink" t:event="borrarDato" t:context="listaestu"
+                                       t:zone="listaZone" href="#">
+                                        <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                            Eliminar
+                                        </span>
+                                    </a>
+                                </t:if>
+                            </t:if>
+                        </p:accionesCell>
+                    </t:grid>
+                </div>                
+            </t:zone>
+        </div>
+    </t:content>
+</html>

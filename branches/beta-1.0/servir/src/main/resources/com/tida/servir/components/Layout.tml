@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+
+        <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    <head>
+        <title>${title}</title>
+    </head>
+    <body>
+
+        <div id = "mainsection" >
+            <!-- start header -->
+            <div id="header">
+                 <div id="logo-left">
+                    <h1>
+                        <t:pagelink page="alerta">RSC</t:pagelink>
+                    </h1>
+                </div>
+                <div id="logo-right">
+                    <h1>
+                        <t:pagelink page="alerta">SERVIR</t:pagelink>
+                    </h1>
+                </div>
+                    
+                <!-- <div id="logo-left">
+                    <h1>
+                        <t:pagelink page="index">Sistema SERVIR</t:pagelink>
+                    </h1>
+                </div>
+                <div id="logo-right">
+                    <h1>
+                        <t:pagelink page="index">Sistema SERVIR</t:pagelink>
+                    </h1>
+                </div> -->
+                
+            </div>
+            <!-- end header -->
+            <t:ComponenteMenu/>
+            <!-- start page -->
+            <div id="page">
+
+                <!-- start content -->
+                <div id="content">
+
+                    <div class="post">
+                        <!-- <div class="title">
+                            <h2>${title}</h2>
+                        </div> -->
+                        <div class="entry">
+                            <t:body/>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end content -->
+                <br style="clear: both;"/>
+            </div>
+            <!-- end page -->
+        </div>
+ 
+        <!-- start footer -->
+        <div id="footer">
+            <div class="f-left" style="width=400px;">
+                <div>Administrado por la Gerencia de Desarrollo Institucional del Sistema</div>
+                <div>Correo: gestores@servir.gob.pe</div>
+                <div>Teléfono: 206-3370 Anexo: 3398</div>
+                <div class="social">
+                    <div class="texto f-left">Síguenos en:</div>
+                    <div id="iconfacebook">
+                        <a href="http://www.facebook.com" target="_blank" title="Facebook">Facebook</a>
+                    </div>
+                    <div id="icontwitter">
+                        <a href="http://twitter.com/SERVIR_PERU/" target="_blank" title="Twitter">Twitter</a>
+                    </div>
+                    <div id="iconyoutube">
+                        <a href="http://www.youtube.com/user/ServirTV" target="_blank" title="YouTube">YouTube</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="f-right">
+                <div id="logopie-right">
+                    <h1>
+                        <a href="http://www.servir.gob.pe" title="SERVIR - Autoridad Nacional del Servicio Civil">SERVIR - Autoridad Nacional del Servicio Civil</a>
+                    </h1>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!-- end footer -->
+    </body>
+</html>

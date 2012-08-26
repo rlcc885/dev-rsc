@@ -1,0 +1,129 @@
+<html t:type="layout" title="Evaluaciones"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+
+      <fieldset>
+            <div t:type="zone" t:id="evaluacionesZone" >
+                    <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
+                        <div class="f-wrap">    
+                            <div class="f-left" >
+                                <label>* Tipo </label>
+                                <input t:type="Select" t:id="tipo" t:value="evaluacion.tipoevaluacion" 
+                                       model="beanTipoevalucion" 
+                                       t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left" >
+                                <label>* Motivo </label>
+                                <input t:type="Select" t:id="motivo" t:value="evaluacion.motivoevaluacion" 
+                                       model="beanMotivoevaluacion" 
+                                       t:validate="required" t:blankOption="ALWAYS" />
+                            </div>
+                            <div class="f-left" >
+                                <fieldset>
+                                <legend>Periodo</legend>
+                                    <div class="f-wrap">
+                                            <label>* Desde</label>
+                                            <!--
+                                            <input t:type="DateField" t:id="fechaDesde" t:value="evaluacion.fec_desde" t:validate="required"
+                                                size="25" />
+                                            -->
+                                              <!--<input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde"  size="25" t:validate="required"/>-->
+                                              <!--<img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioevaluaciones.fec_inicio, 'dd/mm/yyyy');" style="cursor:hand;"></img>-->
+                                              <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="25" t:disabled="${vdetalle}" t:validate="regexp" class="fec_inicio pictureInputDate"/>
+                                              
+                                    </div>
+                                    <div class="f-wrap">	
+                                            <label>* Hasta</label>
+                                            <!--
+                                            <input t:type="DateField" t:id="fechaHasta" t:value="evaluacion.fec_hasta" t:validate="required"
+                                                size="25" />
+                                            -->
+                                            <!--<input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta"  size="25" t:validate="required"/>-->
+                                            <!--<img src="layout/images/cal3.gif" border="0" width="18" height="16" onclick="popUpCalendar(this, formularioevaluaciones.fec_fin, 'dd/mm/yyyy');" style="cursor:hand;"></img>-->
+                                             <input t:type="TextField" t:id="fec_fin" t:value="valfec_hasta" size="25" t:disabled="${vdetalle}" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                                        </div>                                                
+                                </fieldset>                            
+                             </div>
+                         </div>
+                         <div class="f-wrap"> 
+                             <div class="f-left">
+                                <label>* Resultado </label>
+                                <input t:type="TextField" t:id="resultado" t:validate="required, regexp" t:value="evaluacion.calificacion" maxlength="255" size="34"/>
+                             </div>
+                         </div>
+                         <div class="f-wrap">
+                        <div class="f-right">
+                            <t:if test="${bvalidausuario}">
+                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                            </t:if>    
+                        </div>
+                        </div>
+                    </t:form> 
+            </div> 
+            
+            <div t:type="zone" t:id="botonesZone" >
+                    <div>
+                        <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                        </script>
+                    </div>
+                <t:form t:id="formulariobotones"  zone="evaluacionesZone">
+                <div class="f-wrap">
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                    </div>
+                    <div class="f-right">
+                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                    </div>
+                </div>
+                </t:form>
+
+
+            </div>
+   </fieldset>
+    <div class="f-wrap">                        
+        (*) Campos Obligatorios
+    </div>
+     <br/>
+     <div t:type="zone" t:id="mensajesEZone" >
+                <t:form t:id="formulariomensajese"  zone="mensajesEZone"> 
+                    <t:envelope t:id="envelope"/>
+                    <t:errors/>
+                </t:form> 
+     </div>
+     <br/>       
+<div id = "tabla_oi">
+            <t:zone t:id="listaEvaluacionZone">   
+                <t:grid source="listadoEvaluciones" rowsPerPage="10" t:add="Tipo,Motivo,Acciones" pagerPosition="bottom"
+                     row="listaEvaluacion" include="fec_desde,fec_hasta" inPlace="true" >
+                    <t:parameter name="empty">
+                    <div class="no-info">No se encontraron registros</div>
+                    </t:parameter>
+                    <p:tipoCell>
+                               ${listaEvaluacion.tipoevaluacion.valor}
+                    </p:tipoCell>
+                    <p:motivoCell>
+                               ${listaEvaluacion.motivoevaluacion.valor}
+                    </p:motivoCell>
+                    <p:accionesCell>
+                        <t:if test="${bvalidausuario}">
+                               <t:actionlink t:id="editar" zone="evaluacionesZone" context="listaEvaluacion">Editar</t:actionlink> | 
+                            
+                        <t:actionlink t:id="eliminar" zone="listaEvaluacionZone" context="listaEvaluacion"> 
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                Eliminar
+                            </span>
+                        </t:actionlink> 
+                        </t:if>
+                    </p:accionesCell>
+                    
+                </t:grid>
+            </t:zone>
+        </div> 
+    </t:content>
+</html>

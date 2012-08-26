@@ -1,0 +1,30 @@
+<html title="Editar Regimenes Grupos Niveles"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div class="f-wrap">
+            <div class="f-left">
+                <t:label for="regimen"/>
+                <select t:type="Select" t:id="regimen" t:value="regimengruponivel.regimen"
+                model="beanDatoAuxReg" encoder="beanDatoAuxReg"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:blankOption="ALWAYS" t:disabled="disabled" t:zone="prop:zoneRegGruNiv" t:validate="required"/>
+            </div>
+            <div class="f-left">
+                <t:label for="grupo"/>
+                <select t:type="Select" t:id="grupo" t:value="regimengruponivel.grupo"
+                model="beanDatoAuxGru" encoder="beanDatoAuxGru" t:disabled="disabled"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:blankOption="AUTO" t:zone="prop:zoneRegGruNiv"/>
+            </div>
+            <div class="f-left">
+                <t:label for="nivel"/>
+                <select t:type="Select" t:id="nivel" t:value="regimengruponivel.nivelRemunerativo"
+                model="beanDatoAuxNiv" encoder="beanDatoAuxNiv" t:disabled="disabled"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:blankOption="AUTO" t:zone="prop:zoneRegGruNiv"/>
+            </div>         
+        </div>
+    </t:content>
+</html>

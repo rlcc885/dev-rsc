@@ -1,0 +1,40 @@
+<html title="Editar Ubigeos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+    <h3>Formacion</h3>
+        <div class="f-left">
+            <label>Formacion</label>
+            <select t:type="Select" t:id="formacion1" t:value="formacionProfesional.formacion"
+            model="beanFormacion" encoder="beanFormacion"
+            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+            t:blankOption="AUTO"
+            t:disabled="disabled" t:zone="prop:zoneName"/>
+        </div>
+        <!-- <div class="f-left">
+            <label>Formacion 2:</label>
+            <select t:type="Select" t:id="formacion2" t:value="formacionProfesional.formacion2"
+            model="beanFormacion2" encoder="beanFormacion2"
+            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+            t:blankOption="AUTO"
+            t:disabled="disabled" t:zone="prop:zoneName"/>
+        </div>
+        <div class="f-left">
+            <label>Formacion 3:</label>
+            <select t:type="Select" t:id="formacion3" t:value="formacionProfesional.formacion3"
+            model="beanFormacion3" encoder="beanFormacion3"
+            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+            t:blankOption="AUTO"
+            t:disabled="disabled" t:zone="prop:zoneName"/>
+        </div>
+        <div class="f-left">
+            <label>Formacion 4:</label>
+            <select t:type="Select" t:id="formacion4" t:value="formacionProfesional.formacion4"
+            model="beanFormacion4" encoder="beanFormacion4"
+            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+            t:blankOption="AUTO"
+            t:disabled="disabled" t:zone="prop:zoneName"/>
+        </div> -->
+    </t:content>
+</html>

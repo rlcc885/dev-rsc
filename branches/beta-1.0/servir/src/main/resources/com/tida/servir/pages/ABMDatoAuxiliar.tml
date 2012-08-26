@@ -1,0 +1,93 @@
+<html t:type="layout" title="Servir - Cargos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+        <H2>Tablas Auxiliares</H2>
+         <div t:type="zone" t:id="selectZone" class="selectform" >
+                <t:form t:id="formularioselecttabla" >
+                <t:errors/>
+
+                    Tabla:
+                    <select t:type="select" t:id="select_tabla"
+                    model="tablas" value="tabla"
+                     t:zone="listaConceptosZone"/>
+    
+                     
+                </t:form>
+	</div>	<!-- selectZone -->
+
+         <div t:type="zone" t:id="listaConceptosZone" class="selectform" >
+         <t:if test="hayTabla">
+            <t:if test="hayError">
+                <div class="error">
+                    Se encontraron errores al procesar su requerimiento:
+                    ${errores}
+                </div>
+
+            </t:if>
+            <h3>Tabla: ${tabla}</h3>
+            <br/>
+            <t:grid source="tablaAux" rowsPerPage="15" t:add="Acciones" pagerPosition="bottom"
+                 row="t" exclude= "id, nombreTabla, tipoDeAcceso"
+                reorder="tablaRelacion, relacionCodigo, valor, codigo">
+                <t:parameter name="empty">
+                    <div class="no-info">No hay valores para esa tabla</div>
+                </t:parameter>
+                    <p:accionesCell>
+                        <t:if test="hayHijos">
+                            <a t:type="eventLink" t:event="tablaHijos" t:context="t"
+                             t:zone="listaConceptosZone" href="#">Editar Tabla Hijos </a>
+                        </t:if>
+                        <t:if test="esBorrable">
+                            <a t:type="eventLink" t:event="borrarDato" t:context="t"
+                             t:zone="listaConceptosZone" href="#"> Borrar </a>
+                        </t:if>
+                    </p:accionesCell>
+            </t:grid>
+            <a t:type="eventLink" t:event="agregarNuevo"
+                t:zone="agregaConceptosZone" href="#"> Agregar Nuevo Dato</a><br/>
+
+            </t:if> <!-- haytabla-->
+         </div> <!-- listaConceptosZone -->
+
+     <div t:type="zone" t:id="agregaConceptosZone" class="selectform" >
+         <t:if test="agregarConcepto">
+           <t:form t:id="formularioagregoconcepto" zone="listaConceptosZone" >
+               <!--
+                Por defecto, las relaciones las tomamos del padre directamente
+                -->
+                <br/>
+                <t:envelope t:id="envelope"/>                
+                <div class="box">
+                    <h3>Crear / Editar Tabla Auxiliar</h3>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="select_tablarelacion"/>
+                            <select t:type="select" t:id="select_tablarelacion"
+                            model="tablas" value="da.tablaRelacion"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="codigo_relacion"/>
+                            <input t:type="TextField" t:id="codigo_relacion"
+                                t:value="da.relacionCodigo" size="20"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="valor_campo"/>
+                                <input t:type="TextField" t:id="valor_campo"
+                                t:value="da.valor" size="20"/>
+                        </div>
+                        <div class="f-left">
+                        <t:label for="codigo_campo"/>
+                            <input t:type="TextField" t:id="codigo_campo"
+                            t:value="da.codigo" size="4"/>
+                        </div>
+                        <div class="actions f-right">
+                         <input id="submit" type="submit" value="Enviar" class="button f-right"/>
+                        </div>
+                    </div>
+                </div>
+            </t:form>
+         </t:if>
+     </div> <!-- agregaConceptosZone -->
+</html>
