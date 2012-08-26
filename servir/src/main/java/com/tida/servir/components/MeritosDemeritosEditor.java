@@ -2,41 +2,33 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-
 import helpers.Helpers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
-
-
-
 
 /**
  *
  * @author LFL
  */
 public class MeritosDemeritosEditor {
- @Property
+
+    @Property
     @SessionState
     private Usuario _usuario;
+    @SessionState
+    private UsuarioAcceso usua;
     @Property
     @SessionState
     private Entidad _oi;
@@ -44,265 +36,274 @@ public class MeritosDemeritosEditor {
     private Session session;
     @InjectComponent
     private Envelope envelope;
-    @Persist
-    @Property
-    private Boolean vdetalle;
-   
-    
-    @Component(id = "formulariomensajesME")
-    private Form formulariomensajesME;
     @InjectComponent
-    private Zone mensajesMEZone;  
-       
-    @InjectComponent
-    private Zone meritosZone;
+    private Zone mensajesMEZone;
     @InjectComponent
     private Zone claseZone;
-    
-    private int elemento=0;
-    
+    @InjectComponent
+    private Zone listaMeritosZone;
+    @InjectComponent
+    private Zone tipoZone;
+    private int elemento = 0;
     @Component(id = "formularioclase")
     private Form formularioclase;
-        
-    @Component(id = "formulariomeritos")
-    private Form formulariomeritos;
-    
+//    @Component(id = "formulariomeritos")
+//    private Form formulariomeritos;
+    @Component(id = "formulariomensajesME")
+    private Form formulariomensajesME;
     @Persist
     @Property
     private String valfec_desde;
     @Persist
     @Property
     private Date fecha_desde;
-    
     @Parameter
     @Property
     private Trabajador actual;
-    
     @Persist
     @Property
     private MeritoDemerito merito;
-    
     @Property
     @Persist
     private boolean btipo;
-    
     //Listado de Meritos
-    @InjectComponent
-    private Zone listaMeritosZone;
     @Persist
     @Property
-    private MeritoDemerito listaMeritos;
-    
-    @Persist
-    @Property
-    private Boolean vformulario;
- 
+    private LkBusquedaMeritoDemerito listaMeritos;
     @Inject
     private PropertyAccess _access;
-    
+    // Variables para el manejo de los permisos
+    @Property
+    @Persist
+    private boolean bvalidausuario;
+    @Persist
+    @Property
+    private Boolean editando;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Persist
+    @Property
+    private Boolean vdetalle;
+    @Persist
+    @Property
+    private Boolean vguardar;
+    @Persist
+    @Property
+    private Boolean vinserta;
+    @Persist
+    @Property
+    String clase;
+
     //Inicio de la carga de la pagina
     @Log
-    @SetupRender
-    private void inicio() {
-            merito=new MeritoDemerito();
-            listaMeritos=new MeritoDemerito();
-            btipo=false;
-            valfec_desde=null;
-            if(_usuario.getRolid() == 1)
-            {
-                vformulario = false;
-            }else{
-                vformulario = true;
-            }
+    void setupRender() {
+        // No mover la inicializacion de variables
+        resetRegistro();
     }
-    
-    @Log
-    public List<MeritoDemerito> getListadoMeritos() {
-        Criteria c = session.createCriteria(MeritoDemerito.class);
-        c.add(Restrictions.eq("trabajador",actual));   
-        return c.list();
-    }
-   
-     //para obtener datos de la Clase de Merito
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {        
-    List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-    
-    //para obtener datos del Tipo de Merito
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipoMerito() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSMERITO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-    
-        //para obtener datos del Tipo de DMerito
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSDEMERITO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-         //para obtener datos del documento
-    @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-    
-    
-    void onSelectedFromCancelME() {
-        elemento=2;
-    }
-    
-    void onSelectedFromResetME() {
-         elemento=1;
-    }
-    
-    @Log
-    @CommitAfter    
-    Object onSuccessFromFormularioclase() {
-        //System.out.println("aaaaa"+ merito.getClasemeritodemerito().getId());
-        if(merito.getClasemeritodemerito()!=null){
-            if(merito.getClasemeritodemerito().getCodigo()==1){
-                btipo=false;             
-            }else if(merito.getClasemeritodemerito().getCodigo()==2){
-                btipo=true;
-            }
-        }
-        else{
-        }
-        
-         return claseZone.getBody();
 
+    @Log
+    void resetRegistro() {
+        merito = new MeritoDemerito();
+        editando = false;
+        valfec_desde = "";
+        btipo = true;
+        clase = "1";
+        accesos();
     }
-    
-    public String getFechaMD()
-    {
+
+    @Log
+    public void accesos() {
+        bvalidausuario = false;
+        vinserta = false;
+        veditar = false;
+        veliminar = false;
+        vdetalle = true;
+        vguardar = false;
+        if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+            bvalidausuario = true;
+        }
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
+            vdetalle = false;
+            vguardar = true;
+        }
+        if (usua.getAccesodelete() == 1) {
+            veliminar = true;
+        }
+        if (usua.getAccesoreport() == 1) {
+            vinserta = true;
+            vguardar = true;
+            vdetalle = false;
+        }
+    }
+
+    @Log
+    public String getFecha() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(listaMeritos.getFecha());
     }
-    
+
     @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariomeritos() {
-        formulariomensajesME.clearErrors();
-        if(merito.getClasemeritodemerito()==null)
-        {
-            formulariomensajesME.recordError("Debe ingresar la Clase");
-            //envelope.setContents("Debe ingresar la Clase");
-             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody())
-                     ;
+    public List<LkBusquedaMeritoDemerito> getListadoMeritos() {
+        Criteria c = session.createCriteria(LkBusquedaMeritoDemerito.class);
+        c.add(Restrictions.eq("trabajador_id", actual.getId()));
+        return c.list();
+    }
+
+    //para obtener datos de la Clase de Merito
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MERITOSDEMERITOSCLASE", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+    //para obtener datos del Tipo de Merito
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoMerito() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSMERITO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+    //para obtener datos del Tipo de DMerito
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDemerito() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSDEMERITO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    //para obtener datos del documento
+
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+
+    @Log
+    Object onReset() {
+        resetRegistro();
+        return claseZone.getBody();
+    }
+
+    @Log
+    Object onCancel() {
+        System.out.println(_usuario.getRolid());
+        if (_usuario.getRolid() == 1) { // Si es trabajador 
+            return "meritos";
+        } else {
+            return "Busqueda";
         }
-        if(merito.getTipodocumento()==null)
-        {
+    }
+
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioclase() {
+        formulariomensajesME.clearErrors();
+//        if (merito.getClasemeritodemerito() == null) {
+//            formulariomensajesME.recordError("Debe ingresar la Clase");
+//            //envelope.setContents("Debe ingresar la Clase");
+//            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
+//        }
+        if (merito.getTipodocumento() == null) {
             formulariomensajesME.recordError("Debe ingresar el Documento");
             //envelope.setContents("Debe ingresar la Clase");
-             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
+            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
         }
-        
-        if(merito.getTipomeritodemerito()==null)
-        {
+
+        if (merito.getTipomeritodemerito() == null) {
 //            envelope.setContents("Debe ingresar el Tipo");
             formulariomensajesME.recordError("Debe ingresar el Tipo");
-             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
-        }else
-        {
-            
-        if(valfec_desde!=null)
-        {
-                SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
-                } catch (ParseException ex) {
-                ex.printStackTrace();
-                }
-        }else{
-            formulariomensajesME.recordError("Debe de Ingresar una Fecha");
-            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
-        }
-        
-        if(_usuario.getRolid() == 1)
-        {
-            formulariomensajesME.recordError("Ud, no tiene permisos para Insertar Datos");
-//            envelope.setContents("Ud, no tiene permisos para Insertar Datos");
-             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
-        }
-        
-        merito.setFecha(fecha_desde);
-     //   System.out.println("*************MDE :"+merito.getClasemeritodemerito());
-        merito.setTrabajador(actual);
-        merito.setEntidad(_oi);
-        session.saveOrUpdate(merito);
-        envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
-        //envelope.setContents("Mérito demérito creado / modificado exitosamente.");
-        merito=new MeritoDemerito();
-        valfec_desde=null;
-        return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                .add("listaMeritosZone",listaMeritosZone.getBody())
-                .add("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody());
+            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
+        } else {
 
+            if (valfec_desde != null) {
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                formulariomensajesME.recordError("Debe de Ingresar una Fecha");
+                return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
+            }
+
+            if (_usuario.getRolid() == 1) {
+                formulariomensajesME.recordError("Ud, no tiene permisos para Insertar Datos");
+//            envelope.setContents("Ud, no tiene permisos para Insertar Datos");
+                return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
+            }
+
+            merito.setFecha(fecha_desde);
+            //   System.out.println("*************MDE :"+merito.getClasemeritodemerito());
+            merito.setTrabajador_id(actual.getId());
+            merito.setEntidad_id(_oi.getId());
+            session.saveOrUpdate(merito);
+            envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
+            //envelope.setContents("Mérito demérito creado / modificado exitosamente.");
+            resetRegistro();
+            return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("listaMeritosZone", listaMeritosZone.getBody()).add("claseZone", claseZone.getBody());
         }
-  
     }
-    
-//    @Log
-//    @CommitAfter    
-//    Object onSuccessFromFormulariobotonesME() {
-//        if(elemento==1){
-//            merito=new MeritoDemerito();
-//            valfec_desde=null;
-//          return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-//                    .add("listaMeritosZone", listaMeritosZone.getBody());
-//        }else if(elemento==2){
-//            return "Busqueda";
-//        }else{    
-//           return this;
-//        }
-//        
-//    }
-    
+
     @Log
-    Object onActionFromEditarME(MeritoDemerito meri) {        
-        merito=meri;
-        
-        if(merito.getFecha()!=null){
+    public String getFechaMD() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(listaMeritos.getFecha());
+    }
+
+    @Log
+    Object onActionFromEditarME(MeritoDemerito meri) {
+        merito = meri;
+        if (merito.getFecha() != null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde=formatoDeFecha.format(merito.getFecha());
+            valfec_desde = formatoDeFecha.format(merito.getFecha());
         }
-        
-        if(merito.getClasemeritodemerito().getCodigo()==1){
-                btipo=false;             
-        }else if(merito.getClasemeritodemerito().getCodigo()==2){
-                btipo=true;
+        if (merito.getClasemeritodemerito_id() == 1) {
+            btipo = true;
+        } else {
+            btipo = false;
         }
-           return new MultiZoneUpdate("meritosZone", meritosZone.getBody())
-                .add("claseZone", claseZone.getBody()); 
+        clase = String.valueOf(merito.getClasemeritodemerito_id());
+        accesos();
+        editando = true;
+        return claseZone.getBody();
     }
-    
+
     @Log
-    @CommitAfter        
+    @CommitAfter
     Object onActionFromEliminarME(MeritoDemerito meri) {
-         formulariomensajesME.clearErrors();
-         session.delete(meri);
-         envelope.setContents("Meritos demeritos eliminadas exitosamente.");
-        return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                    .add("listaMeritosZone", listaMeritosZone.getBody());
+        formulariomensajesME.clearErrors();
+        session.delete(meri);
+        envelope.setContents("Meritos demeritos eliminadas exitosamente.");
+        resetRegistro();
+        accesos();
+        return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody()).add("listaMeritosZone", listaMeritosZone.getBody());
     }
-    
-    
-    
-    
-   
+
+    @Log
+    Object onActionFromDetalleME(MeritoDemerito meri) {
+        Object objeto = onActionFromEditarME(meri);
+        vdetalle = true;
+        vguardar = false;
+        editando = false;
+        return objeto;
+    }
+
+    @Log
+    Object onValueChangedFromClase(Long dato) {
+        if (dato != null) {
+            merito.setClasemeritodemerito_id(dato);
+            if (dato == 1) {
+                btipo = true;
+            } else {
+                btipo = false;
+            }
+        }
+        merito.setTipomeritodemerito(null);
+        return tipoZone.getBody();
+    }
 }

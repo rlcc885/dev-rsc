@@ -15,24 +15,28 @@ import javax.persistence.*;
 @Entity
 @Table(name = "RSC_USUARIOTRABAJADOR")
 
-@NamedQueries({
-    @NamedQuery(name = "UsuarioTrabajador.findAll", query = "SELECT u FROM UsuarioTrabajador u"),
-    @NamedQuery(name = "UsuarioTrabajador.findByNrodocumento", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nrodocumento = :nrodocumento"),
-    @NamedQuery(name = "UsuarioTrabajador.findByNombres", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nombres = :nombres"),
-    @NamedQuery(name = "UsuarioTrabajador.findByApellidopaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidopaterno = :apellidopaterno"),
-    @NamedQuery(name = "UsuarioTrabajador.findByApellidomaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidomaterno = :apellidomaterno"),
-    @NamedQuery(name = "UsuarioTrabajador.findByApellidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidos = :apellidos"),
-    @NamedQuery(name = "UsuarioTrabajador.findByMd5clave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.md5clave = :md5clave"),
-    @NamedQuery(name = "UsuarioTrabajador.findByIntentosFallidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.intentosFallidos = :intentosFallidos"),
-    @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
-    @NamedQuery(name = "UsuarioTrabajador.findByEstado", query = "SELECT u FROM UsuarioTrabajador u WHERE u.estado = :estado"),
-    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id"),
-    @NamedQuery(name = "UsuarioTrabajador.findByLogin", query = "SELECT u FROM UsuarioTrabajador u WHERE u.login = :login")
-})
+//@NamedQueries({
+//    @NamedQuery(name = "UsuarioTrabajador.findAll", query = "SELECT u FROM UsuarioTrabajador u"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByNrodocumento", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nrodocumento = :nrodocumento"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByNombres", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nombres = :nombres"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByApellidopaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidopaterno = :apellidopaterno"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByApellidomaterno", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidomaterno = :apellidomaterno"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByApellidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.apellidos = :apellidos"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByMd5clave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.md5clave = :md5clave"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByIntentosFallidos", query = "SELECT u FROM UsuarioTrabajador u WHERE u.intentosFallidos = :intentosFallidos"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByEstado", query = "SELECT u FROM UsuarioTrabajador u WHERE u.estado = :estado"),
+//    @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id"),
+//    @NamedQuery(name = "UsuarioTrabajador.findByLogin", query = "SELECT u FROM UsuarioTrabajador u WHERE u.login = :login")
+//})
 
 public class UsuarioTrabajador implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private long id;
     @Column(name = "LOGIN")
     private String login;
     @Column(name = "DOCUMENTOIDENTIDAD_ID")
@@ -58,11 +62,6 @@ public class UsuarioTrabajador implements Serializable {
     private int estado;
     @Column(name = "ESTADODESC")
     private String estadodesc;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "ID")
-    private long id;
-    //@ManyToOne
     @Column(name = "ENTIDAD_ID")
     private Long entidadid;
     @Column(name = "DENOMINACION")

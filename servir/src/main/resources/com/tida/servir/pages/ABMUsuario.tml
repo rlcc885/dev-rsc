@@ -99,7 +99,7 @@
                     t:add="acciones" 
                     t:pagerPosition="bottom" 
                     t:row="u" 
-                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,intentosFallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
+                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,intentosfallidos,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
                     t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc">
                 <t:parameter name="empty">
                     No se han encontrado coincidencias.
@@ -108,7 +108,11 @@
                     <t:eventLink t:event="editaUsuario" t:context="u" href="#" t:zone="tabla_usuario">
                         Editar
                     </t:eventLink>
-                    | 
+                    |
+                    <t:eventLink t:event="editaPerfil" t:context="u" href="#" t:zone="tabla_usuario">
+                        Perfiles
+                    </t:eventLink>
+                    |
                     <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                 </p:accionesCell>
             </t:grid>
@@ -116,154 +120,213 @@
     </t:zone>
 
     <t:zone t:id="editarUsuarioZone" id="editarUsuarioZone">
-        <h3>Datos del Usuario</h3>
-        <script>
+        <t:if test="muestraEditorUsuario">
+            <h3>Datos del Usuario</h3>
+            <script>
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
             </script>
-        <div class="box" id="box_u">
-            <t:envelope t:id="envelope"/>
-            <div id="form_usuario" class="abmform">
-                <fieldset>
-                    <legend> Datos de la Cuenta </legend>
-                    <t:form t:id="formularioCuenta" t:zone="idValidaLogin">
+            <div class="box" id="box_u">
+                <t:envelope t:id="envelope"/>
+                <div id="form_usuario" class="abmform">
+                    <fieldset>
+                        <legend> Datos de la Cuenta </legend>
                         <div class="f-wrap">
                             <div class="f-left">
-                                <t:label for="loginedit" />
-                                <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
-                                       t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaUsuario}"
-                                       onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
-                                <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>
+                                <t:form t:id="formularioCuenta" t:zone="idValidaLogin">
+                                    <t:label for="loginedit" />
+                                    <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
+                                           t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaUsuario}"
+                                           onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
+                                    <t:if test="${editaUsuario}" negate="true" >
+                                        <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>
+                                    </t:if>
+                                </t:form>
                             </div>
                             <div class="f-left">
-                                <t:label for="rolusuarioedit"/>
-                                <select t:type="select" t:id="rolusuarioedit" model="rolUsuario" t:value="rolUsuarioEdit" />
+                                <t:form t:id="formularioRol" t:zone="editarUsuarioZone">
+                                    <t:label for="rolusuarioedit"/>
+                                    <select t:type="select" t:id="rolusuarioedit" t:model="rolUsuario" value="rolUsuarioEdit" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                </t:form>
                             </div>
+                        </div>
+                        <t:zone t:id="idValidaLogin" id="idValidaLogin">
+                            <t:if test="${muestraValidaLogin}">
+                                <t:if test="${bLoginValido}">
+                                    <span class="okmsg">Login de usuario válido.</span>
+                                    <p:else>
+                                        <span class="errormsg">Ya existe el login de usuario.</span>
+                                    </p:else>
+                                </t:if>
+                            </t:if>
+                        </t:zone>
+                    </fieldset>
+                    <t:form  t:id="formularioPersonal" t:zone="editarUsuarioZone">
+                        <fieldset>
+                            <legend> Datos Personales </legend>
+                            <t:errors/>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="nombresedit" />
+                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoPaternoedit" />
+                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoMaternoedit" />
+                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="documentoidentidadedit" />
+                                    <select t:type="Select" t:id="documentoidentidadedit" t:value="documentoIdentidadEdit" t:model="DocumentoIdentidad" 
+                                            t:validate="required"
+                                            t:disabled="${noEditaUsuario}"
+                                            t:style="width: 183px;"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="nrodocumentoedit"/>
+                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
+                                           t:disabled="${noEditaUsuario}" 
+                                           t:size="32"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="emailLaboralEdit" />
+                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="telefonoEdit" />
+                                    <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxLength=20,minLength=1" t:disabled="${noEditaUsuario}"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="cargoEdit" />
+                                    <input t:type="TextField" t:id="cargoEdit" t:value="usuariotrabajadoredit.cargo" t:size="80" t:disabled="true"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend> Datos del Acceso </legend>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="ultimoCambioClaveedit" />
+                                    <input t:type="datefield" t:id="ultimoCambioClaveedit" t:value="usuariotrabajadoredit.ultimoCambioClave" t:size="20" t:disabled="true"/>
+                                </div>
+                                <div class="f-left" style="text-align:center;">
+                                    <t:label for="reinitialisarpasswordedit" style="text-align:center;"/>
+                                    <input t:type="Checkbox" t:id="reinitialisarpasswordedit" t:value="reinitialisarpassword" style="text-align:center;" />
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="estadoUsuarioEdit" />
+                                    <input t:type="Select"
+                                           t:id="estadoUsuarioEdit"
+                                           t:value="usuariotrabajadoredit.estado" 
+                                           t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
+                                           t:style="width: 100px;" />
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="fechacreacionedit" />
+                                    <input t:type="datefield" t:id="fechacreacionedit" t:value="usuariotrabajadoredit.fechacreacion" t:size="20" t:disabled="true"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="intentosFallidos" />
+                                    <input t:type="TextField" t:id="intentosFallidos" t:value="usuariotrabajadoredit.intentosFallidos" t:disabled="true" size="1"/>
+                                </div>
+                                <div class="f-left">
+                                    <label>Blanquear los intentos fallidos</label>
+                                    <input t:type="Checkbox" t:value="blanquearIntentosFallidos" />
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div>
+                                    <t:label for="observacionedit" />
+                                    <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
+                                           t:validate="maxLength=150" 
+                                           t:rows="5" 
+                                           t:cols="123"/>
+                                    <em>(Ingresar 150 caracteres como máximo)</em>
+                                </div>
+                            
+                            </div>
+                        </fieldset>
+                        <div class="actions">
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <t:if test="${editaUsuario}" negate="true" >
+                                <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
+                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Limpiar Formulario
+                                    </span> 
+                                </t:eventLink>
+                            </t:if>
+                            <t:if test="${editaUsuario}">
+                                <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="editarUsuarioZone">
+                                    <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Cancelar
+                                    </span> 
+                                </t:eventLink>
+                            </t:if>
                         </div>
                     </t:form>
-                    <t:zone t:id="idValidaLogin" id="idValidaLogin">
-                        <t:if test="${muestraValidaLogin}">
-                            <t:if test="${bLoginValido}">
-                                <span class="okmsg">Login de usuario válido.</span>
-                                <p:else>
-                                    <span class="errormsg">Ya existe el login de usuario.</span>
-                                </p:else>
-                            </t:if>
-                        </t:if>
-                    </t:zone>
-                </fieldset>
-                <t:form  t:id="formularioPersonal" t:zone="editarUsuarioZone">
-                    <fieldset>
-                        <legend> Datos Personales </legend>
-                        <t:errors/>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="nombresedit" />
-                                <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoPaternoedit" />
-                                <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoMaternoedit" />
-                                <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="documentoidentidadedit" />
-                                <select t:type="Select" t:id="documentoidentidadedit" t:value="documentoIdentidadEdit" t:model="DocumentoIdentidad" 
-                                        t:validate="required"
-                                        t:disabled="${noEditaUsuario}"
-                                        t:style="width: 183px;"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="nrodocumentoedit"/>
-                                <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
-                                       t:disabled="${noEditaUsuario}" 
-                                       t:size="32"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="emailLaboralEdit" />
-                                <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="telefonoEdit" />
-                                <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxLength=20,minLength=1" t:disabled="${noEditaUsuario}"/>
-                            </div>
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="cargoEdit" />
-                                <input t:type="TextField" t:id="cargoEdit" t:value="usuariotrabajadoredit.cargo" t:size="80" t:disabled="true"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend> Datos del Acceso </legend>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="ultimoCambioClaveedit" />
-                                <input t:type="datefield" t:id="ultimoCambioClaveedit" t:value="usuariotrabajadoredit.ultimoCambioClave" t:size="20" t:disabled="true"/>
-                            </div>
-                            <div class="f-left" style="text-align:center;">
-                                <t:label for="reinitialisarpasswordedit" style="text-align:center;"/>
-                                <input t:type="Checkbox" t:id="reinitialisarpasswordedit" t:value="reinitialisarpassword" style="text-align:center;" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="estadoUsuarioEdit" />
-                                <input t:type="Select"
-                                   t:id="estadoUsuarioEdit"
-                                   t:value="usuariotrabajadoredit.estado" 
-                                   t:model="literal:1=Activo,0=Inactivo,2=Bloqueado"
-                                   t:style="width: 100px;" />
-<!--                                <t:select t:id="estadoUsuarioEdit" t:model="estadoUsuario" t:value="estadoUsuarioEdit" 
-                                          t:validate="required" onChange="this.form.fire()" t:zone="editarUsuarioZone" style="width:100px;"/>-->
-                            </div>
-                            <div class="f-left">
-                                <t:label for="fechacreacionedit" />
-                                <input t:type="datefield" t:id="fechacreacionedit" t:value="usuariotrabajadoredit.fechacreacion" t:size="20" t:disabled="true"/>
-                            </div>
-                        </div>
-                        <!--                        <div class="f-left">
-                            <t:label for="intentos_fallidos" />
-                            <input t:type="TextField" t:id="intentos_fallidos" t:value="usuariotrabajador.intentosFallidos" t:disabled="true" size="1"/>
-                        </div>
-                        <div class="f-left">
-                            <label>Blanquear los intentos fallidos</label>
-                            <input t:type="Checkbox" t:value="blanquearIntentosFallidos" />
-                        </div>-->
-                        <div class="f-wrap">
-                            <div>
-                                <t:label for="observacionedit" />
-                                <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
-                                       t:validate="maxLength=150" 
-                                       t:rows="5" 
-                                       t:cols="123"/>
-                                <em>(Ingresar 150 caracteres como máximo)</em>
-                            </div>
-                            
-                        </div>
-                    </fieldset>
-                    <div class="actions">
-                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Confirmo, en calidad de Declaración Jurada, la veracidad y exactitud de la información registrada y autorizo la verificación de lo declarado; asumiendo las responsabilidades a que hubiere lugar." class="button f-right"/>
-                        <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="editarUsuarioZone">
-                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                Limpiar Formulario
-                            </span> 
-                        </t:eventLink>
-                        <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="editarUsuarioZone">
-                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                Cancelar
-                            </span> 
-                        </t:eventLink>
-                    </div>
-                </t:form>
+                </div>
             </div>
-        </div>
+        </t:if>
     </t:zone>
     <t:zone t:id="perfilZone">
-        <t:if test="editaUsuario">
+        <t:if test="muestraEditorUsuario" negate="true">
+            <h3>Datos del Usuario</h3>
+            <div class="box" id="box_u">
+                <div id="form_usuario" class="abmform">
+                    <t:form  t:id="formularioDetallePersonal" t:zone="editarUsuarioZone">
+                        <fieldset>
+                            <legend> Datos Personales </legend>
+                            <t:errors/>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="nombresdetalle" />
+                                    <input t:type="TextField" t:id="nombresdetalle" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="true"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoPaternodetalle" />
+                                    <input t:type="TextField" t:id="apellidoPaternodetalle" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="true"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoMaternodetalle" />
+                                    <input t:type="TextField" t:id="apellidoMaternodetalle" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="documentoidentidaddetalle" />
+                                    <select t:type="Select" t:id="documentoidentidaddetalle" t:value="documentoIdentidadEdit" t:model="DocumentoIdentidad" 
+                                            t:disabled="true"
+                                            t:style="width: 183px;"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="nrodocumentodetalle"/>
+                                    <input t:type="TextField" t:id="nrodocumentodetalle" t:value="usuariotrabajadoredit.nrodocumento" t:disabled="true" t:size="32"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="emailLaboraldetalle" />
+                                    <input t:type="TextField" t:id="emailLaboraldetalle" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="true"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="telefonodetalle" />
+                                    <input t:type="TextField" t:id="telefonodetalle" t:value="usuariotrabajadoredit.telefono" t:size="32" t:disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="cargodetalle" />
+                                    <input t:type="TextField" t:id="cargodetalle" t:value="usuariotrabajadoredit.cargo" t:size="80" t:disabled="true"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </t:form>
+                </div>
+            </div>
             <h3>Perfiles asignados al usuario</h3>
             <div class="box">
                 <t:grid t:source="allPerfiles" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="rownum,usuarioId, perfilId" >

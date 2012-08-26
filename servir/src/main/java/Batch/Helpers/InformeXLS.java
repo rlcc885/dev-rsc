@@ -2432,13 +2432,13 @@ public class InformeXLS {
             PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
             for (MeritoDemerito md : lmd) {
                 escribir.print(InformeXLS.leoCampo(oi.getCodigoEntidadUE()));
-                escribir.print("|");
-                if(md.getTrabajador() != null)
-//                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(md.getTrabajador().getTipoDocumento()), errores, session));
-                escribir.print("|");
-                if(md.getTrabajador() != null)
-                    escribir.print(InformeXLS.leoCampo(md.getTrabajador().getNroDocumento()));
-                escribir.print("|");
+//                escribir.print("|");
+//                if(md.getTrabajador() != null)
+////                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(md.getTrabajador().getTipoDocumento()), errores, session));
+//                escribir.print("|");
+//                if(md.getTrabajador() != null)
+//                    escribir.print(InformeXLS.leoCampo(md.getTrabajador().getNroDocumento()));
+//                escribir.print("|");
 //                if(md.getClase().trim().equals(MeritoDemerito.CLASE_MERITO)){
 //                    clase = "1";
 //                    tipo = "TiposMerito";

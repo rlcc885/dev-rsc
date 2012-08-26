@@ -66,6 +66,8 @@ public class ABMUsuario extends GeneralPage {
     private Form formularioPersonal;
     @Component(id = "formulariobusqueda")
     private Form formulariobusqueda;
+    @Component(id = "formularioRol")
+    private Form formularioRol;
     @Property
     private boolean blanquearIntentosFallidos;
     @Property
@@ -97,9 +99,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private boolean cancelaEditUsuario;
-    @Persist
-    @Property
-    private boolean newPerfil;
+//    @Persist
+//    @Property
+//    private boolean newPerfil;
     @Persist
     @Property
     private String bidentificacionBusqueda;
@@ -164,14 +166,17 @@ public class ABMUsuario extends GeneralPage {
     private boolean bLoginValido;
     @Persist
     @Property
+    private boolean muestraEditorUsuario;
+    @Persist
+    @Property
     private boolean muestraValidaLogin;
     @Inject
     private Request request;
 
     @Log
     void setupRender() {
+        muestraEditorUsuario = true;
         editaUsuario = false;
-        newPerfil = false;
         Calendar c = Calendar.getInstance();
         int dia = c.get(Calendar.DAY_OF_MONTH);
         int mes = c.get(Calendar.MONTH) + 1;
@@ -289,7 +294,7 @@ public class ABMUsuario extends GeneralPage {
         if (bselectPerfil != null) {
             c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", bselectPerfil.getId())));
         }
-        if (bNumeroDocumento != null && !bidentificacionBusqueda.equals("")) {
+        if (bNumeroDocumento != null && !bNumeroDocumento.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento + "%").ignoreCase()).
                     add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
                     add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("n", "ñ") + "%").ignoreCase()));
@@ -320,7 +325,7 @@ public class ABMUsuario extends GeneralPage {
     public List<Perfilporusuario> getAllPerfiles() {
         List<Perfilporusuario> lista = null;
         Query query = session.getNamedQuery("Perfilporusuario.findByUsuarioId");
-        query.setParameter("usuarioId", usuario.getId());
+        query.setParameter("usuarioId", usuariotrabajadoredit.getId());
         lista = query.list();
         return lista;
     }
@@ -353,8 +358,12 @@ public class ABMUsuario extends GeneralPage {
         } else {
             bLoginValido = false;
         }
-        //return new MultiZoneUpdate("validaLogin", validaLogin.getBody());
         return request.isXHR() ? idValidaLogin.getBody() : null;
+    }
+
+    @Log
+    void onSuccessFromFormularioRol() {
+        return;
     }
 
     @Log
@@ -368,9 +377,7 @@ public class ABMUsuario extends GeneralPage {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody())
-                .add("perfilZone", perfilZone.getBody())
-                .add("idValidaLogin", idValidaLogin.getBody());
+        mu = new MultiZoneUpdate("editarUsuarioZone", editarUsuarioZone.getBody()).add("perfilZone", perfilZone.getBody());
         return mu;
     }
 
@@ -386,15 +393,8 @@ public class ABMUsuario extends GeneralPage {
             resetBuscar();
             return zonaFormularioBusqueda.getBody();
         }
-        editaUsuario = false;
-        newPerfil = false;
         return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
     }
-
-//    @Log
-//    public boolean getMuestroOrganismos() {
-//        return ((tipoUsuario.equals(Usuario.ADMINLOCAL)) && (loggedUser.getTipo_usuario().equals(Usuario.ADMINGRAL)));
-//    }
 
     @Log
     public boolean getEsTrabajador() {
@@ -405,23 +405,16 @@ public class ABMUsuario extends GeneralPage {
     void onSelectedFromSave() {
     }
 
-//    @Log
-//    void onSelectedFromCancel() {
-//        cancelaEditUsuario = true;
-//        newPerfil = false;
-//    }
-
     @Log
-    Object onNewPerfil() {
-        newPerfil = true;
+    void resetPerfil() {
+        muestraEditorUsuario = false;
+        editaUsuario = false;
         permiso = new Perfilusuario();
-        return perfilZone.getBody();
     }
 
     @Log
     void resetUsuario() {
         usuariotrabajadoredit = new UsuarioTrabajador();
-//        usuario = new Usuario();
         usuariotrabajadoredit.setFechacreacion(new Date());
         usuariotrabajadoredit.setEstado(1);
         perfil = new Perfil();
@@ -445,79 +438,80 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     @CommitAfter
-//    Object onSuccessFromFormularioUsuario() {
     Object onSuccessFromFormularioPersonal() {
-//        if (!cancelaEditUsuario) {
-        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-//        usuario = new Usuario();
-        String password = null;
-        String subject = null;
-        String body = null;
-        String correo = null;
-        SecureRandom random = new SecureRandom();
-        boolean enviacorreo = false;
-        password = new BigInteger(50, random).toString(32);
+        // Si el login de usuario no es válido
+        if (bLoginValido) {
+            ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+            String password = null;
+            String subject = null;
+            String body = null;
+            String correo = null;
+            SecureRandom random = new SecureRandom();
+            boolean enviacorreo = false;
+            password = new BigInteger(50, random).toString(32);
 
-        if (usuariotrabajadoredit.getTrabajadorid() != null) {
+            if (usuariotrabajadoredit.getTrabajadorid() != null) {
 //            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
-            body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
-            correo = usuario.getTrabajador().getEmailLaboral();
-        } else {
-            body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuariotrabajadoredit.getLogin(), password);
-            correo = usuariotrabajadoredit.getEmaillaboral();
-        }
+                body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
+                correo = usuario.getTrabajador().getEmailLaboral();
+            } else {
+                body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuariotrabajadoredit.getLogin(), password);
+                correo = usuariotrabajadoredit.getEmaillaboral();
+            }
 
-        if (editaUsuario) {
-            if (reinitialisarpassword) {
+            if (editaUsuario) {
+                if (reinitialisarpassword) {
+                    subject = "Datos de acceso al sistema Servir";
+                    usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
+                    enviacorreo = true;
+                }
+            } else {
                 subject = "Datos de acceso al sistema Servir";
+                usuario.setIntentos_fallidos(0L);
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 enviacorreo = true;
             }
-        } else {
-            subject = "Datos de acceso al sistema Servir";
-            usuario.setIntentos_fallidos(0L);
-            usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
-            enviacorreo = true;
-        }
 
-        if (usuariotrabajadoredit.getEstado()==1) {
-            usuario.setIntentos_fallidos(0L);
-        }
+            if (usuariotrabajadoredit.getEstado() == 1) {
+                usuario.setIntentos_fallidos(0L);
+            }
 
-        if (enviacorreo) {
-            if (SMTPConfig.sendMail(subject, body, correo, ca)) {
-                System.out.println("Envío Correcto");
-            } else {
-                Logger logger = new Logger();
-                if (usuariotrabajadoredit.getTrabajadorid() != null) {
-                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+            if (enviacorreo) {
+                if (SMTPConfig.sendMail(subject, body, correo, ca)) {
+                    System.out.println("Envío Correcto");
                 } else {
-                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, 0, 0, Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+                    Logger logger = new Logger();
+                    if (usuariotrabajadoredit.getTrabajadorid() != null) {
+                        logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+                    } else {
+                        logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, 0, 0, Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+                    }
                 }
             }
-        }
-        usuario.setApellidoMaterno(usuariotrabajadoredit.getApellidomaterno());
-        usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
-        usuario.setDocumentoId(documentoIdentidadEdit.getId());
-        usuario.setLogin(usuariotrabajadoredit.getLogin());
-        usuario.setEstado(usuariotrabajadoredit.getEstado());
-        System.out.print(rolUsuarioEdit.getId());
-        usuario.setRolid(rolUsuarioEdit.getId());
-        System.out.println("==============================================================================");
-        System.out.println(rolUsuarioEdit.getId());
-        usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
-        usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
-        usuario.setTelefono(usuariotrabajadoredit.getTelefono());
-        usuario.setFecha_creacion(usuariotrabajadoredit.getFechacreacion());
-        usuario.setObservacion(usuariotrabajadoredit.getObservacion());
+            usuario.setApellidoMaterno(usuariotrabajadoredit.getApellidomaterno());
+            usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
+            usuario.setDocumentoId(documentoIdentidadEdit.getId());
+            usuario.setLogin(usuariotrabajadoredit.getLogin());
+            usuario.setEstado(usuariotrabajadoredit.getEstado());
+            System.out.print(rolUsuarioEdit.getId());
+            usuario.setRolid(rolUsuarioEdit.getId());
+            System.out.println("==============================================================================");
+            System.out.println(rolUsuarioEdit.getId());
+            usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
+            usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
+            usuario.setTelefono(usuariotrabajadoredit.getTelefono());
+            usuario.setFecha_creacion(usuariotrabajadoredit.getFechacreacion());
+            usuario.setObservacion(usuariotrabajadoredit.getObservacion());
 
-        session.saveOrUpdate(usuario);
-        envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-        editaUsuario = true;
+            session.saveOrUpdate(usuario);
+            envelope.setContents(helpers.Constantes.USUARIO_EXITO);
+            editaUsuario = false;
 //        usuario = createNewUsuario();
 //        }
 //        cancelaEditUsuario = false;
+        }
         return zonasTotal();
+        //return editarUsuarioZone.getBody();
     }
 
     @Log
@@ -530,7 +524,6 @@ public class ABMUsuario extends GeneralPage {
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
         editaUsuario = true;
-        newPerfil = false;
         return zonasTotal();
     }
 
@@ -551,7 +544,6 @@ public class ABMUsuario extends GeneralPage {
         permiso = (Perfilusuario) session.get(Perfilusuario.class, perfilusuariopk);
         session.delete(permiso);
         editaUsuario = true;
-        newPerfil = false;
         return zonasTotal();
     }
     /*
@@ -559,7 +551,7 @@ public class ABMUsuario extends GeneralPage {
      */
 
     @Log
-    void onActivate() throws Exception {
+    void onActivate() {
 //        Document pdfDocument = new Document();
 //        URL oracle = new URL("http://www.oracle.com/");
 //        URLConnection conn = oracle.openConnection();
@@ -617,31 +609,30 @@ public class ABMUsuario extends GeneralPage {
     }
 
     @Log
-//    @CommitAfter
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
-//        
         usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
-//        estadoUsuarioEdit = (LkEstadoUsuario) session.get(LkEstadoUsuario.class, lusuariotrabajador.getEstado());
         if (lusuariotrabajador.getTrabajadorid() == null) {
             noEditaUsuario = false;
         } else {
             usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
             noEditaUsuario = true;
         }
-//        botonPerfil = true;
-        //primeraVez = true;
         usuariotrabajadoredit = lusuariotrabajador;
+//        usuariotrabajadoredit.setIntentosfallidos(0);
+        muestraEditorUsuario = true;
         editaUsuario = true;
-        permiso = new Perfilusuario();
+        bLoginValido = true;
+        return zonasTotal();
+    }
+    @Log
+    Object onEditaPerfil(UsuarioTrabajador lusuariotrabajador) {
+        usuariotrabajadoredit = lusuariotrabajador;
+        resetPerfil();
         return zonasTotal();
     }
 
-//    @Log
-//    Usuario onPassivate() {
-//        return null;
-//    }
     @Log
     private boolean usuarioDeOrganismo() {
         return (tipoUsuario.equals(Usuario.ADMINLOCAL)
@@ -681,11 +672,10 @@ public class ABMUsuario extends GeneralPage {
         }
         return c.list();
     }
-    
-    @Log
-    Object onValueChanged(Rol editRol){
-        System.err.println("onValueChangedFromRolUsuarioEdit");
-        rolUsuarioEdit = editRol;
-        return idValidaLogin.getBody();
-    }
+//    @Log
+//    Object onValueChangedRolusuarioedit(Rol editRol){
+//        System.err.println("onValueChangedFromRolUsuarioEdit");
+//        rolUsuarioEdit = editRol;
+//        return idValidaLogin.getBody();
+//    }
 }

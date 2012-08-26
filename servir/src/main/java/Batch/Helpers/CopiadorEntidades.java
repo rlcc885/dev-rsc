@@ -4,24 +4,7 @@
  */
 package Batch.Helpers;
 
-import com.tida.servir.entities.Ant_Laborales;
-import com.tida.servir.entities.AusLicPersonal;
-import com.tida.servir.entities.Cargoxunidad;
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Certificacion; 
-import com.tida.servir.entities.ConceptoRemunerativo;
-import com.tida.servir.entities.ConstanciaDocumental;
-import com.tida.servir.entities.Curso;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.entities.EvaluacionPersonal;
-import com.tida.servir.entities.Familiar;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.MeritoDemerito;
-import com.tida.servir.entities.Publicacion;
-import com.tida.servir.entities.RemuneracionPersonal;
-import com.tida.servir.entities.Titulo;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.UnidadOrganica;
+import com.tida.servir.entities.*;
 import java.util.Date;
 
 /**
@@ -142,8 +125,8 @@ public class CopiadorEntidades {
             destino.setFamiliares(origen.getFamiliares());
         destino.setFormacionInfAdicional(CopiadorEntidades.verifacionNull(origen.getFormacionInfAdicional()));
 //        destino.setGrupoSanguineo(CopiadorEntidades.verifacionNull(origen.getGrupoSanguineo()));
-        if(origen.getMeritosdemeritos() != null)
-            destino.setMeritosdemeritos(origen.getMeritosdemeritos());
+//        if(origen.getMeritosdemeritos() != null)
+//            destino.setMeritosdemeritos(origen.getMeritosdemeritos());
 //        destino.setNacionalidad(CopiadorEntidades.verifacionNull(origen.getNacionalidad()));
         //destino.setNivelInstruccion(CopiadorEntidades.verifacionNull(origen.getNivelinstruccion()));
         destino.setNombres(CopiadorEntidades.verifacionNull(origen.getNombres()));
@@ -270,7 +253,7 @@ public class CopiadorEntidades {
         destino.setFecha(CopiadorEntidades.verifacionNull(origen.getFecha()));
         destino.setMotivo(CopiadorEntidades.verifacionNull(origen.getMotivo()));
 //        destino.setTipo(CopiadorEntidades.verifacionNull(origen.getTipo()));
-        destino.setTrabajador(origen.getTrabajador());
+//        destino.setTrabajador(origen.getTrabajador());
     }
     
     public static void produccionIntelectual(Publicacion origen, Publicacion destino){

@@ -51,9 +51,6 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Publicacion publicacion;
-    @Property
-    @Persist
-    private boolean bvalidausuario;
     //Listado de produccion intelectual
     @InjectComponent
     private Zone listaProIntelectualZone;
@@ -68,9 +65,10 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Date fecha_desde;
-//    @Persist
-//    @Property
-//    private Boolean vformulario;
+    // Variables para el manejo de los permisos
+    @Property
+    @Persist
+    private boolean bvalidausuario;
     @Persist
     @Property
     private Boolean editando;
@@ -93,15 +91,12 @@ public class PublicacionesEditor {
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
-        editando = false;
         resetRegistro();
-        accesos();
     }
 
     @Log
     public void accesos() {
         bvalidausuario = false;
-//        vformulario = true;
         vinserta = false;
         veditar = false;
         veliminar = false;
@@ -114,14 +109,12 @@ public class PublicacionesEditor {
             veditar = true;
             vdetalle = false;
             vguardar = true;
-            //vformulario = true;
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
-            //vformulario = true;
             vguardar = true;
             vdetalle = false;
         }
@@ -211,14 +204,8 @@ public class PublicacionesEditor {
             }
         }
 
-        editando = false;
         envelope.setContents(helpers.Constantes.PROD_INTELECTUAL_EXITO);
-        publicacion = new Publicacion();
-        valfec_desde = null;
-        // Verifica que, si no tiene acceso a insertar, no muestra el formulario
-//        if (!vinserta){
-//            vformulario = false;
-//        }
+        resetRegistro();
         return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
 
     }
@@ -237,26 +224,28 @@ public class PublicacionesEditor {
 
     @Log
     Object onActionFromDetalle(Publicacion publi) {
-        publicacion = publi;
-        if (publicacion.getFecha() != null) {
-            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
-        }
-        accesos();
+//        publicacion = publi;
+//        if (publicacion.getFecha() != null) {
+//            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+//            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
+//        }
+//        accesos();
+        Object objeto = onActionFromEditar(publi);
         vdetalle = true;
         vguardar = false;
-        return proIntelectualZone.getBody();
+        editando = false;
+        return objeto;
     }
 
     @Log
     @CommitAfter
     Object onActionFromEliminar(Publicacion publi) {
+        formulariomensajespi.clearErrors();
         session.delete(publi);
         envelope.setContents("Produción Intelectual eliminada exitosamente.");
         resetRegistro();
         accesos();
-        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).
-                add("listaProIntelectualZone", listaProIntelectualZone.getBody()).
+        return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).
                 add("proIntelectualZone", proIntelectualZone.getBody());
     }
 
@@ -264,17 +253,14 @@ public class PublicacionesEditor {
 //    Object onActionFromEditar2(Publicacion publi) {
 //        return onActionFromEditar(publi);
 //    }
-
 //    @Log
 //    Object onActionFromDetalle2(Publicacion publi) {
 //        return onActionFromDetalle(publi);
 //    }
-
     @Log
     Object onActionFromDetalle3(Publicacion publi) {
         return onActionFromDetalle(publi);
     }
-
 //    @Log
 //    Object onActionFromEliminar2(Publicacion publi) {
 //        return onActionFromEliminar(publi);
