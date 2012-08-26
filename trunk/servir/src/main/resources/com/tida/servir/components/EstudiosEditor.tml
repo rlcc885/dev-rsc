@@ -81,9 +81,9 @@
                             });
                             function toggleStatusEstudio() {
                             if (jQuery('.idestudiando').is(':checked')) {
-                            jQuery('.fec_fin').attr('disabled', true);
+                            jQuery('.fec_fin').datepick('disable');
                             } else {
-                            jQuery('.fec_fin').removeAttr('disabled');
+                            jQuery('.fec_fin').datepick('enable');
                             }
                             }
                         </script>
