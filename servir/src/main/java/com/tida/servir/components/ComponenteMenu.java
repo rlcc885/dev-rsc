@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -19,7 +19,7 @@ import org.apache.tapestry5.services.Response;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-@IncludeStylesheet({"context:layout/menu.css", "context:layout/menu-2.css"})
+@Import(stylesheet ={"context:layout/menu.css", "context:layout/menu-2.css"})
 public class ComponenteMenu {
 
     @Property

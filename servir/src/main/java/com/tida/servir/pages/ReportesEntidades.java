@@ -6,24 +6,21 @@ import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import helpers.Helpers;
 import helpers.Reportes;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-
-import org.hibernate.Session;
-
-import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
+import org.hibernate.Session;
 
 
-@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
+@Import(stylesheet ={"context:layout/trabajadornuevo.css"})
 /**
  * Clase que maneja la pagina de creacion de Trabajador
  */

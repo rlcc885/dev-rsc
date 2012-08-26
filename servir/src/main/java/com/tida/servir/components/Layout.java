@@ -11,12 +11,11 @@ import org.apache.tapestry5.services.javascript.StylesheetOptions;
 /**
  * Layout component for pages of application servir.
  */
-@IncludeStylesheet({"context:layout/layout.css",
+@Import(stylesheet ={"context:layout/layout.css",
     "context:layout/tabs-layout.css",
     "context:layout/tabs.css",
-    "context:layout/jquery.datepick.css"})
-//        @IncludeJavaScriptLibrary("context:layout/protofish.js")
-@IncludeJavaScriptLibrary({"context:layout/jquery.tools.min.js",
+    "context:layout/jquery.datepick.css"},
+    library={"context:layout/jquery.tools.min.js",
     "context:layout/protofish-min.js",
     "context:layout/jALDropDown1.7.3.js",
     "context:layout/navegador.js",

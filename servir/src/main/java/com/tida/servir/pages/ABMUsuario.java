@@ -32,7 +32,6 @@ public class ABMUsuario extends GeneralPage {
 
     @Inject
     private Session session;
-    @Property
     @SessionState
     private Usuario loggedUser;
     @Property
@@ -406,11 +405,11 @@ public class ABMUsuario extends GeneralPage {
     void onSelectedFromSave() {
     }
 
-    @Log
-    void onSelectedFromCancel() {
-        cancelaEditUsuario = true;
-        newPerfil = false;
-    }
+//    @Log
+//    void onSelectedFromCancel() {
+//        cancelaEditUsuario = true;
+//        newPerfil = false;
+//    }
 
     @Log
     Object onNewPerfil() {

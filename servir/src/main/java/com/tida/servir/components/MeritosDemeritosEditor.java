@@ -257,21 +257,21 @@ public class MeritosDemeritosEditor {
   
     }
     
-    @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariobotonesME() {
-        if(elemento==1){
-            merito=new MeritoDemerito();
-            valfec_desde=null;
-          return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
-                    .add("listaMeritosZone", listaMeritosZone.getBody());
-        }else if(elemento==2){
-            return "Busqueda";
-        }else{    
-           return this;
-        }
-        
-    }
+//    @Log
+//    @CommitAfter    
+//    Object onSuccessFromFormulariobotonesME() {
+//        if(elemento==1){
+//            merito=new MeritoDemerito();
+//            valfec_desde=null;
+//          return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody())                             
+//                    .add("listaMeritosZone", listaMeritosZone.getBody());
+//        }else if(elemento==2){
+//            return "Busqueda";
+//        }else{    
+//           return this;
+//        }
+//        
+//    }
     
     @Log
     Object onActionFromEditarME(MeritoDemerito meri) {        

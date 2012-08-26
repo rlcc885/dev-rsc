@@ -186,13 +186,13 @@ public class FamiliaresEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    void onSelectedFromCancel() {
-        elemento = 2;
-    }
+//    void onSelectedFromCancel() {
+//        elemento = 2;
+//    }
 
-    void onSelectedFromReset() {
-        elemento = 1;
-    }
+//    void onSelectedFromReset() {
+//        elemento = 1;
+//    }
 
     void onSelectedFromGuardar() {
         System.out.println("onSelectedFromGuardar");
@@ -409,28 +409,28 @@ public class FamiliaresEditor {
         return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
     }
 
-    @Log
-    Object onActionFromEditar2(Familiar fami) {
-        return onActionFromEditar(fami);
-    }
+//    @Log
+//    Object onActionFromEditar2(Familiar fami) {
+//        return onActionFromEditar(fami);
+//    }
 
-    @Log
-    Object onActionFromDetalle2(Familiar fami) {
-        return onActionFromDetalle(fami);
-    }
+//    @Log
+//    Object onActionFromDetalle2(Familiar fami) {
+//        return onActionFromDetalle(fami);
+//    }
 
     @Log
     Object onActionFromDetalle3(Familiar fami) {
         return onActionFromDetalle(fami);
     }
 
-    @Log
-    Object onActionFromDetalle4(Familiar fami) {
-        return onActionFromDetalle(fami);
-    }
+//    @Log
+//    Object onActionFromDetalle4(Familiar fami) {
+//        return onActionFromDetalle(fami);
+//    }
 
-    @Log
-    Object onActionFromEliminar2(Familiar fami) {
-        return onActionFromEliminar(fami);
-    }
+//    @Log
+//    Object onActionFromEliminar2(Familiar fami) {
+//        return onActionFromEliminar(fami);
+//    }
 }

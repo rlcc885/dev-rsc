@@ -23,7 +23,7 @@ import org.hibernate.criterion.Restrictions;
 /**
  * Clase que maneja la segunda pagina en la creacion de un Trabajador
  */
-@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
+@Import(stylesheet ={"context:layout/trabajadornuevo.css"})
 public class AsignarNuevoCargo extends GeneralPage {
 
     @Inject

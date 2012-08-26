@@ -1,27 +1,15 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.Certificacion;
-import com.tida.servir.entities.Curso;
 import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
-
 import helpers.Errores;
 import helpers.Logger;
 import java.util.ArrayList;
-
 import java.util.Date;
-import java.util.List;
-
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.PrimaryKeyEncoder;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -86,29 +74,29 @@ public class CertificacionesEditor {
         return true;
     }
 
-    public PrimaryKeyEncoder<Long, Certificacion> getEncoder()
-    {
-    	return new PrimaryKeyEncoder<Long, Certificacion>()
-    	{
-    		public Long toKey(Certificacion value)
-    		{
-    			return value.getId();
-    		}
-
-    		public void prepareForKeys(List<Long> keys)
-    		{
-    		}
-
-    		public Certificacion toValue(Long key)
-    		{
-    			return (Certificacion) session.get(Certificacion.class, key);
-    		}
-
-    		public Class<Long> getKeyType() {
-    			return Long.class;
-    		}
-    	};
-    }
+//    public PrimaryKeyEncoder<Long, Certificacion> getEncoder()
+//    {
+//    	return new PrimaryKeyEncoder<Long, Certificacion>()
+//    	{
+//    		public Long toKey(Certificacion value)
+//    		{
+//    			return value.getId();
+//    		}
+//
+//    		public void prepareForKeys(List<Long> keys)
+//    		{
+//    		}
+//
+//    		public Certificacion toValue(Long key)
+//    		{
+//    			return (Certificacion) session.get(Certificacion.class, key);
+//    		}
+//
+//    		public Class<Long> getKeyType() {
+//    			return Long.class;
+//    		}
+//    	};
+//    }
 
     @CommitAfter
     public Object onSuccess()

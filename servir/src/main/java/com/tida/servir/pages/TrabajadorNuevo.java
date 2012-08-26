@@ -24,7 +24,6 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 
 //@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
@@ -35,7 +34,6 @@ public class TrabajadorNuevo extends GeneralPage {
 
     @Inject
     private Session session;
-    @Property
     @SessionState
     private Usuario loggedUser;
     @Inject

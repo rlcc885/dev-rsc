@@ -732,17 +732,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("EOrigenZone",EOrigenZone.getBody());
     }
 
-    @Log
-    AMEntidadUEjecutora onActionFromToggle_filtros() {
-        if (mostrarFiltros) {
-            mostrarFiltros = false;
-            mostrarEsconder = "Mostrar";
-        } else {
-            mostrarFiltros = true;
-            mostrarEsconder = "Ocultar";
-        }
-        return this;
-    }
+//    @Log
+//    AMEntidadUEjecutora onActionFromToggle_filtros() {
+//        if (mostrarFiltros) {
+//            mostrarFiltros = false;
+//            mostrarEsconder = "Mostrar";
+//        } else {
+//            mostrarFiltros = true;
+//            mostrarEsconder = "Ocultar";
+//        }
+//        return this;
+//    }
 
     @Log
     public void onActivate(Entidad eue) {

@@ -1620,8 +1620,9 @@ table.t-data-grid tbody tr td.login {width:80px;}
 }
 .actions a{
     color: #FFFFFF;
-    padding: 5px 8px;
-    padding-bottom: 4px;
+    padding: 4px 8px 5px;
+/*    padding-bottom: 4px;*/
+    padding: 3px 8px 4px\0/;
 }
 .errormsg{
     color: #DD4B39;

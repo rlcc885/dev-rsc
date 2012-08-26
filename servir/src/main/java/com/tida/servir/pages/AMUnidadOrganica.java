@@ -32,7 +32,6 @@ import org.hibernate.criterion.Restrictions;
  */
 public class AMUnidadOrganica extends GeneralPage {
 
-    @Property
     @SessionState
     private Usuario loggedUser;
     @Property

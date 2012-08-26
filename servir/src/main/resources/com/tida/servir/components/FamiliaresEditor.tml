@@ -3,16 +3,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">        
     <t:content>
-        <div>
-                            <script>
-                                jQuery(document).ready(function() {
-                                //
-                                //jQuery(function() {
-                                jQuery('.fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
-                                //jQuery('.fechaNacimiento').datepicker();
-                                });
-                            </script>
-                        </div>
+        
         <div t:type="zone" t:id="mensajesFZone" >
             <script>
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
@@ -22,98 +13,106 @@
                 <t:errors/>
             </t:form> 
         </div>
-        <fieldset>
-            <div class="f-wrap">  
-                <div t:type="zone" t:id="familiaresZone" >
-                    
-                    <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
-                        <div class="f-wrap">                             
-                            <div class="f-left" >
-                                <t:label for="parentesco"/>
-                                <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
+        
+        <div t:type="zone" t:id="familiaresZone" >
+            <div>
+                <script>
+                    jQuery(document).ready(function() {
+                    //
+                    //jQuery(function() {
+                    jQuery('.fechaNacimiento').datepick({dateFormat: 'dd/mm/yyyy'});
+                    //jQuery('.fechaNacimiento').datepicker();
+                    });
+                </script>
+            </div>
+            <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
+                <fieldset>
+                    <div class="f-wrap">                             
+                        <div class="f-left" >
+                            <t:label for="parentesco"/>
+                            <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
                                         model="beanParentesco"  t:disabled="${vdetalle}"
                                         t:validate="required" t:blankOption="ALWAYS"/>       
-                            </div>
-                            <div class="f-left" >	
-                                <t:label for="sexo"/>
-                                <select t:type="Select" t:id="sexo" value="valsexo" 
+                        </div>
+                        <div class="f-left" >	
+                            <t:label for="sexo"/>
+                            <select t:type="Select" t:id="sexo" value="valsexo" 
                                         model="beanSexo" t:disabled="${vdetalle}"
                                         t:blankOption="ALWAYS" />
-                            </div>
-                            <div class="f-left">	
-                                <t:label for="fechaNacimiento"/>
-                                <input t:type="TextField" t:id="fechaNacimiento" t:disabled="${vdetalle}" t:value="nuevafecha" 
+                        </div>
+                        <div class="f-left">	
+                            <t:label for="fechaNacimiento"/>
+                            <input t:type="TextField" t:id="fechaNacimiento" t:disabled="${vdetalle}" t:value="nuevafecha" 
                                        t:validate="regexp" class="fechaNacimiento pictureInputDate"/>
-                            </div>
                         </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="nombres"/>
-                                <input t:type="TextField" t:id="nombres" t:disabled="${vdetalle}"  t:validate="required" t:value="familiarActual.nombres" maxlength="255" size="33"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoPaterno" />
-                                <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
-                            </div>
-                            <div class="f-left">
-                                <t:label for="apellidoMaterno" />
-                                <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
-                            </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="nombres"/>
+                            <input t:type="TextField" t:id="nombres" t:disabled="${vdetalle}"  t:validate="required" t:value="familiarActual.nombres" maxlength="255" size="33"/>
                         </div>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                <t:label for="tipoDocumento" />
-                                <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
+                        <div class="f-left">
+                            <t:label for="apellidoPaterno" />
+                            <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
+                        </div>
+                        <div class="f-left">
+                            <t:label for="apellidoMaterno" />
+                            <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <t:label for="tipoDocumento" />
+                            <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
                                         model="beanTiposDoc" disabled="${bdni}"
                                         t:validate="required" t:blankOption="ALWAYS" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="nroDocumento"/>
-                                <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" 
+                        </div>
+                        <div class="f-left">
+                            <t:label for="nroDocumento"/>
+                            <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" 
                                        t:validate="regexp, required" disabled="${bdni}" size="33" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="estadoCivil" />
-                                <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
+                        </div>
+                        <div class="f-left">
+                            <t:label for="estadoCivil" />
+                            <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
                                         model="beanEstadoCivil" t:disabled="${vdetalle}"
                                         t:blankOption="ALWAYS"/>
-                            </div>
                         </div>
-                        <div class="f-wrap">  
-                            <t:if test="${bvalidausuario}">
-                                <div class="f-left">
-                                    <input t:type="Checkbox" t:id="validado" t:disabled="${vdetalle}"
+                    </div>
+                    <div class="f-wrap">  
+                        <t:if test="${bvalidausuario}">
+                            <div class="f-left">
+                                <input t:type="Checkbox" t:id="validado" t:disabled="${vdetalle}"
                                            t:value="familiarActual.validado"/>Revisado                                        
-                                </div>
-                            </t:if>
-                        </div>
-                        <div class="actions">
-                            <t:if test="${vformulario}">
+                            </div>
+                        </t:if>
+                    </div>
+                    <div class="actions">
+                        <t:if test="${vformulario}">
                             <div class="f-left">                        
                                 (*) Campos Obligatorios
                             </div>
-                            </t:if>    
-                            <t:if test="${vguardar}">
-                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                            </t:if>
-                            <t:if test="${vinserta}">
+                        </t:if>    
+                        <t:if test="${vguardar}">
+                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                        </t:if>
+                        <t:if test="${vinserta}">
                             <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="familiaresZone">
                                 <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                Limpiar Formulario
+                                    Limpiar Formulario
                                 </span> 
                             </t:eventLink>
-                            </t:if>
-                            <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="familiaresZone">
-                                <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                        </t:if>
+                        <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="familiaresZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                 Cancelar
-                                </span> 
-                            </t:eventLink>
-                        </div>
-                        
-                    </t:form>  
-                </div>
-            </div>
-        </fieldset>
+                            </span> 
+                        </t:eventLink>
+                    </div>
+                </fieldset>
+            </t:form>  
+        </div>
+        
   
         <div id = "tabla_oi">
             <t:zone t:id="listaFamiliaresZone">   
@@ -172,10 +171,10 @@
                     </p:revisadoCell>
                     
                     <p:accionesCell>
-                        <t:if test="${bvalidausuario}" negate="true">
+<!--                        <t:if test="${bvalidausuario}" negate="true">-->
                             <t:if test="${listafamiliar.validado}" negate="true"> <!-- no validado -->
                                 <t:if test="${veditar}"> <!-- si edita -->
-                                    <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink> | 
+                                    <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${veditar}" negate="true"> <!-- si no edita -->
                                     <t:actionlink t:id="detalle3" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>
@@ -186,6 +185,7 @@
                             </t:if>
                             <t:if test="${listafamiliar.validado}" negate="true">
                                 <t:if test="${veliminar}">
+                                    |
                                     <t:actionlink t:id="eliminar" zone="listaFamiliaresZone" context="listafamiliar"> 
                                         <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                             Eliminar
@@ -193,29 +193,30 @@
                                     </t:actionlink>
                                 </t:if>
                             </t:if>
-                        </t:if>
-                        <t:if test="${bvalidausuario}">
+<!--                        </t:if>-->
+<!--                        <t:if test="${bvalidausuario}">
                             <t:if test="${listafamiliar.validado}" negate="true">
                                 <t:if test="${veditar}">
-                                    <t:actionlink t:id="editar2" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink> |
+                                    <t:actionlink t:id="editar2" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${veditar}" negate="true">
                                     <t:actionlink t:id="detalle2" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>
                                 </t:if>                               
                             </t:if>   
                             <t:if test="${listafamiliar.validado}">
-                                    <t:actionlink t:id="detalle4" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>                                
+                                <t:actionlink t:id="detalle4" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>                                
                             </t:if>
-                        <t:if test="${listafamiliar.validado}" negate="true">                            
-                            <t:if test="${veliminar}">
-                                <t:actionlink t:id="eliminar2" zone="listaFamiliaresZone" context="listafamiliar"> 
-                                    <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
-                                        Eliminar
-                                    </span>
-                                </t:actionlink>
+                            <t:if test="${listafamiliar.validado}" negate="true">                            
+                                <t:if test="${veliminar}">
+                                    |
+                                    <t:actionlink t:id="eliminar2" zone="listaFamiliaresZone" context="listafamiliar"> 
+                                        <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
+                                            Eliminar
+                                        </span>
+                                    </t:actionlink>
+                                </t:if>
                             </t:if>
-                        </t:if>
-                        </t:if>
+                        </t:if>-->
                     </p:accionesCell>
                 </t:grid>
             </t:zone>

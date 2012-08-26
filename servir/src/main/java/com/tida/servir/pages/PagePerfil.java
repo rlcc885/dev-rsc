@@ -10,12 +10,10 @@ import helpers.Helpers;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.Checkbox;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -30,7 +28,6 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Jurguen Zambrano
  */
-@Import(stack="jquery")
 public class PagePerfil {
 
     @Inject
@@ -99,9 +96,9 @@ public class PagePerfil {
     @SuppressWarnings("unused")
     @Property
     private boolean selectAll = false;
-    @InjectComponent
-    @Property
-    private Checkbox controlTotal;
+//    @InjectComponent
+//    @Property
+//    private Checkbox controlTotal;
     @Persist
     @Property
     private boolean bcontrolTotal;

@@ -1,3 +1,4 @@
+
 <html t:type="layout" title="Administración de Perfiles"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -157,10 +158,24 @@
     </t:zone>
     <t:zone t:id="editPermisoZone">
         <t:if test = "mostrarNew" negate="true">
+            <SCRIPT language="javascript">
+            jQuery(function(){
+                jQuery("input[name=checktodos]").click(function () {
+                    jQuery('.checkacceso').attr('checked', this.checked);
+                });
+                jQuery(".case").click(function(){
+                    if(jQuery(".checkacceso").length == jQuery(".checkacceso:checked").length) {
+                        jQuery("input[name=checktodos]").attr("checked", "checked");
+                    } else {
+                        jQuery("input[name=checktodos]").removeAttr("checked");
+                    }
+                });
+            });
+            </SCRIPT>
             <h3>Asignar derecho a un determinado Perfil de Usuario</h3>
             <div id="box-cargos" class="box">
                 <t:form t:id="permisoInputForm" t:zone="editPermisoZone">
-                                        <fieldset>
+                    <fieldset>
                         <legend>Seleccione Opción:</legend>
                         <div class ="f-wrap">
                             <div class="f-left">
@@ -177,28 +192,28 @@
                         </div>
                         <div class ="f-wrap">
                             <div class="f-left" style="width:100px;text-align:center;">
-                                <t:label for="controlTotal" />
-                                <t:checkbox t:id="controlTotal" value="bcontrolTotal" t:mixins="ioko/boundcheckbox" />
+                                <t:label for="checktodos" />
+                                <t:checkbox t:id="checktodos" value="bcontrolTotal"/>
                             </div>
                             <div class="f-left" style="width:100px;text-align:center;">
                                 <t:label for="lectura" />
-                                <t:checkbox t:id="lectura" value="permiso.accesoselect" t:mixins="ioko/boundcheckbox" master="controlTotal" />
+                                <t:checkbox t:id="lectura" value="permiso.accesoselect" class="checkacceso" />
                             </div>
-                            <div class="f-left" style="width:100px;text-align:center;">
+                            <div class="f-left" style="width:100px;text-align:center;" >
                                 <t:label for="modificar" />
-                                <t:checkbox t:id="modificar" value="permiso.accesoupdate" t:mixins="ioko/boundcheckbox" master="controlTotal" />
+                                <t:checkbox t:id="modificar" value="permiso.accesoupdate" class="checkacceso" />
                             </div>
                             <div class="f-left" style="width:100px;text-align:center;">
                                 <t:label for="insertar" />
-                                <t:checkbox t:id="insertar" value="permiso.accesoinsert" t:mixins="ioko/boundcheckbox" master="controlTotal" />
+                                <t:checkbox t:id="insertar" value="permiso.accesoinsert" class="checkacceso" />
                             </div>
                             <div class="f-left" style="width:100px;text-align:center;">
                                 <t:label for="eliminar" />
-                                <t:checkbox t:id="eliminar" value="permiso.accesodelete" t:mixins="ioko/boundcheckbox" master="controlTotal" />
+                                <t:checkbox t:id="eliminar" value="permiso.accesodelete" class="checkacceso" />
                             </div>
                         </div>
                     </fieldset>
-                    <div id="bouttons" class="f-right">
+                    <div class="actions">
                         <input t:type="Submit" t:id="saveNewPermiso" value="Guardar" t:mixins="confirm" t:message="Desea grabar el permiso?" class="button f-right"/>
 <!--                        <input t:type="Submit" t:id="resetNewPermiso" value="Cancelar" t:mixins="confirm" t:message="Desea cancelar la edición?" class="button f-right"/>-->
                         <t:eventLink t:event="resetNewPermiso" href="#" class="button f-right" t:zone="editPermisoZone">
