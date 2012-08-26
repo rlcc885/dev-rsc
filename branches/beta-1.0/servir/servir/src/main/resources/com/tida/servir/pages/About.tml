@@ -1,0 +1,8 @@
+<html t:type="layout" title="About servir"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <p>About servir application ...</p>
+
+Esto es una prueba de subversion y este texto ha sido añadido desde la maquina virtual. ahora si esta funcionando.
+</html>

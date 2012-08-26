@@ -1,0 +1,248 @@
+
+<html t:type="layout" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+       
+        
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+    </div>
+       
+    <h2>Migración / Fusión de Registros</h2>
+       
+        <form t:type="form" t:id="formOpciones" t:zone="EDestiZone">            
+            <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="migras" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)">
+                <t:if test="mostrarUO"> 
+                    <t:radio t:id="pa1" t:value="true" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>Migración
+                </t:if>
+                <t:radio t:id="pa2" t:value="false" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/> Fusión
+            </t:radiogroup> 
+            
+        </form>  
+        <br/>
+        <br/>
+        <t:zone t:id="EOrigenZone">
+            <form t:type="form" t:id="formEOrigen" t:zone="EOrigenZone">
+  
+             <fieldset>
+               <legend>Origen</legend> 
+                    <t:if test="mostrarUO"> 
+                        <div class="f-left">    
+                            <label>Entidad/Sub Entidad</label>
+                            <input t:type="TextField" t:id="entidad_den"
+                                        t:value="entidad_origen" t:disabled="true" style="width: 350px;"/>                            
+                        </div>
+                        <div class="f-left">
+                            <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
+                        </div>
+                    </t:if>
+                    <div class="f-left">
+                        <label>Nivel Organizacional</label>
+                        <input t:type="Select" t:id="uo_nivelo"                                
+                               t:value="nivelo" model="beanNivelOrigen" t:zone="EOrigenZone"/>  
+                    </div>
+                    <div class="f-left">
+                        <label>Unidad Orgánica</label>
+                        <select t:type="select" t:id="select_unidadOrganicaOrigen"
+                                model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="uoOrigen"
+                                onChange="this.form.fire()" t:zone="EOrigenZone"/>    
+                    </div>
+             </fieldset>
+            </form>                             
+          </t:zone>
+        
+        <t:zone t:id="EDestiZone" >            
+            <form t:type="form" t:id="formEDestino" t:zone="EDestiZone"> 
+              <fieldset>
+               <legend>Destino</legend>  
+                <div class="f-wrap">
+                   <t:if test="mostrarUO"> 
+                    <div class="f-left">    
+                        <label>Entidad/Sub Entidad</label>
+                        <input t:type="TextField" t:id="entidad_den_des"
+                            t:value="entidad_destino" t:disabled="true" style="width: 400px;"/>                            
+                    </div>
+                    <div class="f-left">
+                        <input id="buscar2submit" type="submit" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                    </div>
+                   </t:if>
+                    <div class="f-left">
+                        <label>Nivel Organizacional</label>
+                        <input t:type="Select" t:id="uo_niveld"                                
+                               t:value="niveld" model="beanNivelDestino" t:zone="EDestiZone"/>  
+                    </div>
+                    <div class="f-left">
+                        <if test="mostrarUO">                        
+                            <label>Unidad Orgánica</label>
+                       <select t:type="select" t:id="select_unidadOrganicaDestino"
+                                model="beanUOrganicasDestino" encoder="beanUOrganicasDestino" value="uoDestino"
+                                onChange="this.form.fire()" t:zone="EDestiZone"/>                       
+                        </if>
+                    </div>
+                </div>
+               </fieldset>
+            </form>
+        </t:zone>
+            
+            <!--
+            <div class="f-wrap datosDestinos">
+                <t:EntidadSelect  t:id="entidades" t:entidad="entidadDestino"
+                    t:zone = "NivelDestinoZone" t:zoneName = "NivelDestinoZone"
+                    t:vistaCorta = "true"/>
+            </div>-->
+            <!--<div class="f-wrap">-->
+                <!--
+                    <div class="f-left">
+                        <t:zone t:id="NivelDestinoZone">
+                            <t:if test= "hayentidadDestino">
+                                <form t:type="form" t:id="formNivelUODestino" t:zone="UODestinoZone">
+                                        * Nivel Organizacional
+                                        <input t:type="Select" t:id="unidadorganica_nivel_destino"
+                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                        t:value="nivelDestino" model="beanNivelDestino" t:zone="UODestinoZone"/>
+                                </form>
+                            </t:if>
+                        </t:zone>
+                    </div>-->
+                    <!--
+                    <div class="f-left">
+                        <t:zone t:id="UODestinoZone">
+                            <t:if test= "hayentidadDestino">
+
+                                <form t:type="form" t:id="formUODestino" t:zone ="UOChangeZone">
+                                        <t:if test = "hayNivelDestino">
+                                            * Unidad Orgánica Padre destino
+                                            <select t:type="select" t:id="select_unidadOrganicaDestino"
+                                            model="beanUOrganicasDestino" encoder="beanUOrganicasDestino" value="uoDestino"
+                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                        </t:if>
+                                </form>
+                             </t:if>
+                        </t:zone>
+                    </div>-->
+                    <!--
+                    <div class="f-left">
+                        <t:zone t:id="UOChangeZone">
+                            <t:if test = "ActivoSubmit">
+                                <form t:type="form" t:id="formUOChange" t:zone ="UOChangeZone">
+                                    <input id="submit" type="submit" value="Cambiar UO a esta Entidad" class="button"/>
+                                </form>
+                                <form t:type="form" t:id="formUOFusionar" t:zone ="UOChangeZone">
+                                    <t:errors/>
+                                    <input id="submit" type="submit" value="Fusionar UO a esta Entidad" class="button"/>
+                                </form>
+                             </t:if>
+                        </t:zone>
+                    </div>-->
+ 
+    <div t:type="zone" t:id="botonZone" > 
+        <form t:type="form" t:id="formBotones" t:zone ="botonZone">
+            <t:errors/>
+            <t:envelope t:id="envelope"/>                
+            <div class="actions f-right">
+                <input id="aceptar" type="submit" value="Aceptar" class="button" />                
+                <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
+                <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
+            </div>               
+        </form>
+    </div>  
+    <div id="shade"></div>
+    <div id="modal">           
+        <h1>Selección de entidad</h1>
+        <div class="pane">
+            <t:zone t:id="busZone" t:update="show">
+                <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Denominación</label>
+                            <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 300px;"/> 
+                        </div>                   
+                    </div>
+                    <div class="actions f-right">
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" /> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                    </div> 
+
+                </form>
+            </t:zone>
+            <br/>
+            <br/>
+        </div>
+            <!-- Eorigen-->
+             
+             <!-- Edestino-->
+                 
+        <div t:type="zone" t:id="entiZone" t:update="show">
+            <t:if test="mostrar">
+                <t:if test="entixo">
+                    <h2>Entidad Origen</h2>
+                    <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                                row="entio" include="denominacion" inPlace="true" t:zone="organismosZone">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="editar" zone="EOrigenZone" context="entio" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid> 
+                </t:if>     
+                <t:if test="entixd">
+                    <h2>Entidad Destino</h2>
+                    <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                                row="entid" include="denominacion" inPlace="true" t:zone="entiZone">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="selec" zone="EDestiZone" context="entid" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </t:if>
+                      
+            </t:if>
+        </div>
+                
+             
+    </div>
+         
+    <!--<script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+
+        // This code is a workaround for IE6's lack of support for the
+        // position: fixed style.
+        //
+        if (!('maxHeight' in document.body.style)) {
+        function modalsize() {
+        var top= document.documentElement.scrollTop;
+        var winsize= document.documentElement.offsetHeight;
+        var docsize= document.documentElement.scrollHeight;
+        shade.style.height= Math.max(winsize, docsize)+'px';
+        modal.style.top= top+Math.floor(winsize/3)+'px';
+        };
+        modal.style.position=shade.style.position= 'absolute';
+        window.onscroll=window.onresize= modalsize;
+        modalsize();
+        }
+    </script>-->
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
+       
+
+</html>

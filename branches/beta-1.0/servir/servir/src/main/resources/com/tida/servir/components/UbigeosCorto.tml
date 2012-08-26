@@ -1,0 +1,25 @@
+<html title="Editar UbigeosDosCampos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div class="f-wrap">
+            <div class="f-left">
+                <t:label for="departamento"/>
+                <select t:type="Select" t:id="sector" t:value="ubigeoSectorPliego.sector"
+                model="beanDatoAuxSector" encoder="beanDatoAuxSector" t:disabled="disabled"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:blankOption="AUTO"
+                 t:zone="prop:zoneName"/>
+            </div>
+            <div class="f-left">
+                <t:label for="provincia"/>
+                <select t:type="Select" t:id="pliego" t:value="ubigeoSectorPliego.pliego"
+                model="beanDatoAuxPliego" encoder="beanDatoAuxPliego" t:disabled="disabled"
+                onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                t:blankOption="AUTO"
+                 t:zone="prop:zoneName"/>
+            </div>         
+        </div>
+    </t:content>
+</html>

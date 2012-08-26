@@ -1,0 +1,27 @@
+<html title="Editar Ubigeos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:content>
+        <div class="f-wrap">
+            <div class="f-left">
+                <label>Departamento</label>
+                <select t:type="Select" t:id="cod_ubi_dept" id="cod_ubi_dept" t:value="ubigeo.departamento"
+                model="beanDatoAuxDepto" encoder="beanDatoAuxDepto" t:disabled="disabled"
+                 t:zone="prop:zoneName" />
+            </div>
+            <div class="f-left">
+                <label>Provincia</label>
+                <select t:type="Select" t:id="cod_ubi_prov" id="cod_ubi_prov" t:value="ubigeo.provincia"
+                model="beanDatoAuxProv" encoder="beanDatoAuxProv" t:disabled="disabled"
+                t:zone="prop:zoneName" />
+            </div>
+            <div class="f-left">
+                <label>Distrito</label>
+                <select t:type="Select" t:id="cod_ubi_dist" id="cod_ubi_dist" t:value="ubigeo.distrito"
+                model="beanDatoAuxDist" encoder="beanDatoAuxDist" t:disabled="disabled"
+                t:zone="prop:zoneName" />
+            </div>         
+        </div>
+    </t:content>
+</html>

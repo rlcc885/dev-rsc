@@ -1,0 +1,36 @@
+<html t:type="layout" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+
+
+                           
+    <h3>
+        Reporte Unidades Organicas  
+    </h3>
+
+    <br/>
+    
+    <t:form t:id="formulario" >
+    <div class="filtros">
+    Entidad:
+    <input t:type="TextField"  t:value="paramEntidad"  />
+    </div>
+    
+        <br/>
+    
+        <div>
+    <input type="submit" value="submit"/>
+        </div>
+    </t:form>
+        
+    
+    <SCRIPT LANGUAGE="JavaScript"> 
+        function mostrarEsconder() { 
+            cach.visibility = "visible";
+        } 
+    </SCRIPT>
+</html>
