@@ -95,6 +95,7 @@ public class DatosDeCargoEditor {
     @Log
     @SetupRender
     private void inicio() {
+        limpiar();
         valmotivo=actual_asignado.getMotivo_cese();
 //        valfec_inicio=actual_asignado.getFec_inicio();
 //        valfec_fin=actual_asignado.getFec_fin();
@@ -132,7 +133,13 @@ public class DatosDeCargoEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }       
 
-    
+    void limpiar(){
+        valtipovinculo=null;
+        valfec_fin=null;
+        valfec_inicio=null;
+        valmotivo=null;        
+        
+    }
     void onSelectedFromSave() {        
         elemento=1;   
     }
@@ -215,6 +222,24 @@ public class DatosDeCargoEditor {
     }
     
     void registrar(Boolean e){
+    
+       if(!e){         
+         if(getListadoUsuario().size()>0){
+//            Usuario usuarionuevo=new Usuario();
+//             System.out.println("aquiiiiiii"+getListadoUsuario().get(0).getLogin()+"-"+getListadoUsuario().get(0).getId());
+//            usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+//            System.out.println("aquiiiiiii"+usuarionuevo);
+//            int ui=2;
+//            usuarionuevo.setIntentos_fallidos(2L);
+//            usuarionuevo.setTelefono("cccc");            
+//            usuarionuevo.setEstado(0);
+//            session.saveOrUpdate(usuarionuevo);
+            String hql = "update RSC_USUARIO set ESTADO=0 where login='" + getListadoUsuario().get(0).getLogin()  + "'";
+            Query query = session.createSQLQuery(hql);
+            int rowCount = query.executeUpdate();
+            session.flush();
+         }
+       }
        actual_asignado.setMotivo_cese(valmotivo);
        actual_asignado.setFec_inicio(fecha_inicio);
        actual_asignado.setFec_fin(fecha_fin);
@@ -222,22 +247,9 @@ public class DatosDeCargoEditor {
        actual_asignado.setEstado(e);
        session.saveOrUpdate(actual_asignado);
        //new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-//       session.flush();
+       session.flush();
        formulariodatosdecargoasignado.clearErrors();
-       envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);       
-       if(!e){         
-         if(getListadoUsuario().size()>0){
-            Usuario usuarionuevo=new Usuario();
-             System.out.println("aquiiiiiii"+getListadoUsuario().get(0).getLogin()+"-"+getListadoUsuario().get(0).getId());
-            usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
-            System.out.println("aquiiiiiii"+usuarionuevo);
-            int ui=2;
-            usuarionuevo.setIntentos_fallidos(2L);
-            usuarionuevo.setTelefono("cccc");            
-            usuarionuevo.setEstado(0);
-            session.saveOrUpdate(usuarionuevo);
-         }
-       }
+       envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);   
     }
     
     @Log
