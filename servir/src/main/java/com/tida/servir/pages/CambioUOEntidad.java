@@ -63,11 +63,11 @@ public class CambioUOEntidad extends GeneralPage{
 
     @Property
     @Persist
-    private UnidadOrganica uoOrigen;
+    private LkBusquedaUnidad uoOrigen;
 
     @Property
     @Persist
-    private UnidadOrganica uoDestino;
+    private LkBusquedaUnidad uoDestino;
 
 //    @Property
 //    @Persist
@@ -370,8 +370,9 @@ public class CambioUOEntidad extends GeneralPage{
     return zonasDatos();
     }
 
-    void ejecutar(Entidad eo,Entidad ed,UnidadOrganica uoo,UnidadOrganica uod,int tipo){
-        Query query = session.getNamedQuery("callSpMigracionFucion");
+    void ejecutar(Entidad eo,Entidad ed,LkBusquedaUnidad uoo,LkBusquedaUnidad uod,int tipo){
+        System.out.println("aquiiiii"+eo.getId()+"-"+ed.getId()+"-"+uoo.getId()+"-"+uod.getId()+"-"+tipo);
+        Query query = session.getNamedQuery("callSpFucionMigracion");
         query.setParameter("as_entidad_id_origen", eo.getId());
         query.setParameter("as_entidad_id_destino", ed.getId());
         query.setParameter("an_unidad_origen", uoo.getId());
