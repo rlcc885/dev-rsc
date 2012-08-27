@@ -503,7 +503,6 @@ public class ABMUsuario extends GeneralPage {
 
         if (!noEditaUsuario) {
             // Busca usuarios con el mismo DNI ingresado
-            System.out.println("DNI anterior: '"+numeroDNIanterior +"' DNI ingresado: '"+ usuariotrabajadoredit.getNrodocumento()+"'");
             if (!numeroDNIanterior.equals(usuariotrabajadoredit.getNrodocumento())) {
                 Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
                 query.setParameter("nrodocumento", usuariotrabajadoredit.getNrodocumento());

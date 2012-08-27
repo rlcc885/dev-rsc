@@ -147,6 +147,7 @@ public class Index {
             } else {
                 logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, 0);
                 formulariologin.recordError("Clave incorrecta.");
+                System.out.println("clave incorrecta.");
             }
             session.saveOrUpdate(usuario);
             return this;
