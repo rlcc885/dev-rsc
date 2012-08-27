@@ -488,7 +488,7 @@ public class ConstanciasDocumentalesEditor {
     @Log
     Boolean esObligatorio(String opcion){
         
-        if (opcion == null){opcion = "X";}
+        if (opcion == null || "".equals(opcion)){opcion = "X";}
         
         if(opcion.equalsIgnoreCase("SI"))
         {
@@ -529,7 +529,7 @@ public class ConstanciasDocumentalesEditor {
        valcategoriaconstancia = null;
        valtipoconstancia = null;
        valfec_desde = "";
-       valentregado = null;
+       valentregado = false;
        valobligatorio = "";
 //     valcargoasignado = null;
     }
