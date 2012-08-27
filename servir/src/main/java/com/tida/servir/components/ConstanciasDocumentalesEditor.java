@@ -183,8 +183,7 @@ public class ConstanciasDocumentalesEditor {
 
 
     //@Log
-    void onSelectedFromReset() {
-              
+    void onSelectedFromReset() {            
         elemento = 2;
         if(vdetalle){
             vformulario = false;
@@ -346,7 +345,7 @@ public class ConstanciasDocumentalesEditor {
         editando = true;
         vdetalle = false;
         vbotones = true;
-        vNoedita=true;
+      //  vNoedita=true;
         mostrar();
         return actualizarZonas();
     }
@@ -357,7 +356,11 @@ public class ConstanciasDocumentalesEditor {
         mostrar();
         vdetalle = true;
         vbotones = false;
-        vNoedita=true;
+  //cambios:
+            if (usua.getAccesoupdate() !=1){}
+            else{vNoedita=true;}
+  //---------          
+  //      vNoedita=true;
         vformulario = true;
         return actualizarZonas();
     }
@@ -368,7 +371,11 @@ public class ConstanciasDocumentalesEditor {
         mostrar();
         vdetalle = true;
         vbotones = false;
-        vNoedita=true;
+  //cambios:
+            if (usua.getAccesoupdate() !=1){}
+            else{vNoedita=true;}
+  //---------  
+  //          vNoedita=true;
         vformulario = true;
         return actualizarZonas();
     }
@@ -417,17 +424,25 @@ public class ConstanciasDocumentalesEditor {
         {
             vformulario = true;
             vbotones = true;
-            vNoedita=true;
+  //cambios:
+ //           if (usua.getAccesoupdate() !=1){}
+ //           else{vNoedita=true;}
+  //---------          
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
             {
                 vrevisado = true;
             }
+  //cambios          
+            if (usua.getAccesodelete() != 1)
+            {veliminar = false;}
+  //--------          
         }
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
         {
           opcionADM = true;
         }
-        
+ //--------       
+        if (vformulario == true){vNoedita=true;}
         
         editando = false;
         limpiar();
