@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     private int estado;
     // Si venció el passwd, etc.
     private String md5Clave; // Poner el hash.
-//    private String nombres;
+    private String nombres;
 //    private String apellidos;
     @NonVisual
     @Temporal(TemporalType.DATE)
@@ -80,6 +80,14 @@ public class Usuario implements Serializable {
 
     public void setRolid(Long rolid) {
         this.rolid = rolid;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
 //    public String getClave() {
