@@ -232,7 +232,7 @@ public class AntecedentesEditor {
             session.flush();
 
             if (!editando) {
-                logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA, ant_Laborales.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA, ant_Laborales.getId());
             }
             if (ant_Laborales.getValidado() != null) {
                 if (ant_Laborales.getValidado() == true) {

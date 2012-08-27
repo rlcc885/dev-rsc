@@ -34,6 +34,7 @@ public class Evento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaevento;
     private Long tabla_id;
+    private Long usuario_id;
       
     public String getDescevento() {
         return descevento;
@@ -51,15 +52,6 @@ public class Evento implements Serializable {
         this.entidad_id = entidad_id;
     }
     
-
-    
-//    public Trabajador getTrabajador() {
-//        return trabajador;
-//    }
-//
-//    public void setTrabajador(Trabajador trabajador) {
-//        this.trabajador = trabajador;
-//    }
     public long getTrabajador_id() {
         return trabajador_id;
     }
@@ -106,6 +98,14 @@ public class Evento implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getUsuario_id() {
+        return usuario_id;
+    }
+
+    public void setUsuario_id(long usuario_id) {
+        this.usuario_id = usuario_id;
     }
     
     

@@ -1,64 +1,51 @@
+
 <html t:type="layoutlogin" title="Cambiar clave"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <t:if test="cambioForzado" negate="true">
-
-<!--        <t:if test="noEsAdmSystema">
-            <div class="organismo_titulo">
-                Entidad /U. Ejecutora: ${entidadUE.denominacion}
-            </div>
-        </t:if >-->
-
-    </t:if>
-
-    
     <div class="change-pass">
-        
         <h3>Modificación de clave</h3>
         <div class="box">
-        <div id="form_cambio_clave" class="abmform">
-            <t:zone t:id="zone">
-                <t:form t:id="formulariocambioclave" t:zone = "zone">
-
-                    <t:envelope t:id="envelope"/>
-                    <t:errors/>
-                    <t:if test= "FormDisplay">
-                        <div class="f-wrap" id="div_cambiarclave">
-                            <t:label for="clave_actual"/>
-                            <input t:type="PasswordField" t:id="clave_actual"
+            <div id="form_cambio_clave" class="abmform">
+                <t:zone t:id="zone">
+                    <t:form t:id="formulariocambioclave" t:zone = "zone">
+                        <t:envelope t:id="envelope"/>
+                        <t:errors/>
+                        <t:if test= "FormDisplay">
+                            <div class="f-wrap" id="div_cambiarclave">
+                                <t:label for="clave_actual"/>
+                                <input t:type="PasswordField" t:id="clave_actual"
                                    t:value="oldPass" size="20"/>
-                        </div>
-                        <div class="f-wrap" id="cambiarclave">
-                            <div class="f-left">
-                                <t:label for="nueva_clave"/>
-                                <input t:type="PasswordField" t:id="nueva_clave"
+                            </div>
+                            <div class="f-wrap" id="cambiarclave">
+                                <div class="f-left">
+                                    <t:label for="nueva_clave"/>
+                                    <input t:type="PasswordField" t:id="nueva_clave"
                                        t:value="newPass1" size="20" />
-                            </div>
-                            <div class="f-left">
-                                <t:label for="repita_nueva_clave"/>
-                                <input t:type="PasswordField" t:id="repita_nueva_clave"
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="repita_nueva_clave"/>
+                                    <input t:type="PasswordField" t:id="repita_nueva_clave"
                                        t:value="newPass2" size="20" onclick="javascript: verificar();" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="f-wrap" id="complejidadclave">                                 
-                            <input type="text" id="verificacion" size="50" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
-                        </div>
-                        <div class="f-wrap">
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" />
+                            <div class="f-wrap" id="complejidadclave">                                 
+                                <input type="text" id="verificacion" size="50" disabled="true" style="border-width: 0px; border-style: none; font-size:8pt;" /> 
                             </div>
-                            <div class="f-right">
-                                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button"/>
+                            <div class="f-wrap">
+                                <div class="f-right">
+                                    <input t:type="Submit" t:id="submit" t:mixins="confirm" value="Guardar" class="button" />
+                                </div>
+                                <div class="f-right">
+                                    <input t:type="Submit" t:id="reset" value="Cancelar" class="button"/>
+                                </div>
                             </div>
-                        </div>
-                    </t:if>
-                </t:form>
-            </t:zone>
-        </div>
+                        </t:if>
+                    </t:form>
+                </t:zone>
             </div>
+        </div>
     </div>
-
 
     <script language="javascript">
         var letras=/[A-Za-z\s]/;
@@ -69,60 +56,57 @@
 
         function verificar(){
  
-            porcentaje=0;
-            var texto = document.getElementById("nueva_clave").value;
-            if(tiene_letras(texto)) porcentaje++;   
-            if(tiene_numeros(texto)) porcentaje++;  
-            if(tiene_pocoscaracteres(texto)) porcentaje++;  
-            if(tiene_caracteres(texto)) porcentaje++;  
+        porcentaje=0;
+        var texto = document.getElementById("nueva_clave").value;
+        if(tiene_letras(texto)) porcentaje++;   
+        if(tiene_numeros(texto)) porcentaje++;  
+        if(tiene_pocoscaracteres(texto)) porcentaje++;  
+        if(tiene_caracteres(texto)) porcentaje++;  
 
-            if(porcentaje==0){ 
-                document.getElementById("verificacion").value="Complejidad de clave: 0%";
-                document.getElementById("nueva_clave").value="";
-            }
-            if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 25%";
-            if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
-            if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 75%";
-            if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 100%";
+        if(porcentaje==0){ 
+        document.getElementById("verificacion").value="Complejidad de clave: 0%";
+        document.getElementById("nueva_clave").value="";
+        }
+        if(porcentaje==1) document.getElementById("verificacion").value="Complejidad de clave: 25%";
+        if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
+        if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 75%";
+        if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 100%";
         }
 
         function tiene_caracteres(texto){
     
-            if ((texto.match(caracteres))) {
-                return true;
-            } else {
-                return false;
-            } 
+        if ((texto.match(caracteres))) {
+        return true;
+        } else {
+        return false;
+        } 
         }
 
         function tiene_letras(texto){
     
-            if ((texto.match(letras))) {
-                return true;
-            } else {
-                return false;
-            } 
+        if ((texto.match(letras))) {
+        return true;
+        } else {
+        return false;
+        } 
         }    
 
         function tiene_numeros(texto){
     
-            if ((texto.match(numeros))) {
-                return true;
-            } else {
-                return false;
-            } 
+        if ((texto.match(numeros))) {
+        return true;
+        } else {
+        return false;
+        } 
         } 
 
         function tiene_pocoscaracteres(texto){
     
-            if ((texto.match(cantidad))) {
-                return true;
-            } else {
-                return false;
-            } 
+        if ((texto.match(cantidad))) {
+        return true;
+        } else {
+        return false;
+        } 
         }
-
-
     </script>
-
 </html>

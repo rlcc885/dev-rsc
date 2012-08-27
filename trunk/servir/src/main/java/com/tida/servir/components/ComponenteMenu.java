@@ -3,6 +3,7 @@ package com.tida.servir.components;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioAcceso;
+import com.tida.servir.entities.UsuarioTrabajador;
 import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,29 +29,15 @@ public class ComponenteMenu {
     @Property
     @SessionState
     private Entidad entidad;
+    @SessionState
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
     @Inject
     private ComponentClassResolver componentClassResolver;
     @Inject
     private Context context;
     @Inject
     private ComponentResources resources;
-    /*
-    private EnumMap<Accesos.MENUPADRE, List<Accesos.MENUHIJO>> menues;
-    @Property
-    @Persist
-    private Accesos.MENUPADRE currentPadre;
-    @Property
-    @Persist
-    private Accesos.MENUHIJO currentHijo;
-    @Property
-    private boolean cambiarClave;
-    @Persist
-    private String nombres;
-    @Persist
-    private String apellidos;
-    @Persist
-    private String tipoUsuario;
-    */
     @Inject
     private Session session;
     @Property
@@ -66,7 +53,7 @@ public class ComponenteMenu {
     
     public List getOpcionesMenu() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
-        query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_nrodocumento", usuarioTrabajador.getNrodocumento());
         query.setParameter("in_menuid", opcion.getId());
         query.setParameter("in_pagename", resources.getPageName());
 
@@ -77,14 +64,13 @@ public class ComponenteMenu {
     
     public List getOpcionesMenuPrincipal() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
-        query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_nrodocumento", usuarioTrabajador.getNrodocumento());
         query.setParameter("in_menuid", 0);
         query.setParameter("in_pagename", resources.getPageName());
 
         List result = query.list();
         for (int i = 0; i < result.size(); i++) {
             UsuarioAcceso stock = (UsuarioAcceso) result.get(i);
-   
         }
         return result;
     }
@@ -114,7 +100,7 @@ public class ComponenteMenu {
     }
     
     public String getNombreUsuario(){
-        return _usuario.getTrabajador().getApellidoPaterno()+" "+_usuario.getTrabajador().getApellidoMaterno()+", "+_usuario.getTrabajador().getNombres()+" - "+_usuario.getTrabajador().getEntidad().getDenominacion();
+        return usuarioTrabajador.getApellidopaterno()+" "+usuarioTrabajador.getApellidomaterno()+", "+usuarioTrabajador.getNombres()+" - "+usuarioTrabajador.getDenominacion();
     }
 
     StreamResponse onActionFromReturnStreamResponse() {

@@ -710,9 +710,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 if (usua.getAccesoreport() == 0) {
                     vformulario = false;
                 }
-                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_MODIFICACION_ENTIDADES, entidadUE.getId());
+                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), _usuario.getId(), Logger.MOTIVO_MODIFICACION_ENTIDADES, entidadUE.getId());
             } else {
-                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
+                new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), _usuario.getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
             // envelope.setContents("Entidad creada exitosamente");
             envelope.setContents(this.mensaje_accion());

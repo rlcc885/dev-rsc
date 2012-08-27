@@ -438,7 +438,7 @@ public class CursosEditor {
             session.saveOrUpdate(cursos);
             session.flush();
             if (!editando) {
-                logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_CURSOS, cursos.getId());
+                logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_CURSOS, cursos.getId());
             }
             if (valrevisado != null) {
                 if (valrevisado == true) {
