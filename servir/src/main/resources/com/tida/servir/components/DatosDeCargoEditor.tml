@@ -83,15 +83,15 @@
                             <div class="f-left">
                                 <label><b>* Fecha de Inicio:</b></label>
                                 <div class="f-left">
-                                    <input t:type="DateField" t:id="fec_inicio" t:value="valfec_inicio"
-                                    t:validate="required" size="30" />
+                                    <input t:type="TextField" t:id="fec_inicio" t:value="valfec_inicio"
+                                    t:validate="required" size="25" class="fec_inicio pictureInputDate"/>
                                 </div>
                             </div>
                             <div class="f-left">
                                 <label><b>Fecha de Finalización:</b></label>
                                 <div class="f-left">
-                                    <input t:type="DateField" t:id="fec_fin" t:value="valfec_fin"
-                                            size="30"/>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="valfec_fin"
+                                            size="25" class="fec_fin pictureInputDate"/>
                                    </div>
                             </div>
                          </div>
@@ -118,7 +118,12 @@
                             </div>
                      </form>
                      
-                            
+                       <script>
+                            jQuery(document).ready(function() {
+                            jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                            jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                        </script>                
 
                             
                         
