@@ -7,6 +7,8 @@ import com.tida.servir.pages.Busqueda;
 import helpers.Constantes;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,10 +78,16 @@ public class DatosDeCargoEditor {
     private String valmotivo;
     @Persist
     @Property
-    private Date valfec_inicio;
+    private String valfec_inicio;
     @Persist
     @Property
-    private Date valfec_fin;
+    private String valfec_fin;
+    @Persist
+    @Property
+    private Date fecha_inicio;
+    @Persist
+    @Property
+    private Date fecha_fin;
     @Property
     @Persist
     private DatoAuxiliar valtipovinculo;
@@ -88,25 +96,19 @@ public class DatosDeCargoEditor {
     @SetupRender
     private void inicio() {
         valmotivo=actual_asignado.getMotivo_cese();
-        valfec_inicio=actual_asignado.getFec_inicio();
-        valfec_fin=actual_asignado.getFec_fin();
+//        valfec_inicio=actual_asignado.getFec_inicio();
+//        valfec_fin=actual_asignado.getFec_fin();
+        if (actual_asignado.getFec_inicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_inicio = formatoDeFecha.format(actual_asignado.getFec_inicio());
+        }
+        if (actual_asignado.getFec_fin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_fin = formatoDeFecha.format(actual_asignado.getFec_fin());
+        }
         valtipovinculo=actual_asignado.getTipovinculo();        
     }
     
-    
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.puedeEscribir(_usuario, _oi);
-//    }
-
-//    public Integer getCantPuestosOcupados(){
-//
-//        return Helpers.getCantPuestosOcupadosCargo(session, actual);
-//    }
-
     public boolean getAsignadoBaja() {
         /*
          * TODO JZM revisar linea de codigo
@@ -120,11 +122,7 @@ public class DatosDeCargoEditor {
         else return true;
     }
     
-//    @Log
-//    public String getVinculoTipo(){
-//        return actual_asignado.getTipoVinculo();
-//    }
-    
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoVinculo() {
         //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
@@ -132,26 +130,8 @@ public class DatosDeCargoEditor {
         
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVINCULO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-        
-//    public List<String> getVinculos() {
-//    	return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
-//    }    
-    
-//    public List<String> getEstados() {
-//    	ArrayList<String> estados = new ArrayList<String>();
-//        /*
-//         * TODO JZM verificar linea de codigo
-//        
-//        estados.add(Constantes.ESTADO_ACTIVO);
-//        estados.add(Constantes.ESTADO_BAJA);
-//        */
-//        
-//        estados.add("Activo");
-//        estados.add("Baja");
-//        
-//        return estados;
-//    }    
+    }       
+
     
     void onSelectedFromSave() {        
         elemento=1;   
@@ -167,18 +147,34 @@ public class DatosDeCargoEditor {
         if(elemento==2){
             return Busqueda.class;
         }
-        else{   
+        else{
+            if (valfec_inicio != null) {
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    fecha_inicio = (Date) formatoDelTexto.parse(valfec_inicio);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (valfec_fin!= null) {
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    fecha_fin = (Date) formatoDelTexto.parse(valfec_fin);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+            }
             if(valtipovinculo==null){
                 formulariodatosdecargoasignado.recordError("Tiene que seleccionar Tipo de Vinculo.");
                 return datosDeCargoZone.getBody();
             }
             if(valfec_fin!=null){
                 if(valmotivo != null && !valmotivo.equals("")){
-                    if (valfec_fin.before(valfec_inicio)) {
+                    if (fecha_fin.before(fecha_inicio)) {
                         formulariodatosdecargoasignado.recordError("Las fechas de fin no pueden ser menores a las de inicio");
                         return datosDeCargoZone.getBody();
                     }
-                    if(valfec_inicio.after(new Date())) {
+                    if(fecha_inicio.after(new Date())) {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
@@ -193,11 +189,11 @@ public class DatosDeCargoEditor {
             } 
             if(valmotivo != null && !valmotivo.equals("")){        
                 if(valfec_fin!=null){
-                    if (valfec_fin.before(valfec_inicio)) {
+                    if (fecha_fin.before(fecha_inicio)) {
                         formulariodatosdecargoasignado.recordError("Las fechas de fin no pueden ser menores a las de inicio");
                         return datosDeCargoZone.getBody();
                     }
-                    if(valfec_inicio.after(new Date())) {
+                    if(fecha_inicio.after(new Date())) {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
@@ -209,7 +205,7 @@ public class DatosDeCargoEditor {
                     return datosDeCargoZone.getBody();
                 }       
             }
-            if(valfec_inicio.after(new Date())) {
+            if(fecha_inicio.after(new Date())) {
                 formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                 return datosDeCargoZone.getBody();
             }
@@ -220,8 +216,8 @@ public class DatosDeCargoEditor {
     
     void registrar(Boolean e){
        actual_asignado.setMotivo_cese(valmotivo);
-       actual_asignado.setFec_inicio(valfec_inicio);
-       actual_asignado.setFec_fin(valfec_fin);
+       actual_asignado.setFec_inicio(fecha_inicio);
+       actual_asignado.setFec_fin(fecha_fin);
        actual_asignado.setTipovinculo(valtipovinculo);
        actual_asignado.setEstado(e);
        session.saveOrUpdate(actual_asignado);
