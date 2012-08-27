@@ -8,7 +8,6 @@ function cerrarse(){
 window.close()
 }
 </script>
-
     <div class = "login">
         <h3>Inicio de Sesión</h3>
         <div class = "box">
@@ -29,13 +28,9 @@ window.close()
                     </div>
                     <div class="clear f-wrap">
                         <input id="loginSubmit" type="submit" value="Ingresar" class="button f-right" />
-<!--                        <input id="loginCancel" type="Button" value="Cancelar" onClick="window.close();" />-->
-<!--                        <a onClick="window.close()" class="button f-right">Cancelar</a>-->
                     </div>
                 </div>
-<!--                        </t:if>-->
             </t:form>
-<!--                </t:if>-->
             
             <script language="javaScript"> 
                 function popup(ventana) {
@@ -63,7 +58,6 @@ window.close()
                     <div id="consulta-ciudadana-enlace">
                         <a href="http://172.16.19.56/Consultas" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
                     </div>
-                    <!--                    <a t:type="actionlink" t:id="returnstreamresponse" href="#">Guía del sistema</a>-->
                 </div>
             </div>
         </div>
