@@ -261,11 +261,11 @@ public class TrabajadorNuevo extends GeneralPage {
 //    void onSelectedFromAgregarUO() {
 //        elemento = 5;
 //    }
-            @Log
-    Object onActionFromNuevaUnidadOrganica() {
-        creaNuevaUnidad = true;
-        return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody());
-    }
+//            @Log
+//    Object onActionFromNuevaUnidadOrganica() {
+//        creaNuevaUnidad = true;
+//        return nuevaUnidadZone.getBody();
+//    }
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {

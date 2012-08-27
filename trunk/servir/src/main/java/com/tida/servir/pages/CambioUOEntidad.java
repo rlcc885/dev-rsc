@@ -313,16 +313,27 @@ public class CambioUOEntidad extends GeneralPage{
             if(entidad1==null){ //validar x usuario 
                 if(entidadUE==entidad2){
                     formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
+                    return botonZone.getBody();
                 }
-//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session);              
-                envelope.setContents("Unidad Orgánica Migrada Correctamente1");
+                else{
+//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session); 
+                    ejecutar(entidadUE,entidad2,uoOrigen,uoDestino,2);
+                    envelope.setContents("Unidad Orgánica Migrada Correctamente1");                    
+                }
+
             }
             else{      
-//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
+
                 if(entidad1==entidad2){
                     formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
+                    return botonZone.getBody();
                 }
+                else{
+//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
+                    ejecutar(entidad1,entidad2,uoOrigen,uoDestino,2);
                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
+                }
+                    
             }           
 
         }
@@ -341,28 +352,31 @@ public class CambioUOEntidad extends GeneralPage{
             }
             if(entidad1==null){ //validar x usuario                
 //                  Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
+                ejecutar(entidadUE,entidadUE,uoOrigen,uoDestino,1);
                 envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
 
             }
             else{                  
 //                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
+                ejecutar(entidad1,entidad2,uoOrigen,uoDestino,1);
                 envelope.setContents("Unidad Orgánica Fusionada Correctamente");
 
             }            
         }
 
     }
-    onSelectedFromReset();
+//    onSelectedFromReset();
 //    envelope.setContents(String.valueOf(entidad1)+String.valueOf(uoOrigen)+String.valueOf(entidad2)+String.valueOf(uoDestino));
     return zonasDatos();
     }
 
-    void ejecutar(Entidad eo,Entidad ed,UnidadOrganica uoo,UnidadOrganica uod){
-        Query query = session.getNamedQuery("callSpFucionMigracion");
+    void ejecutar(Entidad eo,Entidad ed,UnidadOrganica uoo,UnidadOrganica uod,int tipo){
+        Query query = session.getNamedQuery("callSpMigracionFucion");
         query.setParameter("as_entidad_id_origen", eo.getId());
         query.setParameter("as_entidad_id_destino", ed.getId());
         query.setParameter("an_unidad_origen", uoo.getId());
         query.setParameter("an_unidad_destino", uod.getId());
+        query.setParameter("an_tipo_proceso", tipo);
         List result = query.list();
         session.flush();
     }

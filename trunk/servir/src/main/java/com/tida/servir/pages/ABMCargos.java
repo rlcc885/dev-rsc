@@ -490,28 +490,7 @@ public class ABMCargos extends GeneralPage {
     /*
      * reset del formulario
      */
-//    @Log
-//    Object onActionFromReset() {
-//        cargo = new Cargoxunidad();
-//        editando = false;
-//        regimengruponivel = new RegimenGrupoNivel();
-//        return zonasDatos();
-//    }
-//    void onSelectedFromReset() {
-//        num = 2;
-//        cargo = new Cargoxunidad();
-//        editando = false;
-//        regimengruponivel = new RegimenGrupoNivel();
-//    }
 
-//    void onSelectedFromCancel() {
-//        num = 3;
-//             cargo = new Cargoxunidad();
-//            editando = false;
-//            regimengruponivel = new RegimenGrupoNivel();
-//
-//
-//    }
 
     @Log
     public Integer getCantPuestosOcupados() {

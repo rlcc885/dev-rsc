@@ -36,7 +36,7 @@ public class Usuario implements Serializable {
     private String login; //el login del usuario
 //    private String tipo_usuario;
 //    private String email;
-    private int estado;
+    private Long estado;
     // Si venció el passwd, etc.
     private String md5Clave; // Poner el hash.
     private String nombres;
@@ -162,11 +162,11 @@ public class Usuario implements Serializable {
 //        this.tipo_usuario = tipo_usuario;
 //    }
 
-    public int getEstado() {
+    public long getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(long estado) {
         this.estado = estado;
     }
 

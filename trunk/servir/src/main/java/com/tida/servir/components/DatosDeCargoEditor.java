@@ -109,18 +109,18 @@ public class DatosDeCargoEditor {
         valtipovinculo=actual_asignado.getTipovinculo();        
     }
     
-    public boolean getAsignadoBaja() {
-        /*
-         * TODO JZM revisar linea de codigo
-        if(actual_asignado.getEstado() == null)
-            return actual_asignado.getEstado().equals(Constantes.ESTADO_BAJA);
-        else return false;
-        * 
-        */
-        if(actual_asignado.getEstado() == false)
-            return false;
-        else return true;
-    }
+//    public boolean getAsignadoBaja() {
+//        /*
+//         * TODO JZM revisar linea de codigo
+//        if(actual_asignado.getEstado() == null)
+//            return actual_asignado.getEstado().equals(Constantes.ESTADO_BAJA);
+//        else return false;
+//        * 
+//        */
+//        if(actual_asignado.getEstado() == false)
+//            return false;
+//        else return true;
+//    }
     
 
     @Log
@@ -222,17 +222,21 @@ public class DatosDeCargoEditor {
        actual_asignado.setEstado(e);
        session.saveOrUpdate(actual_asignado);
        //new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-       session.flush();
+//       session.flush();
        formulariodatosdecargoasignado.clearErrors();
        envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);       
-       if(!e){
-         Usuario usuarionuevo=new Usuario();
+       if(!e){         
          if(getListadoUsuario().size()>0){
+            Usuario usuarionuevo=new Usuario();
+             System.out.println("aquiiiiiii"+getListadoUsuario().get(0).getLogin()+"-"+getListadoUsuario().get(0).getId());
             usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+            System.out.println("aquiiiiiii"+usuarionuevo);
+            int ui=2;
+            usuarionuevo.setIntentos_fallidos(2L);
+            usuarionuevo.setTelefono("cccc");            
             usuarionuevo.setEstado(0);
             session.saveOrUpdate(usuarionuevo);
          }
-         
        }
     }
     
