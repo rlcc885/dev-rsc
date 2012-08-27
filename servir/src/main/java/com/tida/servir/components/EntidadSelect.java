@@ -139,7 +139,7 @@ public class EntidadSelect {
             sessubentidad = true;
             System.out.println(ssubentidad.getDenominacion());
         }
-        
+
         //Si se requiere que se seteen en los combos los valores de la entidad seleccionada por defecto
         /*
          * if (entidad != null) { snivelGobierno = entidad.getNivelGobierno();
@@ -286,11 +286,6 @@ public class EntidadSelect {
     @Log
     Object onValueChangedStipoOrganismo(DatoAuxiliar dato) {
         return EntidadZone.getBody();
-    }
-
-    @Log
-    Object onSuccessFromformEntidad() {
-        return new MultiZoneUpdate("EsSubEntidadZone", EsSubEntidadZone.getBody()).add("TipoSubEntidadZone", TipoSubEntidadZone.getBody()).add("SubEntidadZone", SubEntidadZone.getBody());
     }
 
     @Log
