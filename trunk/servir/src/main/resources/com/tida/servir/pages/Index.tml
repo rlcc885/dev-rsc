@@ -11,7 +11,8 @@ window.close()
     <div class = "login">
         <h3>Inicio de Sesión</h3>
         <div class = "box">
-            <t:form t:id="formulariologin" >
+            <t:zone t:id="loginZone">
+            <t:form t:id="formulariologin" t:zone="loginZone">
                 <t:errors/>
                 <div id="login-box">
                     <div class="clear f-wrap">
@@ -31,6 +32,7 @@ window.close()
                     </div>
                 </div>
             </t:form>
+            </t:zone>
             
             <script language="javaScript"> 
                 function popup(ventana) {
