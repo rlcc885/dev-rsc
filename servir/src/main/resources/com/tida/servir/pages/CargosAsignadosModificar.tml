@@ -21,9 +21,7 @@
 
     <div>    
             <ul id="tabs-cargo" class="tabs">
-                <li><a href="#"> Datos del Cargo/Puesto</a></li>
-                <li><a href="#"> Remuneraciones</a></li>
-                <li><a href="#"> Evaluaciones</a></li>                
+                <li><a href="#"> Datos del Cargo/Puesto</a></li>               
             </ul>
             
             
