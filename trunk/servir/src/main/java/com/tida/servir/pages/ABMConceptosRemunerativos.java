@@ -281,7 +281,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
 
         Criteria c;
         c = session.createCriteria(RemuneracionPersonal.class);
-        c.add(Restrictions.eq("conceptoRemunerativo", cr));
+        c.add(Restrictions.eq("conceptoremunerativo_id", cr.getId()));
 
         if (c.list().size() > 0) {
             return false;
