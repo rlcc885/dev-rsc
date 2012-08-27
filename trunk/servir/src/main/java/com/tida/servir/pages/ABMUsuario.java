@@ -466,6 +466,7 @@ public class ABMUsuario extends GeneralPage {
             seleccionaEntidadUsuario = true;
         }
         esUsuarioTrabajador = false;
+        numeroDNIanterior = "";
     }
 
     @Log
