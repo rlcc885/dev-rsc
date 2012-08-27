@@ -315,7 +315,7 @@ public class ConstanciasDocumentalesEditor {
      // INICIO acciones de auditoria        
             if (!editando) 
             {
-                logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
+                logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
             }
             
             if (valentregado != null) 
