@@ -61,9 +61,10 @@
                         </div>
                         <div class="f-left">
                             <t:label for="bNombreEntidad"/>
-                            <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
-<!--                            <a onClick="javascript: mostrar();" class="button f-right">...</a>-->
-                            <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                            <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:disabled="true" size="85"/>
+                            <t:if test="${bseleccionaEntidadUsuario}">
+                                <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
+                            </t:if>
                         </div>
 <!--                        <div class="f-left">
                             <t:label for="bselectPerfil"/>
@@ -129,13 +130,13 @@
             <h3>Datos del Usuario</h3>
             <div class="box" id="box_u">
 <!--                <t:zone t:id="mensajes">-->
-                    <script>
-                        setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-                    </script>
-                    <t:form t:id="formmensaje">
-                        <t:envelope t:id="envelope"/>   
-                        <t:errors/>
-                    </t:form>
+                <script>
+                    setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+                </script>
+                <t:form t:id="formmensaje">
+                    <t:envelope t:id="envelope"/>   
+                    <t:errors/>
+                </t:form>
 <!--                </t:zone>-->
                 <div id="form_usuario" class="abmform">
                     <fieldset>
@@ -145,7 +146,7 @@
                                 <t:form t:id="formularioCuenta" t:zone="idValidaLogin">
                                     <t:label for="loginedit" />
                                     <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
-                                           t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaUsuario}"
+                                           t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaLoginUsuario}"
                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
                                     <t:if test="${editaUsuario}" negate="true" >
                                         <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>

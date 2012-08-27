@@ -198,6 +198,12 @@ public class ABMUsuario extends GeneralPage {
     private boolean seleccionaEntidadUsuario;
     @Persist
     @Property
+    private boolean bseleccionaEntidadUsuario;
+    @Persist
+    @Property
+    private boolean noEditaLoginUsuario;
+    @Persist
+    @Property
     private Entidad entidadUsuario;
 
     @Log
@@ -213,6 +219,11 @@ public class ABMUsuario extends GeneralPage {
         bEntidad = entidad;
         bNombreEntidad = bEntidad.getDenominacion();
         resetUsuario();
+        if (loggedUser.getRolid() <= 2) {
+            bseleccionaEntidadUsuario = false;
+        } else {
+            bseleccionaEntidadUsuario = true;
+        }
     }
 
     @Log
@@ -441,11 +452,12 @@ public class ABMUsuario extends GeneralPage {
         rolUsuarioEdit = null;
         nombreEntidadEdit = "";
         formmensaje.clearErrors();
+        noEditaLoginUsuario = false;
         if (loggedUser.getRolid() <= 2) {
             seleccionaEntidadUsuario = false;
             entidadUsuario = entidad;
             nombreEntidadEdit = entidadUsuario.getDenominacion();
-        }else{
+        } else {
             seleccionaEntidadUsuario = true;
         }
     }
@@ -653,7 +665,7 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
-        usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
+        usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getId());
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
         if (lusuariotrabajador.getTrabajadorid() == null) {
@@ -661,7 +673,6 @@ public class ABMUsuario extends GeneralPage {
             entidadUsuario = (Entidad) session.get(Entidad.class, lusuariotrabajador.getEntidadid());
             nombreEntidadEdit = entidadUsuario.getDenominacion();
         } else {
-            usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
             entidadUsuario = usuario.getTrabajador().getEntidad();
             nombreEntidadEdit = usuario.getTrabajador().getEntidad().getDenominacion();
             noEditaUsuario = true;
@@ -672,6 +683,7 @@ public class ABMUsuario extends GeneralPage {
         muestraEditorUsuario = true;
         editaUsuario = true;
         bLoginValido = true;
+        noEditaLoginUsuario = true;
         return zonasTotal();
     }
 
