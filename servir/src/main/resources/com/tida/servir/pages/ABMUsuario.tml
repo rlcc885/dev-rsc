@@ -220,7 +220,7 @@
                                 </div>
                                 <div class="f-left">
                                     <t:label for="emailLaboralEdit" />
-                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}" t:validate="required"/>
+                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}" t:validate="required,regexp"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="telefonoEdit" />
