@@ -208,6 +208,8 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private String numeroDNIanterior;
+    @Persist
+    @Property boolean esUsuarioTrabajador;
 
     @Log
     void setupRender() {
@@ -463,6 +465,7 @@ public class ABMUsuario extends GeneralPage {
         } else {
             seleccionaEntidadUsuario = true;
         }
+        esUsuarioTrabajador = false;
     }
 
     @Log
@@ -524,8 +527,8 @@ public class ABMUsuario extends GeneralPage {
         SecureRandom random = new SecureRandom();
         boolean enviacorreo = false;
         password = new BigInteger(50, random).toString(32);
-
-        if (usuariotrabajadoredit.getTrabajadorid() != 0) {
+        
+        if (esUsuarioTrabajador) {
 //            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
             correo = usuario.getTrabajador().getEmailLaboral();
@@ -685,10 +688,12 @@ public class ABMUsuario extends GeneralPage {
             noEditaUsuario = false;
             entidadUsuario = (Entidad) session.get(Entidad.class, lusuariotrabajador.getEntidadid());
             nombreEntidadEdit = entidadUsuario.getDenominacion();
+            esUsuarioTrabajador = false;
         } else {
             entidadUsuario = usuario.getTrabajador().getEntidad();
             nombreEntidadEdit = usuario.getTrabajador().getEntidad().getDenominacion();
             noEditaUsuario = true;
+            esUsuarioTrabajador = true;
         }
 
         usuariotrabajadoredit = lusuariotrabajador;
