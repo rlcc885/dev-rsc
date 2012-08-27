@@ -291,7 +291,7 @@ public class PagePerfil {
             errorMessageSavePerfil = "Ya existe un perfil con la misma descripción.";
             return editZone.getBody();
         }
-        okMessageSavePerfil = "Perfil creado satisfactoriamente.";
+        okMessageSavePerfil = "Perfil creado / modificado satisfactoriamente.";
         perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
         session.saveOrUpdate(perfil);
         nuevoPerfil();
