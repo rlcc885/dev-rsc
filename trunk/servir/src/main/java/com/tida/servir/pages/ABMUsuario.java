@@ -205,6 +205,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private Entidad entidadUsuario;
+    @Persist
+    @Property
+    private String numeroDNIanterior;
 
     @Log
     void setupRender() {
@@ -497,14 +500,19 @@ public class ABMUsuario extends GeneralPage {
             formmensaje.recordError("Seleccione Entidad del Usuario.");
             errores = true;
         }
-        // Busca usuarios con el mismo DNI ingresado
-        Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
-        query.setParameter("nrodocumento", usuariotrabajadoredit.getNrodocumento());
-        if (query.list().size() > 0){
-            formmensaje.recordError("Ya existe un usuario con el DNI ingresado.");
-            errores = true;
+
+        if (!noEditaUsuario) {
+            // Busca usuarios con el mismo DNI ingresado
+            System.out.println("DNI anterior: '"+numeroDNIanterior +"' DNI ingresado: '"+ usuariotrabajadoredit.getNrodocumento()+"'");
+            if (!numeroDNIanterior.equals(usuariotrabajadoredit.getNrodocumento())) {
+                Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
+                query.setParameter("nrodocumento", usuariotrabajadoredit.getNrodocumento());
+                if (query.list().size() > 0) {
+                    formmensaje.recordError("Ya existe un usuario con el DNI ingresado.");
+                    errores = true;
+                }
+            }
         }
-        
         if (errores) {
             return zonasTotal();
         }
@@ -518,7 +526,7 @@ public class ABMUsuario extends GeneralPage {
         boolean enviacorreo = false;
         password = new BigInteger(50, random).toString(32);
 
-        if (usuariotrabajadoredit.getTrabajadorid() != null) {
+        if (usuariotrabajadoredit.getTrabajadorid() != 0) {
 //            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
             correo = usuario.getTrabajador().getEmailLaboral();
@@ -673,6 +681,7 @@ public class ABMUsuario extends GeneralPage {
         usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getId());
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
+        numeroDNIanterior = lusuariotrabajador.getNrodocumento();
         if (lusuariotrabajador.getTrabajadorid() == 0) {
             noEditaUsuario = false;
             entidadUsuario = (Entidad) session.get(Entidad.class, lusuariotrabajador.getEntidadid());
