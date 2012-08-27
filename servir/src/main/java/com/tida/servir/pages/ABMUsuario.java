@@ -305,10 +305,10 @@ public class ABMUsuario extends GeneralPage {
             c.add(Restrictions.disjunction().add(Restrictions.eq("documentoidentidadid", bDocumentoIdentidad.getId())));
         }
         if (bEstado != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.eq("estado", bEstado)));
+            c.add(Restrictions.disjunction().add(Restrictions.eq("estado", Integer.valueOf(bEstado))));
         }
         if (bselectPerfil != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", bselectPerfil.getId())));
+            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectPerfil.getId()))));
         }
         if (bNumeroDocumento != null && !bNumeroDocumento.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento + "%").ignoreCase()).

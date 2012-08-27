@@ -12,6 +12,7 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.PasswordField;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -71,6 +72,9 @@ public class Index {
     private Messages mensajes;
     @Inject
     private Context context;
+    @InjectComponent
+    @Property
+    private Zone loginZone;
 
     public String getOlvidoClave() {
         return mensajes.get("olvidoClave");
@@ -105,7 +109,7 @@ public class Index {
         if (c.isEmpty()) {
             logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
             formulariologin.recordError("Usuario no existe. Contacte a un administrador");
-            return this;
+            return loginZone.getBody();
         }
 
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
@@ -114,13 +118,13 @@ public class Index {
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
             logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, 0);
             formulariologin.recordError("Usuario Bloqueado. Contacte a un administrador");
-            return this;
+            return loginZone.getBody();
         }
 
         if (usuarioTrabajador.getEstado() == 0) { // Si esta inactivo el usuario
             logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, 0);
             formulariologin.recordError("Usuario dado de baja. Contacte a un administrador");
-            return this;
+            return loginZone.getBody();
         }
 
         Criteria cq = session.createCriteria(Usuario.class);
@@ -131,7 +135,7 @@ public class Index {
         String clave2 = clave;
         if (clave2 == null) {
             formulariologin.recordError("No ingreso ninguna Clave");
-            return this;
+            return loginZone.getBody();
         }
         ///*****
 
@@ -139,10 +143,9 @@ public class Index {
             usuario.setIntentos_fallidos(usuario.getIntentos_fallidos() + 1);
             if (usuario.getIntentos_fallidos() >= configuracionAcceso.getIntentos_bloqueo()) {
                 usuario.setEstado(2);
-                System.out.println("=============================================================================");
-                System.out.println(new Date());
-                System.out.println("=============================================================================");
+                usuario.setFecha_bloqueo(new Date());
                 logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, 0);
+                formulariologin.recordError("Clave incorrecta.");
                 formulariologin.recordError("Demasiados Intentos Fallidos. El Usuario ha sido bloqueado.");
             } else {
                 logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_PASSWORDFAIL, 0);
@@ -150,7 +153,7 @@ public class Index {
                 System.out.println("clave incorrecta.");
             }
             session.saveOrUpdate(usuario);
-            return this;
+            return loginZone.getBody();
         }
 
         if (usuario.getUltimo_cambio_clave() != null) {

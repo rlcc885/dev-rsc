@@ -113,6 +113,7 @@ public class PagePerfil {
         }
         nuevoPerfil();
         vNoeditaperfil = false;
+        okMessageSavePerfil = "";
     }
 
     @Log
@@ -123,7 +124,7 @@ public class PagePerfil {
         perfil.setEstado(true);
         errorMessage = "";
         errorMessageSavePerfil = "";
-        okMessageSavePerfil = "";
+//        okMessageSavePerfil = "";
     }
 
     @Log
