@@ -44,13 +44,6 @@ public class CambiarClavePrimera extends GeneralPage {
     @Persist
     private boolean cambioForzado;
 
-//    public Boolean getNoEsAdmSystema() {
-//        if ((_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)) || (_usuario.getTipo_usuario().equals(Usuario.ADMINGRAL))) {
-//            return Boolean.FALSE;
-//        }
-//
-//        return Boolean.TRUE;
-//    }
     @Property
     @SessionState
     private Entidad_BK _entidadUE;
@@ -67,7 +60,6 @@ public class CambiarClavePrimera extends GeneralPage {
     }
 
     public boolean getFormDisplay() {
-
         return envelope.getContents().length() == 0;
     }
 
@@ -76,35 +68,28 @@ public class CambiarClavePrimera extends GeneralPage {
     Zone onSuccessFromFormularioCambioClave() {
         if (!Encriptacion.encriptaEnMD5(oldPass).equals(_usuario.getMd5Clave())) {
             formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
-            //envelope.setContents("Clave actual ingresada incorrecta.");
             return zone;
         }
 
         if (oldPass.equals(Encriptacion.encriptaEnMD5(newPass1))) {
             formulariocambioclave.recordError("La nueva clave debe ser diferente a la actual.");
-            //envelope.setContents("Clave actual ingresada incorrecta.");
             return zone;
         }
 
         if (!newPass1.equals(newPass2)) {
             formulariocambioclave.recordError("Las claves ingresadas deben ser iguales.");
-            //		envelope.setContents("Las claves ingresadas deben ser iguales.");
             return zone;
         }
-
 
         envelope.setContents("Clave modificada con éxito.");
         if (this.cambioForzado) {
             envelope.setContents("Clave modificada con éxito. <a href='/servir'>Reingresar al sistema.</a>");
         }
-        // formulariocambioclave.recordError("Clave modificada con éxito");
         _usuario.setMd5Clave(Encriptacion.encriptaEnMD5(newPass1));
-//        _usuario.setClave(newPass1);
         _usuario.setUltimo_cambio_clave(new Date());
         _usuario.setIntentos_fallidos(0L);
         session.saveOrUpdate(_usuario);
 
         return zone;
-        // return this;
     }
 }

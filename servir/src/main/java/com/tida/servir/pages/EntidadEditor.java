@@ -36,6 +36,9 @@ public class EntidadEditor extends GeneralPage {
     private Session session;
     @SessionState
     private Usuario loggedUser;
+    @SessionState
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
     @Inject
     private Request _request;
     @Property
@@ -169,7 +172,7 @@ public class EntidadEditor extends GeneralPage {
     private void inicio() {
         veditar=true;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento",loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_nrodocumento",usuarioTrabajador.getNrodocumento());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();        
         if(result.isEmpty()){

@@ -514,6 +514,7 @@ public class ABMUsuario extends GeneralPage {
 //            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
             correo = usuario.getTrabajador().getEmailLaboral();
+            usuariotrabajadoredit.setTrabajadorid(0L);
         } else {
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuariotrabajadoredit.getLogin(), password);
             correo = usuariotrabajadoredit.getEmaillaboral();
@@ -541,11 +542,7 @@ public class ABMUsuario extends GeneralPage {
                 System.out.println("Envío Correcto");
             } else {
                 Logger logger = new Logger();
-                if (usuariotrabajadoredit.getTrabajadorid() != null) {
-                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
-                } else {
-                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, 0, 0, Logger.CORREO_FAIL_RESET_PASSWORD, 0);
-                }
+                logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), usuario.getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
             }
         }
         usuario.setEntidad(entidadUsuario);
@@ -668,7 +665,7 @@ public class ABMUsuario extends GeneralPage {
         usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getId());
         rolUsuarioEdit = (Rol) session.get(Rol.class, lusuariotrabajador.getRolid());
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
-        if (lusuariotrabajador.getTrabajadorid() == null) {
+        if (lusuariotrabajador.getTrabajadorid() == 0) {
             noEditaUsuario = false;
             entidadUsuario = (Entidad) session.get(Entidad.class, lusuariotrabajador.getEntidadid());
             nombreEntidadEdit = entidadUsuario.getDenominacion();

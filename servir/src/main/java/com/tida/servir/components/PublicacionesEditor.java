@@ -193,7 +193,7 @@ public class PublicacionesEditor {
         session.flush();
 
         if (_usuario.getRolid() == 1) {
-            logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, actual.getEntidad().getId(), actual.getId(), logger.MOTIVO_PERSONALES_PRODUCCION, publicacion.getId());
+            logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_PRODUCCION, publicacion.getId());
         }
         if (publicacion.getValidado() != null) {
             if (publicacion.getValidado() == true) {
