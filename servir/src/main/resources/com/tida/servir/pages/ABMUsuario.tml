@@ -62,7 +62,8 @@
                         <div class="f-left">
                             <t:label for="bNombreEntidad"/>
                             <input t:type="TextField" t:id="bNombreEntidad" t:value="bNombreEntidad" t:readonly="readonly" size="85"/>
-                            <a onClick="javascript: mostrar();" class="button f-right">...</a>
+<!--                            <a onClick="javascript: mostrar();" class="button f-right">...</a>-->
+                            <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />
                         </div>
 <!--                        <div class="f-left">
                             <t:label for="bselectPerfil"/>
@@ -70,7 +71,7 @@
                         </div>-->
                         <div class="f-left">
                             <t:label for="bselectRol"/>
-                            <t:select t:id="bselectRol" model="rolUsuario" t:value="bselectRol" style="width: 285px;" />
+                            <t:select t:id="bselectRol" model="rolUsuario" t:value="bselectRol" style="width: 200px;" />
                         </div>
                     </div>
                 </fieldset>
@@ -103,8 +104,8 @@
                     t:add="acciones" 
                     t:pagerPosition="bottom" 
                     t:row="u" 
-                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,clave,rolid,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
-                    t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc,intentosFallidos">
+                    t:exclude= "nrodocumento,documentoidentidadid,apellidos,id,md5Clave,intentosFallidos,clave,rolid,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
+                    t:reorder="login,nombres,apellidopaterno,apellidomaterno,estadodesc">
                 <t:parameter name="empty">
                     No se han encontrado coincidencias.
                 </t:parameter>
@@ -126,11 +127,16 @@
     <t:zone t:id="editarUsuarioZone" id="editarUsuarioZone">
         <t:if test="muestraEditorUsuario">
             <h3>Datos del Usuario</h3>
-            <script>
-                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-            </script>
             <div class="box" id="box_u">
-                <t:envelope t:id="envelope"/>
+<!--                <t:zone t:id="mensajes">-->
+                    <script>
+                        setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+                    </script>
+                    <t:form t:id="formmensaje">
+                        <t:envelope t:id="envelope"/>   
+                        <t:errors/>
+                    </t:form>
+<!--                </t:zone>-->
                 <div id="form_usuario" class="abmform">
                     <fieldset>
                         <legend> Datos de la Cuenta </legend>
@@ -170,9 +176,8 @@
                                 <t:zone t:id="formularioEntidadZone" id="formularioEntidadZone">
                                     <t:form t:id="formularioEntidad" t:zone="formularioEntidadZone">
                                         <t:label for ="nombreEntidadEdit"/>
-                                        <input t:type="TextField" t:id="nombreEntidadEdit" t:value="nombreEntidadEdit" t:readonly="readonly" size="85" t:disabled="true"/>
-                                        <t:if test="${noEditaUsuario}" negate="true">
-<!--                                        <a onClick="javascript: mostrar();" class="button f-right">...</a>-->
+                                        <input t:type="TextField" t:id="nombreEntidadEdit" t:value="nombreEntidadEdit" t:readonly="readonly" size="85" t:disabled="true" t:validate="required"/>
+                                        <t:if test="${seleccionaEntidadUsuario}">
                                             <input t:type="submit" t:id="buscarEntidadUsuario" value="..." class="button f-right" onClick="javascript: mostrar();" />
                                         </t:if>
                                     </t:form>
@@ -187,15 +192,15 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nombresedit" />
-                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="apellidoPaternoedit" />
-                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="apellidoMaternoedit" />
-                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}"/>
+                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
@@ -214,7 +219,7 @@
                                 </div>
                                 <div class="f-left">
                                     <t:label for="emailLaboralEdit" />
-                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}"/>
+                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}" t:validate="required"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="telefonoEdit" />
@@ -409,7 +414,7 @@
                                 <t:actionlink t:id="seleccionaEntidad" zone="zonaFormularioBusqueda" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>
                             </t:if>
                             <t:if test="seleccionaEntidadUsuario">
-                                <t:actionlink t:id="seleccionaEntidadUsuario" zone="formularioEntidadZone" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar Entidad</t:actionlink>
+                                <t:actionlink t:id="seleccionaEntidadUsuario" zone="formularioEntidadZone" context="rowEntidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>
                             </t:if>
                         </p:accionesCell>
                     </t:grid>

@@ -60,6 +60,11 @@ public class ABMUsuario extends GeneralPage {
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
     private PropertyAccess _access;
+//    @InjectComponent
+//    @Property
+//    private Zone mensajes;
+    @Component(id = "formmensaje")
+    private Form formmensaje;
     @Component(id = "formularioCuenta")
     private Form formularioCuenta;
     @Component(id = "formularioPersonal")
@@ -170,6 +175,9 @@ public class ABMUsuario extends GeneralPage {
     private boolean bBuscarReset;
     @Persist
     @Property
+    private boolean bBuscarSubmit;
+    @Persist
+    @Property
     private boolean bLoginValido;
     @Persist
     @Property
@@ -188,6 +196,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private boolean seleccionaEntidadUsuario;
+    @Persist
+    @Property
+    private Entidad entidadUsuario;
 
     @Log
     void setupRender() {
@@ -349,7 +360,7 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     Object onSuccessFromFormularioEntidad() {
-        return formularioEntidadZone.getBody();
+        return new MultiZoneUpdate("formularioEntidadZone", formularioEntidadZone.getBody()).add("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
     }
 
     @Log
@@ -368,8 +379,20 @@ public class ABMUsuario extends GeneralPage {
     }
 
     @Log
+    void onSelectedFromBuscarSubmit() {
+        bBuscarSubmit = true;
+    }
+
+    @Log
     void onSelectedFromBuscarReset() {
         bBuscarReset = true;
+    }
+
+    @Log
+    void onSelectedFromBuscarEntidad() {
+        seleccionaEntidadUsuario = false;
+        mostrar = false;
+        bBuscarSubmit = false;
     }
 
     @Log
@@ -379,7 +402,11 @@ public class ABMUsuario extends GeneralPage {
             resetBuscar();
             return zonaFormularioBusqueda.getBody();
         }
-        return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
+        if (bBuscarSubmit) {
+            return new MultiZoneUpdate("tabla_usuario", tabla_usuario.getBody());
+        } else {
+            return null;
+        }
     }
 
     @Log
@@ -410,6 +437,17 @@ public class ABMUsuario extends GeneralPage {
         muestraValidaLogin = false;
         bLoginValido = false;
         intentosFallidos = 0;
+        entidadUsuario = null;
+        rolUsuarioEdit = null;
+        nombreEntidadEdit = "";
+        formmensaje.clearErrors();
+        if (loggedUser.getRolid() <= 2) {
+            seleccionaEntidadUsuario = false;
+            entidadUsuario = entidad;
+            nombreEntidadEdit = entidadUsuario.getDenominacion();
+        }else{
+            seleccionaEntidadUsuario = true;
+        }
     }
 
     @Log
@@ -428,70 +466,94 @@ public class ABMUsuario extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioPersonal() {
         // Si el login de usuario no es válido
-        if (bLoginValido) {
-            ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-            String password = null;
-            String subject = null;
-            String body = null;
-            String correo = null;
-            SecureRandom random = new SecureRandom();
-            boolean enviacorreo = false;
-            password = new BigInteger(50, random).toString(32);
-
-            if (usuariotrabajadoredit.getTrabajadorid() != null) {
-//            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
-                body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
-                correo = usuario.getTrabajador().getEmailLaboral();
-            } else {
-                body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuariotrabajadoredit.getLogin(), password);
-                correo = usuariotrabajadoredit.getEmaillaboral();
+        Boolean errores = false;
+        formmensaje.clearErrors();
+        if (usuariotrabajadoredit.getLogin() == null) {
+            formmensaje.recordError("Ingrese Login de Usuario.");
+            errores = true;
+        } else {
+            if (!bLoginValido) {
+                formmensaje.recordError("Login de Usuario duplicado.");
+                errores = true;
             }
+        }
+        if (rolUsuarioEdit == null) {
+            formmensaje.recordError("Seleccione Rol del Usuario.");
+            errores = true;
+        }
+        if (entidadUsuario == null) {
+            formmensaje.recordError("Seleccione Entidad del Usuario.");
+            errores = true;
+        }
+        if (errores) {
+            return zonasTotal();
+        }
+//        if (bLoginValido) {
+        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+        String password = null;
+        String subject = null;
+        String body = null;
+        String correo = null;
+        SecureRandom random = new SecureRandom();
+        boolean enviacorreo = false;
+        password = new BigInteger(50, random).toString(32);
 
-            if (editaUsuario) {
-                if (reinitialisarpassword) {
-                    subject = "Datos de acceso al sistema Servir";
-                    usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
-                    enviacorreo = true;
-                }
-            } else {
+        if (usuariotrabajadoredit.getTrabajadorid() != null) {
+//            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
+            body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
+            correo = usuario.getTrabajador().getEmailLaboral();
+        } else {
+            body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuariotrabajadoredit.getLogin(), password);
+            correo = usuariotrabajadoredit.getEmaillaboral();
+        }
+
+        if (editaUsuario) {
+            if (reinitialisarpassword) {
                 subject = "Datos de acceso al sistema Servir";
-                usuario.setIntentos_fallidos(0L);
                 usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
                 enviacorreo = true;
             }
+        } else {
+            subject = "Datos de acceso al sistema Servir";
+            usuario.setIntentos_fallidos(0L);
+            usuario.setMd5Clave(Encriptacion.encriptaEnMD5(password));
+            enviacorreo = true;
+        }
 
-            if (blanquearIntentosFallidos) {
-                usuario.setIntentos_fallidos(0L);
-            }
+        if (blanquearIntentosFallidos) {
+            usuario.setIntentos_fallidos(0L);
+        }
 
-            if (enviacorreo) {
-                if (SMTPConfig.sendMail(subject, body, correo, ca)) {
-                    System.out.println("Envío Correcto");
+        if (enviacorreo) {
+            if (SMTPConfig.sendMail(subject, body, correo, ca)) {
+                System.out.println("Envío Correcto");
+            } else {
+                Logger logger = new Logger();
+                if (usuariotrabajadoredit.getTrabajadorid() != null) {
+                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
                 } else {
-                    Logger logger = new Logger();
-                    if (usuariotrabajadoredit.getTrabajadorid() != null) {
-                        logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuario.getEntidad().getId(), usuario.getTrabajador().getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
-                    } else {
-                        logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, 0, 0, Logger.CORREO_FAIL_RESET_PASSWORD, 0);
-                    }
+                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, 0, 0, Logger.CORREO_FAIL_RESET_PASSWORD, 0);
                 }
             }
-            usuario.setApellidoMaterno(usuariotrabajadoredit.getApellidomaterno());
-            usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
-            usuario.setDocumentoId(documentoIdentidadEdit.getId());
-            usuario.setLogin(usuariotrabajadoredit.getLogin());
-            usuario.setEstado(usuariotrabajadoredit.getEstado());
-            usuario.setRolid(rolUsuarioEdit.getId());
-            usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
-            usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
-            usuario.setTelefono(usuariotrabajadoredit.getTelefono());
-            usuario.setFecha_creacion(usuariotrabajadoredit.getFechacreacion());
-            usuario.setObservacion(usuariotrabajadoredit.getObservacion());
-
-            session.saveOrUpdate(usuario);
-            envelope.setContents(helpers.Constantes.USUARIO_EXITO);
-            resetUsuario();
         }
+        usuario.setEntidad(entidadUsuario);
+        usuario.setApellidoMaterno(usuariotrabajadoredit.getApellidomaterno());
+        usuario.setApellidoPaterno(usuariotrabajadoredit.getApellidopaterno());
+        usuario.setNombres(usuariotrabajadoredit.getNombres());
+        usuario.setDocumentoId(documentoIdentidadEdit.getId());
+        usuario.setLogin(usuariotrabajadoredit.getLogin());
+        usuario.setEstado(usuariotrabajadoredit.getEstado());
+        usuario.setRolid(rolUsuarioEdit.getId());
+        usuario.setNumeroDocumento(usuariotrabajadoredit.getNrodocumento());
+        usuario.setEmaillaboral(usuariotrabajadoredit.getEmaillaboral());
+        usuario.setTelefono(usuariotrabajadoredit.getTelefono());
+        usuario.setFecha_creacion(usuariotrabajadoredit.getFechacreacion());
+        usuario.setObservacion(usuariotrabajadoredit.getObservacion());
+
+        session.saveOrUpdate(usuario);
+        envelope.setContents(helpers.Constantes.USUARIO_EXITO);
+        resetUsuario();
+//        }
         return zonasTotal();
     }
 
@@ -596,9 +658,11 @@ public class ABMUsuario extends GeneralPage {
         documentoIdentidadEdit = (DatoAuxiliar) session.get(DatoAuxiliar.class, lusuariotrabajador.getDocumentoidentidadid());
         if (lusuariotrabajador.getTrabajadorid() == null) {
             noEditaUsuario = false;
-            nombreEntidadEdit = "";
+            entidadUsuario = (Entidad) session.get(Entidad.class, lusuariotrabajador.getEntidadid());
+            nombreEntidadEdit = entidadUsuario.getDenominacion();
         } else {
             usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getTrabajadorid());
+            entidadUsuario = usuario.getTrabajador().getEntidad();
             nombreEntidadEdit = usuario.getTrabajador().getEntidad().getDenominacion();
             noEditaUsuario = true;
         }
@@ -644,7 +708,6 @@ public class ABMUsuario extends GeneralPage {
             bEntidad = entidad;
         }
         mostrar = false;
-        //bSeleccionaEntidad = false;
         return zonaFormularioBusqueda.getBody();
     }
 
@@ -652,9 +715,10 @@ public class ABMUsuario extends GeneralPage {
     Object onActionFromSeleccionaEntidadUsuario(Entidad entidad) {
         if (entidad != null) {
             nombreEntidadEdit = entidad.getDenominacion();
+            entidadUsuario = entidad;
         }
         mostrar = false;
-        return new MultiZoneUpdate("formularioEntidadZone",formularioEntidadZone.getBody()).add("busZone",busZone.getBody()).add("entiZone",entiZone.getBody());
+        return new MultiZoneUpdate("formularioEntidadZone", formularioEntidadZone.getBody()).add("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
     }
 
     @Log
