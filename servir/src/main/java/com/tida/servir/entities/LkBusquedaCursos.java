@@ -16,7 +16,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpFucionMigracion",
-        query = "CALL SP_MIGRACIONFUCION(:as_entidad_id_origen,:as_entidad_id_destino,:an_unidad_origen,:an_unidad_destino,?)",
+        query = "CALL SP_MIGRACIONFUCION(?,:as_entidad_id_origen,:as_entidad_id_destino,:an_unidad_origen,:an_unidad_destino,:an_tipo_proceso)",
         resultClass = LkBusquedaCursos.class,
         hints = {
             @QueryHint(name = "org.hibernate.callable", value = "true")
