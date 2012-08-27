@@ -497,6 +497,14 @@ public class ABMUsuario extends GeneralPage {
             formmensaje.recordError("Seleccione Entidad del Usuario.");
             errores = true;
         }
+        // Busca usuarios con el mismo DNI ingresado
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumento");
+        query.setParameter("nrodocumento", usuariotrabajadoredit.getNrodocumento());
+        if (query.list().size() > 0){
+            formmensaje.recordError("Ya existe un usuario con el DNI ingresado.");
+            errores = true;
+        }
+        
         if (errores) {
             return zonasTotal();
         }
