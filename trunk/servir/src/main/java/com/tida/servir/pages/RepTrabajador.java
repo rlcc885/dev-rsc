@@ -439,6 +439,19 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
+    Object onSuccessFromFormGrilla() {
+        if (resetBusquedas) {
+            limpiarBusquedaB();
+            formulariobusquedaB.clearErrors();
+            resetBusquedas = false;
+
+            return new MultiZoneUpdate("busquedaB", busquedaB.getBody());
+        } else {
+            return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
+        }
+    }
+    
+    @Log
     Object onSuccessFromFormularioBusquedaB() {
         if (resetBusquedas) {
             limpiarBusquedaB();
