@@ -24,8 +24,8 @@
                             });
                         </script>
                     </div>
+                     <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
                     <t:if test="${vformulario}">
-                        <t:form t:id="formularioantlaboral"  zone="antLaboralZone">
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <label>* Empresa: </label>
@@ -71,19 +71,20 @@
                                     </div>
                                 </t:if>          
                             </div>
+                        
+                    </t:if>
                          <!--   <t:if test="${vbotones}">-->
                                 <div class="actions">
-                                    <div class="f-left">                        
-                                        (*) Campos Obligatorios
-                                    </div>
                                     <t:if test="${vbotones}">
                                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  />
                                     </t:if>
-                                    <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="antLaboralZone">
-                                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                                            Limpiar Formulario
-                                        </span> 
-                                    </t:eventLink>
+                                    <t:if test="vNoedita">
+                                        <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="antLaboralZone">
+                                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                                Limpiar Formulario
+                                            </span> 
+                                        </t:eventLink>
+                                    </t:if>
                                     <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="antLaboralZone">
                                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                             Cancelar
@@ -92,7 +93,6 @@
                                 </div>
                             <!--</t:if>-->
                         </t:form>
-                    </t:if>
 <!--                    <div>
                         <script>
                             jQuery(document).ready(function() {
@@ -122,7 +122,13 @@
         </fieldset>
         
         <div id = "tabla_oi">
-            <t:zone t:id="listaAntLoboralZone">   
+            <t:zone t:id="listaAntLoboralZone">  
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>
                 <t:grid source="listadoAntLaborales" rowsPerPage="10" t:add="Revisado,Acciones" pagerPosition="bottom"
                         row="listaantlaborales" include="cargo, empresa, fec_ingreso, fec_egreso" inPlace="true" >
                     <t:parameter name="empty">

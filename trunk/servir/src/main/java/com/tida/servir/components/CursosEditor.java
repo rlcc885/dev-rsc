@@ -155,6 +155,7 @@ public class CursosEditor {
         vformulario = false;
         vbotones = false;
         vNoedita = false;
+        veditar=false;
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
@@ -179,7 +180,6 @@ public class CursosEditor {
         votro = true;
         editando = false;
         cursos = new Curso();
-        editando = false;
     }
 
     @Log

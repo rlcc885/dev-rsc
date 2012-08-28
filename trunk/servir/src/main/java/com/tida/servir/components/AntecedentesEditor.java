@@ -92,6 +92,9 @@ public class AntecedentesEditor {
     @Property
     @Persist
     private boolean bvalidausuario;
+    @Persist
+    @Property
+    private Boolean vNoedita;
     @Property
     @SessionState
     private UsuarioAcceso usua;
@@ -102,11 +105,14 @@ public class AntecedentesEditor {
     private void inicio() {
         ant_Laborales = new Ant_Laborales();
         bvalidausuario = false;
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
         valfec_hasta = null;
         valfec_desde = null;
         if (usua.getAccesoupdate() == 1) {
-            veditar = true;
-            vbotones = true;
+           veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 bvalidausuario = true;
             }
@@ -120,6 +126,7 @@ public class AntecedentesEditor {
         if (usua.getAccesoreport() == 1) {
             vformulario = true;
             vbotones = true;
+            vNoedita=true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 bvalidausuario = true;
             }
@@ -168,9 +175,32 @@ public class AntecedentesEditor {
     }
 
     @Log
-    Object onReset() {
-        resetRegistro();
-        formulariomensajesantecedente.clearErrors();
+    Object onReset() {        
+        
+        if (vdetalle) {
+            vformulario = false;
+            vNoedita = false;
+            if (usua.getAccesoreport() == 1) {
+                vformulario = true;
+                vdetalle = false;
+                vbotones = true;
+                resetRegistro();
+                formulariomensajesantecedente.clearErrors();
+                vNoedita = true;
+            }
+        } else {
+            if (usua.getAccesoreport() == 0) {
+                vformulario = false;
+                vdetalle = false;
+                vbotones = false;
+                vNoedita = false;
+            } else {
+                resetRegistro();
+                formulariomensajesantecedente.clearErrors();
+            }
+        }
+        editando=false;
+        
         //return antLaboralZone.getBody();
         return new MultiZoneUpdate("antLaboralZone", antLaboralZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
@@ -225,6 +255,8 @@ public class AntecedentesEditor {
             } else {//editando
                 if (usua.getAccesoreport() == 0) {
                     vformulario = false;
+                    vbotones = false;
+                    vNoedita = false;
                 }
             }
 
@@ -293,8 +325,10 @@ public class AntecedentesEditor {
 
         editando = true;
         vformulario = true;
+        editando = true;
         vdetalle = false;
         vbotones = true;
+        vNoedita=true;
         return antLaboralZone.getBody();
     }
 
@@ -311,6 +345,7 @@ public class AntecedentesEditor {
         ant_Laborales = antLab;
         vdetalle = true;
         vbotones = false;
+        vNoedita=true;
         vformulario = true;
         return antLaboralZone.getBody();
     }
@@ -320,6 +355,7 @@ public class AntecedentesEditor {
         ant_Laborales = antLab;
         vdetalle = true;
         vbotones = false;
+        vNoedita=true;
         vformulario = true;
         return antLaboralZone.getBody();
     }

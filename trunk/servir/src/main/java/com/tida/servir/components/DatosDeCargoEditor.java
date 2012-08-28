@@ -234,9 +234,12 @@ public class DatosDeCargoEditor {
 //            usuarionuevo.setTelefono("cccc");            
 //            usuarionuevo.setEstado(0);
 //            session.saveOrUpdate(usuarionuevo);
-            String hql = "update RSC_USUARIO set ESTADO=0 where login='" + getListadoUsuario().get(0).getLogin()  + "'";
+            session.flush();
+             String hql = "update RSC_USUARIO set ESTADO=0 where login='" + getListadoUsuario().get(0).getLogin()  + "'";
             Query query = session.createSQLQuery(hql);
+            Query query2 = session.createSQLQuery("commit");
             int rowCount = query.executeUpdate();
+            int row=query2.executeUpdate();
             session.flush();
          }
        }
