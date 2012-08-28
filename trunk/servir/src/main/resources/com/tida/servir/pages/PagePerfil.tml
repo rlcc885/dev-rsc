@@ -22,9 +22,9 @@
                 </t:if>
             </p:estadoCell>
             <p:accionesCell>
-                <t:actionlink t:id="editaPerfil" zone="listaZone" t:context="rowPerfil">Editar</t:actionlink>
+                <t:actionlink t:id="editaPerfil" zone="editZone" t:context="rowPerfil">Editar</t:actionlink>
                 |
-                <t:actionlink t:id="permisoPerfil" zone="listaZone" t:context="rowPerfil">Derechos</t:actionlink>
+                <t:actionlink t:id="permisoPerfil" zone="listaPermisoZone" t:context="rowPerfil">Derechos</t:actionlink>
                 <t:if test="eliminaPerfil">
                     |
                     <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">
@@ -70,10 +70,8 @@
                         </div>
                         <div class="f-left">	
                             <t:label for="fechacreacion"/>
-                            <input t:type="DateField"
-                                   t:id="fechacreacion" 
-                                   t:value="perfil.fechacreacion"
-                                   t:disabled="true"/>
+                            <input t:type="TextField" t:id="fechacreacion" t:value="fechaCreacion" 
+                                   t:disabled="true" class="fec_publicacion pictureInputDate"/>
                         </div>
                     </fieldset>
                     <div class="actions">

@@ -7,6 +7,8 @@ package com.tida.servir.pages;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -105,6 +107,9 @@ public class PagePerfil {
     @Persist
     @Property
     private boolean vNoeditaperfil;
+    @Persist
+    @Property
+    private String fechaCreacion;
 
     @Log
     void setupRender() {
@@ -121,6 +126,8 @@ public class PagePerfil {
         mostrarNew = true;
         perfil = new Perfil();
         perfil.setFechacreacion(new Date());
+        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+        fechaCreacion = formatoDeFecha.format(perfil.getFechacreacion());
         perfil.setEstado(true);
         errorMessage = "";
         errorMessageSavePerfil = "";
@@ -211,6 +218,8 @@ public class PagePerfil {
         } else {
             vNoeditaperfil = false;
         }
+        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+        fechaCreacion = formatoDeFecha.format(perfil.getFechacreacion());
         return zonasTotal();
     }
 
@@ -331,11 +340,12 @@ public class PagePerfil {
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).
-                add("editZone", editZone.getBody()).
+        mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).add("editZone", editZone.getBody()).
                 add("listaPermisoZone", listaPermisoZone.getBody()).
                 add("editPermisoZone", editPermisoZone.getBody());
         return mu;
+//        mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).
+//                add("editZone", editZone.getBody());
+//        return mu;
     }
-
 }
