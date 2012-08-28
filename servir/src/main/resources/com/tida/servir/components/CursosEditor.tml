@@ -34,7 +34,9 @@
                 </script>
             </div>
             <t:form t:id="formularioprimero" zone="mensajescurso">
-                <fieldset>
+               
+             <fieldset>
+                <t:if test="${vformulario}">
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Tipo de Estudios</label>
@@ -93,10 +95,8 @@
                             </div>
                         </t:if>
                     </div>
+              </t:if>
                     <div class="actions">
-                        <div class="f-left">                        
-                            (*) Campos Obligatorios
-                        </div> 
                         <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                         </t:if>
@@ -110,7 +110,11 @@
         </t:zone>
         <div id = "tabla_oi">
             <t:zone t:id="listadoZone">  
-                
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
                 <br/>
                 <div id = "tabla_cargo">
                     <t:grid source="listacur" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
