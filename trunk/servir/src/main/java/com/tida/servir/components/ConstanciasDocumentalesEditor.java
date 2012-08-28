@@ -272,7 +272,7 @@ public class ConstanciasDocumentalesEditor {
         else if (elemento == 2) 
         {
             return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
-                    add("mensajesZone", mensajesZone.getBody());
+                    add("mensajesZone", mensajesZone.getBody()).add("primerZone",primerZone.getBody());
         } 
         else if (elemento == 1) 
         {
