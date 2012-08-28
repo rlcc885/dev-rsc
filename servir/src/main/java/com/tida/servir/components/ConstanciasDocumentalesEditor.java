@@ -7,6 +7,7 @@ import helpers.Helpers;
 import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -58,7 +59,7 @@ public class ConstanciasDocumentalesEditor {
     private Zone listaDocumentosZone;
     @InjectComponent
     @Property
-    private Zone primerZone;
+    private Zone tercerZone;
     @InjectComponent
     @Property
     private Zone mensajesZone;
@@ -150,39 +151,59 @@ public class ConstanciasDocumentalesEditor {
          
        return cargoasignado;
    }
+
+    @InjectComponent
+    private Zone primerZone;
+
+    @Inject
+    private Request request;
+    
+       @Log
+    //para obtener datatos del Nivel Gobierno
+    public GenericSelectModel<DatoAuxiliar> getBeanCategoria() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIACONSTANCIA", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanCategoria() {        
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIACONSTANCIA", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    //para obtener datatos de la Organizacion
+    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento(){
+        List<DatoAuxiliar> list = new ArrayList<DatoAuxiliar>();
+
+        if (valcategoriaconstancia != null) 
+        { 
+            list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", "CATEGORÍACONSTANCIA", valcategoriaconstancia.getCodigo(), session);
+        }
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+    @Log
+    Object onValueChangedFromvalcategoriaconstancia(DatoAuxiliar dato) {
+     //   valcategoriaconstancia = dato;
+     //** if (dato != null){valcategoriaconstancia = dato;}   
+        return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
+    }
 
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipoDocumento() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", null, 0, session);
-            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    Object onValueChangedFromvaltipoconstancia(DatoAuxiliar dato) {
+     //   if (dato != null) {valtipoconstancia = dato;}
+        return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
     }
 
-  /*  Log
-    public GenericSelectModel<LkBusquedaCargo> getCargosAsignados()
-    {   Criteria c;
-       c =  session.createCriteria(LkBusquedaCargo.class);
-       c.add(Restrictions.eq("", usua));
-       
-       return new GenericSelectModel<LkBusquedaCargo>(list, DatoAuxiliar.class, "valor", "id", _access);        
-    }*/
-   /* @Log
-    public GenericSelectModel<CargoAsignado> getCargosAsignados2()
-    {   Criteria c;
-    c = session.createCriteria(CargoAsignado.class);
-    c.add(Restrictions.eq("trabajador", actual));
+    @Log
+    Object onValueChangedFrombeanCategoria(DatoAuxiliar dato) {
+   //     if (dato == null) {
+    //       valtipoconstancia =  null;
+   //     }
+        return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
+    }
+
+    @Log
+    Object onSuccessFromFormularioDocumento()
+    {
+        return primerZone.getBody();               
+    }
     
-        return new GenericSelectModel<CargoAsignado>(c.list(), CargoAsignado.class, "id","valor" , _access);
-    }
-    */
-
-
-    //@Log
+    @Log
     void onSelectedFromReset() {            
         elemento = 2;
         if(vdetalle){
@@ -225,6 +246,8 @@ public class ConstanciasDocumentalesEditor {
         elemento = 3;
     }
 
+
+    
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() throws ParseException {     
@@ -248,7 +271,7 @@ public class ConstanciasDocumentalesEditor {
         } 
         else if (elemento == 2) 
         {
-            return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+            return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
                     add("mensajesZone", mensajesZone.getBody());
         } 
         else if (elemento == 1) 
@@ -313,8 +336,9 @@ public class ConstanciasDocumentalesEditor {
             session.flush();
      // INICIO acciones de auditoria        
             if (!editando) 
-            {
+            {   
                 logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
+           //     logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(),actual.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
             }
             
             if (valentregado != null) 
@@ -333,9 +357,9 @@ public class ConstanciasDocumentalesEditor {
             envelope.setContents("Documento creado / modificado con exito");
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+        return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
                 add("mensajesZone", mensajesZone.getBody()).
-                add("listaDocumentosZone", listaDocumentosZone.getBody());
+                add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());
     }
 
     @Log
@@ -383,16 +407,14 @@ public class ConstanciasDocumentalesEditor {
     @Log
     @CommitAfter
     Object onBorrarDato(ConstanciaDocumental dato) {
-        
-        dato.getId();System.out.println("OBJETO A ELIMINAR: "+dato.getId());
         Query query = session.createSQLQuery("DELETE FROM RSC_CONSTANCIADOCUMENTAL WHERE ID = '"+dato.getId()+"'");
         int resultado = query.executeUpdate();
         session.flush();
         envelope.setContents("Documento del Trabajador Eliminado");
         
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
+        return new MultiZoneUpdate("tercer", tercerZone.getBody()).
                 add("mensajesZone", mensajesZone.getBody()).
-                add("listaDocumentosZone", listaDocumentosZone.getBody());
+                add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());
     }
 
     @Log
@@ -450,8 +472,8 @@ public class ConstanciasDocumentalesEditor {
 
     @Log
     MultiZoneUpdate actualizarZonas(){
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).
-                add("listaDocumentosZone", listaDocumentosZone.getBody());
+        return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
+                add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());
     }
     
     @Log
