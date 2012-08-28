@@ -286,6 +286,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     void setupRender() {
+        formulariomensajes.clearErrors();
         entidadUE = new Entidad();
         entidadUE.setEsSubEntidad(false);
         ubigeoEntidadUE = new Ubigeo();
@@ -336,6 +337,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     void nuevoRegistro() {
+        formulariomensajes.clearErrors();
         entidadUE = new Entidad();
         entidad_origen = "";
         titular = "";
@@ -525,6 +527,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
     @Log
     void resetFormulario(Entidad entidad) {
+        formulariomensajes.clearErrors();
         entidadUE = (Entidad) session.load(Entidad.class, entidad.getId());
         if (entidadUE.getOrganizacionEstado() != null) {
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
@@ -620,7 +623,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (entidadUE.getEsSubEntidad() == null)
             {entidadUE.setEsSubEntidad(false);
             }
-         String x = ruc_anterior;   
+            String x = ruc_anterior;   
             Criteria c = session.createCriteria(Entidad.class);
             System.out.println("*********KC :"+entidadUE.getEsSubEntidad());
          //   c.add(Restrictions.eq("ruc", x));
@@ -700,6 +703,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 envelope.setContents("Debe ingresar el nombre de la Entidad ");
                 return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
             }
+            if (entidadUE.getRuc() == null) {
+                formulariomensajes.recordError("Debe ingresar el Ruc ");
+                 //envelope.setContents("Debe ingresar el Ruc ");
+                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+            }
+            
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }

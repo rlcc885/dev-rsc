@@ -238,7 +238,7 @@
                             <div class="f-left">
                                 <t:label for="rucedit"/>
                                 <input t:type="TextField" t:id="rucedit" t:disabled="${vdetalle}"
-                                   t:value="entidadUE.ruc" t:validate="regexp"
+                                   t:value="entidadUE.ruc" t:validate="required,regexp"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zoneDatos"/>
                             </div>
                             <div class="f-left">
