@@ -171,7 +171,7 @@ public class ConstanciasDocumentalesEditor {
 
         if (valcategoriaconstancia != null) 
         { 
-            list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", "CATEGORÍACONSTANCIA", valcategoriaconstancia.getCodigo(), session);
+            list = Helpers.getDatoAuxiliar("DATOCONSTANCIA", "CATEGORIACONSTANCIA", valcategoriaconstancia.getCodigo(), session);
         }
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
