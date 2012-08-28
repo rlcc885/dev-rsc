@@ -190,7 +190,7 @@ public class ConstanciasDocumentalesEditor {
     }
 
     @Log
-    Object onValueChangedFrombeanCategoria(DatoAuxiliar dato) {
+    Object onValueChangedFromBeanCategoria(DatoAuxiliar dato) {
    //     if (dato == null) {
     //       valtipoconstancia =  null;
    //     }
