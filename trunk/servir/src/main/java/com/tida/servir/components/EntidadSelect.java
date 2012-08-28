@@ -230,6 +230,7 @@ public class EntidadSelect {
         if (stipoSubEntidad != null) {
             c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
         }
+        
 //        if (sentidad != null) {
 //            c.add(Restrictions.eq("entidad", sentidad));
 //        }
