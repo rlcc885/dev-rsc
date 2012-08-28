@@ -7,11 +7,13 @@ import com.tida.servir.services.SelectIdModelFactory;
 import helpers.Helpers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -78,6 +80,12 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     @Property
     private boolean yaEntrada;
+    //
+    // Datos para el tipo de reporte
+    //
+    @Property
+    @Persist
+    private DatoAuxiliar tipoReporteSelect;
     //
     // Datos para la busqueda
     //
@@ -217,6 +225,21 @@ public class RepTrabajador extends GeneralPage {
             usu = (UsuarioAcceso) result.get(0);
             vselect = (usu.getAccesoselect() != 0);
         }
+    }
+
+    @Property
+    @InjectComponent
+    private Zone tipoReporteZone;
+
+    @Property
+    @InjectComponent
+    private Zone formGrillaZone;
+    
+    @Log
+    //para obtener datatos de la Organizacion
+    public GenericSelectModel<DatoAuxiliar> getTipoReportes() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOREPORTE", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     @Log
@@ -450,6 +473,7 @@ public class RepTrabajador extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
 
     }
+
     @Property
     @InjectComponent
     private Zone empleadoszone;
@@ -519,4 +543,9 @@ public class RepTrabajador extends GeneralPage {
         fecnacimientomenora = "";
         fecnacimientomayora = "";
     }
+}
+
+enum TipoReportes
+{
+    MASTER_CARD, VISA, AMERICAN_EXPRESS, DINERS_CLUB, DISCOVER
 }
