@@ -1,12 +1,14 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
+import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -15,6 +17,7 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
@@ -37,6 +40,8 @@ public class EvaluacionesPersonalesEditor {
     private Session session;
     @InjectComponent
     private Envelope envelope;
+    @Inject
+    private ComponentResources _resources;
    
     @Parameter
     @Property
@@ -55,14 +60,6 @@ public class EvaluacionesPersonalesEditor {
     @Property
     @Persist
     private EvaluacionPersonal evaluacion;
-    
-    @Property
-    @Persist
-    private boolean bvalidausuario;
-    
-    @Persist
-    @Property
-    private Boolean veditar;
     
     @Persist
     @Property
@@ -87,26 +84,60 @@ public class EvaluacionesPersonalesEditor {
     @Persist
     @Property
     private CargoAsignado cargoasignado;
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
     
     @Inject
     private PropertyAccess _access;
-    
+    //validaciones
     @Persist
     @Property
     private Boolean vdetalle;
+    @Persist
+    @Property
+    private Boolean vformulario;
+    @Persist
+    @Property
+    private Boolean vbotones;
+    @Persist
+    @Property
+    private Boolean veliminar;
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Persist
+    @Property
+    private Boolean vNoedita;
+    @Persist
+    @Property
+    private Boolean editando;
     
     //Inicio de lac carga de la pagina
     @Log
     @SetupRender
     private void inicio() {
-            evaluacion = new EvaluacionPersonal();
-            valfec_desde=null;
-            valfec_hasta=null;
-            if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
-                bvalidausuario=true;
-            }else{
-                bvalidausuario=false;
-            }
+        evaluacion = new EvaluacionPersonal();
+        valfec_desde=null;
+        valfec_hasta=null;
+        
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
+        editando=false;
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
+        }
+        if (usua.getAccesodelete() == 1) {
+            veliminar = true;
+        }
+        if (usua.getAccesoreport() == 1) {
+            vformulario = true;
+            vbotones = true;
+            vNoedita=true; 
+        }
+        getCargosAsignados();
     }
     
    @Log
@@ -117,8 +148,7 @@ public class EvaluacionesPersonalesEditor {
          c.add(Restrictions.eq("legajo.entidad", _oi));
          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
          List result = c.list();
-         cargoasignado=(CargoAsignado) result.get(0);
-         
+         cargoasignado=(CargoAsignado) result.get(0);         
        return cargoasignado;
    }
       
@@ -147,18 +177,58 @@ public class EvaluacionesPersonalesEditor {
     
     
     void onSelectedFromCancel() {
-        elemento=2;
+        elemento=3;
+
     }
     
     void onSelectedFromReset() {
-         elemento=1;
+        elemento=2;        
+        if (vdetalle) {
+            vformulario = false;
+            vNoedita = false;
+            if (usua.getAccesoreport() == 1) {
+                vformulario = true;
+                vdetalle = false;
+                vbotones = true;
+                evaluacion=new EvaluacionPersonal();
+                valfec_desde=null;
+                valfec_hasta=null;
+                editando = false;
+                vNoedita = true;
+                
+            }
+        } else {
+            if (usua.getAccesoreport() == 0) {
+                vformulario = false;
+                vdetalle = false;
+                vbotones = false;
+                vNoedita = false;
+            } else {
+                editando = false;
+                evaluacion=new EvaluacionPersonal();
+                valfec_desde=null;
+                valfec_hasta=null;
+            }
+        }
+         
     }
     
     @Log
     @CommitAfter    
     Object onSuccessFromFormularioevaluaciones() {
-        formulariomensajese.clearErrors();
-        if(valfec_desde!=null){
+        if(elemento==3){
+            if (_usuario.getRolid() == 1) {
+                return "TrabajadorLaboral";
+            } else {
+                return Busqueda.class;
+            }
+        }
+        else if(elemento==2){
+            
+        }else{          
+        
+            formulariomensajese.clearErrors();
+            if(valfec_desde!=null){
                 SimpleDateFormat  formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                 try {
                 fecha_desde = (Date)formatoDelTexto.parse(valfec_desde);
@@ -188,45 +258,39 @@ public class EvaluacionesPersonalesEditor {
             
             evaluacion.setFec_desde(fecha_desde);
             evaluacion.setFec_hasta(fecha_hasta);
-        if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
-            //envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
-            formulariomensajese.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
-        } else {
-        evaluacion.setCargoasignado(getCargosAsignados());
-        session.saveOrUpdate(evaluacion);
-        envelope.setContents(helpers.Constantes.EVALUACION_EXITO);
-        evaluacion=new EvaluacionPersonal();
-        valfec_desde=null;
-        valfec_hasta=null;
+            if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
+                //envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
+                formulariomensajese.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
+            } else {
+                if(editando){
+                   if (usua.getAccesoreport() == 0) {
+                        vformulario = false;
+                        vbotones = false;
+                        vNoedita = false;
+                   } 
+                }
+                evaluacion.setCargoasignado(cargoasignado);
+                session.saveOrUpdate(evaluacion);
+                envelope.setContents(helpers.Constantes.EVALUACION_EXITO);
+                evaluacion=new EvaluacionPersonal();
+                valfec_desde=null;
+                valfec_hasta=null;
+                editando=false;
+            }
         }
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                 .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                 .add("evaluacionesZone", evaluacionesZone.getBody());
-        
-
-  
     }
-    
-//    @Log
-//    @CommitAfter    
-//    Object onSuccessFromFormulariobotones() {
-//        if(elemento==1){
-//            evaluacion=new EvaluacionPersonal();
-//            valfec_desde=null;
-//            valfec_hasta=null;
-//            return  evaluacionesZone.getBody();
-//        }else if(elemento==2){
-//            return "Busqueda";
-//        }else{    
-//           return this;
-//        }
-//        
-//    }
     
     @Log
     Object onActionFromEditar(EvaluacionPersonal evalu) {        
         evaluacion=evalu;
-        
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
+        vNoedita = true;
         if(evaluacion.getFec_desde()!=null){
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde=formatoDeFecha.format(evaluacion.getFec_desde());
@@ -236,18 +300,31 @@ public class EvaluacionesPersonalesEditor {
             valfec_hasta=formatoDeFecha.format(evaluacion.getFec_hasta());
         }
         
-           return evaluacionesZone.getBody(); 
+           return  new MultiZoneUpdate("evaluacionesZone",evaluacionesZone.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
+    }
+    
+    @Log
+    Object onActionFromDetalle(EvaluacionPersonal evalu) {
+        evaluacion=evalu; 
+        vdetalle = true;
+        vbotones = false;
+        vformulario = true;
+        vNoedita = true;
+        if(evaluacion.getFec_desde()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde=formatoDeFecha.format(evaluacion.getFec_desde());
+        }
+        if(evaluacion.getFec_hasta()!=null){
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta=formatoDeFecha.format(evaluacion.getFec_hasta());
+        }
+        return  new MultiZoneUpdate("evaluacionesZone",evaluacionesZone.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
     }
     
     @Log
     @CommitAfter        
     Object onActionFromEliminar(EvaluacionPersonal evalu) {
         session.delete(evalu);
-        if(_usuario.getRolid()==2 || _usuario.getRolid()==3){
-                bvalidausuario=true;
-            }else{
-                bvalidausuario=false;
-            }
         envelope.setContents("Evaluacion personal eliminada exitosamente.");
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
         .add("listaEvaluacionZone", listaEvaluacionZone.getBody());
