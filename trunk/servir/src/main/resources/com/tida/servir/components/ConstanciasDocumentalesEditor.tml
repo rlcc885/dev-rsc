@@ -15,6 +15,30 @@
 
         <fieldset>
             <t:zone t:id="primerZone">
+                <t:if test="vformulario">
+                    <t:form t:id="formularioDocumento" t:zone="primerZone">
+                       <div class="f-wrap">                                                     
+                            <!-- <t:if test="opcionADM">
+                            <div class="f-left">
+                                 <label>Cargo Asignado</label>
+                                <select t:type="Select" t:id="cagoasignado" t:value="valcargoasignado" t:disabled="${detalle}"
+                                        model="cargosAsignados" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:blankOption="ALWAYS" />
+                            </div>
+                            </t:if> -->
+                            <div class="f-left">
+                                <label>* Categoría</label>
+                                <input t:type="Select" t:id="valcategoriaconstancia" model="beanCategoria" t:value="valcategoriaconstancia" t:disabled="${vdetalle}" t:zone="primerZone"/>
+                            </div> 
+                            <div class="f-left">
+                                <label>* Tipo Documento</label>
+                                <input t:type="Select" t:id="valtipoconstancia" model="beanTipoDocumento" t:value="valtipoconstancia" t:disabled="${vdetalle}" t:zone="primerZone" /> <!-- onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" -->
+                            </div>
+                            <br/>
+                       </div>                        
+                    </t:form>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="tercerZone">
                     <div>
                         <script>
                             jQuery(document).ready(function() {
@@ -25,29 +49,6 @@
                     </div>            
            <t:form t:id="formulariobotones" t:zone="mensajesZone">  
                 <t:if test="vformulario">
-                       <div class="f-wrap">
-                            <!--
-                            <t:if test="opcionADM">
-                            <div class="f-left">
-                                 <label>Cargo Asignado</label>
-                                <select t:type="Select" t:id="cagoasignado" t:value="valcargoasignado" t:disabled="${detalle}"
-                                        model="cargosAsignados" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                        t:blankOption="ALWAYS" />
-                            </div>
-                            </t:if>
-                            -->
-
-                            <div class="f-left">
-                                <label>* Categoría</label>
-                                <input t:type="Select" t:id="categoria" model="beanCategoria" t:value="valcategoriaconstancia" t:disabled="${vdetalle}" />
-                            </div> 
-
-                            <div class="f-left">
-                                <label>* Tipo Documento</label>
-                                <input t:type="Select" t:id="tipoDocumento" model="beanTipoDocumento" t:value="valtipoconstancia" t:disabled="${vdetalle}"/> <!-- onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" -->
-                            </div>
-                            <br/>
-                       </div>
                         <div class="f-wrap">
                           <t:if test="opcionADM">    
                              <div class="f-left">
@@ -64,7 +65,7 @@
                       <t:if test="${vrevisado}">
                             <div class="f-wrap">
                                 Entregado 
-                                <input t:type="Checkbox" t:id="revisado" t:value="valentregado" t:disabled="${vdetalle}" t:zone="primerZone"/>     
+                                <input t:type="Checkbox" t:id="revisado" t:value="valentregado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                             </div>
                         </t:if>
                   </t:if>
@@ -112,12 +113,22 @@
                         </t:if>
                     </p:_tipoDocumentoCell>
                     <p:_obligatorioCell>
-                           <t:if test="${documento.entrego}">
+                    <t:if test="${documento.entrego}" >
+                           <t:if test="${documento.obligatorio}">
                                <label class="datofalse">SI</label>  
                            </t:if>
-                            <t:if test="${documento.entrego}" negate="true">
+                            <t:if test="${documento.obligatorio}" negate="true">
+                               <label class="datofalse">NO</label>  
+                           </t:if> 
+                    </t:if>    
+                    <t:if test="${documento.entrego}" negate="true">
+                           <t:if test="${documento.obligatorio}">
+                               <label class="datotrue">SI</label>  
+                           </t:if>
+                            <t:if test="${documento.obligatorio}" negate="true">
                                <label class="datotrue">NO</label>  
                            </t:if> 
+                    </t:if>
                     </p:_obligatorioCell>                    
                     <p:_entregoCell>
                            <t:if test="${documento.entrego}">
