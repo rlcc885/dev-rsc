@@ -207,21 +207,21 @@ public class EvaluacionesPersonalesEditor {
   
     }
     
-    @Log
-    @CommitAfter    
-    Object onSuccessFromFormulariobotones() {
-        if(elemento==1){
-            evaluacion=new EvaluacionPersonal();
-            valfec_desde=null;
-            valfec_hasta=null;
-            return  evaluacionesZone.getBody();
-        }else if(elemento==2){
-            return "Busqueda";
-        }else{    
-           return this;
-        }
-        
-    }
+//    @Log
+//    @CommitAfter    
+//    Object onSuccessFromFormulariobotones() {
+//        if(elemento==1){
+//            evaluacion=new EvaluacionPersonal();
+//            valfec_desde=null;
+//            valfec_hasta=null;
+//            return  evaluacionesZone.getBody();
+//        }else if(elemento==2){
+//            return "Busqueda";
+//        }else{    
+//           return this;
+//        }
+//        
+//    }
     
     @Log
     Object onActionFromEditar(EvaluacionPersonal evalu) {        
