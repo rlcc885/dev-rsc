@@ -10,6 +10,19 @@
     <div class = "mensajes">
         ${mensajes}
     </div>
+    <div t:type="zone" t:id="tipoReporteZone">
+        <t:form t:id="formularioReporte" zone="tipoReporteZone">
+            <fieldset>
+                <div id="filtrosnombres" class="f-wrap">
+                            <div class="f-left">
+                                <t:label for="tipoReporteSelect"/>
+                                <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
+                            </div>
+                        </div>
+            </fieldset>
+        </t:form>
+    </div>
+    
     <!-- <a title= "Mostrar/Ocultar filtros y búsquedas" id = "toggle_filtros" href="#" onclick="toggle_filtros();">Mostrar/Ocultar</a> -->
     <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
     <div t:type="zone" t:id="filtrosZone" visible="${mostrarFiltros}">
@@ -162,42 +175,50 @@
         });
         -->
     </script>
-    <t:if test="vselect">
-        <div id="grillas-busquedas">
-            <div id="tablaTrabajador">
-                <h2>Lista de Trabajadores</h2>
-                <t:zone t:id="empleadoszone">
-<!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
-<!--                        <t:errors/> -->
-                    <t:grid source="empleados"
-                            rowsPerPage="15"
-                            row="persons"
-                            t:add="Legajo"
-                            pagerPosition="bottom"
-                            inPlace="true"
-                            t:exclude="entidad_id,estado,id,nombretrabajador,validado,entidad,unidadorganica,cargo,estadocargo,documentoidentidad_id,sexo,tipodiscapacidad_id,estadocivil_id,regimenlaboral_id,unidadorganica_id,nivelinstruccion_id,formacionprofesional_id,fechainicio,fechafin,fechanacimiento,"
-                            t:reorder="descdocumentoidentidad,nrodocumento,nombres">
-                        <t:parameter name="empty">
-                            <div class="no-info">
-                                No se encontraron trabajadores con el criterio seleccionado.
-                                O bien no hay trabajadores.
-                            </div>
-                        </t:parameter>
-                        <p:legajoCell>
-                            <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="persons.id" href="#">Personales</a>
-                            |
-                            <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="persons.id" href="#">Familiares</a>
-                            |
-                            <a t:type="pagelink" t:page="Meritos" t:context="persons.id" href="#">Laborales</a>
-                            |
-                            <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
-                        </p:legajoCell>
-                    </t:grid>
-<!--                    </t:form>-->
-                </t:zone>
-            </div>
-        </div> <!-- Grillas-busqueda -->
-    </t:if>
+    <div t:type="zone" t:id="formGrillaZone">
+    <t:form t:id="formGrilla" zone="formGrillaZone">
+        <t:if test="vselect">
+            <div id="grillas-busquedas">
+                <div id="tablaTrabajador">
+                    <h2>Lista de Trabajadores</h2>
+                    <t:zone t:id="empleadoszone">
+    <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
+    <!--                        <t:errors/> -->
+                        <t:grid source="empleados"
+                                rowsPerPage="15"
+                                row="persons"
+                                t:add="Legajo,Elegir"
+                                pagerPosition="bottom"
+                                inPlace="true"
+                                t:exclude="entidad_id,estado,id,nombretrabajador,validado,entidad,unidadorganica,cargo,estadocargo,documentoidentidad_id,sexo,tipodiscapacidad_id,estadocivil_id,regimenlaboral_id,unidadorganica_id,nivelinstruccion_id,formacionprofesional_id,fechainicio,fechafin,fechanacimiento,"
+                                t:reorder="descdocumentoidentidad,nrodocumento,nombres">
+                            <t:parameter name="empty">
+                                <div class="no-info">
+                                    No se encontraron trabajadores con el criterio seleccionado.
+                                    O bien no hay trabajadores.
+                                </div>
+                            </t:parameter>
+                            <p:legajoCell>
+                                <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="persons.id" href="#">Personales</a>
+                                |
+                                <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="persons.id" href="#">Familiares</a>
+                                |
+                                <a t:type="pagelink" t:page="Meritos" t:context="persons.id" href="#">Laborales</a>
+                                |
+                                <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
+                            </p:legajoCell>
+                            <p:elegirCell>
+                                <input t:type="checkbox" t:id="checkTrabajador" value="persons.id" onclick="" /> <t:label for="checkTrabajador"/>
+                            </p:elegirCell>
+                        </t:grid>
+    <!--                    </t:form>-->
+                        <input t:id="generarReporte" t:type="submit" value="Generar Reporte" class="button f-right"/>
+                    </t:zone>
+                </div>
+            </div> <!-- Grillas-busqueda -->
+        </t:if>
+    </t:form>
+    </div>
     <script>
         function mostrarEsconder() {
         cach.visibility = "visible";
