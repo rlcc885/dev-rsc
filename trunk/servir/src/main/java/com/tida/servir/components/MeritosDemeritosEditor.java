@@ -94,7 +94,7 @@ public class MeritosDemeritosEditor {
     private Boolean vinserta;
     @Persist
     @Property
-    String clase;
+    private String clase;
 
     //Inicio de la carga de la pagina
     @Log
