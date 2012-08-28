@@ -17,8 +17,16 @@
                             <div class="f-left">
                                 <t:label for="tipoReporteSelect"/>
                                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
+                                <t:label for="radioPrint"/>:
+                                <t:radiogroup t:id="radioPrint" value="0">
+                                        <t:radio t:id="Excel" value="0"/>
+                                        <t:label for="Excel"/>
+                                        <t:radio t:id="PDF" value="1"/>
+                                        <t:label for="PDF"/>
+                                </t:radiogroup>
                             </div>
-                        </div>
+                </div>
+                
             </fieldset>
         </t:form>
     </div>
@@ -208,7 +216,7 @@
                                 <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                             </p:legajoCell>
                             <p:elegirCell>
-                                <input t:type="checkbox" t:id="checkTrabajador" value="persons.id" onclick="" /> <t:label for="checkTrabajador"/>
+                                <input t:type="checkbox" t:id="checkTrabajador" value="persons.id" onclick="" />
                             </p:elegirCell>
                         </t:grid>
     <!--                    </t:form>-->
