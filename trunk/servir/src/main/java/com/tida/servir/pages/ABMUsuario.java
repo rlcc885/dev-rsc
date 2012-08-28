@@ -189,7 +189,7 @@ public class ABMUsuario extends GeneralPage {
     private Request request;
     @Persist
     @Property
-    long intentosFallidos;
+    private long intentosFallidos;
     @Persist
     @Property
     private String nombreEntidadEdit;

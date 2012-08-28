@@ -88,6 +88,4 @@ public class CargosGrilla {
           return c.list();
           
     }
-
-
 }
