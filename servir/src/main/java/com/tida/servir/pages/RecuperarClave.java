@@ -108,7 +108,7 @@ public class RecuperarClave {
         List c = query.list();
 
         if (c.isEmpty()) {
-            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
+//            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
             formulariologin.recordError("Usuario no existe. Contacte a un administrador");
             return this;
         }
