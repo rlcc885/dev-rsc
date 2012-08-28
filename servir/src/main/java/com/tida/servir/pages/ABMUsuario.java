@@ -209,7 +209,8 @@ public class ABMUsuario extends GeneralPage {
     @Property
     private String numeroDNIanterior;
     @Persist
-    @Property boolean esUsuarioTrabajador;
+    @Property 
+    private boolean esUsuarioTrabajador;
 
     @Log
     void setupRender() {

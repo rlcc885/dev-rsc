@@ -189,13 +189,13 @@ public class ConstanciasDocumentalesEditor {
         return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
     }
 
-    @Log
-    Object onValueChangedFromBeanCategoria(DatoAuxiliar dato) {
-   //     if (dato == null) {
-    //       valtipoconstancia =  null;
-   //     }
-        return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
-    }
+//    @Log
+//    Object onValueChangedFromBeanCategoria(DatoAuxiliar dato) {
+//   //     if (dato == null) {
+//    //       valtipoconstancia =  null;
+//   //     }
+//        return request.isXHR() ? new MultiZoneUpdate("primerZone", primerZone.getBody()) : null;
+//    }
 
     @Log
     Object onSuccessFromFormularioDocumento()
