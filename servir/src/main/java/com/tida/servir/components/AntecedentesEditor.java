@@ -347,6 +347,14 @@ public class AntecedentesEditor {
         vbotones = false;
         vNoedita=true;
         vformulario = true;
+        if (ant_Laborales.getFec_ingreso() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(ant_Laborales.getFec_ingreso());
+        }
+        if (ant_Laborales.getFec_egreso() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(ant_Laborales.getFec_egreso());
+        }
         return antLaboralZone.getBody();
     }
 
