@@ -54,16 +54,21 @@
                              </div>
                          </div>
                          <div class="f-wrap">
-                        <div class="f-right">
-                            <t:if test="${bvalidausuario}">
-                                <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                            </t:if>    
-                        </div>
+                            <div class="f-right">
+                                <t:if test="${bvalidausuario}">
+                                    <input t:type="Submit" t:id="guardar" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
+                                </t:if>    
+                                 <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
+                            </div>
+                        <!--    <div class="f-right">
+                               
+                            </div>
+                            <div class="f-right">
+                                
+                            </div>-->
                         </div>
                     </t:form> 
-            </div> 
-            
-            <div t:type="zone" t:id="botonesZone" >
                     <div>
                         <script>
                             jQuery(document).ready(function() {
@@ -72,7 +77,11 @@
                             });
                         </script>
                     </div>
-                <t:form t:id="formulariobotones"  zone="evaluacionesZone">
+            </div> 
+            
+            <div t:type="zone" t:id="botonesZone" >
+                    
+            <!--    <t:form t:id="formulariobotones"  zone="evaluacionesZone">
                 <div class="f-wrap">
                     <div class="f-right">
                         <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
@@ -81,10 +90,9 @@
                         <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
                     </div>
                 </div>
-                </t:form>
-
-
+                </t:form>-->
             </div>
+            
    </fieldset>
     <div class="f-wrap">                        
         (*) Campos Obligatorios
