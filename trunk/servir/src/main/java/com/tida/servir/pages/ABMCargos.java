@@ -479,7 +479,7 @@ public class ABMCargos extends GeneralPage {
             dato.setEstado(Cargoxunidad.ESTADO_BAJA);
             session.saveOrUpdate(dato);
             session.flush();
-            new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+//            new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             envelope.setContents("Cargo Eliminado");
         }
         onReset();

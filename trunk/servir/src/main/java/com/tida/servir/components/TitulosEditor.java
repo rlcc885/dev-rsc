@@ -148,9 +148,9 @@ public class TitulosEditor {
 	{
 		if(titulo.getFec_emision().after(new Date())) {
                         Logger logger = new Logger();
-    			logger.loguearError(session, _usuario, titulo.getId().toString(),
-    					Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
-    					Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
+//    			logger.loguearError(session, _usuario, titulo.getId().toString(),
+//    					Logger.CODIGO_ERROR_FECHA_EMISION_PREVIA_ACTUAL,
+//    					Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL, Logger.TIPO_OBJETO_TITULO);
 
 			_form.recordError(Errores.ERROR_FECHA_EMISION_PREVIA_ACTUAL);
 		}

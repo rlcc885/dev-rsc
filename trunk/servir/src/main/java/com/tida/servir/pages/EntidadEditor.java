@@ -308,7 +308,7 @@ public class EntidadEditor extends GeneralPage {
         entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
         //entidadUE=entidadUE;
         session.saveOrUpdate(entidadUE);
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
+//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         envelope.setContents("Entidad modificada exitosamente");
         return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }

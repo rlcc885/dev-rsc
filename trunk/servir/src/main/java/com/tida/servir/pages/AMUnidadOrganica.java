@@ -585,7 +585,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     // FIN CAMBIO */ 
 
                     session.saveOrUpdate(unidadOrganica);
-                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+//                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                     editando = false;
                     session.flush();
                     resetUnidadOrganica();
@@ -650,7 +650,7 @@ public class AMUnidadOrganica extends GeneralPage {
 
                 // FIN CAMBIO */ 
                 session.saveOrUpdate(unidadOrganica);
-                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+//                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                 editando = false;
                 session.flush();
                 resetUnidadOrganica();
@@ -672,7 +672,7 @@ public class AMUnidadOrganica extends GeneralPage {
         errorBorrar = null;
         dato.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(dato);
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         resetUnidadOrganica();
         envelope.setContents("Unidad Orgánica Eliminada");
 //        //setupUbigeos();
