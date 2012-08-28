@@ -21,6 +21,7 @@
                 </script>
             </div>
             <t:form t:id="formularioprointelectual" zone="proIntelectualZone">
+        <!--        <t:if test="opcInsertar"> -->
                 <fieldset>
                     <div class="f-wrap">
                         <div class="f-left">
@@ -59,11 +60,12 @@
                         <t:if test="${bvalidausuario}">
                             <div class="f-left">
                                 <label>Revisado: </label>
-                                <input t:type="Checkbox" t:id="validado" t:value="publicacion.validado"/>
+                                <input t:type="Checkbox" t:id="validado" t:value="publicacion.validado"  t:disabled="${vdetalle}"/>
                             </div>
                         </t:if>
                     </div>
                 </fieldset>
+     <!--           </t:if> -->   
                 <div class="actions">
                     <div class="f-left">                        
                         (*) Campos Obligatorios

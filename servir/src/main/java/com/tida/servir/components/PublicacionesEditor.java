@@ -87,7 +87,10 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean vinserta;
-
+//modificacion******
+    @Persist
+    @Property
+    private Boolean opcMod;
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
@@ -101,7 +104,10 @@ public class PublicacionesEditor {
         veditar = false;
         veliminar = false;
         vdetalle = true;
-        vguardar = false;
+        vguardar = false;//opcMod=false;
+  //modificacion
+   //     opcInsertar = true;
+        
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
@@ -112,12 +118,20 @@ public class PublicacionesEditor {
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
+            // modificacion
+            //if(usua.getAccesoupdate() != 1){vdetalle=false;}
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
             vguardar = true;
             vdetalle = false;
         }
+        
+        if (!editando){opcMod=false;}
+        if (usua.getAccesoupdate()==1 && vinserta==false && opcMod==false){vguardar=false;}
+   //modificacion
+  //      if (vinserta == true){opcInsetar = false;}
+       // if (usua.getAccesoupdate() == 1 && vinserta==false){opcInsertar=false;}
     }
 
     @Log
@@ -146,7 +160,7 @@ public class PublicacionesEditor {
         publicacion = new Publicacion();
         editando = false;
         valfec_desde = "";
-        accesos();
+        accesos();//opcInsertar=true;
     }
 
     @Log
@@ -217,8 +231,13 @@ public class PublicacionesEditor {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde = formatoDeFecha.format(publicacion.getFecha());
         }
-        accesos();
+//modificacion
+        opcMod=true;
+        accesos();//opcInsertar=true;
+        opcMod=false;
         editando = true;
+        //
+        vguardar=true;
         return proIntelectualZone.getBody();
     }
 
@@ -230,10 +249,16 @@ public class PublicacionesEditor {
 //            valfec_desde = formatoDeFecha.format(publicacion.getFecha());
 //        }
 //        accesos();
+     //   opcInsertar= true;
         Object objeto = onActionFromEditar(publi);
         vdetalle = true;
         vguardar = false;
         editando = false;
+        if (vinserta){}
+        else{vinserta=false;}
+        //modificaciones
+     //   vinserta=false;
+        
         return objeto;
     }
 
