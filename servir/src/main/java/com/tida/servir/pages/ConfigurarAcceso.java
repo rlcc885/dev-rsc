@@ -57,10 +57,10 @@ public class ConfigurarAcceso extends GeneralPage {
         ca = new ConfiguracionAcceso();
     }
 
-    void onSelectedFromCancel() {
-        num = 3;
-        ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-    }
+//    void onSelectedFromCancel() {
+//        num = 3;
+//        ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+//    }
 
     void onSelectedFromSave() {
         num = 1;

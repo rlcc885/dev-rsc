@@ -9,9 +9,13 @@
     <div class="organismo_titulo">
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
-       
-    <h2>Migración / Fusión de Registros</h2>
-       
+
+        <div class="box-background-title">
+    <span class="box-title-01">
+        Migración/Fusión
+    </span>
+</div>
+<div id="panel-01" class="box" >       
         <form t:type="form" t:id="formOpciones" t:zone="EDestiZone">            
             <t:radiogroup t:id="cargo_presupuestado_PAP" t:value="migras" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)">
                 <t:if test="mostrarUO"> 
@@ -32,11 +36,12 @@
                         <div class="f-left">    
                             <label>Entidad/Sub Entidad</label>
                             <input t:type="TextField" t:id="entidad_den"
-                                        t:value="entidad_origen" t:disabled="true" style="width: 350px;"/>                            
-                        </div>
-                        <div class="f-left">
+                                        t:value="entidad_origen" t:disabled="true" style="width: 400px;"/>                            
+                        </div>                   
+                        <div class="f-left" style="position:relative; top:14px; left:-10px;">
                             <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
                         </div>
+       
                     </t:if>
                     <div class="f-left">
                         <label>Nivel Organizacional</label>
@@ -64,7 +69,7 @@
                         <input t:type="TextField" t:id="entidad_den_des"
                             t:value="entidad_destino" t:disabled="true" style="width: 400px;"/>                            
                     </div>
-                    <div class="f-left">
+                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
                         <input id="buscar2submit" type="submit" value="..." class="button f-right" onClick="javascript: mostrar();" />
                     </div>
                    </t:if>
@@ -85,57 +90,6 @@
                </fieldset>
             </form>
         </t:zone>
-            
-            <!--
-            <div class="f-wrap datosDestinos">
-                <t:EntidadSelect  t:id="entidades" t:entidad="entidadDestino"
-                    t:zone = "NivelDestinoZone" t:zoneName = "NivelDestinoZone"
-                    t:vistaCorta = "true"/>
-            </div>-->
-            <!--<div class="f-wrap">-->
-                <!--
-                    <div class="f-left">
-                        <t:zone t:id="NivelDestinoZone">
-                            <t:if test= "hayentidadDestino">
-                                <form t:type="form" t:id="formNivelUODestino" t:zone="UODestinoZone">
-                                        * Nivel Organizacional
-                                        <input t:type="Select" t:id="unidadorganica_nivel_destino"
-                                        onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                        t:value="nivelDestino" model="beanNivelDestino" t:zone="UODestinoZone"/>
-                                </form>
-                            </t:if>
-                        </t:zone>
-                    </div>-->
-                    <!--
-                    <div class="f-left">
-                        <t:zone t:id="UODestinoZone">
-                            <t:if test= "hayentidadDestino">
-
-                                <form t:type="form" t:id="formUODestino" t:zone ="UOChangeZone">
-                                        <t:if test = "hayNivelDestino">
-                                            * Unidad Orgánica Padre destino
-                                            <select t:type="select" t:id="select_unidadOrganicaDestino"
-                                            model="beanUOrganicasDestino" encoder="beanUOrganicasDestino" value="uoDestino"
-                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
-                                        </t:if>
-                                </form>
-                             </t:if>
-                        </t:zone>
-                    </div>-->
-                    <!--
-                    <div class="f-left">
-                        <t:zone t:id="UOChangeZone">
-                            <t:if test = "ActivoSubmit">
-                                <form t:type="form" t:id="formUOChange" t:zone ="UOChangeZone">
-                                    <input id="submit" type="submit" value="Cambiar UO a esta Entidad" class="button"/>
-                                </form>
-                                <form t:type="form" t:id="formUOFusionar" t:zone ="UOChangeZone">
-                                    <t:errors/>
-                                    <input id="submit" type="submit" value="Fusionar UO a esta Entidad" class="button"/>
-                                </form>
-                             </t:if>
-                        </t:zone>
-                    </div>-->
  
     <div t:type="zone" t:id="botonZone" > 
         <form t:type="form" t:id="formBotones" t:zone ="botonZone">
@@ -206,33 +160,10 @@
                 
              
     </div>
-         
-    <!--<script type="text/javascript">
-        var modal= document.getElementById('modal');
-        var shade= document.getElementById('shade');
-        function mostrar() {
-        modal.style.display=shade.style.display= 'block';
-        };
-        function ocultar() {
-        modal.style.display=shade.style.display= 'none';
-        };
-
-        // This code is a workaround for IE6's lack of support for the
-        // position: fixed style.
-        //
-        if (!('maxHeight' in document.body.style)) {
-        function modalsize() {
-        var top= document.documentElement.scrollTop;
-        var winsize= document.documentElement.offsetHeight;
-        var docsize= document.documentElement.scrollHeight;
-        shade.style.height= Math.max(winsize, docsize)+'px';
-        modal.style.top= top+Math.floor(winsize/3)+'px';
-        };
-        modal.style.position=shade.style.position= 'absolute';
-        window.onscroll=window.onresize= modalsize;
-        modalsize();
-        }
-    </script>-->
+    <br/>
+    <br/>
+    <br/>    
+</div>
     <script type="text/javascript">
         var modal= document.getElementById('modal');
         var shade= document.getElementById('shade');
