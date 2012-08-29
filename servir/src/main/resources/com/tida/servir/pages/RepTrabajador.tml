@@ -216,7 +216,7 @@
                                 <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                             </p:legajoCell>
                             <p:elegirCell>
-                                <input t:type="checkbox" t:id="checkTrabajador" value="persons.id" onclick="" />
+                                <input t:type="checkbox" t:id="checkTrabajador" value="false" onclick="" />
                             </p:elegirCell>
                         </t:grid>
     <!--                    </t:form>-->
