@@ -21,7 +21,7 @@ public class Curso implements Serializable {
 //    @ManyToOne(optional = false)    
     private String denominacion;     
     @NonVisual
-    private DatoAuxiliar tipoestudio;    
+    private DatoAuxiliar tipocurso;    
     @NonVisual
     private DatoAuxiliar centroestudio;
     private String otrocentroestudio;
@@ -56,12 +56,12 @@ public class Curso implements Serializable {
         this.denominacion = denominacion;
     }
     @ManyToOne
-    public DatoAuxiliar getTipoestudio() {
-        return tipoestudio;
+    public DatoAuxiliar getTipocurso() {
+        return tipocurso;
     }
 
-    public void setTipoestudio(DatoAuxiliar tipoestudio) {
-        this.tipoestudio = tipoestudio;
+    public void setTipocurso(DatoAuxiliar tipocurso) {
+        this.tipocurso = tipocurso;
     }
     
     @ManyToOne

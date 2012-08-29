@@ -27,7 +27,7 @@ public class LkBusquedaCursos implements Serializable {
     @NonVisual
     private long id;
     private String denominacion;
-    private String tipo_estudio;
+    private String tipo_curso;
     private String centro_estudio;
     private Boolean estado;
     private Boolean validado;
@@ -54,12 +54,12 @@ public class LkBusquedaCursos implements Serializable {
         this.denominacion = denominacion;
     }
     
-    public String getTipo_estudio() {
-        return tipo_estudio;
+    public String getTipo_curso() {
+        return tipo_curso;
     }
 
-    public void setTipo_estudio(String tipo_estudio) {
-        this.tipo_estudio = tipo_estudio;
+    public void setTipo_curso(String tipo_curso) {
+        this.tipo_curso = tipo_curso;
     }
     
     public String getCentro_estudio() {
