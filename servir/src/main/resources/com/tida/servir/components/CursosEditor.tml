@@ -39,7 +39,7 @@
                 <t:if test="${vformulario}">
                     <div class="f-wrap">
                         <div class="f-left">
-                            <label>* Tipo de Estudios</label>
+                            <label>* Tipo de Curso</label>
                             <input t:type="Select" t:id="tipoestudio" model="tipoestudios" 
                                        t:value="valtipoestudio" t:disabled="${vdetalle}" />
                         </div>
@@ -119,14 +119,14 @@
                 <div id = "tabla_cargo">
                     <t:grid source="listacur" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
                             row="listacurso" inPlace="true"> 
-                        <p:tipo_estudioCell>
+                        <p:tipo_cursoCell>
                             <t:if test="${listacurso.validado}">
-                                <label class="datofalse">${listacurso.tipo_estudio}</label>  
+                                <label class="datofalse">${listacurso.tipo_curso}</label>  
                             </t:if>
                             <t:if test="${listacurso.validado}" negate="true">
-                                <label class="datotrue">${listacurso.tipo_estudio}</label>  
+                                <label class="datotrue">${listacurso.tipo_curso}</label>  
                             </t:if>
-                        </p:tipo_estudioCell>                        
+                        </p:tipo_cursoCell>                        
                         <p:denominacionCell>
                             <t:if test="${listacurso.validado}">
                                 <label class="datofalse">${listacurso.denominacion}</label>  

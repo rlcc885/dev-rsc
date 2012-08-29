@@ -191,7 +191,7 @@ public class CursosEditor {
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoestudios() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOESTUDIO", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOCURSO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
@@ -247,7 +247,7 @@ public class CursosEditor {
         limpiar();
         cursos = c;
         mostrar();
-        vdetalle = true;
+        
         vfechahasta = true;
         votro = true;
         vbotones = false;
@@ -262,6 +262,7 @@ public class CursosEditor {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
         }
+        vdetalle = true;
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
     }
 
@@ -506,7 +507,7 @@ public class CursosEditor {
     @Log
     void mostrar() {
         valdenominacion = cursos.getDenominacion();
-        valtipoestudio = cursos.getTipoestudio();
+        valtipoestudio = cursos.getTipocurso();
         valcentroestudio = cursos.getCentroestudio();
         valotrocentro = cursos.getOtrocentroestudio();
         fecha_desde = cursos.getFechainicio();
@@ -519,7 +520,7 @@ public class CursosEditor {
     @Log
     void seteo() {
         cursos.setDenominacion(valdenominacion);
-        cursos.setTipoestudio(valtipoestudio);
+        cursos.setTipocurso(valtipoestudio);
         cursos.setCentroestudio(valcentroestudio);
         cursos.setOtrocentroestudio(valotrocentro);
         cursos.setFechainicio(fecha_desde);
