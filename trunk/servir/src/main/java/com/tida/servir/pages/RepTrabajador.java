@@ -5,11 +5,10 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.services.SelectIdModelFactory;
 import helpers.Helpers;
+import helpers.Reportes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -22,6 +21,7 @@ import org.apache.tapestry5.internal.services.PageRenderQueue;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.json.JSONObject;
+import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.PartialMarkupRenderer;
 import org.apache.tapestry5.services.PartialMarkupRendererFilter;
 import org.apache.tapestry5.services.Request;
@@ -437,18 +437,31 @@ public class RepTrabajador extends GeneralPage {
         });
         return new MultiZoneUpdate("busquedaB", busquedaB.getBody());
     }
-
+ 
+    @Inject
+    private Context context;
+    
+    @Component(id = "formGrilla")
+    private Form formGrilla;
+ 
     @Log
-    Object onSuccessFromFormGrilla() {
-        if (resetBusquedas) {
-            limpiarBusquedaB();
-            formulariobusquedaB.clearErrors();
-            resetBusquedas = false;
-
-            return new MultiZoneUpdate("busquedaB", busquedaB.getBody());
-        } else {
-            return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
-        }
+    StreamResponse onSuccessFromFormGrilla() {
+        Long userID = new Long(96);
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", userID);
+        StreamResponse obj = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+        return obj;
+    }
+    
+    @Log
+    StreamResponse onActionFromAgregarReporte(Long userID) {
+        System.out.println(userID);
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", userID);
+        StreamResponse obj = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+        return obj;
     }
     
     @Log
