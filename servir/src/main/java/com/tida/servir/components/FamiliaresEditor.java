@@ -308,16 +308,15 @@ public class FamiliaresEditor {
         if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
             envelope.setContents("Debe ingresar la fecha");
             return actualizar();
-        } else {
+        }else{
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
             session.saveOrUpdate(familiarActual);
             session.flush();
 
-            if (_usuario.getRolid() == 1) {
+            if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_FAMILIAR, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_FAMILIARES, familiarActual.getId());
             }
-
             if (familiarActual.getValidado() != null) {
                 if (familiarActual.getValidado() == true) {
                     String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + familiarActual.getTrabajador().getId() + "' and tipoevento_id='" + logger.MODIFICACION_FAMILIAR + "' and tabla_id='" + familiarActual.getId() + "' and estadoevento=0";
@@ -326,7 +325,6 @@ public class FamiliaresEditor {
                     session.flush();
                 }
             }
-
             editando = false;
             envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
             familiarActual = new Familiar();
@@ -334,7 +332,6 @@ public class FamiliaresEditor {
             valsexo = null;
 
             return actualizar();
-
         }
     }
 

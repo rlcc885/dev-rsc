@@ -1,0 +1,53 @@
+
+<html t:type="layout" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+       
+        
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+    </div>
+       
+
+<div class="box-background-title">
+    <span class="box-title-01">
+        Importar
+    </span>
+</div>
+<div id="panel-01" class="box" >
+    <fieldset>
+        <form t:type="form" t:id="primerform">
+            <div class="f-wrap">
+                <div class="f-left">
+                    <label>* Tipo Carga</label>
+                    <input  t:type="Select"
+                            t:id="tipo_carga"
+                            t:value="tipocarga" 
+                            t:model="literal:0=Carga Inicial de registros de Entidades/Sub Entidades,
+                            1=Carga masiva de información de Múltiples Entidades/ Sub Entidades,
+                            2=Carga masiva de información de una Entidad/Sub Entidad"/>                    
+                </div>
+                <div class="f-left">
+                    <label>*Ubicación Archivo</label>
+                    <input t:type="upload" t:id="file" value="file" t:size="50" />
+                </div>
+                <div class="f-left" style="margin-top:17px;">
+                    <input type="submit" value="Examinar" class="button"/>
+                </div>     
+                <div class="f-left">
+                    <label>* Tipo Proceso</label>
+                    <input  t:type="Select"
+                            t:id="tipo_proceso"
+                            t:value="tipoproceso" 
+                            t:model="literal:0=Solo Validación,
+                            1=Validación y Procesamiento"/>
+                </div>
+            </div>   
+        </form>
+    </fieldset>
+    
+</div>
+        
+</html>
