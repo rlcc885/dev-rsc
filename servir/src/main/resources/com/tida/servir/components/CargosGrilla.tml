@@ -16,6 +16,18 @@
          |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Baja</a>
         </p:accionesCell>
      </t:grid>
+     <fieldset>
+            <div t:type="zone" t:id="evaluacionesZone" >
+                    <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
+                         <div class="f-wrap">
+                            <div class="f-right">  
+                                <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
+                            </div>
+                        </div>
+                    </t:form>
+            </div>
+     </fieldset>
+    
 <!--    <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar Nuevo Cargo</a>-->
 </t:content>
 </html>
