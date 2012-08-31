@@ -11,6 +11,7 @@ import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
+import com.tida.servir.pages.Busqueda;
 import helpers.Constantes;
 import helpers.Reportes;
 import java.util.HashMap;
@@ -18,10 +19,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Context;
 import org.hibernate.Criteria;
@@ -65,8 +65,11 @@ public class CargosGrilla {
 
     @Inject
    private Context context;
+    
+    @InjectComponent
+    private Zone evaluacionesZone; 
    
-
+    private int elemento=0;
     
     public boolean getEvaluodesasignar() {
         return ca.getFec_fin() == null;
@@ -87,5 +90,17 @@ public class CargosGrilla {
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           return c.list();
           
+    }
+    
+    @Log
+    
+   Object  onSelectedFromCancel() {
+        if (_usuario.getRolid() == 1) {
+                return "TrabajadorLaboral";
+            } else {
+                return Busqueda.class;
+            }
+        
+        
     }
 }
