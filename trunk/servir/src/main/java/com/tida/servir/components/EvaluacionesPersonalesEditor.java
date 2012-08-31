@@ -156,8 +156,10 @@ public class EvaluacionesPersonalesEditor {
     @Log
     public List<EvaluacionPersonal> getListadoEvaluciones() {
         Criteria c = session.createCriteria(EvaluacionPersonal.class);
+        
         System.out.println("aaaaaaaaaaaaaa"+cargoasignado);
         c.add(Restrictions.eq("cargoasignado",cargoasignado));
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return c.list();
     }
     
@@ -213,6 +215,11 @@ public class EvaluacionesPersonalesEditor {
          
     }
     
+//  void validar_campos()
+//  {
+//    if (valfec_desde == null){}
+//    if (valfec_hasta == null){}
+//  }
     @Log
     @CommitAfter    
     Object onSuccessFromFormularioevaluaciones() {

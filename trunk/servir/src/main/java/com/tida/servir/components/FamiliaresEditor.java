@@ -305,6 +305,14 @@ public class FamiliaresEditor {
             }
         }
 
+        if(familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getEstadoCivil().getCodigo()==1)
+        {
+            envelope.setContents("El estado civil de un Conyuge no puede ser Soltero/a");
+            return actualizar();
+        }
+
+        
+        
         if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
             envelope.setContents("Debe ingresar la fecha");
             return actualizar();
