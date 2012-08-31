@@ -103,14 +103,16 @@
                                 <t:if test="${veditar}" negate="true">
                                     <t:actionlink t:id="detalle" zone="listaCargo" context="lkcargo">Detalle</t:actionlink>
                                 </t:if>
-                                <t:if test="${veliminar}">    
-                                    | 
-                                    <a t:type="eventLink" t:event="borrarDato" t:context="lkcargo"
-                                       t:zone="listaCargo" href="#">
-                                        <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
-                                            Eliminar
-                                        </span> 
-                                    </a>
+                                <t:if test="${veliminar}">  
+                                    <t:if test="esBorrable">
+                                        | 
+                                        <a t:type="eventLink" t:event="borrarDato" t:context="lkcargo"
+                                        t:zone="listaCargo" href="#">
+                                            <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                                Eliminar
+                                            </span> 
+                                        </a>
+                                     </t:if>
                                 </t:if>
                             </p:accionesCell>
                         </t:grid>
