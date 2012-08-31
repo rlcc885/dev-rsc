@@ -412,7 +412,7 @@ public class ConstanciasDocumentalesEditor {
         session.flush();
         envelope.setContents("Documento del Trabajador Eliminado");
         
-        return new MultiZoneUpdate("tercer", tercerZone.getBody()).
+        return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
                 add("mensajesZone", mensajesZone.getBody()).
                 add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());
     }

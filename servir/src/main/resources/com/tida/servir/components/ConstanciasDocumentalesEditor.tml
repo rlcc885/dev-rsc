@@ -91,28 +91,28 @@
                 </t:if>
                 <br/>
                 <div id = "tabla_cargo">
-                <t:grid source="listadoDocumentos" rowsPerPage="10" t:add="_Categoria,_TipoDocumento,_Obligatorio,_Entrego,Acciones" pagerPosition="bottom"
-                row="documento" include="fecha" exclude="categoriaconstancia,tipoconstancia,obligatorio,entrego" inPlace="true" >                        
+                <t:grid source="listadoDocumentos" rowsPerPage="10"  pagerPosition="bottom"   row="documento" include="fecha" 
+                 exclude="categoriaconstancia,tipoconstancia,obligatorio,entrego" inPlace="true" t:add="Categoria,TipoDocumento,EsObligatorio,Entregado,Acciones">                        
                     <t:parameter name="empty">
                     <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    <p:_categoriaCell>
+                    <p:categoriaCell>
                         <t:if test="${documento.entrego}">  
                             <label class="datofalse">${documento.categoriaconstancia.valor}</label>  
                         </t:if>
                         <t:if test="${documento.entrego}" negate="true">  
                             <label class="datotrue">${documento.categoriaconstancia.valor}</label>  
                         </t:if>
-                    </p:_categoriaCell>
-                    <p:_tipoDocumentoCell> 
+                    </p:categoriaCell>
+                    <p:tipoDocumentoCell> 
                         <t:if test="${documento.entrego}">  
                             <label class="datofalse">${documento.tipoconstancia.valor}</label>  
                         </t:if>
                         <t:if test="${documento.entrego}" negate="true">  
                             <label class="datotrue">${documento.tipoconstancia.valor}</label>  
                         </t:if>
-                    </p:_tipoDocumentoCell>
-                    <p:_obligatorioCell>
+                    </p:tipoDocumentoCell>
+                    <p:esObligatorioCell>
                     <t:if test="${documento.entrego}" >
                            <t:if test="${documento.obligatorio}">
                                <label class="datofalse">SI</label>  
@@ -129,15 +129,15 @@
                                <label class="datotrue">NO</label>  
                            </t:if> 
                     </t:if>
-                    </p:_obligatorioCell>                    
-                    <p:_entregoCell>
+                    </p:esObligatorioCell>                    
+                    <p:entregadoCell>
                            <t:if test="${documento.entrego}">
                                <label class="datofalse">SI</label>  
                            </t:if>
                             <t:if test="${documento.entrego}" negate="true">
                                <label class="datotrue">NO</label>  
                            </t:if> 
-                    </p:_entregoCell>                       
+                    </p:entregadoCell>                       
                         <p:accionesCell>
                             <t:if test="${veditar}">
                                 <t:if test="${documento.entrego}" negate="true" >
