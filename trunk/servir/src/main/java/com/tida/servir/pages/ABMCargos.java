@@ -271,7 +271,7 @@ public class ABMCargos extends GeneralPage {
 
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicas() {
-         Criteria c;
+        Criteria c;
         c = session.createCriteria(LkBusquedaUnidad.class);
         c.add(Restrictions.eq("entidadId", entidadUE.getId()));
         c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
@@ -327,7 +327,7 @@ public class ABMCargos extends GeneralPage {
             if (bregimengruponivel.getNivelRemunerativo() != null && !bregimengruponivel.getNivelRemunerativo().equals("")) {
                 consulta += " AND S1.NIVELREMUNERATIVO_ID='" + bregimengruponivel.getNivelRemunerativo().getId() + "'";
             }
-        }
+        }          
         consulta += " ORDER BY(DENOMINACION)";
         Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
         return query.list();
@@ -479,12 +479,46 @@ public class ABMCargos extends GeneralPage {
             dato.setEstado(Cargoxunidad.ESTADO_BAJA);
             session.saveOrUpdate(dato);
             session.flush();
+            
 //            new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             envelope.setContents("Cargo Eliminado");
         }
         onReset();
 //        onSelectedFromReset();
         return zonasDatos();// La/a zona a actualizar
+    }
+    
+    
+     @Log
+    public boolean getEsBorrable() {
+        /*
+         * Buscamos; Cargos
+//         */
+//        Criteria c;
+//        c = session.createCriteria(CargoAsignado.class);
+//        c.add(Restrictions.eq("trabajador", usua.getAccesoreport()));
+//        c.add(Restrictions.ne("estado", Cargoxunidad.ESTADO_BAJA));
+        // no quiero las que estÃ©n en baja.
+        
+        
+        Criteria c;
+        c = session.createCriteria(CargoAsignado.class);
+        c.add(Restrictions.eq("cargoxunidad", lkcargo));
+        c.add(Restrictions.like("estado", Cargoxunidad.ESTADO_ALTA));
+        
+        if (c.list().size() > 0) {
+            return false;
+        }
+//        Criteria p;
+//        p = session.createCriteria(LkBusquedaUnidad.class);
+//        p.add(Restrictions.eq("unidadorganicaId", uo.getId()));
+//        p.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA));
+//        // no quiero las que estÃ©n en baja.
+//        if (p.list().size() > 0) {
+//            return false;
+//        }
+
+        return true;
     }
 
     /*
