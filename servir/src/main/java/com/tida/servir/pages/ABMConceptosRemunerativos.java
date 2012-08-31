@@ -82,6 +82,10 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @Persist
     @Property
     private Boolean veditar;
+    
+    @Persist
+    @Property
+    private String sustento_legal;
 
     @SetupRender
     public void inicio() {        
@@ -136,8 +140,10 @@ public class ABMConceptosRemunerativos extends GeneralPage {
 //        if (usua.getAccesoreport() == 0) {
 //            vformulario = false;
 //        }
+        formmensajes.clearErrors();
         elemento = 2;
-        conceptoRemunerativo=new ConceptoRemunerativo();
+        conceptoRemunerativo = new ConceptoRemunerativo();
+//        sustento_legal = null;
     }
     
     void onSelectedFromCancel() {
@@ -162,6 +168,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioConceptoRemunerativo() {
+        formmensajes.clearErrors();
         if(elemento==2 ){
         }
         else if(elemento==3){
@@ -169,6 +176,14 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         else{
             formmensajes.clearErrors();
             if(!validando()){
+                return zonas();
+            }
+            if(conceptoRemunerativo.getDescripcion()== null){
+                formmensajes.recordError("Debe Ingresar una Descripcion");
+                return zonas();
+            }
+            if(conceptoRemunerativo.getSustento_legal() == null){
+                formmensajes.recordError("Debe Ingresar un Sustento Legal");
                 return zonas();
             }
             conceptoRemunerativo.setEntidad_id(_oi.getId());
