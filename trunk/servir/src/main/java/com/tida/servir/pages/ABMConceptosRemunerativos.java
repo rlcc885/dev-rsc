@@ -90,7 +90,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @SetupRender
     public void inicio() {        
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_login", loggedUser.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         vbotones = false;

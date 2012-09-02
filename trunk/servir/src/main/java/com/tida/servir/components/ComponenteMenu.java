@@ -53,7 +53,7 @@ public class ComponenteMenu {
     
     public List getOpcionesMenu() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
-        query.setParameter("in_nrodocumento", usuarioTrabajador.getNrodocumento());
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_menuid", opcion.getId());
         query.setParameter("in_pagename", resources.getPageName());
 
@@ -64,7 +64,7 @@ public class ComponenteMenu {
     
     public List getOpcionesMenuPrincipal() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
-        query.setParameter("in_nrodocumento", usuarioTrabajador.getNrodocumento());
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_menuid", 0);
         query.setParameter("in_pagename", resources.getPageName());
 

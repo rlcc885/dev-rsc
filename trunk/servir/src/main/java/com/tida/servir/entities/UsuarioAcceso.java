@@ -8,23 +8,15 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.*;
 
-/*
- * @NamedNativeQueries({ @NamedNativeQuery( name = "callSpUsuarioAcceso",
- * query="select
- * trabajador_id,nrodocumento,id,descmenu,nivel,menu_id,accesoselect,accesoupdate,accesodelete,accesoreport
- * from USUARIOACCESO where nrodocumento=:in_nrodocumento and nivel=:in_nivel",
- * resultClass = UsuarioAcceso.class, ) })
- */
-
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpUsuarioAcceso",
-    query = "CALL SP_USUARIOACCESO(?,:in_nrodocumento,:in_menuid,:in_pagename)",
+    query = "CALL SP_USUARIOACCESO(?,:in_login,:in_menuid,:in_pagename)",
     resultClass = UsuarioAcceso.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")
     }),
     @NamedNativeQuery(name = "callSpUsuarioAccesoPagina",
-    query = "CALL SP_USUARIOACCESOPAGINA(?,:in_nrodocumento,:in_pagename)",
+    query = "CALL SP_USUARIOACCESOPAGINA(?,:in_login,:in_pagename)",
     resultClass = UsuarioAcceso.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")

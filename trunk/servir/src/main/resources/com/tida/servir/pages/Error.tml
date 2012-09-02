@@ -1,0 +1,6 @@
+<html t:type="layoutlogin" title="Error"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <p>No existe conexión con la Base de Datos. Verifique la configuración del archivo hibernate.cfg.xml</p>
+</html>

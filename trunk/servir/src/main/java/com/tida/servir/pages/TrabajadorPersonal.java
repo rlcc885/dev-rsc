@@ -51,6 +51,9 @@ public class TrabajadorPersonal extends GeneralPage {
     @Property
     @SessionState
     private Usuario _usuario;
+    @SessionState
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
     @Inject
     private PropertyAccess _access;
     @PageActivationContext
@@ -96,7 +99,7 @@ public class TrabajadorPersonal extends GeneralPage {
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         if (result.isEmpty()) {

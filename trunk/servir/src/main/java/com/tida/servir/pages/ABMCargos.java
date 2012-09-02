@@ -167,7 +167,7 @@ public class ABMCargos extends GeneralPage {
         //RESTRICCION
         vdetalle2 = false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_login", loggedUser.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         if (result.isEmpty()) {

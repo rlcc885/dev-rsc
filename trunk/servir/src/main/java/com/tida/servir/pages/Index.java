@@ -76,14 +76,45 @@ public class Index {
     @Property
     private Zone loginZone;
 
+    @Log
+    Object onActivate() {
+        try {
+            if (!session.isConnected()) {
+                return "Wizard";
+            }
+        } catch (Throwable ex) {
+            return "Error";
+        }
+
+        clearCacheData();
+        
+        // Validamos si el aplicativo está siendo cargado desde un punto OffLine
+        Criteria criteriobusqueda;
+        criteriobusqueda = session.createCriteria(UsuarioTrabajador.class);
+        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
+
+        if (criteriobusqueda.list().isEmpty()) {
+            return "Wizard";
+        }
+
+        return null;
+    }
+
+    @Log
+    void setupRender() {
+    }
+
+    @Log
     public String getOlvidoClave() {
         return mensajes.get("olvidoClave");
     }
 
+    @Log
     public String getNuevoUsuario() {
         return mensajes.get("nuevoUsuario");
     }
 
+    @Log
     public GenericSelectModel<Entidad> getBeanOrganismos() {
         List<Entidad> list;
         Criteria c;
@@ -97,8 +128,10 @@ public class Index {
         return _beanOrganismos;
     }
 
+    @Log
     @CommitAfter
     Object onSuccessFromFormulariologin() {
+        Criteria criteriobusqueda;
         Logger logger = new Logger();
         configuracionAcceso = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
 
@@ -113,7 +146,7 @@ public class Index {
         }
 
         usuarioTrabajador = (UsuarioTrabajador) c.get(0);
-        
+
         // Si es un usuario NO trabajador       
         if (usuarioTrabajador.getEstado() == 2) { // Si esta inactivo el usuario
             logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(), Logger.LOGIN_MOTIVO_RECHAZO_USERLOCKED, 0);
@@ -127,9 +160,9 @@ public class Index {
             return loginZone.getBody();
         }
 
-        Criteria cq = session.createCriteria(Usuario.class);
-        cq.add(Restrictions.eq("id", usuarioTrabajador.getId()));
-        usuario = (Usuario) cq.list().get(0); // Guardamos la sesión
+        criteriobusqueda = session.createCriteria(Usuario.class);
+        criteriobusqueda.add(Restrictions.eq("id", usuarioTrabajador.getId()));
+        usuario = (Usuario) criteriobusqueda.list().get(0); // Guardamos la sesión
 
         ///*******
         String clave2 = clave;
@@ -177,6 +210,7 @@ public class Index {
         return Permisos.paginaInicial(usuario);
     }
 
+    @Log
     private void clearCacheData() {
         org.apache.tapestry5.services.Session sessionService = request.getSession(false);
         if (sessionService != null) {
@@ -193,45 +227,7 @@ public class Index {
         }
     }
 
-    /*
-     * Object onSuccessFromFormularioOrganismos() { // el match del eue ya lo
-     * hace desde el tml return Permisos.paginaInicial(usuario); }
-     */
-    void onActivate() {
-        clearCacheData();
-        /*
-         *
-         * List<String> paginas; paginas.add("ABMUsuario");
-         * paginas.add("ABMDatoAuxiliar"); paginas.add("AMOrganismoInformante");
-         * paginas.add("AMUnidadEjecutora"); paginas.add("TrabajadorNuevo");
-         * paginas.add("AMOrgano"); paginas.add("AMUnidadOrganica");
-         * paginas.add("ABMCargos"); paginas.add("Busqueda");
-         * paginas.add("CambiarClave");
-         *
-         * paginas.add("ABMConceptosRemunerativos");
-         * paginas.add("AsignarNuevoCargo");
-         * paginas.add("CargosAsignadosModificar"); paginas.add("CreateCargo");
-         * paginas.add("DesasignarCargo"); paginas.add("TrabajadorModificar");
-         * paginas.add("TrabajadorNuevo");
-         * paginas.add("TransferenciaMasivaTrabajadores"); paginas.add("batch");
-         *
-         * paginas = componentClassResolver.getPageNames();
-         *
-         *
-         * for(String page: paginas) {
-         *
-         * System.out.println("--------------------Pagina: "+ page); Page clase
-         * = pl.loadPage(page, Locale.ENGLISH);
-         * System.out.println("--------------------Clase Pagina cargada: "+
-         * clase); clase.discardPersistentFieldChanges();
-         *
-         * }
-         * // Todos pueden cambiar su clave
-         *
-         */
-
-    }
-
+    @Log
     public String getIp_Adress() {
         //String ip_Adress = "";
         String ip_Adress = requestGlobal.getHTTPServletRequest().getHeader("X-Forwarded-For");
@@ -241,15 +237,12 @@ public class Index {
             return requestGlobal.getHTTPServletRequest().getRemoteAddr();
         }
         /*
-         try {
-         ip_Adress = requestGlobal.getHTTPServletRequest().getRemoteAddr();
-         } catch (Exception e) {
-         //error
-         }
+         * try { ip_Adress =
+         * requestGlobal.getHTTPServletRequest().getRemoteAddr(); } catch
+         * (Exception e) { //error }
          */
         //return ip_Adress;
     }
-
 //    StreamResponse onActionFromReturnStreamResponse() {
 //        return new StreamResponse() {
 //            InputStream inputStream;
