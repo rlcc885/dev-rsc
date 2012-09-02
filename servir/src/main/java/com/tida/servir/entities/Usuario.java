@@ -26,7 +26,8 @@ public class Usuario implements Serializable {
 //       @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //       @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_USUARIO_ID_SEQ", allocationSize = 1)
     @NonVisual
     private Long id;
 //	@PrimaryKeyJoinColumn

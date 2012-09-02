@@ -172,7 +172,7 @@ public class EntidadEditor extends GeneralPage {
     private void inicio() {
         veditar=true;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento",usuarioTrabajador.getNrodocumento());
+        query.setParameter("in_login",usuarioTrabajador.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();        
         if(result.isEmpty()){

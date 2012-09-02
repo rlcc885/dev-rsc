@@ -5,19 +5,10 @@ package com.tida.servir.entities;
  * @author Jurguen Zambrano
  */
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
-
-/*
- * @NamedNativeQueries({ @NamedNativeQuery( name = "callSpUsuarioAcceso",
- * query="select
- * trabajador_id,nrodocumento,id,descmenu,nivel,menu_id,accesoselect,accesoupdate,accesodelete,accesoreport
- * from USUARIOACCESO where nrodocumento=:in_nrodocumento and nivel=:in_nivel",
- * resultClass = UsuarioAcceso.class, ) })
- */
-     
+    
  @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpEventoAcceso",
     query = "CALL SP_EVENTOACCESO(?,:in_rol_id,:in_tipoevento_id,:in_perfil_id,:in_entidad_id)",

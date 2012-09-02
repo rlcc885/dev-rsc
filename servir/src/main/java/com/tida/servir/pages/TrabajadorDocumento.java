@@ -83,7 +83,7 @@ public class TrabajadorDocumento  extends GeneralPage
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento",_usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_login",_usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();        
         if(result.isEmpty()){

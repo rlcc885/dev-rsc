@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.tida.servir.base;
 
 import com.tida.servir.entities.Usuario;
@@ -11,34 +10,33 @@ import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.SessionState;
 
 /**
- * Página general de la que heredan las otras. Para manejar excepciones de session, etc
+ * Página general de la que heredan las otras. Para manejar excepciones de
+ * session, etc
  *
  * @author ale
  */
 public class GeneralPage {
-;
-        @SessionState
-        private Usuario _loggedUser;
-        private boolean _loggedUserExists;
 
-        @InjectPage
-        private SesionTimeout _sesionTimeout;
+    @SessionState
+    private Usuario _loggedUser;
+    private boolean _loggedUserExists;
+    @InjectPage
+    private SesionTimeout _sesionTimeout;
 
-        Object onActivate() {
+    Object onActivate() {
 
-                if (!isLoggedUserExists()) {
-                        return _sesionTimeout;
-                }
-
-                return null;
+        if (!isLoggedUserExists()) {
+            return _sesionTimeout;
         }
 
-        public Usuario getLoggedUser() {
-                return _loggedUser;
-        }
+        return null;
+    }
 
-        public boolean isLoggedUserExists() {
-                return _loggedUserExists;
-        }
+    public Usuario getLoggedUser() {
+        return _loggedUser;
+    }
 
- }
+    public boolean isLoggedUserExists() {
+        return _loggedUserExists;
+    }
+}

@@ -45,22 +45,15 @@ public class Busqueda extends GeneralPage {
     // Mensajes a mostrar entre paginas. Sólo por única vez
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;
-
-    @Log
-    public String getMensajes() {
-        return mensajes;
-    }
-
-    @Log
-    public void setMensajes(String mensajes) {
-        this.mensajes = mensajes;
-    }
     @Property
     @SessionState
     private Entidad _entidadUE;
-    @Property
+//    @Property
+//    @SessionState
+//    private Usuario _usuario;
     @SessionState
-    private Usuario _usuario;
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
     @InjectPage
     private TrabajadorNuevo trabajadorNuevo;
     @Persist
@@ -214,16 +207,26 @@ public class Busqueda extends GeneralPage {
         fecnacimientomayora = "";
 
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", _usuario.getTrabajador().getNroDocumento());
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
         } else {
             usu = (UsuarioAcceso) result.get(0);
-            vselect = (usu.getAccesoselect() != 0);           
+            vselect = (usu.getAccesoselect() != 0);
 //            System.out.println("Eliminar1" + usu.getAccesodelete() + usu.getAccesoreport() + usu.getAccesoupdate());
         }
+    }
+
+    @Log
+    public String getMensajes() {
+        return mensajes;
+    }
+
+    @Log
+    public void setMensajes(String mensajes) {
+        this.mensajes = mensajes;
     }
 
     @Log
@@ -334,11 +337,11 @@ public class Busqueda extends GeneralPage {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha;
-        if (fecnacimientomayora==null){
-            fecnacimientomayora="";
+        if (fecnacimientomayora == null) {
+            fecnacimientomayora = "";
         }
-        if (fecnacimientomenora==null){
-            fecnacimientomenora="";
+        if (fecnacimientomenora == null) {
+            fecnacimientomenora = "";
         }
         if (!fecnacimientomayora.equals("")) {
             fecha = dateFormat.parse(fecnacimientomayora);
@@ -348,12 +351,12 @@ public class Busqueda extends GeneralPage {
             fecha = dateFormat.parse(fecnacimientomenora);
             criterio.add(Restrictions.le("fechanacimiento", fecha));
         }
-        
-        if (fechaingresode==null){
-            fechaingresode="";
+
+        if (fechaingresode == null) {
+            fechaingresode = "";
         }
-        if (fechaingresoa==null){
-            fechaingresoa="";
+        if (fechaingresoa == null) {
+            fechaingresoa = "";
         }
         if (!fechaingresode.equals("")) {
             fecha = dateFormat.parse(fechaingresode);
@@ -521,10 +524,12 @@ public class Busqueda extends GeneralPage {
     private PageRenderQueue _queue;
     @Component(id = "fechaingresodesde")
     private TextField fechaingresodesde;
+
     MultiZoneUpdate onHello() {
         _queue.addPartialMarkupRendererFilter(new PartialMarkupRendererFilter() {
+
             public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
-                _support.addScript("jQuery('#%s').datepick({dateFormat: 'dd/mm/yyyy'});",fechaingresodesde.getClientId());
+                _support.addScript("jQuery('#%s').datepick({dateFormat: 'dd/mm/yyyy'});", fechaingresodesde.getClientId());
                 renderer.renderMarkup(writer, reply);
             }
         });

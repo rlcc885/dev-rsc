@@ -1,0 +1,204 @@
+
+<html t:type="layoutlogin" title="Sistema SERVIR"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    <t:zone t:id="wizardZone">
+        <h2>Configuración Sistema OffLine ${paso}/2</h2>
+        <div class = "wizard">
+            <t:if test="${paso01}">
+                <h3>Registro de Entidad</h3>
+                <div class="box">
+                    <t:form t:id="inputEntidad" zone="wizardZone">
+                        <fieldset>
+                            <legend> Datos </legend>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="NivelGobierno"/>
+                                    <select t:type="Select" t:id="NivelGobierno" t:value="entidadUE.nivelgobierno" model="NivelGobierno" 
+                                            t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" t:style="width:120px;" />                     
+                                </div>
+                                <t:zone t:id="zoneOrganizacion">
+                                    <div class="f-left"> 
+                                        <t:label for="organizacionEdicion"/>
+                                        <select t:type="Select" t:id="organizacionEdicion" t:value="entidadUE.organizacionestado" model="OrganizacionEstadoEdicion" 
+                                                t:zone="zoneOrganizacion" t:validate="required" t:blankOption="ALWAYS" />
+                                    </div>
+                                </t:zone>
+                                <t:zone t:id="zoneDatos" t:update="show">
+                                    <t:if test="bMuestraSectorEdicion">
+                                        <div class="f-left"> 
+                                            <t:label for="sectorgobierno"/>
+                                            <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno"
+                                                   model="SectorGobierno" t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" />
+                                        </div>
+                                        <div class="f-left"> 
+                                            <t:label for="tipoorganismo"/>
+                                            <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
+                                                   model="TipoOrganismo" t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" t:style="width:335px;" />
+                                        </div>
+                                    </t:if>
+                                </t:zone>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for ="denominacionedit"/>
+                                    <input t:type="TextField" t:id="denominacionedit"
+                                           t:value="entidadUE.denominacion" t:validate="required, maxlength=255" size="85" />
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="siglaedit"/>
+                                    <input t:type="TextField" t:id="siglaedit"
+                                           t:value="entidadUE.sigla" t:validate="maxlength=20" size="12"  />
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="rucedit"/>
+                                    <input t:type="TextField" t:id="rucedit"
+                                           t:value="entidadUE.ruc" t:validate="required,regexp"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="cueedit"/>
+                                    <input t:type="TextField" t:id="cueedit"
+                                           t:value="entidadUE.cue_entidad" t:validate="required,maxlength=12" size="14" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend> Ubicación </legend>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="tipovia"/>
+                                    <input t:type="Select" t:id="tipovia" t:value="entidadUE.tipovia" 
+                                           model="TipoVia" t:blankOption="ALWAYS"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="direccionedit"/>
+                                    <input t:type="TextField" t:id="direccionedit" t:value="entidadUE.descvia" t:style="width: 500px;"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="tipozona"/>
+                                    <input t:type="Select" t:id="tipozona" t:value="entidadUE.tipozona" 
+                                           model="TipoZona" t:blankOption="ALWAYS"/>
+                                </div> 
+                                <div class="f-left">
+                                    <t:label for="desczona"/>
+                                    <input t:type="TextField" t:id="desczona" t:value="entidadUE.descZona" t:style="width: 500px;"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left" id="ubigeo_entidadUE"> 
+                                    <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="wizardZone" t:zoneName="wizardZone"/>
+                                </div>
+                            </div>               
+                        </fieldset>
+                        <fieldset>
+                            <legend> Otros Datos </legend>
+                            <div class="f-wrap">
+                                <div class="f-left" style="width: 30%;">
+                                    <t:label for="emailinstitucional"/>
+                                    <input t:type="TextField" t:id="emailinstitucional" t:value="entidadUE.emailInstitucional" style="width: 98%;"/>
+                                </div>
+                                <div class="f-left" style="width: 30%;">
+                                    <t:label for="urlentidad"/>
+                                    <input t:type="TextField" t:id="urlentidad" t:value="entidadUE.urlEntidad" style="width: 98%;"/>
+                                </div>
+                                <div class="f-left" style="width: 30%;">
+                                    <t:label for="telefonoEntidad"/>
+                                    <input t:type="TextField" t:id="telefonoEntidad" t:value="entidadUE.telefonoEntidad" style="width: 98%;"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="f-wrap">                    
+                            <input t:type="Submit" t:id="guardarentidad" value="Ir al paso 2" class="button f-right"/>
+                        </div>
+                    </t:form>
+                    <div t:type="zone" t:id="mensajesZone" >
+                        <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+                            <t:envelope t:id="envelope"/>
+                            <t:errors t:id="errores"/>
+                        </t:form>
+                    </div>
+                </div>
+            </t:if>
+            <t:if test="${paso02}">
+                <h3>Creación de usuario</h3>
+                <div class="box">
+<!--                    <t:form t:id="formmensaje">
+                        <t:envelope t:id="envelope"/>
+                        <t:errors/>
+                    </t:form>-->
+                    <t:form t:id="inputUsuario" t:zone="wizardZone">
+                        <fieldset>
+                            <legend> Datos de la Cuenta </legend>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="loginedit" />
+                                    <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
+                                           t:validate="maxLength=50,minLength=4,required"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="claveedit" />
+                                    <input t:type="PasswordField" t:id="claveedit" t:value="usuariotrabajadoredit.md5clave" t:size="32" 
+                                           t:validate="maxLength=50,required"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend> Datos Personales </legend>
+                            <t:errors/>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="nombresedit" />
+                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32"  t:validate="required"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoPaternoedit" />
+                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:validate="required"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="apellidoMaternoedit" />
+                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:validate="required"/>
+                                </div>
+                            </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    <t:label for="documentoidentidadedit" />
+                                    <select t:type="Select" t:id="documentoidentidadedit" t:value="documentoIdentidadEdit" t:model="documentoIdentidad" 
+                                            t:validate="required"
+                                            t:style="width: 183px;"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="nrodocumentoedit"/>
+                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
+                                           t:size="32"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="emailLaboralEdit" />
+                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:validate="required,regexp"/>
+                                </div>
+                                <div class="f-left">
+                                    <t:label for="telefonoEdit" />
+                                    <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxLength=20,minLength=1" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="actions">
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                            <t:eventLink t:event="cancel" href="#" class="button f-right" t:zone="wizardZone">
+                                <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                    Anterior
+                                </span> 
+                            </t:eventLink>
+                        </div>
+                    </t:form>
+                </div>
+            </t:if>
+        </div>
+    </t:zone>
+</html>

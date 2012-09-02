@@ -156,7 +156,8 @@ public class Entidad implements Serializable {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_ENTIDAD_ID_SEQ", allocationSize = 1)
     public long getId() {
         return id;
     }

@@ -158,7 +158,7 @@ public class AMUnidadOrganica extends GeneralPage {
     //@SetupRender
     String SetupRender() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_nrodocumento", loggedUser.getTrabajador().getNroDocumento());
+        query.setParameter("in_login", loggedUser.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         // Inicializamos las variables utilizadas

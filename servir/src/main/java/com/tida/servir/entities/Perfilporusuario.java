@@ -5,7 +5,6 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.*;
 
 /**
