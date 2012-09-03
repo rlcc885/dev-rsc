@@ -173,7 +173,7 @@
                             <select t:type="Select" t:id="gruposanguineo" t:value="actual.gruposanguineo" model="gruposanguineos" t:disabled="${vgruposanguineo}" t:style="width:100px;"/>
                         </div>    
                         <div class="f-left">                                
-                            <label>Nombre de EPS</label>   
+                            <label>¿Tiene EPS?</label>   
                             <t:radiogroup t:id="tiene_eps" t:value="actual.eps">
                                     <t:radio t:id="o1" t:value="true" t:disabled="${votros}"/> Si 
                                     <t:radio t:id="o2" t:value="false" t:disabled="${votros}"/> No
