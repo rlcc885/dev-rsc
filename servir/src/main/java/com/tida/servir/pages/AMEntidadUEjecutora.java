@@ -253,6 +253,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private Boolean vformulario;
     @Persist
     @Property
+    private Boolean vval_essub;
+    @Persist
+    @Property
     private Boolean vbotones;
     @Persist
     @Property
@@ -302,6 +305,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vdetalle = false;
         editando = false;
         opcion_limpiar = false;
+//        vval_essub=true;
         //validacion de alerta
         if (entidadalerta != null) {
             entidadUE = entidadalerta;
@@ -766,13 +770,20 @@ public class AMEntidadUEjecutora extends GeneralPage {
         
       System.out.println("*********** AME : ON EDITAR SELECCION");
         entidadUE = entidad;
+
         editando = true;
         //**********
         ruc_anterior = entidad.getRuc();
         System.out.println("*********** AME : RUC"+ ruc_anterior);
         //seteo();
         vformulario = true;
-        vdetalle = false;
+         if (entidadUE.getEsSubEntidad()) {
+            bessubentidad = true;
+            entidad_origen = entidadUE.getEntidad().getDenominacion().toString();
+        } else {
+            bessubentidad = false;
+        }
+//         entidad_origen = entidadUE.getEntidad().toString();
         vbotones = true;
         opcion_limpiar = true;
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody());
@@ -1016,6 +1027,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        c.add(Restrictions.eq("entidad_id",entidadUE.getId()));
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
