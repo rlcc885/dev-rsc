@@ -53,7 +53,7 @@ public class EvaluacionesPersonalesEditor {
     private Zone mensajesEZone;  
        
     @InjectComponent
-    private Zone evaluacionesZone;
+    private Zone evaluacionesZone2;
     
     private int elemento=0;
  
@@ -184,6 +184,7 @@ public class EvaluacionesPersonalesEditor {
     }
     
     void onSelectedFromReset() {
+        System.out.println("seleccion RESETX");
         elemento=2;        
         if (vdetalle) {
             vformulario = false;
@@ -231,7 +232,7 @@ public class EvaluacionesPersonalesEditor {
             }
         }
         else if(elemento==2){
-            
+
         }else{          
         
             formulariomensajese.clearErrors();
@@ -246,7 +247,7 @@ public class EvaluacionesPersonalesEditor {
                   formulariomensajese.recordError("Debe ingresar una fecha de Ingreso");  
                   return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
-                    .add("evaluacionesZone", evaluacionesZone.getBody());
+                    .add("evaluacionesZone2", evaluacionesZone2.getBody());
             }   
           
             if(valfec_hasta!=null){
@@ -260,7 +261,7 @@ public class EvaluacionesPersonalesEditor {
                   formulariomensajese.recordError("Debe ingresar una fecha de Egreso");  
                   return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
-                    .add("evaluacionesZone", evaluacionesZone.getBody());
+                    .add("evaluacionesZone2", evaluacionesZone2.getBody());
             } 
             
             evaluacion.setFec_desde(fecha_desde);
@@ -287,7 +288,7 @@ public class EvaluacionesPersonalesEditor {
         }
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                 .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
-                .add("evaluacionesZone", evaluacionesZone.getBody());
+                .add("evaluacionesZone2", evaluacionesZone2.getBody());
     }
     
     @Log
@@ -307,7 +308,7 @@ public class EvaluacionesPersonalesEditor {
             valfec_hasta=formatoDeFecha.format(evaluacion.getFec_hasta());
         }
         
-           return  new MultiZoneUpdate("evaluacionesZone",evaluacionesZone.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
+           return  new MultiZoneUpdate("evaluacionesZone2",evaluacionesZone2.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
     }
     
     @Log
@@ -325,7 +326,7 @@ public class EvaluacionesPersonalesEditor {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_hasta=formatoDeFecha.format(evaluacion.getFec_hasta());
         }
-        return  new MultiZoneUpdate("evaluacionesZone",evaluacionesZone.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
+        return  new MultiZoneUpdate("evaluacionesZone2",evaluacionesZone2.getBody()).add("listaEvaluacionZone", listaEvaluacionZone.getBody()); 
     }
     
     @Log
