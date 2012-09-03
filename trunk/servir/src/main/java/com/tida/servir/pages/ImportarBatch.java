@@ -80,7 +80,10 @@ public class ImportarBatch extends GeneralPage{
     private ApplicationGlobals globals;
     @Component(id = "primerform")
     private Form primerform;
-    
+    private int elemento=0;
+    @Property
+    @Persist
+    private boolean mostrar;
     
     @Log
     @SetupRender
@@ -88,23 +91,57 @@ public class ImportarBatch extends GeneralPage{
 
     }
     
+    @Log
+    void onSelectedFromSave() {
+        elemento = 1;
+    }
+    @Log
+    void onSelectedFromReset() {
+        elemento = 2;
+    }
+    @Log
+    void onSelectedFromCancel() {
+        elemento = 3;
+    }
+    @Log
+    void onSelectedFromContinue() {
+        elemento = 4;
+    }
+    @Log
+    void onSelectedFromCanceldos() {
+        elemento = 5;
+    }
+    
+        
     @CommitAfter
     Object onSuccessFromPrimerform() {
-        File copied;
-        if (file == null) {
-            primerform.recordError("Seleccione archivo a subir.");
-            return this;
-        }
-//        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-        String path="D:/5to ciclo/";
-        String nombreArchivo = Encriptacion.encriptaEnMD5( String.valueOf(entidadUE.getId()) ) + file.getFileName().substring(file.getFileName().length() - 4);
-        File nuevo = new File(path + nombreArchivo);
-        copied = new File(path);
-        if (!copied.exists()) {
-            copied.mkdirs();
-        }
-        file.write(nuevo);
-        envelope.setContents("Archivo Importado");
+        if(elemento==1){            
+            if (file == null) {
+                primerform.recordError("Tiene que seleccionar archivo a subir.");
+                return this;
+            }
+            mostrar=true;
+        }else if(elemento==2){
+            file=null;            
+        }else if(elemento==3){
+            file=null;
+        }else if(elemento==4){
+            File copied;
+    //        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
+            String path="C:/";
+            String nombreArchivo = Encriptacion.encriptaEnMD5( String.valueOf(entidadUE.getId()) ) + file.getFileName().substring(file.getFileName().length() - 4);
+            File nuevo = new File(path + nombreArchivo);
+            copied = new File(path);
+            if (!copied.exists()) {
+                copied.mkdirs();
+            }
+            file.write(nuevo);
+            envelope.setContents("Archivo Importado");
+            
+        }else if(elemento==5){
+            mostrar=false;
+        }       
+
         return this;
     }
 
