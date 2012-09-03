@@ -53,10 +53,12 @@
     
      <br/>    
      
-     
+     <div class="box-background-title">
+        <span class="box-title">Crear/Editar Concepto Remunerativo</span>
+    </div>
+    <div class="box" id="box-cargos">
      <div t:type="zone" t:id="formZone" class="abmform"> 
-             <t:if test="${vformulario}"> 
-             <fieldset>
+             <t:if test="${vformulario}">
                 <t:form  t:id="formularioconceptoremunerativo" t:zone="listaConceptosRemunerativosZone">
                     <div class="f-wrap">
                         <div class="f-left">
@@ -108,11 +110,11 @@
                         </div>                         
                     </div>
                 </t:form>
-            </fieldset>
             <div class="f-wrap">
                 (*) Campos Obligatorios
             </div>
           </t:if>
         </div>
+    </div>
         
 </html>
