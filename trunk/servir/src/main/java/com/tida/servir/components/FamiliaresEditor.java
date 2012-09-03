@@ -215,6 +215,9 @@ public class FamiliaresEditor {
         }
     }
 
+    @Property
+    @Persist
+    private DatoAuxiliar valEstadoCivil;
     @Log
     @CommitAfter
     Object onSuccessFromFormulariofamiliares() {
@@ -238,6 +241,14 @@ public class FamiliaresEditor {
         } else {
             familiarActual.setSexo(null);
         }
+        
+        if (valEstadoCivil != null)
+        {
+          familiarActual.setEstadoCivil(valEstadoCivil);  
+        }
+        else {familiarActual.setEstadoCivil(null);
+        }
+        
 //        if(elemento==3){
         Logger logger = new Logger();
         String consulta = "SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
@@ -305,12 +316,14 @@ public class FamiliaresEditor {
             }
         }
 
-        if(familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getEstadoCivil().getCodigo()==1)
+       if(valEstadoCivil!=null)     
+      {
+        if(familiarActual.getParentesco().getCodigo() == 1 || valEstadoCivil.getCodigo()==1)
         {
             envelope.setContents("El estado civil de un Conyuge no puede ser Soltero/a");
             return actualizar();
         }
-
+      }
         
         
         if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
@@ -370,7 +383,8 @@ public class FamiliaresEditor {
         } else {
             valsexo = null;
         }
-
+        valEstadoCivil = familiarActual.getEstadoCivil();
+        
         editando = true;
         accesos();
 
@@ -395,7 +409,7 @@ public class FamiliaresEditor {
         } else {
             valsexo = null;
         }
-
+        valEstadoCivil = familiarActual.getEstadoCivil();
         editando = false;
         accesos();
         vdetalle = true;
@@ -414,28 +428,9 @@ public class FamiliaresEditor {
         return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
     }
 
-//    @Log
-//    Object onActionFromEditar2(Familiar fami) {
-//        return onActionFromEditar(fami);
-//    }
-
-//    @Log
-//    Object onActionFromDetalle2(Familiar fami) {
-//        return onActionFromDetalle(fami);
-//    }
-
     @Log
     Object onActionFromDetalle3(Familiar fami) {
         return onActionFromDetalle(fami);
     }
 
-//    @Log
-//    Object onActionFromDetalle4(Familiar fami) {
-//        return onActionFromDetalle(fami);
-//    }
-
-//    @Log
-//    Object onActionFromEliminar2(Familiar fami) {
-//        return onActionFromEliminar(fami);
-//    }
 }

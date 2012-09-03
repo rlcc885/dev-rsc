@@ -74,7 +74,7 @@
                         </div>
                         <div class="f-left">
                             <t:label for="estadoCivil" />
-                            <select t:type="Select" t:id="estadocivil" value="familiarActual.estadoCivil" 
+                            <select t:type="Select" t:id="estadocivil" value="valEstadoCivil" 
                                         model="beanEstadoCivil" t:disabled="${vdetalle}"
                                         t:blankOption="ALWAYS"/>
                         </div>
