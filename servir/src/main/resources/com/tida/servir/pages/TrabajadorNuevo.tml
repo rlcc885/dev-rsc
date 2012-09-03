@@ -64,7 +64,7 @@
                                             t:id="bunidadorganica"
                                             t:value="unidadorganica"   
                                             model="beanUOrganicas" 
-                                            t:zone="cargosZone"/>
+                                            t:zone="cargosZone" style="width: 300px"/>
                                     <!--                                <input t:type="Submit" t:id="nuevaUO" value="..." class="button" />-->
                                     <a onClick="javascript: mostrar();" class="button">...</a>
 
@@ -76,7 +76,7 @@
                                     <t:label for="cargo"/>
                                     <input t:type="Select" t:id="cargo" t:value="cargo" 
                                            model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
-                                           t:blankOption="ALWAYS"/>
+                                           t:blankOption="ALWAYS" style="width: 300px"/>
                                     <!--                                <input t:type="Submit" t:id="nuevaCargo" value="..." class="button" />-->
                                     <a onClick="javascript: mostrarCargo();" class="button">...</a>
                                 </div>

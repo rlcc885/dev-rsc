@@ -21,7 +21,9 @@ public class LkCargosDisponibles implements Serializable {
     private Boolean estado;
     private Boolean resultado;
     @NonVisual
-    private Long uoid; 
+    private Long uoid;
+    @NonVisual
+    private Long entidadid;
 
     public LkCargosDisponibles() {
     }
@@ -50,6 +52,14 @@ public class LkCargosDisponibles implements Serializable {
 
     public void setUoid(long uoid) {
         this.uoid = uoid;
+    }
+    
+    public long getEntidadid() {
+        return entidadid;
+    }
+
+    public void setEntidadid(long entidadid) {
+        this.entidadid = entidadid;
     }
     
     public Boolean getEstado() {
