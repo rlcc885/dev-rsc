@@ -18,7 +18,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Login de Usuarios
@@ -73,7 +75,17 @@ public class Wizard {
     private Boolean paso01, paso02, paso03, paso04, bMuestraSectorEdicion;
 
     @Log
-    void onActivate() {
+    Object onActivate() {
+        // Validamos si el aplicativo está siendo cargado desde un punto OffLine
+        Criteria criteriobusqueda;
+        criteriobusqueda = session.createCriteria(UsuarioTrabajador.class);
+        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
+
+        if (criteriobusqueda.list().isEmpty()) {
+            return null;
+        }
+
+        return "Index";
     }
 
     @Log
@@ -153,7 +165,7 @@ public class Wizard {
 
     @Log
     @CommitAfter
-    Object onSuccessFrominputUsuario() {
+    void onSuccessFrominputUsuario() {
         // Grabando Entidad
         entidadUE.setEstado(true);
         entidadUE.setProc_Batch(true);
@@ -185,7 +197,13 @@ public class Wizard {
         perfilusuariopk.setPerfilId(2L);
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
-        return "Index";
+        paso = 3;
+        paso01 = false;
+        paso02 = false;
+        paso03 = true;
+        if (request.isXHR()) {
+            ajaxResponseRenderer.addRender("wizardZone", wizardZone.getBody());
+        }
     }
 
 //    @Log
