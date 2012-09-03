@@ -150,8 +150,13 @@ public class PublicacionesEditor {
 
     //para obtener datos del tipo de publicacion
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeanTipo() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", null, 0, session);
+    public GenericSelectModel<DatoAuxiliar> getBeanTipo() {        
+        List<DatoAuxiliar> list = null;
+        if (publicacion.getClasePublicacion() != null) {
+            list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", "CLASEPRODUCCIONINTELECTUAL", publicacion.getClasePublicacion().getCodigo(), session);
+        }else {
+            list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", "CLASEPRODUCCIONINTELECTUAL", 0, session);
+        }
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
@@ -290,4 +295,8 @@ public class PublicacionesEditor {
 //    Object onActionFromEliminar2(Publicacion publi) {
 //        return onActionFromEliminar(publi);
 //    }
+    @Log
+    Object onValueChangedFromclasepublicacion(DatoAuxiliar dato) {
+        return proIntelectualZone.getBody();
+    }
 }

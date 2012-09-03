@@ -28,7 +28,7 @@
                             <label>* Clase: </label>
                             <input t:type="Select" t:id="clasepublicacion" t:value="publicacion.clasepublicacion" 
                                    model="beanClasePublicacion" t:validate="required" t:blankOption="ALWAYS" 
-                                   t:disabled="${vdetalle}"/>
+                                   t:disabled="${vdetalle}" t:zone="proIntelectualZone" />
                         </div>
                         <div class="f-left">
                             <label>* Tipo: </label>
