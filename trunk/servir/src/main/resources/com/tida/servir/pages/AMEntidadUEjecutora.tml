@@ -108,7 +108,7 @@
                     </div>
                 </fieldset>
                 <div class="f-wrap">
-                    <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?"/>
+                    <input t:type="Submit" t:id="bussubenviar" value="Buscar" class="button f-right"/>
                     <input t:type="Submit" t:id="bussubreset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Esta seguro de realizar esta acción?" />  
                 </div>
             </t:form>
@@ -181,9 +181,9 @@
                                     </t:if>
                                 </div>
                                 <div class="f-left"> 
-                                    <t:label for="tiposubentidad"/>
-                                    <input t:type="Select" t:id="tiposubentidad" t:disabled="${vdetalle}" t:value="entidadUE.tiposubentidad" 
-                                       model="TipoSubEntidad" t:blankOption="ALWAYS" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
+                                 <t:label for="tiposubentidad"/>                                 
+                                 <input t:type="Select" t:id="tiposubentidad" t:disabled="${vdetalle}" t:value="entidadUE.tiposubentidad" 
+                                   model="TipoSubEntidad" t:blankOption="ALWAYS" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>
                                 </div>
                             </t:if>
                         </div>
@@ -238,7 +238,7 @@
                             <div class="f-left">
                                 <t:label for="rucedit"/>
                                 <input t:type="TextField" t:id="rucedit" t:disabled="${vdetalle}"
-                                   t:value="entidadUE.ruc" t:validate="required,regexp"
+                                   t:value="entidadUE.ruc" t:validate="required,regexp,maxlength=11"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zoneDatos"/>
                             </div>
                             <div class="f-left">
@@ -253,6 +253,7 @@
                                 <input t:type="Checkbox" t:id="proc_batch" 
                                    t:value="entidadUE.proc_batch" t:disabled="${vdetalle}"/>
                             </div>
+
                         </div>
                     </t:form>
                 </t:if>
@@ -316,7 +317,7 @@
                                 <t:label for="urlentidad"/>
                                 <input t:type="TextField" t:id="urlentidad"
                                    t:value="entidadUE.urlEntidad" t:disabled="${vdetalle}"
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urlEntidadChanged"  t:zone="zoneOtrosDatos" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="urlEntidadChanged"  t:zone="zoneOtrosDatos" t:style="width: 400px"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="telefonoEntidad"/>
