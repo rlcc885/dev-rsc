@@ -255,6 +255,9 @@ public class TrabajadorNuevo extends GeneralPage {
         if (unidadorganica != null) {
             c.add(Restrictions.eq("uoid", unidadorganica.getId()));
         }
+        if (oi != null) {
+            c.add(Restrictions.eq("entidadid", oi.getId()));
+        }
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("resultado", true));
         list = c.list();
@@ -426,10 +429,6 @@ public class TrabajadorNuevo extends GeneralPage {
                         .add("mensajesZone", mensajesZone.getBody());
             } else if (nuevo.getApellidoPaterno() == null) {
                 envelope.setContents("Debe ingresar el Apellido Paterno del Trabajador.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (unidadorganica == null) {
-                envelope.setContents("Debe ingresar la Unidad Organiza.");
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             } else if (cargo == null) {
