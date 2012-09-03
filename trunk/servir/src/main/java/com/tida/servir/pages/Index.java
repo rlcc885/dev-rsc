@@ -94,7 +94,7 @@ public class Index {
         criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
 
         if (criteriobusqueda.list().isEmpty()) {
-            return "Wizard";
+            return null;
         }
 
         return null;
