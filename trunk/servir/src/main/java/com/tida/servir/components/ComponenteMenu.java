@@ -20,7 +20,7 @@ import org.apache.tapestry5.services.Response;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-@Import(stylesheet ={"context:layout/menu.css", "context:layout/menu-2.css"})
+@Import(stylesheet = {"context:layout/menu.css", "context:layout/menu-2.css"})
 public class ComponenteMenu {
 
     @Property
@@ -43,14 +43,12 @@ public class ComponenteMenu {
     @Property
     private UsuarioAcceso opcion;
 
-    
-    public Object onSalir()
-    {
-     _usuario=null;
-     entidad = null;
-     return "Index";
+    public Object onSalir() {
+        _usuario = null;
+        entidad = null;
+        return "Index";
     }
-    
+
     public List getOpcionesMenu() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
@@ -61,7 +59,7 @@ public class ComponenteMenu {
 
         return result;
     }
-    
+
     public List getOpcionesMenuPrincipal() {
         Query query = session.getNamedQuery("callSpUsuarioAcceso");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
@@ -98,9 +96,9 @@ public class ComponenteMenu {
             }
         }
     }
-    
-    public String getNombreUsuario(){
-        return usuarioTrabajador.getApellidopaterno()+" "+usuarioTrabajador.getApellidomaterno()+", "+usuarioTrabajador.getNombres()+" - "+usuarioTrabajador.getDenominacion();
+
+    public String getNombreUsuario() {
+        return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + " - " + usuarioTrabajador.getDenominacion();
     }
 
     StreamResponse onActionFromReturnStreamResponse() {

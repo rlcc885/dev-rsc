@@ -268,13 +268,13 @@ public class batch_dev extends GeneralPage {
         }
 
         //unzip el archivo
-        errores = Unzip.deZippe(lugarArchivo);
-        if (errores.size() > 0) { // hay errores
-            for (String error : errores) {
-                formularioprocesobatch.recordError(error);
-            }
-            return this;
-        }
+//        errores = Unzip.deZippe(lugarArchivo);
+//        if (errores.size() > 0) { // hay errores
+//            for (String error : errores) {
+//                formularioprocesobatch.recordError(error);
+//            }
+//            return this;
+//        }
 
         System.out.println("-------------------------- Etapa Inicio -------------");
 

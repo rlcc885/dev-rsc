@@ -4,7 +4,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
     <t:zone t:id="wizardZone">
-        <h2>Configuración Sistema OffLine ${paso}/2</h2>
+        <h2>Configuración Sistema OffLine ${paso}/3</h2>
         <div class = "wizard">
             <t:if test="${paso01}">
                 <h3>Registro de Entidad</h3>
@@ -197,6 +197,19 @@
                             </t:eventLink>
                         </div>
                     </t:form>
+                </div>
+            </t:if>
+            <t:if test="${paso03}">
+                <h3>Registro de Entidad</h3>
+                <div class="box">
+                    La Entidad 
+                    <strong>${entidadUE.denominacion}</strong> y el usuario 
+                    <strong>${usuariotrabajadoredit.login}</strong> fueron creados correctamente.
+                    <br /><br />
+                    <a t:type="pagelink" page="index">
+                        Ir al inicio de la aplicación.
+                    </a>
+                    <br /><br /><br /><br /><br /><br /><br /><br />
                 </div>
             </t:if>
         </div>
