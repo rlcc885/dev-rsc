@@ -344,13 +344,12 @@ public class EntidadEditor extends GeneralPage {
     }
 
     public List<LkBusquedaTrabajador> getTrabajadores() {
-        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class); 
+        c.add(Restrictions.eq("entidad_id", entidadUE.getId()));
         System.out.println("nombress: " + nombreTrabajador);
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-        c.add(Restrictions.eq("entidad_id", entidadUE.getId()));
-  
         return c.list();
     }
 

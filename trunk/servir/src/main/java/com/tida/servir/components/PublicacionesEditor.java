@@ -153,9 +153,9 @@ public class PublicacionesEditor {
     public GenericSelectModel<DatoAuxiliar> getBeanTipo() {        
         List<DatoAuxiliar> list = null;
         if (publicacion.getClasePublicacion() != null) {
-            list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", "CLASEPRODUCCIONINTELECTUAL", publicacion.getClasePublicacion().getCodigo(), session);
+            list = Helpers.getDatoAuxiliar("TIPOSPRODUCCIONINTELECTUAL", "CLASEPRODUCCIONINTELECTUAL", publicacion.getClasePublicacion().getCodigo(), session);
         }else {
-            list = Helpers.getDatoAuxiliar("TIPOSPUBLICACION", "CLASEPRODUCCIONINTELECTUAL", 0, session);
+            list = Helpers.getDatoAuxiliar("TIPOSPRODUCCIONINTELECTUAL", "CLASEPRODUCCIONINTELECTUAL", 0, session);
         }
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
