@@ -6,6 +6,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.LkBusquedaEntidad;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.util.List;
@@ -62,7 +63,7 @@ public class EntidadSelect {
     private DatoAuxiliar stipoOrganismo;
     @Property
     @Persist
-    private Entidad sentidad;
+    private LkBusquedaEntidad sentidad;
     @Property
     @Persist
     private Entidad ssubentidad;
@@ -129,7 +130,7 @@ public class EntidadSelect {
         sentidad = null;
         ssubentidad = null;
         if (entidad.getEntidad() == null) {
-            sentidad = entidad;
+            sentidad=(LkBusquedaEntidad)session.load(LkBusquedaEntidad.class, entidad.getId());
             bessubentidad = false;
             sessubentidad = false;
             System.out.println(sentidad.getDenominacion());
@@ -193,27 +194,27 @@ public class EntidadSelect {
     }
 
     @Log
-    public GenericSelectModel<Entidad> getEntidades() {
-        return new GenericSelectModel<Entidad>(searchEntidades(), Entidad.class, "denominacion", "id", _access);
+    public GenericSelectModel<LkBusquedaEntidad> getEntidades() {
+        return new GenericSelectModel<LkBusquedaEntidad>(searchEntidades(), LkBusquedaEntidad.class, "denominacion", "id", _access);
     }
 
     @Log
-    private List<Entidad> searchEntidades() {
-        Criteria c = session.createCriteria(Entidad.class);
+    private List<LkBusquedaEntidad> searchEntidades() {
+        Criteria c = session.createCriteria(LkBusquedaEntidad.class);
         c.add(Restrictions.eq("estado", true));
         if (snivelGobierno != null) {
-            c.add(Restrictions.eq("nivelGobierno", snivelGobierno));
+            c.add(Restrictions.eq("nivelgobierno", snivelGobierno.getValor()));
         }
         if (sorganizacionestado != null) {
-            c.add(Restrictions.eq("organizacionEstado", sorganizacionestado));
+            c.add(Restrictions.eq("organizacionestado", sorganizacionestado.getValor()));
         }
         if (ssectorGobierno != null) {
-            c.add(Restrictions.eq("sectorGobierno", ssectorGobierno));
+            c.add(Restrictions.eq("sectorgobierno", ssectorGobierno.getValor()));
         }
         if (stipoOrganismo != null) {
-            c.add(Restrictions.eq("tipoOrganismo", stipoOrganismo));
+            c.add(Restrictions.eq("tipoorganismo", stipoOrganismo.getValor()));
         }
-        c.add(Restrictions.eq("esSubEntidad", false));
+        c.add(Restrictions.eq("essubentidad", false));
         return c.list();
     }
 
@@ -327,6 +328,7 @@ public class EntidadSelect {
                     formulariobotones.recordError("Tiene que seleccionar una Sub-Entidad");
                     return UnidadEjecutoraZone.getBody();
                 } else {
+                    System.out.println("diccccc");
                     entidad = ssubentidad;
                 }
             } else {
@@ -334,7 +336,8 @@ public class EntidadSelect {
                     formulariobotones.recordError("Tiene que seleccionar una Entidad");
                     return UnidadEjecutoraZone.getBody();
                 } else {
-                    entidad = sentidad;
+                    entidad=(Entidad)session.load(Entidad.class, sentidad.getId());
+                    System.out.println("docccccc"+entidad);
                 }
             }
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
