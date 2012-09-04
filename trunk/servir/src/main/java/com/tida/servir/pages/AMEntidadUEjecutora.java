@@ -767,11 +767,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
         entidadUE = entidad;
 
         editando = true;
-        ruc_anterior = entidad.getRuc();
+        if(entidad.getRuc()!=null){
+            ruc_anterior = entidad.getRuc();
+        }
         vformulario = true;
          if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
-            entidad_origen = entidadUE.getEntidad().getDenominacion().toString();
+            if(entidadUE.getEntidad() != null){
+                if(entidadUE.getEntidad().getDenominacion().toString() != null){
+                    entidad_origen = entidadUE.getEntidad().getDenominacion().toString();
+                }
+            }
         } else {
             bessubentidad = false;
         }
