@@ -185,7 +185,7 @@
                                    t:validate="maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreepsChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">                                
-                            <label>Recibe Pensión</label>   
+                            <label>¿Recibe Pensión?</label>   
                             <t:radiogroup t:id="recibe_pension" t:value="actual.recibepension">
                                     <t:radio t:id="r1" t:value="true" t:disabled="${votros}"/> Si 
                                     <t:radio t:id="r2" t:value="false" t:disabled="${votros}"/> No

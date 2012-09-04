@@ -221,7 +221,7 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     @Log
-    Object onActionFromSelec (Entidad enti2) {        
+    Object onActionFromSeleccionar(Entidad enti2) {        
         entidad2 = enti2;
         entidad_destino=entidad2.getDenominacion();
         entixd=false;
@@ -240,16 +240,19 @@ public class CambioUOEntidad extends GeneralPage{
         uoDestino=null;
         entidad_destino=null;
         entidad2=null;
-        if(entio!=null){
-            entio=null;
-            entidad1=null;
-            List<LkBusquedaUnidad> list;
-            Criteria c = session.createCriteria(LkBusquedaUnidad.class);
-            c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
-            c.add(Restrictions.eq("entidadId", entidadUE.getId() ));        
-            list = c.list();
-            _beanUOrganicasOrigen = new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);       
-        }
+        entidad1=null;
+        entio=null;
+        migras=false;
+//        if(entio!=null){
+//            entio=null;
+//            entidad1=null;
+//            List<LkBusquedaUnidad> list;
+//            Criteria c = session.createCriteria(LkBusquedaUnidad.class);
+//            c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));
+//            c.add(Restrictions.eq("entidadId", entidadUE.getId() ));        
+//            list = c.list();
+//            _beanUOrganicasOrigen = new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);       
+//        }
         uoOrigen=null;
         entidad_origen=null;
     }
@@ -262,7 +265,7 @@ public class CambioUOEntidad extends GeneralPage{
         return zonasDatos();
     }
     else if(num==3){
-        return CambioEntidad.class;
+        return Alerta.class;
     }
     else{
         formBotones.clearErrors();
