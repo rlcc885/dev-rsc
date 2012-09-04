@@ -15,7 +15,8 @@ public class Ant_Laborales implements Serializable {
 
     @NonVisual
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_ANTELABORAL_ID_SEQ", allocationSize = 1)
     private Long id;
     private String empresa;
     private String cargo;

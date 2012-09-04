@@ -21,7 +21,8 @@ public class Evento implements Serializable {
     public static Integer CANT_DEFAULT = 1;
         
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_EVENTO_ID_SEQ", allocationSize = 1)
     private long id;
     private String descevento;
 //    @ManyToOne

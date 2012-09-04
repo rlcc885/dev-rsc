@@ -3,11 +3,7 @@ package com.tida.servir.entities;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -20,7 +16,8 @@ public class ConceptoRemunerativo implements Serializable {
 
     @NonVisual
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CONREMUNERATIVO_ID_SEQ", allocationSize = 1)
     private Long id;
     @NonVisual
     private String codigo;

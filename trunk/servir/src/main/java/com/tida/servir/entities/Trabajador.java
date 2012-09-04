@@ -15,7 +15,8 @@ public class Trabajador implements Serializable // extends Persona
 
     private static final String DNI = "DNI";
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_TRABAJADOR_ID_SEQ", allocationSize = 1)
     @NonVisual
     private Long id;
     @Validate("required")

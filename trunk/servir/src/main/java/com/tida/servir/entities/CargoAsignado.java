@@ -20,7 +20,8 @@ public class CargoAsignado implements Serializable {
     public static boolean ESTADO_ALTA = true;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CARGOASIGNADO_ID_SEQ", allocationSize = 1)
     @NonVisual
     private Long id;
 

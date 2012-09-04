@@ -5,13 +5,7 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
@@ -61,7 +55,8 @@ public class Estudios {
     
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_ESTUDIOS_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
