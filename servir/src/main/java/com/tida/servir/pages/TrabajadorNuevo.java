@@ -246,21 +246,29 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevocargo() {
+        if (unidadorganica == null) {
+            formulariotrabajadornuevo.recordError("Debe seleccionar una Unidad Organica.");
+        } else {
         if (nuevoCargo != null) {            
             Cargoxunidad ncargo;
             ncargo = new Cargoxunidad();
+            System.out.println("11111111: " + nuevoCargo);
             ncargo.setDen_cargo(nuevoCargo);
             ncargo.setCod_cargo("C9999");
+            nuevaunidadorganica.setId(unidadorganica.getId());
             ncargo.setUnidadorganica(nuevaunidadorganica);
             ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
             ncargo.setRegimenlaboral(regimenla);
             ncargo.setCtd_puestos_total(1);
+            System.out.println("entroooo: ");
             session.saveOrUpdate(ncargo);
+            System.out.println("2222222: ");
             cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class,ncargo.getId());
             envelope.setContents(helpers.Constantes.CARGO_EXITO);
         } else {
             formulariotrabajadornuevo.recordError("No puede agregar un cargo vacio");
 
+        }
         }
 
         return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
