@@ -125,10 +125,6 @@ public class EntidadEditor extends GeneralPage {
     private Envelope envelope;
     @Inject
     private ApplicationGlobals globals;
-    //Edicion
-//    @Property
-//    @Persist
-//    private boolean badmentidad;
     @Property
     @Persist
     private boolean mostrar;
@@ -168,6 +164,8 @@ public class EntidadEditor extends GeneralPage {
      * inicio de la carga de pagina
      * veditar : empieza en true, es utilizado en el .tml para controlar el acceso de edicion a los campos.
      */
+
+    // inicio de pagina
     @SetupRender
     private void inicio() {
         veditar=true;
@@ -177,7 +175,6 @@ public class EntidadEditor extends GeneralPage {
         List result = query.list();        
         if(result.isEmpty()){
             System.out.println(String.valueOf("Vacio:"));
-            //return"alerta";
         }
         else{
             usua = (UsuarioAcceso) result.get(0);
@@ -192,7 +189,6 @@ public class EntidadEditor extends GeneralPage {
                 vformulario=true;
                 vbotones=true; 
             }
-        //return null;
         }
         File copied;
         copied = new File(globals.getServletContext().getRealPath("/") + "images/logotipo/"+entidadUE.getLogotipo());
@@ -249,6 +245,8 @@ public class EntidadEditor extends GeneralPage {
         return this;
     }
 
+    
+    // cargar combos
     //para obtener datatos del Nivel Gobierno
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
@@ -285,15 +283,6 @@ public class EntidadEditor extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-//    void onSelectedFromReset() {
-//        elemento = 1;
-//        badmentidad = false;
-//    }
-//
-//    void onSelectedFromCancel() {
-//        elemento = 2;
-//        badmentidad = false;
-//    }
     void onSelectedFromCancelBuscador() {
         btitulari = false;
         bjefeOGAi = false;
@@ -301,14 +290,13 @@ public class EntidadEditor extends GeneralPage {
         System.out.println("onSelectedFromCancelBuscador");
     }
 
+    // formulario principal
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
         entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
         entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
         entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-        //entidadUE=entidadUE;
         session.saveOrUpdate(entidadUE);
-//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(entidadUE.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ORGANISMO_INFORMANTE);
         envelope.setContents("Entidad modificada exitosamente");
         return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
@@ -353,6 +341,7 @@ public class EntidadEditor extends GeneralPage {
         return c.list();
     }
 
+    // accion de boton seleccionado
     Object onActionFromeditarTitular(Trabajador traba) {
         titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
         entidadUE.setTitular(traba);
@@ -362,7 +351,6 @@ public class EntidadEditor extends GeneralPage {
     }
 
     Object onActionFromeditarJefeRRHH(Trabajador traba) {
-        //jeferrhht = traba;
         jefeRRHH = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
         entidadUE.setJefeRRHH(traba);
         bjefeRRHHi = false;
@@ -371,7 +359,6 @@ public class EntidadEditor extends GeneralPage {
     }
 
     Object onActionFromeditarJefeOGA(Trabajador traba) {
-        //jefeogat = traba;
         jefeOGA = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
         entidadUE.setJefeOga(traba);
         bjefeOGAi = false;
@@ -379,6 +366,7 @@ public class EntidadEditor extends GeneralPage {
         return JefeOGAZone.getBody();
     }
 
+    // eventos de cambio de valor en los campos
     void onSiglaChanged() {
         entidadUE.setSigla(_request.getParameter("param"));
     }

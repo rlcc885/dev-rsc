@@ -99,6 +99,7 @@ public class TrabajadorEditar extends GeneralPage {
         return mensajes != null;
     }
 
+    // pagina activa
     @Log
     void onActivate() {
         actual = (Trabajador) session.load(Trabajador.class, _usuario.getTrabajador().getId());

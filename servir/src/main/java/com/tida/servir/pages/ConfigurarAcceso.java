@@ -52,20 +52,17 @@ public class ConfigurarAcceso extends GeneralPage {
         }
     }
 
+    // accion de boton seleccionado
     void onSelectedFromReset() {
         num = 2;
         ca = new ConfiguracionAcceso();
     }
 
-//    void onSelectedFromCancel() {
-//        num = 3;
-//        ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
-//    }
-
     void onSelectedFromSave() {
         num = 1;
     }
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormularioconfiguraracceso() {
@@ -93,7 +90,6 @@ public class ConfigurarAcceso extends GeneralPage {
             Logger logger = new Logger();
             Tipoevento tipoeve = new Tipoevento();
             tipoeve.setId(2);
-            //logger.loguearEvento(session,tipoeve,usuario.getEntidad(),usuario.getTrabajador().getId(),"Existe un error en la conexi&oacute;n con el Servidor de Correos.");
             formularioconfiguraracceso.recordError("Existe un error en la conexión con el Servidor de Correos.");
         }
         return zone.getBody();

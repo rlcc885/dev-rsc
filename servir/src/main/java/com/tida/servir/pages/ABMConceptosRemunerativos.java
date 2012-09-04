@@ -87,6 +87,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @Property
     private String sustento_legal;
 
+    // inicio de pagina
     @SetupRender
     public void inicio() {        
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
@@ -127,28 +128,20 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         return c.list();
     }
 
+    // accion de boton seleccionado    
     void onSelectedFromSave() {
         elemento = 1;
     }
 
-    //@Log
     void onSelectedFromReset() {
-//        limpiar();
-//        formlistaestudios.clearErrors();
-//        editando = false;
-//        estudio = new Estudios();
-//        if (usua.getAccesoreport() == 0) {
-//            vformulario = false;
-//        }
+
         formmensajes.clearErrors();
         elemento = 2;
         conceptoRemunerativo = new ConceptoRemunerativo();
-//        sustento_legal = null;
     }
     
     void onSelectedFromCancel() {
         elemento = 3; 
-        System.out.println("detaleeeeee"+vdetalle);
         if(vdetalle){
             vformulario=false; 
             if (usua.getAccesoreport() == 1) {
@@ -165,6 +158,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         }
     }
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormularioConceptoRemunerativo() {
@@ -194,7 +188,6 @@ public class ABMConceptosRemunerativos extends GeneralPage {
             else{
                 envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EXITO);
             }
-            //new Logger().loguearOperacion(session, loggedUser, String.valueOf(conceptoRemunerativo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
             if(editando){
                 if (usua.getAccesoreport() == 0) {
                         vformulario = false;
@@ -235,6 +228,8 @@ public class ABMConceptosRemunerativos extends GeneralPage {
       return fin;
     }
     
+
+    // editar concepto remunerativo
     @Log
     Object onActionFromEditar(ConceptoRemunerativo concepto) {
         conceptoRemunerativo = concepto;
@@ -246,6 +241,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         return zonas();
     }
     
+    // ver detalle de concepto remunerativo
    @Log
     Object onActionFromDetalle(ConceptoRemunerativo concepto) {
         conceptoRemunerativo = concepto; 
@@ -255,22 +251,9 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         vNoedita = true;
         return zonas();
     }
-    /*
-     * Borrar la fila
-     */
-//    void onActivate(ConceptoRemunerativo c) {
-//
-//        editando = (c != null);
-//        if (c == null) {
-//            c = new ConceptoRemunerativo();
-//        }
-//
-//        // Le genero la sesión hibernate así puede identificarlo como igual
-//        //this._oi = (EntidadUEjecutora) session.load(EntidadUEjecutora.class, _oi.getId());
-//
-//        this.conceptoRemunerativo = c; //(Usuario) session.load(Usuario.class, user.getId());
-//    }
 
+
+   // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOREMUNERACION", null, 0, session);
@@ -304,17 +287,16 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         return true;
     }
 
+    // accion de borrar concepto remunerativo
     @Log
     @CommitAfter
     Object onBorrarDato(ConceptoRemunerativo dato) {
-//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()),
-//                Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
-
         session.delete(dato);
         envelope.setContents("Concepto Remunerativo Eliminado");
         return zonas();// La/a zona a actualizar
     }
     
+    // actualizar zonas
     @Log
     private MultiZoneUpdate zonas() {
         MultiZoneUpdate mu;

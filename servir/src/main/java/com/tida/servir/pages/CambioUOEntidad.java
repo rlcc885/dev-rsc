@@ -44,14 +44,6 @@ public class CambioUOEntidad extends GeneralPage{
     @SessionState
     private Usuario usuario;
 
-//    @Property
-//    @Persist
-//    private Integer nivelOrigen;
-//
-//    @Property
-//    @Persist
-//    private Integer nivelDestino;
-
     @Property
     @Persist
     private LkBusquedaUnidad uoOrigen;
@@ -59,10 +51,6 @@ public class CambioUOEntidad extends GeneralPage{
     @Property
     @Persist
     private LkBusquedaUnidad uoDestino;
-
-//    @Property
-//    @Persist
-//    private Entidad entidadDestino;
 
     @Persist
     private GenericSelectModel<LkBusquedaUnidad> _beanUOrganicasOrigen;
@@ -76,23 +64,9 @@ public class CambioUOEntidad extends GeneralPage{
 
     @InjectComponent
     private Zone EOrigenZone;
-
-//    @Property
-//    @InjectComponent
-//    private Zone NivelDestinoZone;
-
-//    @Property
-//    @InjectComponent
-//    private Zone UOOrigenNivelZone;
-
-//    @InjectComponent
-//    private Zone UODestinoZone;
     
     @InjectComponent
     private Zone EDestiZone;
-
-//    @InjectComponent
-//    private Zone UOChangeZone;
 
     @Inject
     private Request _request;
@@ -164,6 +138,7 @@ public class CambioUOEntidad extends GeneralPage{
     @Persist
     private Integer niveld;
       
+    // inicio de pagina
     @Log
     @SetupRender
     private void inicio() {
@@ -235,10 +210,9 @@ public class CambioUOEntidad extends GeneralPage{
         return c.list();
     }
     
+    // accion de botones del formulario
     @Log
     Object onActionFromEditar(Entidad enti1) {        
-        //entio = enti1;        
-//        entidad1.setId(entio.getId());
         entidad1=enti1;
         entidad_origen=entidad1.getDenominacion();
         entixo=false;
@@ -250,7 +224,6 @@ public class CambioUOEntidad extends GeneralPage{
     Object onActionFromSelec (Entidad enti2) {        
         entidad2 = enti2;
         entidad_destino=entidad2.getDenominacion();
-//        entidad2.setId(entid.getId());
         entixd=false;
         uoDestino=null;
         return EDestiZone.getBody();  
@@ -281,6 +254,7 @@ public class CambioUOEntidad extends GeneralPage{
         entidad_origen=null;
     }
     
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormBotones() {
@@ -307,7 +281,6 @@ public class CambioUOEntidad extends GeneralPage{
                     return botonZone.getBody();
                 }
                 else{
-//                    Helpers.migrarUOBase(uoOrigen, entidadUE, entidad2, session); 
                     ejecutar(entidadUE,entidad2,uoOrigen,uoDestino,2);
                     envelope.setContents("Unidad Orgánica Migrada Correctamente1");                    
                 }
@@ -320,7 +293,6 @@ public class CambioUOEntidad extends GeneralPage{
                     return botonZone.getBody();
                 }
                 else{
-//                     Helpers.migrarUOBase(uoOrigen, entidad1, entidad2, session);
                     ejecutar(entidad1,entidad2,uoOrigen,uoDestino,2);
                     envelope.setContents("Unidad Orgánica Migrada Correctamente");
                 }
@@ -342,13 +314,11 @@ public class CambioUOEntidad extends GeneralPage{
                 return botonZone.getBody();
             }
             if(entidad1==null){ //validar x usuario                
-//                  Helpers.fusionarUOBase(uoOrigen, entidadUE, entidad2, uoDestino, session);
                 ejecutar(entidadUE,entidadUE,uoOrigen,uoDestino,1);
                 envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
 
             }
             else{                  
-//                        Helpers.fusionarUOBase(uoOrigen, entidad1, entidad2, uoDestino, session);
                 ejecutar(entidad1,entidad2,uoOrigen,uoDestino,1);
                 envelope.setContents("Unidad Orgánica Fusionada Correctamente");
 
@@ -356,8 +326,6 @@ public class CambioUOEntidad extends GeneralPage{
         }
 
     }
-//    onSelectedFromReset();
-//    envelope.setContents(String.valueOf(entidad1)+String.valueOf(uoOrigen)+String.valueOf(entidad2)+String.valueOf(uoDestino));
     return zonasDatos();
     }
 
@@ -374,6 +342,7 @@ public class CambioUOEntidad extends GeneralPage{
     }
     
     
+
     public List<Integer> getBeanNivel(Entidad eUE, Integer first){
         List<Integer> nivel = new LinkedList<Integer>();
         Integer nivelMax = 0;
@@ -409,7 +378,8 @@ public class CambioUOEntidad extends GeneralPage{
         }
 
     }
-     
+
+    // cargar combos    
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicasOrigen(){
         List<LkBusquedaUnidad> list;
@@ -466,6 +436,7 @@ public class CambioUOEntidad extends GeneralPage{
 
     }
 
+    // evento de cambio de valor en los campos
     @Log
     Object onValueChangedFromUo_nivelo(Integer dato) {
         if (dato != null) {

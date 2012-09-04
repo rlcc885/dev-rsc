@@ -19,7 +19,6 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -69,23 +68,15 @@ public class BajaTrabajador extends GeneralPage {
     @InjectComponent
     private Zone cargosGrillaZone;
 
+    // cargar empleados
     public List<Trabajador> getEmpleados() {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.createAlias("trabajador", "trabajador");
-        //c.createAlias("legajo", "legajo");
-        //c.createAlias("cargo", "cargo");
-        //c.add(Restrictions.eq("legajo.entidadUE", _entidadUE));
-         
         if (nroDocumento != null) {
             c.add(Restrictions.eq("trabajador.nroDocumento", nroDocumento));
         }
-//        if (tipoDocumento != null ) {
-//            c.add(Restrictions.like("trabajador.documentoidentidad", tipoDocumento));
-//        }
         c.add(Restrictions.eq("legajo", buscarlegajo()));
         c.add(Restrictions.like("estado", Constantes.ESTADO_ACTIVO));
-        //c.setProjection(Projections.distinct(Projections.property("trabajador")));
-
         return c.list();
     }
 

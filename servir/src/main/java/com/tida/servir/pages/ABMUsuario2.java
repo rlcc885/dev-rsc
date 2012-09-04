@@ -60,20 +60,14 @@ public class ABMUsuario2 {
         return c.list();
     }
 
+    // fromulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormularioUsuario() {
-//        usuario.setEntidadUE(_oi);
-        // Seteo algún oi
-
         CrearDatos.crearDatosBasicos(session); // Creo algunos organismos, etc
         CrearDatos.crearDatosAuxiliares(session); // Creo las tablas básicas de datos auxiliares
-        //        usuario.setEntidadUE((EntidadUEjecutora) session.createCriteria(EntidadUEjecutora.class).list().get(0));
 
         session.saveOrUpdate(usuario);
-
-        //usuario = new Usuario();
-        //session.saveOrUpdate(usuario)
         return this;
     }
 
@@ -91,17 +85,6 @@ public class ABMUsuario2 {
         usuario = new Usuario();
     }
 
-    /*
-     * Borrar la fila
-     */
-    /*
-     * void onActionFromBorrar(UnidadEjecutora ue) { // FIXME TODO Ver en qué
-     * condiciones borrar una UnidadEjecutora y en cuáles no.
-     * System.out.println("UE a Borrar " + ue.denominacion_ue);
-     * session.delete("UnidadEjecutora", ue);
-     *
-     * }
-     */
     /*
      * Cargar desde los parámetros
      */

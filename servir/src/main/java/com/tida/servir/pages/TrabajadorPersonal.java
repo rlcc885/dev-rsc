@@ -95,6 +95,7 @@ public class TrabajadorPersonal extends GeneralPage {
         return mensajes != null;
     }
 
+    // inicio de pagina
     @Log
     @SetupRender
     private void inicio() {
@@ -116,6 +117,5 @@ public class TrabajadorPersonal extends GeneralPage {
             System.out.println("actualll");
         }
 
-        System.out.println("trabajaaaanulo");
     }
 }

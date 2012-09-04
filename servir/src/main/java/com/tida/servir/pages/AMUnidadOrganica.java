@@ -46,9 +46,6 @@ public class AMUnidadOrganica extends GeneralPage {
     @InjectComponent
     @Property
     private Zone unidadesOrganicasZone;
-//    @InjectComponent
-//    @Property
-//    private Zone ubigeoDomZone;
     @InjectComponent
     @Property
     private Zone nivelUOZone;
@@ -83,9 +80,6 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private String localidad;
-//    @InjectComponent
-//    @Property
-//    private Zone nivelZone;
     @InjectComponent
     private Envelope envelope;
     @Persist
@@ -109,23 +103,13 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private UsuarioAcceso usua;
-//    @Property
-//    @Persist
-//    private boolean siuno;
     @Property
     @Persist
     private Integer bnivelUO;
     @Property
     @Persist
     private boolean mostrar;
-//    @Component(id = "formlistaunidad")
-//    private Form formlistaunidad;
-    //@Persist
     private int num, mostra, num2;
-//    @InjectComponent
-//    @Property
-//    private Zone nivelOrga;
-    //validaciones
     @Persist
     @Property
     private Boolean vdetalle;
@@ -154,8 +138,8 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
 
+    // inicio de pagina
     @Log
-    //@SetupRender
     String SetupRender() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", loggedUser.getLogin());
@@ -199,18 +183,6 @@ public class AMUnidadOrganica extends GeneralPage {
 
     @Log
     public GenericSelectModel<LkBusquedaUnidad> getbbeansUO() {
-//        String consulta = "SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"
-//                + " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"
-//                + " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"
-//                + " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='" + entidadUE.getId() + "'";
-//        if (bnivelUO != null) {
-//            consulta += " AND S1.NIVEL='" + (bnivelUO - 1) + "'";
-//        }
-//        consulta += "ORDER BY(DENOMINACION)";
-//        List<LkBusquedaUnidad> list;
-//        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
-//        list = query.list();
-        
         Criteria c;
         c = session.createCriteria(LkBusquedaUnidad.class);
         c.add(Restrictions.eq("entidadId", entidadUE.getId()));
@@ -222,6 +194,7 @@ public class AMUnidadOrganica extends GeneralPage {
     }
 
 
+    // accion de los botones
     @Log
     void onSelectedFromMuestra() {
         num2 = 3;
@@ -249,20 +222,6 @@ public class AMUnidadOrganica extends GeneralPage {
         num = 1;
     }
 
-//    @Log
-//    void onSelectedFromCancel() {
-//        num = 3;
-//        if (!vbotones) {
-//            vformulario = false;
-//        } else {
-//            unidadOrganica = new UnidadOrganica();
-//            ubigeoDomicilio = new Ubigeo();
-//            nivelUO = 1;
-//            editando = false;
-//            uoAntecesora = null;
-//        }
-//    }
-
     @Log
     @CommitAfter
     Object onSuccessFromFormulariofiltrounidad() {
@@ -274,7 +233,6 @@ public class AMUnidadOrganica extends GeneralPage {
         } else {
             mostrar = true;
             editando = false;
-            //envelope.setContents(String.valueOf(uoAntecesora)+"-"+String.valueOf(nivelUO));
             mostra = 1;
             unidadOrganica = new UnidadOrganica();
             resetUnidadOrganica();
@@ -286,6 +244,7 @@ public class AMUnidadOrganica extends GeneralPage {
     public Boolean getBniveluno() {
         return bnivelUO == 1;
     }
+    // cargar unidades organicas
     @Log
     public List<UnidadOrganica> getUnidadesOrganicas() {
         Criteria c;
@@ -298,7 +257,6 @@ public class AMUnidadOrganica extends GeneralPage {
                 c.add(Restrictions.eq("nivel", bnivelUO));
             }
             if (buoAntece != null && !buoAntece.equals("")) {
-                //c.createAlias("unidadorganica", "unidadorganica");
                 c.add(Restrictions.eq("unidadorganicaId", buoAntece.getId()));
             }
             if (bdenouni != null && !bdenouni.equals("")) {
@@ -314,24 +272,6 @@ public class AMUnidadOrganica extends GeneralPage {
         c.addOrder(Order.asc("denominacion"));
         return c.list();
     }
-
-//    @Log
-//    public boolean getUsuarioGeneral() {
-//        return Helpers.esMultiOrganismo(loggedUser);
-//    }
-//
-//    @Log
-//    public boolean getNoUsuarioGeneral() {
-//        return !getUsuarioGeneral();
-//    }
-
-//    @Log
-//    public boolean getPuedeEditar() {
-//        if (entidadUE == null) {
-//            return false;
-//        }
-//        return Permisos.puedeEscribir(loggedUser, entidadUE);
-//    }
 
     /**
      * Hasta acÃ¡ para levantar combo de organos
@@ -395,43 +335,25 @@ public class AMUnidadOrganica extends GeneralPage {
         return nivel;
     }
 
+    // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoActividad() {
-        //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
-        //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
-
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIAUO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipovia() {
-        //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
-        //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
-
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOVIA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipozona() {
-        //System.out.println("uo on getbean dato situacion CAO "+uo+" getpuedeeditar "+getPuedeEditar() );
-        //return Helpers.getValorTablaAuxiliar("SituacionCAP", session);
-
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-    /*
-     * public GenericSelectModel<EntidadUEjecutora> getBeansEUE(){ Criteria c; c
-     * = session.createCriteria(UnidadOrganica.class);
-     * c.add(Restrictions.eq("entidadUE", entidadUE));
-     * c.add(Restrictions.ne("estado", EntidadUEjecutora.ESTADO_BAJA));
-     *
-     * return new
-     * GenericSelectModel<EntidadUEjecutora>(c.list(),EntidadUEjecutora.class,"denominacion","id",_access);
-     * }
-     */
     //lista unidades antecesoras
     @Log
     public GenericSelectModel<UnidadOrganica> getbeansUO() {
@@ -446,44 +368,13 @@ public class AMUnidadOrganica extends GeneralPage {
 
         return new GenericSelectModel<UnidadOrganica>(c.list(), UnidadOrganica.class, "den_und_organica", "id", _access);
     }
-//    @Log
-//    public GenericSelectModel<LkBusquedaUnidad> getbeansUO() {
-//        String consulta="SELECT S1.id, S1.den_und_organica denominacion, S1.sigla, S1.nivel,"+
-//          " S1.unidadorganica_id, S1.CATEGORIAUO_ID, T1.DESCCATEGORIAUO,"+
-//          " S1.ENTIDAD_ID, S1.ESTADO FROM    rsc_unidadorganica S1 LEFT JOIN lkcategoriauo T1"+
-//          " ON (T1.categoriauo_id = s1.categoriauo_id) WHERE S1.ESTADO=1 AND S1.ENTIDAD_ID='"+entidadUE.getId()+"'"+
-//          " AND S1.NIVEL='"+(nivelUO - 1)+"' AND S1.ID!='"+unidadOrganica.getId()+"'";
-//        consulta+="ORDER BY(DENOMINACION)";
-//        List<LkBusquedaUnidad> list;
-//        Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaUnidad.class);
-//        list=query.list();
-//        return new GenericSelectModel<LkBusquedaUnidad>(list, LkBusquedaUnidad.class, "denominacion", "id", _access);
-//    }
 
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformNivelUO() {
-//
-//        
-////        if(uoAntecesora != null){
-////            System.out.println("------------- unidad organica "+uoAntecesora.getCod_und_organica());
-////            ubigeoDomicilio.setDepartamento(uoAntecesora.getCod_ubi_dept());
-////            ubigeoDomicilio.setDistrito(uoAntecesora.getCod_ubi_dist());
-////            ubigeoDomicilio.setProvincia(uoAntecesora.getCod_ubi_prov());
-////        }
-//        
-//        if (getPuedeEditar()) {
-//            System.out.println("--------- entrÃ© iuci");
-//            //onUbigeoEntidadUOAntecesora();
-//            return new MultiZoneUpdate("ubigeoDomZone", ubigeoDomZone.getBody()).add("nivelZone", nivelZone.getBody());
-//        }
-//        return nivelZone.getBody();
-//    }
     @Log
     public Boolean getNivelUno() {
         return nivelUO == 1;
     }
 
+    // cargar nueva unidad organica
     @Log
     void resetUnidadOrganica() {
         vNoedita = true;
@@ -492,29 +383,30 @@ public class AMUnidadOrganica extends GeneralPage {
         nivelUO = 1;
         uoAntecesora = null;
         mostrar = true;
-        //vbotones = false;
         if (!veditar) {
             vformulario = false;
         }
         vdetalle = false;
         vzona = true;
-
         num = 2;
         editando = false;
     }
 
+    // limpiar 
     @Log
     Object onReset() {
         resetUnidadOrganica();
         return unidadesOrganicasZone.getBody();
     }
 
+    // cancelar accion
     @Log
     Object onCancel() {
         resetUnidadOrganica();
         return unidadesOrganicasZone.getBody();
     }
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromformularioaltaunidadorganica() {
@@ -668,101 +560,26 @@ public class AMUnidadOrganica extends GeneralPage {
     void guardar_modificar() {
     }
 
+    // eliminar unidad organica
     @Log
     @CommitAfter
     Object onBorrarDato(UnidadOrganica dato) {
         errorBorrar = null;
         dato.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(dato);
-//        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_BAJA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         resetUnidadOrganica();
         envelope.setContents("Unidad Orgánica Eliminada");
-//        //setupUbigeos();
-//        javaScriptSupport.addScript("new Prin();");
-//        if(bescon==null){
-//            envelope.setContents("Borrooo--"+String.valueOf(bescon));
-//        }
-//        else{
-//            envelope.setContents("NO Borrooo");
-//        }
 
         return zonas();// La/a zona a actualizar
     }
 
-//    @Log
-//    @SetupRender
-//    private void setupUbigeos() {
-//        if (nivelUO == null) {
-//            nivelUO = 1;
-//        }
-//
-////        if (unidadOrganica != null) {
-////            if (ubigeoDomicilio == null) {
-////                ubigeoDomicilio = new Ubigeo();
-////            }
-////            ubigeoDomicilio.setDepartamento(entidadUE.getCod_ubi_dept());
-////            ubigeoDomicilio.setProvincia(entidadUE.getCod_ubi_prov());
-////            ubigeoDomicilio.setDistrito(entidadUE.getCod_ubi_dist());
-////        }
-//
-//        if (editando != false) {
-//           // onUbigeoEntidadUOAntecesora();
-//        }
-//        //ubicacion();
-//    }
     @Log
     void onPrepareFromformularioaltaunidadorganica() {
         errorBorrar = null;
     }
 
-//    @Log
-//    void onUbigeoEntidadUOAntecesora() {
-//        if (unidadOrganica != null) {
-//            // cargamos el ubigeo de la entidad
-//            ubigeoDomicilio.setDepartamento(unidadOrganica.getCod_ubi_dept());
-//            ubigeoDomicilio.setProvincia(unidadOrganica.getCod_ubi_prov());
-//            ubigeoDomicilio.setDistrito(unidadOrganica.getCod_ubi_dist());            
-//        } else {
-//            if (uoAntecesora != null) {
-//                System.out.println("----------- antecesora pas null "+uoAntecesora);
-//                ubigeoDomicilio.setDepartamento(uoAntecesora.getCod_ubi_dept());
-//                ubigeoDomicilio.setDistrito(uoAntecesora.getCod_ubi_dist());
-//                ubigeoDomicilio.setProvincia(uoAntecesora.getCod_ubi_prov());                
-//            }else{
-//                System.out.println("----------- antecesora null "+uoAntecesora);
-//                ubigeoDomicilio.setDepartamento(entidadUE.getDepartamento());
-//                ubigeoDomicilio.setDistrito(entidadUE.getDistrito());
-//                ubigeoDomicilio.setProvincia(entidadUE.getProvincia());
-//            }
-//
-//        }
-//        
-//    }
-
-    /*
-     * reset del formulario (borrar objeto)
-     */
-//    @Log
-//    void onActionFromReset() {
-//        unidadOrganica = new UnidadOrganica();
-//        ubigeoDomicilio = new Ubigeo();
-//        nivelUO = 1;
-//        uoAntecesora = null;
-//        editando = false;
-//        //onUbigeoEntidadUOAntecesora();
-//    }
-
-    /*
-     * Cargar desde los parÃ¡metros
-     */
     @Log
     void onActivate() {
-//        if (unidadOrganica == null) {
-//            System.out.println("----------- unidad organica null");
-//            resetUnidadOrganica();
-////            ubicacion();
-//            zonas();
-//        }
     }
 
     @Log
@@ -800,6 +617,7 @@ public class AMUnidadOrganica extends GeneralPage {
         ubicacion();
     }
 
+    // actualizacion de zonas
     @Log
     private MultiZoneUpdate zonas() {
         MultiZoneUpdate mu;
@@ -818,6 +636,7 @@ public class AMUnidadOrganica extends GeneralPage {
         return mu;
     }
 
+    // editar unidad organica seleccionada
     @Log
     Object onActionFromEditar(UnidadOrganica uo) {
         unidadOrganica = (UnidadOrganica) session.get(UnidadOrganica.class, uo.getId());
@@ -839,6 +658,7 @@ public class AMUnidadOrganica extends GeneralPage {
         return zonas();
     }
 
+    // ver detalles de unidad organica seleccionada
     @Log
     Object onActionFromDetalle(UnidadOrganica uo) {
         unidadOrganica = (UnidadOrganica) session.get(UnidadOrganica.class, uo.getId());
@@ -851,6 +671,7 @@ public class AMUnidadOrganica extends GeneralPage {
         return zonas();
     }
 
+    // evento de cambio de valor en campos
     @Log
     Object onValueChangedFromUnidadorganica_nivel(Integer dato) {
         nivelUO = dato;

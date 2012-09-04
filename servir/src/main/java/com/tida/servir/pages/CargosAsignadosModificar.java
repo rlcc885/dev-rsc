@@ -46,16 +46,8 @@ public class CargosAsignadosModificar extends GeneralPage {
         this.trabajador = trabajador;
     }
 
-    // zonas relacionadas al ABM de Cargos
-//    @InjectComponent
-//    private Zone remuneracionesPersonalesZone;
-//
-//
-//    @InjectComponent
-//    private Zone evaluacionesPersonalesZone;
-//
-//    @InjectComponent
-//    private Zone ausLicPersonalesZone;
+
+    // inicio de pagina
     @SetupRender
     void initializeValue() {
         trabajador = ca.getTrabajador();

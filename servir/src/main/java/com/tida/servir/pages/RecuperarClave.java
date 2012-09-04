@@ -58,11 +58,6 @@ public class RecuperarClave {
     private Request request;
     @Component(id = "formulariologin")
     private Form formulariologin;
-    /*
-     * @Component(id = "formularioorganismos") private Form
-     * formularioOrganismos;
-     *
-     */
     @Inject
     private ComponentResources _resources;
     @InjectPage
@@ -87,7 +82,6 @@ public class RecuperarClave {
     }
 
     void onSelectedFrombotonCancelar() {
-        System.out.println("SELECCIONA PRIMERO ===========================================================");
         _cancelar = true;
     }
 
@@ -95,6 +89,7 @@ public class RecuperarClave {
         //  usuario = null; // Para que haga un logout
     }
 
+    // formulario principal
     @CommitAfter
     Object onSuccessFromFormulariologin() throws InterruptedException {
         if (_cancelar){
@@ -108,7 +103,6 @@ public class RecuperarClave {
         List c = query.list();
 
         if (c.isEmpty()) {
-//            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERNOEXIST, getIp_Adress());
             formulariologin.recordError("Usuario no existe. Contacte a un administrador");
             return this;
         }
@@ -135,8 +129,6 @@ public class RecuperarClave {
         SecureRandom random = new SecureRandom();
         clave = new BigInteger(50, random).toString(32);
         usuario.setMd5Clave(Encriptacion.encriptaEnMD5(clave));
-        //usuario.setClave(password);
-        //sendPasswordByEMail(usuario.getTrabajador().getEmailLaboral(), usuario.getLogin(), password);
         String subject = "Datos de acceso al sistema Servir";
         String body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getNroDocumento(), clave);
 
@@ -145,11 +137,9 @@ public class RecuperarClave {
             session.saveOrUpdate(usuario);
             System.out.println("envío Correcto");
             administrador = true;
-            //formulariologin.recordError("La nueva contraseña ha sido enviado a su correo electrónico laboral. Verifique su bandeja de entrada.");
         } else {
             System.out.println("envío Fallido");
             logger.loguearEvento(session, logger.ACCESOS, usuarioTrabajador.getEntidadid(), usuarioTrabajador.getTrabajadorid(), usuarioTrabajador.getId(),Logger.LOGIN_MOTIVO_ERROR_RECUPERAR_CLAVE,0);
-//            logger.loguearAcceso(session, null, Logger.LOGIN_STATUS_ERROR, Logger.LOGIN_MOTIVO_RECHAZO_USERLOW, getIp_Adress());
             formulariologin.recordError("Hubo un problema al enviar la nueva contraseña a su correo electrónico. Intente más tarde.");
         }
         
@@ -174,24 +164,16 @@ public class RecuperarClave {
     }
 
     void onActivate() {
-        System.out.println("CARGA LA PAGINA=============>>>>");
         System.out.println(administrador);
         clearCacheData();
     }
 
     public String getIp_Adress() {
-        //String ip_Adress = "";
         String ip_Adress = requestGlobal.getHTTPServletRequest().getHeader("X-Forwarded-For");
         if (ip_Adress != null) {
             return ip_Adress;
         } else {
             return requestGlobal.getHTTPServletRequest().getRemoteAddr();
         }
-        /*
-         * try { ip_Adress =
-         * requestGlobal.getHTTPServletRequest().getRemoteAddr(); } catch
-         * (Exception e) { //error }
-         */
-        //return ip_Adress;
     }
 }

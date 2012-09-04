@@ -61,6 +61,7 @@ public class DesasignarCargo extends GeneralPage {
     @SessionState
     private Usuario _usuario;
 
+    //accion de boton seleccionado
     void onSelectedFromDesasignarEquivoco() {
         equivoco = true;
         desasignar = true;
@@ -112,6 +113,7 @@ public class DesasignarCargo extends GeneralPage {
     }
 
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormularioConfirmacionDesasignacion() {
@@ -133,10 +135,10 @@ public class DesasignarCargo extends GeneralPage {
 
     }
 
+    // estados de la pagina
     void onActivate(CargoAsignado c) {
         ca = c;
         t = c.getTrabajador();
-        //fec_fin = new Date();
         desasignar = false;
     }
 

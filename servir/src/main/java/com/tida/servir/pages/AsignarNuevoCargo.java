@@ -67,8 +67,6 @@ public class AsignarNuevoCargo extends GeneralPage {
     private Boolean unidadSeleccionada;
     @Inject
     private PropertyAccess _access;
-    //private GenericSelectModel<Cargo> _beans;
-
 
     public Cargoxunidad getcargo() {
         return cargo;
@@ -79,6 +77,7 @@ public class AsignarNuevoCargo extends GeneralPage {
         return Helpers.getValorTablaAuxiliar("TipoVínculo", session);
     }
 
+    // cargar combos
     public CargosSelectModel<Cargoxunidad> getBeans() {
         Criteria c = session.createCriteria(Cargoxunidad.class)
                 .add(Restrictions.eq("und_organica", unidadorganica))
@@ -109,6 +108,7 @@ public class AsignarNuevoCargo extends GeneralPage {
     public AsignarNuevoCargo() {
     }
 
+    // validacion de campos
     @Log
     void onValidateFromformularioasignar() {
         if (Helpers.getCantPuestosOcupadosCargo(session, cargo) >= cargo.getCtd_puestos_total()) {
@@ -147,16 +147,15 @@ public class AsignarNuevoCargo extends GeneralPage {
 
         cargoAsignado.setLegajo((Legajo) crit.list().get(0)); //tomo el primer
         cargoAsignado.setFec_inicio(fec_inicio);
-//        cargoAsignado.setCtd_per_superv(ctd_per_superv);
         cargoAsignado.setTrabajador(trabajador);
         cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
-        //cargoAsignado.setTipoVinculo(tipoVinculo);
         session.merge(cargoAsignado);
         new Logger().loguearOperacion(session, _usuario, String.valueOf(cargoAsignado.getId()), Logger.CODIGO_OPERACION_ALTA, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO_ASIGNADO);
 
         return Busqueda.class;
     }
 
+    // fromulario principal
     @Log
     @CommitAfter
     Object onSuccessFromformulariounidadorganica() {

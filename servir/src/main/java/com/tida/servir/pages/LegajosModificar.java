@@ -196,6 +196,7 @@ public class LegajosModificar  extends GeneralPage {
         legajo = l;
     }
 
+    // estado de pagina activa
     @Log
     void onActivate(Trabajador t)
     {

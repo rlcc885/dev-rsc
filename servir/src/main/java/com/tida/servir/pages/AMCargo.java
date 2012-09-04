@@ -66,12 +66,11 @@ public class AMCargo {
         _beans = new GenericSelectModel<UnidadOrganica>(list, UnidadOrganica.class, "den_und_organica", "id", _access);
     }
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromformularioaltacargo() {
         // FIXME: chequear que la ue no esté repetida, etc
-
-        // System.out.println("Unidad organica: " + cargo.getUnd_organica());
         UnidadOrganica uo = (UnidadOrganica) session.load(UnidadOrganica.class, cargo.getUnidadorganica().getId());
         cargo.setUnidadorganica(uo);
         session.saveOrUpdate(cargo);
@@ -94,12 +93,8 @@ public class AMCargo {
         cargo = new Cargoxunidad();
     }
 
-    /*
-     * Borrar la fila
-     */
-    /*
-     * Cargar desde los parámetros
-     */
+
+    // estados de la pagina
     void onActivate(Cargoxunidad c) {
         if (c == null) {
             c = new Cargoxunidad();

@@ -557,4 +557,13 @@ public class DatosPersonalesEditor {
     Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
         return _request.isXHR() ? new MultiZoneUpdate("tipoPensionZone", tipoPensionZone.getBody()) : null;
     }
+    
+    
+    @Log
+    Object onValueChangedFromtiene_eps()
+    {
+
+        System.out.println("EPS EVENTO LANZADO");
+        return null;
+    }
 }

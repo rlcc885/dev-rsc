@@ -1,35 +1,18 @@
 package com.tida.servir.pages;
 
-import annotations.XHR;
-import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.*;
 import helpers.Constantes;
 
-import helpers.Helpers;
-import com.tida.servir.services.SelectIdModelFactory;
-import helpers.Errores;
-import helpers.Logger;
-
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.SelectModel;
-
-import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.Form;
 
 import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
@@ -72,7 +55,7 @@ public class Inicio  extends GeneralPage {
     @Property
     private Entidad_BK entidad_nueva;
     
-    
+    //cargar datos de entidades
     public List<Entidad_BK> getEntidadesUEjecutoras() {
         Criteria c;
         c = session.createCriteria(Entidad_BK.class);
@@ -81,7 +64,7 @@ public class Inicio  extends GeneralPage {
         return c.list();
     }
 
-
+    //cargar datos de empleados
     public List<Trabajador> getEmpleados() {
         Criteria c = session.createCriteria(CargoAsignado.class);
         c.createAlias("trabajador", "trabajador");
@@ -91,31 +74,7 @@ public class Inicio  extends GeneralPage {
         return c.list();
     }
  
-    /*
-    @Log
-    void onActionFromReset() {
-        entidadUE = new EntidadUEjecutora();
-        e=new Trabajador();
-    }
-
-    @Log
-    public void onActivate(EntidadUEjecutora eue,Trabajador t) {
-        entidadUE = eue;
-         e = t;
-        //editando = true;
-    }
-    */
-    
-    // TODO revisar JZM
-//    public boolean getNoEditable() {
-//        return !getEditable();
-//    }
-//
-//    public boolean getEditable() {
-//       return Permisos.muestraGrillaEntidad(_usuario);
-//    }
-   
- 
+    // obtener fila
      public String getSelectionRow() {
         if (actual != null) {
             if (e.getId() == actual.getId()) {
@@ -127,6 +86,7 @@ public class Inicio  extends GeneralPage {
 
     }
     
+    // incio de pagina
     @Log
     @SetupRender
     void initializeValue()

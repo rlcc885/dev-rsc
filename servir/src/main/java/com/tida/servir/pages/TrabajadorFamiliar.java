@@ -92,6 +92,7 @@ public class TrabajadorFamiliar extends GeneralPage {
         return mensajes != null;
     }
 
+    // inicio de la pagina
     @Log
     @SetupRender
     private void inicio() {

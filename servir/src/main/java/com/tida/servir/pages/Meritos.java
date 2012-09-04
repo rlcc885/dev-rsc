@@ -47,6 +47,7 @@ public class Meritos extends GeneralPage {
     @Inject
     private ComponentResources _resources;
 
+    // inicio de pagina
     @Log
     @SetupRender
     private void inicio() {
