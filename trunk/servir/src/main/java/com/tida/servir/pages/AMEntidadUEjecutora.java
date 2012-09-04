@@ -224,6 +224,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
     private boolean bessubentidad;
     @Property
     @Persist
+    private boolean noCambiaSubentidad;
+
+    @Property
+    @Persist
     private boolean bCancelFormulario;
     @Property
     @Persist
@@ -354,6 +358,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         jefeRRHH = "";
         jefeOGA = "";
         bessubentidad = false;
+        //
+        noCambiaSubentidad = false;
     }
 
     // cargar datos
@@ -376,9 +382,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
+            //
+            noCambiaSubentidad = true;
+            //
             entidad_origen = entidadUE.getEntidad().getDenominacion();
         } else {
+            
             bessubentidad = false;
+            //
+            noCambiaSubentidad = false;
+            //
         }
         if (entidadUE.getDepartamento() != null) {
             ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
@@ -555,9 +568,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
+            //
+            noCambiaSubentidad = true;
+            //
             entidad_origen = entidadUE.getEntidad().getDenominacion();
         } else {
             bessubentidad = false;
+            //
+            noCambiaSubentidad = false;
+            //
         }
         if (entidadUE.getDepartamento() != null) {
             ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
@@ -605,12 +624,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 return "AMEntidadUEjecutora";
             }
         } else if (bResetFormulario) {
-            System.out.println("********FASE 1");
             if (opcion_limpiar.equals(true)) {
-                System.out.println("**** RESETFORMULARIO");
                 resetFormulario(entidadUE);
             } else {// entidadUE = new Entidad();
-                System.out.println("***** LIMPIAR FORMULARIO");
                 this.limpiar_formulario();
             }
 
@@ -630,37 +646,23 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
 
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
-            System.out.println("****************** 22222");
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-            System.out.println("****************** 22222");
             System.out.println(entidadUE.getEsSubEntidad());
-            // System.out.println(entidadUE.getTipoSubEntidad().toString());
-
-            ///************ 17 agosto
             if (entidadUE.getEsSubEntidad() == null)
             {entidadUE.setEsSubEntidad(false);
             }
             String x = ruc_anterior;   
             Criteria c = session.createCriteria(Entidad.class);
-            System.out.println("*********KC :"+entidadUE.getEsSubEntidad());
-         //   c.add(Restrictions.eq("ruc", x));
        if (!editando)    
        {  
            c.add(Restrictions.eq("ruc",entidadUE.getRuc()));
             if (entidadUE.getEsSubEntidad()) 
             {
-//                if (!c.list().isEmpty()) {
-//                    if (!entidadUE.getEntidad().getRuc().equals(entidadUE.getRuc())) {
-//                        //envelope.setContents("RUC duplicado");
-//                        formulariomensajes.recordError("RUC duplicado");
-//                        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-//                    }
-//                }
+
             } 
             else 
             {
                     if (!c.list().isEmpty()) {
-                    //envelope.setContents("RUC duplicado");
                      formulariomensajes.recordError("RUC duplicado");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                      }
@@ -676,16 +678,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
               if (!c.list().isEmpty())
                 {
                     formulariomensajes.recordError("RUC duplicado");
-                    //envelope.setContents("RUC duplicado");
                     return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                 }
          }
        }
-       
-
-
-            //**************************************************
-            
             
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
@@ -694,7 +690,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 }
             }
 
-            System.out.println("************************* 1111111");
             if (entidadUE.getNivelGobierno() == null) {
                 envelope.setContents("Debe ingresar el Nivel de Gobierno");
                 return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
@@ -729,7 +724,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
-            System.out.println("********** FASE DE CREACION FIN");
             session.saveOrUpdate(entidadUE);
             session.flush();
             if (editando) {
@@ -740,7 +734,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
             } else {
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), _usuario.getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
-            // envelope.setContents("Entidad creada exitosamente");
             envelope.setContents(this.mensaje_accion());
             // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
             opcion_limpiar = false;
@@ -780,6 +773,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vformulario = true;
          if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
+            //
+            noCambiaSubentidad = true;
+            //
             if(entidadUE.getEntidad() != null){
                 if(entidadUE.getEntidad().getDenominacion().toString() != null){
                     entidad_origen = entidadUE.getEntidad().getDenominacion().toString();
@@ -787,8 +783,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             }
         } else {
             bessubentidad = false;
+            //
+            noCambiaSubentidad = false;
+            //
         }
-//         entidad_origen = entidadUE.getEntidad().toString();
         vbotones = true;
         opcion_limpiar = true;
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody());
@@ -803,6 +801,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vbotones = false;
         vformulario = true;
         bessubentidad = true;
+        //
+        noCambiaSubentidad = true;
+        //
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody()).add("botonesZone", botonesZone.getBody());
     }
 
@@ -936,8 +937,14 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onSuccessFromFormularioEntidadOrigen() {
         if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
+            //
+            noCambiaSubentidad = true;
+            //
         } else {
             bessubentidad = false;
+            //
+            noCambiaSubentidad = false;
+            //
         }
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody()).
                 add("busZone2", busZone2.getBody()).
@@ -1008,7 +1015,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
     }
 
     @Log
-    Object onActionFromSeleccionaEntidad(Entidad entidad) {
+    Object onActionFromSeleccionaEntidad(Entidad entidad) 
+    {
         System.err.println("onActionFromSeleccionaEntidad");
         if (entidad != null) {
             entidad_origen = entidad.getDenominacion();
@@ -1018,10 +1026,21 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE.setTipoZona(entidad.getTipoZona());
             entidadUE.setDescvia(entidad.getDescvia());
             entidadUE.setDescZona(entidad.getDescZona());
+            
+            /* no tomar en cuenta al crear/modificar subentidad
             entidadUE.setNivelGobierno(entidad.getNivelGobierno());
             entidadUE.setOrganizacionEstado(entidad.getOrganizacionEstado());
             entidadUE.setSectorGobierno(entidad.getSectorGobierno());
             entidadUE.setTipoOrganismo(entidad.getTipoOrganismo());
+            */
+            //
+            entidadUE.setNivelGobierno(null);
+            entidadUE.setOrganizacionEstado(null);
+            entidadUE.setSectorGobierno(null);
+            entidadUE.setTipoOrganismo(null);            
+            //
+            noCambiaSubentidad = false;
+            
             ubigeoEntidadUE.setDepartamento(entidad.getDepartamento());
             ubigeoEntidadUE.setProvincia(entidad.getProvincia());
             ubigeoEntidadUE.setDistrito(entidad.getDistrito());
@@ -1192,6 +1211,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
         jefeRRHH = null;
         jefeOGA = null;
         bessubentidad = false;
+        //
+        noCambiaSubentidad = false;
+        //
         ubigeoEntidadUE.setDepartamento(null);
         ubigeoEntidadUE.setProvincia(null);
         ubigeoEntidadUE.setDistrito(null);
