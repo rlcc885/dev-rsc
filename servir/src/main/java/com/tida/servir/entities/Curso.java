@@ -17,6 +17,9 @@ public class Curso implements Serializable {
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
     @NonVisual
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CURSO_ID_SEQ", allocationSize = 1)
     private Long id;
 //    @ManyToOne(optional = false)    
     private String denominacion;     
@@ -38,8 +41,7 @@ public class Curso implements Serializable {
     @NonVisual
     private Entidad entidad;
     
-    @Id
-    @GeneratedValue
+
     public Long getId() {
         return id;
     }

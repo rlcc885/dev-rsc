@@ -1,10 +1,7 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
@@ -25,7 +22,8 @@ public class RemuneracionPersonal implements Serializable {
     private Long cargoasignado_id;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_REMPERSONAL_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

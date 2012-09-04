@@ -32,7 +32,8 @@ public class Publicacion implements Serializable {
     private Trabajador trabajador;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_PUBLICACION_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

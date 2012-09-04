@@ -19,7 +19,8 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class ConstanciaDocumental {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CONSTANCIADOC_ID_SEQ", allocationSize = 1)
     @NonVisual
     private Long id;
     @ManyToOne

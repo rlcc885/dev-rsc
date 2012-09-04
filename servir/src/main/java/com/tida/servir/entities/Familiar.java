@@ -37,7 +37,8 @@ public class Familiar // extends Persona
     
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_FAMILIAR_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

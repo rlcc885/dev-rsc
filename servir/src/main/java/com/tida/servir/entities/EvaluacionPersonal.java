@@ -31,7 +31,8 @@ public class EvaluacionPersonal {
     private CargoAsignado cargoasignado;
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_EVALUACION_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

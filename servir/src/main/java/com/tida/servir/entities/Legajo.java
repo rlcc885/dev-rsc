@@ -79,7 +79,8 @@ public class Legajo implements Serializable {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_LEGAJO_ID_SEQ", allocationSize = 1)
 //	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //	@GenericGenerator(name = "system-uuid", strategy = "uuid")
     public long getid() {
