@@ -113,9 +113,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar bsectorGobierno;
+    //
     @Property
     @Persist
-    private DatoAuxiliar btipoOrganismo;
+    private DatoAuxiliar tipOrganismo;
+    
+    //
+//    @Property
+//    @Persist
+//    private DatoAuxiliar btipoOrganismo;
     @Property
     @Persist
     private Ubigeo ubigeobusEntidadUE;
@@ -477,7 +483,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bnivelGobierno = null;
         bsectorGobierno = null;
         borganizacionEstado = null;
-        btipoOrganismo = null;
+        tipOrganismo = null;
         busdenominacion = "";
         ubigeobusEntidadUE = new Ubigeo();
         btiposubentidad = null;
@@ -485,6 +491,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeobusSubEntidadUE = new Ubigeo();
         bBuscaEntidad = false;
         busestado=null;
+        bMuestraSector = false;
     }
 
     @Log
@@ -508,7 +515,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bnivelGobierno = null;
         bsectorGobierno = null;
         borganizacionEstado = null;
-        btipoOrganismo = null;
+        tipOrganismo = null;
         busdenominacion = "";
         ubigeobusEntidadUE = new Ubigeo();
         btiposubentidad = null;
@@ -840,8 +847,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (borganizacionEstado != null) {
                 c.add(Restrictions.eq("organizacionestado", borganizacionEstado.getValor()));
             }
-            if (btipoOrganismo != null) {
-                c.add(Restrictions.eq("tipoorganismo", btipoOrganismo.getValor()));
+            if (tipOrganismo != null) {
+                c.add(Restrictions.eq("tipoorganismo", tipOrganismo.getValor()));
             }
             if (busdenominacion != null) {
                 c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + busdenominacion + "%").ignoreCase()).
