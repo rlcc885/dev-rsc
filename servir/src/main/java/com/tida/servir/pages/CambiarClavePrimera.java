@@ -43,7 +43,9 @@ public class CambiarClavePrimera extends GeneralPage {
     private String newPass2;
     @Persist
     private boolean cambioForzado;
-
+    
+    private int elemento=0;
+    
     @Property
     @SessionState
     private Entidad_BK _entidadUE;
@@ -66,20 +68,26 @@ public class CambiarClavePrimera extends GeneralPage {
     // fromulario principal
     @Log
     @CommitAfter
-    Zone onSuccessFromFormularioCambioClave() {
+    Object onSuccessFromFormularioCambioClave() {
+        
+        if(elemento==1){
+            return  "CambiarClave";
+        }
+         else{
+        
         if (!Encriptacion.encriptaEnMD5(oldPass).equals(_usuario.getMd5Clave())) {
             formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
-            return zone;
+            return zone.getBody();
         }
 
         if (oldPass.equals(Encriptacion.encriptaEnMD5(newPass1))) {
             formulariocambioclave.recordError("La nueva clave debe ser diferente a la actual.");
-            return zone;
+            return zone.getBody();
         }
 
         if (!newPass1.equals(newPass2)) {
             formulariocambioclave.recordError("Las claves ingresadas deben ser iguales.");
-            return zone;
+            return zone.getBody();
         }
 
         envelope.setContents("Clave modificada con éxito.");
@@ -91,6 +99,11 @@ public class CambiarClavePrimera extends GeneralPage {
         _usuario.setIntentos_fallidos(0L);
         session.saveOrUpdate(_usuario);
 
-        return zone;
+        return zone.getBody();
+        }
+    }
+    
+    void onSelectedFromReset() {
+         elemento=1;
     }
 }
