@@ -580,7 +580,8 @@ public class ABMUsuario extends GeneralPage {
     Object onSuccessFromPerfilInputForm() {
         Perfilusuario permiso = new Perfilusuario();
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK();
-        perfilusuariopk.setUsuarioId(usuario.getId());
+        System.out.println("usuariooooooo"+usuario.getId());
+        perfilusuariopk.setUsuarioId(usuariotrabajadoredit.getId());
         perfilusuariopk.setPerfilId(perfil.getId());
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
