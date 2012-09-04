@@ -22,12 +22,12 @@
                             <div class="f-left">
                                 <t:label for="duracion_clave"/>
                                 <input t:type="TextField" t:id="duracion_clave"
-                                       t:value="vigenciaClave" size="3" t:validate="max=365,min=1,required,regexp" />
+                                       t:value="vigenciaClave" size="3" t:validate="max=365,min=1,required,regexp,maxlength=19" />
                             </div>
                             <div class="f-left">
                                 <t:label for="cantidad_intentos"/>
                                 <input t:type="TextField" t:id="cantidad_intentos"
-                                       t:value="ca.intentos_bloqueo" size="3" t:validate="required" />
+                                       t:value="ca.intentos_bloqueo" size="3" t:validate="required,maxlength=19" />
                             </div>
                         </div>
                     </fieldset>
@@ -37,22 +37,22 @@
                             <div class="f-left">
                                 <t:label for="smtp_servidor"/>
                                 <input t:type="TextField" t:id="smtp_servidor"
-                                       t:value="ca.smtp_servidor" size="30" t:validate="required" />
+                                       t:value="ca.smtp_servidor" size="30" t:validate="required,maxlength=255" />
                             </div>
                             <div class="f-left">
                                 <t:label for="smtp_usuario"/>
                                 <input t:type="TextField" t:id="smtp_usuario"
-                                       t:value="ca.smtp_usuario" size="30" t:validate="required" />
+                                       t:value="ca.smtp_usuario" size="30" t:validate="required,maxlength=255" />
                             </div>
                             <div class="f-left">
                                 <t:label for="smtp_clave"/>
                                 <input t:type="TextField" t:id="smtp_clave"
-                                       t:value="ca.smtp_clave" size="30" t:validate="required" />
+                                       t:value="ca.smtp_clave" size="30" t:validate="required,maxlength=50" />
                             </div>
                             <div class="f-left">
                                 <t:label for="smtp_puerto"/>
                                 <input t:type="TextField" t:id="smtp_puerto"
-                                       t:value="ca.smtp_puerto" size="3" t:validate="required" />
+                                       t:value="ca.smtp_puerto" size="3" t:validate="required,maxlength=255" />
                             </div>
                             <div id="bouttons" style="margin-top:22px;">
                                 <t:eventLink t:event="probarConexion" href="#" t:zone="zone" class="button">

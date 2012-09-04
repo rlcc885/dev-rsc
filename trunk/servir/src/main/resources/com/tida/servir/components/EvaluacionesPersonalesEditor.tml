@@ -33,7 +33,7 @@
                          <div class="f-wrap"> 
                              <div class="f-left">
                                 <label>* Resultado </label>
-                                <input t:type="TextField" t:id="resultado" t:validate="regexp" t:value="evaluacion.calificacion" maxlength="255" size="34" t:disabled="${vdetalle}"/>
+                                <input t:type="TextField" t:id="resultado" t:validate="regexp,maxlength=10" t:value="evaluacion.calificacion" size="34" t:disabled="${vdetalle}"/>
                              </div>
                          </div>
                              <div class="logoentidad" style="position:relative; top:-90px; left:430px; width: 200px; height: 50px;">

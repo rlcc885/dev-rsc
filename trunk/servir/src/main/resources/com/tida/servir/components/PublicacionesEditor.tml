@@ -40,8 +40,8 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Título: </label>
-                            <input t:type="TextField" t:id="titulo" t:value="publicacion.titulo" t:validate="required" 
-                                   t:disabled="${vdetalle}" size="50"/>
+                            <input t:type="TextField" t:id="titulo" t:value="publicacion.titulo" t:validate="required,maxlength=255" 
+                                   t:disabled="${vdetalle}" size="50" />
                         </div>
                         <div class="f-left">
                             <label>Fecha: </label>
