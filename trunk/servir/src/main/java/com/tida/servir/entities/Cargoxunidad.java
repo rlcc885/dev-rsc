@@ -22,10 +22,8 @@ public class Cargoxunidad implements Serializable {
     //	@Id
 //  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //  @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Id
-    @NonVisual
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
-    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CARGOXUNIDAD_ID_SEQ", allocationSize = 1)
+    
+    @NonVisual    
     private long id;
 //	@PrimaryKeyJoinColumn
 //	@Validate("required")
@@ -249,7 +247,9 @@ public class Cargoxunidad implements Serializable {
         this.unidadorganica = unidadorganica;
     }
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_CARGOXUNIDAD_ID_SEQ", allocationSize = 1)
     public long getId() {
         return id;
     }
