@@ -25,7 +25,7 @@
                         <div class="f-left">
                             <t:label for="importe"/>
                             <input t:type="TextField" t:id="importe" t:value="remuneracion.importe"
-                                   t:validate="required, regexp" t:disabled="${vdetalle}"/>                               
+                                   t:validate="required, regexp,maxlength=19" t:disabled="${vdetalle}"/>                               
                         </div>      
                     </div>
                 </fieldset>
