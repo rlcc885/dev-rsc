@@ -48,9 +48,6 @@ public class Busqueda extends GeneralPage {
     @Property
     @SessionState
     private Entidad _entidadUE;
-//    @Property
-//    @SessionState
-//    private Usuario _usuario;
     @SessionState
     @Property
     private UsuarioTrabajador usuarioTrabajador;
@@ -86,9 +83,6 @@ public class Busqueda extends GeneralPage {
     @Persist
     @Property
     private String nroDocumento;
-//    @Persist
-//    @Property
-//    private String tipoDocumento;
     //
     // Datos para los filtros
     //
@@ -177,8 +171,6 @@ public class Busqueda extends GeneralPage {
     @Property
     @Persist
     private Boolean flg_altatrabajador;
-//    @Component(id = "xxx")
-//    private Form xxx;
     @Property
     @Persist
     private LkBusquedaTrabajador persons;
@@ -195,10 +187,10 @@ public class Busqueda extends GeneralPage {
     @Property
     private String fecnacimientomayora;
 
+    // inicio de pagina
     @Log
     void setupRender() {
         limpiar();
-        // MODIFICACION 13 AGOSTO
         vselect = true;
         flg_altatrabajador = true;
         fechaingresode = "";
@@ -215,7 +207,6 @@ public class Busqueda extends GeneralPage {
         } else {
             usu = (UsuarioAcceso) result.get(0);
             vselect = (usu.getAccesoselect() != 0);
-//            System.out.println("Eliminar1" + usu.getAccesodelete() + usu.getAccesoreport() + usu.getAccesoupdate());
         }
     }
 
@@ -229,6 +220,7 @@ public class Busqueda extends GeneralPage {
         this.mensajes = mensajes;
     }
 
+    // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getFormacionprofesional() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("FORMACIONPROFESIONAL", null, 0, session);
@@ -241,9 +233,6 @@ public class Busqueda extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-//    public List<String> getSexos() {
-//        return Helpers.getValorTablaAuxiliar("SEXO", session);
-//    }
     @Log
     public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
@@ -278,9 +267,8 @@ public class Busqueda extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
 
     }
-    //WW  @Component(id = "formulariobusquedasfiltros")
-    //WW  private Form formulariobusquedasfiltros;
 
+    // cargar empleados
     @Log
     public List<LkBusquedaTrabajador> getEmpleados() throws ParseException {
         Criteria criterio = session.createCriteria(LkBusquedaTrabajador.class);
@@ -368,112 +356,13 @@ public class Busqueda extends GeneralPage {
         }
 
         return criterio.list();
-
-//        String consulta = "SELECT distinct S9.ID,S2.VALOR TIPODOC,S9.NRODOCUMENTO,S9.NOMBRES,S9.APELLIDOPATERNO,S9.APELLIDOMATERNO,S1.ID CARGOASI "
-//                + "FROM RSC_CARGOASIGNADO S1 JOIN RSC_LEGAJO S8 ON S8.ID=S1.LEGAJO_ID "
-//                + "JOIN RSC_TRABAJADOR S9 ON S9.ID=S1.TRABAJADOR_ID "
-//                + "JOIN RSC_CARGOXUNIDAD S10 ON S10.ID=S1.CARGOXUNIDAD_ID "
-//                + "LEFT JOIN RSC_DATOAUXILIAR S2 ON S2.ID = S9.DOCUMENTOIDENTIDAD_ID "
-//                + "WHERE S1.ESTADO=1 AND (S8.ENTIDAD_ID='" + _entidadUE.getId() + "')";
-//
-//        //List pri=session.createSQLQuery("select id,apellidopaterno,apellidomaterno,nombres from rsc_trabajador where entidad_id=40").list();
-//        //persons=(List<Trabajador>)session.createSQLQuery("select id,apellidopaterno from rsc_trabajador where entidad_id=40").list();
-////        Criteria c = session.createCriteria(CargoAsignado.class); 
-////        c.createAlias("trabajador", "trabajador");
-////        c.createAlias("legajo", "legajo");
-////        c.createAlias("cargoxunidad", "cargoxunidad");
-////        c.add(Restrictions.eq("legajo.entidad", _entidadUE));
-////        // busquedasI
-//        if (apellidoPaterno != null && !apellidoPaterno.equals("")) {
-//            consulta += " AND UPPER(S9.APELLIDOPATERNO) LIKE UPPER('" + apellidoPaterno + "')||'%'";
-//
-//        }
-//        if (apellidoMaterno != null && !apellidoMaterno.equals("")) {
-//            consulta += " AND UPPER(S9.APELLIDOMATERNO) LIKE UPPER('" + apellidoMaterno + "')||'%'";
-//        }
-//        if (nombres != null && !nombres.equals("")) {
-//            consulta += " AND UPPER(S9.NOMBRES) LIKE UPPER('" + nombres + "')||'%'";
-//        }
-//
-//        if (nroDocumento != null && !nroDocumento.equals("")) {
-//            //System.out.println("------------------ empleados nroDocumento " + nroDocumento);
-//            consulta += " AND S9.NRODOCUMENTO='" + nroDocumento + "'";
-//        }
-//
-//        if (valdocumentoide != null && !valdocumentoide.equals("")) {
-//            consulta += " AND S9.DOCUMENTOIDENTIDAD_ID='" + valdocumentoide.getId() + "'";
-//        }
-//
-//        // filtros
-//        if (sexo != null && !sexo.equals("")) {
-//            if (sexo.equals("MASCULINO")) {
-//                consulta += " AND S9.SEXO= 'M'";
-//            } else if (sexo.equals("FEMENINO")) {
-//                consulta += " AND S9.SEXO= 'F'";
-//            }
-//        }
-//
-//        if (valTipoDiscapacidad != null && !valTipoDiscapacidad.equals("")) {
-//            consulta += " AND S9.TIPODISCAPACIDAD_ID='" + valTipoDiscapacidad.getId() + "'";
-//        }
-//
-//        if (valestadocivil != null && !valestadocivil.equals("")) {
-//            consulta += " AND S9.ESTADOCIVIL_ID='" + valestadocivil.getId() + "'";
-//        }
-//
-//        if (valregimenlaboral != null && !valregimenlaboral.equals("")) {
-//            consulta += " AND S10.REGIMENLABORAL_ID='" + valregimenlaboral.getId() + "'";
-//        }
-//        if (valunidadorganica != null && !valunidadorganica.equals("")) {
-//            consulta += " AND S10.UNIDADORGANICA_ID='" + valunidadorganica.getId() + "'";
-//        }
-//
-//        if (valnivelinstruccion != null && !valnivelinstruccion.equals("")) {
-//            consulta += " AND S9.NIVELINSTRUCCION_ID='" + valnivelinstruccion.getId() + "'";
-//        }
-//        if (valformacionprofe != null && !valformacionprofe.equals("")) {
-//            consulta += " AND S9.FORMACIONPROFESIONAL_ID='" + valformacionprofe.getId() + "'";
-//        }
-//
-//
-//        java.util.Date date = new java.util.Date();
-//        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-//        String fecha = "";
-//        if (fechadenacimientomayora != null) {
-//            fecha = sdf.format(fechadenacimientomayora);
-//            consulta += " AND S9.FECHANACIMIENTO>=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-//        }
-//
-//        if (fechadenacimientomenora != null) {
-//            fecha = sdf.format(fechadenacimientomenora);
-//            consulta += " AND S9.FECHANACIMIENTO<=(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-//        }
-//        if (fechadeingresodesdea != null) {
-//            fecha = sdf.format(fechadeingresodesdea);
-//            consulta += " AND S1.FEC_INICIO>(select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-//        }
-//
-//        if (fechadeingresohastaa != null) {
-//            fecha = sdf.format(fechadeingresohastaa);
-//            consulta += " AND S1.FEC_INICIO< (select to_date('" + fecha + "','dd/MM/yyyy') from dual)";
-//
-//        }
-//
-//        consulta += " ORDER BY(APELLIDOPATERNO)";
-////
-////        c.add(Restrictions.like("estado", CargoAsignado.ESTADO_ALTA));
-////        c.setProjection(Projections.distinct(Projections.property("trabajador")));
-////        Trabajador trabajador = new Trabajador();
-//        //System.out.println("-------------------- trabajador "+trabajador.getNroDocumento());
-//        Query query = session.createSQLQuery(consulta).addEntity(LkAdminTrabajador.class);
-//        return query.list();
     }
+
     private boolean resetBusquedas = false;
 
     @Log
     void onSelectedFromBorrarBusquedasA() {
         resetBusquedas = true;
-        //reseteo el formulario
     }
 
     @Log
@@ -492,9 +381,7 @@ public class Busqueda extends GeneralPage {
         }
         return this;
     }
-//    @Property
-//    @InjectComponent
-//    private Zone filtrosZone;
+
     @Component(id = "formulariobusquedaA")
     private Form formulariobusquedaA;
     @Property
@@ -505,14 +392,13 @@ public class Busqueda extends GeneralPage {
         if (resetBusquedas) {
             limpiar();
             formulariobusquedaA.clearErrors();
-//        }
-//        if (resetBusquedas) {
             resetBusquedas = false;
             return new MultiZoneUpdate("busquedaA", busquedaA.getBody());
         } else {
             return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
         }
     }
+
     @Component(id = "formulariobusquedaB")
     private Form formulariobusquedaB;
     @Property
@@ -541,12 +427,9 @@ public class Busqueda extends GeneralPage {
         if (resetBusquedas) {
             limpiarBusquedaB();
             formulariobusquedaB.clearErrors();
-//        }
-//        if (resetBusquedas) {
             resetBusquedas = false;
 
             return new MultiZoneUpdate("busquedaB", busquedaB.getBody());
-            //return this;
         } else {
             return new MultiZoneUpdate("empleadoszone", empleadoszone.getBody());
         }
@@ -611,11 +494,10 @@ public class Busqueda extends GeneralPage {
         nombres = null;
         nroDocumento = null;
         valdocumentoide = null;
-        //
     }
 
+    // limpiar los campos de busqueda
     void limpiarBusquedaB() {
-        //      tipoDocumento = null;
         sexo = null;
         fechadenacimientomenora = null;
         fechadenacimientomayora = null;
@@ -636,13 +518,10 @@ public class Busqueda extends GeneralPage {
         fechadeingresodesdea = null;
         fechadeingresohastaa = null;
         valregimenlaboral = null;
-
-        //=======13 agosto
         valestadocivil = null;
         valunidadorganica = null;
         valnivelinstruccion = null;
         valformacionprofe = null;
-        //
         fechaingresode = "";
         fechaingresoa = "";
         fecnacimientomenora = "";

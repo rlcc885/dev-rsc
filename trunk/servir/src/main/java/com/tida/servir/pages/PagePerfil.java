@@ -98,9 +98,6 @@ public class PagePerfil {
     @SuppressWarnings("unused")
     @Property
     private boolean selectAll = false;
-//    @InjectComponent
-//    @Property
-//    private Checkbox controlTotal;
     @Persist
     @Property
     private boolean bcontrolTotal;
@@ -111,6 +108,7 @@ public class PagePerfil {
     @Property
     private String fechaCreacion;
 
+    // inicio de pagina
     @Log
     void setupRender() {
         if (editaPerfil == null) {
@@ -131,21 +129,15 @@ public class PagePerfil {
         perfil.setEstado(true);
         errorMessage = "";
         errorMessageSavePerfil = "";
-//        okMessageSavePerfil = "";
     }
 
     @Log
     String onActivate() {
-        // Validar Acceso a la página
-        /*
-         * if (!userExists) { return "Index"; } return null;
-         */
         return null;
     }
 
     @Log
     public boolean isEliminaPerfil() {
-        //  && rowPerfil.getMenuCollection().isEmpty() && rowPerfil.getUsuarioCollection().isEmpty()
         if (rowPerfil.getId() > 8) {
             return true;
         } else {
@@ -153,6 +145,7 @@ public class PagePerfil {
         }
     }
 
+    // cargar combos de formulario
     @Log
     public GenericSelectModel<Menu> getBeanOpciones() {
         List<Menu> list;
@@ -226,7 +219,6 @@ public class PagePerfil {
     // Si pulsa el enlace de PERMISOS
     @Log
     Object onActionFromPermisoPerfil(Perfil lperfil) {
-        System.out.println("--------------------------------------------------");
         perfil = lperfil;
         mostrarNew = false;
         errorMessageSavePerfil = "";
@@ -323,6 +315,7 @@ public class PagePerfil {
         bcontrolTotal = false;
     }
 
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromPermisoInputForm() {
@@ -337,6 +330,7 @@ public class PagePerfil {
         return zonasTotal();
     }
 
+    // actualizacion de zonas
     @Log
     private MultiZoneUpdate zonasTotal() {
         MultiZoneUpdate mu;
@@ -344,8 +338,5 @@ public class PagePerfil {
                 add("listaPermisoZone", listaPermisoZone.getBody()).
                 add("editPermisoZone", editPermisoZone.getBody());
         return mu;
-//        mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).
-//                add("editZone", editZone.getBody());
-//        return mu;
     }
 }

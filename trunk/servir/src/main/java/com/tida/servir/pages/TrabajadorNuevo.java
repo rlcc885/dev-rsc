@@ -34,8 +34,6 @@ public class TrabajadorNuevo extends GeneralPage {
 
     @Inject
     private Session session;
-//    @SessionState
-//    private Usuario loggedUser;
     @SessionState
     @Property
     private UsuarioTrabajador usuarioTrabajador;
@@ -56,9 +54,6 @@ public class TrabajadorNuevo extends GeneralPage {
     @InjectComponent
     @Property
     private Zone trabajadorNuevoZone;
-//    @InjectComponent
-//    @Property
-//    private Zone unidadOrganicaZone;
     @InjectComponent
     @Property
     private Zone nuevaUnidadZone;
@@ -68,19 +63,11 @@ public class TrabajadorNuevo extends GeneralPage {
     @InjectComponent
     @Property
     private Zone cargosZone;
-//    @InjectComponent
-//    @Property
-//    private Zone nuevoCargosZone;
-//    @InjectComponent
-//    @Property
-//    private Zone botonesZone;
     @InjectComponent
     private Zone mensajesZone;
     //Formularios
     @Component(id = "formulariotrabajadornuevo")
     private Form formulariotrabajadornuevo;
-//    @Component(id = "formulariounidadorganica")
-//    private Form formulariounidadorganica;
     @Component(id = "formularionuevaunidadorganica")
     private Form formularionuevaunidadorganica;
     @Component(id = "formulariomensajes")
@@ -104,20 +91,11 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private Cargoxunidad cargo2;
-//    @Property
-//    @Persist
-//    private Cargoxunidad ncargo;
     //Variables
     private List<String> tiposDoc = new ArrayList();
-//    @Property
-//    @Persist
-//    private boolean bUOrganica;
     @Persist
     @Property
     private String nuevaUOrganica;
-//    @Property
-//    @Persist
-//    private boolean bCargo;
     @Persist
     @Property
     private String nuevoCargo;
@@ -152,9 +130,6 @@ public class TrabajadorNuevo extends GeneralPage {
     @Persist
     @Property
     private LkBusquedaTrabajador listaentidad;
-//    @PageActivationContext
-////    @Persist
-//    private Trabajador actual;
     @Property
     @Persist
     private Boolean mostrar;
@@ -168,14 +143,8 @@ public class TrabajadorNuevo extends GeneralPage {
     @Persist
     private DatoAuxiliar regimenla;
 
-//    public Trabajador getActual() {
-//        return actual;
-//    }
-//
-//    public void setActual(Trabajador actual) {
-//        this.actual = actual;
-//    }
 
+    // inicio de la pagina
     @Log
     @SetupRender
     void initializeValue() {
@@ -214,23 +183,8 @@ public class TrabajadorNuevo extends GeneralPage {
         }
     }
 
-//    @Log
-//    void buscarlegajo() {
-//        Criteria c = session.createCriteria(Legajo.class);
-//        c.add(Restrictions.eq("trabajador", actual));
-//        c.add(Restrictions.eq("entidad", oi));
-//        c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-//        List result = c.list();
-//        nuevoLegajo = (Legajo) result.get(0);
-//    }
 
-//    public List<String> getTiposDoc() {
-//    	Criteria c = session.createCriteria(DatoAuxiliar.class);
-//    	c.add(Restrictions.eq("nombreTabla", "DOCUMENTOIDENTIDAD"));
-//        c.add(Restrictions.ne("valor", "Partida de nacimiento (solo a menores)"));
-//    	c.setProjection(Projections.property("valor"));
-//        return c.list();
-//    }
+    // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
@@ -264,28 +218,14 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<LkCargosDisponibles>(list, LkCargosDisponibles.class, "den_cargo", "id", _access);
     }
 
-//    void onSelectedFromAgregarUO() {
-//        elemento = 5;
-//    }
-//            @Log
-//    Object onActionFromNuevaUnidadOrganica() {
-//        creaNuevaUnidad = true;
-//        return nuevaUnidadZone.getBody();
-//    }
+
+    // formulario de creacion de nueva UO
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {
-//        if (elemento == 5) {
-        System.out.println("entroo aaa");
         System.out.println("entroo aaa" + nuevaUOrganica);
         if (nuevaUOrganica == null) {
-//                System.out.println("entroo bbbb");
-            //envelope.setContents("No puede agregar una Unidad Organica vacia");
             formulariotrabajadornuevo.recordError("No puede agregar una Unidad Organica vacia.");
-//                elemento = 0;
-//                bUOrganica = false;
-//                return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
-//                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
         } else {
             System.out.println("entroo ccc");
             nuevaunidadorganica = new UnidadOrganica();
@@ -295,37 +235,14 @@ public class TrabajadorNuevo extends GeneralPage {
             nuevaunidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
             session.saveOrUpdate(nuevaunidadorganica);
             envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
-//                elemento = 0;
-//                bUOrganica = false;
         }
-//        } else {
-//            if (bUOrganica) {
-//                bUOrganica = false;
-//            } else {
-//                bUOrganica = true;
-//            }
-//        }
 
         return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
 
-//    void onSelectedFromAgregarCargo() {
-//        elemento = 6;
-//    }
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromFormulariounidadorganica() {
-//        return new MultiZoneUpdate("nuevaUnidadOrganicaZone", nuevaUnidadOrganicaZone.getBody())
-//                .add("cargosZone", cargosZone.getBody());
-//    }
-//    @Log
-//    Object onActionFromNuevaUnidadOrganica() {
-//        bUOrganica = true;
-//        bCargo = false;
-//        return nuevaUnidadCargoZone.getBody();
-//    }
 
+    // formulario de creacion de nuevo cargo
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevocargo() {
@@ -346,28 +263,11 @@ public class TrabajadorNuevo extends GeneralPage {
 
         }
 
-
-
         return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
 
-//    @Log
-//    void onPrepareFromformulariotrabajadornuevo() {
-//        if (nuevo == null) {
-//            nuevo = new Trabajador();
-//        }
-//        System.out.println("entro y gravo " + fechaingreso);
-//        System.out.println("entro y gravo2 " + puestoconfianza);
-//        //trabajadorTieneCargoOtraEntidad = false;
-//    }
-//    @Log
-//    @CommitAfter
-//    Object onSuccessFromformulariotrabajadornuevo() {
-//        System.out.println("entro y gravo " + fechaingreso);
-//        System.out.println("entro y gravo2 " + puestoconfianza);
-//        return trabajadorNuevoZone.getBody();
-//    }
+
     @Log
     public boolean getDNI() {
         if (nuevo.getTipodiscapacidad().equals("DNI")) {
@@ -395,15 +295,12 @@ public class TrabajadorNuevo extends GeneralPage {
     }
 
 
+
+    // formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormulariotrabajadornuevo() throws ParseException {
 
-        //       if(elemento==1){
-        //           return "TrabajadorNuevo";
-        //       }else if(elemento==2){
-        //           return "Alerta";
-        //       }else{
         if (getListadoEntidades().size() > 0) {
             envelope.setContents(helpers.Constantes.EUE_EXITO);
             envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
@@ -452,10 +349,8 @@ public class TrabajadorNuevo extends GeneralPage {
                         //Trabajador ya existe
                        nuevo=(Trabajador) session.load(Trabajador.class, getListadoTrabajadores().get(0).getId());
                        if(cargo2.getRegimenlaboral()!=null){
-                           System.out.println("aquiiiiiiusuarioo");
                          if(cargo2.getRegimenlaboral().getFlg_creausuario()==true){ 
                            if(getListadoUsuario().size()>0){
-                               System.out.println("aquiiifinallll");
                                usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
                                usuarionuevo.setEntidad(oi);
                                usuarionuevo.setEstado(1);
@@ -471,7 +366,6 @@ public class TrabajadorNuevo extends GeneralPage {
                     }
                     else{
                         if(cargo2.getRegimenlaboral()!=null){
-                            System.out.println("aquiiiiiiusuarioo");
                             if(cargo2.getRegimenlaboral().getFlg_creausuario()==true){                            
                                 seteanuevousuario(usuarionuevo);
                                 session.saveOrUpdate(usuarionuevo);
@@ -503,9 +397,7 @@ public class TrabajadorNuevo extends GeneralPage {
                     }
                 }
 
-                //cargoAsignado.setFec_inicio(fechaingreso);
                 cargoAsignado.setTipovinculo(tipovinculo);
-                //cargo2.setId(cargo.getId());
                 cargoAsignado.setCargoxunidad(cargo2);
                 cargoAsignado.setPuestoconfianza(puestoconfianza);
                 session.saveOrUpdate(cargoAsignado);
@@ -513,11 +405,9 @@ public class TrabajadorNuevo extends GeneralPage {
 
                 envelope.setContents(helpers.Constantes.EUE_EXITO);
                 envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
-//                actual = null;
                 return Busqueda.class;
             }
         }
-//        }        
     }
 
     void seteanuevousuario(Usuario usuarionuevo){
@@ -559,6 +449,7 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
     }
         
+    // evento de valor cambiados en los campos
     @Log
     void onDNIChanged() {
         nuevo.setNroDocumento(_request.getParameter("param"));

@@ -28,6 +28,7 @@ public class CambioEntidad  extends GeneralPage
     @Inject
     private Session session;
     
+    // inicio de la pagina
     @SetupRender
     void initValues() {
         if (eue == null) {

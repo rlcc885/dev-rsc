@@ -63,6 +63,7 @@ public class CambiarClavePrimera extends GeneralPage {
         return envelope.getContents().length() == 0;
     }
 
+    // fromulario principal
     @Log
     @CommitAfter
     Zone onSuccessFromFormularioCambioClave() {

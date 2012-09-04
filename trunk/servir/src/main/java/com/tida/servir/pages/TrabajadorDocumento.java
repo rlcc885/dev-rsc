@@ -79,7 +79,8 @@ public class TrabajadorDocumento  extends GeneralPage
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
 
-        @Log
+    // inicio de la pagina
+    @Log
     @SetupRender
     private void inicio() {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");

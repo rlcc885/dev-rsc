@@ -40,9 +40,6 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @SessionState
     private Entidad entidad;
-//    @Property
-//    @Persist
-//    private Usuario usuario;
     @Property
     private UsuarioTrabajador u;
     @Property
@@ -60,9 +57,6 @@ public class ABMUsuario extends GeneralPage {
     private GenericSelectModel<LkEstadoUsuario> _lkEstadoUsuario;
     @Inject
     private PropertyAccess _access;
-//    @InjectComponent
-//    @Property
-//    private Zone mensajes;
     @Component(id = "formmensaje")
     private Form formmensaje;
     @Component(id = "formularioCuenta")
@@ -106,9 +100,6 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private boolean cancelaEditUsuario;
-//    @Persist
-//    @Property
-//    private boolean newPerfil;
     @Persist
     @Property
     private String bidentificacionBusqueda;
@@ -121,9 +112,6 @@ public class ABMUsuario extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar documentoIdentidadEdit;
-//    @Property
-//    @Persist
-//    private LkEstadoUsuario estadoUsuarioEdit;
     @Property
     @Persist
     private Rol rolUsuarioEdit;
@@ -212,6 +200,7 @@ public class ABMUsuario extends GeneralPage {
     @Property 
     private boolean esUsuarioTrabajador;
 
+    // inicio de la pagina
     @Log
     void setupRender() {
         muestraEditorUsuario = true;
@@ -251,6 +240,7 @@ public class ABMUsuario extends GeneralPage {
         return Helpers.getValorTablaAuxiliar("TipoDocumento", session);
     }
 
+    // cargar los combos
     @Log
     public GenericSelectModel<Rol> getRolUsuario() {
         List<Rol> list;
@@ -395,6 +385,7 @@ public class ABMUsuario extends GeneralPage {
         return mu;
     }
 
+    // seleccion del boton    
     @Log
     void onSelectedFromBuscarSubmit() {
         bBuscarSubmit = true;
@@ -482,6 +473,7 @@ public class ABMUsuario extends GeneralPage {
         return zonasTotal();
     }
 
+    //formulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormularioPersonal() {
@@ -520,7 +512,6 @@ public class ABMUsuario extends GeneralPage {
         if (errores) {
             return zonasTotal();
         }
-//        if (bLoginValido) {
         ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
         String password = null;
         String subject = null;
@@ -531,7 +522,6 @@ public class ABMUsuario extends GeneralPage {
         password = new BigInteger(50, random).toString(32);
         
         if (esUsuarioTrabajador) {
-//            usuario = (Usuario) session.get(Usuario.class, usuariotrabajadoredit.getTrabajadorid());
             body = String.format("Identificación de Usuario: %s<br />Clave: %s", usuario.getTrabajador().getDocumentoidentidad().getCodigo() + usuario.getTrabajador().getNroDocumento(), password);
             correo = usuario.getTrabajador().getEmailLaboral();
             usuariotrabajadoredit.setTrabajadorid(0L);
@@ -582,7 +572,6 @@ public class ABMUsuario extends GeneralPage {
         session.saveOrUpdate(usuario);
         envelope.setContents(helpers.Constantes.USUARIO_EXITO);
         resetUsuario();
-//        }
         return zonasTotal();
     }
 
@@ -624,62 +613,9 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     void onActivate() {
-//        Document pdfDocument = new Document();
-//        URL oracle = new URL("http://www.oracle.com/");
-//        URLConnection conn = oracle.openConnection();
-//        /*
-//         * Reader htmlreader = new BufferedReader(new InputStreamReader(
-//         * oracle.openStream() ));
-//         */
-//        Reader htmlreader = new BufferedReader(new InputStreamReader(
-//                new FileInputStream("c://grafico.html")));
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        PdfWriter.getInstance(pdfDocument, baos);
-//        pdfDocument.open();
-//        StyleSheet styles = new StyleSheet();
-//        styles.loadTagStyle("body", "font", "Bitstream Vera Sans");
-//        ArrayList arrayElementList = (ArrayList) HTMLWorker.parseToList(htmlreader, styles);
-//        for (int i = 0; i < arrayElementList.size(); ++i) {
-//            Element e = (Element) arrayElementList.get(i);
-//            pdfDocument.add(e);
-//        }
-//        pdfDocument.close();
-//        byte[] bs = baos.toByteArray();
-//        String pdfBase64 = Base64.encodeBytes(bs); //output
-//        File pdfFile = new File("pdfExample.pdf");
-//        FileOutputStream out = new FileOutputStream(pdfFile);
-//        out.write(bs);
-////        out.close();
-//
-//        // codigo valido para html pero invalido para XHTML
-//        // no esta cerrando el tag img
-//        String html = new String("<img scr='img.gif'>");
-//        //--
-//        ByteArrayInputStream b = new ByteArrayInputStream(html.getBytes());
-//        ByteArrayOutputStream out2 = new ByteArrayOutputStream();
-//
-//        Tidy tidy = new Tidy();
-//        tidy.setXHTML(true); // queremos que la salida sea xhtml
-//        tidy.parse(b, out2);
-//        System.out.println(out2.toString());
-//        
-//        HtmlImageGenerator imageGenerator = new HtmlImageGenerator();
-//        imageGenerator.loadUrl("http://dl.dropbox.com/u/4151695/html/jOrgChart/example/example.html");
-//        imageGenerator.saveAsImage("hello-world.png");
-//        imageGenerator.saveAsHtmlWithMap("hello-world.html", "hello-world.png");
-//
-//        File inputFile = new File("hola.xhtml");
-//        OutputStream os = new FileOutputStream(new File("xhtmlToPdf_holaMundo.pdf"));
-//
-//        ITextRenderer renderer = new ITextRenderer();
-//        renderer.setDocument(inputFile);
-//        renderer.layout();
-//        renderer.createPDF(os);
-//
-//        os.close();
-//        out.close();
     }
 
+    //accion de editar usuario
     @Log
     Object onEditaUsuario(UsuarioTrabajador lusuariotrabajador) {
         usuario = (Usuario) session.get(Usuario.class, lusuariotrabajador.getId());
@@ -707,6 +643,7 @@ public class ABMUsuario extends GeneralPage {
         return zonasTotal();
     }
 
+    // accion de editar perfil
     @Log
     Object onEditaPerfil(UsuarioTrabajador lusuariotrabajador) {
         usuariotrabajadoredit = lusuariotrabajador;
@@ -733,6 +670,7 @@ public class ABMUsuario extends GeneralPage {
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
     }
 
+    // seleccion de entidad
     @Log
     Object onActionFromSeleccionaEntidad(Entidad entidad) {
         if (entidad != null) {
@@ -758,7 +696,6 @@ public class ABMUsuario extends GeneralPage {
         Criteria c = session.createCriteria(Entidad.class);
         if (bdenoentidad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()));
-            //.add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()))
         }
         return c.list();
     }
