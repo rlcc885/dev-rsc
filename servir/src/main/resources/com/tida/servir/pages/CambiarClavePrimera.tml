@@ -15,18 +15,18 @@
                             <div class="f-wrap" id="div_cambiarclave">
                                 <t:label for="clave_actual"/>
                                 <input t:type="PasswordField" t:id="clave_actual"
-                                   t:value="oldPass" size="20"/>
+                                   t:value="oldPass" size="20" t:validate="maxlength=50"/>
                             </div>
                             <div class="f-wrap" id="cambiarclave">
                                 <div class="f-left">
                                     <t:label for="nueva_clave"/>
                                     <input t:type="PasswordField" t:id="nueva_clave"
-                                       t:value="newPass1" size="20" onkeyup="javascript: verificar();" />
+                                           t:value="newPass1" size="20" onkeyup="javascript: verificar();" t:validate="maxlength=50"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="repita_nueva_clave"/>
                                     <input t:type="PasswordField" t:id="repita_nueva_clave"
-                                       t:value="newPass2" size="20"  />
+                                       t:value="newPass2" size="20" t:validate="maxlength=50" />
                                 </div>
                             </div>
                             <div class="f-wrap" id="complejidadclave">                                 
@@ -51,7 +51,7 @@
         var letras=/[A-Za-z\s]/;
         var caracteres =  /\W/;
         var numeros=/[0-9]/;
-        var cantidad =  /[a-zA-Z0-9]{6,100}/;
+        var cantidad =  /[a-zA-Z0-9]{6,50}/;
         
 
         function verificar(){   

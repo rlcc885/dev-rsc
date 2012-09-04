@@ -29,19 +29,19 @@
                             <div class="f-left">
                                 <t:label for="clave_vieja"/>
                                 <input t:type="PasswordField" t:id="clave_vieja"
-                                   t:value="oldPass" size="20"  />
+                                   t:value="oldPass" size="20" t:validate="maxlength=50" />
                             </div>
                         </div>
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="clave_nueva_1"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_1"
-                                       t:value="newPass1" size="20"  onkeyup="javascript: verificar();" />
+                                       t:value="newPass1" size="20" t:validate="maxlength=50" onkeyup="javascript: verificar();" />
                             </div>
                             <div class="f-left">
                                 <t:label for="clave_nueva_2"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_2"
-                                       t:value="newPass2" size="20"  />
+                                       t:value="newPass2" size="20" t:validate="maxlength=50" />
                             </div>
                         </div>
                        
@@ -71,7 +71,7 @@
         var letras=/[A-Za-z\s]/;
         var caracteres =  /\W/;
         var numeros=/[0-9]/;
-        var cantidad =  /[a-zA-Z0-9]{6,100}/;
+        var cantidad =  /[a-zA-Z0-9]{6,50}/;
         
 
         function verificar(){   
