@@ -49,15 +49,15 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="nombres"/>
-                            <input t:type="TextField" t:id="nombres" t:disabled="${vdetalle}"  t:validate="required" t:value="familiarActual.nombres" maxlength="255" size="33"/>
+                            <input t:type="TextField" t:id="nombres" t:disabled="${vdetalle}"  t:validate="required,maxlength=150" t:value="familiarActual.nombres" maxlength="255" size="33"/>
                         </div>
                         <div class="f-left">
                             <t:label for="apellidoPaterno" />
-                            <input t:type="TextField" t:id="apellidoPaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
+                            <input t:type="TextField" t:id="apellidoPaterno" t:validate="required,maxlength=150" t:disabled="${vdetalle}" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
                         </div>
                         <div class="f-left">
                             <t:label for="apellidoMaterno" />
-                            <input t:type="TextField" t:id="apellidoMaterno" t:validate="required" t:disabled="${vdetalle}" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
+                            <input t:type="TextField" t:id="apellidoMaterno" t:validate="required,maxlength=150" t:disabled="${vdetalle}" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
                         </div>
                     </div>
                     <div class="f-wrap">

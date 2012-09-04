@@ -318,7 +318,7 @@ public class FamiliaresEditor {
 
        if(valEstadoCivil!=null)     
       {
-        if(familiarActual.getParentesco().getCodigo() == 1 || valEstadoCivil.getCodigo()==1)
+        if(familiarActual.getParentesco().getCodigo() == 1 && valEstadoCivil.getCodigo()==1)
         {
             envelope.setContents("El estado civil de un Conyuge no puede ser Soltero/a");
             return actualizar();

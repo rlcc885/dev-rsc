@@ -201,25 +201,25 @@
                             <div class="f-left">
                                 <t:label for="NivelGobierno"/>
                                 <select t:type="Select" t:id="NivelGobierno" t:value="entidadUE.nivelgobierno" model="NivelGobierno" 
-                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" t:style="width:120px;" disabled="${bessubentidad}" />                     
+                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" t:style="width:120px;" disabled="${noCambiaSubentidad}" />                     
                             </div>
                             <div class="f-left"> 
                                 <t:label for="organizacionEdicion"/>
                                 <select t:type="Select" t:id="organizacionEdicion" t:value="entidadUE.organizacionestado" model="OrganizacionEstadoEdicion" 
-                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" disabled="${bessubentidad}" />
+                                    t:zone="zoneDatos" t:validate="required" t:blankOption="ALWAYS" disabled="${noCambiaSubentidad}" />
                             </div>
                             <t:if test="bMuestraSectorEdicion">
                                 <div class="f-left"> 
                                     <t:label for="sectorgobierno"/>
                                     <input t:type="Select" t:id="sectorgobierno" t:value="entidadUE.sectorgobierno"
                                        model="SectorGobierno" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zoneDatos"
-                                       t:validate="required" t:blankOption="ALWAYS" disabled="${bessubentidad}" />
+                                       t:validate="required" t:blankOption="ALWAYS" disabled="${noCambiaSubentidad}" />
                                 </div>
                                 <div class="f-left"> 
                                     <t:label for="tipoorganismo"/>
                                     <input t:type="Select" t:id="tipoorganismo" t:value="entidadUE.tipoorganismo" 
                                        model="TipoOrganismo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="zoneDatos"
-                                       t:validate="required" t:blankOption="ALWAYS" t:style="width:335px;" disabled="${bessubentidad}" />
+                                       t:validate="required" t:blankOption="ALWAYS" t:style="width:335px;" disabled="${noCambiaSubentidad}" />
                                 </div>
                             </t:if>  
                         </div>
@@ -505,6 +505,7 @@
                 </div>
             </t:if>
         </t:zone>
+        
         <div t:type="zone" t:id="entiZone" t:update="show">
             <t:if test="bSeleccionaEntidad">
                 <t:if test="mostrar">
