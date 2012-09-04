@@ -19,7 +19,9 @@ public class Publicacion implements Serializable {
 
     @NonVisual
     private Long id;  
+    @ManyToOne
     private DatoAuxiliar clasepublicacion;
+    @ManyToOne
     private DatoAuxiliar tipo;
     private String titulo;
     private String descripcion;
@@ -27,8 +29,9 @@ public class Publicacion implements Serializable {
     private Date fecha;
     private boolean agregadoTrabajador;
     private Boolean validado;
-    
+    @ManyToOne
     private Entidad entidad;
+    @ManyToOne
     private Trabajador trabajador;
     
     @Id

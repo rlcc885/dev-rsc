@@ -107,7 +107,7 @@ public class Ant_Laborales implements Serializable {
     public void setValidado(Boolean validado) {
         this.validado = validado;
     }
-
+    @ManyToOne
     public Trabajador getTrabajador() {
         return trabajador;
     }
@@ -115,7 +115,7 @@ public class Ant_Laborales implements Serializable {
     public void setTrabajador(Trabajador trabajador) {
         this.trabajador = trabajador;
     }
-
+    @ManyToOne
     public Entidad getEntidad() {
         return entidad;
     }

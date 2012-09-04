@@ -32,7 +32,7 @@ public class MeritoDemerito implements Serializable {
     private String motivo;
     @Validate("required")
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date fecha;    
     private Long entidad_id;
     private Long trabajador_id;
 

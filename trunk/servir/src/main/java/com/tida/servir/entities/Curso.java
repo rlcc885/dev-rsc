@@ -24,8 +24,10 @@ public class Curso implements Serializable {
 //    @ManyToOne(optional = false)    
     private String denominacion;     
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar tipocurso;    
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar centroestudio;
     private String otrocentroestudio;
     private Boolean estudiando;
@@ -37,8 +39,10 @@ public class Curso implements Serializable {
     private Boolean validado;
     private Boolean fueradelpais;
     @NonVisual
+    @ManyToOne
     private Trabajador trabajador;
     @NonVisual
+    @ManyToOne
     private Entidad entidad;
     
 
