@@ -49,11 +49,11 @@
                     <div class="f-wrap">                        
                         <div class="f-left">
                             <label>Denominación</label>
-                            <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="33"/>                                
+                            <input t:type="TextField" t:id="bdenouni" t:value="bdenouni" size="33" t:validate="maxlength=255"/>                                
                         </div>
                         <div class="f-left">
                             <label>Sigla</label>
-                            <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="33"/>
+                            <input t:type="TextField" t:id="bsigla" t:value="bsigla" size="33" t:validate="maxlength=20"/>
                         </div>
                     </div>
                     <div class="actions f-right">

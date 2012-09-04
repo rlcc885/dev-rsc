@@ -59,7 +59,7 @@
                         <legend>Descripción del Perfil:</legend>
                         <div class="f-left">
                             <t:label for="descripcion"/>
-                            <t:textfield t:id="descripcion" t:value="perfil.descperfil" t:size="80" t:style="text-transform: uppercase;" t:disabled="${vNoeditaperfil}"/>
+                            <t:textfield t:id="descripcion" t:value="perfil.descperfil" t:size="80" t:style="text-transform: uppercase;" t:disabled="${vNoeditaperfil}" t:validate="maxlength=255"/>
                         </div>
                         <div class="f-left">
                             <t:label for="estado"/>

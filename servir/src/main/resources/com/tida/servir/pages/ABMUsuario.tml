@@ -146,7 +146,7 @@
                                 <t:form t:id="formularioCuenta" t:zone="idValidaLogin">
                                     <t:label for="loginedit" />
                                     <input t:type="TextField" t:id="loginedit" t:value="usuariotrabajadoredit.login" t:size="32" 
-                                           t:validate="maxLength=50,minLength=4,required" t:disabled="${noEditaLoginUsuario}"
+                                           t:validate="maxlength=50,minLength=4,required" t:disabled="${noEditaLoginUsuario}"
                                            onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
                                     <t:if test="${editaUsuario}" negate="true" >
                                         <input t:type="Submit" t:id="validalogin" value="Ver Disponibilidad" class="button" t:zone="idValidaLogin" t:disabled="${noEditaUsuario}"/>
@@ -193,15 +193,15 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nombresedit" />
-                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
+                                    <input t:type="TextField" t:id="nombresedit" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required,maxlength=255"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="apellidoPaternoedit" />
-                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
+                                    <input t:type="TextField" t:id="apellidoPaternoedit" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required,maxlength=255"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="apellidoMaternoedit" />
-                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required"/>
+                                    <input t:type="TextField" t:id="apellidoMaternoedit" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="${noEditaUsuario}" t:validate="required,maxlength=255"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
@@ -214,17 +214,17 @@
                                 </div>
                                 <div class="f-left">
                                     <t:label for="nrodocumentoedit"/>
-                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp"
+                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp,maxlength=20"
                                            t:disabled="${noEditaUsuario}" 
                                            t:size="32"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="emailLaboralEdit" />
-                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}" t:validate="required,regexp"/>
+                                    <input t:type="TextField" t:id="emailLaboralEdit" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="${noEditaUsuario}" t:validate="required,regexp,maxlength=255"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="telefonoEdit" />
-                                    <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxLength=20,minLength=1" t:disabled="${noEditaUsuario}"/>
+                                    <input t:type="TextField" t:id="telefonoEdit" t:value="usuariotrabajadoredit.telefono" t:size="32" t:validate="maxlength=20,minLength=1" t:disabled="${noEditaUsuario}"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
@@ -270,7 +270,7 @@
                                 <div>
                                     <t:label for="observacionedit" />
                                     <input t:type="TextArea" t:id="observacionedit" t:value="usuariotrabajadoredit.observacion" 
-                                           t:validate="maxLength=150" 
+                                           t:validate="maxlength=150" 
                                            t:rows="5" 
                                            t:cols="123"/>
                                     <em>(Ingresar 150 caracteres como máximo)</em>

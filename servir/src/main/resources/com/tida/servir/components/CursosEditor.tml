@@ -45,7 +45,7 @@
                         </div>
                         <div class="f-left">
                             <label>* Denominación</label>
-                            <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="70" t:disabled="${vdetalle}" />
+                            <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="70" t:disabled="${vdetalle}" t:validate="maxlength=255" />
                         </div>               
                     </div>
                     <div class="f-wrap">

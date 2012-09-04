@@ -47,7 +47,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Motivo</label>
-                            <input t:type="TextArea" t:id="motivo" t:validate="required" t:value="merito.motivo" maxlength="255" cols="30" t:disabled="${vdetalle}"/>
+                            <input t:type="TextArea" t:id="motivo" t:validate="required,maxlength=255" t:value="merito.motivo" cols="30" t:disabled="${vdetalle}"/>
                             <label>
                                 <i>(Máximo 250 caracteres)</i>
                             </label>
