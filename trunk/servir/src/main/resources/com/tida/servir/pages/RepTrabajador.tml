@@ -21,8 +21,9 @@
     <div class="organismo_titulo">
         Categoría: ${categoria}
     </div>
+    
     <div t:type="zone" t:id="tipoReporteZone">
-        <t:form t:id="formularioReporte" zone="tipoReporteZone">
+        <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
             <fieldset>
                 Tipo de Reporte: &nbsp;
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
@@ -34,14 +35,68 @@
             </fieldset>
             
             <fieldset>
+                <div visible="${mostrarFiltrosTrabajador}">
+                    <legend> Categoría: Trabajador </legend>
+                    <div class="f-wrap">                             
+                        <t:zone t:id="trabajadorZone" t:update="show">
+                            <div class="f-left">
+                                <t:label for ="titular"/>
+                                <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
+                                <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                            </div>
+                        </t:zone>
+                    </div>
+                </div>
+                
                 <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" />
             </fieldset>
         </t:form>
     </div>
 
-    <script>
-        function mostrarEsconder() {
-        cach.visibility = "visible";
+    <script type="text/javascript">
+        
+        function mostrar() {
+            var modal= document.getElementById('modal');
+            var shade= document.getElementById('shade');
+            modal.style.display=shade.style.display= 'block';
+        }
+        function ocultar() {
+            var modal= document.getElementById('modal');
+            var shade= document.getElementById('shade');
+            modal.style.display=shade.style.display= 'none';
         }
     </script>
+    
+    <div id="shade"></div>
+    <div id="modal">
+        <t:zone t:id="busZone" t:update="show" >
+            <h1>Selección de Trabajador</h1>
+            <div class="pane">
+                <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            Nombre completo: 
+                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                        </div>                   
+                        <div class="actions f-right">
+                            <input id="buscarsubmit2" type="submit" value="Buscar" class="button" />
+                            <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </t:zone>
+        <t:zone t:id="trabaZone" t:update="show">
+            <t:if test="mostrar">
+                <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
+                    <t:parameter name="empty">
+                        <div class="no-info">No hay Trabajadores encontrados.</div>
+                    </t:parameter>
+                    <p:accionesCell> 
+                        <t:actionlink t:id="seleccionaTitular" zone="TitularZone" context="titulart" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                    </p:accionesCell>
+                </t:grid>
+            </t:if>
+        </t:zone>
+    </div>
 </html>

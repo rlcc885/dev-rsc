@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.RadioGroup;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -19,8 +20,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Start page of application servir.
@@ -107,6 +110,30 @@ public class RepTrabajador extends GeneralPage {
 
     @Inject
     private Context context;
+    
+    @Property
+    @InjectComponent
+    private Zone trabajadorZone;
+    
+    @Property
+    @Persist
+    private String titular;
+    
+    @Property
+    @InjectComponent
+    private Zone busZone;
+    
+    @Persist
+    @Property
+    private String nombreTrabajador;
+
+    @Property
+    @Persist
+    private boolean mostrar;
+
+    @Property
+    @Persist
+    private LkBusquedaTrabajador titulart;
 
     @Log
     void setupRender() {
@@ -130,6 +157,24 @@ public class RepTrabajador extends GeneralPage {
         }
     }
 
+    void onSelectedFromCancelFormFindTrabajador() {
+        mostrar = false;
+    }
+
+    @Log
+    Object onSuccessFromFormFindTrabajador() {
+        return null;
+    }
+
+    @Log
+    public List<LkBusquedaTrabajador> getTrabajadores() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+        if (nombreTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoReportes() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOREPORTE", null, 0, session);
@@ -138,7 +183,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     StreamResponse onSuccessFromFormularioReporte() {
-        Long userId = new Long("247");
+        Long userId = new Long("9");
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("MandatoryParameter_UsuarioID", userId);
