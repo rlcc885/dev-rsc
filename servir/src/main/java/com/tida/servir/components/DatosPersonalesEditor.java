@@ -501,7 +501,12 @@ public class DatosPersonalesEditor {
                 vdatospersonales = true;
                 vdatosubicacion = false;
                 votros = true;
+                vgruposanguineo=true;
                 vemergencia = false;
+                vtipodiscapacidad=true;
+                vruc = true;
+                vconadis=true;
+                vessalud=true;
             } else if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vdatospersonales = true;
                 vdatosubicacion = false;
