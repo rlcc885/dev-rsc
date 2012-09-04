@@ -41,8 +41,12 @@
                                 <input t:type="Select" t:id="bsectorGobierno" t:value="bsectorGobierno" model="SectorGobierno" t:zone="busquedacombosZone" t:blankOption="ALWAYS"/>
                             </div>
                             <div class="f-left"> 
-                                <t:label for="btipoOrganismo"/>
+                          <!--      <t:label for="btipoOrganismo"/>
                                 <input t:type="Select" t:id="btipoOrganismo" t:value="btipoOrganismo" model="TipoOrganismo" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:335px;"/>
+                               -->
+                               <label>Tipo de Organismo</label>
+                                <input t:type="Select" t:id="prueba" t:value="tipOrganismo" model="TipoOrganismo" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:335px;"/>
+                                
                             </div>
                         </t:if>
                     </div>

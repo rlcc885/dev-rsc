@@ -67,7 +67,7 @@
                         <div class="f-left">
                             <t:label for="sentidad">Entidad</t:label>
                             <select t:type="Select" t:id="sentidad" t:value="sentidad" t:style="width:600px;"
-                                    t:model="Entidades" t:encoder="Entidades" t:blankOption="NEVER" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                    t:model="Entidades" t:encoder="Entidades" t:blankOption="ALWAYS" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
                                     t:zone="EntidadZone"/>
                         </div>
                     </t:zone>

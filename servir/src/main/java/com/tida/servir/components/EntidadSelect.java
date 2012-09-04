@@ -115,6 +115,11 @@ public class EntidadSelect {
     @Component(id = "formulariobotones")
     private Form formulariobotones;
 
+// CAMBIOS EN LA ENTIDAD    
+    @Property
+    @Persist
+    private LkBusquedaEntidad entidadPrueba;
+    
     //Para inicializar valores
     @Log
     void setupRender() {
@@ -141,34 +146,14 @@ public class EntidadSelect {
             System.out.println(ssubentidad.getDenominacion());
         }
 
-        //Si se requiere que se seteen en los combos los valores de la entidad seleccionada por defecto
-        /*
-         * if (entidad != null) { snivelGobierno = entidad.getNivelGobierno();
-         * sorganizacionestado= entidad.getOrganizacionEstado(); ssectorGobierno
-         * = entidad.getSectorGobierno(); stipoOrganismo =
-         * entidad.getTipoOrganismo(); sentidad = entidad; } else { if
-         * (!vistaCorta) { //Cargamos alguna entidad Criteria c =
-         * session.createCriteria(Entidad.class);
-         * c.add(Restrictions.ne("estado", true)); sentidad = entidad =
-         * (Entidad) c.list().get(0); snivelGobierno =
-         * entidad.getNivelGobierno(); sorganizacionestado=
-         * entidad.getOrganizacionEstado(); ssectorGobierno =
-         * entidad.getSectorGobierno(); stipoOrganismo =
-         * entidad.getTipoOrganismo(); } }
-         *
-         */
-
+        entidadPrueba = sentidad;
+        sentidad = null;
     }
 
     //para obtener datos del Nivel Gobierno
     @Log
     public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
-//        DatoAuxiliar todos = new DatoAuxiliar();
-//        todos.setId(9999999999L);
-//        todos.setValor("TODOS");
-//        todos.setCodigo(9999999999L);
-//        list.add(todos);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
@@ -231,12 +216,6 @@ public class EntidadSelect {
         if (stipoSubEntidad != null) {
             c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
         }
-        
-//        if (sentidad != null) {
-//            c.add(Restrictions.eq("entidad", sentidad));
-//        }
-        //c.addOrder(Order.asc("denominacion"));
-        //c.add(Restrictions.eq("essubentidad", 1));
         return c.list();
     }
 
@@ -319,8 +298,18 @@ public class EntidadSelect {
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
         if (elemento == 1) {
+            
+          // cambios   
+            sentidad = null;
+          // cambios  
+            
             return "CambioEntidad";
         } else if (elemento == 2) {
+            
+          // cambios  
+            if (sentidad == null){sentidad = entidadPrueba;}
+          // cambios
+            
             return "Alerta";
         } else {
             if (bessubentidad) {
@@ -340,6 +329,11 @@ public class EntidadSelect {
                     System.out.println("docccccc"+entidad);
                 }
             }
+            
+            
+            System.out.println("LA ENTIDADX ES : "+sentidad);
+
+                    
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
             if (_zone != null) {
                 return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
@@ -347,5 +341,6 @@ public class EntidadSelect {
                 return UnidadEjecutoraZone.getBody();
             }
         }
+        
     }
 }
