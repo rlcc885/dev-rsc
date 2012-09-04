@@ -21,12 +21,12 @@
                                 <div class="f-left">
                                     <t:label for="nueva_clave"/>
                                     <input t:type="PasswordField" t:id="nueva_clave"
-                                       t:value="newPass1" size="20" />
+                                       t:value="newPass1" size="20" onkeyup="javascript: verificar();" />
                                 </div>
                                 <div class="f-left">
                                     <t:label for="repita_nueva_clave"/>
                                     <input t:type="PasswordField" t:id="repita_nueva_clave"
-                                       t:value="newPass2" size="20" onclick="javascript: verificar();" />
+                                       t:value="newPass2" size="20"  />
                                 </div>
                             </div>
                             <div class="f-wrap" id="complejidadclave">                                 
@@ -49,20 +49,25 @@
 
     <script language="javascript">
         var letras=/[A-Za-z\s]/;
-        var caracteres =  /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,100})$/;
+        var caracteres =  /\W/;
         var numeros=/[0-9]/;
         var cantidad =  /[a-zA-Z0-9]{6,100}/;
-        var porcentaje=0;
+        
 
-        function verificar(){
+        function verificar(){   
  
-        porcentaje=0;
+        var porcentaje=0;
+            
         var texto = document.getElementById("nueva_clave").value;
-        if(tiene_letras(texto)) porcentaje++;   
-        if(tiene_numeros(texto)) porcentaje++;  
-        if(tiene_pocoscaracteres(texto)) porcentaje++;  
-        if(tiene_caracteres(texto)) porcentaje++;  
-
+        if (letras.test(texto)==true) porcentaje++;
+         if (caracteres.test(texto)==true) porcentaje++;
+          if (numeros.test(texto)==true) porcentaje++;
+           if (cantidad.test(texto)==true) porcentaje++;
+        //if(tiene_letras(texto)) porcentaje++;   
+        //if(tiene_numeros(texto)) porcentaje++;  
+        //if(tiene_pocoscaracteres(texto)) porcentaje++;  
+        //if(tiene_caracteres(texto)) porcentaje++;
+        
         if(porcentaje==0){ 
         document.getElementById("verificacion").value="Complejidad de clave: 0%";
         document.getElementById("nueva_clave").value="";
@@ -71,14 +76,15 @@
         if(porcentaje==2) document.getElementById("verificacion").value="Complejidad de clave: 50%";
         if(porcentaje==3) document.getElementById("verificacion").value="Complejidad de clave: 75%";
         if(porcentaje==4) document.getElementById("verificacion").value="Complejidad de clave: 100%";
-        }
 
+        }
+/*
         function tiene_caracteres(texto){
     
         if ((texto.match(caracteres))) {
-        return true;
-        } else {
         return false;
+        } else {
+        return true;
         } 
         }
 
@@ -108,5 +114,7 @@
         return false;
         } 
         }
+*/
+
     </script>
 </html>
