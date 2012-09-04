@@ -120,6 +120,10 @@ public class RepTrabajador extends GeneralPage {
     private String titular;
     
     @Property
+    @Persist
+    private String trabajador_ape;
+    
+    @Property
     @InjectComponent
     private Zone busZone;
     
@@ -129,16 +133,21 @@ public class RepTrabajador extends GeneralPage {
 
     @Property
     @Persist
-    private boolean mostrar;
-
-    @Property
-    @Persist
     private LkBusquedaTrabajador titulart;
 
+    @Property
+    @InjectComponent
+    private Zone trabaZone;
+    
+    @Property
+    @Persist
+    private boolean mostrar;
+    
     @Log
     void setupRender() {
         vselect = true;
 
+        mostrar = false;
         categoria = "Trabajador";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
@@ -157,13 +166,31 @@ public class RepTrabajador extends GeneralPage {
         }
     }
 
-    void onSelectedFromCancelFormFindTrabajador() {
-        mostrar = false;
+    @Log
+    Object onActionFromSeleccionaTitular(Trabajador traba) {
+        if (traba != null) {
+            titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
+            _entidadUE.setTitular(traba);
+        }
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
+    }
+    
+    void onSelectedFromCancelFormFindTrabajador() {}
+    
+    @Log
+    StreamResponse onSelectedFromGenerarReporte() {
+        Long userId = new Long("9");
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", userId);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+        return report;
     }
 
     @Log
     Object onSuccessFromFormFindTrabajador() {
-        return null;
+        mostrar = true;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody());
     }
 
     @Log
@@ -182,14 +209,7 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    StreamResponse onSuccessFromFormularioReporte() {
-        Long userId = new Long("9");
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", userId);
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-        return report;
-    }
+    void onSuccessFromFormularioReporte() { }
     
     @Log
     RepTrabajador onActionFromMostrarTrabajador() {
