@@ -14,6 +14,7 @@ public class Familiar // extends Persona
     @NonVisual
     private Long id;
     @Validate("required")
+    @ManyToOne
     private DatoAuxiliar parentesco;
     private String sexo;
     @Temporal(TemporalType.DATE)
@@ -25,14 +26,17 @@ public class Familiar // extends Persona
     @Validate("required")
     private String apellidoMaterno;
     @Validate("required")
+    @ManyToOne
     private DatoAuxiliar tipoDocumento;
     @Validate("required")
     private String nroDocumento;
+    @ManyToOne
     private DatoAuxiliar estadoCivil;
     private boolean agregadoTrabajador;
     private Boolean validado;
-    
+    @ManyToOne
     private Entidad entidad;
+    @ManyToOne
     private Trabajador trabajador;
     
 

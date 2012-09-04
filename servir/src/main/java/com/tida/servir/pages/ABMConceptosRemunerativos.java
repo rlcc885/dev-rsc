@@ -20,6 +20,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -125,6 +126,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         Criteria c;
         c = session.createCriteria(LkBusquedaConRemunerativo.class);
         c.add(Restrictions.eq("entidad", _oi.getId()));
+        c.addOrder(Order.asc("descripcion"));
         return c.list();
     }
 
@@ -206,7 +208,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
       Criteria c;
         c = session.createCriteria(LkBusquedaConRemunerativo.class);
         c.add(Restrictions.eq("entidad", _oi.getId()));
-        c.add(Restrictions.like("codigo", conceptoRemunerativo.getCodigo()));
+        c.add(Restrictions.disjunction().add(Restrictions.like("codigo", conceptoRemunerativo.getCodigo()).ignoreCase()));
         if (editando) {
             c.add(Restrictions.ne("id", conceptoRemunerativo.getId()));
         }
@@ -216,8 +218,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         }
         c = session.createCriteria(LkBusquedaConRemunerativo.class);
         c.add(Restrictions.eq("entidad", _oi.getId()));
-        c.add(Restrictions.like("descripcion", conceptoRemunerativo.getDescripcion()));
-
+        c.add(Restrictions.disjunction().add(Restrictions.like("descripcion", conceptoRemunerativo.getDescripcion()).ignoreCase()));
         if (editando) {
             c.add(Restrictions.ne("id", conceptoRemunerativo.getId()));
         }

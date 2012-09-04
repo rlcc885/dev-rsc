@@ -24,18 +24,22 @@ public class Estudios {
 //    @ManyToOne(optional = false)    
     private String denominacion; 
     
-    
+    @ManyToOne
     private DatoAuxiliar tipoestudio;    
     @NonVisual
     private DatoAuxiliar centroestudio;
     private String otrocentroestudio;
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar pais;
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar departamento;
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar provincia;
     @NonVisual
+    @ManyToOne
     private DatoAuxiliar distrito;
     @NonVisual
     private String colegio;
@@ -49,8 +53,10 @@ public class Estudios {
     private Boolean agregadotrabajador;
     private Boolean validado;
     @NonVisual
+    @ManyToOne
     private Trabajador trabajador;
     @NonVisual
+    @ManyToOne
     private Entidad entidad;
     
     

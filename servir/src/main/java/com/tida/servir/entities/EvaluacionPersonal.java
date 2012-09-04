@@ -17,8 +17,10 @@ public class EvaluacionPersonal {
     @NonVisual
     private Long id;
     @Validate("required")
+    @ManyToOne
     private DatoAuxiliar tipoevaluacion;
     @Validate("required")
+    @ManyToOne
     private DatoAuxiliar motivoevaluacion;
     @Validate("required")
     private String calificacion;
@@ -28,6 +30,7 @@ public class EvaluacionPersonal {
     @Validate("required")
     @Temporal(TemporalType.DATE)
     private Date fec_hasta;
+    @ManyToOne
     private CargoAsignado cargoasignado;
     
     @Id

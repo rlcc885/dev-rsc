@@ -5,17 +5,7 @@
     <div class="organismo_titulo">
         Entidad /U. Ejecutora: ${oi.denominacion}
     </div>
-
-        <t:zone t:id="mensajes">
-            <script>
-                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-            </script>
-            <t:form t:id="formmensajes">
-                <t:envelope t:id="envelope"/>   
-                <t:errors/>
-            </t:form>
-        </t:zone>
-         
+        
     <div t:type="zone" t:id="listaConceptosRemunerativosZone"  class="selectform t-zone">
         <div id = "tabla_conceptoremunerativo" >
             <div class="t-data-grid">
@@ -50,8 +40,16 @@
             </div>
         </div>
     </div> <!-- Lista Conceptos -->
-    
-     <br/>    
+    <t:zone t:id="mensajes">
+        <br/>
+        <script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
+        <t:form t:id="formmensajes">
+            <t:envelope t:id="envelope"/>   
+            <t:errors/>
+        </t:form>
+    </t:zone>   
      
      <div class="box-background-title">
         <span class="box-title">Crear/Editar Concepto Remunerativo</span>

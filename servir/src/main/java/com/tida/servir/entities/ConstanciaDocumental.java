@@ -95,7 +95,7 @@ public class ConstanciaDocumental {
     public void setEntrego(Boolean entrego) {
         this.entrego = entrego;
     }
-
+    @ManyToOne
         public CargoAsignado getCargoasignado() {
         return cargoasignado;
     }
