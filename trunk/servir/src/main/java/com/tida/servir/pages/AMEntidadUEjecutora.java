@@ -938,7 +938,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (entidadUE.getEsSubEntidad()) {
             bessubentidad = true;
             //
-            noCambiaSubentidad = true;
+            noCambiaSubentidad = false;
             //
         } else {
             bessubentidad = false;
