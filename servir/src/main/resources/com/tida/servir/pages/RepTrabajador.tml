@@ -12,17 +12,17 @@
     <div t:type="zone" t:id="categoriasZone">
         <fieldset>
             Seleccione la Categoría:&nbsp;
-            <a t:type="actionlink" t:id="mostrarTrabajador" href="#">Trabajador</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarEntidad" href="#">Entidad/Unidad Organica</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarUsuario" href="#">Usuario</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarGobierno" href="#">Nivel de Gobierno/Sector/Organización del Estado</a>
+            <a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;
+            <a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad/Unidad Organica</a> &nbsp;-&nbsp;
+            <a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Usuario</a> &nbsp;-&nbsp;
+            <a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Nivel de Gobierno/Sector/Organización del Estado</a>
         </fieldset>
     </div>
-    <div class="organismo_titulo">
+    <div class="organismo_titulo" t:type="zone" t:id="categoriaZone" update="show">
         Categoría: ${categoria}
     </div>
     
-    <div t:type="zone" t:id="tipoReporteZone">
+    <div t:type="zone" t:id="tipoReporteZone" update="show">
         <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
             <fieldset>
                 Tipo de Reporte: &nbsp;
@@ -35,17 +35,19 @@
             </fieldset>
             
             <fieldset>
-                <div visible="${mostrarFiltrosTrabajador}">
-                    <legend> Categoría: Trabajador </legend>
-                    <div class="f-wrap">                             
-                        <t:zone t:id="trabajadorZone" t:update="show">
-                            <div class="f-left">
-                                Trabajador: 
-                                <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
-                                <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
-                            </div>
-                        </t:zone>
-                    </div>
+                <div>
+                    <t:if test="mostrarFiltrosTrabajador" >
+                        <legend> Categoría: Trabajador </legend>
+                        <div class="f-wrap">                             
+                            <t:zone t:id="trabajadorZone" t:update="show">
+                                <div class="f-left">
+                                    Trabajador: 
+                                    <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
+                                    <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                                </div>
+                            </t:zone>
+                        </div>
+                    </t:if>
                 </div>
                 
                 <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" />

@@ -20,6 +20,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -143,12 +144,17 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private boolean mostrar;
     
+    @Property
+    @InjectComponent
+    private Zone categoriaZone;
+    
     @Log
     void setupRender() {
         vselect = true;
 
         mostrar = false;
-        categoria = "Trabajador";
+        radio = false;
+        categoria = "";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
@@ -174,18 +180,6 @@ public class RepTrabajador extends GeneralPage {
         }
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
     }
-    
-    void onSelectedFromCancelFormFindTrabajador() {}
-    
-    @Log
-    StreamResponse onSelectedFromGenerarReporte() {
-        Long userId = new Long("9");
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", userId);
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-        return report;
-    }
 
     @Log
     Object onSuccessFromFormFindTrabajador() {
@@ -209,45 +203,63 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    void onSuccessFromFormularioReporte() { }
+    StreamResponse onSuccessFromFormularioReporte() {
+        if (mostrarFiltrosTrabajador)
+            generarTrabajador();
+        
+        Long userId = new Long("9");
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", userId);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+        return report;
+    }
     
     @Log
-    RepTrabajador onActionFromMostrarTrabajador() {
+    void generarTrabajador() {
+        if (radio)
+            System.out.println("PDF");
+        else
+            System.out.println("EXCEL");
+    }
+    
+    @Log
+    Object onActionFromMostrarTrabajador() {
         categoria = "Trabajador";
         mostrarFiltrosTrabajador = true;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
-        mostrarFiltrosGobierno = false;
-        return this;
+        mostrarFiltrosGobierno = false;        
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
     @Log
-    RepTrabajador onActionFromMostrarEntidad() {
+    Object onActionFromMostrarEntidad() {
         categoria = "Entidad/Unidad Organica";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
-        return this;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
     @Log
-    RepTrabajador onActionFromMostrarUsuario() {
+    Object onActionFromMostrarUsuario() {
         categoria = "Usuario";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = true;
         mostrarFiltrosGobierno = false;
-        return this;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
     @Log
-    RepTrabajador onActionFromMostrarGobierno() {
+    Object onActionFromMostrarGobierno() {
         categoria = "Nivel de Gobierno/Sector/Organización del Estado";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = true;
-        return this;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
 }
