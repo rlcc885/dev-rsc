@@ -5,22 +5,16 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Reportes;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.RadioGroup;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -99,10 +93,6 @@ public class RepTrabajador extends GeneralPage {
 
     @Property
     @Persist
-    private boolean radio;
-
-    @Property
-    @Persist
     private DatoAuxiliar tipoReporteSelect;
     
     @Property
@@ -168,18 +158,32 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private boolean generarDisabled;
     
+    @Property
+    @Persist
+    private Reportes.TIPO type;
+    
+    @Property
+    @Persist
+    private Reportes.TIPO excel;
+    
+    @Property
+    @Persist
+    private Reportes.TIPO pdf;
+    
     @Log
     void setupRender() {
         vselect = true;
 
         mostrar = false;
-        radio = false;
         categoria = "";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
         generarDisabled = true;
+        
+        excel = Reportes.TIPO.EXCEL;
+        pdf = Reportes.TIPO.PDF;
         
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -248,21 +252,50 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    StreamResponse onSuccessFromFormularioReporte() {
+    void onSelectedFromGenerarReporte() {
         if (mostrarFiltrosTrabajador)
             generarTrabajador();
-        
-        Long userId = new Long("9");
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", userId);
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-        return report;
+        if (mostrarFiltrosEntidad)
+            generarEntidad();
+        if (mostrarFiltrosUsuario)
+            generarUsuario();
+        if (mostrarFiltrosGobierno)
+            generarGobierno();
+    }
+
+    @Log
+    void generarTrabajador() {
+        if (type == Reportes.TIPO.PDF) {
+            System.out.println("PDF");
+//            Long userId = new Long("9");
+//            Reportes rep = new Reportes();
+//            Map<String, Object> parametros = new HashMap<String, Object>();
+//            parametros.put("MandatoryParameter_UsuarioID", userId);
+//            StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+//            return report;
+        } else
+            System.out.println("EXCEL");
     }
     
     @Log
-    void generarTrabajador() {
-        if (radio)
+    void generarEntidad() {
+        if (type == Reportes.TIPO.PDF)
+            System.out.println("PDF");
+        else
+            System.out.println("EXCEL");
+    }
+    
+    @Log
+    void generarUsuario() {
+        if (type == Reportes.TIPO.PDF)
+            System.out.println("PDF");
+        else
+            System.out.println("EXCEL");
+    }
+    
+    @Log
+    void generarGobierno() {
+        if (type == Reportes.TIPO.PDF)
             System.out.println("PDF");
         else
             System.out.println("EXCEL");
