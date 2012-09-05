@@ -143,11 +143,17 @@ public class ABMCargos extends GeneralPage {
     @Property
     @Persist
     private LkBusquedaCargo lkcargo;
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+        return null;
+    }
+    
     // inicio de la pagina
     @Log
-    @SetupRender
-    private void inicio() {
+    void setupRender() {
         onSelectedFromClear();
         mostrar = true;
         vbotones = false;
@@ -155,6 +161,7 @@ public class ABMCargos extends GeneralPage {
         vdetalle = false;
         //RESTRICCION
         vdetalle2 = false;
+        logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", loggedUser.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -174,9 +181,10 @@ public class ABMCargos extends GeneralPage {
                 vformulario = true;
                 vbotones = true;
             }
-        }
+        }        
         // Utilizado para ocultar o mostrar los botones de cancelar y limpiar formulario.
         vNoedita = true;
+        
     }
 
     @Log
@@ -385,7 +393,7 @@ public class ABMCargos extends GeneralPage {
         if (cargo == null) {
             cargo = new Cargoxunidad();
             regimengruponivel = new RegimenGrupoNivel();
-            editando = false;
+            editando = false;            
         }
 
         if (regimengruponivel == null) {
@@ -436,6 +444,7 @@ public class ABMCargos extends GeneralPage {
             session.saveOrUpdate(dato);
             session.flush();
             envelope.setContents("Cargo Eliminado");
+            new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()),Logger.CODIGO_OPERACION_DELETE,Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
         }
         onReset();
         return zonasDatos();// La/a zona a actualizar
@@ -484,6 +493,7 @@ public class ABMCargos extends GeneralPage {
         vNoedita = true;
         vdetalle2 = false;
         regimengruponivel = new RegimenGrupoNivel();
+        cantidadPuestos = null;
     }
 
     // limpiar formulario
@@ -610,14 +620,15 @@ public class ABMCargos extends GeneralPage {
             cargo.setRegimenlaboral(regimengruponivel.getRegimen());
             cargo.setCtd_puestos_total(Integer.parseInt(cantidadPuestos));
             cargo.setEstado(Cargoxunidad.ESTADO_ALTA);
-            session.merge(cargo);
-            new Logger().loguearOperacion(session, loggedUser, String.valueOf(cargo.getId()), (editando ? Logger.CODIGO_OPERACION_ALTA : Logger.CODIGO_OPERACION_MODIFICACION), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+            session.saveOrUpdate(cargo);
+            session.flush();
+            new Logger().loguearOperacion(session, loggedUser, String.valueOf(cargo.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             cargo = new Cargoxunidad();
             regimengruponivel = new RegimenGrupoNivel();
             mostrar = true;
-                editando = false;
-                formmensaje.clearErrors();
-                envelope.setContents(helpers.Constantes.CARGO_EXITO);
+            editando = false;
+            formmensaje.clearErrors();
+            envelope.setContents(helpers.Constantes.CARGO_EXITO);
         }
         //RESTRICCION
         vdetalle2 = false;

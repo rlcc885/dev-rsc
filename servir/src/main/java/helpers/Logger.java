@@ -66,16 +66,17 @@ public class Logger {
     public static final String TIPO_OBJETO_CARGO_ASIGNADO = "Cargo Asignado";
     public static final String TIPO_OBJETO_REMUNERACION_PERSONAL = "Remuneracion Personal";
     public static final String TIPO_OBJETO_TITULO = "Titulo";
-    public static final String TIPO_OBJETO_CARGO = "Cargo";
+    public static final String TIPO_OBJETO_CARGO = "Cargo/Puesto";
     public static final String TIPO_OBJETO_LEGAJO = "Legajo";
     public static final String TIPO_OBJETO_CONCEPTO_REMUNERATIVO = "Concepto Remunerativo";
     public static final String TIPO_OBJETO_ORGANISMO_INFORMANTE = "Organismo Informante";
     public static final String TIPO_OBJETO_UNIDAD_ORGANICA = "Unidad Organica";
     public static final String TIPO_OBJETO_UNIDAD_EJECUTORA = "Unidad Ejecutora";
     public static final String TIPO_OBJETO_ENTIDAD_UNIDAD_EJECUTORA = "Entidad Unidad Ejecutora";
-    public static final String CODIGO_OPERACION_ALTA = "1";
-    public static final String CODIGO_OPERACION_MODIFICACION = "2";
-    public static final String CODIGO_OPERACION_BAJA = "3";
+    public static final String CODIGO_OPERACION_SELECT = "1";
+    public static final String CODIGO_OPERACION_INSERT = "2";
+    public static final String CODIGO_OPERACION_UPDATE= "3";
+    public static final String CODIGO_OPERACION_DELETE = "4";
     public static final String RESULTADO_OPERACION_OK = "OK";
     public static final String RESULTADO_OPERACION_ERROR = "ERROR";
     public static final String CORREO_FAIL_RESET_PASSWORD = "Conexión con el Servidor de Correos no establecida al reestablecer contraseña.";
@@ -121,9 +122,8 @@ public class Logger {
         l.setCod_operacion(cod_operacion);
         l.setRes_operacion(res_operacion);
         l.setTipo_objeto(tipo_objeto);
-
-        session.persist(l);
-        //session.flush();
+        session.save(l);
+        session.flush();
     }
 
     @Log

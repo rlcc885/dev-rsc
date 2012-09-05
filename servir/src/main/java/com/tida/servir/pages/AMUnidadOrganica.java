@@ -138,6 +138,14 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
 
+    
+    // loguear operación
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+        return null;
+    }
+    
     // inicio de pagina
     @Log
     String SetupRender() {
@@ -152,6 +160,7 @@ public class AMUnidadOrganica extends GeneralPage {
         vbotones = false;
         veliminar = false;
         vformulario = false;
+        logueo();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
             return "alerta";
@@ -169,7 +178,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 vbotones = true;
             }
 
-        }
+        }        
         resetUnidadOrganica();
         onSelectedFromLimpia();
         ubicacion();
@@ -432,7 +441,6 @@ public class AMUnidadOrganica extends GeneralPage {
                         unidadOrganica.setEntidad(entidadUE);
                         unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                     }
-                    //c.add(Restrictions.eq("cod_und_organica", unidadOrganica.getCod_und_organica()));
                     c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
                     c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                     
@@ -449,7 +457,6 @@ public class AMUnidadOrganica extends GeneralPage {
                             unidadOrganica.setEntidad(entidadUE);
                             unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                         }
-//                        c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()));
                         c.add(Restrictions.disjunction().add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()).ignoreCase()));
                         c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                         if (c.list().size() > 0) {
@@ -480,14 +487,12 @@ public class AMUnidadOrganica extends GeneralPage {
 
                     // FIN CAMBIO */ 
 
-                    session.saveOrUpdate(unidadOrganica);
-//                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-                    editando = false;
+                    session.saveOrUpdate(unidadOrganica);                    
                     session.flush();
+                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+                    editando = false;
                     resetUnidadOrganica();
-//                setupUbigeos();
                     formmensaje.clearErrors();
-//                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
                 }
             } else {
                 errorBorrar = null;
@@ -546,10 +551,10 @@ public class AMUnidadOrganica extends GeneralPage {
                 }
 
                 // FIN CAMBIO */ 
-                session.saveOrUpdate(unidadOrganica);
-//                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-                editando = false;
+                session.saveOrUpdate(unidadOrganica);                
                 session.flush();
+                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);    
+                editando = false;
                 resetUnidadOrganica();
                 formmensaje.clearErrors();
             }
@@ -572,7 +577,7 @@ public class AMUnidadOrganica extends GeneralPage {
         session.saveOrUpdate(dato);
         resetUnidadOrganica();
         envelope.setContents("Unidad Orgánica Eliminada");
-
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         return zonas();// La/a zona a actualizar
     }
 
