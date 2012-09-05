@@ -72,7 +72,7 @@ public class EntidadSelect {
     private DatoAuxiliar stipoSubEntidad;
     @Property
     @Persist
-    private boolean sessubentidad;
+    private boolean sessubentidad2;
     @InjectComponent
     @Property
     private Zone OrganizacionZone;
@@ -137,12 +137,12 @@ public class EntidadSelect {
         if (entidad.getEntidad() == null) {
             sentidad=(LkBusquedaEntidad)session.load(LkBusquedaEntidad.class, entidad.getId());
             bessubentidad = false;
-            sessubentidad = false;
+            sessubentidad2 = false;
             System.out.println(sentidad.getDenominacion());
         } else {
             ssubentidad = entidad;
             bessubentidad = true;
-            sessubentidad = true;
+            sessubentidad2 = true;
             System.out.println(ssubentidad.getDenominacion());
         }
 

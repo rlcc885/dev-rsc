@@ -86,7 +86,7 @@
                         <div class="f-left">
                             <t:label for ="sessubentidad">Es Sub-Entidad</t:label>
                             <input t:type="Checkbox" t:id="sessubentidad" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
-                                   t:value="sessubentidad" />
+                                   t:value="sessubentidad2" />
                         </div>
                     </form>            
                 </t:zone>   
