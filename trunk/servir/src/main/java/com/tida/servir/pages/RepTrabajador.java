@@ -148,6 +148,26 @@ public class RepTrabajador extends GeneralPage {
     @InjectComponent
     private Zone categoriaZone;
     
+    @Property
+    @Persist
+    private boolean trabajadorLink;
+    
+    @Property
+    @Persist
+    private boolean entidadLink;
+    
+    @Property
+    @Persist
+    private boolean usuarioLink;
+    
+    @Property
+    @Persist
+    private boolean gobiernoLink;
+    
+    @Property
+    @Persist
+    private boolean generarDisabled;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -159,6 +179,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
+        generarDisabled = true;
         
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -169,6 +190,30 @@ public class RepTrabajador extends GeneralPage {
         } else {
             usu = (UsuarioAcceso) result.get(0);
             vselect = (usu.getAccesoselect() != 0);
+            
+            switch (usu.getNivel()) {
+                case 1:
+                    trabajadorLink = entidadLink = gobiernoLink = true;
+                    break;
+                case 2:
+                    trabajadorLink = entidadLink = true;
+                    break;
+                case 3:
+                    usuarioLink = true;
+                    break;
+                case 4:
+                    trabajadorLink = entidadLink = gobiernoLink = true;
+                    break;
+                case 5:
+                    trabajadorLink = entidadLink  = true;
+                    break;
+                case 6:
+                    trabajadorLink  = true;
+                    break;
+                case 7:
+                    gobiernoLink  = true;
+                    break;
+            }
         }
     }
 
@@ -229,7 +274,8 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosTrabajador = true;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
-        mostrarFiltrosGobierno = false;        
+        mostrarFiltrosGobierno = false;
+        generarDisabled = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -240,6 +286,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
+        generarDisabled = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -250,6 +297,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = true;
         mostrarFiltrosGobierno = false;
+        generarDisabled = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -260,6 +308,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = true;
+        generarDisabled = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
 }
