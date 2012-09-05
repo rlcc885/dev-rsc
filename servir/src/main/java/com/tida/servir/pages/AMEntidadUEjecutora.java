@@ -1028,17 +1028,30 @@ public class AMEntidadUEjecutora extends GeneralPage {
             entidadUE.setDescZona(entidad.getDescZona());
             
             /* no tomar en cuenta al crear/modificar subentidad
+             * 
             entidadUE.setNivelGobierno(entidad.getNivelGobierno());
             entidadUE.setOrganizacionEstado(entidad.getOrganizacionEstado());
             entidadUE.setSectorGobierno(entidad.getSectorGobierno());
             entidadUE.setTipoOrganismo(entidad.getTipoOrganismo());
+            * 
             */
             //
+            if (!editando)
+            {
             entidadUE.setNivelGobierno(null);
             entidadUE.setOrganizacionEstado(null);
             entidadUE.setSectorGobierno(null);
             entidadUE.setTipoOrganismo(null);            
+            }
+            else
+            {
+            entidadUE.setNivelGobierno(entidad.getNivelGobierno());
+            entidadUE.setOrganizacionEstado(entidad.getOrganizacionEstado());
+            entidadUE.setSectorGobierno(entidad.getSectorGobierno());
+            entidadUE.setTipoOrganismo(entidad.getTipoOrganismo());
+            }
             //
+            
             noCambiaSubentidad = false;
             
             ubigeoEntidadUE.setDepartamento(entidad.getDepartamento());
