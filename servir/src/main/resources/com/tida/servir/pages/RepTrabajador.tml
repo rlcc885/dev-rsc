@@ -28,9 +28,9 @@
                 Tipo de Reporte: &nbsp;
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
                 &nbsp; Formato del Reporte: &nbsp;
-                <t:radiogroup value="radio">
-                    Excel <t:radio t:id="Excel" value="0"/>
-                    PDF <t:radio t:id="PDF" value="1"/>
+                <t:radiogroup t:id="type">
+                    Excel <t:radio t:id="excel" value="excel"/>
+                    PDF <t:radio t:id="pdf" value="pdf"/>
                 </t:radiogroup>
             </fieldset>
             
