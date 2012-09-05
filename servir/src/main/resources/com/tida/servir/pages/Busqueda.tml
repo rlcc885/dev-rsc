@@ -31,15 +31,15 @@
                         <div id="filtrosnombres" class="f-wrap">
                             <div class="f-left">
                                 <t:label for="apellidoPaterno"/>
-                                <input t:type="TextField" t:id="apellidoPaterno" size="30"/>
+                                <input t:type="TextField" t:id="apellidoPaterno" size="30" t:validate="maxlength=150"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="apellidoMaterno"/>
-                                <input t:type="TextField" t:id="apellidoMaterno" size="30"/>
+                                <input t:type="TextField" t:id="apellidoMaterno" size="30" t:validate="maxlength=150"/>
                             </div>
                             <div class="f-left">
                                 <t:label for="nombres"/>
-                                <input t:type="TextField" t:id="nombres" size="30"/>
+                                <input t:type="TextField" t:id="nombres" size="30" t:validate="maxlength=150"/>
                             </div>
                         </div> <!-- filtrosnombres -->
                         <div id="filtrosdoc">
