@@ -213,7 +213,7 @@
                             <div class="f-left">
                                 <label>Descripción Zona</label>
                                 <input t:type="TextField" t:id="unidadOrganica_desczona"
-                                       t:value="unidadorganica.desczona" size="30" t:validate="maxlength=200" t:disabled="${vzona}"
+                                       t:value="unidadorganica.desczona" size="30" t:validate="maxlength=200"
                                        t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="descriChanged" t:zone="unidadesOrganicasZone"/>
                             </div>                                                     
                         </div>
