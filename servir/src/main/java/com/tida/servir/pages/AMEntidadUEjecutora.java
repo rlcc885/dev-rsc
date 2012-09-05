@@ -118,7 +118,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Persist
     private DatoAuxiliar tipOrganismo;
     
-    //
+    // cambios
 //    @Property
 //    @Persist
 //    private DatoAuxiliar btipoOrganismo;
