@@ -148,6 +148,13 @@ public class CursosEditor {
     private Boolean vrevisado;
     private int elemento = 0;
 
+    // loguear operación
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CURSO);
+        return null;
+    }
+    
     @Log
     void setupRender() {
         vrevisado = false;
@@ -156,6 +163,7 @@ public class CursosEditor {
         vbotones = false;
         vNoedita = false;
         veditar=false;
+        logueo();
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
@@ -276,6 +284,7 @@ public class CursosEditor {
     Object onBorrarDato(Curso dato) {
         session.delete(dato);
         envelope.setContents("Curso del Trabajador Eliminado");
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CURSO);
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());//.add("terceraZone", terceraZone.getBody());
     }
 
@@ -438,6 +447,7 @@ public class CursosEditor {
             seteo();
             session.saveOrUpdate(cursos);
             session.flush();
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(cursos.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CURSO);    
             if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_CURSOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_CURSOS, cursos.getId());
             }

@@ -52,12 +52,12 @@ public class Logger {
     public static final String USUARIO_TIPO_OPERACION_EDICION = "EDICION DE USUARIO";
     public static final String USUARIO_TIPO_OPERACION_CREACION = "CREACION DE USUARIO";
     public static final String TIPO_OBJETO_USUARIO = "Usuario";
-    public static final String TIPO_OBJETO_ANT_LABORALES = "Ant_Laborales";
-    public static final String TIPO_OBJETO_PUBLICACION = "Publicacion";
+ 
+
     public static final String TIPO_OBJETO_AUSLICPERSONAL = "AusLicPersonal";
     public static final String TIPO_OBJETO_CERTIFICACION = "Certificacion";
     public static final String TIPO_OBJETO_CONSTANCIA_DOCUMENTAL = "Constancia Documental";
-    public static final String TIPO_OBJETO_CURSO = "Curso";
+
     public static final String TIPO_OBJETO_TRABAJADOR = "Trabajador";
     public static final String TIPO_OBJETO_FAMILIAR = "Familiar";
     public static final String TIPO_OBJETO_EVALUACION = "Evaluacion Personal";
@@ -65,12 +65,15 @@ public class Logger {
     public static final String TIPO_OBJETO_ORGANO = "Organo";
     public static final String TIPO_OBJETO_CARGO_ASIGNADO = "Cargo Asignado";
     public static final String TIPO_OBJETO_REMUNERACION_PERSONAL = "Remuneracion Personal";
-    public static final String TIPO_OBJETO_TITULO = "Titulo";
-    public static final String TIPO_OBJETO_CARGO = "Cargo/Puesto";
+    public static final String TIPO_OBJETO_CARGO = "Cargo/Puesto";//
     public static final String TIPO_OBJETO_LEGAJO = "Legajo";
-    public static final String TIPO_OBJETO_CONCEPTO_REMUNERATIVO = "Concepto Remunerativo";
-    public static final String TIPO_OBJETO_ORGANISMO_INFORMANTE = "Organismo Informante";
-    public static final String TIPO_OBJETO_UNIDAD_ORGANICA = "Unidad Organica";
+    public static final String TIPO_OBJETO_CONCEPTO_REMUNERATIVO = "Concepto Remunerativo";//
+    public static final String TIPO_OBJETO_UNIDAD_ORGANICA = "Unidad Organica";//
+    public static final String TIPO_OBJETO_DATOS_PERSONALES = "Datos Personales";//
+    public static final String TIPO_OBJETO_ESTUDIO = "Estudio";//
+    public static final String TIPO_OBJETO_CURSO = "Curso";//
+    public static final String TIPO_OBJETO_EXPERIENCIA_LABORAL = "Experiencia Laboral";//
+    public static final String TIPO_OBJETO_PRODUCCION_INTELECTUAL = "Producción Intelectual";//
     public static final String TIPO_OBJETO_UNIDAD_EJECUTORA = "Unidad Ejecutora";
     public static final String TIPO_OBJETO_ENTIDAD_UNIDAD_EJECUTORA = "Entidad Unidad Ejecutora";
     public static final String CODIGO_OPERACION_SELECT = "1";
@@ -153,8 +156,8 @@ public class Logger {
         l.setFecha(new Date());
         // FIXME: l.setIp(requestGlobal.getRemoteAddr());
 
-        session.persist(l);
-        //session.flush();
+        session.save(l);
+        session.flush();
     }
 
     @Log

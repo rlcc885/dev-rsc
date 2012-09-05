@@ -155,6 +155,13 @@ public class EstudiosEditor {
     @Property
     private Boolean ingresaubigeo;
  
+    // loguear operación
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
+        return null;
+    }
+    
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
         Criteria c = session.createCriteria(LkBusquedaEstudios.class);
@@ -380,6 +387,7 @@ public class EstudiosEditor {
             seteo();
             session.saveOrUpdate(estudio);
             session.flush();
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(estudio.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);    
             if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_ESTUDIOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_ESTUDIOS, estudio.getId());
             }
@@ -555,6 +563,7 @@ public class EstudiosEditor {
     Object onBorrarDato(Estudios dato) {
         session.delete(dato);
         envelope.setContents("Estudio del Trabajador Eliminado");
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
 
@@ -566,6 +575,7 @@ public class EstudiosEditor {
         vformulario=false;
         vbotones=false;
         vNoedita=false;
+        logueo();
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
