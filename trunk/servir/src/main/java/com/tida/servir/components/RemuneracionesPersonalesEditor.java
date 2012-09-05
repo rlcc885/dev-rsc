@@ -165,6 +165,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     @CommitAfter
     Object onSuccess() {
+        System.out.println("aaaaaa"+remuneracion.getImporte());
         remuneracion.setCargoasignado_id(cargoAsignado);
         remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
         session.saveOrUpdate(remuneracion);
