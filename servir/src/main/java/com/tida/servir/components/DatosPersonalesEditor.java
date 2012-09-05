@@ -5,6 +5,7 @@ import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -87,9 +88,17 @@ public class DatosPersonalesEditor {
     @Property
     private String fechanacimiento;
 
+    // loguear operación
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_DATOS_PERSONALES);
+        return null;
+    }
+    
     @Log
 //    @SetupRender
     void setupRender() {
+        logueo();
         if (actual.getSexo() != null) {
             if (actual.getSexo().equals("M")) {
                 valsexo = "MASCULINO";
@@ -101,6 +110,7 @@ public class DatosPersonalesEditor {
         } else {
             valsexo = null;
         }
+        
 
 
         domicilioCP = actual.getDomicilioCodigoPostal();
@@ -217,6 +227,7 @@ public class DatosPersonalesEditor {
             }           
             session.saveOrUpdate(actual);
             session.flush();
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(actual.getId()), Logger.CODIGO_OPERACION_UPDATE , Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_DATOS_PERSONALES);    
             formulariodatospersonales.clearErrors();
             envelope.setContents(helpers.Constantes.TRABAJADOR_EDIT_EXITO);
             validaciones();

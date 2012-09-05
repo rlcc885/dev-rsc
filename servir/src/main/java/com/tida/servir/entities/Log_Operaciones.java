@@ -1,15 +1,10 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
+import javax.persistence.*;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Log_Operaciones {
@@ -41,7 +36,8 @@ public class Log_Operaciones {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RSC_LOG_OPERACIONES_ID_SEQ", allocationSize = 1)
     public long getId() {
         return id;
     }
