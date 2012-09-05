@@ -87,7 +87,14 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     @Persist
     @Property
     private String sustento_legal;
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
+        return null;
+    }
+    
     // inicio de pagina
     @SetupRender
     public void inicio() {        
@@ -102,6 +109,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         veliminar = false;
         vformulario = false;
         vdetalle=false;
+        logueo();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
         } else {
@@ -184,16 +192,16 @@ public class ABMConceptosRemunerativos extends GeneralPage {
             }
             conceptoRemunerativo.setEntidad_id(_oi.getId());
             session.saveOrUpdate(conceptoRemunerativo);
+            session.flush();
+            new Logger().loguearOperacion(session, loggedUser, String.valueOf(conceptoRemunerativo.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
             if(editando){
                 envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EDIT_EXITO);
-            }
-            else{
-                envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EXITO);
-            }
-            if(editando){
                 if (usua.getAccesoreport() == 0) {
                         vformulario = false;
                 }
+            }
+            else{
+                envelope.setContents(helpers.Constantes.CONREMUNERATIVO_EXITO);
             }
             editando = false;
             vNoedita=false;
@@ -294,6 +302,7 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     Object onBorrarDato(ConceptoRemunerativo dato) {
         session.delete(dato);
         envelope.setContents("Concepto Remunerativo Eliminado");
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CONCEPTO_REMUNERATIVO);
         return zonas();// La/a zona a actualizar
     }
     
