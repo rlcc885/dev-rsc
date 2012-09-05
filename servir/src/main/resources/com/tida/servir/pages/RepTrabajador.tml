@@ -12,10 +12,10 @@
     <div t:type="zone" t:id="categoriasZone">
         <fieldset>
             Seleccione la Categoría:&nbsp;
-            <a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad/Unidad Organica</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Usuario</a> &nbsp;-&nbsp;
-            <a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Nivel de Gobierno/Sector/Organización del Estado</a>
+            <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad/Unidad Organica</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Usuario</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Nivel de Gobierno/Sector/Organización del Estado</a></t:if>
         </fieldset>
     </div>
     <div class="organismo_titulo" t:type="zone" t:id="categoriaZone" update="show">
@@ -50,7 +50,7 @@
                     </t:if>
                 </div>
                 
-                <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" />
+                <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" disabled="generarDisabled"/>
             </fieldset>
         </t:form>
     </div>
