@@ -510,6 +510,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onSelectedFromBusenviar() {
         bBuscaEntidad = true;
+        bBuscaSubEntidad=false;
     }
 
     // formulario de busqueda
@@ -541,6 +542,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     void onSelectedFromBussubenviar() {
         bBuscaSubEntidad = true;
+        bBuscaEntidad = false;
     }
 
     @Log
@@ -872,6 +874,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     c.add(Restrictions.eq("estado", false));
                 }
             }
+            c.add(Restrictions.eq("essubentidad", false));
         }
         if (bBuscaSubEntidad) {
             //Sub Entidad
@@ -899,9 +902,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
                     c.add(Restrictions.eq("estado", false));
                 }
             }
-            if (bessubentidad) {
-                c.add(Restrictions.eq("essubentidad", bessubentidad));
-            }
+//            if (bessubentidad) {
+//                c.add(Restrictions.eq("essubentidad", bessubentidad));
+//            }
+            c.add(Restrictions.eq("essubentidad", true));
         }
         return c.list();
     }
