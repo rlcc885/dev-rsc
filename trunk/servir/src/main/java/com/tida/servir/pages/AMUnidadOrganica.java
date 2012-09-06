@@ -80,7 +80,7 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private String localidad;
-
+     
     @Persist
     @Property
     private String bdenouni;
