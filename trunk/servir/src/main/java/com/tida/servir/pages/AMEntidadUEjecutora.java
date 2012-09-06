@@ -1071,10 +1071,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         c.add(Restrictions.eq("entidad_id",entidadUE.getId()));
         if (nombreTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         return c.list();
     }
+    
 
     @Log
     Object onActionFromSeleccionaTitular(Trabajador traba) {
