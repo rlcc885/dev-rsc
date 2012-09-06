@@ -30,7 +30,7 @@
                             <div class="f-left">
                                 <label>* Denominación</label>
                                 <input t:type="TextField" t:id="denominacion" t:value="valdenominacion" size="75" t:disabled="${vdetalle}"
-                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denChanged"  t:zone="primerZone" t:validate="maxlength=255"/>
+                                       t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="denChanged"  t:zone="primerZone" t:validate="maxlength=150"/>
                             </div>
                         </div>
                         <div class="f-wrap">
