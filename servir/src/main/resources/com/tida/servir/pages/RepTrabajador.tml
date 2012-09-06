@@ -37,7 +37,7 @@
             <fieldset>
                 <div>
                     <t:if test="mostrarFiltrosTrabajador" >
-                        <legend> Categoría: Trabajador </legend>
+                        <legend> Categoría: Trabajador </legend><br />
                         <div class="f-wrap">                             
                             <t:zone t:id="trabajadorZone" t:update="show">
                                 <div class="f-left">
@@ -49,6 +49,22 @@
                         </div>
                     </t:if>
                 </div>
+                
+                <div>
+                    <t:if test="mostrarFiltrosEntidad" >
+                        <legend> Categoría: Entidad </legend><br />
+                        <div class="f-wrap">                             
+                            <t:zone t:id="entidadZone" t:update="show">
+                                <div class="f-left">
+                                    Entidad: 
+                                    <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
+                                    <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                                </div>
+                            </t:zone>
+                        </div>
+                    </t:if>
+                </div>
+                
                 
                 <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" disabled="generarDisabled"/>
             </fieldset>
@@ -70,35 +86,73 @@
     </script>
     
     <div id="shade"></div>
-    <div id="modal">
+    <div id="modal" >
         <t:zone t:id="busZone" t:update="show" >
-            <h1>Selección de Trabajador</h1>
-            <div class="pane">
-                <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
-                    <div class="f-wrap">
-                        <div class="f-left">
-                            Nombre completo: 
-                            <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+            <t:if test="mostrarFiltrosTrabajador" >
+                <h1>Selección de Trabajador</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Nombre completo: 
+                                <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                            </div>
+                            <div class="actions f-right">
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                            </div>
                         </div>
-                        <div class="actions f-right">
-                            <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                            <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                    </form>
+                </div>
+            </t:if>
+            <t:if test="mostrarFiltrosEntidad" >
+                <h1>Selección de Entidad</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Nombre de la Entidad: 
+                                <input t:type="TextField" t:id="entidad_ape" t:value="nombreEntidad" style="width: 300px;"/> 
+                            </div>
+                            <div class="actions f-right">
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </t:zone>
-        <t:zone t:id="trabaZone" t:update="show">
-            <t:if test="mostrar">
-                <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
-                    <t:parameter name="empty">
-                        <div class="no-info">No hay Trabajadores encontrados.</div>
-                    </t:parameter>
-                    <p:accionesCell> 
-                        <t:actionlink t:id="seleccionaTitular" zone="trabaZone" context="titulart" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
-                    </p:accionesCell>
-                </t:grid>
+                    </form>
+                </div>
             </t:if>
         </t:zone>
+            <t:zone t:id="trabaZone" t:update="show">
+                <t:if test="mostrar">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay Trabajadores encontrados.</div>
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaTitular" zone="trabaZone" context="titulart" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="entiZone" t:update="show">
+                <t:if test="mostrar">
+                    <t:grid source="entidades" 
+                    rowsPerPage="10" 
+                    pagerPosition="bottom"
+                    row="listaentidad" 
+                    exclude="id,nivelgobierno,departamento,cue_entidad,sigla,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
+                    reorder="ruc,denominacion,acciones"
+                    inPlace="true" 
+                    t:add="Acciones">
+                        <t:parameter name="empty">
+                            <div class="no-info">No se encontraron coincidencias</div>
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaEntidad" zone="entiZone" context="listaentidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </t:if>
+            </t:zone>
     </div>
 </html>

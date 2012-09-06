@@ -125,13 +125,37 @@ public class RepTrabajador extends GeneralPage {
     private String nombreTrabajador;
 
     @Property
-    @Persist
-    private LkBusquedaTrabajador titulart;
-
-    @Property
     @InjectComponent
     private Zone trabaZone;
     
+    @Property
+    @InjectComponent
+    private Zone entidadZone;
+    
+    @Property
+    @Persist
+    private String entidadTx;
+    
+    @Property
+    @Persist
+    private String entidad_ape;
+    
+    @Persist
+    @Property
+    private String nombreEntidad;
+
+    @Property
+    @InjectComponent
+    private Zone entiZone;
+    
+    @Property
+    @Persist
+    private LkBusquedaTrabajador titulart;
+
+    @Persist
+    @Property
+    private LkBusquedaEntidad listaentidad;
+
     @Property
     @Persist
     private boolean mostrar;
@@ -235,9 +259,20 @@ public class RepTrabajador extends GeneralPage {
             titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
             _entidadUE.setTitular(traba);
         }
+        mostrar = false;
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
     }
 
+    @Log
+    Object onActionFromSeleccionaEntidad(Entidad enti) {
+        if (enti != null) {
+            entidadTx = enti.getDenominacion();
+            _entidadUE.setEntidad(enti);
+        }
+        mostrar = false;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
+    }
+    
     @Log
     Object onSuccessFromFormFindTrabajador() {
         mostrar = true;
@@ -245,10 +280,47 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
+    Object onSuccessFromFormFindEntidad() {
+        mostrar = true;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
+    }
+
+    @Log
+    Object onSelectedFromBuscarTitular() {
+        return new MultiZoneUpdate("busZone", busZone.getBody());
+    }
+
+    @Log
+    Object onSelectedFromBuscarEntidad() {
+        return new MultiZoneUpdate("busZone", busZone.getBody());
+    }
+    
+    @Log
+    Object onSelectedFromCancelFormFindTrabajador() {
+        mostrar = false;
+        return new MultiZoneUpdate("trabaZone", trabaZone.getBody());
+    }
+    
+    @Log
+    Object onSelectedFromCancelFormFindEntidad() {
+        mostrar = false;
+        return new MultiZoneUpdate("entiZone", entiZone.getBody());
+    }
+    
+    @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+    
+    @Log
+    public List<LkBusquedaEntidad> getEntidades() {
+        Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+        if (nombreEntidad != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", nombreEntidad + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         return c.list();
     }
