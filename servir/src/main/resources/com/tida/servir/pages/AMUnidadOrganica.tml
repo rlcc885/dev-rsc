@@ -127,6 +127,15 @@
 
     </div> <!-- listaUOZone -->
     
+    <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
+        <script>
+            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+        </script>
+        <form t:type="form" t:id="formmensaje" id="formmensaje" t:zone="mensajeZone">
+            <t:envelope t:id="envelope"/>
+            <t:errors/> 
+        </form>
+    </div>   
    
 <!-- aqui -->
     <t:zone t:id="unidadesOrganicasZone" id="unidadesOrganicasZone">
@@ -246,20 +255,4 @@
             </div> <!--  fin box -->
         </t:if>
     </t:zone>
-    
-   <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
-       <script>
-             setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
-        </script>
-        <form t:type="form" t:id="formmensaje" id="formmensaje" t:zone="mensajeZone">
-              <t:if test="mensaje">
-                    <script>
-                        alert("${mensaje}");  
-                    </script>
-                </t:if>
-            <t:errors/> 
-        </form>
-    </div>  
-    
-    
 </html>
