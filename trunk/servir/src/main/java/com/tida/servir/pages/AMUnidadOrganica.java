@@ -80,8 +80,7 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private String localidad;
-    @InjectComponent
-    private Envelope envelope;
+
     @Persist
     @Property
     private String bdenouni;
@@ -137,7 +136,9 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
-
+    @Persist
+    @Property
+    private String mensaje;
     
     // loguear operación
     @CommitAfter
@@ -480,9 +481,15 @@ public class AMUnidadOrganica extends GeneralPage {
 
                     /* INICIO CAMBIO    */
                     if (editando == true) {
-                        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
+                       //envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
+                        
+                        mensaje=helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO;
+                       
                     } else {
-                        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
+                      //  envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
+                        mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
+                        
+                                         
                     }
 
                     // FIN CAMBIO */ 
@@ -545,9 +552,12 @@ public class AMUnidadOrganica extends GeneralPage {
                 unidadOrganica.setUnidadorganica(uoAntecesora);
                 /* INICIO CAMBIO    */
                 if (editando == true) {
-                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
+         
+                   mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
+                      
                 } else {
-                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
+                      
+                     mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
                 }
 
                 // FIN CAMBIO */ 
@@ -576,7 +586,8 @@ public class AMUnidadOrganica extends GeneralPage {
         dato.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(dato);
         resetUnidadOrganica();
-        envelope.setContents("Unidad Orgánica Eliminada");
+        mensaje="Unidad Orgánica Eliminada";
+        //envelope.setContents("Unidad Orgánica Eliminada");
         new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         return zonas();// La/a zona a actualizar
     }
