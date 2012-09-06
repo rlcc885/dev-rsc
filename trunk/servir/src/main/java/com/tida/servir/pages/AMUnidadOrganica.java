@@ -80,7 +80,8 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     @Persist
     private String localidad;
-     
+    @InjectComponent
+    private Envelope envelope;
     @Persist
     @Property
     private String bdenouni;
@@ -136,17 +137,7 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
-    @Persist
-    @Property
-    private String mensaje;
-    
-    // loguear operación
-    @CommitAfter
-    Object logueo(){
-        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
-        return null;
-    }
-    
+
     // inicio de pagina
     @Log
     String SetupRender() {
@@ -161,7 +152,6 @@ public class AMUnidadOrganica extends GeneralPage {
         vbotones = false;
         veliminar = false;
         vformulario = false;
-        logueo();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
             return "alerta";
@@ -179,7 +169,7 @@ public class AMUnidadOrganica extends GeneralPage {
                 vbotones = true;
             }
 
-        }        
+        }
         resetUnidadOrganica();
         onSelectedFromLimpia();
         ubicacion();
@@ -432,23 +422,24 @@ public class AMUnidadOrganica extends GeneralPage {
                 } else {
                     errorBorrar = null;
                     Criteria c;
-                    //String consulta = "SELECT * FROM RSC_UNIDADORGANICA WHERE UPPER(cod_und_organica)=UPPER('" +  unidadOrganica.getCod_und_organica() + "') AND S2.ENTIDAD_ID='" + unidadOrganica.getEntidad().getId() + "'";
-                    c = session.createCriteria(UnidadOrganica.class);
+                    String consulta = "SELECT * FROM RSC_UNIDADORGANICA WHERE UPPER(cod_und_organica)=UPPER('" +  unidadOrganica.getCod_und_organica() + "') AND S2.ENTIDAD_ID='" + unidadOrganica.getEntidad().getId() + "'";
+                    //c = session.createCriteria(UnidadOrganica.class);
 
                     if (editando) {
-                        //consulta += ("AND ID!='" + unidadOrganica.getId() + "'");
-                        c.add(Restrictions.ne("id", unidadOrganica.getId()));
+                        consulta += ("AND ID!='" + unidadOrganica.getId() + "'");
+                        //c.add(Restrictions.ne("id", unidadOrganica.getId()));
                     } else {
                         unidadOrganica.setEntidad(entidadUE);
                         unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                     }
-                    c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
-                    c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
+                    //c.add(Restrictions.eq("cod_und_organica", unidadOrganica.getCod_und_organica()));
+                    //c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
+                    //c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                     
-                    //Query query = session.createSQLQuery(consulta).addEntity(UnidadOrganica.class);
-                    if (c.list().size() > 0) {
+                    Query query = session.createSQLQuery(consulta).addEntity(UnidadOrganica.class);
+                    if (query.list().size() > 0) {
                         formmensaje.recordError(Errores.ERROR_COD_UND_ORG_UNICA);
-                        formmensaje.recordError("Código ya existente: " + ((UnidadOrganica) c.list().get(0)).getCod_und_organica());
+                        //formmensaje.recordError("Código ya existente: " + ((UnidadOrganica) c.list().get(0)).getCod_und_organica());
                         return zonas();
                     } else {
                         c = session.createCriteria(UnidadOrganica.class);
@@ -458,6 +449,7 @@ public class AMUnidadOrganica extends GeneralPage {
                             unidadOrganica.setEntidad(entidadUE);
                             unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                         }
+//                        c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()));
                         c.add(Restrictions.disjunction().add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()).ignoreCase()));
                         c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                         if (c.list().size() > 0) {
@@ -481,25 +473,21 @@ public class AMUnidadOrganica extends GeneralPage {
 
                     /* INICIO CAMBIO    */
                     if (editando == true) {
-                       //envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
-                        
-                        mensaje=helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO;
-                       
+                        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
                     } else {
-                      //  envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
-                        mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
-                        
-                                         
+                        envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
                     }
 
                     // FIN CAMBIO */ 
 
-                    session.saveOrUpdate(unidadOrganica);                    
-                    session.flush();
-                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+                    session.saveOrUpdate(unidadOrganica);
+//                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                     editando = false;
+                    session.flush();
                     resetUnidadOrganica();
+//                setupUbigeos();
                     formmensaje.clearErrors();
+//                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
                 }
             } else {
                 errorBorrar = null;
@@ -512,8 +500,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     unidadOrganica.setEntidad(entidadUE);
                     unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                 }
-                //c.add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()));
-                c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
+                c.add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()));
                 c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
 
                 if (c.list().size() > 0) {
@@ -552,19 +539,16 @@ public class AMUnidadOrganica extends GeneralPage {
                 unidadOrganica.setUnidadorganica(uoAntecesora);
                 /* INICIO CAMBIO    */
                 if (editando == true) {
-         
-                   mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
-                      
+                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_MODIFICADA_EXITO);
                 } else {
-                      
-                     mensaje=helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO;
+                    envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_CREADA_EXITO);
                 }
 
                 // FIN CAMBIO */ 
-                session.saveOrUpdate(unidadOrganica);                
-                session.flush();
-                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);    
+                session.saveOrUpdate(unidadOrganica);
+//                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                 editando = false;
+                session.flush();
                 resetUnidadOrganica();
                 formmensaje.clearErrors();
             }
@@ -586,9 +570,8 @@ public class AMUnidadOrganica extends GeneralPage {
         dato.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(dato);
         resetUnidadOrganica();
-        mensaje="Unidad Orgánica Eliminada";
-        //envelope.setContents("Unidad Orgánica Eliminada");
-        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+        envelope.setContents("Unidad Orgánica Eliminada");
+
         return zonas();// La/a zona a actualizar
     }
 
