@@ -25,7 +25,7 @@
     <div t:type="zone" t:id="tipoReporteZone" update="show">
         <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
             <fieldset>
-                Tipo de Reporte: &nbsp;
+                Reporte: &nbsp;
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
                 &nbsp; Formato del Reporte: &nbsp;
                 <t:radiogroup t:id="type">

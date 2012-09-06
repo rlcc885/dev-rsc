@@ -3,11 +3,13 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Helpers;
 import helpers.Reportes;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
+import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -93,7 +95,7 @@ public class RepTrabajador extends GeneralPage {
 
     @Property
     @Persist
-    private DatoAuxiliar tipoReporteSelect;
+    private Reporte tipoReporteSelect;
     
     @Property
     @Persist
@@ -169,6 +171,12 @@ public class RepTrabajador extends GeneralPage {
     @Property
     @Persist
     private Reportes.TIPO pdf;
+    
+    private static final long TRABAJADOR = 0;
+    private static final long ENTIDAD = 1;
+    private static final long USUARIO = 2;
+    private static final long GOBIERNO = 3;
+    private static final long NINGUNO = 4;
     
     @Log
     void setupRender() {
@@ -246,59 +254,70 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
-    public GenericSelectModel<DatoAuxiliar> getTipoReportes() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOREPORTE", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    public GenericSelectModel<Reporte> getTipoReportes() {
+        Criteria c = session.createCriteria(Reporte.class);
+        if (mostrarFiltrosTrabajador)
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.TRABAJADOR));
+        else if (mostrarFiltrosEntidad)
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.ENTIDAD));
+        else if (mostrarFiltrosUsuario)
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.USUARIO));
+        else if (mostrarFiltrosGobierno)
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.GOBIERNO));
+        else
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.NINGUNO));
+        return new GenericSelectModel<Reporte>(c.list(), Reporte.class, "nombre", "id", _access);
     }
     
     @Log
     void onSelectedFromGenerarReporte() {
-        if (mostrarFiltrosTrabajador)
-            generarTrabajador();
-        if (mostrarFiltrosEntidad)
-            generarEntidad();
-        if (mostrarFiltrosUsuario)
-            generarUsuario();
-        if (mostrarFiltrosGobierno)
-            generarGobierno();
+        if (tipoReporteSelect != null) {
+            if (mostrarFiltrosTrabajador)
+                generarTrabajador();
+            if (mostrarFiltrosEntidad)
+                generarEntidad();
+            if (mostrarFiltrosUsuario)
+                generarUsuario();
+            if (mostrarFiltrosGobierno)
+                generarGobierno();
+        }
     }
 
     @Log
-    void generarTrabajador() {
-        if (type == Reportes.TIPO.PDF) {
-            System.out.println("PDF");
-//            Long userId = new Long("9");
-//            Reportes rep = new Reportes();
-//            Map<String, Object> parametros = new HashMap<String, Object>();
-//            parametros.put("MandatoryParameter_UsuarioID", userId);
-//            StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-//            return report;
-        } else
-            System.out.println("EXCEL");
+    StreamResponse generarTrabajador() {
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
+        //tipoReporteSelect.getCodigo()
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        return report;
     }
     
     @Log
-    void generarEntidad() {
-        if (type == Reportes.TIPO.PDF)
-            System.out.println("PDF");
-        else
-            System.out.println("EXCEL");
+    StreamResponse generarEntidad() {
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        return report;
     }
     
     @Log
-    void generarUsuario() {
-        if (type == Reportes.TIPO.PDF)
-            System.out.println("PDF");
-        else
-            System.out.println("EXCEL");
+    StreamResponse generarUsuario() {
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        return report;
     }
     
     @Log
-    void generarGobierno() {
-        if (type == Reportes.TIPO.PDF)
-            System.out.println("PDF");
-        else
-            System.out.println("EXCEL");
+    StreamResponse generarGobierno() {
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        return report;
     }
     
     @Log
@@ -336,7 +355,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onActionFromMostrarGobierno() {
-        categoria = "Nivel de Gobierno/Sector/Organización del Estado";
+        categoria = "Nivel de Gobierno/Sector/Organizacion del Estado";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
