@@ -28,7 +28,7 @@
                     <div class="f-left">
                         <label>Nivel Organizacional</label>
                         <input t:type="Select" t:id="bunidadorganica_nivel"                                
-                               t:value="bnivelUO" model="nivel" t:zone="nivelUOZone"/>
+                               t:value="bnivelUO" model="nivel" t:zone="nivelUOZone" t:blankLabel="...TODOS"/>
                     </div> 
                     <div class="f-left">
                         <label>Unidad Orgánica Antecesora</label>
