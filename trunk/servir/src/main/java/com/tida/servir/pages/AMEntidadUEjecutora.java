@@ -1045,10 +1045,10 @@ public class AMEntidadUEjecutora extends GeneralPage {
             }
             else
             {
-            entidadUE.setNivelGobierno(entidad.getNivelGobierno());
+           /* entidadUE.setNivelGobierno(entidad.getNivelGobierno());
             entidadUE.setOrganizacionEstado(entidad.getOrganizacionEstado());
             entidadUE.setSectorGobierno(entidad.getSectorGobierno());
-            entidadUE.setTipoOrganismo(entidad.getTipoOrganismo());
+            entidadUE.setTipoOrganismo(entidad.getTipoOrganismo());*/
             }
             //
             
