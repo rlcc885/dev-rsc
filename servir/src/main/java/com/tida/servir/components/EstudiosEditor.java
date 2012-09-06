@@ -39,8 +39,8 @@ public class EstudiosEditor {
     private Entidad _oi;
 //    @Component(id = "titulosEdit")
 //    private Form _form;
-    @InjectComponent
-    private Envelope envelope;
+//    @InjectComponent
+//    private Envelope envelope;
     @Property
     @Persist
     private Estudios estudio;
@@ -154,6 +154,9 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean ingresaubigeo;
+        @Persist
+    @Property
+    private String mensaje;
  
     // loguear operación
     @CommitAfter
@@ -285,7 +288,7 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() {
-        
+        mensaje=null;
         if (valestudiando != null) {
             if (valestudiando) {
                 System.out.println("esta estudiando");
@@ -401,7 +404,8 @@ public class EstudiosEditor {
             }
             editando = false;
             limpiar();
-            envelope.setContents(helpers.Constantes.ESTUDIO_EXITO);
+//            envelope.setContents(helpers.Constantes.ESTUDIO_EXITO);
+            mensaje=helpers.Constantes.ESTUDIO_EXITO;
         }
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("mensajes", mensajes.getBody()).
@@ -470,7 +474,8 @@ public class EstudiosEditor {
         valestudiando = estudio.getEstudiando();
         valrevisado = estudio.getValidado();
     }
-
+    
+    
     @Log
     Object onActionFromEditar(Estudios estu) {
         limpiar();
@@ -561,8 +566,10 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onBorrarDato(Estudios dato) {
+        mensaje=null;
         session.delete(dato);
-        envelope.setContents("Estudio del Trabajador Eliminado");
+//        envelope.setContents("Estudio del Trabajador Eliminado");
+        mensaje="Estudio del Trabajador Eliminado";
         new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }

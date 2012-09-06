@@ -8,7 +8,12 @@
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
             </script>
             <t:form t:id="formlistaestudios">
-                <t:envelope t:id="envelope"/>   
+                <!--<t:envelope t:id="envelope"/>-->  
+                <t:if test="mensaje">
+                    <script>
+                        alert("${mensaje}");  
+                    </script>
+                </t:if>
                 <t:errors/>
             </t:form>
         </t:zone>
