@@ -37,15 +37,15 @@
                             <div class="f-wrap">
                                 <div class="f-left">
                                     <t:label for="nuevo_nombres"/>
-                                    <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="33" t:validate="required,maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="nuevo_apellidoPaterno" />
-                                    <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="33" t:validate="required,maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                                 <div class="f-left">
                                     <t:label for="nuevo_apellidoMaterno" />
-                                    <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="33" t:validate="required" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
+                                    <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="33" t:validate="required,maxlength=150" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged"  t:zone="trabajadorNuevoZone"/>
                                 </div>
                             </div>                    
                         </fieldset>
