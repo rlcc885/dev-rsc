@@ -1053,13 +1053,16 @@ input.t-error, textarea.t-error, select.t-error { border-color:#E10827; color:#5
 /*#ok_msg { background-color:#91d722; border:none; margin: 0 auto; width: 90%;}*/
 /*Cambiar clave */
 #ok_msg {
-    background-color: #4F8A10;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    text-align: center;
+position:fixed;
+top: 0; left: 0;
+z-index: 10;
+background:#FF8951;
+padding:10px;
+border:1px solid #CCCCCC;
+text-align:center;
+text-decoration-color:#FFFFFF;
+font-weight:bold;
+width:99%;
 }
 
 
