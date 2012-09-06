@@ -11,7 +11,7 @@
         <div id="form_cambio_clave" class="abmform">
             <t:zone t:id="zone" t:update="show">
                 <script>
-                    setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+                     setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }, "slow");},4000);
                 </script>
                 <t:form t:id="formularioconfiguraracceso" t:zone = "zone">
                     <t:envelope t:id="envelope"/>
