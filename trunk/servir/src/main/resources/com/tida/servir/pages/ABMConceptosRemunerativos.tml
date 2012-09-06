@@ -43,7 +43,7 @@
     <t:zone t:id="mensajes">
         <br/>
         <script>
-            setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }, "slow");},4000);
         </script>
         <t:form t:id="formmensajes">
             <t:envelope t:id="envelope"/>   
