@@ -129,7 +129,7 @@
     
     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
-           setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }, "slow");},4000);
+            setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
         </script>
         <form t:type="form" t:id="formmensaje" id="formmensaje" t:zone="mensajeZone">
             <t:envelope t:id="envelope"/>
