@@ -5,13 +5,21 @@
 
     <div class="change-pass">
         <h3>Modificación de clave</h3>
+         <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
+        <script>
+          setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+        </script>
+        <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
+            <t:envelope t:id="envelope"/>
+             
+        </form>
+    </div>
         <div class="box">
             <div id="form_cambio_clave" class="abmform">
                 <t:zone t:id="zone">
                     <t:form t:id="formulariocambioclave" t:zone = "zone">
-                        <t:envelope t:id="envelope"/>
-                        <t:errors/>
                         <t:if test= "FormDisplay">
+                            <t:errors/>
                             <div class="f-wrap" id="div_cambiarclave">
                                 <t:label for="clave_actual"/>
                                 <input t:type="PasswordField" t:id="clave_actual"
