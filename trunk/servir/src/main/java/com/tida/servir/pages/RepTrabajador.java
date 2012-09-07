@@ -212,7 +212,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
-        generarDisabled = true;
+        generarDisabled = false;
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
@@ -228,27 +228,29 @@ public class RepTrabajador extends GeneralPage {
             vselect = (usu.getAccesoselect() != 0);
             
             switch (usu.getNivel()) {
-                case 1:
+                case 1://Administrador SERVIR
                     trabajadorLink = entidadLink = gobiernoLink = true;
                     break;
-                case 2:
+                case 2://Administrador de Entidad
                     trabajadorLink = entidadLink = true;
                     break;
-                case 3:
+                case 3://Administrador del Sistema
                     usuarioLink = true;
                     break;
-                case 4:
+                case 4://Consultas  SERVIR
                     trabajadorLink = entidadLink = gobiernoLink = true;
                     break;
-                case 5:
+                case 5://Consultas Entidad
                     trabajadorLink = entidadLink  = true;
                     break;
-                case 6:
+                case 6://Trabajador
                     trabajadorLink  = true;
                     break;
-                case 7:
+                case 7://Contraloría
                     gobiernoLink  = true;
                     break;
+//                case 8://Órgano de Control Institucional
+//                    break;
             }
         }
     }
@@ -342,17 +344,18 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    void onSelectedFromGenerarReporte() {
+    StreamResponse onActionFromGenerarReporte() {
         if (tipoReporteSelect != null) {
             if (mostrarFiltrosTrabajador)
-                generarTrabajador();
+                return generarTrabajador();
             if (mostrarFiltrosEntidad)
-                generarEntidad();
+                return generarEntidad();
             if (mostrarFiltrosUsuario)
-                generarUsuario();
+                return generarUsuario();
             if (mostrarFiltrosGobierno)
-                generarGobierno();
+                return generarGobierno();
         }
+        return null;
     }
 
     @Log
@@ -361,7 +364,7 @@ public class RepTrabajador extends GeneralPage {
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
         //tipoReporteSelect.getCodigo()
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
         return report;
     }
     
@@ -370,7 +373,7 @@ public class RepTrabajador extends GeneralPage {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
         return report;
     }
     
@@ -379,7 +382,7 @@ public class RepTrabajador extends GeneralPage {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
         return report;
     }
     
@@ -388,7 +391,7 @@ public class RepTrabajador extends GeneralPage {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.B5, type, parametros, context);
+        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
         return report;
     }
     
@@ -399,7 +402,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
-        generarDisabled = false;
+        generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -410,7 +413,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
-        generarDisabled = false;
+        generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -421,7 +424,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = true;
         mostrarFiltrosGobierno = false;
-        generarDisabled = false;
+        generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -432,7 +435,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = true;
-        generarDisabled = false;
+        generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
 }

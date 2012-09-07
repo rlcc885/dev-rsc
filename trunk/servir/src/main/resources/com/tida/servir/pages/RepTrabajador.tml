@@ -33,7 +33,7 @@
                     PDF <t:radio t:id="pdf" value="pdf"/>
                 </t:radiogroup>
             </fieldset>
-            
+        <t:if test="generarDisabled">     
             <fieldset>
                 <div>
                     <t:if test="mostrarFiltrosTrabajador" >
@@ -65,9 +65,9 @@
                     </t:if>
                 </div>
                 
-                
-                <input t:type="Submit" t:id="generarReporte" value="Generar Reporte" class="button f-right" disabled="generarDisabled"/>
+                <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF">Generar Reporte</a>
             </fieldset>
+        </t:if>
         </t:form>
     </div>
 
