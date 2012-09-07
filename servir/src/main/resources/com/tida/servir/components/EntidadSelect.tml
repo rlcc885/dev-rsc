@@ -141,6 +141,9 @@
             </div>
             <br class="clear" />
             <t:if test="vistaCorta" negate = "true">
+             <script>
+              setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+            </script>
                 <t:envelope t:id="envelope"/>
             </t:if>
         </t:zone>
