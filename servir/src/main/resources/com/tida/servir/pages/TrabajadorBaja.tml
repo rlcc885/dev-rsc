@@ -5,8 +5,9 @@
       xmlns:p="tapestry:parameter">
     <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
     <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+        Entidad: ${entidadUE.denominacion}
     </div>
+      <h2> Baja de Trabajadores </h2>
     <div class = "mensajes">
         ${mensajes}
     </div>
