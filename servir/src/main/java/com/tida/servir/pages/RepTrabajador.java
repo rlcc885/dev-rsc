@@ -202,6 +202,16 @@ public class RepTrabajador extends GeneralPage {
     private static final long GOBIERNO = 3;
     private static final long NINGUNO = 4;
     
+    @Property
+    @Persist
+    private Trabajador _trabajadorRep;
+    @Property
+    @Persist
+    private Entidad _entidadRep;
+    @Property
+    @Persist
+    private Usuario _usuarioRep;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -259,7 +269,7 @@ public class RepTrabajador extends GeneralPage {
     Object onActionFromSeleccionaTitular(Trabajador traba) {
         if (traba != null) {
             titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
-            _entidadUE.setTitular(traba);
+            _trabajadorRep = traba;
         }
         mostrar = false;
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
@@ -269,7 +279,7 @@ public class RepTrabajador extends GeneralPage {
     Object onActionFromSeleccionaEntidad(Entidad enti) {
         if (enti != null) {
             entidadTx = enti.getDenominacion();
-            _entidadUE.setEntidad(enti);
+            _entidadRep = enti;
         }
         mostrar = false;
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiZone", entiZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
@@ -345,54 +355,26 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     StreamResponse onActionFromGenerarReporte() {
+        Reportes rep = new Reportes();
+        Map<String, Object> parametros = new HashMap<String, Object>();
         if (tipoReporteSelect != null) {
-            if (mostrarFiltrosTrabajador)
-                return generarTrabajador();
-            if (mostrarFiltrosEntidad)
-                return generarEntidad();
-            if (mostrarFiltrosUsuario)
-                return generarUsuario();
-            if (mostrarFiltrosGobierno)
-                return generarGobierno();
-        }
-        return null;
-    }
-
-    @Log
-    StreamResponse generarTrabajador() {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        //tipoReporteSelect.getCodigo()
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
+            if (mostrarFiltrosTrabajador && _trabajadorRep != null)
+                parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+            if (mostrarFiltrosEntidad && _entidadRep != null)
+                parametros.put("MandatoryParameter_EntidadID", _entidadRep.getId());
+            if (mostrarFiltrosUsuario && _usuarioRep != null)
+                parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
+            if (mostrarFiltrosGobierno && _usuarioRep != null)
+                parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
+        } else { return null; }
+        StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
         return report;
     }
-    
-    @Log
-    StreamResponse generarEntidad() {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
-        return report;
-    }
-    
-    @Log
-    StreamResponse generarUsuario() {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
-        return report;
-    }
-    
-    @Log
-    StreamResponse generarGobierno() {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", _entidadUE.getTitular().getId());
-        StreamResponse report = rep.callReporte(Reportes.REPORTE.A2, type, parametros, context);
-        return report;
+        
+    Reportes.REPORTE retornarReporte(String codigo) {
+        if (codigo.equals("A2"))
+            return Reportes.REPORTE.A2;
+        return Reportes.REPORTE.B5;
     }
     
     @Log
