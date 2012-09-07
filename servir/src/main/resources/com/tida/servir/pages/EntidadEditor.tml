@@ -4,6 +4,9 @@
     <h2> Editar Entidad </h2>
     <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
+              <script>
+              setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+            </script>
             <t:envelope t:id="envelope"/>
             <t:errors/>
         </t:form> 
