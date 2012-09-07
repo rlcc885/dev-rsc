@@ -11,9 +11,24 @@
         ${mensajes}
     </div>
     <!-- <a title= "Mostrar/Ocultar filtros y búsquedas" id = "toggle_filtros" href="#" onclick="toggle_filtros();">Mostrar/Ocultar</a> -->
-    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
-    <div t:type="zone" t:id="filtrosZone" visible="${mostrarFiltros}">
+<!--    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a> -->
+
+    <div t:type="zone" t:id="filtrosZone" class="selectform">
                 <!-- the tabs -->
+        <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-02").click(function(){
+                jQuery("#panel-02").slideToggle("slow");
+                return true;
+                });
+                });        
+        </script>
+        <div class="box-background-title">
+                <span class="box-title-02">
+                    <strong style="cursor:pointer;">+</strong>
+                </span>
+        </div>
+        <div id="panel-02" >                
         <ul id="tabs-top" class="tabs">
             <li>
                 <a href="#"> Búsqueda Básica</a>
@@ -151,7 +166,8 @@
             </div>
             <br class="clear" />
         </div>
-
+        </div>
+                
     </div>
 
     <script>
@@ -166,9 +182,23 @@
         <div id="grillas-busquedas">
             <div id="tablaTrabajador">
                 <h2>Lista de Trabajadores</h2>
-                <t:zone t:id="empleadoszone">
+                <div t:type="zone" t:id="empleadoszone" class="selectform">
 <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
 <!--                        <t:errors/> -->
+                    <script>
+                        jQuery(document).ready(function(){
+                        jQuery(".box-title-01").click(function(){
+                        jQuery("#panel-01").slideToggle("slow");
+                        return true;
+                        });
+                        });        
+                    </script>
+                    <div class="box-background-title">
+                        <span class="box-title-01">
+                            <strong style="cursor:pointer;">+</strong> Listado de Trabajadores
+                        </span>
+                    </div>
+                    <div id="panel-01" class="box">
                     <t:grid source="empleados"
                             rowsPerPage="15"
                             row="persons"
@@ -193,8 +223,10 @@
                             <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                         </p:legajoCell>
                     </t:grid>
+
 <!--                    </t:form>-->
-                </t:zone>
+                    </div>
+                </div >
             </div>
         </div> <!-- Grillas-busqueda -->
     </t:if>
