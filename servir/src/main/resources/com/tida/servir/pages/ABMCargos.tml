@@ -3,7 +3,7 @@
       xmlns:p="tapestry:parameter">
 
     <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+        Entidad: ${entidadUE.denominacion}
     </div>
 
     <h2>Administración de Cargos / Puestos</h2>
