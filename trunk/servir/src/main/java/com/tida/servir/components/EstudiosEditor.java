@@ -153,8 +153,8 @@ public class EstudiosEditor {
     private int elemento = 0;
     @Persist
     @Property
-    private Boolean ingresaubigeo;
-        @Persist
+    private Boolean ingresaubigeo;      
+    @Persist
     @Property
     private String mensaje;
  
