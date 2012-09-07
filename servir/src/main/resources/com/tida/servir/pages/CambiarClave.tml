@@ -29,7 +29,7 @@
     </div>
     <div class="box" style="width:450px; margin: auto;">
         <div id="form_cambio_clave" class="abmform">
-            <t:zone t:id="zone2">
+            <t:zone t:id="zone">
                 <t:form t:id="formulariocambioclave" t:zone = "zone">
                     <t:if test= "FormDisplay">
                         <t:errors/>
@@ -52,7 +52,7 @@
                                        t:value="newPass2" size="20" t:validate="maxlength=50" />
                             </div>
                         </div>
-                       <div class="f-left complejidad-clave">
+                       <div class="f-wrap" id="complejidadclave"> 
                         <input type="text" id="verificacion" t:value="verificacion" size="25" readonly="readonly" style="border-width: 0px; border-style: none; font-size:8pt;" />
                     </div>
                         <div class="f-wrap">
