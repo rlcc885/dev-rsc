@@ -66,6 +66,22 @@
                                    t:disabled="${veditar}" t:zone="principalZone" />
                         </div>
                     </div>
+                    
+
+                    <t:if test="entidadUE.esSubEntidad">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>Entidad Origen</label>
+                                <input t:type="textfield" t:id="entidadPadre" t:value="entidad_origen" SIZE ="85" t:disabled="true"/>    
+                            </div>
+                            <div class="f-left">
+                                <label>Tipo Subentidad</label>
+                                <input t:type="select" model="TipoSubEntidad" t:id="tiposubentidad" 
+                                       t:value="entidadUE.tiposubentidad" t:disabled="true"/>   
+                            </div>                        
+                        </div>
+                    </t:if>
+                    
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="RUC"/>

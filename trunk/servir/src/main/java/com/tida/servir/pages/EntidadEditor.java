@@ -137,6 +137,10 @@ public class EntidadEditor extends GeneralPage {
     
     @Persist
     @Property
+    private String entidad_origen;
+    
+    @Persist
+    @Property
     private Boolean vformulario;
     @Persist
     @Property
@@ -190,6 +194,9 @@ public class EntidadEditor extends GeneralPage {
                 vbotones=true; 
             }
         }
+        
+        entidad_origen="";        
+        
         File copied;
         copied = new File(globals.getServletContext().getRealPath("/") + "images/logotipo/"+entidadUE.getLogotipo());
         if (!copied.exists()) {
@@ -223,6 +230,13 @@ public class EntidadEditor extends GeneralPage {
         if (entidadUE.getJefeOga() != null) {
             jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
+        
+        if (entidadUE.getEsSubEntidad()==true)
+        {
+         entidad_origen = entidadUE.getEntidad().getDenominacion();            
+        }
+        else{entidad_origen="";}
+
     }
 
     @CommitAfter
@@ -282,7 +296,14 @@ public class EntidadEditor extends GeneralPage {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOZONA", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-
+    @Log
+    //para obtener datatos del Tipo Entidad
+    public GenericSelectModel<DatoAuxiliar> getTipoSubEntidad() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    
     void onSelectedFromCancelBuscador() {
         btitulari = false;
         bjefeOGAi = false;
