@@ -34,7 +34,7 @@ public class CambiarClave extends GeneralPage {
     @Inject
     private Session session;
     @InjectComponent
-    private Zone zone2;
+    private Zone zone;
     @InjectComponent
     private Zone mensajeZone;    
     
@@ -92,60 +92,60 @@ public class CambiarClave extends GeneralPage {
              
             if(oldPass == null){
                 formulariocambioclave.recordError("Tiene que Ingresa la Clave Actual");
-                return zone2.getBody();
+                return zone.getBody();
             }
             
             if(newPass1 == null){
                 formulariocambioclave.recordError("Tiene que Ingresa una Clave Nueva");
-                return zone2.getBody();
+                return zone.getBody();
             }
             
             if(newPass2 == null){
                 formulariocambioclave.recordError("Tiene que Ingresa una Clave Nueva");
-                return zone2.getBody();
+                return zone.getBody();
             }
 
             if (!Encriptacion.encriptaEnMD5(oldPass).equals(_usuario.getMd5Clave())) {
                 verificacion="";
                 formulariocambioclave.recordError("Clave actual ingresada incorrecta.");
-                 return zone2.getBody(); 
+                 return zone.getBody(); 
             }
            
             
             if (oldPass.equals(newPass1)) {
                 verificacion="";
                 formulariocambioclave.recordError("La nueva clave debe ser diferente a la actual.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
 
             if (!newPass1.equals(newPass2)) {
                 verificacion="";
                 formulariocambioclave.recordError("Las claves ingresadas deben ser iguales.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
             
             if (_usuario.getTrabajador().getNombres().indexOf((newPass1.toUpperCase()))>=0) {
                 verificacion="";
                 formulariocambioclave.recordError("La claves ingresada contiene el nombre del usuario.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
             
             if (_usuario.getTrabajador().getApellidoMaterno().indexOf((newPass1.toUpperCase()))>=0) {
                 verificacion="";
                 formulariocambioclave.recordError("La clave ingresada contiene el apellido materno del usuario.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
             
             if (_usuario.getTrabajador().getApellidoPaterno().indexOf((newPass1.toUpperCase()))>=0) {
                 verificacion="";
                 formulariocambioclave.recordError("La clave ingresada contiene el apellido paterno del usuario.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
             
             if (_usuario.getLogin().indexOf(newPass1)>=0) {
                 verificacion="";
                 formulariocambioclave.recordError("La clave ingresada contiene el login del usuario.");
-                return zone2.getBody(); 
+                return zone.getBody(); 
             }
             
             envelope.setContents("Clave modificada con éxito.");
@@ -158,7 +158,7 @@ public class CambiarClave extends GeneralPage {
             _usuario.setIntentos_fallidos(0L);
             session.saveOrUpdate(_usuario);
 
-            return new MultiZoneUpdate("zone2", zone2.getBody())                             
+            return new MultiZoneUpdate("zone2", zone.getBody())                             
                     .add("mensajeZone",mensajeZone.getBody()); 
          }
     }
