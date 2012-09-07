@@ -422,22 +422,16 @@ public class AMUnidadOrganica extends GeneralPage {
                 } else {
                     errorBorrar = null;
                     Criteria c;
-                    String consulta = "SELECT * FROM RSC_UNIDADORGANICA WHERE UPPER(cod_und_organica)=UPPER('" +  unidadOrganica.getCod_und_organica() + "') AND S2.ENTIDAD_ID='" + unidadOrganica.getEntidad().getId() + "'";
-                    //c = session.createCriteria(UnidadOrganica.class);
-
+                    c = session.createCriteria(UnidadOrganica.class);
                     if (editando) {
-                        consulta += ("AND ID!='" + unidadOrganica.getId() + "'");
-                        //c.add(Restrictions.ne("id", unidadOrganica.getId()));
+                        c.add(Restrictions.ne("id", unidadOrganica.getId()));
                     } else {
                         unidadOrganica.setEntidad(entidadUE);
                         unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                     }
-                    //c.add(Restrictions.eq("cod_und_organica", unidadOrganica.getCod_und_organica()));
-                    //c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
-                    //c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
-                    
-                    Query query = session.createSQLQuery(consulta).addEntity(UnidadOrganica.class);
-                    if (query.list().size() > 0) {
+                    c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica())));
+                    c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
+                    if (c.list().size() > 0) {
                         formmensaje.recordError(Errores.ERROR_COD_UND_ORG_UNICA);
                         //formmensaje.recordError("Código ya existente: " + ((UnidadOrganica) c.list().get(0)).getCod_und_organica());
                         return zonas();
@@ -500,7 +494,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     unidadOrganica.setEntidad(entidadUE);
                     unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                 }
-                c.add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()));
+                c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica())));
                 c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
 
                 if (c.list().size() > 0) {
