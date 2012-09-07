@@ -176,7 +176,7 @@ public class TipoSancion
  */       
       return actualizarZonas();  
     }
-    
+
     @Log
     Object onCancel()
     {
@@ -187,7 +187,7 @@ public class TipoSancion
             } 
                 return "TrabajadorPersonal";    
     }
-    
+
     
      @Log
  //   @CommitAfter
