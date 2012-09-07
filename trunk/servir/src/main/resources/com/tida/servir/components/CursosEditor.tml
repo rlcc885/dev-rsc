@@ -5,7 +5,7 @@
     <t:content>
         <t:zone t:id="mensajescurso">
             <script>
-                setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }, "slow");},4000);
+                setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
             </script>
             <t:form t:id="formlistacursos">
                 <t:envelope t:id="envelope"/>   
