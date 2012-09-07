@@ -1,7 +1,12 @@
 <html t:type="layout" title="Servir - Entidades Unidades Ejecutoras"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-    <h2> Editar Entidad </h2>
+    
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+    </div>
+
+    <h2> Datos de Entidad </h2>
     <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
               <script>
