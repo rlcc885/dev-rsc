@@ -11,6 +11,24 @@
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=alerta" />
     </t:if>
 <!--    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>-->
+
+    <div t:type="zone" t:id="filtrosZone" class="selectform">
+                <!-- the tabs -->
+        <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-01").click(function(){
+                jQuery("#panel-01").slideToggle("slow");
+                return true;
+                });
+                });        
+        </script>
+        <div class="box-background-title">
+                <span class="box-title-01">
+                    <strong style="cursor:pointer;">+</strong> 
+                </span>
+        </div>
+        <div id="panel-01" >    
+    
     <ul id="tabs-topb" class="tabs">
         <li>
             <a href="#"> Entidad</a>
@@ -118,12 +136,25 @@
             </t:form>
         </div>
     </div> 
-    
-    <div class="box-background-title">
-        <span class="box-title">Listado de Entidades</span>
+        </div>
     </div>
-    <div class="box">
-        <t:zone t:id="listaentidadZone">
+    
+    <div t:type="zone" t:id="listaentidadZone" class="selectform">    
+  <!--      <t:if test="mostrar2"> -->
+            <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-02").click(function(){
+                jQuery("#panel-02").slideToggle("slow");
+                return true;
+                });
+                });        
+            </script>
+            <div class="box-background-title">
+                <span class="box-title-02">
+                    <strong style="cursor:pointer;">+</strong> Listado de Entidades
+                </span>
+            </div>
+            <div id="panel-02" class="box">
             <t:grid source="listadoEntidades" 
                     rowsPerPage="10" 
                     pagerPosition="bottom"
@@ -159,8 +190,10 @@
                     </t:if>
                 </p:accionesCell>
             </t:grid>  
-        </t:zone>
+            </div>
+<!--        </t:if>  -->  
     </div>
+    
              
     <div class="box-background-title">
         <span class="box-title">Crear / Editar Registro de Entidad</span>
