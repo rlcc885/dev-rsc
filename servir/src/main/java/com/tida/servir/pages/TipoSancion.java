@@ -184,7 +184,8 @@ public class TipoSancion
            //     return "TrabajadorPersonal";
             } else {
              //   return Busqueda.class;
-            }        
+            } 
+                return "TrabajadorPersonal";    
     }
     
     
