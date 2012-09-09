@@ -232,8 +232,14 @@
                             </t:if>
                         </div>
                     </fieldset>
-                    <t:if test="${vbotones}">
-                        <div class="actions">
+                    
+                    <div class="actions">
+
+                            <a t:type="pagelink" page="pageorganigrama" target="_blank" class="button f-left">
+                                Ver Organigrama
+                            </a>
+
+                        <t:if test="${vbotones}">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                             <t:if test="vNoedita">
                                 <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="unidadesOrganicasZone">
@@ -249,8 +255,9 @@
                                     </span> 
                                 </t:eventLink>
                             </t:if>
-                        </div>
-                    </t:if>
+                        </t:if>
+                    </div>
+                    
                 </t:form>
             </div> <!--  fin box -->
         </t:if>
