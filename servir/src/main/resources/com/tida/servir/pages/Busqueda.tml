@@ -181,7 +181,6 @@
     <t:if test="vselect">
         <div id="grillas-busquedas">
             <div id="tablaTrabajador">
-                <h2>Lista de Trabajadores</h2>
                 <div t:type="zone" t:id="empleadoszone" class="selectform">
 <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
 <!--                        <t:errors/> -->

@@ -370,17 +370,6 @@ public class TrabajadorBaja extends GeneralPage {
         resetBusquedas = true;
     }
 
-    @Log
-    TrabajadorBaja onActionFromToggle_filtros() {
-        if (mostrarFiltros) {
-            mostrarFiltros = false;
-            mostrarEsconder = "Mostrar";
-        } else {
-            mostrarFiltros = true;
-            mostrarEsconder = "Ocultar";
-        }
-        return this;
-    }
    
     @Component(id = "formulariobusquedaA")
     private Form formulariobusquedaA;

@@ -252,7 +252,13 @@ public class DatosDeCargoEditor {
        //new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
        session.flush();
        formulariodatosdecargoasignado.clearErrors();
-       envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);   
+       if(!e){
+           envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_BAJA);
+       }
+       else{
+           envelope.setContents(helpers.Constantes.CARGO_ASIGNADO_EXITO);   
+       }
+       
     }
     
     @Log
