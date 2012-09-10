@@ -1,5 +1,11 @@
 
 <div class="menu" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    
+  <!--  <div class="mostraUsuarioMenu">
+        <h3>${nombreusuario}</h3>
+    </div>-->
+    
     <ul id='menu-1' class='menu'>
         <li t:type="loop" source="OpcionesMenuPrincipal" value="opcion"  class="sub">
             <t:if test = "tieneHijo">
@@ -30,10 +36,7 @@
             <a t:type="eventlink" t:event="salir">Salir</a>
         </li>
     </ul>
-    <br style="clear: both;" />
-    <div class="mostraUsuarioMenu">
-        <h3>${nombreusuario}</h3>
-    </div>
+   <br style="clear: both;" />
     <script type='text/javascript'>
         document.observe('dom:loaded', function(){
         ProtoFish('menu-1', '200', 'hover', false, true, true);

@@ -19,9 +19,8 @@
                 <div id="logo-right">
                     <h1>
                         <t:pagelink page="alerta">SERVIR</t:pagelink>
-                    </h1>
-                </div>
-                    
+                    </h1>           
+                </div>                    
                 <!-- <div id="logo-left">
                     <h1>
                         <t:pagelink page="index">Sistema SERVIR</t:pagelink>
@@ -33,6 +32,27 @@
                     </h1>
                 </div> -->
                 
+            </div>
+             <div id="header2">
+                <div id="f-left2">    
+                        ${nombreusuario}             
+                </div> 
+                  <t:if test="mostrarse">
+                    <div id="f-right2">
+                        Administrador de Servir
+                    </div>
+                </t:if>
+                 <t:if test="mostrare">
+                     <div id="f-right2">
+                        Administrador de Entidad
+                    </div>
+                 </t:if>
+                 <t:if test="mostrars">
+                     <div id="f-right2">
+                        Administrador de Sistemas
+                    </div>
+                 </t:if>
+               
             </div>
             <!-- end header -->
             <t:ComponenteMenu/>
