@@ -1,5 +1,7 @@
 package com.tida.servir.components;
 
+import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.UsuarioTrabajador;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -58,6 +60,42 @@ public class Layout {
     @Symbol(SymbolConstants.APPLICATION_VERSION)
     @Property
     private String appVersion;
+    
+    @SessionState
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
+    
+    @Property
+    @Persist
+    private boolean mostrars;
+    @Property
+    @Persist
+    private boolean mostrare;
+    @Property
+    @Persist
+    private boolean mostrarse;
+     @Property
+    @SessionState
+    private Usuario _usuario;
+     
+    @Log
+    @SetupRender
+    private void inicio() {
+        if(_usuario.getRolid()==4){
+            mostrars=true;
+        }
+        if(_usuario.getRolid()==2){
+            mostrare=true;
+        }
+        if(_usuario.getRolid()==3){
+            mostrarse=true;
+        }
+        if(_usuario.getRolid()==1){
+            mostrars=false;
+            mostrare=false;
+            mostrarse=false;
+        }        
+    }
 
     // add an IE-only style sheet if browser is IE
     void afterRender() {
@@ -75,5 +113,10 @@ public class Layout {
 
     public String[] getPageNames() {
         return new String[]{"Index", "Ayuda"};
+    }
+    
+     public String getNombreUsuario() {
+        //return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + " - " + usuarioTrabajador.getDenominacion();
+        return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres();
     }
 }

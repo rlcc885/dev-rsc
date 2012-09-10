@@ -4,14 +4,27 @@
       xmlns:p="tapestry:parameter">
 
     <h2>Administración de Perfiles</h2>
+    
+    <div t:type="zone" t:id="mensajesEZone" >
+            <script>
+              setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+            </script>
+            <t:form t:id="formulariomensajese"  zone="mensajesEZone"> 
+                <t:envelope t:id="envelope"/>
+                <t:errors/>
+            </t:form> 
+        </div>
      
     <t:zone t:id="listaZone">
-        <t:if test="errorMessage">
-            <script>
+     <!--   <t:if test="errorMessage">
+           <script>
                 setTimeout(function(){ jQuery(".mensajes").fadeOut(1000);}, 4000);
             </script>
+            <script>
+              setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+            </script>
             <div class="error mensajes">${errorMessage}</div>
-        </t:if>
+        </t:if>-->
         <t:grid t:source="allPerfiles" inPlace="true" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="rowPerfil" exclude="id">
             <p:estadoCell>
                 <t:if test="${rowPerfil.estado}">
@@ -41,14 +54,20 @@
     <t:zone t:id="editZone">
         <t:if test = "mostrarNew">
             <t:if test="errorMessageSavePerfil">
-                <script>
+                <!--<script>
                     setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
+                </script>-->
+                <script>
+                    setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
                 </script>
                 <div class="error messageSavePerfil">${errorMessageSavePerfil}</div>
             </t:if>
             <t:if test="okMessageSavePerfil">
-                <script>
+                <!--<script>
                     setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
+                </script>-->
+                <script>
+                    setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
                 </script>
                 <div class="exito messageSavePerfil">${okMessageSavePerfil}</div>
             </t:if>
