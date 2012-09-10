@@ -1,0 +1,23 @@
+<html t:type="layout" title="Servir - Cambiar Entidad"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<!--     <h2> Selección de Entidad /U. Ejecutora </h2>-->
+     <div class="box-background-title">
+        <span class="box-title-01">
+            Buscar ${mensaje}
+        </span>
+    </div>
+    <div id="panel-01" class="box">
+        <t:zone t:id="busquedaZone">
+            <form t:type="form" t:id="formbusqueda" t:zone="busquedaZone">
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Tipo Documento</label>
+                        <input t:type="Select" t:id="tipo_documento"                                
+                               t:value="btipodocumento" model="beantipodocumento" t:zone="busquedaZone" t:blankLabel="...TODOS"/>
+                    </div>
+                
+            </form>
+        </t:zone>
+    </div>
+</html>
