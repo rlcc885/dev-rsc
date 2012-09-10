@@ -10,12 +10,16 @@ import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.ResultSet;
 import java.util.List;
+import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Session;
-
 /**
  *
  * @author ale
@@ -38,7 +42,7 @@ public class ABMSancion  extends GeneralPage
     private boolean bestrabajador;
     @Property
     @Persist
-    private DatoAuxiliar btipodocumento;    
+    private DatoAuxiliar bdocidentidad;    
     @Property
     @Persist
     private String bnumerodocumento;
@@ -59,9 +63,19 @@ public class ABMSancion  extends GeneralPage
     }
     
     @Log
-    public GenericSelectModel<DatoAuxiliar> getBeantipodocumento() {
+    public GenericSelectModel<DatoAuxiliar> getBeandocumentoidentidad() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformbusqueda() {
+        
+      return this;
+    }
+    
+   
+    
 
 }
