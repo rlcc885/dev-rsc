@@ -1,5 +1,7 @@
 package com.tida.servir.components;
 
+import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.UsuarioTrabajador;
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -52,15 +54,20 @@ public class LayoutLogin {
     @Symbol(SymbolConstants.APPLICATION_VERSION)
     @Property
     private String appVersion;
-
+    
+    @SessionState
+    @Property
+    private UsuarioTrabajador usuarioTrabajador;
+    
+    
     // add an IE-only style sheet if browser is IE
     void afterRender() {
         javaScriptSupport.importStylesheet(new StylesheetLink(ie6, new StylesheetOptions(null, "IE 6")));
         javaScriptSupport.importStylesheet(new StylesheetLink(ie7, new StylesheetOptions(null, "IE 7")));
         javaScriptSupport.importStylesheet(new StylesheetLink(ie8, new StylesheetOptions(null, "gte IE 8")));
         javaScriptSupport.importStylesheet(new StylesheetLink(ff, new StylesheetOptions(null, "ff")));
-
-    }
+        
+   }
 
     public String getClassForPageName() {
         return resources.getPageName().equalsIgnoreCase(pageName)
