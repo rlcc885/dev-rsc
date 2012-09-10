@@ -3,20 +3,15 @@
       xmlns:p="tapestry:parameter"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     <t:content>
-        <t:zone t:id="mensajes">
+        <div t:type="zone" t:id="mensajesEZone" >
             <script>
-                setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+              setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
             </script>
-            <t:form t:id="formlistaestudios">
-                <!--<t:envelope t:id="envelope"/>-->  
-                <t:if test="mensaje">
-                    <script>
-                        alert("${mensaje}");  
-                    </script>
-                </t:if>
+            <t:form t:id="formulariomensajese"  zone="mensajesEZone"> 
+                <t:envelope t:id="envelope"/>
                 <t:errors/>
-            </t:form>
-        </t:zone>
+            </t:form> 
+        </div>
 
         <fieldset>
             <t:zone t:id="primerZone">
@@ -99,7 +94,7 @@
                         </script>
                     </div>
                     
-                    <t:form t:id="formulariobotones" t:zone="mensajes">  
+                    <t:form t:id="formulariobotones" t:zone="mensajesEZone">  
                       <t:if test="${vformulario}">  
                         <t:if test="${vrevisado}">
                             <div class="f-wrap">
