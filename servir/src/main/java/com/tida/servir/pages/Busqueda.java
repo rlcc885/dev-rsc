@@ -370,7 +370,7 @@ public class Busqueda extends GeneralPage {
         resetBusquedas = true;
     }
 
-    @Log
+ /*   @Log
     Busqueda onActionFromToggle_filtros() {
         if (mostrarFiltros) {
             mostrarFiltros = false;
@@ -380,7 +380,7 @@ public class Busqueda extends GeneralPage {
             mostrarEsconder = "Ocultar";
         }
         return this;
-    }
+    }*/
 
     @Component(id = "formulariobusquedaA")
     private Form formulariobusquedaA;
