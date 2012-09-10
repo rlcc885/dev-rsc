@@ -767,7 +767,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     Object onEditarSeleccion(Entidad entidad) {
         entidadUE = entidad;
-
+        seteo();//renato agregado
         editando = true;
         if(entidad.getRuc()!=null){
             ruc_anterior = entidad.getRuc();
