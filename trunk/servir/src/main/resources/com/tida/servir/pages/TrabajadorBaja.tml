@@ -12,9 +12,23 @@
         ${mensajes}
     </div>
     <!-- <a title= "Mostrar/Ocultar filtros y búsquedas" id = "toggle_filtros" href="#" onclick="toggle_filtros();">Mostrar/Ocultar</a> -->
-    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>
-    <div t:type="zone" t:id="filtrosZone" visible="${mostrarFiltros}">
+    
+    <div t:type="zone" t:id="filtrosZone">
                 <!-- the tabs -->
+     <script>
+                jQuery(document).ready(function(){
+                jQuery(".box-title-02").click(function(){
+                jQuery("#panel-02").slideToggle("slow");
+                return true;
+                });
+                });        
+    </script>
+    <div class="box-background-title">
+            <span class="box-title-02">
+                <strong style="cursor:pointer;">+</strong>
+            </span>
+    </div>
+    <div id="panel-02" >
         <ul id="tabs-top" class="tabs">
             <li>
                 <a href="#"> Búsqueda Básica</a>
@@ -152,7 +166,7 @@
             </div>
             <br class="clear" />
         </div>
-
+    </div>
     </div>
 
     <script>
@@ -166,14 +180,27 @@
     <t:if test="vselect">
         <div id="grillas-busquedas">
             <div id="tablaTrabajador">
-                <h2>Lista de Trabajadores</h2>
                 <t:zone t:id="empleadoszone">
 <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
 <!--                        <t:errors/> -->
+                    <script>
+                        jQuery(document).ready(function(){
+                        jQuery(".box-title-01").click(function(){
+                        jQuery("#panel-01").slideToggle("slow");
+                        return true;
+                        });
+                        });        
+                    </script>
+                    <div class="box-background-title">
+                        <span class="box-title-01">
+                            <strong style="cursor:pointer;">+</strong> Listado de Trabajadores
+                        </span>
+                    </div>
+                    <div id="panel-01" class="box">
                     <t:grid source="empleados"
                             rowsPerPage="15"
                             row="persons"
-                            t:add="Legajo"
+                            t:add="Accion"
                             pagerPosition="bottom"
                             inPlace="true"
                             t:exclude="entidad_id,estado,id,nombretrabajador,validado,entidad,unidadorganica,cargo,estadocargo,documentoidentidad_id,sexo,tipodiscapacidad_id,estadocivil_id,regimenlaboral_id,unidadorganica_id,nivelinstruccion_id,formacionprofesional_id,fechainicio,fechafin,fechanacimiento,"
@@ -184,10 +211,11 @@
                                 O bien no hay trabajadores.
                             </div>
                         </t:parameter>
-                        <p:legajoCell>
+                        <p:accionCell>
                             <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="persons.caid" href="#">Baja</a>                            
-                        </p:legajoCell>
+                        </p:accionCell>
                     </t:grid>
+                    </div>
 <!--                    </t:form>-->
                 </t:zone>
             </div>
