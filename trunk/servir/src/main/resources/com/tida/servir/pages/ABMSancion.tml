@@ -19,8 +19,8 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>Tipo Documento</label>
-                        <input t:type="Select" t:id="tipo_documento"                                
-                               t:value="btipodocumento" model="beantipodocumento" t:zone="busquedaZone" />
+                        <input t:type="Select" t:id="documento_identidad"                                
+                               t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" />
                     </div>
                     <div class="f-left">
                         <label>Número de Documento</label>
