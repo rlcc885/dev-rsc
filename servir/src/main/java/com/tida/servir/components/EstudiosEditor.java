@@ -39,8 +39,8 @@ public class EstudiosEditor {
     private Entidad _oi;
 //    @Component(id = "titulosEdit")
 //    private Form _form;
-//    @InjectComponent
-//    private Envelope envelope;
+    @InjectComponent
+    private Envelope envelope;
     @Property
     @Persist
     private Estudios estudio;
@@ -71,9 +71,9 @@ public class EstudiosEditor {
     private Zone tercerZone;
     @InjectComponent
     @Property
-    private Zone mensajes;
-    @Component(id = "formlistaestudios")
-    private Form formlistaestudios;
+    private Zone mensajesEZone;
+    @Component(id = "formulariomensajese")
+    private Form formulariomensajese;
     @Inject
     private Request _request;
     //campos
@@ -154,9 +154,7 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean ingresaubigeo;      
-    @Persist
-    @Property
-    private String mensaje;
+
  
     // loguear operación
     @CommitAfter
@@ -253,7 +251,7 @@ public class EstudiosEditor {
                 vdetalle=false;
                 vbotones=true;
                 limpiar();
-                formlistaestudios.clearErrors();
+                formulariomensajese.clearErrors();
                 editando = false;
                 estudio = new Estudios();
                 vNoedita=true;
@@ -268,7 +266,7 @@ public class EstudiosEditor {
             }
             else{
                 limpiar();
-                formlistaestudios.clearErrors();
+                formulariomensajese.clearErrors();
                 editando = false;
                 estudio = new Estudios();  
             }            
@@ -288,7 +286,6 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onSuccessFromformulariobotones() {
-        mensaje=null;
         if (valestudiando != null) {
             if (valestudiando) {
                 System.out.println("esta estudiando");
@@ -325,32 +322,32 @@ public class EstudiosEditor {
                 return Busqueda.class;
             }
         } else if (elemento == 2) {
-            return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("mensajes", mensajes.getBody());
+            return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("mensajesEZone", mensajesEZone.getBody());
         } else if (elemento == 1) {
-            formlistaestudios.clearErrors();
+            formulariomensajese.clearErrors();
             Logger logger = new Logger();
             if (valdenominacion == null) {
-                formlistaestudios.recordError("Tiene que ingresar la Denominación");
-                return mensajes.getBody();
+                formulariomensajese.recordError("Tiene que ingresar la Denominación");
+                return mensajesEZone.getBody();
             }
             if (valtipoestudio == null) {
-                formlistaestudios.recordError("Tiene que seleccionar el Tipo de Estudio");
-                return mensajes.getBody();
+                formulariomensajese.recordError("Tiene que seleccionar el Tipo de Estudio");
+                return mensajesEZone.getBody();
             }
             if (valcentroestudio == null) {
-                formlistaestudios.recordError("Tiene que seleccionar el Centro de Estudio");
-                return mensajes.getBody();
+                formulariomensajese.recordError("Tiene que seleccionar el Centro de Estudio");
+                return mensajesEZone.getBody();
             }
             if (fecha_desde == null) {
-                formlistaestudios.recordError("Tiene que ingresar Fecha de Inicio");
-                return mensajes.getBody();
+                formulariomensajese.recordError("Tiene que ingresar Fecha de Inicio");
+                return mensajesEZone.getBody();
             }
             if (fecha_desde.after(new Date())) {
-                formlistaestudios.recordError("La fecha de inicio debe ser previa a la fecha actual.");
-                return mensajes.getBody();
+                formulariomensajese.recordError("La fecha de inicio debe ser previa a la fecha actual.");
+                return mensajesEZone.getBody();
             }
             if (validando() == false) {
-                return mensajes.getBody();
+                return mensajesEZone.getBody();
             }
             if (editando) {
                 //editando
@@ -404,11 +401,11 @@ public class EstudiosEditor {
             }
             editando = false;
             limpiar();
-//            envelope.setContents(helpers.Constantes.ESTUDIO_EXITO);
-            mensaje=helpers.Constantes.ESTUDIO_EXITO;
+            envelope.setContents(helpers.Constantes.ESTUDIO_EXITO);
+            //mensaje=helpers.Constantes.ESTUDIO_EXITO;
         }
 
-        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("mensajes", mensajes.getBody()).
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("mensajesEZone", mensajesEZone.getBody()).
                 add("listaZone", listaZone.getBody()).
                 add("segundoZone", segundoZone.getBody()).
                 add("tercerZone", tercerZone.getBody());
@@ -421,32 +418,32 @@ public class EstudiosEditor {
             if (valestudiando == false) {
 
                 if (valfec_hasta == null) {
-                    formlistaestudios.recordError("Debe ingresar Fecha de Fin");
+                    formulariomensajese.recordError("Debe ingresar Fecha de Fin");
                     resultado = false;
                 } else if (fecha_hasta.after(new Date())) {
-                    formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                    formulariomensajese.recordError("La fecha de fin debe ser previa a la fecha actual.");
                     resultado = false;
                 } else if (fecha_desde.after(fecha_hasta)) {
-                    formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
+                    formulariomensajese.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                     resultado = false;
                 } else if (fecha_desde.equals(fecha_hasta)) {
                     resultado = false;
-                    formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
+                    formulariomensajese.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
             }
         } else {
             if (valfec_hasta == null) {
-                formlistaestudios.recordError("Tiene que ingresar Fecha de Fin");
+                formulariomensajese.recordError("Tiene que ingresar Fecha de Fin");
                 resultado = false;
             } else if (fecha_hasta.after(new Date())) {
-                formlistaestudios.recordError("La fecha de fin debe ser previa a la fecha actual.");
+                formulariomensajese.recordError("La fecha de fin debe ser previa a la fecha actual.");
                 resultado = false;
             } else if (fecha_desde.after(fecha_hasta)) {
-                formlistaestudios.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
+                formulariomensajese.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                 resultado = false;
             } else if (fecha_desde.equals(fecha_hasta)) {
                 resultado = false;
-                formlistaestudios.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
+                formulariomensajese.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
 
@@ -566,10 +563,10 @@ public class EstudiosEditor {
     @Log
     @CommitAfter
     Object onBorrarDato(Estudios dato) {
-        mensaje=null;
+//        mensaje=null;
         session.delete(dato);
-//        envelope.setContents("Estudio del Trabajador Eliminado");
-        mensaje="Estudio del Trabajador Eliminado";
+        envelope.setContents("Estudio del Trabajador Eliminado");
+//        mensaje="Estudio del Trabajador Eliminado";
         new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
