@@ -11,10 +11,7 @@ import com.tida.servir.entities.Entidad;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.util.List;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Session;
@@ -38,12 +35,28 @@ public class ABMSancion  extends GeneralPage
     private PropertyAccess _access;
     @Property
     @Persist
-    private DatoAuxiliar btipodocumento;
-    
-    
+    private boolean bestrabajador;
+    @Property
+    @Persist
+    private DatoAuxiliar btipodocumento;    
+    @Property
+    @Persist
+    private String bnumerodocumento;
+    @Property
+    @Persist
+    private String bnombres;
+    @Property
+    @Persist
+    private String bapaterno;
+    @Property
+    @Persist
+    private String bamaterno;
     
     // inicio de la pagina
-    
+    @SetupRender
+    void inicio(){
+        
+    }
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeantipodocumento() {

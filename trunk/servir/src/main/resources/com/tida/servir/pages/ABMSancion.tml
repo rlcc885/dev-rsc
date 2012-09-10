@@ -12,11 +12,39 @@
             <form t:type="form" t:id="formbusqueda" t:zone="busquedaZone">
                 <div class="f-wrap">
                     <div class="f-left">
-                        <label>Tipo Documento</label>
-                        <input t:type="Select" t:id="tipo_documento"                                
-                               t:value="btipodocumento" model="beantipodocumento" t:zone="busquedaZone" t:blankLabel="...TODOS"/>
+                        ¿Es Trabajador del Sector Público?
+                        <input t:type="Checkbox" t:id="es_trabajador" t:value="bestrabajador"/>                              
                     </div>
                 </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Tipo Documento</label>
+                        <input t:type="Select" t:id="tipo_documento"                                
+                               t:value="btipodocumento" model="beantipodocumento" t:zone="busquedaZone" />
+                    </div>
+                    <div class="f-left">
+                        <label>Número de Documento</label>
+                        <input t:type="TextField" t:id="numero_documento"
+                                t:value="bnumerodocumento" size="30" />
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Nombres</label>
+                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Apellido Paterno</label>
+                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Apellido Materno</label>
+                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30"/>
+                    </div>
+
+                </div>
+
+                
                 
             </form>
         </t:zone>
