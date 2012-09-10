@@ -379,6 +379,8 @@ public class EntidadEditor extends GeneralPage {
         return JefeRRHHZone.getBody();
     }
 
+    
+    
     Object onActionFromeditarJefeOGA(Trabajador traba) {
         jefeOGA = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
         entidadUE.setJefeOga(traba);
