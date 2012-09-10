@@ -221,6 +221,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     Object onActionFromDetalle(RemuneracionPersonal remu) {
         remuneracion = remu;
+        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo_id());
         accesos();
         vdetalle = true;
         vguardar = false;
