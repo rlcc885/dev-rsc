@@ -166,20 +166,27 @@ public class RemuneracionesPersonalesEditor {
     @Log
     @CommitAfter
     Object onSuccess() {
-        
+        int numRemuDupl=0;
+        formulariomensajesCR.clearErrors();
         String consulta = "SELECT COUNT(*) FROM RSC_REMUNERACIONPERSONAL F "
                 + "WHERE F.CARGOASIGNADO_ID = " + cargoAsignado + " AND F.CONCEPTOREMUNERATIVO_ID = '" + conceptoseleccionado.getId() + "'";
         System.out.println(consulta);
         Query q1 = session.createSQLQuery(consulta);
-            int numRemuDupl = Integer.parseInt(q1.list().get(0).toString());
-        
-        if (numRemuDupl > 0) {
-            envelope.setContents("No es posible registrar un concepto de pago mas de una vez");
+        numRemuDupl = Integer.parseInt(q1.list().get(0).toString());
+            
+        if(editando && numRemuDupl > 1){
+            formulariomensajesCR.recordError("No es posible registrar un concepto de pago mas de una vez");
+            //envelope.setContents("No es posible registrar un concepto de pago mas de una vez");
+            return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
+                .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
+                .add("remuneracionesZone", remuneracionesZone.getBody());
+        }else if(!editando && numRemuDupl > 0){
+            formulariomensajesCR.recordError("No es posible registrar un concepto de pago mas de una vez");
+            //envelope.setContents("No es posible registrar un concepto de pago mas de una vez");
             return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
                 .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
                 .add("remuneracionesZone", remuneracionesZone.getBody());
         }else{
-        
         remuneracion.setCargoasignado_id(cargoAsignado);
         remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
         session.saveOrUpdate(remuneracion);
@@ -194,6 +201,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     Object onActionFromEditar(RemuneracionPersonal remu) {
         remuneracion = remu;
+        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo_id());
         accesos();
         editando = true;
         return new MultiZoneUpdate("remuneracionesZone", remuneracionesZone.getBody());
