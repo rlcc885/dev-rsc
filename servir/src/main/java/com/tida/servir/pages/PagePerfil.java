@@ -4,6 +4,7 @@
  */
 package com.tida.servir.pages;
 
+import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
@@ -12,10 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.Log;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -107,6 +106,13 @@ public class PagePerfil {
     @Persist
     @Property
     private String fechaCreacion;
+    @InjectComponent
+    private Envelope envelope;
+    @InjectComponent
+    @Property
+    private Zone mensajesEZone;
+    @Component(id = "formulariomensajese")
+    private Form formulariomensajese;
 
     // inicio de pagina
     @Log
@@ -116,7 +122,7 @@ public class PagePerfil {
         }
         nuevoPerfil();
         vNoeditaperfil = false;
-        okMessageSavePerfil = "";
+        formulariomensajese.clearErrors();
     }
 
     @Log
@@ -127,7 +133,7 @@ public class PagePerfil {
         SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
         fechaCreacion = formatoDeFecha.format(perfil.getFechacreacion());
         perfil.setEstado(true);
-        errorMessage = "";
+        formulariomensajese.clearErrors();
         errorMessageSavePerfil = "";
     }
 
@@ -181,17 +187,18 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPerfil(Perfil lperfil) {
+        formulariomensajese.clearErrors();
         if (lperfil.getUsuarioCollection().size() > 0) {
-            errorMessage = "El Perfil no puede ser eliminado porque existen usuarios asignados al perfil.";
+            formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen usuarios asignados al perfil.");
         } else {
             if (lperfil.getMenuCollection().size() > 0) {
-                errorMessage = "El Perfil no puede ser eliminado porque existen opciones de menu asociados.";
+                formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen opciones de menu asociados.");
             } else {
                 try {
                     session.delete(lperfil);
                     nuevoPerfil();
                 } catch (Exception e) {
-                    errorMessage = "Otro error que pueda suceder :) ";
+                    formulariomensajese.recordError("Otro error que pueda suceder :) ");
                 }
             }
         }
@@ -204,7 +211,7 @@ public class PagePerfil {
         perfil = lperfil;
         mostrarNew = true;
         errorMessageSavePerfil = "";
-        okMessageSavePerfil = "";
+       formulariomensajese.clearErrors();
         editaPerfil = true;
         if (perfil.getId() <= 8) {
             vNoeditaperfil = true;
@@ -223,6 +230,7 @@ public class PagePerfil {
         mostrarNew = false;
         errorMessageSavePerfil = "";
         okMessageSavePerfil = "";
+        formulariomensajese.clearErrors();
         editaPerfil = false;
         nuevoPermiso();
         return zonasTotal();
@@ -275,6 +283,7 @@ public class PagePerfil {
         menu.setId(0);
         errorMessageSavePerfil = "";
         okMessageSavePerfil = "";
+        formulariomensajese.clearErrors();
     }
 
     @Log
@@ -282,17 +291,18 @@ public class PagePerfil {
     Object onSuccessFromPerfilInputForm() {
         errorMessage = "";
         if (perfil.getDescperfil() == null || perfil.getDescperfil().isEmpty()) {
-            errorMessageSavePerfil = "Ingrese descripción del perfil.";
-            return editZone.getBody();
+            formulariomensajese.recordError("Ingrese descripción del perfil.");
+            return new MultiZoneUpdate ("editZone",editZone.getBody()).add("mensajesEZone", mensajesEZone.getBody());
         }
         Criteria c = session.createCriteria(Perfil.class);
         c.add(Restrictions.eq("descperfil", perfil.getDescperfil().toUpperCase()));
         c.add(Restrictions.ne("id", perfil.getId()));
         if (c.list().size() > 0) {
-            errorMessageSavePerfil = "Ya existe un perfil con la misma descripción.";
-            return editZone.getBody();
+            formulariomensajese.recordError("Ya existe un perfil con la misma descripción.");
+            return new MultiZoneUpdate ("editZone",editZone.getBody()).add("mensajesEZone", mensajesEZone.getBody());
         }
-        okMessageSavePerfil = "Perfil creado / modificado satisfactoriamente.";
+        //okMessageSavePerfil = "Perfil creado / modificado satisfactoriamente.";
+        envelope.setContents("Perfil creado / modificado satisfactoriamente.");
         perfil.setDescperfil(perfil.getDescperfil().toUpperCase());
         session.saveOrUpdate(perfil);
         nuevoPerfil();
@@ -336,7 +346,8 @@ public class PagePerfil {
         MultiZoneUpdate mu;
         mu = new MultiZoneUpdate("listaZone", listaZone.getBody()).add("editZone", editZone.getBody()).
                 add("listaPermisoZone", listaPermisoZone.getBody()).
-                add("editPermisoZone", editPermisoZone.getBody());
+                add("editPermisoZone", editPermisoZone.getBody()).
+                add("mensajesEZone", mensajesEZone.getBody());
         return mu;
     }
 }
