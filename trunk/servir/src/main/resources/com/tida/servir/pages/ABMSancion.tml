@@ -16,6 +16,7 @@
                         <input t:type="Select" t:id="tipo_documento"                                
                                t:value="btipodocumento" model="beantipodocumento" t:zone="busquedaZone" t:blankLabel="...TODOS"/>
                     </div>
+                </div>
                 
             </form>
         </t:zone>
