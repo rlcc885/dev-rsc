@@ -94,6 +94,7 @@ public class CambiarClavePrimera extends GeneralPage {
             return zone.getBody();
         }
         
+        if(_usuario.getTrabajador()!=null){
         if (_usuario.getTrabajador().getNombres().indexOf((newPass1.toUpperCase()))>=0) {
                 formulariocambioclave.recordError("La claves ingresada contiene el nombre del usuario.");
                 return zone.getBody(); 
@@ -108,7 +109,7 @@ public class CambiarClavePrimera extends GeneralPage {
                 formulariocambioclave.recordError("La clave ingresada contiene el apellido paterno del usuario.");
                 return zone.getBody(); 
             }
-            
+        }   
             if (_usuario.getLogin().indexOf(newPass1)>=0) {
                 formulariocambioclave.recordError("La clave ingresada contiene el login del usuario.");
                 return zone.getBody(); 
