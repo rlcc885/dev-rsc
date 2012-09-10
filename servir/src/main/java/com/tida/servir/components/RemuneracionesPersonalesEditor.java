@@ -12,6 +12,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -165,7 +166,20 @@ public class RemuneracionesPersonalesEditor {
     @Log
     @CommitAfter
     Object onSuccess() {
-        System.out.println("aaaaaa"+remuneracion.getImporte());
+        
+        String consulta = "SELECT COUNT(*) FROM RSC_REMUNERACIONPERSONAL F "
+                + "WHERE F.CARGOASIGNADO_ID = " + cargoAsignado + " AND F.CONCEPTOREMUNERATIVO_ID = '" + conceptoseleccionado.getId() + "'";
+        System.out.println(consulta);
+        Query q1 = session.createSQLQuery(consulta);
+            int numRemuDupl = Integer.parseInt(q1.list().get(0).toString());
+        
+        if (numRemuDupl > 0) {
+            envelope.setContents("No es posible registrar un concepto de pago mas de una vez");
+            return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
+                .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
+                .add("remuneracionesZone", remuneracionesZone.getBody());
+        }else{
+        
         remuneracion.setCargoasignado_id(cargoAsignado);
         remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
         session.saveOrUpdate(remuneracion);
@@ -174,6 +188,7 @@ public class RemuneracionesPersonalesEditor {
         return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
                 .add("listaRemuneracionesZone", listaRemuneracionesZone.getBody())
                 .add("remuneracionesZone", remuneracionesZone.getBody());
+        }
     }
 
     @Log
