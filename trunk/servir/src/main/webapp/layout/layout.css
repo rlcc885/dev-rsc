@@ -946,8 +946,17 @@ DIV.t-available-values UL LI
     color:#fff;   
     float:left; 
     /*height:20px; */
-    width:200px; 
-    margin-left: 20px;;}
+    /*width:215px; */
+    margin-left: 1px;;}
+#f-center3{ font-weight:bold;
+    color:#fff;   
+    float:left; 
+    height:20px; 
+    width:500px; 
+    margin-left: 20px;
+    margin-right: 10px;
+   /*margin: 0 auto;*/
+    }
 .f-right { float:right;}
 #f-right2 {  
 /*
@@ -963,8 +972,8 @@ float:right;
     color:#fff;   
     float:right; 
     /*height:20px; */
-    width:150px; 
-    margin-right: 20px;
+   /* width:522px; 
+    margin-right: 1px;*/
    }
 
 .clear { clear:both;}

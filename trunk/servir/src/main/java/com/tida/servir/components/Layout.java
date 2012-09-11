@@ -1,5 +1,6 @@
 package com.tida.servir.components;
 
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioTrabajador;
 import org.apache.tapestry5.*;
@@ -77,6 +78,9 @@ public class Layout {
      @Property
     @SessionState
     private Usuario _usuario;
+     @Property
+    @SessionState
+    private Entidad entity;
      
     @Log
     @SetupRender
@@ -117,6 +121,10 @@ public class Layout {
     
      public String getNombreUsuario() {
         //return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + " - " + usuarioTrabajador.getDenominacion();
-        return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres();
+        return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + "  - ";
+    }
+     public String getNombreEntidad() {
+        //return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + " - " + usuarioTrabajador.getDenominacion();
+        return entity.getDenominacion();
     }
 }

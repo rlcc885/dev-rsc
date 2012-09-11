@@ -36,23 +36,25 @@
              <div id="header2">
                 <div id="f-left2">    
                         ${nombreusuario}             
-                </div> 
+                </div>                
                   <t:if test="mostrarse">
-                    <div id="f-right2">
+                    <div id="f-left2">
                         Administrador de Servir
                     </div>
                 </t:if>
                  <t:if test="mostrare">
-                     <div id="f-right2">
+                     <div id="f-left2">
                         Administrador de Entidad
                     </div>
                  </t:if>
                  <t:if test="mostrars">
-                     <div id="f-right2">
+                     <div id="f-left2">
                         Administrador de Sistemas
                     </div>
                  </t:if>
-               
+                <div id="f-right2">    
+                        ${nombreentidad}             
+                </div>
             </div>
             <!-- end header -->
             <t:ComponenteMenu/>
