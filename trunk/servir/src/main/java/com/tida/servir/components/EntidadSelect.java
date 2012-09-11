@@ -73,6 +73,9 @@ public class EntidadSelect {
     @Property
     @Persist
     private boolean sessubentidad2;
+    @Property
+    @Persist
+    private boolean prueba_msj;
     @InjectComponent
     @Property
     private Zone OrganizacionZone;
@@ -148,6 +151,7 @@ public class EntidadSelect {
 
         entidadPrueba = sentidad;
         sentidad = null;
+        prueba_msj=false;
     }
 
     //para obtener datos del Nivel Gobierno
@@ -330,15 +334,21 @@ public class EntidadSelect {
                 }
             }
             
-            
-            System.out.println("LA ENTIDADX ES : "+sentidad);
-
-                    
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
+            System.out.println("LA ENTIDADX ES : "+sentidad);
+            prueba_msj = true;
+        
             if (_zone != null) {
-                return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
+                //return new MultiZoneUpdate("UnidadEjecutoraZone", UnidadEjecutoraZone.getBody()).add(_zoneName, _zone.getBody());
+                return "CambioEntidad";
             } else {
-                return UnidadEjecutoraZone.getBody();
+                //return UnidadEjecutoraZone.getBody();
+                if(prueba_msj==true)
+                {return "CambioEntidad";
+                }else{
+                    return "CambioEntidad";
+                }
+                
             }
         }
         
