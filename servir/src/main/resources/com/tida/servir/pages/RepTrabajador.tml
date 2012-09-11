@@ -41,7 +41,7 @@
                         <div class="f-wrap">                             
                             <t:zone t:id="trabajadorZone" t:update="show">
                                 <div class="f-left">
-                                    Trabajador: 
+                                    Trabajador: &nbsp;
                                     <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
                                     <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
                                 </div>
@@ -56,9 +56,28 @@
                         <div class="f-wrap">                             
                             <t:zone t:id="entidadZone" t:update="show">
                                 <div class="f-left">
-                                    Entidad: 
+                                    Entidad/Sub Entidad: &nbsp;
                                     <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
-                                    <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                                    <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" /> 
+                                    <br />&nbsp; Nivel Organizacional:&nbsp;
+                                    <input t:type="Select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:updateZoneId"/>
+                                    &nbsp; Unidad Orgánica: &nbsp;
+                                    <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:updateZoneId"/> 
+                                </div>
+                            </t:zone>
+                        </div>
+                    </t:if>
+                </div>
+                
+                <div>
+                    <t:if test="mostrarFiltrosUsuario" >
+                        <legend> Categoría: Usuario </legend><br />
+                        <div class="f-wrap">                             
+                            <t:zone t:id="usuarioZone" t:update="show">
+                                <div class="f-left">
+                                    Usuario: &nbsp;
+                                    <input t:type="TextField" t:id="usuarioTx" t:style="width:600px;" t:value="usuarioTx" t:readonly="readonly" /> 
+                                    <input t:type="submit" t:id="buscarUsuario" value="..." class="button f-right" onClick="javascript: mostrar();" /> 
                                 </div>
                             </t:zone>
                         </div>
@@ -106,17 +125,34 @@
                 </div>
             </t:if>
             <t:if test="mostrarFiltrosEntidad" >
-                <h1>Selección de Entidad</h1>
+                <h1>Selección de Entidad/Sub Entidad</h1>
                 <div class="pane">
                     <form t:type="form" t:id="formFindEntidad" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
-                                Nombre de la Entidad: 
+                                Denominación: 
                                 <input t:type="TextField" t:id="entidad_ape" t:value="nombreEntidad" style="width: 300px;"/> 
                             </div>
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                                 <input t:type="Submit" t:id="cancelFormFindEntidad" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t:if>
+            <t:if test="mostrarFiltrosUsuario" >
+                <h1>Selección de Usuario</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindUsuario" t:zone ="busZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Nombre completo: 
+                                <input t:type="TextField" t:id="usuario_ape" t:value="nombreUsuario" style="width: 300px;"/> 
+                            </div>
+                            <div class="actions f-right">
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                <input t:type="Submit" t:id="cancelFormFindUsuario" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                             </div>
                         </div>
                     </form>
@@ -150,6 +186,25 @@
                         </t:parameter>
                         <p:accionesCell> 
                             <t:actionlink t:id="seleccionaEntidad" zone="entiZone" context="listaentidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="usuaZone" t:update="show">
+                <t:if test="mostrar">
+                    <t:grid inPlace="true" 
+                            source="usuarios" 
+                            rowsPerPage="10" 
+                            t:add="Acciones" 
+                            pagerPosition="bottom" 
+                            row="u" 
+                            exclude= "nrodocumento,estadodesc,documentoidentidadid,apellidos,id,md5Clave,intentosFallidos,clave,rolid,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
+                            reorder="login,nombres,apellidopaterno,apellidomaterno">
+                        <t:parameter name="empty">
+                            No se han encontrado coincidencias.
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaUsuario" zone="usuaZone" context="u" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
                         </p:accionesCell>
                     </t:grid>
                 </t:if>

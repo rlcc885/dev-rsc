@@ -3,8 +3,10 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
+import helpers.Helpers;
 import helpers.Reportes;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.apache.tapestry5.ComponentResources;
@@ -155,6 +157,10 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     @Property
     private LkBusquedaEntidad listaentidad;
+    
+    @Persist
+    @Property
+    private UsuarioTrabajador u;
 
     @Property
     @Persist
@@ -197,20 +203,57 @@ public class RepTrabajador extends GeneralPage {
     private Reportes.TIPO pdf;
     
     private static final long TRABAJADOR = 0;
+    
     private static final long ENTIDAD = 1;
+    
     private static final long USUARIO = 2;
+    
     private static final long GOBIERNO = 3;
+    
     private static final long NINGUNO = 4;
     
     @Property
     @Persist
+    private Integer nivelo;
+    
+    @Persist
+    private GenericSelectModel<LkBusquedaUnidad> _beanUOrganicasOrigen;
+    
+    @Property
+    @InjectComponent
+    private Zone usuarioZone;
+    
+    @Property
+    @Persist
+    private String usuarioTx;
+    
+    @Property
+    @InjectComponent
+    private Zone usuaZone;
+    
+    @Property
+    @Persist
+    private String usuario_ape;
+    
+    @Persist
+    @Property
+    private String nombreUsuario;
+    
+    @Property
+    @Persist
     private Trabajador _trabajadorRep;
+    
     @Property
     @Persist
     private Entidad _entidadRep;
+    
     @Property
     @Persist
-    private Usuario _usuarioRep;
+    private UsuarioTrabajador _usuarioRep;
+        
+    @Property
+    @Persist
+    private LkBusquedaUnidad unidadRep;
     
     @Log
     void setupRender() {
@@ -232,35 +275,35 @@ public class RepTrabajador extends GeneralPage {
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
         if (result.isEmpty()) {
-            System.out.println(String.valueOf("Vacio:"));
+            System.out.println(String.valueOf("Vacio"));
         } else {
             usu = (UsuarioAcceso) result.get(0);
             vselect = (usu.getAccesoselect() != 0);
             
-            switch (usu.getNivel()) {
-                case 1://Administrador SERVIR
+            switch ((int)usu.getRolid()) {//usu.getNivel()
+                case 3://1://Administrador SERVIR
                     trabajadorLink = entidadLink = gobiernoLink = true;
                     break;
                 case 2://Administrador de Entidad
                     trabajadorLink = entidadLink = true;
                     break;
-                case 3://Administrador del Sistema
+                case 4://3://Administrador del Sistema
                     usuarioLink = true;
                     break;
-                case 4://Consultas  SERVIR
+                case 6://4://Consultas  SERVIR
                     trabajadorLink = entidadLink = gobiernoLink = true;
                     break;
                 case 5://Consultas Entidad
                     trabajadorLink = entidadLink  = true;
                     break;
-                case 6://Trabajador
+                case 1://6://Trabajador
                     trabajadorLink  = true;
                     break;
                 case 7://Contraloría
                     gobiernoLink  = true;
                     break;
-//                case 8://Órgano de Control Institucional
-//                    break;
+                case 8://Órgano de Control Institucional
+                    break;
             }
         }
     }
@@ -286,6 +329,16 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    Object onActionFromSeleccionaUsuario(UsuarioTrabajador traba) {
+        if (traba != null) {
+            usuarioTx = traba.getApellidopaterno() + " " + traba.getApellidomaterno() + ", " + traba.getNombres();
+            _usuarioRep = traba;
+        }
+        mostrar = false;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("usuaZone", usuaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
+    }
+    
+    @Log
     Object onSuccessFromFormFindTrabajador() {
         mostrar = true;
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody());
@@ -298,12 +351,23 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
+    Object onSuccessFromFormFindUsuario() {
+        mostrar = true;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("usuaZone", usuaZone.getBody());
+    }
+    
+    @Log
     Object onSelectedFromBuscarTitular() {
         return new MultiZoneUpdate("busZone", busZone.getBody());
     }
 
     @Log
     Object onSelectedFromBuscarEntidad() {
+        return new MultiZoneUpdate("busZone", busZone.getBody());
+    }
+    
+    @Log
+    Object onSelectedFromBuscarUsuario() {
         return new MultiZoneUpdate("busZone", busZone.getBody());
     }
     
@@ -337,6 +401,15 @@ public class RepTrabajador extends GeneralPage {
         return c.list();
     }
 
+    @Log
+    public List<UsuarioTrabajador> getUsuarios() {
+        Criteria c = session.createCriteria(UsuarioTrabajador.class);
+        if (nombreUsuario != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+    
     @Log
     public GenericSelectModel<Reporte> getTipoReportes() {
         Criteria c = session.createCriteria(Reporte.class);
@@ -419,5 +492,53 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = true;
         generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
+    }
+    
+    @Log
+    Object onValueChangedFromUo_nivelo(Integer dato) {
+        if (dato != null) {
+            nivelo = dato;
+        }
+        return new MultiZoneUpdate("entidadZone", entidadZone.getBody());
+    }
+    
+    @Log
+    public List<Integer> getBeanNivelOrigen(){
+        if(_entidadRep == null)
+            return getBeanNivel(_entidadUE, 1);
+        else
+            return getBeanNivel(_entidadRep, 1);
+    }
+    
+    public List<Integer> getBeanNivel(Entidad eUE, Integer first){
+        List<Integer> nivel = new LinkedList<Integer>();
+        Integer nivelMax = Helpers.maxNivelUO(eUE, session);
+        for(int i=first; i <= nivelMax; i++){
+            nivel.add(i);
+        }
+        return nivel;
+    }
+    
+    @Log
+    public GenericSelectModel<LkBusquedaUnidad> getBeanUOrganicasOrigen(){
+        List<LkBusquedaUnidad> list;
+        Criteria c = session.createCriteria(LkBusquedaUnidad.class);
+        c.add(Restrictions.ne("estado", UnidadOrganica.ESTADO_BAJA ));        
+        if (nivelo != null) {
+            c.add(Restrictions.eq("nivel", nivelo));
+        }
+        if(_entidadRep==null){
+            c.add(Restrictions.eq("entidadId", _entidadUE.getId() ));
+        }
+        else{
+            c.add(Restrictions.eq("entidadId", _entidadRep.getId() ));
+        }        
+        list = c.list();
+        _beanUOrganicasOrigen = new GenericSelectModel<LkBusquedaUnidad>(list,LkBusquedaUnidad.class,"denominacion","id",_access);       
+        return _beanUOrganicasOrigen;
+    }
+    
+    public String getUpdateZoneId() { 
+        return entidadZone.getClientId(); 
     }
 }
