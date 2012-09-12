@@ -5,99 +5,178 @@
 
 package com.tida.servir.pages;
 
+import Batch.Helpers.*;
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad_BK;
-import com.tida.servir.services.GenericSelectModel;
+import com.tida.servir.entities.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.hibernate.Criteria;
+import org.apache.tapestry5.services.Response;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.tapestry5.annotations.Log;
+import org.hibernate.Query;
 /**
  *
  * @author ale
  */
 public class TransferenciaMasivaTrabajadores  extends GeneralPage {
     
-        
+    private final String STARTPATH = "ArchivosCSV/";
+
+    @Component(id = "formulariodescargarzip")
+    private Form formulariodescargarzip;
+
+    private List<String> errores = new LinkedList<String>();
+    
     @Inject
     private Session session;
-
-    @Component(id = "formulariotransferencia")
-    private Form formTransfer;
-
-
-    @Component(id = "formularioseleccion")
-    private Form formSelect;
-
-    @Property
-    @Persist
-    private Entidad_BK entidadUEDestino;
-
-
-    @Property
-    @Persist
-    private Entidad_BK entidadUEOrigen;
-
-
-
-    @Property
-    @Persist
-    private Boolean seleccion;
-
-    @Inject
-    private PropertyAccess _access;
-
-    @Property
-    private long cantTrabajadores;
-
-    public boolean getTransfer(){
-        return !seleccion;
-    }
     
-    public GenericSelectModel<Entidad_BK> getBeanOrganismos(){
+    @Property
+    @SessionState
+    private Entidad _entidadUE;
+    
+    private LkBusquedaCargo uo;
+    
+    @Property
+    @Persist
+    private String archivoDescargar;
+    
+    @Property
+    @Persist
+    private boolean respuestaOk;
 
-        List<Entidad_BK> list;
-        Criteria c;
-        c = session.createCriteria(Entidad_BK.class);
-        c.add(Restrictions.ne("estado", Entidad_BK.ESTADO_BAJA ));
+    StreamResponse onActionFromReturnStreamResponse() {
+		return new StreamResponse() {
+			InputStream inputStream;
 
-        list = c.list();
+			@Override
+			public void prepareResponse(Response response) {
+                                File fileADescargar = new File(archivoDescargar);
+                                
+                                try {
+                                    inputStream = new FileInputStream(fileADescargar);
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 
-        return new GenericSelectModel<Entidad_BK>(list,Entidad_BK.class,"denominacion","id",_access);
-       
-    }
+                                try {
+                                    response.setHeader("Content-Type", "application/x-zip");
+                                    response.setHeader("Content-Disposition", "inline; filename="+fileADescargar.getName());
+                                    response.setHeader("Content-Length", "" + inputStream.available());
+				}
+				catch (IOException e) {
+			            Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, e);
+				}
+			}
+			
+			@Override
+			public String getContentType() {
+				return "application/x-zip";
+			}
+			
+			@Override
+			public InputStream getStream() throws IOException {
+				return inputStream;
+			}
 
-    Object onSuccessFromformularioseleccion() {
-        if(entidadUEDestino.equals(entidadUEOrigen)) {
-            formSelect.recordError("Los organismos origen y destino no pueden ser iguales");
-            return this;
-        } 
+		};
+	}
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformulariodescargarzip(){
+        respuestaOk = true;        
+        InformeXLS myXLS = new InformeXLS();
+        List<Trabajador> ltrabajador = new LinkedList<Trabajador>();
+        List<ConstanciaDocumental> lcd = new LinkedList<ConstanciaDocumental>();
+        
+        //archivo a descargar
+        Date date = new Date();
+        String nombreArchivo = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
+        nombreArchivo = "ArchivosCSV Renato - "+sdf.format(date);
+        String newlocation = STARTPATH + "GeneracionCSV/" + nombreArchivo +"/";
+        archivoDescargar = newlocation + nombreArchivo +".zip";                
+        
+        //System.out.println("------------- new location "+newlocation+" starpath "+STARTPATH);
 
-        Legajo l;
-        Criteria c = session.createCriteria(Legajo.class);
-        c.add(Restrictions.eq("entidadUE", entidadUEOrigen));
-        cantTrabajadores = c.list().size();
-        seleccion = false; // se muestra la parte de transfer y se oculta esta
-        return this;
-    }
-
-
-    Object onSuccessFromformulariotransferencia() {
-        seleccion = true;
-        return this;
-    }
-
-    void onActivate(){
-        if (seleccion == null) {
-            seleccion = true;
+        File f = new File(newlocation);
+        if (!f.exists()) {
+            f.mkdirs();
         }
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+                // Creo la hoja
+            HSSFSheet hoja1 = objWB.createSheet("Unidades Organicas"); 
+
+             String consulta = "SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "
+                + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
+                + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
+                + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
+                + "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='" + _entidadUE.getId() + "'";
+            Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
+            List result = query.list();
+            for(int i=0;i<result.size();i++){
+                uo=(LkBusquedaCargo) result.get(i);
+                HSSFRow fila = hoja1.createRow((short)(i));            
+                for(int j=0;j<2;j++){
+                        HSSFCell celda = fila.createCell((short)j);   
+                        celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+                        celda.setCellValue(String.valueOf(uo.getDenominacion()));
+                   }           
+            }
+//            PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter("C:/libro1.xls")));
+            String strNombreArchivo = newlocation+"xxxENTIDAD.xls";
+            File objFile = new File(strNombreArchivo);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
+//        Criteria criteriaEntidadUE = session.createCriteria(EntidadUEjecutora.class);
+//        criteriaEntidadUE.add(Restrictions.eq("id", _entidadUE.getId()));
+//
+//        if (!criteriaEntidadUE.list().isEmpty()) {
+//            //generacion archivo organismos informantes.csv
+//            System.out.println("ENTIDAD UE");
+//            errores = myXLS.creadorCSVEntidadUE(_entidadUE, newlocation + "ORGAN1.csv", session);
+//
+//            Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
+//            criteriaConcepto.add(Restrictions.eq("entidadUE", _entidadUE));
+//
+//   
+//        }
+        
+        
+        
+        
+        //zip los CSV en un archivo ZIP
+        errores = Unzip.zippe(newlocation, nombreArchivo +".zip");
+        if (errores.size() > 0 ) { // hay errores
+            for(String error: errores){
+                formulariodescargarzip.recordError(error);
+            }
+            return this;
+        }
+        
+        
+
+        return this;
+
     }
 }
