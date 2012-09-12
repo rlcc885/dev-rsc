@@ -214,6 +214,13 @@ Fin de librerias pentaho -->
 -->
 <!-- Dependencias de los webservices -->
         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.8</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>axis</groupId>
             <artifactId>axis</artifactId>
             <version>1.4</version>
@@ -333,14 +340,14 @@ Fin de librerias pentaho -->
         <repository>
             <id>apache-snapshots</id>
             <url>http://repository.apache.org/snapshots/</url>
+            
         </repository>
 
         <repository>
             <id>maven</id>
             <url>http://repo1.maven.org/maven2</url>
         </repository>
-
-<!-- Repositorio de pentaho
+ <!-- Repositorio de pentaho
 
         <repository>
           <snapshots />
@@ -385,5 +392,6 @@ of a Tapestry Maven plugin is not required.   -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <tapestry-release-version>5.3.4</tapestry-release-version>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 </project>

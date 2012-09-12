@@ -3,53 +3,47 @@
       xmlns:p="tapestry:parameter">
 
 
-           <t:Menu/>
+    <div class="organismo_titulo">
+        Entidad /U. Ejecutora: ${entidadUE.denominacion}
+    </div>
 
-    <h2> Transferencia masiva de trabajadores </h2>
+    <h2>Exportacion</h2>
 
+    <t:form t:id="formulariodescargarzip">
+        <t:errors/>
 
-         <div t:type="zone" t:id="selectZone" class="selectform" >
-         <t:if test="seleccion">
-                <t:form t:id="formularioseleccion" t:zone="selectZone">
-                <t:errors/>
-
-
-                    Organismo Origen: <br/>
-                    <select t:type="select" t:id="select_organismo_origen"
-                    model="BeanOrganismos" encoder="BeanOrganismos"
-                     value="organismoOrigen" t:validate="required"/><br/>
-
-                    Organismo Destino:<br/>
-                    <select t:type="select" t:id="select_organismo_destino"
-                    model="BeanOrganismos" encoder="BeanOrganismos"
-                     value="organismoDestino" t:validate="required"/><br/>
-<!--
-                     Se transfieren
-                     <t:if test="seleccionaOrganos">
-                     </t:if>
--->
-                    <br/>
-                    <input id="Seleccionar" type="submit" value="Seleccionar"/><br/>
-              </t:form>
-            </t:if>
-         
-         
-         <t:if test="transfer">
-         ¿Transferir ${cantTrabajadores} trabajadores
-            desde el <br/>
-            Entidad /U. Ejecutora ${organismoOrigen.denominacion} al <br/>
-            Entidad /U. Ejecutora ${organismoDestino.denominacion} ?
-                <t:form t:id="formulariotransferencia" t:zone="selectZone" >
-                <t:errors/>
-
-                <br/>
-            <input id="Transferir" type="submit" value="Transferir"/><br/>
-            <br/>
-            <input id="cancelar" type="submit" value="cancelar"/><br/>
-
-              </t:form>
-         </t:if>
+        <t:if test = "respuestaOk">
+            <div id='ok_msg'> 
+                Archivo procesado correctamente
+                <a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar archivo de resultados</a>
+                Recuerde que este link esta disponible por unos instantes unicamente.
             </div>
+       </t:if>
+
+        <div id= "cargo" style = "color:red"> 
+            Carga en curso... 
+        </div>
+
+        <div class="f-wrap">
+            <input id="submit" type="submit" value="Exportar" class="button f-left" onclick="extraStep();"/>
+        </div>
+    </t:form>
+
+    <SCRIPT LANGUAGE="JavaScript">
+        var nava = (document.layers);
+        var dom = (document.getElementById);
+        var iex = (document.all);
+        if (nava) { cach = document.cargo }
+        else if (dom) { cach = document.getElementById("cargo").style }
+        else if (iex) { cach = cargo.style }
+        cach.visibility = "hidden";
+    </SCRIPT>
+
+   <SCRIPT LANGUAGE="JavaScript"> 
+        function extraStep() { 
+            cach.visibility = "visible";
+        } 
+    </SCRIPT>
 
 
 </html>
