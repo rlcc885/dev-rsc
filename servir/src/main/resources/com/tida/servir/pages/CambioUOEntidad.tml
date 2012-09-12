@@ -92,13 +92,16 @@
         </t:zone>
  
     <div t:type="zone" t:id="botonZone" > 
+        <script>
+          setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+        </script>
         <form t:type="form" t:id="formBotones" t:zone ="botonZone">
             <t:errors/>
             <t:envelope t:id="envelope"/>                
             <div class="actions f-right">
-                <input id="aceptar" type="submit" value="Aceptar" class="button" />                
-                <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
-                <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" page="CambioUOEntidad" class="button"/>
+                <input t:id="aceptar" t:type="submit" value="Aceptar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button" />                
+                <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
+                <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
             </div>               
         </form>
     </div>  
@@ -111,7 +114,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>Denominación</label>
-                            <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 300px;"/> 
+                            <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 400px;"/> 
                         </div>                   
                     </div>
                     <div class="actions f-right">
