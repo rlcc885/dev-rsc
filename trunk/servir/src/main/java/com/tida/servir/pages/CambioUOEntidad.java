@@ -285,7 +285,7 @@ public class CambioUOEntidad extends GeneralPage{
                 }
                 else{
                     ejecutar(entidadUE,entidad2,uoOrigen,uoDestino,2);
-                    envelope.setContents("Unidad Orgánica Migrada Correctamente1");                    
+                    envelope.setContents(helpers.Constantes.MIGRACION_EXITO);                    
                 }
 
             }
@@ -297,7 +297,7 @@ public class CambioUOEntidad extends GeneralPage{
                 }
                 else{
                     ejecutar(entidad1,entidad2,uoOrigen,uoDestino,2);
-                    envelope.setContents("Unidad Orgánica Migrada Correctamente");
+                    envelope.setContents(helpers.Constantes.MIGRACION_EXITO);
                 }
                     
             }           
@@ -318,12 +318,12 @@ public class CambioUOEntidad extends GeneralPage{
             }
             if(entidad1==null){ //validar x usuario                
                 ejecutar(entidadUE,entidadUE,uoOrigen,uoDestino,1);
-                envelope.setContents("Unidad Orgánica Fusionada Correctamente1");
+                envelope.setContents(helpers.Constantes.FUSION_EXITO);
 
             }
             else{                  
                 ejecutar(entidad1,entidad2,uoOrigen,uoDestino,1);
-                envelope.setContents("Unidad Orgánica Fusionada Correctamente");
+                envelope.setContents(helpers.Constantes.FUSION_EXITO);
 
             }            
         }

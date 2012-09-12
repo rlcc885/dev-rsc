@@ -15,6 +15,9 @@
 
       <div id = "Datos_Generales">
            <h2>Legajo - Datos Familiares</h2>
+           <div id= "basicosTrabajador">
+               <h3>${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
+           </div>
       </div>
 
     <div class="wrap">
