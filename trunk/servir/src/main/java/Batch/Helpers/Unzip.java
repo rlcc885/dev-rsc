@@ -130,7 +130,7 @@ public class Unzip {
             String files[] = f.list();
             // pour chacun des fichiers de la liste
             for (int i = 0; i < files.length; i++) {
-                if (files[i].endsWith(".csv") || files[i].endsWith(".CSV")) {
+                if (files[i].endsWith(".xls") || files[i].endsWith(".xls")) {
 
                     // en afficher le nom
                     //System.out.println("Adding: " + files[i]);
