@@ -68,13 +68,16 @@ public class Layout {
     
     @Property
     @Persist
-    private boolean mostrars;
+    private boolean estrabajador;
     @Property
     @Persist
-    private boolean mostrare;
+    private boolean esadministradorsistemas;
     @Property
     @Persist
-    private boolean mostrarse;
+    private boolean esadministradorservir;
+    @Property
+    @Persist
+    private boolean esadministradorentidad;
      @Property
     @SessionState
     private Usuario _usuario;
@@ -86,18 +89,28 @@ public class Layout {
     @SetupRender
     private void inicio() {
         if(_usuario.getRolid()==4){
-            mostrars=true;
+            esadministradorsistemas=true;
+            esadministradorentidad=false;
+            esadministradorservir=false;
+            estrabajador=false;
         }
         if(_usuario.getRolid()==2){
-            mostrare=true;
+            esadministradorentidad=true;
+            estrabajador=false;
+            esadministradorservir=false;
+            esadministradorsistemas=false;
         }
         if(_usuario.getRolid()==3){
-            mostrarse=true;
+            esadministradorservir=true;
+            esadministradorentidad=false;
+            estrabajador=false;
+            esadministradorsistemas=false;
         }
         if(_usuario.getRolid()==1){
-            mostrars=false;
-            mostrare=false;
-            mostrarse=false;
+            estrabajador=true;
+            esadministradorentidad=false;
+            esadministradorservir=false;
+            esadministradorsistemas=false;
         }        
     }
 

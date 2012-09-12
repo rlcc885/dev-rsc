@@ -37,19 +37,24 @@
                 <div id="f-left2">    
                         ${nombreusuario}             
                 </div>                
-                  <t:if test="mostrarse">
+                  <t:if test="esadministradorservir">
                     <div id="f-left2">
                         Administrador de Servir
                     </div>
                 </t:if>
-                 <t:if test="mostrare">
+                 <t:if test="esadministradorentidad">
                      <div id="f-left2">
                         Administrador de Entidad
                     </div>
                  </t:if>
-                 <t:if test="mostrars">
+                 <t:if test="esadministradorsistemas">
                      <div id="f-left2">
                         Administrador de Sistemas
+                    </div>
+                 </t:if>
+                 <t:if test="estrabajador">
+                     <div id="f-left2">
+                        Trabajador
                     </div>
                  </t:if>
                 <div id="f-right2">    
