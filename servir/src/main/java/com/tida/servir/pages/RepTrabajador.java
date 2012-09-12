@@ -240,6 +240,30 @@ public class RepTrabajador extends GeneralPage {
     private String nombreUsuario;
     
     @Property
+    @InjectComponent
+    private Zone gobiernoZone;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar snivelGobierno;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar sorganizacionestado;
+    
+    @Property
+    @Persist
+    private boolean organizacionBool;
+    
+    @Property
+    @Persist
+    private boolean sectorBool;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar ssectorGobierno;
+    
+    @Property
     @Persist
     private Trabajador _trabajadorRep;
     
@@ -266,6 +290,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
         generarDisabled = false;
+        organizacionBool = false;
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
@@ -308,6 +333,24 @@ public class RepTrabajador extends GeneralPage {
         }
     }
 
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getNivelGobierno() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("NIVELGOBIERNO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getSectorGobierno() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("SECTORGOBIERNO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", "NIVELGOBIERNO", snivelGobierno.getCodigo(), session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
     @Log
     Object onActionFromSeleccionaTitular(Trabajador traba) {
         if (traba != null) {
@@ -538,7 +581,42 @@ public class RepTrabajador extends GeneralPage {
         return _beanUOrganicasOrigen;
     }
     
-    public String getUpdateZoneId() { 
+    public String getEntidadZoneId() { 
         return entidadZone.getClientId(); 
+    }
+    
+    public String getGobiernoZoneId() { 
+        return gobiernoZone.getClientId(); 
+    }
+    
+    @Log
+    Object onValueChangedFromSnivelGobierno(DatoAuxiliar dato) {
+        if (dato == null) {
+            organizacionBool = false;
+        } else {
+            organizacionBool = true;
+        }
+        sorganizacionestado = null;
+        return request.isXHR() ? new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody()) : null;
+    }
+
+    @Log
+    Object onValueChangedFromSorganizacionestado(DatoAuxiliar dato) {
+        if (dato == null) {
+            sectorBool = false;
+        } else {
+            if (dato.getValor().equalsIgnoreCase("PODER EJECUTIVO")) {
+                sectorBool = true;
+            } else {
+                sectorBool = false;
+            }
+        }
+        ssectorGobierno = null;
+        return request.isXHR() ? new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody()) : null;
+    }
+
+    @Log
+    Object onValueChangedFromSsectorgobierno(DatoAuxiliar dato) {
+        return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
     }
 }

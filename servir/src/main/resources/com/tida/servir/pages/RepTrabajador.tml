@@ -59,10 +59,10 @@
                                     Entidad/Sub Entidad: &nbsp;
                                     <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
                                     <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" /> 
-                                    <br />&nbsp; Nivel Organizacional:&nbsp;
-                                    <input t:type="Select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:updateZoneId"/>
+                                    <br />Nivel Organizacional:&nbsp;
+                                    <input t:type="Select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:entidadZoneId"/>
                                     &nbsp; Unidad Orgánica: &nbsp;
-                                    <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:updateZoneId"/> 
+                                    <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:entidadZoneId"/> 
                                 </div>
                             </t:zone>
                         </div>
@@ -84,7 +84,29 @@
                     </t:if>
                 </div>
                 
-                <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF">Generar Reporte</a>
+                <div>
+                    <t:if test="mostrarFiltrosGobierno">
+                        <legend> Categoría: Nivel de Gobierno/Sector/Organización del Estado </legend><br />
+                        <div class="f-wrap">    
+                            <t:zone t:id="gobiernoZone" id="gobiernoZone" t:update="show">
+                                <div class="f-left">
+                                    Nivel de Gobierno: &nbsp;
+                                    <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    <t:if test="organizacionBool">
+                                        &nbsp; Organización Estado: &nbsp;
+                                        <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
+                                    <t:if test="sectorBool">
+                                        &nbsp; Sector: &nbsp;
+                                        <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
+                                </div>
+                            </t:zone>
+                        </div>
+                    </t:if>
+                </div>
+                
+                <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank">Generar Reporte</a>
             </fieldset>
         </t:if>
         </t:form>
