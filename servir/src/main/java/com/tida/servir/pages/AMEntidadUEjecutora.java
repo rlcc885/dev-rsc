@@ -830,7 +830,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.like("esSubEntidad",false));
         if (bdenoentidad != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" +bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion","%"+ bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         return c.list();
     }
