@@ -294,6 +294,7 @@ public class RepTrabajador extends GeneralPage {
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
+        type = pdf;
         
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -473,7 +474,7 @@ public class RepTrabajador extends GeneralPage {
     StreamResponse onActionFromGenerarReporte() {
         Reportes rep = new Reportes();
         Map<String, Object> parametros = new HashMap<String, Object>();
-        if (tipoReporteSelect != null) {
+        if (tipoReporteSelect != null && type != null) {
             if (mostrarFiltrosTrabajador && _trabajadorRep != null)
                 parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
             if (mostrarFiltrosEntidad && _entidadRep != null)
