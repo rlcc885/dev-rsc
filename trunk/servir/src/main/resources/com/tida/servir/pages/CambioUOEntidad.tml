@@ -99,7 +99,7 @@
             <t:errors/>
             <t:envelope t:id="envelope"/>                
             <div class="actions f-right">
-                <input t:id="aceptar" t:type="submit" value="Aceptar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button" />                
+                <input t:type="submit" t:id="aceptar" value="Aceptar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button" />                
                 <input t:type="Submit" t:id="reset" value="Limpiar formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
                 <input t:type="Submit" t:id="cancelar" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button"/>
             </div>               
