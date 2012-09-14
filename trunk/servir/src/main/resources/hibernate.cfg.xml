@@ -37,7 +37,7 @@
     <!-- seconds -->
     <property name="hibernate.c3p0.min_size">5</property>
     <property name="hibernate.c3p0.max_size">20</property>
-    <property name="hibernate.c3p0.timeout">5800</property>
+    <property name="hibernate.c3p0.timeout">7000</property>
     <property name="hibernate.c3p0.max_statements">5</property>
 
     <!--

@@ -188,7 +188,7 @@ public class RemuneracionesPersonalesEditor {
                 .add("remuneracionesZone", remuneracionesZone.getBody());
         }else{
         remuneracion.setCargoasignado_id(cargoAsignado);
-        remuneracion.setConceptoremunerativo_id(conceptoseleccionado.getId());
+        remuneracion.setConceptoremunerativo(conceptoseleccionado);
         session.saveOrUpdate(remuneracion);
         envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
         resetRegistro();
@@ -201,7 +201,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     Object onActionFromEditar(RemuneracionPersonal remu) {
         remuneracion = remu;
-        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo_id());
+        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo().getId());
         accesos();
         editando = true;
         return new MultiZoneUpdate("remuneracionesZone", remuneracionesZone.getBody());
@@ -221,7 +221,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     Object onActionFromDetalle(RemuneracionPersonal remu) {
         remuneracion = remu;
-        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo_id());
+        conceptoseleccionado.setId(remuneracion.getConceptoremunerativo().getId());
         accesos();
         vdetalle = true;
         vguardar = false;

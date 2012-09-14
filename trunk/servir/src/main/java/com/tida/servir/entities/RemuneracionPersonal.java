@@ -18,7 +18,8 @@ public class RemuneracionPersonal implements Serializable {
     @Validate("required")
     private String importe;
     @Validate("required")
-    private Long conceptoremunerativo_id;
+    @ManyToOne
+    private ConceptoRemunerativo conceptoremunerativo;
     private Long cargoasignado_id;
 
     @Id
@@ -31,13 +32,14 @@ public class RemuneracionPersonal implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public long getConceptoremunerativo_id() {
-        return conceptoremunerativo_id;
+    
+    @ManyToOne
+    public ConceptoRemunerativo getConceptoremunerativo() {
+        return conceptoremunerativo;
     }
 
-    public void setConceptoremunerativo_id(long conceptoremunerativo_id) {
-        this.conceptoremunerativo_id = conceptoremunerativo_id;
+    public void setConceptoremunerativo(ConceptoRemunerativo conceptoremunerativo) {
+        this.conceptoremunerativo = conceptoremunerativo;
     }
 
     public long getCargoasignado_id() {

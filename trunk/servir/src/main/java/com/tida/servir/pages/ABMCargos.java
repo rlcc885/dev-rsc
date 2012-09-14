@@ -305,7 +305,7 @@ public class ABMCargos extends GeneralPage {
                 + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
                 + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
                 + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
-                + "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='" + entidadUE.getId() + "'";
+                + "WHERE S1.ESTADO=1 ANS S2.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='" + entidadUE.getId() + "'";
         if (num3 == 2) {
         } else {
             if (nivel != null) {
