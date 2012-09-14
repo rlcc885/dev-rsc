@@ -270,9 +270,14 @@ public class AMUnidadOrganica extends GeneralPage {
             }
         }
         c.addOrder(Order.asc("denominacion"));
-        return c.list();
+        List<UnidadOrganica> lista = c.list();
+        nroregistros = Integer.toString(lista.size());
+        return lista;
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
     /**
      * Hasta acÃ¡ para levantar combo de organos
      */

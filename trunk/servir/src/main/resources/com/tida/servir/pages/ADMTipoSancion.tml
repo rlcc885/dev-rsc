@@ -92,12 +92,12 @@
                    </div>
                    <br/>
 
-                   <div class="f-wrap">
+                   <div class="f-wrap" style="width: 600px;">
                        <div class="f-left">
                            <label>* Tipo de Inhabilitación</label>
                            <select t:type="select" t:id="tipoinhabilitacion" t:value="valtipo" model="beanTipo" t:validate="required" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                        </div>
-                       <div class="f-left">
+                       <div class="f-right">
                            <fieldset>
                                <legend>* Tiempo de Visualización </legend>
                                <div class="f-left">
@@ -116,7 +116,7 @@
                        </div>
                    </div>
                    <br/>
-                   <div class="f-wrap">
+                   <div class="f-wrap" style="width: 600px;">
                        <div class="f-left">
                            <fieldset>
                                <legend>* Periodo de Inhabilitacion Min</legend>
@@ -134,7 +134,7 @@
                                </div> 
                            </fieldset>                           
                        </div>
-                       <div class="f-left">
+                       <div class="f-right">
                            <fieldset>
                                <legend>* Periodo de Inhabilitacion Max</legend>
                                <div class="f-left">                               

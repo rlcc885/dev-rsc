@@ -8,19 +8,22 @@
 
     <h2> Administración de Unidades Orgánicas </h2>
 
-    <script>
-        jQuery(document).ready(function(){
-        jQuery(".box-title-01").click(function(){
-        jQuery("#panel-01").slideToggle("slow");
-        return true;
-        });
-        });
-    </script>
-    <div class="box-background-title">
-        <span class="box-title-01">
-            <strong style="cursor:pointer;">+</strong> Buscar UO
-        </span>
-    </div>
+ <script>
+     jQuery(document).ready(function(){
+     jQuery(".box-title-02").click(function(){
+    jQuery("#panel-02").slideToggle("slow");
+      return true;
+     });
+       });
+ </script>
+            <div class="box-background-title">
+                <span class="box-title-02">
+                    <strong style="cursor:pointer;">+</strong> Busqueda
+                </span>
+            </div>
+            <div id="panel-02" class="box" >
+
+    
     <div id="panel-01" class="box" >
         <t:zone t:id="nivelUOZone">
             <form t:type="form" t:id="xxx" t:zone="nivelUOZone">
@@ -66,24 +69,10 @@
         </div>
         <br class="clear" />
     </div>
-
+                <br/><br/>
     <div t:type="zone" t:id="listaUOZone" class="selectform" >
-        <!-- <t:if test = "hayOrgano"> -->        
         <t:if test="mostrar">
-            <script>
-                jQuery(document).ready(function(){
-                jQuery(".box-title-02").click(function(){
-                jQuery("#panel-02").slideToggle("slow");
-                return true;
-                });
-                });
-            </script>
-            <div class="box-background-title">
-                <span class="box-title-02">
-                    <strong style="cursor:pointer;">+</strong> Listado de UO
-                </span>
-            </div>
-            <div id="panel-02" class="box" >
+
                 <t:form t:id="formularioxx">      
                     <t:grid source="unidadesorganicas" 
                             rowsPerPage="10" 
@@ -116,16 +105,22 @@
                             </t:if> 
                         </p:accionesCell>
                     </t:grid>
+                    <div class="f-right">
+                        <b>${nroregistros} Registros.</b>
+                    </div>
+                    <br/>
                     <t:if test="errorBorrar">
                         <div class="error" id = "errorBorrar">
                             ${errorBorrar}
                         </div>
                     </t:if>
                 </t:form>
-            </div>
+
         </t:if>
 
     </div> <!-- listaUOZone -->
+             </div>   
+    
     
     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
@@ -173,9 +168,9 @@
                         <br/>
                         <div class="f-wrap">
                             <div class="f-left">
-                                <label>Código</label>
+                                <label>* Código</label>
                                 <input t:type="TextField" t:id="unidadorganica_cod_und_organica"
-                                       t:value="unidadorganica.cod_und_organica" size="20" t:validate="maxlength=50" t:disabled="${vdetalle}"
+                                       t:value="unidadorganica.cod_und_organica" size="20" t:validate="required,maxlength=50" t:disabled="${vdetalle}"
                                        t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="codigoChanged" t:zone="unidadesOrganicasZone"/>
                             </div>
                             <div class="f-left">
