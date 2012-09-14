@@ -25,10 +25,10 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.hibernate.Session;
-import org.apache.poi.hssf.usermodel.*;
 import org.apache.tapestry5.annotations.Log;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 /**
  *
@@ -102,9 +102,9 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
     Object onSuccessFromformulariodescargarzip(){
         respuestaOk = true;     
         GeneracionXLS geXLS=new GeneracionXLS();
-        InformeXLS myXLS = new InformeXLS();
-        List<Trabajador> ltrabajador = new LinkedList<Trabajador>();
-        List<ConstanciaDocumental> lcd = new LinkedList<ConstanciaDocumental>();
+//        InformeXLS myXLS = new InformeXLS();
+//        List<Trabajador> ltrabajador = new LinkedList<Trabajador>();
+//        List<ConstanciaDocumental> lcd = new LinkedList<ConstanciaDocumental>();
         
         //archivo a descargar
         Date date = new Date();
@@ -120,108 +120,93 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
         if (!f.exists()) {
             f.mkdirs();
         }
-        Criteria criteriaEntidadUE = session.createCriteria(Entidad.class);
-        criteriaEntidadUE.add(Restrictions.eq("id", _entidadUE.getId()));
+        errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+"xxxENTIDAD.xls", session);
 
-        if (!criteriaEntidadUE.list().isEmpty()) {
-            errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+"xxxENTIDAD.xls", session);
-            
-            Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
-            criteriaConcepto.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
+        Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
+        criteriaConcepto.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
 
-            if (!criteriaConcepto.list().isEmpty()) {
-                //generacion archivo concepto.csv
-                errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+"xxxCONCEPTO.xls",_entidadUE, session);
-            }
-            
-            Criteria criteriaUnidadOrganica = session.createCriteria(UnidadOrganica.class);
-            criteriaUnidadOrganica.add(Restrictions.eq("entidad", _entidadUE));
-
-            if (!criteriaUnidadOrganica.list().isEmpty()) {
-                //generacion archivo unidad organica.csv
-                System.out.println("UNIDAD ORGANICA");
-                errores = geXLS.generadoXLSUnidadOrganica(criteriaUnidadOrganica.list(), newlocation + "xxxUNIDADORGANICA.xls", session);
-
-//                List<UnidadOrganica> luo = new LinkedList<UnidadOrganica>();
-//                luo.addAll(criteriaUnidadOrganica.list());
-//                List<Cargoxunidad> lcargo = new LinkedList<Cargoxunidad>();
-//                for (UnidadOrganica uo : luo) {
-//                    Criteria criteriaCargo = session.createCriteria(Cargoxunidad.class);
-//
-//                    criteriaCargo.add(Restrictions.eq("und_organica", uo));
-//                    lcargo.addAll(criteriaCargo.list());
-//                }
-//                if (!lcargo.isEmpty()) {
-//                    //generacion archivo cargo.csv
-//                    System.out.println("CARGO");
-//                    errores = myXLS.creadorCSVCargo(lcargo, newlocation + "xxxCARGO.xls", session);
-//                }
-
-            }
-            
-            
+        if (!criteriaConcepto.list().isEmpty()) {
+            //generacion archivo concepto.csv
+            errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+"xxxCONCEPTO.xls",_entidadUE, session);
         }
         
+        Criteria criteriaUnidad = session.createCriteria(LkBatchUnidadOrga.class);
+        criteriaUnidad.add(Restrictions.eq("entidad", _entidadUE.getId()));
+        if (!criteriaUnidad.list().isEmpty()) {
+//                //generacion archivo unidad organica.csv
+                System.out.println("UNIDAD ORGANICA");
+            errores = geXLS.generadoXLSUnidadOrganica(criteriaUnidad.list(), newlocation + "xxxUNIDADORGANICA.xls", session);
+        }
+            List<LkBatchUnidadOrga> luo = new LinkedList<LkBatchUnidadOrga>();
+            luo.addAll(criteriaUnidad.list());
+            List<LkBatchCargoxUnidad> lcargo = new LinkedList<LkBatchCargoxUnidad>();
+            for (LkBatchUnidadOrga uo : luo) {
+                Criteria criteriaCargo = session.createCriteria(LkBatchCargoxUnidad.class);
+                criteriaCargo.add(Restrictions.eq("unidadorganicaid", uo.getId()));
+                lcargo.addAll(criteriaCargo.list());
+            }
+            if (!lcargo.isEmpty()) {
+                //generacion archivo cargo.csv
+                System.out.println("CARGO");
+                errores = geXLS.generadoXLSCargo(lcargo, newlocation + "xxxCARGO.xls", session,_entidadUE);
+            }
+        Criteria criteriaCargoAsignado = session.createCriteria(LkBatchCargoAsignado.class);
+        criteriaCargoAsignado.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+        if (!criteriaCargoAsignado.list().isEmpty()) {
+//                //generacion archivo unidad organica.csv
+            System.out.println("cargo asignado");
+            errores = geXLS.generadoXLSCargoAsignado(criteriaCargoAsignado.list(), newlocation + "xxxCARGOASIGNADO.xls", session,_entidadUE);
+            List<LkBatchCargoAsignado> lcargoasignado = new LinkedList<LkBatchCargoAsignado>();
+            lcargoasignado.addAll(criteriaCargoAsignado.list());
+            
+            List<LkBatchEvaluacion> levaluacion = new LinkedList<LkBatchEvaluacion>();
+            List<LkBatchRemuneracion> lremuneracion = new LinkedList<LkBatchRemuneracion>();
+            List<LkBatchConstancia> lconstancia= new LinkedList<LkBatchConstancia>();
+            
+            
+            for(LkBatchCargoAsignado casi: lcargoasignado){               
+                Criteria criteriaRemuneracion= session.createCriteria(LkBatchRemuneracion.class);                
+                criteriaRemuneracion.add(Restrictions.eq("cargoasignadoid", casi.getId()));
+                lremuneracion.addAll(criteriaRemuneracion.list());
+                Criteria criteriaEvaluacion= session.createCriteria(LkBatchEvaluacion.class);                
+                criteriaEvaluacion.add(Restrictions.eq("cargoasignadoid", casi.getId()));
+                levaluacion.addAll(criteriaEvaluacion.list());
+                Criteria criteriaConstancia= session.createCriteria(LkBatchConstancia.class);                
+                criteriaConstancia.add(Restrictions.eq("cargoasignadoid", casi.getId()));
+                lconstancia.addAll(criteriaConstancia.list());                
+            }
+            
+            if(!lremuneracion.isEmpty()){
+                System.out.println("REMUNERACIONPERSONAL");
+                errores = geXLS.generadoXLSRemuneraciones(lremuneracion, newlocation + "xxxREMUNERACION.xls", session,_entidadUE);
+            }
+            if(!levaluacion.isEmpty()){
+                System.out.println("EVALUACIONPERSONAL");
+                errores = geXLS.generadoXLSEvaluaciones(levaluacion, newlocation + "xxxEVALUACION.xls", session,_entidadUE);
+            }
+            if(!lconstancia.isEmpty()){
+                System.out.println("CONSTANCIA");
+                errores = geXLS.generadoXLSConstancias(lconstancia, newlocation + "xxxCONSTANCIA.xls", session,_entidadUE);
+            }  
+        }
         
-        
-        
-        
-//        try{
-//            HSSFWorkbook objWB = new HSSFWorkbook();
-//                // Creo la hoja
-//            HSSFSheet hoja1 = objWB.createSheet("Unidades Organicas"); 
-//
-//             String consulta = "SELECT S1.ID,S1.DEN_CARGO DENOMINACION,S3.VALOR SITUCAP,S4.VALOR REGLABO,S2.DEN_UND_ORGANICA UNIDADORGA FROM RSC_CARGOXUNIDAD S1 "
-//                + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
-//                + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
-//                + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
-//                + "WHERE S1.ESTADO=1 AND S1.UNIDADORGANICA_ID IS NOT NULL AND S2.ENTIDAD_ID='" + _entidadUE.getId() + "'";
-//            Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
-//            List result = query.list();
-//            for(int i=0;i<result.size();i++){
-//                uo=(LkBusquedaCargo) result.get(i);
-//                HSSFRow fila = hoja1.createRow((short)(i));            
-//                for(int j=0;j<2;j++){
-//                    HSSFCell celda = fila.createCell((short)j);   
-//                    celda.setCellType(HSSFCell.CELL_TYPE_STRING);
-//                    celda.setCellValue(String.valueOf(uo.getDenominacion()));
-//                }           
-//            }
-////            PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter("C:/libro1.xls")));
-//            String strNombreArchivo = newlocation+"xxxENTIDAD.xls";
-//            File objFile = new File(strNombreArchivo);
-//            FileOutputStream archivoSalida = new FileOutputStream(objFile);
-//            objWB.write(archivoSalida);
-//            archivoSalida.close();
-//        }catch(Exception e){
-//            System.out.println(e.toString());
-//        }
-        
-//        Criteria criteriaEntidadUE = session.createCriteria(EntidadUEjecutora.class);
-//        criteriaEntidadUE.add(Restrictions.eq("id", _entidadUE.getId()));
-//
-//        if (!criteriaEntidadUE.list().isEmpty()) {
-//            //generacion archivo organismos informantes.csv
-//            System.out.println("ENTIDAD UE");
-//            errores = myXLS.creadorCSVEntidadUE(_entidadUE, newlocation + "ORGAN1.csv", session);
-//
-//            Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
-//            criteriaConcepto.add(Restrictions.eq("entidadUE", _entidadUE));
-//
-//   
-//        }
-        
-        
-        
+        Criteria criteriaTrabajador = session.createCriteria(LkBatchTrabajador.class);
+        criteriaTrabajador.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+        if (!criteriaTrabajador.list().isEmpty()) {
+            //generacion archivo unidad organica.csv
+            System.out.println("TRABAJADOR");
+            errores = geXLS.generadoXLSTrabajador(criteriaTrabajador.list(), newlocation + "xxxTRABAJADOR.xls", session,_entidadUE);
+        } 
+ 
         
         //zip los CSV en un archivo ZIP
-        errores = Unzip.zippe(newlocation, nombreArchivo +".zip");
-        if (errores.size() > 0 ) { // hay errores
-            for(String error: errores){
-                formulariodescargarzip.recordError(error);
-            }
-            return this;
-        }
+//        errores = Unzip.zippe(newlocation, nombreArchivo +".zip");
+//        if (errores.size() > 0 ) { // hay errores
+//            for(String error: errores){
+//                formulariodescargarzip.recordError(error);
+//            }
+//            return this;
+//        }
         
         
 

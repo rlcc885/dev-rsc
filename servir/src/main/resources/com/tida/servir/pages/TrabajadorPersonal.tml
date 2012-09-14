@@ -6,19 +6,33 @@
         <div class="organismo_titulo">
             Entidad /U. Ejecutora: ${oi.denominacion}
         </div>
-
-        <t:if test = "haymensajes">
-            <div id="Mensajes">
-                ${mensajes}
+    
+    <div class="f-wrap">
+        <div class="f-left">
+            <div class="box-background-title">
+                <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span class="box-title">Familiares</span></a>
             </div>
-        </t:if>
-
+        </div>
+        <div class="f-left">
+            <div class="box-background-title">
+                <a t:type="pagelink" t:page="Meritos" t:context="${menu.id}" href="#"><span class="box-title">Laborales</span></a>
+            </div>
+        </div>
+        <div class="f-left">
+            <div class="box-background-title">
+                <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span class="box-title">Documentos</span></a>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+     
       <div id = "Datos_Generales">
            <h2> Legajo - Datos Personales </h2>
-           <!--<div id= "basicosTrabajador">
-               <h3>${menu.documentoidentidad.valor}: ${menu.nroDocumento}
-               ${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres}</h3>
-           </div>-->
+           <div id= "basicosTrabajador">
+               <h3>${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres}</h3>
+           </div>
       </div>
 
     <div class="wrap">
