@@ -21,16 +21,19 @@
                         t:exclude="id,incluyeInhabilitacion,tiempoMaxAnios,tiempoMaxMeses,tiempoMaxDias,tiempoVisualizaMeses,
                         fechaRegistro,idUsuarioRegistra,fechaModificacion,idUsuarioModifica,fechaEliminacion,idUsuarioElimina,estadoRegistro,
                         observaciones,tiempoVisualizaDias,tiempoVisualizaAnios,tiempoMinAnios,tiempoMinMeses,tiempoMinDias,sancionRegimenList,categoriasancion,tipoInhabilitacion" 
-                        t:add="categoria,tiempoDeVisualizacion,acciones" >
+                        t:add="categoria,tipoDeInhabilitacion,periodoMaximoInhabilitacion,acciones" >
 			<t:parameter name="empty">
 			    <div class="no-info">No se encontraron registros</div>
 			</t:parameter>
                         <p:categoriaCell>
                             <label>${tipsancion.categoriasancion.valor}</label>
                         </p:categoriaCell>
-                        <p:tiempoDeVisualizacionCell>
-                      <!--      <label>${periodomaximoportipo}</label> -->
-                        </p:tiempoDeVisualizacionCell>
+                        <p:tipoDeInhabilitacionCell>
+                            <label>${tipsancion.tipoInhabilitacion.valor}</label>
+                        </p:tipoDeInhabilitacionCell> 
+                        <p:periodoMaximoInhabilitacionCell>
+                            <label>${periodomaximoinhabilitacion}</label>
+                        </p:periodoMaximoInhabilitacionCell>
                         <p:accionesCell>
 				<t:if test="${veditar}">
 					<t:actionlink t:id="editar" zone="listaTipoSancionZone" t:context="tipsancion">Editar</t:actionlink>
@@ -40,10 +43,12 @@
 					<t:actionlink t:id="detalle" zone="listaTipoSancionZone" t:context="tipsancion">Detalle</t:actionlink>
 				</t:if>
 				<t:if test="${veliminar}">
+                                    <t:if test="${eliminarSN}">
 					| 
                                 <a t:type="eventLink" t:event="borrarDato" t:context="tipsancion" t:zone="listaTipoSancionZone" href="#">
                                     <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
                                 </a>
+                                    </t:if>  
 				</t:if>
 			</p:accionesCell> 
 		</t:grid>            
@@ -97,11 +102,11 @@
                                <legend>* Tiempo de Visualización </legend>
                                <div class="f-left">
                                    <label><center>Dias</center></label>                                   
-                               <input t:type="textfield" t:id="tiempovisualizacion1" t:value="valtiempoD" size="10" t:validate="regexp,required" t:disabled="${vdetalle}"/>                                   
+                               <input t:type="textfield" t:id="tiempovisualizacion1" t:value="valtiempoD" size="10" t:validate="regexp,required,max=365" t:disabled="${vdetalle}"/>                                   
                                </div>
                                <div class="f-left">
                                    <label><center>Meses</center></label>                                   
-                               <input t:type="textfield" t:id="tiempovisualizacion2" t:value="valtiempoM" size="10" t:validate="regexp,required" t:disabled="${vdetalle}"/>                                   
+                               <input t:type="textfield" t:id="tiempovisualizacion2" t:value="valtiempoM" size="10" t:validate="regexp,required,max=12" t:disabled="${vdetalle}"/>                                   
                                </div>
                                <div class="f-left">
                                    <label><center>Años</center></label>                                   
@@ -114,35 +119,35 @@
                    <div class="f-wrap">
                        <div class="f-left">
                            <fieldset>
-                               <legend>Periodo de Inhabilitacion Max</legend>
+                               <legend>* Periodo de Inhabilitacion Min</legend>
                                <div class="f-left">                               
                                    <label><center>Días</center></label>
-                               <input t:type="textfield" t:id="ndias1" t:value="valdiasMin" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="ndias1" t:value="valdiasMin" size="10" t:validate="regexp,required,max=365" t:disabled="${vdetalle}"/>
                                </div>
                                <div class="f-left">
                                    <label><center>Meses</center></label>
-                               <input t:type="textfield" t:id="nmeses1" t:value="valmesesMin" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="nmeses1" t:value="valmesesMin" size="10" t:validate="regexp,required,max=12" t:disabled="${vdetalle}"/>
                                </div>
                                <div class="f-left">
                                    <label><center>Años</center></label>
-                               <input t:type="textfield" t:id="nanos1" t:value="valaniosMin" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="nanos1" t:value="valaniosMin" size="10" t:validate="regexp,required" t:disabled="${vdetalle}"/>
                                </div> 
                            </fieldset>                           
                        </div>
                        <div class="f-left">
                            <fieldset>
-                               <legend>Periodo de Inhabilitacion Min</legend>
+                               <legend>* Periodo de Inhabilitacion Max</legend>
                                <div class="f-left">                               
                                    <label><center>Días</center></label>
-                               <input t:type="textfield" t:id="ndias2" t:value="valdiasMax" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="ndias2" t:value="valdiasMax" size="10" t:validate="regexp,required,max=365" t:disabled="${vdetalle}"/>
                                </div>
                                <div class="f-left">
                                    <label><center>Meses</center></label>
-                               <input t:type="textfield" t:id="nmeses2" t:value="valmesesMax" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="nmeses2" t:value="valmesesMax" size="10" t:validate="regexp,required,max=12" t:disabled="${vdetalle}"/>
                                </div>
                                <div class="f-left">
                                    <label><center>Años</center></label>
-                               <input t:type="textfield" t:id="nanos2" t:value="valaniosMax" size="10" t:validate="regexp" t:disabled="${vdetalle}"/>
+                               <input t:type="textfield" t:id="nanos2" t:value="valaniosMax" size="10" t:validate="regexp,required" t:disabled="${vdetalle}"/>
                                </div> 
                            </fieldset>                           
                        </div>                               

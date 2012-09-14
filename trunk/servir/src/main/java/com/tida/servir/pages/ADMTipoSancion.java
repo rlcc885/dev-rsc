@@ -5,12 +5,8 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.LktipoSancion;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UsuarioAcceso;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
-import com.tida.servir.entities.TipoSancion;
 import helpers.Helpers;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
@@ -29,6 +25,8 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import com.tida.servir.entities.TipoSancion;
 
 /**
  *
@@ -77,172 +75,7 @@ public class ADMTipoSancion
     private Envelope envelope;
     @Inject  
     private ComponentResources _resources;
-    //inicio de pagina 
-    @Log
-    void setupRender() {
-        // inicio de variables
-        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_login", _usuario.getLogin());
-//      query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        query.setParameter("in_pagename", "TIPOSANCION");
-        List result = query.list();
-        
-        vdetalle=false;
-        vformulario=false;
-        vbotones=false;
-        vNoedita=false;
-        
-        
-        if (result.isEmpty()) {
-            System.out.println(String.valueOf("Vacio:"));
-        } else {
-           usua = (UsuarioAcceso) result.get(0);
-
-           if (usua.getAccesoupdate() == 1) {veditar = true;}
-        if (usua.getAccesodelete() == 1) {veliminar = true;}
-        if (usua.getAccesoreport() == 1) 
-        {
-            vformulario = true;
-            vbotones = true;
-            if (usua.getAccesodelete() != 1){veliminar = false;}
-        }
-        if (vformulario == true){vNoedita=true;}
-        editando = false;
-        limpiar();
-        }
-
-    }
-
-
-
-    
-
-    
-    @Log
-    Object onReset()
-    {
-        if(vdetalle)
-        {
-            vformulario = false;
-            vNoedita=false;
-            if (usua.getAccesoreport() == 1) 
-            {
-                vformulario=true;
-                vdetalle=false;
-                vbotones=true;
-                limpiar();
-                formularioMensajes.clearErrors();
-                editando = false;
-                tiposancionactual = new TipoSancion();
-                vNoedita=true;
-            }
-        }
-        else
-        {
-            if (usua.getAccesoreport() == 0) 
-            {
-                vformulario=false;
-                vdetalle=false;
-                vbotones=false;
-                vNoedita=false;
-            }
-            else
-            {
-                limpiar();
-                formularioMensajes.clearErrors();
-                editando = false;
-               tiposancionactual = new TipoSancion();  
-            }            
-        }
-        
-      return actualizarZonas();  
-    }
-
-    @Log
-    Object onCancel()
-    {
-            if (_usuario.getRolid() == 1) {
-           //     return "TrabajadorPersonal";
-            } else {
-             //   return Busqueda.class;
-            } 
-                return "TrabajadorPersonal";    
-    }
-
-    
-     @Log
-    @CommitAfter
-    Object onSuccessFromFormularioTipoSancion() 
-     {     
-                 
-           formularioMensajes.clearErrors();
-           if(editando) 
-            {
-                if (usua.getAccesoreport() == 0) 
-                {
-                    vformulario = false;
-                    vbotones=false;
-                    vNoedita=false;
-                }
-            } 
-            else 
-            {
-               tiposancionactual = new TipoSancion();  
-            }
-
-           //***
-           //LUGAR DE LA LOGICA DEL NEGOCIO
-           
-    /*       if (validarCamposNulos()==false)
-           {
-               return actualizarZonas();
-           }*/
-           
-           //***
-           
-            tiposancionactual.setId(Long.valueOf("10"));
-            
-            seteo();
-                 
-
-            
-            session.saveOrUpdate(tiposancionactual);
-            session.flush();
-
-         /*   if (!editando) 
-            {   
-                logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
-            }
-            
-            if (valentregado != null) 
-            {
-                if (valentregado == true) 
-                {
-                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + constancia.getCargoasignado().getTrabajador().getId() + "' and tipoevento_id='" + Logger.MODIFICACION_DOCUMENTOS + "' and tabla_id='" + constancia.getId() + "' and estadoevento=0";
-                    Query query = session.createSQLQuery(hql);
-                    int rowCount = query.executeUpdate();
-                    session.flush();
-                }
-            }*/
-
-            editando = false;
-            limpiar();
-            envelope.setContents("Tipo de sancion creado / modificado con exito");         
-        
-        
-        return actualizarZonas();
-     }
-     
-     
-    
-     Object actualizarZonas()
-     {
-         return new MultiZoneUpdate("listaTipoSancionZone",listaTipoSancionZone.getBody()).
-                                add("tipoSancionZone",tipoSancionZone.getBody()).
-                                add("mensajesZone",mensajesZone.getBody());
-    
-     }
-     
+         
      
      // datos de la clase
      @Property
@@ -299,12 +132,154 @@ public class ADMTipoSancion
      private TipoSancion tiposancionactual;
 
 
+    
+    
+    //inicio de pagina 
+    @Log
+    void setupRender() {
+        // inicio de variables
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", _usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+//        query.setParameter("in_pagename", "TIPOSANCION");
+        List result = query.list();
+        
+        vdetalle=false;
+        vformulario=false;
+        vbotones=false;
+        vNoedita=false;
+        
+        
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+           usua = (UsuarioAcceso) result.get(0);
+
+           if (usua.getAccesoupdate() == 1) {veditar = true;}
+        if (usua.getAccesodelete() == 1) {veliminar = true;}
+        if (usua.getAccesoreport() == 1) 
+        {
+            vformulario = true;
+            vbotones = true;
+            if (usua.getAccesodelete() != 1){veliminar = false;}
+        }
+        if (vformulario == true){vNoedita=true;}
+        editando = false;
+        limpiar();
+        }
+
+    }
+
+    @Log
+    Object onReset()
+    {
+        if(vdetalle)
+        {
+            vformulario = false;
+            vNoedita=false;
+            if (usua.getAccesoreport() == 1) 
+            {
+                vformulario=true;
+                vdetalle=false;
+                vbotones=true;
+                limpiar();
+                formularioMensajes.clearErrors();
+                editando = false;
+                tiposancionactual = new TipoSancion();
+                vNoedita=true;
+            }
+        }
+        else
+        {
+            if (usua.getAccesoreport() == 0) 
+            {
+                vformulario=false;
+                vdetalle=false;
+                vbotones=false;
+                vNoedita=false;
+            }
+            else
+            {
+                limpiar();
+                formularioMensajes.clearErrors();
+                editando = false;
+               tiposancionactual = new TipoSancion();  
+            }            
+        }
+        
+      return actualizarZonas();  
+    }
+
+    @Log
+    Object onCancel()
+    {
+            if (_usuario.getRolid() == 3) {
+                return "Busqueda";
+            } else  {
+                return "TrabajadorPersonal";  
+            }
+    }
+
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioTipoSancion() 
+     {     
+                 
+           formularioMensajes.clearErrors();
+           if(editando) 
+            { if (usua.getAccesoreport() == 0) 
+                {   vformulario = false;
+                    vbotones=false;
+                    vNoedita=false;
+                }
+            } 
+            else {
+               tiposancionactual = new TipoSancion();  
+            }
+            
+            seteo();
+                 
+            session.saveOrUpdate(tiposancionactual);
+            session.flush();
+
+         /*   if (!editando) 
+            {   
+                logger.loguearEvento(session, Logger.MODIFICACION_DOCUMENTOS, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), Logger.MOTIVO_DOCUMENTOS_DOCUMENTOS, constancia.getId());
+            }
+            
+            if (valentregado != null) 
+            {
+                if (valentregado == true) 
+                {
+                    String hql = "update RSC_EVENTO set estadoevento=1 where trabajador_id='" + constancia.getCargoasignado().getTrabajador().getId() + "' and tipoevento_id='" + Logger.MODIFICACION_DOCUMENTOS + "' and tabla_id='" + constancia.getId() + "' and estadoevento=0";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+                    session.flush();
+                }
+            }*/
+
+            editando = false;
+            limpiar();
+            envelope.setContents("Tipo de sancion creado / modificado con exito");         
+        
+        
+        return actualizarZonas();
+     }
+     
+     
+    
+     Object actualizarZonas()
+     {
+         return new MultiZoneUpdate("listaTipoSancionZone",listaTipoSancionZone.getBody()).
+                                add("tipoSancionZone",tipoSancionZone.getBody()).
+                                add("mensajesZone",mensajesZone.getBody());
+    
+     }
+
     @Log
      public List<TipoSancion> getListadoTipoSanciones() {
         Criteria c2 = session.createCriteria(TipoSancion.class);
-//        c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
-//        c2.add(Restrictions.eq("legajo",buscarlegajo()));
-//        c2.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return c2.list();
     }
 	
@@ -326,12 +301,12 @@ public class ADMTipoSancion
 
     @Log
     void seteo(){
-        
+
      tiposancionactual.setDescripcion(valdescripcion);    
      tiposancionactual.setCategoriaSancion(valcategoria);   
      tiposancionactual.setTipoInhabilitacion(valtipo);
      
-     tiposancionactual.setTiempoMinAnios(Integer.parseInt(valaniosMin));     
+     tiposancionactual.setTiempoMinAnios(Integer.parseInt(valaniosMin));
      tiposancionactual.setTiempoMinDias(Integer.parseInt(valdiasMin));
      tiposancionactual.setTiempoMinMeses(Integer.parseInt(valmesesMin));
      
@@ -348,24 +323,20 @@ public class ADMTipoSancion
     }
 
     @Log
-    void mostrar(){
+    void mostrar(){   
      valdescripcion = tiposancionactual.getDescripcion();    
      valcategoria = tiposancionactual.getCategoriaSancion();   
      valtipo = tiposancionactual.getTipoInhabilitacion();
      valaniosMin = tiposancionactual.getTiempoMinAnios().toString();
      valdiasMin = tiposancionactual.getTiempoMinDias().toString();
      valmesesMin = tiposancionactual.getTiempoMinMeses().toString();
-     
      valmesesMax = tiposancionactual.getTiempoMaxMeses().toString();
      valdiasMax = tiposancionactual.getTiempoMaxDias().toString();
      valaniosMax = tiposancionactual.getTiempoMaxAnios().toString();
-     
      valtiempoA = tiposancionactual.getTiempoVisualizaAnios().toString();
      valtiempoD = tiposancionactual.getTiempoVisualizaDias().toString();
      valtiempoM = tiposancionactual.getTiempoVisualizaMeses().toString();
-     
-     valobservacion = tiposancionactual.getObservaciones();        
-     
+     valobservacion = tiposancionactual.getObservaciones();             
         
     }
 
@@ -375,15 +346,15 @@ public class ADMTipoSancion
      valdescripcion="";
      valcategoria= null;
      valtipo = null;
-     valdiasMin = "";
-     valmesesMin = "";
-     valaniosMin = "";
-     valdiasMax = "";
-     valmesesMax = "";
-     valaniosMax = "";
-     valtiempoD = "";
-     valtiempoM = "";
-     valtiempoA = "";
+     valdiasMin = "0";
+     valmesesMin = "0";
+     valaniosMin = "0";
+     valdiasMax = "0";
+     valmesesMax = "0";
+     valaniosMax = "0";
+     valtiempoD = "0";
+     valtiempoM = "0";
+     valtiempoA = "0";
      valobservacion = "";
      
     return new MultiZoneUpdate ("tipoSancionZone",tipoSancionZone.getBody());
@@ -392,18 +363,15 @@ public class ADMTipoSancion
     
     @Log
     Object onActionFromEditar(TipoSancion dato) {
-        System.out.println(dato.getId());
         
-        tiposancionactual = dato;
+        tiposancionactual = dato;        
         vformulario = true;
         editando = true;
         vdetalle = false;
         vbotones = true;
         mostrar();
-        //return actualizarZonas();
         
-        return new MultiZoneUpdate("tipoSancionZone",tipoSancionZone.getBody());
-
+        return actualizarZonas();
     }
 
     @Log
@@ -422,23 +390,48 @@ public class ADMTipoSancion
     Object onBorrarDato(TipoSancion dato) {
        session.delete(dato);
        envelope.setContents("Tipo de Sancion Eliminado");
+       limpiar();
         return actualizarZonas();
     }
     
-    @Persist
-    private String periodomaximoportipo;
+//    @Persist
+    private String periodomaximoinhabilitacion;
+
     
-    private void  setperiodomaximoportipo(){}
-    
-    public String getperiodomaximoportipo()
-    {
+    public String getPeriodomaximoinhabilitacion() {
        String cadena="";
-       if(tipsancion.getTiempoVisualizaDias()!=0){cadena+=tipsancion.getTiempoVisualizaDias()+" DIAS ";}
-       if(tipsancion.getTiempoVisualizaMeses()!=0){cadena+=tipsancion.getTiempoVisualizaMeses()+" MESES ";}
-       if(tipsancion.getTiempoVisualizaAnios()!=0){cadena+=tipsancion.getTiempoVisualizaAnios()+" AÑOS ";}
+       
+       if(tipsancion.getTiempoMaxDias()!=0){cadena+=tipsancion.getTiempoMaxDias()+" DIAS ";}
+       if(tipsancion.getTiempoMaxMeses()!=0){cadena+=tipsancion.getTiempoMaxMeses()+" MESES ";}
+       if(tipsancion.getTiempoMaxAnios()!=0){cadena+=tipsancion.getTiempoMaxAnios()+" AÑOS ";}
     
     return cadena;
 
+    }
+
+    public void setPeriodomaximoinhabilitacion(String periodomaximoinhabilitacion) {
+        this.periodomaximoinhabilitacion = periodomaximoinhabilitacion;
+    }
+    
+    
+    public boolean geteliminarSN()
+    {
+        
+        Criteria c1 = session.createCriteria(Sancion2.class);
+        c1.add(Restrictions.eq("tipoSancion", tipsancion));
+
+        if (c1.list().isEmpty()){
+          c1 = session.createCriteria(SancionRegimen.class);
+          c1.add(Restrictions.eq("tipoSancion", tipsancion));
+                if (c1.list().isEmpty()){
+                    return true;
+                }
+
+        }
+        
+        
+        
+        return false;
     }
      
 }

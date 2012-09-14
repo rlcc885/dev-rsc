@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
@@ -19,7 +20,9 @@ public class TipoSancion implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @Basic(optional = false)
+    @NonVisual
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_TIPO_SANCION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID_TIPO_SANCION")
     private Long id;
     @Column(name = "DESCRIPCION")
@@ -288,7 +291,7 @@ public class TipoSancion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject1.TipoSancion[ idTipoSancion=" + id + " ]";
+        return "com.tida.servir.entities.TipoSancion[ idTipoSancion=" + id + " ]";
     }
     
 }
