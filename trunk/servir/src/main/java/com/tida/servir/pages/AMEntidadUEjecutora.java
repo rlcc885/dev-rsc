@@ -617,30 +617,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
+        
+        System.out.println("SALIXXX"+vbotones);
+        System.out.println("SALIXXX"+bCancelFormulario);
+        System.out.println("SALIXXX"+bResetFormulario);
+        System.out.println("SALIXXX");
+        
         formulariomensajes.clearErrors();
-        if (bCancelFormulario) {
-            nuevoRegistro();
-            if (!vbotones) {
-                vformulario = false;
-            } else {
-                return "AMEntidadUEjecutora";
-            }
-        } else if (bResetFormulario) {
-            if (opcion_limpiar.equals(true)) {
-                resetFormulario(entidadUE);
-            } else {// entidadUE = new Entidad();
-                this.limpiar_formulario();
-            }
 
-            opcion_limpiar = false;
-
-            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
-                    add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
-                    add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
-                    add("TitularZone", TitularZone.getBody()).
-                    add("JefeRRHHZone", JefeRRHHZone.getBody()).
-                    add("JefeOGAZone", JefeOGAZone.getBody());
-        } else {
+        if(insertarentidad) {
             System.out.println("***** FASE DE CREACION:" + entidadUE.toString());
             System.out.println("******" + ubigeoEntidadUE.toString());
             entidadUE.setEstado(true);
@@ -726,6 +711,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
+        System.out.println("AMENTIDADX");
+            
             session.saveOrUpdate(entidadUE);
             session.flush();
             if (editando) {
@@ -739,7 +726,53 @@ public class AMEntidadUEjecutora extends GeneralPage {
             envelope.setContents(this.mensaje_accion());
             // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
             opcion_limpiar = false;
+            
+            //
+            
+            //
         }
+  
+  
+  else if (bResetFormulario) {
+            if (opcion_limpiar.equals(true)) {
+                resetFormulario(entidadUE);
+            } else {// entidadUE = new Entidad();
+                this.limpiar_formulario();
+            }
+
+            opcion_limpiar = false;
+
+            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
+                    add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                    add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
+                    add("TitularZone", TitularZone.getBody()).
+                    add("JefeRRHHZone", JefeRRHHZone.getBody()).
+                    add("JefeOGAZone", JefeOGAZone.getBody());
+        } 
+        else if (bCancelFormulario) {
+            nuevoRegistro();
+            if (!vbotones) {
+                vformulario = false;
+            } else {
+                
+                System.out.println("XXX");
+//                return "AMEntidadUEjecutora";
+             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
+                    add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                    add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
+                    add("TitularZone", TitularZone.getBody()).
+                    add("JefeRRHHZone", JefeRRHHZone.getBody()).
+                    add("JefeOGAZone", JefeOGAZone.getBody());
+               
+            }
+        }  
+  
+  
+  
+  
+  
+  
+  
         nuevoRegistro();
         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).
                 add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
@@ -936,6 +969,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
         mostrar = false;
     }
 
+    @Log
+    void onSelectedFromguardarentidad()
+    {
+        insertarentidad = true;
+    }
+    
+    @Property
+    @Persist
+    private boolean insertarentidad;
     @Log
     @CommitAfter
     Object onSuccessFromFormularioEntidadOrigen() {

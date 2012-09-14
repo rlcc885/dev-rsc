@@ -12,9 +12,7 @@
     </t:if>
 <!--    <a t:type="actionlink" id="toggle_filtros" t:id="toggle_filtros" href="#" onclick=";">${mostrarEsconder}</a>-->
 
-    <div t:type="zone" t:id="filtrosZone" class="selectform">
-                <!-- the tabs -->
-        <script>
+         <script>
                 jQuery(document).ready(function(){
                 jQuery(".box-title-01").click(function(){
                 jQuery("#panel-01").slideToggle("slow");
@@ -24,10 +22,14 @@
         </script>
         <div class="box-background-title">
                 <span class="box-title-01">
-                    <strong style="cursor:pointer;">+</strong> 
+                    <strong style="cursor:pointer;">+</strong> Busqueda
                 </span>
-        </div>
-        <div id="panel-01" >    
+        </div>   
+           <div id="panel-01" class="box">    
+    <div t:type="zone" t:id="filtrosZone" class="selectform">
+                <!-- the tabs -->
+
+ 
     
     <ul id="tabs-topb" class="tabs">
         <li>
@@ -136,25 +138,17 @@
             </t:form>
         </div>
     </div> 
-        </div>
+
     </div>
-    
+    <br/><br/>
     <div t:type="zone" t:id="listaentidadZone" class="selectform">    
-  <!--      <t:if test="mostrar2"> -->
-            <script>
-                jQuery(document).ready(function(){
-                jQuery(".box-title-02").click(function(){
-                jQuery("#panel-02").slideToggle("slow");
-                return true;
-                });
-                });        
-            </script>
-            <div class="box-background-title">
+
+    <!--        <div class="box-background-title">
                 <span class="box-title-02">
-                    <strong style="cursor:pointer;">+</strong> Listado de Entidades
+                  Listado de Entidades
                 </span>
-            </div>
-            <div id="panel-02" class="box">
+            </div> -->
+            <div id="panel-02">
             <t:grid source="listadoEntidades" 
                     rowsPerPage="10" 
                     pagerPosition="bottom"
@@ -193,7 +187,7 @@
             </div>
 <!--        </t:if>  -->  
     </div>
-    
+        </div>    
              
     <div class="box-background-title">
         <span class="box-title">Crear / Editar Registro de Entidad</span>
