@@ -613,28 +613,26 @@ public class AMEntidadUEjecutora extends GeneralPage {
         editando = false;
     }
 
+    @Log
+    void onSelectedFromguardarentidad()
+    {
+        insertarentidad = true;
+    }
+
     // fromulario principal
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobotones() {
-        
-        System.out.println("SALIXXX"+vbotones);
-        System.out.println("SALIXXX"+bCancelFormulario);
-        System.out.println("SALIXXX"+bResetFormulario);
-        System.out.println("SALIXXX");
-        
+                
         formulariomensajes.clearErrors();
 
         if(insertarentidad) {
-            System.out.println("***** FASE DE CREACION:" + entidadUE.toString());
-            System.out.println("******" + ubigeoEntidadUE.toString());
             entidadUE.setEstado(true);
 
             entidadUE.setDepartamento(ubigeoEntidadUE.getDepartamento());
 
             entidadUE.setProvincia(ubigeoEntidadUE.getProvincia());
             entidadUE.setDistrito(ubigeoEntidadUE.getDistrito());
-            System.out.println(entidadUE.getEsSubEntidad());
             if (entidadUE.getEsSubEntidad() == null)
             {entidadUE.setEsSubEntidad(false);
             }
@@ -651,7 +649,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             {
                     if (!c.list().isEmpty()) {
                      formulariomensajes.recordError("RUC duplicado");
-                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
                      }
             }
        }
@@ -665,7 +663,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
               if (!c.list().isEmpty())
                 {
                     formulariomensajes.recordError("RUC duplicado");
-                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
                 }
          }
        }
@@ -673,48 +671,49 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (entidadUE.getEsSubEntidad()) {
                 if (entidadUE.getTipoSubEntidad() == null) {
                     envelope.setContents("Debe seleccionar Tipo de Sub Entidad.");
-                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
                 }
             }
 
             if (entidadUE.getNivelGobierno() == null) {
                 envelope.setContents("Debe ingresar el Nivel de Gobierno");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
             }
 
             if (entidadUE.getOrganizacionEstado() == null) {
                 envelope.setContents("Debe ingresar la Organizacion Estado");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
             }
 
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
                 if (entidadUE.getSectorGobierno() == null) {
                     envelope.setContents("Debe ingresar el Sector");
-                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
                 }
                 if (entidadUE.getTipoOrganismo() == null) {
                     envelope.setContents("Debe ingresar el Tipo de Organismo");
-                    return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
                 }
             }
 
             if (entidadUE.getDenominacion() == null) {
                 envelope.setContents("Debe ingresar el nombre de la Entidad ");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
             }
             if (entidadUE.getRuc() == null) {
                 formulariomensajes.recordError("Debe ingresar el Ruc ");
                  //envelope.setContents("Debe ingresar el Ruc ");
-                return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
             }
             
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
-        System.out.println("AMENTIDADX");
             
             session.saveOrUpdate(entidadUE);
             session.flush();
+            insertarentidad = false;
+            editando = false;
             if (editando) {
                 if (usua.getAccesoreport() == 0) {
                     vformulario = false;
@@ -727,13 +726,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
             // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
             opcion_limpiar = false;
             
-            //
-            
-            //
         }
-  
-  
-  else if (bResetFormulario) {
+
+        else if (bResetFormulario) {
             if (opcion_limpiar.equals(true)) {
                 resetFormulario(entidadUE);
             } else {// entidadUE = new Entidad();
@@ -742,14 +737,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
 
             opcion_limpiar = false;
 
-            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
+            editando = false;
+            bResetFormulario = false;
+            return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).
+                    add("zoneDatos", zoneDatos.getBody()).
                     add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
                     add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
                     add("TitularZone", TitularZone.getBody()).
                     add("JefeRRHHZone", JefeRRHHZone.getBody()).
-                    add("JefeOGAZone", JefeOGAZone.getBody());
+                    add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone",botonesZone.getBody());
         } 
         else if (bCancelFormulario) {
+            bCancelFormulario = false;
+            editando = false;
             nuevoRegistro();
             if (!vbotones) {
                 vformulario = false;
@@ -757,22 +757,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 
                 System.out.println("XXX");
 //                return "AMEntidadUEjecutora";
-             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).
+             return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).
+                    add("zoneDatos", zoneDatos.getBody()).
                     add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
                     add("zoneOtrosDatos", zoneOtrosDatos.getBody()).
                     add("TitularZone", TitularZone.getBody()).
                     add("JefeRRHHZone", JefeRRHHZone.getBody()).
-                    add("JefeOGAZone", JefeOGAZone.getBody());
+                    add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone",botonesZone.getBody());
                
             }
         }  
-  
-  
-  
-  
-  
-  
-  
+
         nuevoRegistro();
         return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).
                 add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
@@ -786,7 +781,18 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("EOrigenZone",EOrigenZone.getBody());
     }
 
+    @Log
+    public Object actualizarZonas()
+    {
+        return new MultiZoneUpdate("zoneDatos", zoneDatos.getBody()).
+                add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).
+                add("TitularZone", TitularZone.getBody()).
+                add("JefeRRHHZone", JefeRRHHZone.getBody()).
+                add("JefeOGAZone", JefeOGAZone.getBody()).
+                add("mensajesZone", mensajesZone.getBody());
+    }
 
+    
     @Log
     public void onActivate(Entidad eue) {
         entidadUE = eue;
@@ -979,11 +985,6 @@ public class AMEntidadUEjecutora extends GeneralPage {
         mostrar = false;
     }
 
-    @Log
-    void onSelectedFromguardarentidad()
-    {
-        insertarentidad = true;
-    }
     
     @Property
     @Persist
