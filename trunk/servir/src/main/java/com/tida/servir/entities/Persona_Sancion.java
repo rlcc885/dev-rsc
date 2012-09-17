@@ -6,6 +6,7 @@ package com.tida.servir.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
@@ -41,14 +42,6 @@ public class Persona_Sancion implements Serializable {
     public void setApellidoPaterno(String apellidoPaterno) {
         this.apellidoPaterno = apellidoPaterno;
     }
-
-    public String getCargo_persona() {
-        return cargo_persona;
-    }
-
-    public void setCargo_persona(String cargo_persona) {
-        this.cargo_persona = cargo_persona;
-    }
     
     @ManyToOne
     public DatoAuxiliar getDocumentoidentidad() {
@@ -57,14 +50,6 @@ public class Persona_Sancion implements Serializable {
 
     public void setDocumentoidentidad(DatoAuxiliar documentoidentidad) {
         this.documentoidentidad = documentoidentidad;
-    }
-
-    public String getEstado_cargo() {
-        return estado_cargo;
-    }
-
-    public void setEstado_cargo(String estado_cargo) {
-        this.estado_cargo = estado_cargo;
     }
 
     public String getNombres() {
@@ -83,54 +68,48 @@ public class Persona_Sancion implements Serializable {
         this.nroDocumento = nroDocumento;
     }
     
-    @ManyToOne
-    public DatoAuxiliar getRegimenlaboral() {
-        return regimenlaboral;
-    }
-
-    public void setRegimenlaboral(DatoAuxiliar regimenlaboral) {
-        this.regimenlaboral = regimenlaboral;
-    }
-
-    public String getTiempo_servicio_anio() {
-        return tiempo_servicio_anio;
-    }
-
-    public void setTiempo_servicio_anio(String tiempo_servicio_anio) {
-        this.tiempo_servicio_anio = tiempo_servicio_anio;
-    }
-
-    public String getTiempo_servicio_dia() {
-        return tiempo_servicio_dia;
-    }
-
-    public void setTiempo_servicio_dia(String tiempo_servicio_dia) {
-        this.tiempo_servicio_dia = tiempo_servicio_dia;
-    }
-
-    public String getTiempo_servicio_mes() {
-        return tiempo_servicio_mes;
-    }
-
-    public void setTiempo_servicio_mes(String tiempo_servicio_mes) {
-        this.tiempo_servicio_mes = tiempo_servicio_mes;
-    }
-    @Validate("required")
+    
     private String nroDocumento;
-    @Validate("required")
     private String nombres;
-    @Validate("required")
     private String apellidoPaterno;
-    @Validate("required")
     private String apellidoMaterno;
-    @ManyToOne
-    @Validate("required")
-    private DatoAuxiliar regimenlaboral;
-    private String cargo_persona;
-    private String tiempo_servicio_anio;
-    private String tiempo_servicio_mes;
-    private String tiempo_servicio_dia;
-    private String estado_cargo;           
+    private String direccion;
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Date getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(Date fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+    @Temporal(TemporalType.DATE)
+    private Date fecha_nacimiento;
+    private String nacionalidad;
+    private String sexo;
     
     public long getId() {
         return id;

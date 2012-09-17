@@ -18,6 +18,22 @@
                 </div>
                 <div class="f-wrap">
                     <div class="f-left">
+                        <label>* Entidad</label>
+                        <input t:type="TextField" t:id="entidad_descripcion"
+                                t:value="bentidad" size="100" t:disabled="true"/>
+                    </div>
+                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                        <input t:id="buscarenti" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Buscar Trabajador</label>
+                    </div>
+                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                        <input t:id="buscartraba" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
+                    </div>
+                    <div class="f-left">
                         <label>Tipo Documento</label>
                         <input t:type="Select" t:id="documento_identidad"                                
                                t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" />
@@ -30,27 +46,57 @@
                 </div>
                 <div class="f-wrap">
                     <div class="f-left">
-                        <label>Nombres</label>
+                        <label>* Nombres</label>
                         <input t:type="TextField" t:id="nombres" value="bnombres" size="30"/>
                     </div>
                     <div class="f-left">
-                        <label>Apellido Paterno</label>
+                        <label>* Apellido Paterno</label>
                         <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30"/>
                     </div>
                     <div class="f-left">
-                        <label>Apellido Materno</label>
+                        <label>* Apellido Materno</label>
                         <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30"/>
                     </div>
-                </div>
-                <div class="f-wrap">
-                    <input t:type="Submit" t:id="share" value="Buscar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                    <input t:type="Submit" t:id="resetbus" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                    <input t:type="Submit" t:id="cancelbus" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                </div>                
+                </div>             
             </form>
         </t:zone>        
-    </div>
+    
+
+
     <t:zone t:id="listadoZone">
 
     </t:zone>
+    <div id="shade"></div>
+        
+    <div id="modal"> 
+        <h1>Selección de entidad</h1>
+        <div class="pane">
+            <t:zone t:id="busZone" t:update="show">
+                <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">                    
+                    <div class="actions f-right">
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" /> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                    </div> 
+
+                </form>
+            </t:zone>
+            <br/>
+            <br/>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    </div>
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
+
 </html>

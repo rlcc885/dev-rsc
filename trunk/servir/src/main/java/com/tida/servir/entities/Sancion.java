@@ -2,70 +2,274 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.tida.servir.entities;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
+import org.apache.tapestry5.beaneditor.NonVisual;
+import org.apache.tapestry5.beaneditor.Validate;
 
 /**
  *
- * @author Morgan
+ * @author ale
  */
-public class Sancion {
+@Entity
+@Table(name = "RNSDD_SANCION")
+public class Sancion implements Serializable {
     
-    private String nombres;
-    private String apellidos;
-    private String institucion;
-    private String tipoSancion;
-    private String inabilitacion;
-    private Date finInabilitacion;
+    @Id    
+    @Column(name = "ID")
+    private long id;    
+    @ManyToOne
+    private Trabajador autoridadnot;
+    @ManyToOne
+    private Trabajador autoridadsan;
+    @ManyToOne
+    private DatoAuxiliar categoria_sancion;
+    private String causa;
+    private Boolean estrabajador;
+    @Temporal(TemporalType.DATE)
+    private Date fecha_docnot;
+    @Temporal(TemporalType.DATE)
+    private Date fecha_docsan;
+    @Temporal(TemporalType.DATE)
+    private Date fechafin_inha;
+    @Temporal(TemporalType.DATE)
+    private Date fechaini_inha;
 
-    public String getInstitucion() {
-        return institucion;
+    public Trabajador getAutoridadnot() {
+        return autoridadnot;
     }
 
-    public void setInstitucion(String institucion) {
-        this.institucion = institucion;
+    public void setAutoridadnot(Trabajador autoridadnot) {
+        this.autoridadnot = autoridadnot;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public Trabajador getAutoridadsan() {
+        return autoridadsan;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setAutoridadsan(Trabajador autoridadsan) {
+        this.autoridadsan = autoridadsan;
     }
 
-    public Date getFinInabilitacion() {
-        return finInabilitacion;
+    public DatoAuxiliar getCategoria_sancion() {
+        return categoria_sancion;
     }
 
-    public void setFinInabilitacion(Date finInabilitacion) {
-        this.finInabilitacion = finInabilitacion;
+    public void setCategoria_sancion(DatoAuxiliar categoria_sancion) {
+        this.categoria_sancion = categoria_sancion;
     }
 
-    public String getInabilitacion() {
-        return inabilitacion;
+    public String getCausa() {
+        return causa;
     }
 
-    public void setInabilitacion(String inabilitacion) {
-        this.inabilitacion = inabilitacion;
+    public void setCausa(String causa) {
+        this.causa = causa;
     }
 
-    public String getNombres() {
-        return nombres;
+    public Boolean getEstrabajador() {
+        return estrabajador;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setEstrabajador(Boolean estrabajador) {
+        this.estrabajador = estrabajador;
     }
 
-    public String getTipoSancion() {
-        return tipoSancion;
+    public Date getFecha_docnot() {
+        return fecha_docnot;
     }
 
-    public void setTipoSancion(String tipoSancion) {
-        this.tipoSancion = tipoSancion;
+    public void setFecha_docnot(Date fecha_docnot) {
+        this.fecha_docnot = fecha_docnot;
     }
 
+    public Date getFecha_docsan() {
+        return fecha_docsan;
+    }
+
+    public void setFecha_docsan(Date fecha_docsan) {
+        this.fecha_docsan = fecha_docsan;
+    }
+
+    public Date getFechafin_inha() {
+        return fechafin_inha;
+    }
+
+    public void setFechafin_inha(Date fechafin_inha) {
+        this.fechafin_inha = fechafin_inha;
+    }
+
+    public Date getFechaini_inha() {
+        return fechaini_inha;
+    }
+
+    public void setFechaini_inha(Date fechaini_inha) {
+        this.fechaini_inha = fechaini_inha;
+    }
+
+    public Boolean getFunnot() {
+        return funnot;
+    }
+
+    public void setFunnot(Boolean funnot) {
+        this.funnot = funnot;
+    }
+
+    public Boolean getFunsan() {
+        return funsan;
+    }
+
+    public void setFunsan(Boolean funsan) {
+        this.funsan = funsan;
+    }
+
+    public String getNumdocnot() {
+        return numdocnot;
+    }
+
+    public void setNumdocnot(String numdocnot) {
+        this.numdocnot = numdocnot;
+    }
+
+    public String getNumdocsan() {
+        return numdocsan;
+    }
+
+    public void setNumdocsan(String numdocsan) {
+        this.numdocsan = numdocsan;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Persona_Sancion getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona_Sancion persona) {
+        this.persona = persona;
+    }
+
+    public String getTiem_ser_anio() {
+        return tiem_ser_anio;
+    }
+
+    public void setTiem_ser_anio(String tiem_ser_anio) {
+        this.tiem_ser_anio = tiem_ser_anio;
+    }
+
+    public String getTiem_ser_dia() {
+        return tiem_ser_dia;
+    }
+
+    public void setTiem_ser_dia(String tiem_ser_dia) {
+        this.tiem_ser_dia = tiem_ser_dia;
+    }
+
+    public String getTiem_ser_mes() {
+        return tiem_ser_mes;
+    }
+
+    public void setTiem_ser_mes(String tiem_ser_mes) {
+        this.tiem_ser_mes = tiem_ser_mes;
+    }
+
+    public DatoAuxiliar getTipo_documentonot() {
+        return tipo_documentonot;
+    }
+
+    public void setTipo_documentonot(DatoAuxiliar tipo_documentonot) {
+        this.tipo_documentonot = tipo_documentonot;
+    }
+
+    public DatoAuxiliar getTipo_documentosan() {
+        return tipo_documentosan;
+    }
+
+    public void setTipo_documentosan(DatoAuxiliar tipo_documentosan) {
+        this.tipo_documentosan = tipo_documentosan;
+    }
+
+    public TipoSancion getTipo_sancion() {
+        return tipo_sancion;
+    }
+
+    public void setTipo_sancion(TipoSancion tipo_sancion) {
+        this.tipo_sancion = tipo_sancion;
+    }
+
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
+//    @ManyToOne
+//    private Funcionario funcionarionot;
+//    @ManyToOne
+//    private Funcionario funcionariosan;
+    private Boolean funnot;
+    private Boolean funsan;
+    private String numdocnot;
+    private String numdocsan;
+    private String observaciones;
+    @ManyToOne
+    private Persona_Sancion persona;
+    private String tiem_ser_anio;
+    private String tiem_ser_dia;
+    private String tiem_ser_mes;
+    @ManyToOne
+    private DatoAuxiliar tipo_documentonot;
+    @ManyToOne
+    private DatoAuxiliar tipo_documentosan;
+    @ManyToOne
+    private TipoSancion tipo_sancion;
+    @ManyToOne
+    private Trabajador trabajador;
+    
+    
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Sancion other = (Sancion) obj;
+        if (id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
 }
