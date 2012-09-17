@@ -7,11 +7,10 @@
         Entidad /U. Ejecutora: ${entidadUE.denominacion}
     </div>
 
-    <h2>Exportacion</h2>
+    <h2>Exportación</h2>
 
     <t:form t:id="formulariodescargarzip">
         <t:errors/>
-
         <t:if test = "respuestaOk">
             <div id='ok_msg'> 
                 Archivo procesado correctamente

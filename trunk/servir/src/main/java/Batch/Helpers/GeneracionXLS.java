@@ -810,7 +810,426 @@ public class GeneracionXLS {
         }
         return errores;
     }
+    
+    public List<String> generadoXLSEstudios(List<LkBatchEstudio> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Denominacion de Estudio");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Tipo de Estudio");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Centro de Estudios");
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Nombre de Otro Centro");
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Pais donde realizo Estudio");
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Departamento donde realizo Estudio");
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Provincia donde realizo Estudio");
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Distrito donde realizo Estudio");
+            celda= fila.createCell((short)11);
+            celda.setCellValue("Nombre de Colegio Profesional");
+            celda= fila.createCell((short)12);
+            celda.setCellValue("Numero de Colegiatura");
+            celda= fila.createCell((short)13);
+            celda.setCellValue("Estudiando Actualmente");
+            celda= fila.createCell((short)14);
+            celda.setCellValue("Fecha de Inicio");
+            celda= fila.createCell((short)15);
+            celda.setCellValue("Fecha de Fin");
             
+            
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchEstudio cr=(LkBatchEstudio)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getDenominacion()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getTipoestudio()));              
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getCentroestudio()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getOtrocentroestudio()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(leoCampo(cr.getPais()));
+                celda= fila.createCell((short)8);
+                celda.setCellValue(leoCampo(cr.getDepartamento()));
+                celda= fila.createCell((short)9);
+                celda.setCellValue(leoCampo(cr.getProvincia()));
+                celda= fila.createCell((short)10);
+                celda.setCellValue(leoCampo(cr.getDistrito()));
+                celda= fila.createCell((short)11);
+                celda.setCellValue(leoCampo(cr.getColegio()));
+                celda= fila.createCell((short)12);
+                celda.setCellValue(leoCampo(cr.getColegiatura()));
+                celda= fila.createCell((short)13);
+                celda.setCellValue(BoolFrom(cr.getEstudiando()));
+                celda= fila.createCell((short)14);
+                celda.setCellValue(datetoString(cr.getFechainicio()));
+                celda= fila.createCell((short)15);
+                celda.setCellValue(datetoString(cr.getFechafin()));
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxESTUDIO.xls");
+        }
+        
+        return errores;
+    }
+    
+    public List<String> generadoXLSCursos(List<LkBatchCurso> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Denominacion de Curso");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Centro de Estudios");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Nombre de Otro Centro");            
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Fecha de Inicio");
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Fecha de Fin");
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Estudiando Actualmente");
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Tipo de Curso");
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Fuera del Pais");
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchCurso cr=(LkBatchCurso)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getDenominacion()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getCentroestudio()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getOtrocentroestudio()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(datetoString(cr.getFechainicio()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(datetoString(cr.getFechafin()));
+                celda= fila.createCell((short)8);
+                celda.setCellValue(BoolFrom(cr.getEstudiando()));
+                celda= fila.createCell((short)9);
+                celda.setCellValue(leoCampo(cr.getTipocurso()));
+                celda= fila.createCell((short)10);
+                celda.setCellValue(BoolFrom(cr.getFueradelpais()));
+                
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxCURSO.xls");
+        }
+        
+        return errores;
+    }
+        
+    public List<String> generadoXLSAntecedentes(List<LkBatchAnteceLabo> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Nombre de la Empresa");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Cargo del Trabajador");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Funcion del Trabajador");            
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Motivo del Cese");
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Fecha de Ingreso");
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Fecha de Salida");
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchAnteceLabo cr=(LkBatchAnteceLabo)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getEmpresa()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getCargo()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getFuncion()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getMotivocese()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(datetoString(cr.getFec_ingreso()));
+                celda= fila.createCell((short)8);
+                celda.setCellValue(datetoString(cr.getFec_egreso()));                
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxANTECEDENTE.xls");
+        }
+        
+        return errores;
+    }
+    
+    public List<String> generadoXLSPublicaciones(List<LkBatchPublicacion> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Clase de Publiacion");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Tipo de Publicacion");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Titulo de la Publicacion");            
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Detalle de la Publicacion");
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Fecha de Publicacion");
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchPublicacion cr=(LkBatchPublicacion)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getClasepublicacion()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getTipo()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getTitulo()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getDescripcion()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(datetoString(cr.getFecha()));
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxPRODUCCION.xls");
+        }
+        
+        return errores;
+    }
+    
+    public List<String> generadoXLSFamiliares(List<LkBatchFamiliar> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Tipo de Parentesco");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Sexo del Familiar");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Fecha de Nacimiento");            
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Nombres");
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Apellido Paterno");
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Apellido Materno");
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)11);
+            celda.setCellValue("Estado Civil");            
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchFamiliar cr=(LkBatchFamiliar)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getParentesco()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getSexo()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(datetoString(cr.getFechaNacimiento()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getNombres()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(leoCampo(cr.getApellidoPaterno()));
+                celda= fila.createCell((short)8);
+                celda.setCellValue(leoCampo(cr.getApellidoMaterno()));
+                celda= fila.createCell((short)9);
+                celda.setCellValue(leoCampo(cr.getTipoDocumentofa()));
+                celda= fila.createCell((short)10);
+                celda.setCellValue(leoCampo(cr.getNroDocumentof()));
+                celda= fila.createCell((short)11);
+                celda.setCellValue(leoCampo(cr.getEstadoCivil()));                
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxFAMILIAR.xls");
+        }
+        
+        return errores;
+    }
+    
+    public List<String> generadoXLSMeritos(List<LkBatchMeritoDeme> lcr,String path, Session session,Entidad ue){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Cargo Asignado"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo de documento de identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Numero de documento de identidad");
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Clase de Merito o Demerito");
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Tipo de Merito o Demerito");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Motivo de Merito/Demerito");            
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Fecha");
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBatchMeritoDeme cr=(LkBatchMeritoDeme)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                celda.setCellValue(leoCampo(ue.getCue_entidad()));
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)2);
+                celda.setCellValue(leoCampo(cr.getNrodocumento()));
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getClasemeritodemerito()));
+                celda= fila.createCell((short)4);    
+                celda.setCellValue(leoCampo(cr.getTipomeritodemerito()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getTipodocumento()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getMotivo()));
+                celda= fila.createCell((short)7);
+                celda.setCellValue(datetoString(cr.getFecha()));
+            }
+            
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxDEMERITO.xls");
+        }
+        
+        return errores;
+    }
+    
     private void ajustaColumnas(HSSFSheet hoja) {
         final short numeroColumnas = hoja.getRow(0).getLastCellNum();
         for (int i = 0; i < numeroColumnas; i++) {

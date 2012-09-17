@@ -16,19 +16,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.hibernate.Session;
-import org.apache.tapestry5.annotations.Log;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 /**
  *
@@ -36,7 +30,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class TransferenciaMasivaTrabajadores  extends GeneralPage {
     
-    private final String STARTPATH = "ArchivosCSV/";
+    private final String STARTPATH = "ArchivosXLS/";
 
     @Component(id = "formulariodescargarzip")
     private Form formulariodescargarzip;
@@ -59,7 +53,12 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
     @Property
     @Persist
     private boolean respuestaOk;
-
+    
+    @SetupRender
+    void inicio(){
+        
+    }        
+    
     StreamResponse onActionFromReturnStreamResponse() {
 		return new StreamResponse() {
 			InputStream inputStream;
@@ -101,17 +100,13 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
     @CommitAfter
     Object onSuccessFromformulariodescargarzip(){
         respuestaOk = true;     
-        GeneracionXLS geXLS=new GeneracionXLS();
-//        InformeXLS myXLS = new InformeXLS();
-//        List<Trabajador> ltrabajador = new LinkedList<Trabajador>();
-//        List<ConstanciaDocumental> lcd = new LinkedList<ConstanciaDocumental>();
-        
+        GeneracionXLS geXLS=new GeneracionXLS();        
         //archivo a descargar
         Date date = new Date();
         String nombreArchivo = "";
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
-        nombreArchivo = "ArchivosCSV Renato - "+sdf.format(date);
-        String newlocation = STARTPATH + "GeneracionCSV/" + nombreArchivo +"/";
+        nombreArchivo = "ArchivosXLS - "+sdf.format(date);
+        String newlocation = STARTPATH + "GeneracionXLS/" + nombreArchivo +"/";
         archivoDescargar = newlocation + nombreArchivo +".zip";                
         
         System.out.println("------------- new location "+newlocation+" starpath "+STARTPATH);
@@ -196,20 +191,89 @@ public class TransferenciaMasivaTrabajadores  extends GeneralPage {
             //generacion archivo unidad organica.csv
             System.out.println("TRABAJADOR");
             errores = geXLS.generadoXLSTrabajador(criteriaTrabajador.list(), newlocation + "xxxTRABAJADOR.xls", session,_entidadUE);
+            List<LkBatchTrabajador> ltrabajador = new LinkedList<LkBatchTrabajador>();
+            ltrabajador.addAll(criteriaTrabajador.list());
+            
+            List<LkBatchEstudio> lestudio = new LinkedList<LkBatchEstudio>();
+            List<LkBatchCurso> lcurso = new LinkedList<LkBatchCurso>();
+            List<LkBatchAnteceLabo> lantecedente = new LinkedList<LkBatchAnteceLabo>();
+            List<LkBatchPublicacion> lproduccion = new LinkedList<LkBatchPublicacion>();
+            List<LkBatchFamiliar> lfamiliar = new LinkedList<LkBatchFamiliar>();
+            List<LkBatchMeritoDeme> ldemerito = new LinkedList<LkBatchMeritoDeme>();
+            
+            for(LkBatchTrabajador tra: ltrabajador){
+                Criteria criteriaCurso= session.createCriteria(LkBatchCurso.class);                
+                criteriaCurso.add(Restrictions.eq("trabajador_id", tra.getId()));
+                criteriaCurso.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                lcurso.addAll(criteriaCurso.list());
+                
+                Criteria criteriaEstudio= session.createCriteria(LkBatchEstudio.class);                
+                criteriaEstudio.add(Restrictions.eq("trabajador_id", tra.getId()));
+                criteriaEstudio.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                lestudio.addAll(criteriaEstudio.list());               
+                
+                
+//                System.out.println("aquiiii cursooo"+criteriaCurso.list().size());
+                
+                Criteria criteriaAntecedente= session.createCriteria(LkBatchAnteceLabo.class);                
+                criteriaAntecedente.add(Restrictions.eq("trabajador_id", tra.getId()));
+                criteriaAntecedente.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                lantecedente.addAll(criteriaAntecedente.list());
+                
+                Criteria criteriaProduccion= session.createCriteria(LkBatchPublicacion.class);                
+                criteriaProduccion.add(Restrictions.eq("trabajador_id", tra.getId()));
+                criteriaProduccion.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                lproduccion.addAll(criteriaProduccion.list());
+                
+                Criteria criteriaFamiliar= session.createCriteria(LkBatchFamiliar.class);                
+                criteriaFamiliar.add(Restrictions.eq("trabajadorid", tra.getId()));
+                criteriaFamiliar.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                lfamiliar.addAll(criteriaFamiliar.list());
+                
+                Criteria criteriaDemerito= session.createCriteria(LkBatchMeritoDeme.class);                
+                criteriaDemerito.add(Restrictions.eq("trabajador_id", tra.getId()));
+                criteriaDemerito.add(Restrictions.eq("entidadid", _entidadUE.getId()));
+                ldemerito.addAll(criteriaDemerito.list());
+                
+                
+            }
+            if(!lestudio.isEmpty()){
+                System.out.println("ESTUDIOS");
+                errores = geXLS.generadoXLSEstudios(lestudio, newlocation + "xxxESTUDIO.xls", session,_entidadUE);
+            }
+            if(!lcurso.isEmpty()){
+                System.out.println("CURSOS");
+                errores = geXLS.generadoXLSCursos(lcurso, newlocation + "xxxCURSO.xls", session,_entidadUE);
+            }
+            if(!lantecedente.isEmpty()){
+                System.out.println("ANTECEDENTES");
+                errores = geXLS.generadoXLSAntecedentes(lantecedente, newlocation + "xxxANTECEDENTE.xls", session,_entidadUE);
+            }
+            if(!lproduccion.isEmpty()){
+                System.out.println("PRODUCCION");
+                errores = geXLS.generadoXLSPublicaciones(lproduccion, newlocation + "xxxPRODUCCION.xls", session,_entidadUE);
+            }
+            if(!lfamiliar.isEmpty()){
+                System.out.println("FAMILIARES");
+                errores = geXLS.generadoXLSFamiliares(lfamiliar, newlocation + "xxxFAMILIAR.xls", session,_entidadUE);
+            }
+            if(!ldemerito.isEmpty()){
+                System.out.println("DEMERITO");
+                errores = geXLS.generadoXLSMeritos(ldemerito, newlocation + "xxxDEMERITO.xls", session,_entidadUE);
+            }
+            
+            
         } 
  
         
         //zip los CSV en un archivo ZIP
-//        errores = Unzip.zippe(newlocation, nombreArchivo +".zip");
-//        if (errores.size() > 0 ) { // hay errores
-//            for(String error: errores){
-//                formulariodescargarzip.recordError(error);
-//            }
-//            return this;
-//        }
-        
-        
-
+        errores = Unzip.zippe(newlocation, nombreArchivo +".zip");
+        if (errores.size() > 0 ) { // hay errores
+            for(String error: errores){
+                formulariodescargarzip.recordError(error);
+            }
+            return this;
+        }
         return this;
 
     }
