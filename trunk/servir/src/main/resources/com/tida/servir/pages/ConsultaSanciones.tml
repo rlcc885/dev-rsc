@@ -1,0 +1,18 @@
+<html t:type="layout" title="Sistema SERVIR"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"    
+      xmlns:p="tapestry:parameter">
+          
+          
+<div class="box-background-title">
+      <span class="box-title">Consulta de Sancionados</span>
+ </div>
+ 
+  <div class="box">
+      <t:zone t:id="consultaSancionadosZone">
+          <t:form t:id="formularioconsultasancionado" zone="consultaSancionadosZone">
+              
+          </t:form>
+      </t:zone>
+  </div>
+          
+</html>
