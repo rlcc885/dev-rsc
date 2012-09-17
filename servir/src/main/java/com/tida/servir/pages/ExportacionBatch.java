@@ -28,7 +28,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author ale
  */
-public class TransferenciaMasivaTrabajadores  extends GeneralPage {
+public class ExportacionBatch  extends GeneralPage {
     
     private final String STARTPATH = "ArchivosXLS/";
 
