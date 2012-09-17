@@ -72,38 +72,38 @@ public class Sanciones {
         return Boolean.FALSE;
     }
 
-    public static Sancion muestroSanciones(String tipoDocumento, String nroDocumento, Session session, List<String> errores) {
-        Sancion sancion = new Sancion();
-        
-        try {
-            sancion.setApellidos(results.getString(3));
-            sancion.setFinInabilitacion(results.getDate(7));
-            sancion.setInabilitacion(results.getString(6));
-            sancion.setInstitucion(results.getString(4));
-            sancion.setNombres(results.getString(2));
-            sancion.setTipoSancion(results.getString(5));
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Sanciones.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-        return sancion;
-    }
-
-    public static String formatoEnvelope(Sancion sancion) {
-        if(sancion == null)
-            return "Error en el formato de sancion!";
-        
-        String pantalla = null;
-
-        pantalla = "Apellidos: "
-                + sancion.getApellidos() + ". Nombres: "
-                + sancion.getNombres() + ". Institucion: "
-                + sancion.getInstitucion() + ". Tipo de sancion: "
-                + sancion.getTipoSancion() + ". Inhabilitacion: "
-                + sancion.getInabilitacion() + ". Fin de inhabilitacion: "
-                + sancion.getFinInabilitacion();
-
-        return pantalla;
-    }
+//    public static Sancion muestroSanciones(String tipoDocumento, String nroDocumento, Session session, List<String> errores) {
+//        Sancion sancion = new Sancion();
+//        
+//        try {
+//            sancion.setApellidos(results.getString(3));
+//            sancion.setFinInabilitacion(results.getDate(7));
+//            sancion.setInabilitacion(results.getString(6));
+//            sancion.setInstitucion(results.getString(4));
+//            sancion.setNombres(results.getString(2));
+//            sancion.setTipoSancion(results.getString(5));
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Sanciones.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
+//        return sancion;
+//    }
+//
+//    public static String formatoEnvelope(Sancion sancion) {
+//        if(sancion == null)
+//            return "Error en el formato de sancion!";
+//        
+//        String pantalla = null;
+//
+//        pantalla = "Apellidos: "
+//                + sancion.getApellidos() + ". Nombres: "
+//                + sancion.getNombres() + ". Institucion: "
+//                + sancion.getInstitucion() + ". Tipo de sancion: "
+//                + sancion.getTipoSancion() + ". Inhabilitacion: "
+//                + sancion.getInabilitacion() + ". Fin de inhabilitacion: "
+//                + sancion.getFinInabilitacion();
+//
+//        return pantalla;
+//    }
 }

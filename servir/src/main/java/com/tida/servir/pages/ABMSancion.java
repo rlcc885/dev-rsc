@@ -55,6 +55,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private String bamaterno;
+    @Property
+    @Persist
+    private String bentidad;
     
     // inicio de la pagina
     @SetupRender
