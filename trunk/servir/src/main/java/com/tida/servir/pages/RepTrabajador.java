@@ -433,6 +433,9 @@ public class RepTrabajador extends GeneralPage {
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
+        if (_entidadUE != null) {
+            c.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
+        }
         return c.list();
     }
     
