@@ -332,9 +332,17 @@ public class ABMCargos extends GeneralPage {
         }          
         consulta += " ORDER BY(DENOMINACION)";
         Query query = session.createSQLQuery(consulta).addEntity(LkBusquedaCargo.class);
+        
+             nroregistros = Integer.toString(query.list().size());
+   
         return query.list();
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
+
+    
     @Log
     public List<String> getRegimen() {
         return Helpers.getValorTablaAuxiliar("RegimenLaboralContractual", session);

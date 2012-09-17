@@ -353,9 +353,17 @@ public class TrabajadorBaja extends GeneralPage {
             fecha = dateFormat.parse(fechaingresoa);
             criterio.add(Restrictions.le("fechainicio", fecha));
         }
-
+        
+        nroregistros = Integer.toString(criterio.list().size());
+        
         return criterio.list();
     }
+    
+    @Persist
+    @Property
+    private String nroregistros;
+    
+    
     private boolean resetBusquedas = false;
 
     // action de boton seleccionado

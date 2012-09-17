@@ -196,6 +196,12 @@
                             <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="persons.caid" href="#">Baja</a>                            
                         </p:accionCell>
                     </t:grid>
+
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>
+              
                     </div>
 <!--                    </t:form>-->
                 </t:zone>
