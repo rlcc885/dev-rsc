@@ -57,7 +57,7 @@ public final class Tratamiento {
     private List<Legajo> _legajo  = new LinkedList<Legajo>();
     private List<CargoAsignado> _cargoAsignado = new LinkedList<CargoAsignado>();
     private List<Familiar> _familiar = new LinkedList<Familiar>();
-    private List<Titulo> _titulo = new LinkedList<Titulo>();
+//    private List<Titulo> _titulo = new LinkedList<Titulo>();
     private List<Certificacion> _certificacion = new LinkedList<Certificacion>();
     private List<Curso> _curso = new LinkedList<Curso>();
     private List<Ant_Laborales> _antLaborale  = new LinkedList<Ant_Laborales>();
@@ -65,7 +65,7 @@ public final class Tratamiento {
     private List<Publicacion> _producionIntelectual  = new LinkedList<Publicacion>();
     private List<RemuneracionPersonal> _remuneracionPersonal = new LinkedList<RemuneracionPersonal>();
     private List<EvaluacionPersonal> _evaluacionPersonal  = new LinkedList<EvaluacionPersonal>();
-    private List<AusLicPersonal> _ausLicPersonal = new LinkedList<AusLicPersonal>();
+//    private List<AusLicPersonal> _ausLicPersonal = new LinkedList<AusLicPersonal>();
     private List<ConstanciaDocumental> _constanciaDocumentale  = new LinkedList<ConstanciaDocumental>();
 
     //informe de cada archivo xls
@@ -227,9 +227,9 @@ public final class Tratamiento {
         return _antLaborale;
     }
 
-    public List<AusLicPersonal> getAusLicPersonal() {
-        return _ausLicPersonal;
-    }
+//    public List<AusLicPersonal> getAusLicPersonal() {
+//        return _ausLicPersonal;
+//    }
 
     public List<Cargoxunidad> getCargo() {
         return _cargo;
@@ -266,10 +266,10 @@ public final class Tratamiento {
     public List<RemuneracionPersonal> getRemuneracionPersonal() {
         return _remuneracionPersonal;
     }
-
-    public List<Titulo> getTitulo() {
-        return _titulo;
-    }
+//
+//    public List<Titulo> getTitulo() {
+//        return _titulo;
+//    }
 
     public List<Trabajador> getTrabajador() {
         return _trabajador;
@@ -299,9 +299,9 @@ public final class Tratamiento {
         this._antLaborale = _antLaborale;
     }
 
-    public void setAusLicPersonal(List<AusLicPersonal> _ausLicPersonal) {
-        this._ausLicPersonal = _ausLicPersonal;
-    }
+//    public void setAusLicPersonal(List<AusLicPersonal> _ausLicPersonal) {
+//        this._ausLicPersonal = _ausLicPersonal;
+//    }
 
     public void setCargo(List<Cargoxunidad> _cargo) {
         this._cargo = _cargo;
@@ -355,9 +355,9 @@ public final class Tratamiento {
         this._remuneracionPersonal = _remuneracionPersonal;
     }
 
-    public void setTitulo(List<Titulo> _titulo) {
-        this._titulo = _titulo;
-    }
+//    public void setTitulo(List<Titulo> _titulo) {
+//        this._titulo = _titulo;
+//    }
 
     public void setTrabajador(List<Trabajador> _trabajador) {
         this._trabajador = _trabajador;

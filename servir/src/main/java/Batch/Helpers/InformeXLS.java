@@ -2247,45 +2247,45 @@ public class InformeXLS {
         return errores;
     }
 
-    public static List<String> creadorCSVTitulo(List<Titulo> lt, String file, Entidad_BK oi, Session session) {
-        List<String> errores = new LinkedList<String>();
-
-        try {
-            PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            for (Titulo t : lt) {
-                escribir.print(InformeXLS.leoCampo(oi.getCodigoEntidadUE()));
-                escribir.print("|");
-                if(t.getTrabajador() != null)
-//                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(t.getTrabajador().getTipoDocumento()), errores, session));
-                escribir.print("|");
-                if(t.getTrabajador() != null)
-                    escribir.print(InformeXLS.leoCampo(t.getTrabajador().getNroDocumento()));
-                escribir.print("|");
-                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("NivelTitulo", InformeXLS.leoCampo(t.getNivel()), errores, session));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getDenominacion()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getEspecialidad()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getCentro_estudios()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getLugar_emision()));
-                escribir.print("|");
-                escribir.print(InformeXLS.datetoString(t.getFec_emision()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getColegio_profesional()));
-                escribir.print("|");
-                escribir.print(InformeXLS.leoCampo(t.getNum_colegiatura()));
-                escribir.println();
-            }
-            escribir.close();
-
-        } catch (Exception ex) {
-            errores.add(ERROR_GENERANDO_EL_ARCHIVO + " COMPTRA2.csv");
-        }
-
-        return errores;
-    }
+//    public static List<String> creadorCSVTitulo(List<Titulo> lt, String file, Entidad_BK oi, Session session) {
+//        List<String> errores = new LinkedList<String>();
+//
+//        try {
+//            PrintWriter escribir = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+//            for (Titulo t : lt) {
+//                escribir.print(InformeXLS.leoCampo(oi.getCodigoEntidadUE()));
+//                escribir.print("|");
+//                if(t.getTrabajador() != null)
+////                    escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("TipoDocumento", InformeXLS.leoCampo(t.getTrabajador().getTipoDocumento()), errores, session));
+//                escribir.print("|");
+//                if(t.getTrabajador() != null)
+//                    escribir.print(InformeXLS.leoCampo(t.getTrabajador().getNroDocumento()));
+//                escribir.print("|");
+//                escribir.print(CreadorDesdeDB.getCodigoFromValorDatoAuxiliar("NivelTitulo", InformeXLS.leoCampo(t.getNivel()), errores, session));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getDenominacion()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getEspecialidad()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getCentro_estudios()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getLugar_emision()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.datetoString(t.getFec_emision()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getColegio_profesional()));
+//                escribir.print("|");
+//                escribir.print(InformeXLS.leoCampo(t.getNum_colegiatura()));
+//                escribir.println();
+//            }
+//            escribir.close();
+//
+//        } catch (Exception ex) {
+//            errores.add(ERROR_GENERANDO_EL_ARCHIVO + " COMPTRA2.csv");
+//        }
+//
+//        return errores;
+//    }
 
     public static List<String> creadorCSVCertificacion(List<Certificacion> lc, String file, Entidad_BK oi, Session session) {
         List<String> errores = new LinkedList<String>();

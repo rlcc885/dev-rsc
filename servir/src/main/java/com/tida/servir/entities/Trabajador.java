@@ -477,9 +477,9 @@ public class Trabajador implements Serializable // extends Persona
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
     public List<Publicacion> publicaciones = new ArrayList<Publicacion>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-    public List<Titulo> titulos = new ArrayList<Titulo>();
+//    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+//    @NonVisual
+//    public List<Titulo> titulos = new ArrayList<Titulo>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
     public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
@@ -501,9 +501,9 @@ public class Trabajador implements Serializable // extends Persona
         this.cargosAsignados = cargosAsignados;
     }
 
-    public List<Titulo> getTitulos() {
-        return titulos;
-    }
+//    public List<Titulo> getTitulos() {
+//        return titulos;
+//    }
 
     public List<Curso> getCursos() {
         return cursos;
@@ -513,9 +513,9 @@ public class Trabajador implements Serializable // extends Persona
         this.cursos = cursos;
     }
 
-    public void setTitulos(List<Titulo> titulos) {
-        this.titulos = titulos;
-    }
+//    public void setTitulos(List<Titulo> titulos) {
+//        this.titulos = titulos;
+//    }
 
     public List<Publicacion> getPublicaciones() {
         return publicaciones;

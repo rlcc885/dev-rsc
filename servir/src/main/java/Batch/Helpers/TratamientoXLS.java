@@ -275,8 +275,8 @@ public class TratamientoXLS {
         InformeXLS informeTitulo = new InformeXLS();
         List<String> errores = new LinkedList<String>();
         
-        if(myTratamiento.getTipoProceso().equals(TipoProceso.VALIDACION_Y_PROCESAMIENTO))
-            saveLista(myTratamiento.getTitulo(), myTratamiento.getSession());
+//        if(myTratamiento.getTipoProceso().equals(TipoProceso.VALIDACION_Y_PROCESAMIENTO))
+//            saveLista(myTratamiento.getTitulo(), myTratamiento.getSession());
         
         try {
             informeTitulo.creadorXLSTitulo(myTratamiento.getIsTitulo(), myTratamiento.getPath());

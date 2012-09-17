@@ -486,64 +486,64 @@ public class ComparadorEntidades {
      * @param cdestino - El que vino de la base de datos
      * @return - Devuelve una linea de informacion
      */
-    public static LineaInformeTipoNumeroDocumento titulos(Titulo corigen, Titulo cdestino, String numeroDocumento, String tipoDocumento, String codigo_organismo) {
-        LineaInformeTipoNumeroDocumento lit = new LineaInformeTipoNumeroDocumento();
-
-        lit.setCodigoEntidadUE(codigo_organismo);
-        lit.setNumeroDocumento(numeroDocumento);
-        lit.setTipoDocumento(tipoDocumento);
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivel(), cdestino.getNivel()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDenominacion(), cdestino.getDenominacion()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEspecialidad(), cdestino.getEspecialidad()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCentro_estudios(), cdestino.getCentro_estudios()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getLugar_emision(), cdestino.getLugar_emision()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_emision(), cdestino.getFec_emision()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getColegio_profesional(), cdestino.getColegio_profesional()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNum_colegiatura(), cdestino.getNum_colegiatura()));
-        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lit;
-        }
-
-        /*
-         * lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador(),
-         * cdestino.getTrabajador()));
-         * if(lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
-         * return lit; }
-         */
-
-        // Si llego hasta aca es que no hubieron cambios
-        lit.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
-        return lit;
-    }
+//    public static LineaInformeTipoNumeroDocumento titulos(Titulo corigen, Titulo cdestino, String numeroDocumento, String tipoDocumento, String codigo_organismo) {
+//        LineaInformeTipoNumeroDocumento lit = new LineaInformeTipoNumeroDocumento();
+//
+//        lit.setCodigoEntidadUE(codigo_organismo);
+//        lit.setNumeroDocumento(numeroDocumento);
+//        lit.setTipoDocumento(tipoDocumento);
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNivel(), cdestino.getNivel()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getDenominacion(), cdestino.getDenominacion()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getEspecialidad(), cdestino.getEspecialidad()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getCentro_estudios(), cdestino.getCentro_estudios()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getLugar_emision(), cdestino.getLugar_emision()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_emision(), cdestino.getFec_emision()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getColegio_profesional(), cdestino.getColegio_profesional()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getNum_colegiatura(), cdestino.getNum_colegiatura()));
+//        if (lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lit;
+//        }
+//
+//        /*
+//         * lit.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTrabajador(),
+//         * cdestino.getTrabajador()));
+//         * if(lit.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)){
+//         * return lit; }
+//         */
+//
+//        // Si llego hasta aca es que no hubieron cambios
+//        lit.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
+//        return lit;
+//    }
 
     /**
      * Devuelve la linea para poner en el xls certificacion
@@ -905,37 +905,37 @@ public class ComparadorEntidades {
      * @param cdestino - El que vino de la base de datos
      * @return - Devuelve una linea de informacion
      */
-    public static LineaInformeTipoNumeroDocumento auslicpersonal(AusLicPersonal corigen, AusLicPersonal cdestino, String numeroDocumento, String tipoDocumento, String codigo_organismo) {
-        LineaInformeTipoNumeroDocumento lialp = new LineaInformeTipoNumeroDocumento();
-
-        lialp.setCodigoEntidadUE(codigo_organismo);
-        lialp.setNumeroDocumento(numeroDocumento);
-        lialp.setTipoDocumento(tipoDocumento);
-
-        lialp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
-        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lialp;
-        }
-
-        lialp.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_desde(), cdestino.getFec_desde()));
-        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lialp;
-        }
-
-        lialp.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_hasta(), cdestino.getFec_hasta()));
-        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lialp;
-        }
-
-        lialp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getMotivo(), cdestino.getMotivo()));
-        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
-            return lialp;
-        }
-
-        // Si llego hasta aca es que no hubieron cambios
-        lialp.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
-        return lialp;
-    }
+//    public static LineaInformeTipoNumeroDocumento auslicpersonal(AusLicPersonal corigen, AusLicPersonal cdestino, String numeroDocumento, String tipoDocumento, String codigo_organismo) {
+//        LineaInformeTipoNumeroDocumento lialp = new LineaInformeTipoNumeroDocumento();
+//
+//        lialp.setCodigoEntidadUE(codigo_organismo);
+//        lialp.setNumeroDocumento(numeroDocumento);
+//        lialp.setTipoDocumento(tipoDocumento);
+//
+//        lialp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getTipo(), cdestino.getTipo()));
+//        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lialp;
+//        }
+//
+//        lialp.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_desde(), cdestino.getFec_desde()));
+//        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lialp;
+//        }
+//
+//        lialp.setResultado(ComparadorEntidades.comparadorDate(corigen.getFec_hasta(), cdestino.getFec_hasta()));
+//        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lialp;
+//        }
+//
+//        lialp.setResultado(ComparadorEntidades.comparadorDatos(corigen.getMotivo(), cdestino.getMotivo()));
+//        if (lialp.getResultado().equals(ResultadoOperacionCSV.MODIFICADO)) {
+//            return lialp;
+//        }
+//
+//        // Si llego hasta aca es que no hubieron cambios
+//        lialp.setResultado(ResultadoOperacionCSV.SIN_CAMBIO);
+//        return lialp;
+//    }
 
     /**
      * Devuelve la linea para poner en el xls constancia documental
