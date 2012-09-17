@@ -4,7 +4,7 @@
  */
 package com.tida.servir.entities;
 
-import com.sun.istack.internal.NotNull;
+//import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +17,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class SancionRegimenPK implements Serializable {
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "ID_TIPO_SANCION")
     private Long idTipoSancion;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "ID_REG_LABORAL")
     private Long idRegLaboral;
 
