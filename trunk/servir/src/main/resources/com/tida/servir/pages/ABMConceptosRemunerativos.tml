@@ -6,6 +6,14 @@
         Entidad: ${oi.denominacion}
     </div>
           <h2> Conceptos Remunerativos </h2>
+    
+         <div class="box-background-title">
+                <span class="box-title-01">
+                    Lista de Conceptos Remunerativos
+                </span>
+        </div>   
+           <div id="panel-01" class="box">   
+          
     <div t:type="zone" t:id="listaConceptosRemunerativosZone"  class="selectform t-zone">
         <div id = "tabla_conceptoremunerativo" >
             <div class="t-data-grid">
@@ -37,9 +45,17 @@
                             
                     </p:accionesCell>
                 </t:grid>
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>
+              
             </div>
         </div>
     </div> <!-- Lista Conceptos -->
+    
+           </div>
+          
     <t:zone t:id="mensajes">
         <br/>
         <script>
