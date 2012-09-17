@@ -106,6 +106,10 @@
                                 </t:if>
                             </p:accionesCell>
                         </t:grid>
+                        <div class="f-right">
+                           <b>${nroregistros} Registros.</b>
+                        </div>                        
+                    <br/>
                     </div>
                     <p>${errorBorrar}</p>
                 </t:form>

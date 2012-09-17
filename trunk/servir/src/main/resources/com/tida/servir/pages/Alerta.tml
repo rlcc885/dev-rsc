@@ -18,6 +18,9 @@
                                     <a t:type="pagelink" t:page="${eventoservir1.pagina}" t:context="eventoservir1.trabajadorid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
+                        
+                        <div class="f-right"><b>${nrotrabajadoresservir} Registros.</b></div><br/>                        
+
                     </div>
                     <br/><br/>
                     <h2>Datos de Entidades Modificadas</h2>
@@ -31,6 +34,9 @@
                                     <a t:type="pagelink" t:page="AMEntidadUEjecutora" t:context="eventoservir2.entidadid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
+                        
+                        <div class="f-right"><b>${nroeventos} Registros.</b></div><br/>
+
                     </div>
                 </t:form>
             </t:if>
@@ -51,6 +57,9 @@
                                     <a t:type="pagelink" t:page="${eventoentidad.pagina}" t:context="eventoentidad.trabajadorid" href="#">Detalle</a>
                             </p:accionesCell>
                         </t:grid>
+                        
+                        <div class="f-right"><b>${nrotrabajadores} Registros.</b></div><br/>
+
                     </div>                    
                 </t:form>
             </t:if>
@@ -71,6 +80,9 @@
                                     <t:actionlink t:id="editar" zone="listasistemas" context="eventosistemas">OK</t:actionlink>
                             </p:accionesCell>
                         </t:grid>
+                        
+                        <div class="f-right"><b>${nroeventossis} Registros.</b></div><br/>
+
                     </div>                    
                 </t:form>
             </t:if>

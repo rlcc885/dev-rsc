@@ -222,6 +222,11 @@
                             <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="persons.id" href="#">Documentos</a>
                         </p:legajoCell>
                     </t:grid>
+                        
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>                        
 
 <!--                    </t:form>-->
                     </div>

@@ -270,9 +270,12 @@ public class AMUnidadOrganica extends GeneralPage {
             }
         }
         c.addOrder(Order.asc("denominacion"));
-        List<UnidadOrganica> lista = c.list();
-        nroregistros = Integer.toString(lista.size());
-        return lista;
+//        List<UnidadOrganica> lista = c.list();
+//        nroregistros = Integer.toString(lista.size());
+        nroregistros = Integer.toString(c.list().size());
+   
+        return c.list();
+//        return lista;
     }
 
     @Persist

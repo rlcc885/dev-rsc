@@ -865,9 +865,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (bdenoentidad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" +bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion","%"+ bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
+        
         return c.list();
     }
 
+
+    
     // cargar entidades
     @Log
     public List<LkBusquedaEntidad> getListadoEntidades() {
@@ -940,9 +943,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
 //            }
             c.add(Restrictions.eq("essubentidad", true));
         }
+
+        nroregistros = Integer.toString(c.list().size());
+
         return c.list();
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
+    
     // accion de botones
     @Log
     void onSelectedFromBuscarTitular() {
