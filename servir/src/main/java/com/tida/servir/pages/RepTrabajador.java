@@ -507,7 +507,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onActionFromMostrarEntidad() {
-        categoria = "Entidad/Unidad Organica";
+        categoria = "Entidad";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
