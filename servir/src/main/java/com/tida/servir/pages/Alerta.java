@@ -95,8 +95,19 @@ public class Alerta  extends GeneralPage {
             mostrarse=false;
         }        
     }
-    
- 
+@Property    
+@Persist
+private String nroeventos;
+@Property    
+@Persist
+private String nrotrabajadoresservir;
+@Property    
+@Persist
+private String nrotrabajadores;
+@Property    
+@Persist
+private String nroeventossis;
+
     @Log
     public List<BusquedaEvento> getEventos() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
@@ -109,6 +120,7 @@ public class Alerta  extends GeneralPage {
         for (int i = 0; i < result.size(); i++) {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
+        nroeventos = Integer.toString(result.size());
         return result;
     }
     
@@ -124,6 +136,7 @@ public class Alerta  extends GeneralPage {
         for (int i = 0; i < result.size(); i++) {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
+        nrotrabajadoresservir = Integer.toString(result.size());
         return result;
     }
     
@@ -139,6 +152,7 @@ public class Alerta  extends GeneralPage {
         for (int i = 0; i < result.size(); i++) {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
+        nrotrabajadores = Integer.toString(result.size());
         return result;
     }    
     
@@ -154,6 +168,7 @@ public class Alerta  extends GeneralPage {
         for (int i = 0; i < result.size(); i++) {
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
+        nroeventossis = Integer.toString(result.size());
         return result;
     }
    
