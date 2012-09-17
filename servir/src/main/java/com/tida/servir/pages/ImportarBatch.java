@@ -5,11 +5,16 @@
 
 package com.tida.servir.pages;
 
+import Batch.Helpers.Unzip;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import helpers.Encriptacion;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import org.apache.tapestry5.ComponentResources;
@@ -64,8 +69,6 @@ public class ImportarBatch extends GeneralPage{
     @Property
     @Persist
     private UploadedFile file;
-    @InjectComponent
-    private Envelope envelope;
     @Inject
     private ApplicationGlobals globals;
     @Component(id = "primerform")
@@ -74,6 +77,11 @@ public class ImportarBatch extends GeneralPage{
     @Property
     @Persist
     private boolean mostrar;
+    @Property
+    @Persist
+    private boolean respuestaOk;
+    private final String STARTPATH = "ArchivosXLS/";
+    private List<String> errores = new LinkedList<String>();
     
     @Log
     @SetupRender
@@ -105,30 +113,38 @@ public class ImportarBatch extends GeneralPage{
         
     @CommitAfter
     Object onSuccessFromPrimerform() {
-        if(elemento==1){            
+        if(elemento==4){            
             if (file == null) {
                 primerform.recordError("Tiene que seleccionar archivo a subir.");
                 return this;
             }
-            mostrar=true;
+//            mostrar=true;
         }else if(elemento==2){
             file=null;            
         }else if(elemento==3){
             file=null;
-        }else if(elemento==4){
+        }else if(elemento==1){
+            respuestaOk=true;
             File copied;
+            Date date = new Date();
     //        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-            String path="C:/";
-            String nombreArchivo = Encriptacion.encriptaEnMD5( String.valueOf(entidadUE.getId()) ) + file.getFileName().substring(file.getFileName().length() - 4);
-            File nuevo = new File(path + nombreArchivo);
+            String nombreArchivo = "";
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
+            nombreArchivo = "ArchivosTXT - "+sdf.format(date);
+            String path = STARTPATH + "Importacion/"+nombreArchivo+"/";
+            
+            
             copied = new File(path);
             if (!copied.exists()) {
                 copied.mkdirs();
             }
+            File nuevo = new File(path+file.getFileName());
             file.write(nuevo);
+            
+            errores = Unzip.deZippe(path);
+            
             System.out.println("priiiiii"+nuevo.getPath()+"/"+nuevo.getName());
             //descromprimir(nuevo.getPath()+"/"+nuevo.getName());
-            envelope.setContents("Archivo Importado");
             
         }else if(elemento==5){
             mostrar=false;

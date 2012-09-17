@@ -185,8 +185,10 @@ public class DatosDeCargoEditor {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
-                    registrar(false);
-                    
+                    String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+//                    registrar(false);
                     return datosDeCargoZone.getBody();
                 }
                 else{
@@ -204,7 +206,10 @@ public class DatosDeCargoEditor {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
-                    registrar(false);
+                    String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
+                    Query query = session.createSQLQuery(hql);
+                    int rowCount = query.executeUpdate();
+//                    registrar(false);
                     return datosDeCargoZone.getBody();
                 }
                 else{
@@ -221,28 +226,9 @@ public class DatosDeCargoEditor {
         return datosDeCargoZone.getBody();
     }
     
+    @CommitAfter
     void registrar(Boolean e){
-    
-       if(!e){         
-         if(getListadoUsuario().size()>0){
-//            Usuario usuarionuevo=new Usuario();
-//             System.out.println("aquiiiiiii"+getListadoUsuario().get(0).getLogin()+"-"+getListadoUsuario().get(0).getId());
-//            usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
-//            System.out.println("aquiiiiiii"+usuarionuevo);
-//            int ui=2;
-//            usuarionuevo.setIntentos_fallidos(2L);
-//            usuarionuevo.setTelefono("cccc");            
-//            usuarionuevo.setEstado(0);
-//            session.saveOrUpdate(usuarionuevo);
-            session.flush();
-             String hql = "update RSC_USUARIO set ESTADO=0 where login='" + getListadoUsuario().get(0).getLogin()  + "'";
-            Query query = session.createSQLQuery(hql);
-            Query query2 = session.createSQLQuery("commit");
-            int rowCount = query.executeUpdate();
-            int row=query2.executeUpdate();
-            session.flush();
-         }
-       }
+        
        actual_asignado.setMotivo_cese(valmotivo);
        actual_asignado.setFec_inicio(fecha_inicio);
        actual_asignado.setFec_fin(fecha_fin);
@@ -261,12 +247,27 @@ public class DatosDeCargoEditor {
        
     }
     
-    @Log
-    public List<UsuarioTrabajador> getListadoUsuario() {
-        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
-        query.setParameter("login", actual_asignado.getTrabajador().getNroDocumento());
-        return query.list();
-    }
+//    @CommitAfter
+//    Object bajausuario(Boolean e){            
+//       if(!e){         
+//         if(getListadoUsuario().size()>0){
+//            session.flush();
+//            String hql = "update RSC_USUARIO set ESTADO=0 where login='" + getListadoUsuario().get(0).getLogin()  + "'";
+//            Query query = session.createSQLQuery(hql);
+//            int rowCount = query.executeUpdate();
+//            session.flush();
+//         }
+//       }
+//       return null;
+//    }
+    
+//    @Log
+//    public List<UsuarioTrabajador> getListadoUsuario() {
+//        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
+//        query.setParameter("login", actual_asignado.getTrabajador().getNroDocumento());
+//        session.flush();
+//        return query.list();
+//    }
     
 
 }
