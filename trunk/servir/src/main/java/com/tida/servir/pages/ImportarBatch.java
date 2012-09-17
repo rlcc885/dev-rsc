@@ -82,7 +82,7 @@ public class ImportarBatch extends GeneralPage{
     private boolean respuestaOk;
     private final String STARTPATH = "ArchivosXLS/";
     private List<String> errores = new LinkedList<String>();
-    
+    private final String ARCHIVO_UPLOAD_DIFFERENTE_ZIP = "Por favor necesita de ingresar un archivo que tiene un extension .zip o .ZIP!";
     @Log
     @SetupRender
     private void inicio() {
@@ -124,59 +124,44 @@ public class ImportarBatch extends GeneralPage{
         }else if(elemento==3){
             file=null;
         }else if(elemento==1){
-            respuestaOk=true;
-            File copied;
-            Date date = new Date();
-    //        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
-            String nombreArchivo = "";
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
-            nombreArchivo = "ArchivosTXT - "+sdf.format(date);
-            String path = STARTPATH + "Importacion/"+nombreArchivo+"/";
-            
-            
-            copied = new File(path);
-            if (!copied.exists()) {
-                copied.mkdirs();
+            if (file.getFileName().endsWith("zip") || (file.getFileName().endsWith("ZIP"))) {
+                respuestaOk=true;
+                File copied;
+                Date date = new Date();
+        //        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
+                String nombreArchivo = "";
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
+                nombreArchivo = "ArchivosTXT - "+sdf.format(date);
+                String path = STARTPATH + "Importacion/"+nombreArchivo+"/";
+
+
+                copied = new File(path);
+                if (!copied.exists()) {
+                    copied.mkdirs();
+                }
+                File nuevo = new File(path+file.getFileName());
+                file.write(nuevo);
+
+                errores = Unzip.deZippe(path);
+
+                System.out.println("priiiiii"+nuevo.getPath()+"/"+nuevo.getName());
+                //descromprimir(nuevo.getPath()+"/"+nuevo.getName());
+            }else {
+                errores.add(ARCHIVO_UPLOAD_DIFFERENTE_ZIP);
             }
-            File nuevo = new File(path+file.getFileName());
-            file.write(nuevo);
+            if (errores.size() > 0) { // hay errores
+                for (String error : errores) {
+                    primerform.recordError(error);
+                }
+            }
             
-            errores = Unzip.deZippe(path);
-            
-            System.out.println("priiiiii"+nuevo.getPath()+"/"+nuevo.getName());
-            //descromprimir(nuevo.getPath()+"/"+nuevo.getName());
             
         }else if(elemento==5){
             mostrar=false;
         }       
 
         return this;
-    }
-    
-   void descromprimir(String path){
-       final int BUFFER = 2048;
-       try {
-         BufferedOutputStream dest = null;
-         FileInputStream fis = new FileInputStream(path);
-         ZipInputStream zis = new ZipInputStream(new BufferedInputStream(fis));
-         ZipEntry entry;
-         while((entry = zis.getNextEntry()) != null) {
-            System.out.println("Extracting: " +entry);
-            int count;
-            byte data[] = new byte[BUFFER];
-            // write the files to the disk
-            FileOutputStream fos = new 	      FileOutputStream(entry.getName());
-            dest = new               BufferedOutputStream(fos, BUFFER);
-            while ((count = zis.read(data, 0, BUFFER))               != -1) {
-               dest.write(data, 0, count);
-            }
-            dest.flush();
-            dest.close();
-         }
-         zis.close();
-      } catch(Exception e) {
-         e.printStackTrace();
-      }
-   }
+    }    
+   
 
 }
