@@ -45,11 +45,7 @@ public class CargoAsignado implements Serializable {
     @Validate("required")
 //  @OneToMany(cascade=CascadeType.ALL)
     private List<EvaluacionPersonal> evaluacionesPersonales;
-    
-    @OneToMany(cascade=CascadeType.ALL)
-    @Validate("required")
-//   @OneToMany(cascade=CascadeType.ALL)
-    private List<AusLicPersonal> ausLicPersonales;
+
 
     @ManyToOne
     @Validate("required")
@@ -80,15 +76,7 @@ public class CargoAsignado implements Serializable {
         this.tipovinculo = tipovinculo;
     }
 
-        public List<AusLicPersonal> getAusLicPersonales() {
-        return ausLicPersonales;
-    }
-
-    public void setAusLicPersonales(List<AusLicPersonal> ausLicPersonales) {
-        this.ausLicPersonales = ausLicPersonales;
-    }
-
-        public Cargoxunidad getCargoxunidad() {
+    public Cargoxunidad getCargoxunidad() {
         return cargoxunidad;
     }
 

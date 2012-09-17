@@ -4,7 +4,7 @@
  */
 package Batch.Helpers;
 
-import com.tida.servir.entities.AusLicPersonal;
+//import com.tida.servir.entities.AusLicPersonal;
 import com.tida.servir.entities.Cargoxunidad;
 import com.tida.servir.entities.CargoAsignado;
 import com.tida.servir.entities.ConceptoRemunerativo;
@@ -431,22 +431,22 @@ public class CreadorDesdeDB {
             return null;
         }
         
-        for (AusLicPersonal alp : ca.getAusLicPersonales()) {
-            AusLicPersonalCSV alpcsv = new AusLicPersonalCSV();
-
-            if(ca.getCargoxunidad() != null)
-                alpcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
-            else
-                alpcsv.setCodigo_cargo("");
-            alpcsv.setCodigEntidadUE(eue.getCodigoEntidadUE());
-            alpcsv.setFecha_desde(alp.getFec_desde());
-            alpcsv.setFecha_hasta(alp.getFec_hasta());
-            alpcsv.setMotivo(alp.getMotivo());
-            alpcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
-            alpcsv.setTipo(alp.getTipo());
-//            alpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
-            lalpcsv.add(alpcsv);
-        }
+//        for (AusLicPersonal alp : ca.getAusLicPersonales()) {
+//            AusLicPersonalCSV alpcsv = new AusLicPersonalCSV();
+//
+//            if(ca.getCargoxunidad() != null)
+//                alpcsv.setCodigo_cargo(ca.getCargoxunidad().getCod_cargo());
+//            else
+//                alpcsv.setCodigo_cargo("");
+//            alpcsv.setCodigEntidadUE(eue.getCodigoEntidadUE());
+//            alpcsv.setFecha_desde(alp.getFec_desde());
+//            alpcsv.setFecha_hasta(alp.getFec_hasta());
+//            alpcsv.setMotivo(alp.getMotivo());
+//            alpcsv.setNro_documento(ca.getTrabajador().getNroDocumento());
+//            alpcsv.setTipo(alp.getTipo());
+////            alpcsv.setTipo_documento(ca.getTrabajador().getTipoDocumento());
+//            lalpcsv.add(alpcsv);
+//        }
 
         return lalpcsv;
     }
