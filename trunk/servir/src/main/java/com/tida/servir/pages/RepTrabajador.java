@@ -279,11 +279,16 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private LkBusquedaUnidad unidadRep;
     
+    @Property
+    @Persist
+    private boolean bEntidad;
+    
     @Log
     void setupRender() {
         vselect = true;
 
         mostrar = false;
+        bEntidad = true;
         categoria = "";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
@@ -433,7 +438,7 @@ public class RepTrabajador extends GeneralPage {
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-        if (_entidadUE != null) {
+        if (_entidadUE != null && usu.getRolid() != 3) {
             c.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
         }
         return c.list();
@@ -511,6 +516,8 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onActionFromMostrarEntidad() {
         categoria = "Entidad";
+        if (_entidadUE != null) entidadTx = _entidadUE.getDenominacion();
+        if (usu.getRolid() == 3) bEntidad = false;
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
@@ -546,7 +553,7 @@ public class RepTrabajador extends GeneralPage {
         if (dato != null) {
             nivelo = dato;
         }
-        return new MultiZoneUpdate("entidadZone", entidadZone.getBody());
+        return entidadZone.getClientId();//new MultiZoneUpdate("entidadZone", entidadZone.getBody());
     }
     
     @Log
