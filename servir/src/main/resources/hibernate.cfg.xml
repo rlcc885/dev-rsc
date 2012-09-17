@@ -15,7 +15,10 @@
 	</session-factory>
 </hibernate-configuration>
 -->
+
+
 <hibernate-configuration>
+    
   <session-factory>
     <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
     <property name="hibernate.default_schema">rnsc</property>
