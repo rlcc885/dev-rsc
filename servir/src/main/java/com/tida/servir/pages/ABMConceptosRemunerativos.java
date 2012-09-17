@@ -135,8 +135,16 @@ public class ABMConceptosRemunerativos extends GeneralPage {
         c = session.createCriteria(LkBusquedaConRemunerativo.class);
         c.add(Restrictions.eq("entidad", _oi.getId()));
         c.addOrder(Order.asc("descripcion"));
+
+        nroregistros = Integer.toString(c.list().size());
+                
         return c.list();
     }
+    
+    @Persist
+    @Property
+    private String nroregistros;
+    
 
     // accion de boton seleccionado    
     void onSelectedFromSave() {
