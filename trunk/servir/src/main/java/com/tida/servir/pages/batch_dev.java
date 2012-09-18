@@ -5,12 +5,7 @@
 package com.tida.servir.pages;
 
 
-import Batch.Helpers.CreadorDesdeCsv;
-import Batch.Helpers.LineasArchivos;
-import Batch.Helpers.OrigenArchivos;
-import Batch.Helpers.TipoProceso;
-import Batch.Helpers.TratamientoXLS;
-import Batch.Helpers.Unzip;
+import Batch.Helpers.*;
 import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad;
@@ -183,7 +178,7 @@ public class batch_dev  extends GeneralPage {
     
     
     @Persist
-    private Tratamiento myTratamiento;
+    private ValidacionXLS myTratamiento;
 
 
     private boolean continuar;
@@ -223,7 +218,7 @@ public class batch_dev  extends GeneralPage {
         }
         
         //tratamiento
-        myTratamiento.setTipoProceso(tipoProceso);
+//        myTratamiento.setTipoProceso(tipoProceso);
 //        errores = myTratamiento.generacionListDesdeCSV();
         
         if (errores.size() > 0 ) { // hay errores
@@ -238,7 +233,7 @@ public class batch_dev  extends GeneralPage {
 
         System.out.println("--------------------GENERACION XLS----------------------");
 
-        errores = TratamientoXLS.generarXLS(myTratamiento);
+//        errores = TratamientoXLS.generarXLS(myTratamiento);
         
         if (errores.size() > 0 ) { // hay errores
             for(String error: errores){
@@ -267,31 +262,31 @@ public class batch_dev  extends GeneralPage {
         
         System.out.println("-------------------------- Etapa Unzip -------------");
         
-            if(file.getFileName().endsWith("zip") || (file.getFileName().endsWith("ZIP"))){
-                Date date = new Date();
-                int aleatorio = (int) (Math.random() * 1000 + 1);
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-                lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
-                paraDescargar = lugarArchivo + nombreArchivo + "XLS.zip";
-                String archivoXLS = lugarArchivo + file.getFileName();
-                copied = new File(lugarArchivo);
-                if (!copied.exists()) {
-                    copied.mkdirs();
-                }
-                
-                File nuevo = new File(archivoXLS);
-                file.write(nuevo);
+        if(file.getFileName().endsWith("zip") || (file.getFileName().endsWith("ZIP"))){
+            Date date = new Date();
+            int aleatorio = (int) (Math.random() * 1000 + 1);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
+            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
+            paraDescargar = lugarArchivo + nombreArchivo + "XLS.zip";
+            String archivoXLS = lugarArchivo + file.getFileName();
+            copied = new File(lugarArchivo);
+            if (!copied.exists()) {
+                copied.mkdirs();
+            }
 
-            }else{
-                errores.add(ARCHIVO_UPLOAD_DIFFERENTE_ZIP);
+            File nuevo = new File(archivoXLS);
+            file.write(nuevo);
+
+        }else{
+            errores.add(ARCHIVO_UPLOAD_DIFFERENTE_ZIP);
+        }
+
+        if (errores.size() > 0 ) { // hay errores
+            for(String error: errores){
+                formularioprocesobatch.recordError(error);
             }
-            
-            if (errores.size() > 0 ) { // hay errores
-                for(String error: errores){
-                    formularioprocesobatch.recordError(error);
-                }
-            }
+        }
         
         //unzip el archivo
         errores = Unzip.deZippe(lugarArchivo);
@@ -301,20 +296,20 @@ public class batch_dev  extends GeneralPage {
             }
             return this;
         }
-       
+        
         System.out.println("-------------------------- Etapa Inicio -------------");
         
-//        try {
-////            myTratamiento = new Tratamiento(lugarArchivo, origenArchivos,  session, errores, tipoProceso, _usuario);
-//        } catch (IOException ex) {
-//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-//            formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
-//            return this;
-//        } catch (ParseException ex) {
-//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
-//            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades / U.Ejecutoras.");
-//            return this;
-//        }
+        try {
+            myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario);
+        } catch (IOException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+            formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
+            return this;
+        } catch (ParseException ex) {
+            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+            formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades / U.Ejecutoras.");
+            return this;
+        }
         
         //verificacion tipo usuario y carga massiva
 //        if(!_usuario.getTipo_usuario().equals(Usuario.ADMINSISTEMA)){
@@ -347,9 +342,9 @@ public class batch_dev  extends GeneralPage {
         */
 
         lla = myTratamiento.getCantLineasArchivos(errores);
-
+        
         if (errores.size() > 0 ) { // hay errores
-            formularioprocesobatch.recordError("Error procesando csv.");
+            formularioprocesobatch.recordError("Error procesando XLS.");
             for(String error: errores){
                 formularioprocesobatch.recordError(error);
             }
