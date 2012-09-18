@@ -219,6 +219,7 @@ public class ABMUsuario extends GeneralPage {
         } else {
             bseleccionaEntidadUsuario = true;
         }
+        noEditaLoginUsuario=false;
     }
 
     @Log
@@ -550,9 +551,11 @@ public class ABMUsuario extends GeneralPage {
         if (enviacorreo) {
             if (SMTPConfig.sendMail(subject, body, correo, ca)) {
                 System.out.println("Envío Correcto");
-            } else {
-                Logger logger = new Logger();
-                logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuariotrabajadoredit.getEntidadid(), usuario.getTrabajador().getId(), loggedUser.getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+            } else {                
+                if(noEditaLoginUsuario){
+                    Logger logger = new Logger();
+                    logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, usuariotrabajadoredit.getEntidadid(), usuario.getTrabajador().getId(), loggedUser.getId(), Logger.CORREO_FAIL_RESET_PASSWORD, 0);
+                }
             }
         }
         usuario.setEntidad(entidadUsuario);
