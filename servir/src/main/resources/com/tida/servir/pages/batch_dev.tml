@@ -58,7 +58,7 @@
                 <div id = "tamanosArchivos" class = "informacion">
                     <ul>
                         <li t:type="loop" source="lla" value="la">
-                            Nombre de archivo: ${la.archivo} - Nro. Líneas: ${la.lineas}
+                            <b>Nombre de archivo:</b> ${la.archivo} <b>- Nro. Líneas: </b> ${la.lineas}
                         </li>
                     </ul>
                 </div>
@@ -77,10 +77,9 @@
                         model="tiposProceso"
                          value="tipoProceso" t:validate="required"/>
                     </div>
-                    <div class="clear f-wrap">
+                    <br/>
+                    <div class="clear f-wrap">                        
                         <input t:id="continuar" t:type="submit" value="Continuar" class="button f-right" onclick="extraStep();"/>
-                    </div>
-                    <div class="clear f-wrap">
                         <input t:id="cancelar" t:type="submit" value="Cancelar" class="button f-right"/>
                     </div>
                 </div>
