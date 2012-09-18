@@ -4,10 +4,12 @@
 <!--     <h2> Selección de Entidad /U. Ejecutora </h2>-->
      <div class="box-background-title">
         <span class="box-title-01">
-            Buscar ${mensaje}
+            Registro de Sanción
         </span>
     </div>
     <div id="panel-01" class="box">
+        <fieldset>
+            <legend>Datos del Sancionado</legend>
         <t:zone t:id="busquedaZone">
             <form t:type="form" t:id="formbusqueda" t:zone="busquedaZone">
                 <div class="f-wrap">
@@ -27,7 +29,7 @@
                     </div>
                 </div>
                 <div class="f-wrap">
-                    <div class="f-left">
+                    <div class="f-left" style="position:relative; top:10px; left:-10px;">
                         <label>Buscar Trabajador</label>
                     </div>
                     <div class="f-left" style="position:relative; top:14px; left:-10px;">
@@ -57,10 +59,37 @@
                         <label>* Apellido Materno</label>
                         <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30"/>
                     </div>
-                </div>             
+                </div>
+                <br/>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>* Regimen Laboral/Contractual</label>
+                        <input t:type="Select" t:id="regimen_laboral"                                
+                               t:value="bregimen" model="beanregimenlaboral" t:zone="busquedaZone" />
+                    </div>
+                    <div class="f-left">
+                        <label>Puesto/Cargo</label>
+                        <input t:type="TextField" t:id="cargo_puesto" value="bpuesto" size="60"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                   <div class="f-left" style="width: 200px; height: 170px;">
+                        <fieldset>
+                        <legend>Tiempo de Servicios</legend>
+                            <div class="f-left">
+                                <label>Dias</label>
+                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="10" t:disabled="true"/>
+                            </div>
+                        </fieldset>
+                   </div>
+                </div>
+                <div class="f-left">
+                    <label>Fuera del Pais</label>
+                    <input t:type="Checkbox" t:id="pais" t:value="valfuera" t:disabled="${vdetalle}"/>
+                </div>
             </form>
         </t:zone>        
-    
+       </fieldset>
 
 
     <t:zone t:id="listadoZone">
