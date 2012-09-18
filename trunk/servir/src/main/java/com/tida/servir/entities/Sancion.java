@@ -233,6 +233,8 @@ public class Sancion implements Serializable {
     private DatoAuxiliar tipo_documentonot;
     @ManyToOne
     private DatoAuxiliar tipo_documentosan;
+    
+    @JoinColumn(name = "TIPO_SANCION_ID", referencedColumnName = "ID_TIPO_sANCION")
     @ManyToOne
     private TipoSancion tipo_sancion;
     @ManyToOne

@@ -417,10 +417,11 @@ public class ADMTipoSancion
     public boolean geteliminarSN()
     {
         
-        Criteria c1 = session.createCriteria(Sancion2.class);
-        c1.add(Restrictions.eq("tipoSancion", tipsancion));
+        Criteria c1 = session.createCriteria(Sancion.class);
+        c1.add(Restrictions.eq("tipo_sancion", tipsancion));
 
         if (c1.list().isEmpty()){
+            
           c1 = session.createCriteria(SancionRegimen.class);
           c1.add(Restrictions.eq("tipoSancion", tipsancion));
                 if (c1.list().isEmpty()){
