@@ -14,8 +14,8 @@
             Seleccione la Categoría:&nbsp;
             <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;</t:if>
             <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Usuario</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Nivel de Gobierno/Sector/Organización del Estado</a></t:if>
+            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidado</a></t:if>
         </fieldset>
     </div>
     <div class="organismo_titulo" t:type="zone" t:id="categoriaZone" update="show">
@@ -23,7 +23,7 @@
     </div>
     
     <div t:type="zone" t:id="tipoReporteZone" update="show">
-        <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
+        <t:form t:id="tipoReporteForm" zone="tipoReporteZone">
             <fieldset>
                 Reporte: &nbsp;
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
@@ -33,45 +33,57 @@
                     PDF <t:radio t:id="pdf" value="pdf"/>
                 </t:radiogroup>
             </fieldset>
+        </t:form>
         <t:if test="generarDisabled">     
             <fieldset>
                 <div>
                     <t:if test="mostrarFiltrosTrabajador" >
                         <legend> Categoría: Trabajador </legend><br />
-                        <div class="f-wrap">                             
-                            <t:zone t:id="trabajadorZone" t:update="show">
-                                <div class="f-left">
-                                    Trabajador: &nbsp;
-                                    <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
-                                    <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
-                                </div>
-                            </t:zone>
+                        <div class="f-wrap">
+                            <t:form t:id="trabajadorForm" zone="tipoReporteZone">
+                                <t:zone t:id="trabajadorZone" t:update="show">
+                                    <div class="f-left">
+                                        <t:if test="visualEntidad">
+                                            Entidad/Sub Entidad: &nbsp;
+                                            <input t:type="TextField" t:id="entidadTrabajador" t:style="width:600px;" t:value="entidadTrabajador" t:readonly="readonly" /> 
+                                            <input t:type="submit" t:id="buscarEntidadTrabajador" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
+                                            <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar"/>
+                                            <br /><br />
+                                        </t:if>
+                                        Trabajador: &nbsp;
+                                        <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
+                                        <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
+                                    </div>
+                                </t:zone>
+                            </t:form>
                         </div>
                     </t:if>
                 </div>
                 
                 <div>
                     <t:if test="mostrarFiltrosEntidad" >
-                        <legend> Categoría: Entidad </legend><br />
-                        <div class="f-wrap">                             
-                            <t:zone t:id="entidadZone" t:update="show">
-                                <div class="f-left">
-                                    Entidad/Sub Entidad: &nbsp;
-                                    <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
-                                    <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
-                                    <br /><br />Nivel Organizacional:&nbsp;
-                                    <input t:type="select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:entidadZoneId"/>
-                                    &nbsp; Unidad Orgánica: &nbsp;
-                                    <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:entidadZoneId"/> 
-                                </div>
-                            </t:zone>
-                        </div>
+                        <t:form t:id="entidadForm" zone="tipoReporteZone">
+                            <legend> Categoría: Entidad </legend><br />
+                            <div class="f-wrap">                             
+                                <t:zone t:id="entidadZone" t:update="show">
+                                    <div class="f-left">
+                                        Entidad/Sub Entidad: &nbsp;
+                                        <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
+                                        <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
+                                        <br /><br />Nivel Organizacional:&nbsp;
+                                        <input t:type="select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:entidadZoneId"/>
+                                        &nbsp; Unidad Orgánica: &nbsp;
+                                        <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:entidadZoneId"/> 
+                                    </div>
+                                </t:zone>
+                            </div>
+                        </t:form>
                     </t:if>
                 </div>
                 
                 <div>
                     <t:if test="mostrarFiltrosUsuario" >
-                        <legend> Categoría: Usuario </legend><br />
+                        <legend> Categoría: Sistema </legend><br />
                         <div class="f-wrap">                             
                             <t:zone t:id="usuarioZone" t:update="show">
                                 <div class="f-left">
@@ -86,30 +98,50 @@
                 
                 <div>
                     <t:if test="mostrarFiltrosGobierno">
-                        <legend> Categoría: Nivel de Gobierno/Sector/Organización del Estado </legend><br />
+                        <legend> Categoría: Consolidado </legend><br />
                         <div class="f-wrap">    
                             <t:zone t:id="gobiernoZone" id="gobiernoZone" t:update="show">
                                 <div class="f-left">
-                                    Nivel de Gobierno: &nbsp;
-                                    <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                    <t:if test="organizacionBool">
-                                        &nbsp; Organización Estado: &nbsp;
-                                        <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                    </t:if>
-                                    <t:if test="sectorBool">
-                                        &nbsp; Sector: &nbsp;
-                                        <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" /><br />
-                                    </t:if>
+                                    <t:form t:id="gobierForm" zone="gobiernoZone">
+                                        Nivel de Gobierno: &nbsp;
+                                        <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                        <t:if test="organizacionBool">
+                                            &nbsp; Organización Estado: &nbsp;
+                                            <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                        </t:if>
+                                        <t:if test="sectorBool">
+                                            <br /><br />
+                                            Sector: &nbsp;
+                                            <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                        </t:if>
+                                        <t:if test="organoBool">
+                                            &nbsp; Tipo Organismo: &nbsp;
+                                            <input t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo" model="TipoOrganismo" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                        </t:if>
+                                    </t:form>
+                                    <t:form t:id="gobiernoForm" zone="gobiernoZone">
+                                        <br /><br />
+                                        Es Sub-Entidad: &nbsp;
+                                        <input t:type="Checkbox" t:id="sessubentidad" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:value="bessubentidad2" />
+                                        <t:if test="bessubentidad">
+                                            &nbsp; Tipo Sub-Entidad:&nbsp;
+                                            <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="gobiernoZone" t:blankOption="ALWAYS" />
+                                            <br /><br />
+                                            &nbsp; Sub-Entidad:&nbsp;
+                                            <input t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;" model="SubEntidades" t:blankOption="NEVER" t:zone="gobiernoZone"/>
+                                        </t:if>
+                                    </t:form>
                                 </div>
                             </t:zone>
                         </div>
                     </t:if>
                 </div>
                 
-                <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank">Generar Reporte</a>
+                <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
+                    <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank">Generar Reporte</a>
+                </t:form>
             </fieldset>
         </t:if>
-        </t:form>
     </div>
 
     <script type="text/javascript">
@@ -130,21 +162,23 @@
     <div id="modal" >
         <t:zone t:id="busZone" t:update="show" >
             <t:if test="mostrarFiltrosTrabajador" >
-                <h1>Selección de Trabajador</h1>
-                <div class="pane">
-                    <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                Nombre completo: 
-                                <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                <t:if test="mostrarTrabajadorS">
+                    <h1>Selección de Trabajador</h1>
+                    <div class="pane">
+                        <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    Nombre completo: 
+                                    <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                                </div>
+                                <div class="actions f-right">
+                                    <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                    <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                                </div>
                             </div>
-                            <div class="actions f-right">
-                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
-                                <input t:type="Submit" t:id="cancelFormFindTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                </t:if>
             </t:if>
             <t:if test="mostrarFiltrosEntidad" >
                 <h1>Selección de Entidad/Sub Entidad</h1>
@@ -175,6 +209,23 @@
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
                                 <input t:type="Submit" t:id="cancelFormFindUsuario" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t:if>
+            <t:if test="mostrarEntidadTrabajador" >
+                <h1>Selección de Entidad/Sub Entidad</h1>
+                <div class="pane">
+                    <form t:type="form" t:id="formFindEntidadTrabajador" t:zone ="busZone">
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                Denominación: 
+                                <input t:type="TextField" t:id="entidad_apes" t:value="nombreEntidadTrabajador" style="width: 300px;"/> 
+                            </div>
+                            <div class="actions f-right">
+                                <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                                <input t:type="Submit" t:id="cancelFormFindEntidadTrabajador" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
                             </div>
                         </div>
                     </form>
@@ -227,6 +278,25 @@
                         </t:parameter>
                         <p:accionesCell> 
                             <t:actionlink t:id="seleccionaUsuario" zone="usuaZone" context="u" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>
+                </t:if>
+            </t:zone>
+            <t:zone t:id="entiTraZone" t:update="show">
+                <t:if test="mostrar">
+                    <t:grid source="entidades" 
+                    rowsPerPage="10" 
+                    pagerPosition="bottom"
+                    row="listaentidad" 
+                    exclude="id,nivelgobierno,departamento,cue_entidad,sigla,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
+                    reorder="ruc,denominacion,acciones"
+                    inPlace="true" 
+                    t:add="Acciones">
+                        <t:parameter name="empty">
+                            <div class="no-info">No se encontraron coincidencias</div>
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaEntidadTrabajador" zone="entiTraZone" context="listaentidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
                         </p:accionesCell>
                     </t:grid>
                 </t:if>
