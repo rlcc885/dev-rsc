@@ -2,6 +2,7 @@ package com.tida.servir.components;
 
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
+import helpers.Logger;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -190,6 +191,7 @@ public class RemuneracionesPersonalesEditor {
         remuneracion.setCargoasignado_id(cargoAsignado);
         remuneracion.setConceptoremunerativo(conceptoseleccionado);
         session.saveOrUpdate(remuneracion);
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(remuneracion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_REMUNERACION_PERSONAL);    
         envelope.setContents(helpers.Constantes.REMUNERACION_EXITO);
         resetRegistro();
         return new MultiZoneUpdate("mensajesCRZone", mensajesCRZone.getBody())
@@ -210,6 +212,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     @CommitAfter
     Object onActionFromEliminar(RemuneracionPersonal remu) {
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(remu.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_REMUNERACION_PERSONAL);
         session.delete(remu);
         resetRegistro();
         accesos();

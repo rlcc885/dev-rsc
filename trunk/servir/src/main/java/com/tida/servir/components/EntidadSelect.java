@@ -7,8 +7,10 @@ package com.tida.servir.components;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.LkBusquedaEntidad;
+import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import java.util.List;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -49,6 +51,9 @@ public class EntidadSelect {
     @Property
     @SessionState
     private Entidad entidad;
+    @Property
+    @SessionState
+    private Usuario _usuario;
     @Property
     @Persist
     private DatoAuxiliar snivelGobierno;
@@ -122,10 +127,16 @@ public class EntidadSelect {
     @Property
     @Persist
     private LkBusquedaEntidad entidadPrueba;
-    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SELECCION_ENTIDAD);
+        return null;
+    }
     //Para inicializar valores
     @Log
     void setupRender() {
+        logueo();
         borganizacionestado = false;
         bsectorgobierno = false;
         btipoorganismo = false;
@@ -333,7 +344,7 @@ public class EntidadSelect {
                     System.out.println("docccccc"+entidad);
                 }
             }
-            
+            new Logger().loguearOperacion(session, _usuario, "",Logger.CODIGO_OPERACION_EXECUTE,Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SELECCION_ENTIDAD);
             envelope.setContents("Entidad /U. Ejecutora Seleccionada");
             System.out.println("LA ENTIDADX ES : "+sentidad);
             prueba_msj = true;

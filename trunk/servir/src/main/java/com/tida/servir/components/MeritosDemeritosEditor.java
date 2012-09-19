@@ -3,6 +3,7 @@ package com.tida.servir.components;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -234,6 +235,7 @@ public class MeritosDemeritosEditor {
             merito.setEntidad_id(_oi.getId());
             session.saveOrUpdate(merito);
             envelope.setContents(helpers.Constantes.MERITO_DEMERITO_EXITO);
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(merito.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_MERITO_DEMERITO);    
             resetRegistro();
             return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("listaMeritosZone", listaMeritosZone.getBody()).add("claseZone", claseZone.getBody());
         }
@@ -266,6 +268,7 @@ public class MeritosDemeritosEditor {
     @Log
     @CommitAfter
     Object onActionFromEliminarME(MeritoDemerito meri) {
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(meri.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_MERITO_DEMERITO);
         formulariomensajesME.clearErrors();
         session.delete(meri);
         envelope.setContents("Meritos demeritos eliminadas exitosamente.");

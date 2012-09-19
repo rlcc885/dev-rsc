@@ -262,7 +262,7 @@ public class AntecedentesEditor {
 
             session.saveOrUpdate(ant_Laborales);
             session.flush();
-
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(ant_Laborales.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_EXPERIENCIA_LABORAL);  
             if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA, ant_Laborales.getId());
             }
@@ -334,7 +334,8 @@ public class AntecedentesEditor {
 
     @Log
     @CommitAfter
-    Object onActionFromEliminar(Ant_Laborales antLab) {
+    Object onActionFromEliminar(Ant_Laborales antLab) {        
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(antLab.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_EXPERIENCIA_LABORAL);
         session.delete(antLab);
         envelope.setContents("Antecedentes Laborales eliminados exitosamente.");
         return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("listaAntLoboralZone", listaAntLoboralZone.getBody());

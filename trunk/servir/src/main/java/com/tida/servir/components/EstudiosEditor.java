@@ -154,14 +154,6 @@ public class EstudiosEditor {
     @Persist
     @Property
     private Boolean ingresaubigeo;      
-
- 
-    // loguear operación
-    @CommitAfter
-    Object logueo(){
-        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
-        return null;
-    }
     
     @Log
     public List<LkBusquedaEstudios> getEstudios() {
@@ -564,10 +556,10 @@ public class EstudiosEditor {
     @CommitAfter
     Object onBorrarDato(Estudios dato) {
 //        mensaje=null;
-        session.delete(dato);
-        envelope.setContents("Estudio del Trabajador Eliminado");
-//        mensaje="Estudio del Trabajador Eliminado";
         new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
+        session.delete(dato);
+        envelope.setContents("Estudio del Trabajador Eliminado");        
+//        mensaje="Estudio del Trabajador Eliminado";
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("listaZone", listaZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody());
     }
 
@@ -579,7 +571,6 @@ public class EstudiosEditor {
         vformulario=false;
         vbotones=false;
         vNoedita=false;
-        logueo();
         if (usua.getAccesoupdate() == 1) {
             veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {

@@ -8,6 +8,7 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Constantes;
 import helpers.Encriptacion;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class TrabajadorNuevo extends GeneralPage {
     @SessionState
     @Property
     private UsuarioTrabajador usuarioTrabajador;
+    @SessionState
+    @Property
+    private Usuario _usuario;
     @Inject
     private PropertyAccess _access;
     @Inject
@@ -142,13 +146,19 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar regimenla;
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
+        return null;
+    }
 
     // inicio de la pagina
     @Log
     @SetupRender
     void initializeValue() {
-
+        logueo();
         unidadorganica = null;
         nuevaunidadorganica = new UnidadOrganica();
         cargo = new LkCargosDisponibles();
@@ -369,8 +379,7 @@ public class TrabajadorNuevo extends GeneralPage {
                            }                           
                          }
                          session.saveOrUpdate(usuarionuevo);
-                       }
-                       
+                       }                       
                     }
                     else{
                         if(cargo2.getRegimenlaboral()!=null){
@@ -379,6 +388,7 @@ public class TrabajadorNuevo extends GeneralPage {
                                 session.saveOrUpdate(usuarionuevo);
                             }
                         }
+                        
                         
                     }
                     nuevo.setEntidad(oi);

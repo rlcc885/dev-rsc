@@ -6,21 +6,17 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Sancion;
+import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.sql.ResultSet;
 import java.util.List;
-import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 /**
  *
  * @author ale
@@ -35,6 +31,8 @@ public class ABMSancion  extends GeneralPage
     private Session session;
     @Inject
     private PropertyAccess _access;
+    
+    //campos de datos del sancionado
     @Property
     @Persist
     private boolean bestrabajador;
@@ -64,7 +62,37 @@ public class ABMSancion  extends GeneralPage
     private DatoAuxiliar bregimen;
     @Property
     @Persist
-    private Sancion nuevasancion;
+    private Sancion nuevasancion;    
+    @Property
+    @Persist
+    private String bestadopuesto;
+    
+    //datos de la sancion
+    @Property
+    @Persist
+    private DatoAuxiliar categoriasancion;
+    @Property
+    @Persist
+    private TipoSancion tiposancion;
+    @Property
+    @Persist
+    private String fechadocnot;
+    @Property
+    @Persist
+    private String autoridadnot;
+    @Property
+    @Persist
+    private String fechadocsan;
+    @Property
+    @Persist
+    private String autoridadsan;
+    @Property
+    @Persist
+    private String fecinicio;
+    @Property
+    @Persist
+    private String fecfin;
+    
     // inicio de la pagina
     @SetupRender
     void inicio(){
@@ -80,6 +108,33 @@ public class ABMSancion  extends GeneralPage
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanregimenlaboral() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGIMENLABORAL", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<TipoSancion> getBeantiposancion() {
+        List<TipoSancion> list;
+        Criteria c;
+        c = session.createCriteria(TipoSancion.class);       
+        list = c.list();
+        return new GenericSelectModel<TipoSancion>(list, TipoSancion.class, "descripcion", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeancategoriasancion() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIASANCION", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeantipodocnot() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIASANCION", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeantipodocsan() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIASANCION", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     

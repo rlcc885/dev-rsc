@@ -10,6 +10,7 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
@@ -137,11 +138,18 @@ public class CambioUOEntidad extends GeneralPage{
     @Property
     @Persist
     private Integer niveld;
-      
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+        return null;
+    }
     // inicio de pagina
     @Log
     @SetupRender
     private void inicio() {
+        logueo();
         migras=false;
         if(usuario.getRolid()==3){
             mostrarUO=true;
@@ -347,6 +355,8 @@ public class CambioUOEntidad extends GeneralPage{
         query.setParameter("an_tipo_proceso", tipo);
         List result = query.list();
         session.flush();
+        new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_EXECUTE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_MIGRACION_FUSION);
+
     }
     
     

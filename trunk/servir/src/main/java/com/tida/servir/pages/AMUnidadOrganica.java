@@ -137,14 +137,21 @@ public class AMUnidadOrganica extends GeneralPage {
     @Persist
     @Property
     private Boolean vNoedita; //Nos sirve para ocultar los botones de Cancelar y Limpiar Formulario
-
+    
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
+        return null;
+    }
     // inicio de pagina
     @Log
     String SetupRender() {
+        logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", loggedUser.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
         List result = query.list();
+        
         // Inicializamos las variables utilizadas
         vbotones = false;
         vNoedita = false;
@@ -483,7 +490,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     // FIN CAMBIO */ 
 
                     session.saveOrUpdate(unidadOrganica);
-//                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+                    new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE: Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                     editando = false;
                     session.flush();
                     resetUnidadOrganica();
@@ -548,7 +555,7 @@ public class AMUnidadOrganica extends GeneralPage {
 
                 // FIN CAMBIO */ 
                 session.saveOrUpdate(unidadOrganica);
-//                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_MODIFICACION : Logger.CODIGO_OPERACION_ALTA), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+                new Logger().loguearOperacion(session, loggedUser, String.valueOf(unidadOrganica.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
                 editando = false;
                 session.flush();
                 resetUnidadOrganica();
@@ -569,6 +576,7 @@ public class AMUnidadOrganica extends GeneralPage {
     @CommitAfter
     Object onBorrarDato(UnidadOrganica dato) {
         errorBorrar = null;
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
         dato.setEstado(UnidadOrganica.ESTADO_BAJA);
         session.saveOrUpdate(dato);
         resetUnidadOrganica();

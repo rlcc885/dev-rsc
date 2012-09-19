@@ -44,6 +44,10 @@ public class ExportacionBatch  extends GeneralPage {
     @SessionState
     private Entidad _entidadUE;
     
+    @Property
+    @SessionState
+    private Usuario _logged;
+    
     private LkBusquedaCargo uo;
     
     @Property
@@ -115,14 +119,17 @@ public class ExportacionBatch  extends GeneralPage {
         if (!f.exists()) {
             f.mkdirs();
         }
-        errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+"xxxENTIDAD.xls", session);
-
+        if(_logged.getRolid()!=2){
+            errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+"xxxENTIDAD.xls", session);
+        }
         Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
         criteriaConcepto.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
 
         if (!criteriaConcepto.list().isEmpty()) {
             //generacion archivo concepto.csv
-            errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+"xxxCONCEPTO.xls",_entidadUE, session);
+            if(_logged.getRolid()!=2){
+                errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+"xxxCONCEPTO.xls",_entidadUE, session);
+            }
         }
         
         Criteria criteriaUnidad = session.createCriteria(LkBatchUnidadOrga.class);
@@ -173,7 +180,9 @@ public class ExportacionBatch  extends GeneralPage {
             
             if(!lremuneracion.isEmpty()){
                 System.out.println("REMUNERACIONPERSONAL");
-                errores = geXLS.generadoXLSRemuneraciones(lremuneracion, newlocation + "xxxREMUNERACION.xls", session,_entidadUE);
+                if(_logged.getRolid()!=2){
+                    errores = geXLS.generadoXLSRemuneraciones(lremuneracion, newlocation + "xxxREMUNERACION.xls", session,_entidadUE);
+                }
             }
             if(!levaluacion.isEmpty()){
                 System.out.println("EVALUACIONPERSONAL");

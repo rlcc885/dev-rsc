@@ -210,6 +210,7 @@ public class PublicacionesEditor {
 
         session.saveOrUpdate(publicacion);
         session.flush();
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(publicacion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_PRODUCCION_INTELECTUAL);    
 
         if (_usuario.getRolid() == 1) {
             logger.loguearEvento(session, logger.MODIFICACION_PRODUCCION, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_PRODUCCION, publicacion.getId());
@@ -270,6 +271,7 @@ public class PublicacionesEditor {
     @Log
     @CommitAfter
     Object onActionFromEliminar(Publicacion publi) {
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(publi.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_PRODUCCION_INTELECTUAL);
         formulariomensajespi.clearErrors();
         session.delete(publi);
         envelope.setContents("Produción Intelectual eliminada exitosamente.");

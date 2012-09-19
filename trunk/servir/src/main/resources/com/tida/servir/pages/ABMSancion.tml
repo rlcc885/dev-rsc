@@ -29,35 +29,38 @@
                     </div>
                 </div>
                 <div class="f-wrap">
-                    <div class="f-left" style="position:relative; top:10px; left:-10px;">
+                    <div class="f-left" style="position:relative; top:18px;">
                         <label>Buscar Trabajador</label>
                     </div>
-                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                    <div class="f-left" style="position:relative; top:12px; left:-10px;">
                         <input t:id="buscartraba" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
                     </div>
                     <div class="f-left">
-                        <label>Tipo Documento</label>
+                        <label>* Tipo Documento</label>
                         <input t:type="Select" t:id="documento_identidad"                                
-                               t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" />
+                               t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" t:blankOption="ALWAYS"  t:validate="required"/>
                     </div>
                     <div class="f-left">
-                        <label>Número de Documento</label>
+                        <label>* Número de Documento</label>
                         <input t:type="TextField" t:id="numero_documento"
-                                t:value="bnumerodocumento" size="30" />
+                                t:value="bnumerodocumento" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                        <input t:id="buscarpersona" t:type="submit" value="..." class="button"/>
                     </div>
                 </div>
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Nombres</label>
-                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30"/>
+                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="true"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Paterno</label>
-                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30"/>
+                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="true"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Materno</label>
-                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30"/>
+                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="true"/>
                     </div>
                 </div>
                 <br/>
@@ -65,36 +68,163 @@
                     <div class="f-left">
                         <label>* Regimen Laboral/Contractual</label>
                         <input t:type="Select" t:id="regimen_laboral"                                
-                               t:value="bregimen" model="beanregimenlaboral" t:zone="busquedaZone" />
+                               t:value="bregimen" model="beanregimenlaboral" t:zone="busquedaZone" t:disabled="true"/>
                     </div>
                     <div class="f-left">
                         <label>Puesto/Cargo</label>
-                        <input t:type="TextField" t:id="cargo_puesto" value="bpuesto" size="60"/>
+                        <input t:type="TextField" t:id="cargo_puesto" value="bpuesto" size="60" t:disabled="true"/>
                     </div>
                 </div>
+                <br/>
                 <div class="f-wrap">
-                   <div class="f-left" style="width: 200px; height: 170px;">
+                   <div class="f-left" style="width: 250px; height: 80px;">
                         <fieldset>
                         <legend>Tiempo de Servicios</legend>
                             <div class="f-left">
                                 <label>Dias</label>
-                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="10" t:disabled="true"/>
+                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:disabled="true"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Meses</label>
+                                <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5" t:disabled="true"/>
+                            </div>
+                            <div class="f-left">
+                                <label>Años</label>
+                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5" t:disabled="true"/>
                             </div>
                         </fieldset>
                    </div>
-                </div>
-                <div class="f-left">
-                    <label>Fuera del Pais</label>
-                    <input t:type="Checkbox" t:id="pais" t:value="valfuera" t:disabled="${vdetalle}"/>
-                </div>
+                   <div class="f-left">
+                        <label>Estado en el Puesto/Cargo</label>
+                        <input t:type="TextField" t:id="estado_puesto" value="bestadopuesto" size="30" t:disabled="true"/>
+                   </div>
+                </div>   
             </form>
         </t:zone>        
        </fieldset>
-
-
-    <t:zone t:id="listadoZone">
-
-    </t:zone>
+     
+        <t:zone t:id="sancionZone">
+            <div>
+                <script>
+                    jQuery(document).ready(function() {
+                    jQuery('.fecha_docnot').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fecha_docsan').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                    });
+                </script>
+            </div>  
+            <form t:type="form" t:id="formsancion" t:zone="sancionZone">
+              <fieldset>
+              <legend>Datos de la Sanción</legend>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>* Categoría de la Sanción</label>
+                        <input t:type="Select" t:id="categoria_sancion"                                
+                               t:value="categoriasancion" model="beancategoriasancion" t:zone="sancionZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Tipo de Sanción</label>
+                        <input t:type="Select" t:id="tipo_sancion"                                
+                               t:value="tiposancion" model="beantiposancion" t:zone="sancionZone"/>
+                    </div>
+                </div>
+               <br/>
+               <fieldset>
+                   <legend>Datos de la Notificación</legend>
+                   <div class="f-wrap">
+                       <div class="f-left">
+                            <label>* Tipo de Documento</label>
+                            <input t:type="Select" t:id="tipo_docnot"                                
+                                t:value="nuevasancion.tipo_documentonot" model="beantipodocnot" t:zone="sancionZone" t:validate="required" t:blankOption="ALWAYS" />
+                       </div>
+                       <div class="f-left">
+                            <label>* Descripción o Número</label>
+                            <input t:type="TextField" t:id="num_docnot" value="nuevasancion.numdocnot" size="30" t:validate="required"/>
+                       </div>
+                       <div class="f-left">
+                            <label>* Fecha</label>
+                            <input t:type="TextField" t:id="fecha_docnot" t:value="fechadocnot" size="25" t:validate="required,regexp" class="fecha_docnot pictureInputDate"/>
+                       </div>
+                   </div>
+                   <div class="f-left">
+                        <label>* Autoridad que Notifica</label>
+                        <input t:type="TextField" t:id="autoridad_not" value="autoridadnot" size="100" t:validate="required" t:disabled="true"/>
+                   </div>
+                   <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                        <input t:id="buscarautoridadnot" t:type="submit" value="..." class="button" />
+                   </div>
+               </fieldset>
+               <br/>
+               <fieldset>
+                   <legend>Datos del Documento que Sanciona</legend>
+                   <div class="f-wrap">
+                       <div class="f-left">
+                            <label>* Tipo de Documento</label>
+                            <input t:type="Select" t:id="tipo_docsan"                                
+                                t:value="nuevasancion.tipo_documentosan" model="beantipodocsan" t:zone="sancionZone" t:validate="required" t:blankOption="ALWAYS" />
+                       </div>
+                       <div class="f-left">
+                            <label>* Descripción o Número</label>
+                            <input t:type="TextField" t:id="num_docsan" value="nuevasancion.numdocsan" size="30" t:validate="required"/>
+                       </div>
+                       <div class="f-left">
+                            <label>* Fecha</label>
+                            <input t:type="TextField" t:id="fecha_docsan" t:value="fechadocsan" size="25" t:validate="required,regexp" class="fecha_docsan pictureInputDate"/>
+                       </div>                       
+                   </div>
+                   <div class="f-left">
+                            <label>* Autoridad que Sanciona</label>
+                            <input t:type="TextField" t:id="autoridad_san" value="autoridadsan" size="100" t:validate="required" t:disabled="true"/>
+                    </div>
+                   <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                        <input t:id="buscarautoridadsan" t:type="submit" value="..." class="button" />
+                   </div>
+               </fieldset>
+               <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Descripción: </label>
+                        <input t:type="TextArea" t:id="descripcion" t:value="nuevasancion.causa" style="width: 350px;" rows="5" 
+                                t:validate="maxLength=250"/>
+                        <br />
+                        <i>(Máximo 250 caracteres)</i>
+                    </div>
+                    <div class="f-left" style="width: 200px; height: 130px;">
+                        <fieldset>
+                        <legend>Periodo de Inhabilitación</legend>
+                        <div class="f-wrap">                            
+                            <div class="f-left">
+                                <label>* Fecha de Inicio</label>
+                                <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="25" t:validate="regexp" class="fec_inicio pictureInputDate"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Fecha de Finalización</label>
+                                <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="25" t:validate="regexp" class="fec_fin pictureInputDate"/>
+                            </div>                        
+                        </div>
+                        </fieldset>
+                        
+                    </div>
+              </div>
+              <div class="f-left">
+                 <label>Descripción: </label>
+                <input t:type="TextArea" t:id="observaciones" t:value="nuevasancion.observaciones" style="width: 350px;" rows="5" 
+                        t:validate="maxLength=150"/>
+                <br />
+                <i>(Máximo 150 caracteres)</i>
+              </div>
+               
+            </fieldset>   
+            <div class="actions">
+                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+            </div>
+            </form>
+        </t:zone>
+     
+        
+        
+        
     <div id="shade"></div>
         
     <div id="modal"> 
