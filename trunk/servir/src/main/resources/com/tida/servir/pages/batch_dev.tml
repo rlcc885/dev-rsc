@@ -53,6 +53,21 @@
 
          </t:if>
 
+    
+    <div class="f-wrap" >
+    <t:form t:id="reporte" target="_blank" >    
+         <br/><br/>   
+        <div class="f-left">
+            <label>Formato Salida :</label>
+            <t:select t:id="formato" t:validate="required"/> <br/><br/>
+        </div>
+        <div class="f-left">
+            <input type="submit" value="mostrar"/>
+        </div>
+    </t:form>
+    </div>
+    
+    
        <t:if test = "etapaConfirmacion">
 
                 <div id = "tamanosArchivos" class = "informacion">

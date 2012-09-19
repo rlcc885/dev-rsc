@@ -10,27 +10,24 @@ import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
+import helpers.ReporteBatch;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -366,5 +363,22 @@ public class batch_dev  extends GeneralPage {
         this.errores = errores;
     }
     
-   
+    @Property
+    @Persist
+    private ReporteBatch.Formatos formato ;
+
+    private String tipoReporte = "report1";
+
+    @OnEvent(value="submit" ,component="reporte") 
+    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
+    {
+        
+    HashMap<String,Object> parametros = new HashMap<String,Object>();
+
+    ReporteBatch reportes= new ReporteBatch();
+            
+    return  reportes.getReporte(tipoReporte, parametros, formato);
+    
+    }
+    
 }
