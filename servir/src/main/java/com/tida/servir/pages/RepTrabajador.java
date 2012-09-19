@@ -136,19 +136,35 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
+    private String entidadTrabajador;
+    
+    @Property
+    @Persist
     private String entidadTx;
     
     @Property
     @Persist
     private String entidad_ape;
     
+    @Property
+    @Persist
+    private String entidad_apes;
+    
     @Persist
     @Property
     private String nombreEntidad;
+    
+    @Persist
+    @Property
+    private String nombreEntidadTrabajador;
 
     @Property
     @InjectComponent
     private Zone entiZone;
+    
+    @Property
+    @InjectComponent
+    private Zone entiTraZone;
     
     @Property
     @Persist
@@ -261,6 +277,10 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
+    private boolean organoBool;
+    
+    @Property
+    @Persist
     private DatoAuxiliar ssectorGobierno;
     
     @Property
@@ -270,6 +290,10 @@ public class RepTrabajador extends GeneralPage {
     @Property
     @Persist
     private Entidad _entidadRep;
+    
+    @Property
+    @Persist
+    private Entidad entidadTraba;
     
     @Property
     @Persist
@@ -283,6 +307,38 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private boolean bEntidad;
     
+    @Property
+    @Persist
+    private boolean bessubentidad;
+    
+    @Property
+    @Persist
+    private boolean bessubentidad2;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar stipoOrganismo;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar stipoSubEntidad;
+    
+    @Property
+    @Persist
+    private Entidad ssubentidad;
+    
+    @Property
+    @Persist
+    private boolean mostrarEntidadTrabajador;
+    
+    @Property
+    @Persist
+    private boolean mostrarTrabajadorS;
+    
+    @Property
+    @Persist
+    private boolean visualEntidad;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -290,6 +346,8 @@ public class RepTrabajador extends GeneralPage {
         mostrar = false;
         bEntidad = true;
         categoria = "";
+        visualEntidad = true;
+        mostrarTrabajadorS = true;
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
@@ -358,6 +416,12 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
     Object onActionFromSeleccionaTitular(Trabajador traba) {
         if (traba != null) {
             titular = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
@@ -367,6 +431,18 @@ public class RepTrabajador extends GeneralPage {
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("trabaZone", trabaZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
     }
 
+    @Log
+    Object onActionFromSeleccionaEntidadTrabajador(Entidad enti) {
+        if (enti != null) {
+            entidadTrabajador = enti.getDenominacion();
+            entidadTraba = enti;
+        }
+        mostrarEntidadTrabajador = false;
+        mostrarTrabajadorS = true;
+        mostrar = false;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiTraZone", entiTraZone.getBody()).add("tipoReporteZone", tipoReporteZone.getBody());
+    }
+    
     @Log
     Object onActionFromSeleccionaEntidad(Entidad enti) {
         if (enti != null) {
@@ -400,9 +476,21 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
+    Object onSuccessFromFormFindEntidadTrabajador() {
+        mostrar = true;
+        return new MultiZoneUpdate("busZone", busZone.getBody()).add("entiTraZone", entiTraZone.getBody());
+    }
+    
+    @Log
     Object onSuccessFromFormFindUsuario() {
         mostrar = true;
         return new MultiZoneUpdate("busZone", busZone.getBody()).add("usuaZone", usuaZone.getBody());
+    }
+    
+    @Log
+    Object onSuccessFromGobiernoForm() {
+        bessubentidad = !bessubentidad;
+        return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
     }
     
     @Log
@@ -412,6 +500,13 @@ public class RepTrabajador extends GeneralPage {
 
     @Log
     Object onSelectedFromBuscarEntidad() {
+        return new MultiZoneUpdate("busZone", busZone.getBody());
+    }
+    
+    @Log
+    Object onSelectedFromBuscarEntidadTrabajador() {
+        mostrarEntidadTrabajador = true;
+        mostrarTrabajadorS = false;
         return new MultiZoneUpdate("busZone", busZone.getBody());
     }
     
@@ -433,14 +528,22 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    Object onSelectedFromCancelFormFindEntidadTrabajador() {
+        mostrarEntidadTrabajador = false;
+        mostrarTrabajadorS = true;
+        mostrar = false;
+        return new MultiZoneUpdate("entiTraZone", entiTraZone.getBody());
+    }
+    
+    @Log
     public List<LkBusquedaTrabajador> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         if (nombreTrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
-        if (_entidadUE != null && usu.getRolid() != 3) {
-            c.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
-        }
+        if (entidadTraba != null)
+            c.add(Restrictions.eq("entidad_id", entidadTraba.getId()));
+
         return c.list();
     }
     
@@ -505,6 +608,11 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onActionFromMostrarTrabajador() {
         categoria = "Trabajador";
+        if (usu.getRolid() == 3) bEntidad = false;
+        if (usu.getRolid() == 2) {
+            visualEntidad = false;
+            if (_entidadUE != null) { entidadTrabajador = _entidadUE.getDenominacion(); entidadTraba = _entidadUE; }
+        }
         mostrarFiltrosTrabajador = true;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
@@ -528,7 +636,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onActionFromMostrarUsuario() {
-        categoria = "Usuario";
+        categoria = "Sistema";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = true;
@@ -539,7 +647,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onActionFromMostrarGobierno() {
-        categoria = "Nivel de Gobierno/Sector/Organizacion del Estado";
+        categoria = "Consolidado";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
@@ -553,7 +661,7 @@ public class RepTrabajador extends GeneralPage {
         if (dato != null) {
             nivelo = dato;
         }
-        return entidadZone.getClientId();//new MultiZoneUpdate("entidadZone", entidadZone.getBody());
+        return entidadZone.getClientId();
     }
     
     @Log
@@ -628,6 +736,46 @@ public class RepTrabajador extends GeneralPage {
 
     @Log
     Object onValueChangedFromSsectorgobierno(DatoAuxiliar dato) {
+        if (dato == null) {
+            organoBool = false;
+        } else {
+            organoBool = true;
+        }
+        stipoOrganismo = null;
         return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
+    }
+
+    @Log
+    Object onValueChangedFromStipoOrganismo(DatoAuxiliar dato) {
+        return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
+    }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getTipoSubEntidad() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<Entidad> getSubEntidades() {
+        return new GenericSelectModel<Entidad>(searchSubEntidades(), Entidad.class, "denominacion", "id", _access);
+    }
+    
+    @Log
+    private List<Entidad> searchSubEntidades() {
+        Criteria c = session.createCriteria(Entidad.class);
+        c.add(Restrictions.eq("estado", true));
+        c.add(Restrictions.eq("esSubEntidad", true));
+        if (stipoSubEntidad != null) {
+            c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
+        }
+        return c.list();
+    }
+    
+    @Log
+    Object onSelectedFromReset() {
+        entidadTrabajador = ""; 
+        entidadTraba = null;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
 }
