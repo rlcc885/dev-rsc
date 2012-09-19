@@ -2,11 +2,13 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
+import helpers.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Query;
@@ -78,11 +80,19 @@ public class TrabajadorDocumento  extends GeneralPage
 
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_LEGAJO_DOCUMENTO);
+        return null;
+    }
+    
     // inicio de la pagina
     @Log
     @SetupRender
     private void inicio() {
+        logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login",_usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());

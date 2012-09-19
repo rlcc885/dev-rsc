@@ -7,6 +7,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
 
 @Entity
+@Table(name = "RSC_LOG_OPERACIONES")
 public class Log_Operaciones {
 
     @Override

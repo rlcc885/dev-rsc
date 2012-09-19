@@ -334,7 +334,7 @@ public class FamiliaresEditor {
             familiarActual.setEntidad(_oi);
             session.saveOrUpdate(familiarActual);
             session.flush();
-
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(familiarActual.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_FAMILIAR);    
             if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_FAMILIAR, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_FAMILIARES, familiarActual.getId());
             }
@@ -421,6 +421,8 @@ public class FamiliaresEditor {
     @Log
     @CommitAfter
     Object onActionFromEliminar(Familiar fami) {
+        
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(fami.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_FAMILIAR);
         session.delete(fami);
         envelope.setContents("Familiar eliminado exitosamente.");
         resetRegistro();

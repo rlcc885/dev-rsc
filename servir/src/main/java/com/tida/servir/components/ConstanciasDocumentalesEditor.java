@@ -334,6 +334,8 @@ public class ConstanciasDocumentalesEditor {
             
             session.saveOrUpdate(constancia);
             session.flush();
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(constancia.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_DOCUMENTO);    
+
      // INICIO acciones de auditoria        
             if (!editando) 
             {   
@@ -407,11 +409,11 @@ public class ConstanciasDocumentalesEditor {
     @Log
     @CommitAfter
     Object onBorrarDato(ConstanciaDocumental dato) {
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_DOCUMENTO);        
         Query query = session.createSQLQuery("DELETE FROM RSC_CONSTANCIADOCUMENTAL WHERE ID = '"+dato.getId()+"'");
         int resultado = query.executeUpdate();
         session.flush();
         envelope.setContents("Documento del Trabajador Eliminado");
-        
         return new MultiZoneUpdate("tercerZone", tercerZone.getBody()).
                 add("mensajesZone", mensajesZone.getBody()).
                 add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());

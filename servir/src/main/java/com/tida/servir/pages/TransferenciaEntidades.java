@@ -11,6 +11,7 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Errores;
 import helpers.Helpers;
+import helpers.Logger;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
@@ -119,11 +120,19 @@ public class TransferenciaEntidades extends GeneralPage{
     @Property
     @Persist
     private LkBusquedaCursos lkcu;    
-      
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRANSFERENCIA);
+        return null;
+    }
+    
     @Log
     @SetupRender
     private void inicio() {
         limpiar();
+        logueo();
     }
     
         
@@ -246,6 +255,7 @@ public class TransferenciaEntidades extends GeneralPage{
         query.setParameter("as_entidad_id_destino", ed.getId());
         List result = query.list();
         session.flush();
+        new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_EXECUTE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRANSFERENCIA);
     }
     
     @Log

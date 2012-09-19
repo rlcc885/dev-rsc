@@ -5,10 +5,12 @@ import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioAcceso;
+import helpers.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Query;
@@ -46,11 +48,18 @@ public class Meritos extends GeneralPage {
     private UsuarioAcceso usua;
     @Inject
     private ComponentResources _resources;
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_LEGAJO_LABORAL);
+        return null;
+    }
     // inicio de pagina
     @Log
     @SetupRender
     private void inicio() {
+        logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());

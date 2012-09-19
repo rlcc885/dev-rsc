@@ -4,6 +4,7 @@ import com.tida.servir.entities.*;
 import com.tida.servir.pages.Busqueda;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -279,6 +280,7 @@ public class EvaluacionesPersonalesEditor {
                 }
                 evaluacion.setCargoasignado(cargoasignado);
                 session.saveOrUpdate(evaluacion);
+                new Logger().loguearOperacion(session, _usuario, String.valueOf(evaluacion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_EVALUACION);    
                 envelope.setContents(helpers.Constantes.EVALUACION_EXITO);
                 evaluacion=new EvaluacionPersonal();
                 valfec_desde=null;
@@ -331,7 +333,8 @@ public class EvaluacionesPersonalesEditor {
     
     @Log
     @CommitAfter        
-    Object onActionFromEliminar(EvaluacionPersonal evalu) {
+    Object onActionFromEliminar(EvaluacionPersonal evalu) {        
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(evalu.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ESTUDIO);
         session.delete(evalu);
         envelope.setContents("Evaluacion personal eliminada exitosamente.");
         return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             

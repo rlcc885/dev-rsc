@@ -1,17 +1,13 @@
 package com.tida.servir.entities;
 
 import java.util.Date;
+import javax.persistence.*;
 
 import org.apache.tapestry5.beaneditor.NonVisual;
 import org.apache.tapestry5.beaneditor.Validate;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@Table(name = "RSC_LOG_ACCESOS")
 public class Log_Accesos {
 
     @Override

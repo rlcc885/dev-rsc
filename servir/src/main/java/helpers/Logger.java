@@ -54,32 +54,36 @@ public class Logger {
     public static final String TIPO_OBJETO_USUARIO = "Usuario";
  
 
-    public static final String TIPO_OBJETO_AUSLICPERSONAL = "AusLicPersonal";
-    public static final String TIPO_OBJETO_CERTIFICACION = "Certificacion";
-    public static final String TIPO_OBJETO_CONSTANCIA_DOCUMENTAL = "Constancia Documental";
-
-    public static final String TIPO_OBJETO_TRABAJADOR = "Trabajador";
-    public static final String TIPO_OBJETO_FAMILIAR = "Familiar";
-    public static final String TIPO_OBJETO_EVALUACION = "Evaluacion Personal";
-    public static final String TIPO_OBJETO_MERITO_DEMERITO = "Meritos / Demeritos";
-    public static final String TIPO_OBJETO_ORGANO = "Organo";
+    
+    public static final String TIPO_OBJETO_DOCUMENTO = "Documento";//
+    public static final String TIPO_OBJETO_TRABAJADOR = "Alta de Trabajador";
+    public static final String TIPO_OBJETO_EVALUACION = "Evaluacion Personal";//
+    public static final String TIPO_OBJETO_MERITO_DEMERITO = "Meritos / Demeritos";//
     public static final String TIPO_OBJETO_CARGO_ASIGNADO = "Cargo Asignado";
-    public static final String TIPO_OBJETO_REMUNERACION_PERSONAL = "Remuneracion Personal";
+    public static final String TIPO_OBJETO_REMUNERACION_PERSONAL = "Remuneracion Personal";//
     public static final String TIPO_OBJETO_CARGO = "Cargo/Puesto";//
-    public static final String TIPO_OBJETO_LEGAJO = "Legajo";
     public static final String TIPO_OBJETO_CONCEPTO_REMUNERATIVO = "Concepto Remunerativo";//
     public static final String TIPO_OBJETO_UNIDAD_ORGANICA = "Unidad Organica";//
+    public static final String TIPO_OBJETO_LEGAJO_PERSONAL = "Legajo Personal";//
+    public static final String TIPO_OBJETO_LEGAJO_FAMILIAR = "Legajo Familiar";//
+    public static final String TIPO_OBJETO_LEGAJO_LABORAL = "Legajo Laboral";//
+    public static final String TIPO_OBJETO_LEGAJO_DOCUMENTO = "Legajo Documento";//
     public static final String TIPO_OBJETO_DATOS_PERSONALES = "Datos Personales";//
     public static final String TIPO_OBJETO_ESTUDIO = "Estudio";//
     public static final String TIPO_OBJETO_CURSO = "Curso";//
     public static final String TIPO_OBJETO_EXPERIENCIA_LABORAL = "Experiencia Laboral";//
-    public static final String TIPO_OBJETO_PRODUCCION_INTELECTUAL = "Producción Intelectual";//
-    public static final String TIPO_OBJETO_UNIDAD_EJECUTORA = "Unidad Ejecutora";
-    public static final String TIPO_OBJETO_ENTIDAD_UNIDAD_EJECUTORA = "Entidad Unidad Ejecutora";
+    public static final String TIPO_OBJETO_PRODUCCION_INTELECTUAL = "Producción Intelectual";//    
+    public static final String TIPO_OBJETO_FAMILIAR = "Familiar";//
+    public static final String TIPO_OBJETO_MIGRACION_FUSION = "Migración/Fusión";//
+    public static final String TIPO_OBJETO_TRANSFERENCIA = "Tranasferencia";//
+    public static final String TIPO_OBJETO_ENTIDAD = "Entidad/Sub Entidad";//
+    public static final String TIPO_OBJETO_SELECCION_ENTIDAD = "Seleccion Entidad";//
+    
     public static final String CODIGO_OPERACION_SELECT = "1";
     public static final String CODIGO_OPERACION_INSERT = "2";
     public static final String CODIGO_OPERACION_UPDATE= "3";
     public static final String CODIGO_OPERACION_DELETE = "4";
+    public static final String CODIGO_OPERACION_EXECUTE = "5";
     public static final String RESULTADO_OPERACION_OK = "OK";
     public static final String RESULTADO_OPERACION_ERROR = "ERROR";
     public static final String CORREO_FAIL_RESET_PASSWORD = "Conexión con el Servidor de Correos no establecida al reestablecer contraseña.";

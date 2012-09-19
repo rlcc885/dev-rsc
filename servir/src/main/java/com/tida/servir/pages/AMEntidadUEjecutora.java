@@ -294,10 +294,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
     public void setEntidadalerta(Entidad entidadalerta) {
         this.entidadalerta = entidadalerta;
     }
-
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
+        return null;
+    }
+    
     // incio de la pagina
     @Log
     void setupRender() {
+        logueo();
         formulariomensajes.clearErrors();
         entidadUE = new Entidad();
         entidadUE.setEsSubEntidad(false);
@@ -712,6 +719,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             
             session.saveOrUpdate(entidadUE);
             session.flush();
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
             insertarentidad = false;
             editando = false;
             if (editando) {
@@ -854,6 +862,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     Object onActionFromEliminarSeleccion(Entidad enti1) {
         if (enti1.getEstado()) {
             enti1.setEstado(false);
+            new Logger().loguearOperacion(session, _usuario, String.valueOf(enti1.getId()),Logger.CODIGO_OPERACION_DELETE,Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
             session.saveOrUpdate(enti1);
             envelope.setContents("Entidad Eliminada");
         } else {
