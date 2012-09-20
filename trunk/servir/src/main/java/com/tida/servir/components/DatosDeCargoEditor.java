@@ -188,7 +188,7 @@ public class DatosDeCargoEditor {
                     String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
-//                    registrar(false);
+                    registrar(false);
                     return datosDeCargoZone.getBody();
                 }
                 else{
@@ -209,7 +209,7 @@ public class DatosDeCargoEditor {
                     String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
-//                    registrar(false);
+                    registrar(false);
                     return datosDeCargoZone.getBody();
                 }
                 else{
