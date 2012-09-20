@@ -28,6 +28,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @SessionState
     private Entidad eue;
+    @Property
+    @SessionState
+    private Usuario usuario;
     
     @Inject
     private Session session;
@@ -44,6 +47,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private LkBusquedaEntidad rowentidad;
+    @Property
+    @Persist
+    private LkBusquedaTrabajadorSan btrabajador;
     
     //campos de datos del sancionado
     @Property
@@ -121,6 +127,9 @@ public class ABMSancion  extends GeneralPage
     private Boolean bmostrar;
     @Property
     @Persist
+    private Boolean bmostrarrol;
+    @Property
+    @Persist
     private Boolean mostrarentidad;
     @Property
     @Persist
@@ -131,6 +140,14 @@ public class ABMSancion  extends GeneralPage
     @SetupRender
     void inicio(){
         nuevasancion=new Sancion();
+        if(usuario.getRolid()==2){
+            bmostrarrol=false;
+            bmostrar=true;
+        }
+        else{
+            bmostrarrol=true;
+            
+        }
     }
     
     @Log
@@ -228,21 +245,45 @@ public class ABMSancion  extends GeneralPage
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
          }
+         if(usuario.getRolid()==2){
+             
+         }
          nroregistros = Integer.toString(c.list().size());
          return c.list();
-     }
+    }
+     
     @Log
     @CommitAfter
     Object onSuccessFromformbusquedaentidad() {   
         mostrarlista=true;
-      return busquedamodalZone.getBody();
+        return busquedamodalZone.getBody();
     }
-    
-     
      
     @Persist
     @Property
     private String nroregistros; 
+    
+    @Log
+     public List<LkBusquedaTrabajadorSan> getTrabajadores() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajadorSan.class);
+        if (bnomautoridad != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformbusquedaautoridad(){
+        mostrarlista=true;
+        return busquedamodalZone.getBody();
+    }
+    
+    @Log
+    Object onActionFromSeleccionarentidad(Entidad enti) {
+        bentidad = enti.getDenominacion();
+        return busquedaZone.getBody();
+    }
     
     @Log
     private MultiZoneUpdate zonasDatos() {
