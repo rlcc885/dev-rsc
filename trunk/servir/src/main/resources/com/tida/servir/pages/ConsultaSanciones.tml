@@ -3,16 +3,162 @@
       xmlns:p="tapestry:parameter">
           
           
-<div class="box-background-title">
+ <div class="box-background-title">
       <span class="box-title">Consulta de Sancionados</span>
  </div>
  
   <div class="box">
-      <t:zone t:id="consultaSancionadosZone">
-          <t:form t:id="formularioconsultasancionado" zone="consultaSancionadosZone">
+      <t:zone t:id="consultaSancionesZone">
+          <t:form t:id="formularioconsultasanciones" zone="consultaSancionesZone">
+              <t:errors/>
+              <fieldset>
+                  <legend>Por Entidad / Sub Entidad</legend> 
+                  <div class="f-left">    
+                        <label>Entidad/Sub Entidad</label>
+                        <input t:type="TextField" t:id="entidad_den"
+                                    t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
+                  </div>
+                  <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                            <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
+                  </div>
+              </fieldset>
+              <fieldset>
+                  <legend>Datos Personales</legend> 
+                    <div class="f-wrap"> 
+                        <div class="f-left">
+                            <t:label for="nombres"/>
+                            <input t:type="TextField" t:id="nombres" t:value="bnombres" size="33" t:validate="maxlength=150"  t:zone="consultaSancionesZone"/>
+                         </div>
+                         <div class="f-left">
+                            <t:label for="apellidoPaterno" />
+                            <input t:type="TextField" t:id="apellidoPaterno" t:value="bapellidoPaterno" size="33" t:validate="maxlength=150" t:zone="consultaSancionesZone"/>
+                         </div>
+                         <div class="f-left">
+                            <t:label for="apellidoMaterno" />
+                            <input t:type="TextField" t:id="apellidoMaterno" t:value="bapellidoMaterno" size="33" t:validate="maxlength=150"  t:zone="consultaSancionesZone"/>
+                         </div>                        
+                    </div> 
+                    <div class="f-wrap"> 
+                        <div class="f-left">
+                             <t:label for="tipoDocumento"/> 
+                                <select t:type="Select" t:id="tipoDocumento" t:value="bdocumentoidentidad" onChange="this.form.fire()" model="tiposDoc" />
+                        </div>
+                        <div class="f-left">
+                            <label>Numero de Documento</label>
+                            <input t:type="TextField" t:id="numeroDocumento" t:value="bnumeroDocumento" size="33" t:validate="maxlength=11" t:zone="consultaSancionesZone"/>
+                         </div>  
+                    </div> 
+              </fieldset>
               
+               <fieldset>
+                   <legend>Datos de la Sancion</legend>
+                   <div class="f-wrap"> 
+                         <div class="f-left">
+                             <t:label for="regimenLaboral"/> 
+                              <select t:type="Select" t:id="regimenLaboral" t:value="bregimenLaboral" model="regimenLaboral" t:zone="consultaSancionesZone"/>
+                         </div>
+                         <div class="f-left">
+                              <label>Categoria de Sancion</label>
+                              <select t:type="Select" t:id="categoriaSancion" t:value="bcategoriaSancion"  model="categoriaSancion" t:zone="consultaSancionesZone" />
+                         </div>
+                         <div class="f-left">
+                             <label>Tipos de Sancion</label>
+                             <select t:type="Select" t:id="tiposancion" t:value="btipoSancion"  model="tipoSancion" t:zone="consultaSancionesZone"/>
+                         </div>    
+                   </div>
+                   <fieldset>
+                      <legend>Estado</legend>
+                        <div class="f-wrap"> 
+                                <div class="f-left">  
+                                <label><input t:type="Checkbox" t:id="esVigente" t:value="esVigente" /> Vigente </label>
+                                </div>
+                                <div class="f-left">
+                                <label><input t:type="Checkbox" t:id="esNoVigente" t:value="esNoVigente" /> No Vigente </label>
+                                </div>
+                                <div class="f-left">
+                                    <label><input t:type="Checkbox" t:id="esSuspendida" t:value="esSuspendida" /> Suspendidas </label>
+                                </div>
+                                <div class="f-left">
+                                    <label><input t:type="Checkbox" t:id="esAnulada" t:value="esAnulada" /> Anuladas </label>
+                                </div>
+                                <div class="f-left">
+                                    <label><input t:type="Checkbox" t:id="esHistorica" t:value="esHistorica" /> Historicas </label>
+                                </div>     
+                        </div>
+                    </fieldset>
+                    
+               </fieldset>
+                <div class="f-wrap"> 
+                    <div class="actions f-right">
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
+                        <input t:type="Submit" t:id="limpia" value="Limpiar formulario" t:mixins="confirm" class="button"/> 
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
+                    </div>
+                </div>
           </t:form>
       </t:zone>
+      
   </div>
-          
+   <br/><br/>
+   
+    <div t:type="zone" t:id="listaConsultaSancionZone" class="selectform" >
+        <t:form t:id="formconsultaSancion">    
+            <t:grid source="busquedaSancionados" 
+                            rowsPerPage="10" 
+                            t:add="Acciones" 
+                            pagerPosition="bottom"
+                            row="cs"          
+                            inPlace="true">
+                       <t:parameter name="empty">
+                          <div class="no-info">No hay personas/trabajadores sancionados</div>
+                       </t:parameter>
+            </t:grid>
+        </t:form>    
+    </div>
+    
+     <div id="shade"></div>
+      <div id="modal">           
+        <h1>Selección de entidad</h1>
+        <div class="pane">
+            <t:zone t:id="busZone" t:update="show">
+                <form t:type="form" t:id="formulariobusqueda" t:zone ="busZone">
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Denominación</label>
+                            <input t:type="TextField" t:id="entida_deno" t:value="bdenoentidad" style="width: 400px;"/> 
+                        </div>                   
+                    </div>
+                    <div class="actions f-right">
+                        <input id="buscarsubmit" type="submit" value="Buscar" class="button" /> 
+                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button" onClick="javascript: ocultar();"/>
+                    </div> 
+
+                </form>
+                <t:grid source="entidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                                row="entio" include="denominacion" inPlace="true" t:zone="organismosZone">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="editar" zone="consultaSancionesZone" context="entio" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid> 
+            </t:zone>
+            <br/>
+            <br/>
+        </div>
+            <!-- Eorigen-->
+             
+             <!-- Edestino-->                          
+    </div>  
+     <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script> 
 </html>
