@@ -56,7 +56,8 @@ public class Logger {
 
     
     public static final String TIPO_OBJETO_DOCUMENTO = "Documento";//
-    public static final String TIPO_OBJETO_TRABAJADOR = "Alta de Trabajador";
+    public static final String TIPO_OBJETO_ALTA_TRABAJADOR="Alta de Trabajador";
+    public static final String TIPO_OBJETO_TRABAJADOR = "Trabajador";
     public static final String TIPO_OBJETO_EVALUACION = "Evaluacion Personal";//
     public static final String TIPO_OBJETO_MERITO_DEMERITO = "Meritos / Demeritos";//
     public static final String TIPO_OBJETO_CARGO_ASIGNADO = "Cargo Asignado";
@@ -78,6 +79,7 @@ public class Logger {
     public static final String TIPO_OBJETO_TRANSFERENCIA = "Tranasferencia";//
     public static final String TIPO_OBJETO_ENTIDAD = "Entidad/Sub Entidad";//
     public static final String TIPO_OBJETO_SELECCION_ENTIDAD = "Seleccion Entidad";//
+    public static final String TIPO_OBJETO_SELECCION_USUARIO = "Usuario";//
     
     public static final String CODIGO_OPERACION_SELECT = "1";
     public static final String CODIGO_OPERACION_INSERT = "2";
