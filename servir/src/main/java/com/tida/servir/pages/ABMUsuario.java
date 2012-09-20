@@ -199,10 +199,17 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property 
     private boolean esUsuarioTrabajador;
-
+    
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, loggedUser, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_USUARIO);
+        return null;
+    }
     // inicio de la pagina
     @Log
     void setupRender() {
+        logueo();
         muestraEditorUsuario = true;
         Calendar c = Calendar.getInstance();
         int dia = c.get(Calendar.DAY_OF_MONTH);
@@ -573,6 +580,7 @@ public class ABMUsuario extends GeneralPage {
         usuario.setObservacion(usuariotrabajadoredit.getObservacion());
 
         session.saveOrUpdate(usuario);
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(usuario.getId()), (noEditaLoginUsuario ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_USUARIO);
         envelope.setContents(helpers.Constantes.USUARIO_EXITO);
         resetUsuario();
         return zonasTotal();

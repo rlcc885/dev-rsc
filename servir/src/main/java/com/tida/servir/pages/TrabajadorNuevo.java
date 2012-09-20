@@ -150,7 +150,7 @@ public class TrabajadorNuevo extends GeneralPage {
     // loguear operación de entrada a pagina
     @CommitAfter
     Object logueo(){
-        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ALTA_TRABAJADOR);
         return null;
     }
 
@@ -379,7 +379,7 @@ public class TrabajadorNuevo extends GeneralPage {
                            }                           
                          }
                          session.saveOrUpdate(usuarionuevo);
-                       }                       
+                       }                        
                     }
                     else{
                         if(cargo2.getRegimenlaboral()!=null){
@@ -387,12 +387,12 @@ public class TrabajadorNuevo extends GeneralPage {
                                 seteanuevousuario(usuarionuevo);
                                 session.saveOrUpdate(usuarionuevo);
                             }
-                        }
-                        
+                        }                       
                         
                     }
                     nuevo.setEntidad(oi);
-                    session.saveOrUpdate(nuevo);                    
+                    session.saveOrUpdate(nuevo); 
+                    new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevo.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
                     //Guardar Legajo
                     nuevoLegajo = new Legajo();
                     nuevoLegajo.setEntidad(oi);
@@ -422,6 +422,7 @@ public class TrabajadorNuevo extends GeneralPage {
                 //creando usuario nuevo                
 
                 envelope.setContents(helpers.Constantes.EUE_EXITO);
+                new Logger().loguearOperacion(session, _usuario, String.valueOf(cargoAsignado.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO_ASIGNADO);
                 envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
                 return Busqueda.class;
             }
