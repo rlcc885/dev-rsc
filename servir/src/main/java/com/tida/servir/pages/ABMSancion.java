@@ -253,6 +253,16 @@ public class ABMSancion  extends GeneralPage
 
     }
     
+    @Log
+    Object onValueChangedFromCategoria_sancion(DatoAuxiliar dato) {
+        return zonasDatos();
+    }
+    
+    @Log
+    Object onValueChangedFromRegimen_laboral(DatoAuxiliar dato) {
+        return zonasDatos();
+    }
+    
    
     
 
