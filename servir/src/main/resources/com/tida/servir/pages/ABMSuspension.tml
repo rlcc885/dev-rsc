@@ -1,0 +1,56 @@
+<html t:type="layout" title="Sistema SERVIR"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+        <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+    <div class="box-background-title">
+        <span class="box-title-01">
+            Suspensión
+        </span>
+    </div>
+    <div id="panel-01" class="box">
+        <t:zone t:id="suspensionZone">
+            <form t:type="form" t:id="formaltasuspension" t:zone="suspensionZone">
+                <fieldset>
+                    <legend>Inicio de la Suspensión</legend>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Entidad</label>
+                            <input t:type="TextField" t:id="entidad_descripcion"
+                                    t:value="bentidadinicio" size="100" t:disabled="true"/>
+                        </div>
+                        <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                            <input t:id="buscarentiini" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Tipo Documento</label>
+                            <input t:type="Select" t:id="tipo_documento_ini"                                
+                                t:value="nuevasuspension.tipo_documentoini" model="beantipo_documentoini" t:zone="suspensionZone" t:blankOption="ALWAYS"/>
+                        </div>
+                        <div class="f-left">
+                            <label>* Número de Documento</label>
+                            <input t:type="TextField" t:id="num_docini"
+                                    t:value="nuevasuspension.numdocini" size="30"/>
+                        </div>
+                        <div class="f-left">
+                            <label>* Fecha del Documento</label>
+                            <input t:type="TextField" t:id="fecha_docini" t:value="fechadocini" size="25" t:validate="required,regexp" class="fecha_docnot pictureInputDate"/>
+                       </div>
+                    </div>
+                    
+                    
+                    
+                    
+                </fieldset>
+                <fieldset>
+                    <legend>Fin de la Suspensión</legend>
+                </fieldset>
+                <fieldset>
+                    <legend>Observaciones</legend>
+                </fieldset>
+            </form>
+        </t:zone>
+    </div>
+       
+</html>
