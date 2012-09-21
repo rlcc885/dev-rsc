@@ -11,6 +11,7 @@ import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.DateField;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -166,15 +167,15 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private LkBusquedaTrabajador titulart;
+    private Trabajador titulart;
 
     @Persist
     @Property
-    private LkBusquedaEntidad listaentidad;
+    private Entidad listaentidad;
     
     @Persist
     @Property
-    private UsuarioTrabajador u;
+    private Usuario u;
 
     @Property
     @Persist
@@ -295,7 +296,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private UsuarioTrabajador _usuarioRep;
+    private Usuario _usuarioRep;
         
     @Property
     @Persist
@@ -360,6 +361,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = false;
         generarDisabled = false;
         organizacionBool = false;
+        entidadTraba = null;
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
@@ -460,9 +462,9 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    Object onActionFromSeleccionaUsuario(UsuarioTrabajador traba) {
+    Object onActionFromSeleccionaUsuario(Usuario traba) {
         if (traba != null) {
-            usuarioTx = traba.getApellidopaterno() + " " + traba.getApellidomaterno() + ", " + traba.getNombres();
+            usuarioTx = traba.getApellidoPaterno() + " " + traba.getApellidoMaterno() + ", " + traba.getNombres();
             _usuarioRep = traba;
         }
         mostrar = false;
@@ -542,20 +544,23 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    public List<LkBusquedaTrabajador> getTrabajadores() {
-        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
+    public List<Trabajador> getTrabajadores() {
+        Criteria c = session.createCriteria(Trabajador.class);
         if (nombreTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase())
+                    .add(Restrictions.like("apellidoMaterno", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase())
+                    .add(Restrictions.like("nombres", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }else
+            if (entidadTraba == null) return null;
         if (entidadTraba != null)
-            c.add(Restrictions.eq("entidad_id", entidadTraba.getId()));
-
+            c.add(Restrictions.eq("entidad", entidadTraba));
+        
         return c.list();
     }
     
     @Log
-    public List<LkBusquedaEntidad> getEntidades() {
-        Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+    public List<Entidad> getEntidades() {
+        Criteria c = session.createCriteria(Entidad.class);
         if (nombreEntidad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", nombreEntidad + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
@@ -563,8 +568,17 @@ public class RepTrabajador extends GeneralPage {
     }
 
     @Log
+    public List<Entidad> getEntidadesTra() {
+        Criteria c = session.createCriteria(Entidad.class);
+        if (nombreEntidadTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", nombreEntidadTrabajador + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidadTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidadTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }
+        return c.list();
+    }
+    
+    @Log
     public List<UsuarioTrabajador> getUsuarios() {
-        Criteria c = session.createCriteria(UsuarioTrabajador.class);
+        Criteria c = session.createCriteria(Usuario.class);
         if (nombreUsuario != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
