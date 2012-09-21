@@ -5,15 +5,13 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Reportes;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
@@ -339,6 +337,14 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private boolean visualEntidad;
     
+    @Property
+    @Persist
+    private String fechaingresodesde;
+    
+    @Property
+    @Persist
+    private String fechaingresohasta;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -371,7 +377,7 @@ public class RepTrabajador extends GeneralPage {
             
             switch ((int)usu.getRolid()) {//usu.getNivel()
                 case 3://1://Administrador SERVIR
-                    trabajadorLink = entidadLink = gobiernoLink = true;
+                    trabajadorLink = entidadLink = gobiernoLink = usuarioLink = true;//CORREGIR: quitar usuario
                     break;
                 case 2://Administrador de Entidad
                     trabajadorLink = entidadLink = true;
@@ -665,6 +671,11 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    Object onValueChangedFromSTipoSubEntidad() {
+        return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
+    }
+    
+    @Log
     public List<Integer> getBeanNivelOrigen(){
         if(_entidadRep == null)
             return getBeanNivel(_entidadUE, 1);
@@ -766,9 +777,7 @@ public class RepTrabajador extends GeneralPage {
         Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("esSubEntidad", true));
-        if (stipoSubEntidad != null) {
-            c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
-        }
+        c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
         return c.list();
     }
     
