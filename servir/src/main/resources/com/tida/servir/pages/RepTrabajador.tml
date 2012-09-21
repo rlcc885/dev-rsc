@@ -246,7 +246,7 @@
         </t:zone>
             <t:zone t:id="trabaZone" t:update="show">
                 <t:if test="mostrar">
-                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="apellidoPaterno,apellidoMaterno,nombres" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados.</div>
                         </t:parameter>
@@ -262,8 +262,8 @@
                     rowsPerPage="10" 
                     pagerPosition="bottom"
                     row="listaentidad" 
-                    exclude="id,nivelgobierno,departamento,cue_entidad,sigla,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
-                    reorder="ruc,denominacion,acciones"
+                    include="denominacion" 
+                    reorder="denominacion"
                     inPlace="true" 
                     t:add="Acciones">
                         <t:parameter name="empty">
@@ -296,12 +296,12 @@
             </t:zone>
             <t:zone t:id="entiTraZone" t:update="show">
                 <t:if test="mostrar">
-                    <t:grid source="entidades" 
+                    <t:grid source="entidadesTra" 
                     rowsPerPage="10" 
                     pagerPosition="bottom"
                     row="listaentidad" 
-                    exclude="id,nivelgobierno,departamento,cue_entidad,sigla,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
-                    reorder="ruc,denominacion,acciones"
+                    include="denominacion" 
+                    reorder="denominacion"
                     inPlace="true" 
                     t:add="Acciones">
                         <t:parameter name="empty">
