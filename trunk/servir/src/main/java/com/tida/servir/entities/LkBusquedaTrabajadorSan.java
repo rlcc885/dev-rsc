@@ -21,20 +21,90 @@ public class LkBusquedaTrabajadorSan implements Serializable {
     private String nombretrabajador; 
     private String nrodocumento;
     private String apellidoPaterno;
-    private String apellidoMaterno;
+    private String apellidoMaterno;  
     private String nombres;
-    private Long documentoidentidad_id;
-    private String descdocumentoidentidad;    
     private Long entidad_id;
+    private String den_cargo;
+    private String estadocargo;
+    private String regimenvalor;
+    @ManyToOne
+    private DatoAuxiliar regimenlaboral;
+    @ManyToOne
+    private DatoAuxiliar documentoidentidad;
+    @Temporal(TemporalType.DATE)
+    private Date fec_inicio;
+    @Temporal(TemporalType.DATE)
+    private Date fec_fin;
+    private String tiempo_dias;
 
-    public Long getDocumentoidentidad_id() {
-        return documentoidentidad_id;
+    public String getTiempo_dias() {
+        return tiempo_dias;
     }
 
-    public void setDocumentoidentidad_id(Long documentoidentidad_id) {
-        this.documentoidentidad_id = documentoidentidad_id;
+    public void setTiempo_dias(String tiempo_dias) {
+        this.tiempo_dias = tiempo_dias;
+    }    
+    
+    public Date getFec_fin() {
+        return fec_fin;
     }
 
+    public void setFec_fin(Date fec_fin) {
+        this.fec_fin = fec_fin;
+    }
+
+    public Date getFec_inicio() {
+        return fec_inicio;
+    }
+
+    public void setFec_inicio(Date fec_inicio) {
+        this.fec_inicio = fec_inicio;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getDocumentoidentidad() {
+        return documentoidentidad;
+    }
+
+    public void setDocumentoidentidad(DatoAuxiliar documentoidentidad) {
+        this.documentoidentidad = documentoidentidad;
+    }
+    
+    public String getDen_cargo() {
+        return den_cargo;
+    }
+
+    public void setDen_cargo(String den_cargo) {
+        this.den_cargo = den_cargo;
+    }
+
+    public String getEstadocargo() {
+        return estadocargo;
+    }
+
+    public void setEstadocargo(String estadocargo) {
+        this.estadocargo = estadocargo;
+    }
+    
+    @ManyToOne
+    public DatoAuxiliar getRegimenlaboral() {
+        return regimenlaboral;
+    }
+
+    public void setRegimenlaboral(DatoAuxiliar regimenlaboral) {
+        this.regimenlaboral = regimenlaboral;
+    }
+
+    public String getRegimenvalor() {
+        return regimenvalor;
+    }
+
+    public void setRegimenvalor(String regimenvalor) {
+        this.regimenvalor = regimenvalor;
+    }
+
+    
+    
     public Long getEntidad_id() {
         return entidad_id;
     }
@@ -94,14 +164,6 @@ public class LkBusquedaTrabajadorSan implements Serializable {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
-    }
-
-    public String getDescdocumentoidentidad() {
-        return descdocumentoidentidad;
-    }
-
-    public void setDescdocumentoidentidad(String descdocumentoidentidad) {
-        this.descdocumentoidentidad = descdocumentoidentidad;
     }   
     
 }

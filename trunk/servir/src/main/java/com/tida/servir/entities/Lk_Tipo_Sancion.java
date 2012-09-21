@@ -47,6 +47,16 @@ public class Lk_Tipo_Sancion implements Serializable {
     @Column(name = "ID_REG_LABORAL")
     private Long reg_laboral;
     private Long categoria;
+    private long codigo;
+
+    public long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
+    }    
+    
     public Lk_Tipo_Sancion() {
     }
 

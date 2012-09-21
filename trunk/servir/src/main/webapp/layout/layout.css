@@ -1579,7 +1579,7 @@ DIV.t-data-grid {
     font-weight: bold;
 }
 
-#shade,#shade2, #modal,#modalNuevaUnidadOrganica,#modalNuevoCargo { display: none; }
+#shade,#shade2, #modal,#modal2,#modalNuevaUnidadOrganica,#modalNuevoCargo { display: none; }
 #shade,#shade2 { 
     position: fixed; 
     z-index: 100; 
@@ -1591,7 +1591,7 @@ DIV.t-data-grid {
     filter: alpha(opacity=75);
     background: #000;
 }
-#modal { 
+#modal,#modal2 { 
     position: fixed; 
     z-index:1002; 
     top: 50%; 

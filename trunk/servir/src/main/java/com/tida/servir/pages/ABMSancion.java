@@ -9,6 +9,9 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -16,6 +19,7 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -31,7 +35,8 @@ public class ABMSancion  extends GeneralPage
     @Property
     @SessionState
     private Usuario usuario;
-    
+    @Inject
+    private Request _request;
     @Inject
     private Session session;
     @Inject
@@ -43,7 +48,7 @@ public class ABMSancion  extends GeneralPage
     private String bdenoentidad;
     @Property
     @Persist
-    private String bnomautoridad;
+    private String bnomtrabajador;
     @Property
     @Persist
     private LkBusquedaEntidad rowentidad;
@@ -85,6 +90,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private String bestadopuesto;
+    @Property
+    @Persist
+    private Entidad entidadbusqueda;
     
     //datos de la sancion
     @Property
@@ -120,7 +128,12 @@ public class ABMSancion  extends GeneralPage
     @InjectComponent
     private Zone sancionZone;
     @InjectComponent
+    private Zone tiposancionZone;
+    @InjectComponent
     private Zone busquedamodalZone;
+    @InjectComponent
+    private Zone inhabilitacionZone;
+     
     //validaciones
     @Property
     @Persist
@@ -134,11 +147,16 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean mostrarlista;
+    @Property
+    @Persist
+    private Boolean mostrarfecha;
     private int elemento=0;
     
     // inicio de la pagina
     @SetupRender
     void inicio(){
+        bmostrar=false;
+        mostrarfecha=false;
         nuevasancion=new Sancion();
         if(usuario.getRolid()==2){
             bmostrarrol=false;
@@ -207,17 +225,24 @@ public class ABMSancion  extends GeneralPage
     }
     
     @Log
+    void onSelectedFromBuscarpersona(){
+        elemento=3;
+    }
+    @Log
     @CommitAfter
     Object onSuccessFromformbusqueda() {
       if(elemento==1){
           mostrarlista=false;
-          System.out.println("aquiiiiiiiii"+mostrarentidad);
+          bdenoentidad=null;
            return zonasDatos();
       }  
       else if(elemento==2){
           mostrarlista=false;
-          System.out.println("aquiiiiiiiii"+mostrarentidad);
+          bnomtrabajador=null;
           return zonasDatos();
+      }
+      else if(elemento==3){
+          
       }
       return busquedaZone.getBody();
     }
@@ -234,9 +259,12 @@ public class ABMSancion  extends GeneralPage
       return zonasDatos();
     }
     
-    
-    
-    
+    @Log
+    Object onActionFromBuscarautoridadnot(){
+        
+        return sancionZone.getBody();
+    }
+
      @Log
      public List<LkBusquedaEntidad> getListadoEntidades() {
          Criteria c = session.createCriteria(LkBusquedaEntidad.class);
@@ -244,9 +272,6 @@ public class ABMSancion  extends GeneralPage
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()).
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
-         }
-         if(usuario.getRolid()==2){
-             
          }
          nroregistros = Integer.toString(c.list().size());
          return c.list();
@@ -266,24 +291,57 @@ public class ABMSancion  extends GeneralPage
     @Log
      public List<LkBusquedaTrabajadorSan> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajadorSan.class);
-        if (bnomautoridad != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
+        if (bnomtrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
+        if(usuario.getRolid()==2){
+            c.add(Restrictions.eq("entidad_id", eue.getId()));
+        }
+        else{
+            if(entidadbusqueda!=null){
+                c.add(Restrictions.eq("entidad_id", entidadbusqueda.getId()));
+            }
+        }        
         return c.list();
     }
     
     @Log
     @CommitAfter
-    Object onSuccessFromformbusquedaautoridad(){
+    Object onSuccessFromformbusquedatrabajador(){
         mostrarlista=true;
         return busquedamodalZone.getBody();
     }
     
     @Log
     Object onActionFromSeleccionarentidad(Entidad enti) {
-        bentidad = enti.getDenominacion();
+        entidadbusqueda=enti;
+        bentidad = enti.getDenominacion();        
         return busquedaZone.getBody();
     }
+    
+    @Log
+    Object onActionFromSeleccionaTrabajador(LkBusquedaTrabajadorSan btra) {
+        limpiarbusqueda();
+        bdocidentidad=btra.getDocumentoidentidad();
+        bnumerodocumento=btra.getNrodocumento();
+        bnombres=btra.getNombres();
+        bapaterno=btra.getApellidoPaterno();
+        bamaterno=btra.getApellidoMaterno();
+        bregimen=btra.getRegimenlaboral();
+        bpuesto=btra.getDen_cargo();
+        bestadopuesto=btra.getEstadocargo();
+        nuevasancion.setTiem_ser_dia(String.valueOf(btra.getTiempo_dias()));
+        if(btra.getFec_fin()!=null){
+            calcular(btra.getFec_inicio(),btra.getFec_fin());
+        }
+        else{
+            java.util.Date fechaactual = new Date();
+            calcular(btra.getFec_inicio(),fechaactual);
+        }
+        return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
+    }
+     
+    
     
     @Log
     private MultiZoneUpdate zonasDatos() {
@@ -296,13 +354,67 @@ public class ABMSancion  extends GeneralPage
     
     @Log
     Object onValueChangedFromCategoria_sancion(DatoAuxiliar dato) {
-        return zonasDatos();
+           return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
     }
     
     @Log
-    Object onValueChangedFromRegimen_laboral(DatoAuxiliar dato) {
-        return zonasDatos();
+    Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
+           if(dato.getCodigo()==3){
+               mostrarfecha=true;
+           } 
+           else{
+               mostrarfecha=false;
+           }
+           return new MultiZoneUpdate("inhabilitacionZone", inhabilitacionZone.getBody());
+    } 
+        
+    void limpiarbusqueda(){
+        bdocidentidad=null;
+        bnumerodocumento=null;
+        bnombres=null;
+        bapaterno=null;
+        bamaterno=null;
+        bregimen=null;
+        bpuesto=null;
+        bestadopuesto=null;
     }
+    
+    void calcular(Date inicio,Date fin){
+        long fechaInicial = inicio.getTime(); //Tanto fecha inicial como fecha final son Date. 
+        long fechaFinal = fin.getTime(); 
+        long diferencia = fechaInicial - fechaFinal; 
+        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)); 
+        System.out.println("diasssssssss"+inicio+"-"+fin+"-"+dias);
+//        System.current(inicio.getTime()-fin.getTime());
+//        SimpleDateFormat dateyear = new SimpleDateFormat("yyyy");
+//        SimpleDateFormat datemes = new SimpleDateFormat("MM");
+//        SimpleDateFormat datedia = new SimpleDateFormat("dd");
+//        nuevasancion.setTiem_ser_anio(Integer.toString(Integer.parseInt(dateyear.format(fin))-Integer.parseInt(dateyear.format(inicio))));
+//        nuevasancion.setTiem_ser_mes(Integer.toString(Integer.parseInt(datemes.format(fin))-Integer.parseInt(datemes.format(inicio))));
+//        nuevasancion.setTiem_ser_dia(Integer.toString(Integer.parseInt(datedia.format(fin))-Integer.parseInt(datedia.format(inicio))));
+////        System.out.println("aquiiiiiii"+inicio+"-"+dateFormat.format(inicio));
+    }
+    
+//     public static String restaFechas(GregorianCalendar date1, GregorianCalendar date2) {
+//        if (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR)) {
+//            return String.valueOf(date2.get(Calendar.DAY_OF_YEAR) - date1.get(Calendar.DAY_OF_YEAR));
+//        } else {
+//            /* SI ESTAMOS EN DISTINTO ANYO COMPROBAMOS QUE EL ANYO DEL DATEINI NO SEA BISIESTO
+//             * SI ES BISIESTO SON 366 DIAS EL ANYO
+//             * SINO SON 365
+//             */
+//            int diasAnyo = date1.isLeapYear(date1.get(Calendar.YEAR)) ? 366 : 365;
+//
+//            /* CALCULAMOS EL RANGO DE ANYOS */
+//            int rangoAnyos = date2.get(Calendar.YEAR) - date1.get(Calendar.YEAR);
+//
+//            /* CALCULAMOS EL RANGO DE DIAS QUE HAY */
+//            int rango = (rangoAnyos * diasAnyo) + (date2.get(Calendar.DAY_OF_YEAR) - date1.get(Calendar.DAY_OF_YEAR));
+//
+//            return String.valueOf(rango);
+//        }
+//    }
+    
     
    
     
