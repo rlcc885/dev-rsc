@@ -171,7 +171,7 @@
     </script>
     
     <div id="shade"></div>
-    <div id="modal" >
+    <div id="modal" style="width: fit-content; height: fit-content">
         <t:zone t:id="busZone" t:update="show" >
             <t:if test="mostrarFiltrosTrabajador" >
                 <t:if test="mostrarTrabajadorS">
