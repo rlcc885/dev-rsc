@@ -1,3 +1,4 @@
+
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tida</groupId>
@@ -275,12 +276,12 @@ Fin de librerias pentaho -->
             <artifactId>html2image</artifactId>
             <version>0.9</version>
         </dependency>-->
-        <dependency>
+<!--        <dependency>
             <groupId>commons-javaflow</groupId>
             <artifactId>commons-javaflow</artifactId>
             <version>20060411</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.8.2</version>
@@ -299,28 +300,29 @@ Fin de librerias pentaho -->
             <groupId>groovy-all</groupId>
             <artifactId>groovy-all</artifactId>
             <version>1.7.5</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>iText</groupId>
             <artifactId>iText</artifactId>
             <version>2.1.7</version>
-        </dependency>
+        </dependency>-->
         <dependency>
-            <groupId>jasperreports</groupId>
+            <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>4.7.0</version>
         </dependency>
-        <dependency>
+            
+<!--        <dependency>
             <groupId>poi</groupId>
             <artifactId>poi</artifactId>
             <version>3.7-20101029</version>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>png-encoder</groupId>
             <artifactId>png-encoder</artifactId>
             <version>1.5</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
