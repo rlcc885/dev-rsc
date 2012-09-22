@@ -6,11 +6,7 @@
 package Batch.Helpers;
 
 import Batch.Tratamiento;
-import au.com.bytecode.opencsv.CSVReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,152 +26,197 @@ public class ListLineaEntidadUE {
         LineasArchivos lo;
         try {
             if(!misCSVs.get(0).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(0)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(0)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxENTIDAD");
                 llo.add(lo);
             }
             if(!misCSVs.get(1).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(1)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(1)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxCONCEPTO");
                 llo.add(lo);
             }
             if(!misCSVs.get(2).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(2)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(2)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxUNIDADORGANICA");
                 llo.add(lo);
             }
             if(!misCSVs.get(3).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(3)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(3)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxCARGO");
                 llo.add(lo);
             }
             if(!misCSVs.get(4).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(4)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(4)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxCARGOASIGNADO");
                 llo.add(lo);
             }
             if(!misCSVs.get(5).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(5)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(5)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxREMUNERACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(6).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(6)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(6)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxEVALUACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(7).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(7)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(7)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxCONSTANCIA");
                 llo.add(lo);
             }
             if(!misCSVs.get(8).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(8)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(8)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxTRABAJADOR");
                 llo.add(lo);
             }
             if(!misCSVs.get(9).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(9)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(9)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxESTUDIO");
                 llo.add(lo);
             }
             if(!misCSVs.get(10).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(10)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(10)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxCURSO");
                 llo.add(lo);
             }
             if(!misCSVs.get(11).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(11)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(11)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxANTECEDENTE");
                 llo.add(lo);
             }
             if(!misCSVs.get(12).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(12)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(12)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxPRODUCCION");
                 llo.add(lo);
             }
             if(!misCSVs.get(13).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(13)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(13)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxFAMILIAR");
                 llo.add(lo);
             }
             if(!misCSVs.get(14).equals("")){
-                Workbook wb = Workbook.getWorkbook(new File(path+"/"+misCSVs.get(14)+".xls"));
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(14)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int lNumeroLineas = 0; 
+                while ((data = bf.readLine())!=null) {
+                    lNumeroLineas++;
+                }
                 lo = new LineasArchivos();
-                Sheet sheet = wb.getSheet(0);
-                int rows = sheet.getRows();
-                lo = new LineasArchivos();
-                lo.setLineas(rows-1);
+                lo.setLineas(lNumeroLineas-1);
                 lo.setArchivo("xxxDEMERITO");
                 llo.add(lo);
             }            
