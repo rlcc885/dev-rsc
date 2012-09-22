@@ -114,7 +114,7 @@ public class ValidacionXLS {
         File[] list = directorio.listFiles();
         if (list != null) {
             for (int i = 0; i < list.length; i++) {
-                if (list[i].getName().endsWith(".XLS") || list[i].getName().endsWith(".xls")) {
+                if (list[i].getName().endsWith(".txt") || list[i].getName().endsWith(".TXT")) {
                     misCSVs.set(compareStringDepositorioToArrayListArchivos(list[i].getName().substring(0, (list[i].getName().length()) - 4), archivos, errores), list[i].getName().substring(0, (list[i].getName().length()) - 4));
                 }
             }
