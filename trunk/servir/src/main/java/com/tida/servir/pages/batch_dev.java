@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JRException;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.*;
@@ -265,7 +265,7 @@ public class batch_dev  extends GeneralPage {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
             lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
-            paraDescargar = lugarArchivo + nombreArchivo + "XLS.zip";
+            paraDescargar = lugarArchivo + nombreArchivo + "TXT.zip";
             String archivoXLS = lugarArchivo + file.getFileName();
             copied = new File(lugarArchivo);
             if (!copied.exists()) {
@@ -367,18 +367,18 @@ public class batch_dev  extends GeneralPage {
     @Persist
     private ReporteBatch.Formatos formato ;
 
-    private String tipoReporte = "report1";
-
-    @OnEvent(value="submit" ,component="reporte") 
-    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
-    {
-        
-    HashMap<String,Object> parametros = new HashMap<String,Object>();
-
-    ReporteBatch reportes= new ReporteBatch();
-            
-    return  reportes.getReporte(tipoReporte, parametros, formato);
-    
-    }
+//    private String tipoReporte = "report1";
+//
+//    @OnEvent(value="submit" ,component="reporte") 
+//    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
+//    {
+//        
+//    HashMap<String,Object> parametros = new HashMap<String,Object>();
+//
+//    ReporteBatch reportes= new ReporteBatch();
+//            
+//    return  reportes.getReporte(tipoReporte, parametros, formato);
+//    
+//    }
     
 }
