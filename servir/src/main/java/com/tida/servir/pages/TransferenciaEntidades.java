@@ -177,6 +177,7 @@ public class TransferenciaEntidades extends GeneralPage{
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+        c.add(Restrictions.eq("estado", true));
         if (bdenoentidad != null && !bdenoentidad.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()));
         }        
@@ -254,7 +255,7 @@ public class TransferenciaEntidades extends GeneralPage{
         query.setParameter("as_entidad_id_origen", eo.getId());
         query.setParameter("as_entidad_id_destino", ed.getId());
         List result = query.list();
-        session.flush();
+//        session.close();
         new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_EXECUTE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRANSFERENCIA);
     }
     

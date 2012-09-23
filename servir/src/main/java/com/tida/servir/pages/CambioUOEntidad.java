@@ -212,6 +212,7 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+        c.add(Restrictions.eq("estado", true));
         if (bdenoentidad != null && !bdenoentidad.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()));
         }        
