@@ -254,7 +254,7 @@ public class TransferenciaEntidades extends GeneralPage{
         Query query = session.getNamedQuery("callSpTransferencia");
         query.setParameter("as_entidad_id_origen", eo.getId());
         query.setParameter("as_entidad_id_destino", ed.getId());
-        List result = query.list();
+        query.list();
 //        session.close();
         new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_EXECUTE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRANSFERENCIA);
     }

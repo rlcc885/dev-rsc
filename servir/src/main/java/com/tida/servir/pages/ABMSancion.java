@@ -51,10 +51,25 @@ public class ABMSancion  extends GeneralPage
     private String bnomtrabajador;
     @Property
     @Persist
+    private String bnomautoridad;
+    @Property
+    @Persist
     private LkBusquedaEntidad rowentidad;
     @Property
     @Persist
     private LkBusquedaTrabajadorSan btrabajador;
+    @Property
+    @Persist
+    private LkBusquedaFuncionario bfuncionario;
+    @Property
+    @Persist
+    private Funcionario nuevofuncionario;
+    @Property
+    @Persist
+    private String bnomtrabaautoridad;
+    @Property
+    @Persist
+    private LkBusquedaTrabajadorAuto btrabajadorauto;
     
     //campos de datos del sancionado
     @Property
@@ -133,6 +148,8 @@ public class ABMSancion  extends GeneralPage
     private Zone busquedamodalZone;
     @InjectComponent
     private Zone inhabilitacionZone;
+    @InjectComponent
+    private Zone autoridadmodalZone;
      
     //validaciones
     @Property
@@ -150,6 +167,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean mostrarfecha;
+    @Property
+    @Persist
+    private Boolean mostrarnuevof;
     private int elemento=0;
     
     // inicio de la pagina
@@ -158,6 +178,7 @@ public class ABMSancion  extends GeneralPage
         bmostrar=false;
         mostrarfecha=false;
         nuevasancion=new Sancion();
+        nuevofuncionario=new Funcionario();
         if(usuario.getRolid()==2){
             bmostrarrol=false;
             bmostrar=true;
@@ -260,8 +281,8 @@ public class ABMSancion  extends GeneralPage
     }
     
     @Log
-    Object onActionFromBuscarautoridadnot(){
-        
+    Object onBuscarautoridadnot(){  
+        mostrarnuevof=false;
         return sancionZone.getBody();
     }
 
@@ -289,7 +310,7 @@ public class ABMSancion  extends GeneralPage
     private String nroregistros; 
     
     @Log
-     public List<LkBusquedaTrabajadorSan> getTrabajadores() {
+    public List<LkBusquedaTrabajadorSan> getTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajadorSan.class);
         if (bnomtrabajador != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
@@ -340,7 +361,50 @@ public class ABMSancion  extends GeneralPage
         }
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
-     
+    
+    @Log
+    public List<LkBusquedaFuncionario> getFuncionarios() {
+        Criteria c = session.createCriteria(LkBusquedaFuncionario.class);
+        if (bnomautoridad != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad + "%").ignoreCase()).add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }     
+        return c.list();
+    }
+    
+    @Log
+    public List<LkBusquedaTrabajadorAuto> getTrabajadoresAuto() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajadorAuto.class);
+        if (bnomtrabaautoridad != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
+        }     
+        return c.list();
+    }
+    
+    @Log
+    Object onActionFromSeleccionaTrabajadorAuto(LkBusquedaTrabajadorAuto traauto) {
+        nuevofuncionario.setApellidoMaterno(traauto.getApellidoMaterno());
+        nuevofuncionario.setApellidoPaterno(traauto.getApellidoPaterno());
+        nuevofuncionario.setNombres(traauto.getNombres());
+        nuevofuncionario.setNroDocumento(traauto.getNroDocumento());       
+        return autoridadmodalZone.getBody();
+    }
+    
+    @Log
+    void onSelectedFromNuevautoridad(){
+        elemento=4;
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformbusquedaautoridad(){
+        if(elemento==4){
+            mostrarnuevof=true;
+        }else{
+            mostrarlista=true;
+        }
+        
+        return autoridadmodalZone.getBody();
+    }
     
     
     @Log
@@ -380,41 +444,14 @@ public class ABMSancion  extends GeneralPage
     }
     
     void calcular(Date inicio,Date fin){
-        long fechaInicial = inicio.getTime(); //Tanto fecha inicial como fecha final son Date. 
-        long fechaFinal = fin.getTime(); 
-        long diferencia = fechaInicial - fechaFinal; 
-        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)); 
-        System.out.println("diasssssssss"+inicio+"-"+fin+"-"+dias);
-//        System.current(inicio.getTime()-fin.getTime());
-//        SimpleDateFormat dateyear = new SimpleDateFormat("yyyy");
-//        SimpleDateFormat datemes = new SimpleDateFormat("MM");
-//        SimpleDateFormat datedia = new SimpleDateFormat("dd");
-//        nuevasancion.setTiem_ser_anio(Integer.toString(Integer.parseInt(dateyear.format(fin))-Integer.parseInt(dateyear.format(inicio))));
-//        nuevasancion.setTiem_ser_mes(Integer.toString(Integer.parseInt(datemes.format(fin))-Integer.parseInt(datemes.format(inicio))));
-//        nuevasancion.setTiem_ser_dia(Integer.toString(Integer.parseInt(datedia.format(fin))-Integer.parseInt(datedia.format(inicio))));
-////        System.out.println("aquiiiiiii"+inicio+"-"+dateFormat.format(inicio));
+//        long fechaInicial = inicio.getTime(); //Tanto fecha inicial como fecha final son Date. 
+//        long fechaFinal = fin.getTime(); 
+//        long diferencia = fechaInicial - fechaFinal; 
+//        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)); 
+//        System.out.println("diasssssssss"+inicio+"-"+fin+"-"+dias);
     }
     
-//     public static String restaFechas(GregorianCalendar date1, GregorianCalendar date2) {
-//        if (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR)) {
-//            return String.valueOf(date2.get(Calendar.DAY_OF_YEAR) - date1.get(Calendar.DAY_OF_YEAR));
-//        } else {
-//            /* SI ESTAMOS EN DISTINTO ANYO COMPROBAMOS QUE EL ANYO DEL DATEINI NO SEA BISIESTO
-//             * SI ES BISIESTO SON 366 DIAS EL ANYO
-//             * SINO SON 365
-//             */
-//            int diasAnyo = date1.isLeapYear(date1.get(Calendar.YEAR)) ? 366 : 365;
-//
-//            /* CALCULAMOS EL RANGO DE ANYOS */
-//            int rangoAnyos = date2.get(Calendar.YEAR) - date1.get(Calendar.YEAR);
-//
-//            /* CALCULAMOS EL RANGO DE DIAS QUE HAY */
-//            int rango = (rangoAnyos * diasAnyo) + (date2.get(Calendar.DAY_OF_YEAR) - date1.get(Calendar.DAY_OF_YEAR));
-//
-//            return String.valueOf(rango);
-//        }
-//    }
-    
+
     
    
     

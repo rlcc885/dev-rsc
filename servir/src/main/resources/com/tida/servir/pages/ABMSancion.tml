@@ -172,10 +172,12 @@
                         <input t:type="TextField" t:id="autoridad_not" value="autoridadnot" size="100" t:validate="required" t:disabled="true"/>
                    </div>
                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                       <!--<t:eventLink t:event="buscarautoridadnot" href="#" class="button f-right" t:zone="sancionZone" onClick="javascript: mostrar2();">                            
-                                ...
-                       </t:eventLink>-->
-                       <t:actionlink t:id="buscarautoridadnot" zone="sancionZone" onClick="javascript:mostrar();">...</t:actionlink>
+                       <t:eventLink t:event="buscarautoridadnot" href="#" class="button f-right" t:zone="sancionZone" onClick="javascript: mostrar2();">                            
+                                <span t:type="any" onClick="javascript: mostrar2();">
+                                    ...
+                                </span> 
+                       </t:eventLink>
+                       <!--<t:actionlink t:id="buscarautoridadnot" zone="sancionZone" onClick="javascript:mostrar();">...</t:actionlink>-->
                         <!--<input t:id="buscarautoridadnot" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>-->
                    </div>
                </fieldset>
@@ -306,7 +308,7 @@
                     </div>                    
                 </form>
                 <t:if test="mostrarlista">
-                    <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom" row="btrabajador" include="nombretrabajador,den_cargo,regimenvalor,estadocargo" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="btrabajador" include="nombretrabajador,den_cargo,regimenvalor,estadocargo" inPlace="true">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay Trabajadores encontrados.</div>
                             </t:parameter>
@@ -323,25 +325,114 @@
          </t:zone>
     </div>
     <div id="shade2"></div>
-    <div id="modal2" style="height: 360px;">
+    <div id="modal2" style="height: 410px;">
        <t:zone t:id="autoridadmodalZone" t:update="show">
+         <t:if test="mostrarnuevof" negate="true">
            <div class="box-background-title">
                 <span class="box-title-01">
                     Selección de Autoridad
                 </span>
            </div>
            <div id="panel-01" class="box">
-            <form t:type="form" t:id="formbusquedaautoridad" t:zone ="busquedamodalZone">
+            <form t:type="form" t:id="formbusquedaautoridad" t:zone ="autoridadmodalZone">
                 <div class="f-wrap">
                     <label>Apellidos / Nombres</label>
-
+                    <input t:type="TextField" t:id="nombre_autoridad" value="bnomautoridad" size="100"/>
                 </div>     
                 <div class="f-wrap">
-                    <input id="buscarsubmit3" type="submit" value="Buscar" class="button f-right" /> 
+                    <input t:id="nuevautoridad" t:type="submit" value="Nuevo" class="button f-right" />                
                     <input t:type="Submit" t:id="cancelmodal3" value="Cancelar" class="button f-right" onClick="javascript: ocultar2();"/>
+                    <input id="buscarsubmit3" type="submit" value="Buscar" class="button f-right" />                   
                 </div> 
             </form>
-           </div>
+            <t:if test="mostrarlista">
+                Listado de Autoridades
+                <t:grid source="funcionarios" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario" inPlace="true">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay Autoridades encontrados.</div>
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaFuncionario" zone="autoridadmodalZone" context="bfuncionario" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                </t:grid>               
+                <div class="f-right"><b>${nroregistros} Registros.</b></div>
+                <br/>
+                <br/>
+            </t:if>
+          </div>
+         </t:if>
+         <t:if test="mostrarnuevof">          
+          <form t:type="form" t:id="formnuevaautoridad" t:zone ="autoridadmodalZone">
+            <div class="box-background-title">
+            <span class="box-title-01">
+                Nueva Autoridad
+            </span>
+            </div>
+            <div id="panel-01" class="box"> 
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>* Apellido Paterno</label>
+                        <input t:type="TextField" t:id="autoridad_apaterno" value="nuevofuncionario.apellidoPaterno" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Apellido Materno</label>
+                        <input t:type="TextField" t:id="autoridad_amaterno" value="nuevofuncionario.apellidoMaterno" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Nombres</label>
+                        <input t:type="TextField" t:id="autoridad_nombres" value="nuevofuncionario.nombres" size="30" t:validate="required"/>
+                    </div>
+                </div>
+                <div class="f-wrap">
+                    <div class="f-left">
+                        <label>* Tipo de Documento</label>
+                        
+                    </div>
+                    <div class="f-left">
+                        <label>* Número de Documento</label>
+                        <input t:type="TextField" t:id="autoridad_nrodocumento" value="nuevofuncionario.nroDocumento" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Cargo</label>
+                        <input t:type="TextField" t:id="autoridad_cargo" value="nuevofuncionario.den_cargo" size="30" t:validate="required"/>
+                    </div>
+                    <div class="f-left" style="position:relative; top:13px; left:140px;">
+                        <input t:id="saveautoridad" t:type="submit" value="Guardar" class="button f-right" />                
+                        <t:eventLink t:event="cancelmodal3" href="#" class="button f-right" t:zone="autoridadmodalZone">
+                            <span t:type="any">
+                                Cancelar
+                            </span> 
+                        </t:eventLink>
+                    </div>
+                </div>
+             </div> 
+             <div class="box-background-title">
+                <span class="box-title-01">
+                    Listado de Trabajadores
+                </span>
+             </div>
+             <div id="panel-01" class="box">
+                <div class="f-wrap">
+                  <div class="f-left">
+                    <label>Apellidos / Nombres</label>
+                    <input t:type="TextField" t:id="nombre_autoridad_trabajador" value="bnomtrabaautoridad" size="100"/>
+                  </div>
+                  <div class="f-left" style="position:relative; top:13px; left:160px;">
+                    <input t:id="buscartrabaautoridad" t:type="submit" value="Buscar" class="button f-right" />
+                  </div>
+                </div>             
+                <t:grid source="trabajadoresAuto" rowsPerPage="4" t:add="Acciones" pagerPosition="bottom" row="btrabajadorauto" include="nombretrabajador" inPlace="true">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay Trabajadores encontrados.</div>
+                        </t:parameter>
+                        <p:accionesCell> 
+                            <t:actionlink t:id="seleccionaTrabajadorAuto" zone="autoridadmodalZone" context="btrabajadorauto">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                </t:grid>
+            </div>
+         </form>
+         </t:if>
+           
        </t:zone>
     </div>
     
