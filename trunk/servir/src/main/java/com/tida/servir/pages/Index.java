@@ -91,10 +91,10 @@ public class Index {
         // Validamos si el aplicativo está siendo cargado desde un punto OffLine
         Criteria criteriobusqueda;
         criteriobusqueda = session.createCriteria(UsuarioTrabajador.class);
-        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
+//        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
 
         if (criteriobusqueda.list().isEmpty()) {
-            return null;
+            return "Wizard";
         }
 
         return null;
