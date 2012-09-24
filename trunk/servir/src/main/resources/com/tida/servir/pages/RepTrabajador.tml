@@ -38,7 +38,6 @@
             <fieldset>
                 <div>
                     <t:if test="mostrarFiltrosTrabajador" >
-                        <legend> Categoría: Trabajador </legend><br />
                         <div class="f-wrap">
                             <t:form t:id="trabajadorForm" zone="tipoReporteZone">
                                 <t:zone t:id="trabajadorZone" t:update="show">
@@ -63,7 +62,6 @@
                 <div>
                     <t:if test="mostrarFiltrosEntidad" >
                         <t:form t:id="entidadForm" zone="tipoReporteZone">
-                            <legend> Categoría: Entidad </legend><br />
                             <div class="f-wrap">                             
                                 <t:zone t:id="entidadZone" t:update="show">
                                     <div class="f-left">
@@ -83,7 +81,6 @@
                 
                 <div>
                     <t:if test="mostrarFiltrosUsuario" >
-                        <legend> Categoría: Sistema </legend><br />
                         <div class="f-wrap">
                             <t:form t:id="usuarioForm" zone="tipoReporteZone">
                                 <t:zone t:id="usuarioZone" t:update="show">
@@ -111,7 +108,6 @@
                 
                 <div>
                     <t:if test="mostrarFiltrosGobierno">
-                        <legend> Categoría: Consolidado </legend><br />
                         <div class="f-wrap">    
                             <t:zone t:id="gobiernoZone" id="gobiernoZone" t:update="show">
                                 <div class="f-left">
