@@ -15,7 +15,8 @@
             <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;</t:if>
             <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> &nbsp;-&nbsp;</t:if>
             <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidado</a></t:if>
+            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidado</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="sancionLink" ><a t:type="actionlink" t:id="mostrarSancion" zone="tipoReporteZone">Sanciones</a></t:if>
         </fieldset>
     </div>
     <div class="organismo_titulo" t:type="zone" t:id="categoriaZone" update="show">
@@ -140,6 +141,16 @@
                                         </t:if>
                                     </t:form>
                                 </div>
+                            </t:zone>
+                        </div>
+                    </t:if>
+                </div>
+                
+                <div>
+                    <t:if test="mostrarFiltrosSancion">
+                        <div class="f-wrap">
+                            <t:zone t:id="sancionZone" id="sancionZone" t:update="show">
+                                SANCIONES
                             </t:zone>
                         </div>
                     </t:if>
