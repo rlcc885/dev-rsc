@@ -11,8 +11,6 @@ import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.DateField;
-import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
@@ -85,6 +83,10 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     @Property
     private boolean mostrarFiltrosGobierno;
+    
+    @Property
+    @Persist
+    private boolean mostrarFiltrosSancion;
     
     @Property
     @InjectComponent
@@ -200,6 +202,10 @@ public class RepTrabajador extends GeneralPage {
     @Property
     @Persist
     private boolean gobiernoLink;
+    
+    @Property
+    @Persist
+    private boolean sancionLink;
     
     @Property
     @Persist
@@ -346,6 +352,10 @@ public class RepTrabajador extends GeneralPage {
     @Persist
     private String fechaingresohasta;
     
+    @Property
+    @InjectComponent
+    private Zone sancionZone;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -359,6 +369,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
+        mostrarFiltrosSancion = false;
         generarDisabled = false;
         organizacionBool = false;
         entidadTraba = null;
@@ -379,7 +390,7 @@ public class RepTrabajador extends GeneralPage {
             
             switch ((int)usu.getRolid()) {//usu.getNivel()
                 case 3://1://Administrador SERVIR
-                    trabajadorLink = entidadLink = gobiernoLink = usuarioLink = true;//CORREGIR: quitar usuario
+                    trabajadorLink = entidadLink = gobiernoLink = usuarioLink = sancionLink = true;//CORREGIR: quitar usuario y elegir quienes ven sanciones
                     break;
                 case 2://Administrador de Entidad
                     trabajadorLink = entidadLink = true;
@@ -639,6 +650,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
+        mostrarFiltrosSancion = false;
         generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
@@ -653,6 +665,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = false;
+        mostrarFiltrosSancion = false;
         generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
@@ -664,6 +677,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = true;
         mostrarFiltrosGobierno = false;
+        mostrarFiltrosSancion = false;
         generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
@@ -675,6 +689,19 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
         mostrarFiltrosGobierno = true;
+        mostrarFiltrosSancion = false;
+        generarDisabled = true;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
+    }
+    
+    @Log
+    Object onActionFromMostrarSancion() {
+        categoria = "Sanciones";
+        mostrarFiltrosTrabajador = false;
+        mostrarFiltrosEntidad = false;
+        mostrarFiltrosUsuario = false;
+        mostrarFiltrosGobierno = false;
+        mostrarFiltrosSancion = true;
         generarDisabled = true;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
