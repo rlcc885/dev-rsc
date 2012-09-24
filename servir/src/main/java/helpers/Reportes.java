@@ -40,7 +40,7 @@ public class Reportes {
 				LUE1, L1, L2, L3, L4, L5, L6, L7, L9, L11,  //REPORTE NUEVOS MAFI
 				D44, C1212, //REPORTE MAFI
 				D66, D77, D88, // REPORTES MAFI
-				B2, B3, B4, B5,	    
+				B2, B3, B4, B5, B1,
                                 C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C12_PDF,
                                 D1, D2, D3, D4, D4_PDF, D5, D6, D6_PDF, D7, D7_PDF, D8, D8_PDF, remuneraciones,
                                 Reporte2 };
@@ -51,7 +51,7 @@ public class Reportes {
 					    "LUE1.prpt", "L1.prpt", "L2.prpt", "L3.prpt", "L4.prpt", "L5.prpt", "L6.prpt", "L7.prpt", "L9.prpt", "L11.prpt", // REPORTES NUEVOS MAFI
 					    "D44.prpt", "C1212.prpt", //nuevo mafi
 					    "D66.prpt", "D77.prpt", "D88.prpt",// reportes mafi
-                                            "B2.prpt", "B3.prpt", "B4.prpt", "B5.prpt",
+                                            "B2.prpt", "B3.prpt", "B4.prpt", "B5.prpt", "B1.prpt",
                                             "C1.prpt", "C2.prpt", "C3.prpt", "C4.prpt", "C5.prpt",
                                             "C6.prpt", "C7.prpt", "C8.prpt", "C9.prpt", "C10.prpt",
                                             "C11.prpt", "C12.prpt",  "C12.prpt",

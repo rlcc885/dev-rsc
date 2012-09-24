@@ -231,7 +231,9 @@ public class RepTrabajador extends GeneralPage {
     
     private static final long GOBIERNO = 3;
     
-    private static final long NINGUNO = 4;
+    private static final long SANCION = 4;
+    
+    private static final long NINGUNO = 5;
     
     @Property
     @Persist
@@ -609,6 +611,8 @@ public class RepTrabajador extends GeneralPage {
             c.add(Restrictions.eq("categoria_id", RepTrabajador.USUARIO));
         else if (mostrarFiltrosGobierno)
             c.add(Restrictions.eq("categoria_id", RepTrabajador.GOBIERNO));
+        else if (mostrarFiltrosSancion)
+            c.add(Restrictions.eq("categoria_id", RepTrabajador.SANCION));
         else
             c.add(Restrictions.eq("categoria_id", RepTrabajador.NINGUNO));
         return new GenericSelectModel<Reporte>(c.list(), Reporte.class, "nombre", "id", _access);
@@ -617,24 +621,40 @@ public class RepTrabajador extends GeneralPage {
     @Log
     StreamResponse onActionFromGenerarReporte() {
         Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
+        Map<String, Object> parametros;
         if (tipoReporteSelect != null && type != null) {
-            if (mostrarFiltrosTrabajador && _trabajadorRep != null)
-                parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
-            if (mostrarFiltrosEntidad && _entidadRep != null)
-                parametros.put("MandatoryParameter_EntidadID", _entidadRep.getId());
-            if (mostrarFiltrosUsuario && _usuarioRep != null)
-                parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
-            if (mostrarFiltrosGobierno && _usuarioRep != null)
-                parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
+            parametros = retornarParametros(tipoReporteSelect.getCodigo());
+            if (parametros == null) return null;
         } else { return null; }
         StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
         return report;
     }
-        
+
+    Map<String, Object> retornarParametros(String codigo) {
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (codigo.equals("A2")) {
+            if (_trabajadorRep == null) return null;
+            parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+        } else if (codigo.equals("C2")) {
+            if (_entidadRep == null) return null;
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+        } else if (codigo.equals("B1")) {
+            if (_usuarioRep == null) return null;
+            parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
+            parametros.put("MandatoryParameter_FechaDesde", fechaingresodesde);
+            if (fechaingresohasta == null) return null;
+            parametros.put("MandatoryParameter_FechaHasta", fechaingresohasta);
+        }
+        return parametros;
+    }
+
     Reportes.REPORTE retornarReporte(String codigo) {
         if (codigo.equals("A2"))
             return Reportes.REPORTE.A2;
+        if (codigo.equals("B1"))
+            return Reportes.REPORTE.B1;
+        if (codigo.equals("C2"))
+            return Reportes.REPORTE.C2;
         return Reportes.REPORTE.B5;
     }
     
