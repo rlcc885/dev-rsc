@@ -419,7 +419,9 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getOrganizacionEstado() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", "NIVELGOBIERNO", snivelGobierno.getCodigo(), session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("ORGANIZACIONESTADO", snivelGobierno != null ? "NIVELGOBIERNO" : null, 
+                snivelGobierno != null ? snivelGobierno.getCodigo() : 0
+                , session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
@@ -644,7 +646,8 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onActionFromMostrarEntidad() {
         categoria = "Entidad";
-        if (_entidadUE != null) entidadTx = _entidadUE.getDenominacion();
+        if (usu.getRolid() == 2)
+            if (_entidadUE != null) { entidadTx = _entidadUE.getDenominacion(); _entidadRep = _entidadUE; }
         if (usu.getRolid() == 3) bEntidad = false;
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = true;
@@ -737,10 +740,16 @@ public class RepTrabajador extends GeneralPage {
     Object onValueChangedFromSnivelGobierno(DatoAuxiliar dato) {
         if (dato == null) {
             organizacionBool = false;
+            sectorBool = false;
+            organoBool = false;
         } else {
             organizacionBool = true;
+            sectorBool = false;
+            organoBool = false;
         }
         sorganizacionestado = null;
+        ssectorGobierno = null;
+        stipoOrganismo = null;
         return request.isXHR() ? new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody()) : null;
     }
 
@@ -748,14 +757,18 @@ public class RepTrabajador extends GeneralPage {
     Object onValueChangedFromSorganizacionestado(DatoAuxiliar dato) {
         if (dato == null) {
             sectorBool = false;
+            organoBool = false;
         } else {
             if (dato.getValor().equalsIgnoreCase("PODER EJECUTIVO")) {
                 sectorBool = true;
+                organoBool = false;
             } else {
                 sectorBool = false;
+                organoBool = false;
             }
         }
         ssectorGobierno = null;
+        stipoOrganismo = null;
         return request.isXHR() ? new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody()) : null;
     }
 
@@ -791,14 +804,42 @@ public class RepTrabajador extends GeneralPage {
         Criteria c = session.createCriteria(Entidad.class);
         c.add(Restrictions.eq("estado", true));
         c.add(Restrictions.eq("esSubEntidad", true));
-        c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
+        if (snivelGobierno != null)
+            c.add(Restrictions.eq("nivelGobierno", snivelGobierno));
+        else return new ArrayList<Entidad>();
+        if (sorganizacionestado != null)
+            c.add(Restrictions.eq("organizacionEstado", sorganizacionestado));
+        if (ssectorGobierno != null)
+            c.add(Restrictions.eq("sectorGobierno", ssectorGobierno));
+        if (stipoOrganismo != null)
+            c.add(Restrictions.eq("tipoOrganismo", stipoOrganismo));
+        if (stipoSubEntidad != null)
+            c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
         return c.list();
     }
     
     @Log
     Object onSelectedFromReset() {
-        entidadTrabajador = ""; 
-        entidadTraba = null;
-        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
+        if (usu.getRolid() == 3) {
+            entidadTrabajador = ""; 
+            entidadTraba = null;
+            entidadTx = "";
+            _entidadRep = null;
+        }
+        titular = "";
+        _trabajadorRep = null;
+        nivelo = null;
+        unidadRep = null;
+        usuarioTx = "";
+        _usuarioRep = null;
+//        fechaingresodesde = null;
+//        fechaingresohasta = null;
+//        stipoOrganismo = null;
+//        ssectorGobierno = null;
+//        sorganizacionestado = null;
+//        snivelGobierno = null;
+//        ssubentidad = null;
+//        stipoSubEntidad = null;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody());
     }
 }
