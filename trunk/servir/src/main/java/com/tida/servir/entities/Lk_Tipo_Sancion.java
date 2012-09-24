@@ -11,7 +11,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
- * @author Jurguen Zambrano
+ * @author mcribillero
  */
 @Entity
 public class Lk_Tipo_Sancion implements Serializable {

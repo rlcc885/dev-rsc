@@ -13,15 +13,19 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author mcribillero
  * @date 20/09/2012
  */
+@Entity
 public class LkBusquedaSancionados implements Serializable{
     
     @Id
     @NonVisual
     @Column(name = "ID_SANCION")
-    private long id_sancion;
+    private Long id_sancion;
     @NonVisual
     @Column(name = "ENTIDAD_ID")
     private Long entidad_id;
+    @NonVisual
+    @Column(name = "ESTADO_ID")
+    private Long estado_id;
     private String apellidos_persona;
     private String nombres_persona;
     private String apellidos_trabajador;
@@ -30,6 +34,16 @@ public class LkBusquedaSancionados implements Serializable{
     private String tipo_sancion;
     private String estado;
     private String tiempo_restante;
+    private String tipo_doc_trabajador;
+    private String tipo_doc_persona;
+    private String nro_doc_persona;
+    private String nro_doc_trabajador;
+    private String categoria_sancion_id;
+    private String id_reg_laboral;
+    private Long id_tipo_sancion;
+    private String b_datos_persona;
+    private String b_datos_trabajador;
+    private Boolean estrabajador;
 
     public String getApellidos_persona() {
         return apellidos_persona;
@@ -103,12 +117,100 @@ public class LkBusquedaSancionados implements Serializable{
         this.entidad_id = entidad_id;
     }
 
-    public long getId_sancion() {
+    public Long getId_sancion() {
         return id_sancion;
     }
 
-    public void setId_sancion(long id_sancion) {
+    public void setId_sancion(Long id_sancion) {
         this.id_sancion = id_sancion;
+    }
+
+    public String getTipo_doc_persona() {
+        return tipo_doc_persona;
+    }
+
+    public void setTipo_doc_persona(String tipo_doc_persona) {
+        this.tipo_doc_persona = tipo_doc_persona;
+    }
+
+    public String getTipo_doc_trabajador() {
+        return tipo_doc_trabajador;
+    }
+
+    public void setTipo_doc_trabajador(String tipo_doc_trabajador) {
+        this.tipo_doc_trabajador = tipo_doc_trabajador;
+    }
+
+    public String getNro_doc_persona() {
+        return nro_doc_persona;
+    }
+
+    public void setNro_doc_persona(String nro_doc_persona) {
+        this.nro_doc_persona = nro_doc_persona;
+    }
+
+    public String getNro_doc_trabajador() {
+        return nro_doc_trabajador;
+    }
+
+    public void setNro_doc_trabajador(String nro_doc_trabajador) {
+        this.nro_doc_trabajador = nro_doc_trabajador;
+    }
+
+    public String getCategoria_sancion_id() {
+        return categoria_sancion_id;
+    }
+
+    public void setCategoria_sancion_id(String categoria_sancion_id) {
+        this.categoria_sancion_id = categoria_sancion_id;
+    }
+
+    public String getId_reg_laboral() {
+        return id_reg_laboral;
+    }
+
+    public void setId_reg_laboral(String id_reg_laboral) {
+        this.id_reg_laboral = id_reg_laboral;
+    }
+
+    public Long getId_tipo_sancion() {
+        return id_tipo_sancion;
+    }
+
+    public void setId_tipo_sancion(Long id_tipo_sancion) {
+        this.id_tipo_sancion = id_tipo_sancion;
+    }
+
+    public Long getEstado_id() {
+        return estado_id;
+    }
+
+    public void setEstado_id(Long estado_id) {
+        this.estado_id = estado_id;
+    }
+
+    public String getB_datos_persona() {
+        return b_datos_persona;
+    }
+
+    public void setB_datos_persona(String b_datos_persona) {
+        this.b_datos_persona = b_datos_persona;
+    }
+
+    public String getB_datos_trabajador() {
+        return b_datos_trabajador;
+    }
+
+    public void setB_datos_trabajador(String b_datos_trabajador) {
+        this.b_datos_trabajador = b_datos_trabajador;
+    }
+
+    public Boolean getEstrabajador() {
+        return estrabajador;
+    }
+
+    public void setEstrabajador(Boolean estrabajador) {
+        this.estrabajador = estrabajador;
     }
  
 }

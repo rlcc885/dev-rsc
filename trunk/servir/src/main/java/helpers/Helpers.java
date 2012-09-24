@@ -422,6 +422,6 @@ public class Helpers {
 //        }
         c.addOrder( Order.asc("valor") );
         return c.list();
-    }  
+    }
     
 }
