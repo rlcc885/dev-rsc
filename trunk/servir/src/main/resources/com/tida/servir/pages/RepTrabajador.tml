@@ -46,7 +46,6 @@
                                             Entidad/Sub Entidad: &nbsp;
                                             <input t:type="TextField" t:id="entidadTrabajador" t:style="width:600px;" t:value="entidadTrabajador" t:readonly="readonly" /> 
                                             <input t:type="submit" t:id="buscarEntidadTrabajador" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
-                                            <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar"/>
                                             <br /><br />
                                         </t:if>
                                         Trabajador: &nbsp;
@@ -134,10 +133,10 @@
                                         <input t:type="Checkbox" t:id="sessubentidad" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:value="bessubentidad2" />
                                         <t:if test="bessubentidad">
                                             &nbsp; Tipo Sub-Entidad:&nbsp;
-                                            <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="prop:gobiernoZoneId" t:blankOption="NEVER" />
+                                            <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
                                             <br /><br />
                                             &nbsp; Sub-Entidad:&nbsp;
-                                            <input t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;" model="SubEntidades" t:blankOption="NEVER" t:zone="prop:gobiernoZoneId"/>
+                                            <input t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;" model="SubEntidades" t:blankOption="ALWAYS" t:zone="prop:gobiernoZoneId"/>
                                         </t:if>
                                     </t:form>
                                 </div>
@@ -147,6 +146,7 @@
                 </div>
                 
                 <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
+                    <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar"/>
                     <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank">Generar Reporte</a>
                 </t:form>
             </fieldset>
