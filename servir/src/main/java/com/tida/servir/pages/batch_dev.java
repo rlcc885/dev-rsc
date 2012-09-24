@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
 //import net.sf.jasperreports.engine.JRException;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
@@ -363,22 +364,31 @@ public class batch_dev  extends GeneralPage {
         this.errores = errores;
     }
     
+
+    
     @Property
     @Persist
     private ReporteBatch.Formatos formato ;
 
-//    private String tipoReporte = "report1";
-//
-//    @OnEvent(value="submit" ,component="reporte") 
-//    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
-//    {
-//        
-//    HashMap<String,Object> parametros = new HashMap<String,Object>();
-//
-//    ReporteBatch reportes= new ReporteBatch();
-//            
-//    return  reportes.getReporte(tipoReporte, parametros, formato);
-//    
-//    }
+    private String tipoReporte="";
+
+    @OnEvent(value="submit" ,component="reporte") 
+    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
+    {
+    //PARAMETROS DEL REPORTE    
+    HashMap<String,Object> parametros = new HashMap<String,Object>();
+    parametros.put("EntidadId", _entidadUE.getCue_entidad());
+    //    parametros.put("EntidadId", 1);
+
+    // NOMBRE DEL REPORTE
+    tipoReporte = "ReporteErrores.jasper";
+    
+    System.out.println("REPORTE: "+tipoReporte+"PARAMETROS: "+parametros.toString()+"FORMATO:"+formato.toString());
+
+    
+    ReporteBatch reportes= new ReporteBatch();
+    return  reportes.getReporte(tipoReporte, parametros, formato);
+    
+    }
     
 }

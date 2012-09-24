@@ -124,7 +124,7 @@ public class ADMTipoSancion
      // VARIABLE DE LA GRID
      @Property
      @Persist
-     private TipoSancion tipsancion;
+     private LkTipoSancion tipsancion;
     
      // OBJETO DE MANIPULACION
      @Property
@@ -145,6 +145,8 @@ public class ADMTipoSancion
         List result = query.list();
         
         vdetalle=false;
+        detallemin=false;
+        detallemax=false;
         vformulario=false;
         vbotones=false;
         vNoedita=false;
@@ -181,6 +183,8 @@ public class ADMTipoSancion
             {
                 vformulario=true;
                 vdetalle=false;
+                detallemin=false;
+                detallemax=false;
                 vbotones=true;
                 limpiar();
                 formularioMensajes.clearErrors();
@@ -195,6 +199,8 @@ public class ADMTipoSancion
             {
                 vformulario=false;
                 vdetalle=false;
+                detallemin=false;
+                detallemax=false;
                 vbotones=false;
                 vNoedita=false;
             }
@@ -213,11 +219,12 @@ public class ADMTipoSancion
     @Log
     Object onCancel()
     {
-            if (_usuario.getRolid() == 3) {
+        /*  if (_usuario.getRolid() == 3) {
                 return "Busqueda";
             } else  {
                 return "TrabajadorPersonal";  
-            }
+            }   */
+      return "Alerta";      
     }
 
     
@@ -239,7 +246,9 @@ public class ADMTipoSancion
             }
             
             seteo();
-                 
+ 
+            if (this.validaciones()==false){return mensajesZone.getBody();}
+                  
             session.saveOrUpdate(tiposancionactual);
             session.flush();
 
@@ -278,8 +287,8 @@ public class ADMTipoSancion
      }
 
     @Log
-     public List<TipoSancion> getListadoTipoSanciones() {
-        Criteria c2 = session.createCriteria(TipoSancion.class);
+     public List<LkTipoSancion> getListadoTipoSanciones() {
+        Criteria c2 = session.createCriteria(LkTipoSancion.class);
         return c2.list();
     }
 	
@@ -356,6 +365,9 @@ public class ADMTipoSancion
      valtiempoM = "0";
      valtiempoA = "0";
      valobservacion = "";
+     vdetalle = false;
+     detallemax=false;
+     detallemin=false;
      
     return new MultiZoneUpdate ("tipoSancionZone",tipoSancionZone.getBody());
      
@@ -368,8 +380,27 @@ public class ADMTipoSancion
         vformulario = true;
         editando = true;
         vdetalle = false;
+        detallemin=false;
+        detallemax=false;
         vbotones = true;
         mostrar();
+
+        if (valtipo != null){
+            
+            if (valtipo.getCodigo()==1){
+                detallemin = false;
+                detallemax = false;
+            }
+            if (valtipo.getCodigo()==2){
+                detallemin = true;
+                detallemax = false;                
+            }
+            if (valtipo.getCodigo()==3){
+                detallemin = true;
+                detallemax = true;                  
+            }
+            
+        }
         
         return actualizarZonas();
     }
@@ -379,6 +410,8 @@ public class ADMTipoSancion
         tiposancionactual = dato;
         mostrar();
         vdetalle = true;
+        detallemin=true;
+        detallemax=true;
         vbotones = false;
         if (usua.getAccesoupdate() ==1){vNoedita=true;}
         vformulario = true;
@@ -400,10 +433,14 @@ public class ADMTipoSancion
     
     public String getPeriodomaximoinhabilitacion() {
        String cadena="";
-       
-       if(tipsancion.getTiempoMaxDias()!=0){cadena+=tipsancion.getTiempoMaxDias()+" DIAS ";}
-       if(tipsancion.getTiempoMaxMeses()!=0){cadena+=tipsancion.getTiempoMaxMeses()+" MESES ";}
-       if(tipsancion.getTiempoMaxAnios()!=0){cadena+=tipsancion.getTiempoMaxAnios()+" AÑOS ";}
+
+       if(tipsancion.getDias()==0&&tipsancion.getMeses()==0&&tipsancion.getAnios()==0){
+           return "NO TIENE";
+       }
+
+       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DIAS ";}
+       if(tipsancion.getMeses()!=0){cadena+=tipsancion.getMeses()+" MESES ";}
+       if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÑOS ";}
     
     return cadena;
 
@@ -434,5 +471,95 @@ public class ADMTipoSancion
         
         return false;
     }
-     
+
+    @Persist
+    @Property
+    private Boolean detallemin;
+
+    @Persist
+    @Property
+    private Boolean detallemax;
+
+    @InjectComponent
+    private Zone periodoZone;
+
+    
+    @Log
+    Object onValueChangedFromtipoinhabilitacion(DatoAuxiliar dato){
+        if (dato != null){
+            
+            if (dato.getCodigo()==1){
+                detallemin = false;
+                detallemax = false;
+            }
+            if (dato.getCodigo()==2){
+                detallemin = true;
+                detallemax = false;
+                valdiasMin = "0";valmesesMin = "0";valaniosMin = "0";
+            }
+            if (dato.getCodigo()==3){
+                detallemin = true;
+                detallemax = true;
+                valdiasMin = "0";valmesesMin = "0";valaniosMin = "0";
+                valdiasMax = "0";valmesesMax = "0";valaniosMax = "0";
+            }
+            
+        }
+            
+        return new MultiZoneUpdate("periodoZone", periodoZone.getBody());
+    }
+
+        private Boolean validaciones()
+    {
+        // PRIMERA RESTRICCION (PERIODO DE INHABILITACION)
+        Integer min = 0;
+        Integer max = 0;
+        min+=tiposancionactual.getTiempoMinDias();
+        min+=tiposancionactual.getTiempoMinMeses()*30;
+        min+=tiposancionactual.getTiempoMinAnios()*365;
+
+        System.out.println("MINZ :"+min );
+        
+        max+=tiposancionactual.getTiempoMaxDias();
+        max+=tiposancionactual.getTiempoMaxMeses()*30;
+        max+=tiposancionactual.getTiempoMaxAnios()*365;
+
+        System.out.println("MAXZ :"+max );
+
+        if (max < min)
+        {
+            formularioMensajes.recordError("El Periodo de Inhabilitacion Maximo debe ser mayor que el Periodo Minimo");
+            return false;
+        }
+        //***************************
+        
+        // SEGUNDA RESTRICCION (CATEGORIA DE SANCION)
+        Criteria c = session.createCriteria(TipoSancion.class);
+        c.add(Restrictions.eq("descripcion", tiposancionactual.getDescripcion()));
+        c.add(Restrictions.eq("categoriasancion", tiposancionactual.getCategoriaSancion()));
+        
+        if (editando)
+        {
+            c.add(Restrictions.ne("id", tiposancionactual.getId()));
+        }
+        
+        if (!c.list().isEmpty())
+        {
+            formularioMensajes.recordError("El Tipo de Sancion deberia tener diferente Categoria");
+            return false;            
+        }
+        //***************************
+ 
+        // TERCERA RESTRICCION (TIPO INAHBILITACION MAXIMA)
+        if (tiposancionactual.getTipoInhabilitacion().getCodigo()==2)
+        {
+            if (max==0){
+                formularioMensajes.recordError("Periodo Maximo invalido");
+                return false;
+                }
+        }
+        
+        return true;
+    }
+        
 }

@@ -53,19 +53,27 @@
 
          </t:if>
 
-    
-    <div class="f-wrap" >
-    <t:form t:id="reporte" target="_blank" >    
-         <br/><br/>   
-        <div class="f-left">
-            <label>Formato Salida :</label>
-            <t:select t:id="formato" t:validate="required"/> <br/><br/>
-        </div>
-        <div class="f-left">
-            <input type="submit" value="mostrar"/>
-        </div>
-    </t:form>
+  <!-- REPORTE DE ERRORES --> 
+  
+    <div class="f-left">
+        <fieldset>
+            <legend>Reporte de Errores</legend>
+        <t:form t:id="reporte" target="_blank" >    
+            <div class="f-wrap">
+                <div class="f-left">
+                    <label>Formato Salida :</label>
+                </div>
+                <div class="f-left">
+                    <t:select t:id="formato" t:validate="required" style="width: 60px;"/>
+                </div>             
+                <div class="f-left">
+                    <input t:type="submit" t:id="guardar" value="mostrar" class="button f-right" />               
+                </div>             
+            </div>
+        </t:form>
+        </fieldset>
     </div>
+	
     
     
        <t:if test = "etapaConfirmacion">
