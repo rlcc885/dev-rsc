@@ -219,7 +219,7 @@ Fin de librerias pentaho -->
             <artifactId>poi</artifactId>
             <version>3.8</version>
         </dependency>
-
+       <!--reporte-->     
 
         <dependency>
             <groupId>axis</groupId>
@@ -276,53 +276,66 @@ Fin de librerias pentaho -->
             <artifactId>html2image</artifactId>
             <version>0.9</version>
         </dependency>-->
-<!--        <dependency>
-            <groupId>commons-javaflow</groupId>
-            <artifactId>commons-javaflow</artifactId>
-            <version>20060411</version>
-        </dependency>-->
-<!--        <dependency>
-            <groupId>commons-beanutils</groupId>
+        <dependency>
+            <groupId>commons</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.8.2</version>
+            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>commons-digester</groupId>
+            <groupId>jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>4.7.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons</groupId>
             <artifactId>commons-digester</artifactId>
             <version>2.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>commons-logging</groupId>
+            <groupId>commons</groupId>
+            <artifactId>commons-javaflow</artifactId>
+            <version>20060411</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>groovy-all</groupId>
+            <groupId>groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>1.7.5</version>
-        </dependency>-->
-<!--        <dependency>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>iText</groupId>
             <artifactId>iText</artifactId>
             <version>2.1.7</version>
-        </dependency>-->
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>4.7.0</version>
+            <type>jar</type>
         </dependency>
-            
-<!--        <dependency>
-            <groupId>poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.7-20101029</version>
-        </dependency>-->
-<!--        <dependency>
+        <dependency>
             <groupId>png-encoder</groupId>
             <artifactId>png-encoder</artifactId>
             <version>1.5</version>
             <type>jar</type>
-        </dependency>-->
+        </dependency>
+        <dependency>
+            <groupId>poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.7</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

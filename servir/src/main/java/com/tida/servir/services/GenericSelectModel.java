@@ -1,5 +1,6 @@
 package com.tida.servir.services;
 
+import com.tida.servir.entities.DatoAuxiliar;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
