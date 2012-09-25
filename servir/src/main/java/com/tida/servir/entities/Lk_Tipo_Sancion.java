@@ -68,4 +68,66 @@ public class Lk_Tipo_Sancion implements Serializable {
         this.id = id;
     }
     
+    @Column(name = "TIEMPO_MIN_ANIOS")
+    private Integer tiempoMinAnios;
+    @Column(name = "TIEMPO_MIN_MESES")
+    private Integer tiempoMinMeses;
+    @Column(name = "TIEMPO_MIN_DIAS")
+    private Integer tiempoMinDias;
+    @Column(name = "TIEMPO_MAX_ANIOS")
+    private Integer tiempoMaxAnios;
+    @Column(name = "TIEMPO_MAX_MESES")
+    private Integer tiempoMaxMeses;
+    @Column(name = "TIEMPO_MAX_DIAS")
+    private Integer tiempoMaxDias;
+
+    public Integer getTiempoMaxAnios() {
+        return tiempoMaxAnios;
+    }
+
+    public void setTiempoMaxAnios(Integer tiempoMaxAnios) {
+        this.tiempoMaxAnios = tiempoMaxAnios;
+    }
+
+    public Integer getTiempoMaxDias() {
+        return tiempoMaxDias;
+    }
+
+    public void setTiempoMaxDias(Integer tiempoMaxDias) {
+        this.tiempoMaxDias = tiempoMaxDias;
+    }
+
+    public Integer getTiempoMaxMeses() {
+        return tiempoMaxMeses;
+    }
+
+    public void setTiempoMaxMeses(Integer tiempoMaxMeses) {
+        this.tiempoMaxMeses = tiempoMaxMeses;
+    }
+
+    public Integer getTiempoMinAnios() {
+        return tiempoMinAnios;
+    }
+
+    public void setTiempoMinAnios(Integer tiempoMinAnios) {
+        this.tiempoMinAnios = tiempoMinAnios;
+    }
+
+    public Integer getTiempoMinDias() {
+        return tiempoMinDias;
+    }
+
+    public void setTiempoMinDias(Integer tiempoMinDias) {
+        this.tiempoMinDias = tiempoMinDias;
+    }
+
+    public Integer getTiempoMinMeses() {
+        return tiempoMinMeses;
+    }
+
+    public void setTiempoMinMeses(Integer tiempoMinMeses) {
+        this.tiempoMinMeses = tiempoMinMeses;
+    }
+    
+    
 }

@@ -119,16 +119,16 @@ public class ExportacionBatch  extends GeneralPage {
         if (!f.exists()) {
             f.mkdirs();
         }
-        if(_logged.getRolid()!=2){
-            errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+"xxxENTIDAD.xls", session);
-        }
+//        if(_logged.getRolid()!=2){
+            errores=geXLS.generadoXLSEntidad(_entidadUE, newlocation+_entidadUE.getCue_entidad()+"ENTIDAD.xls", session);
+//        }
         Criteria criteriaConcepto = session.createCriteria(ConceptoRemunerativo.class);
         criteriaConcepto.add(Restrictions.eq("entidad_id", _entidadUE.getId()));
 
         if (!criteriaConcepto.list().isEmpty()) {
             //generacion archivo concepto.csv
             if(_logged.getRolid()!=2){
-                errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+"xxxCONCEPTO.xls",_entidadUE, session);
+                errores = geXLS.generadoXLSConcepto(criteriaConcepto.list(), newlocation+_entidadUE.getCue_entidad()+"CONCEPTO.xls",_entidadUE, session);
             }
         }
         
@@ -137,7 +137,7 @@ public class ExportacionBatch  extends GeneralPage {
         if (!criteriaUnidad.list().isEmpty()) {
 //                //generacion archivo unidad organica.csv
                 System.out.println("UNIDAD ORGANICA");
-            errores = geXLS.generadoXLSUnidadOrganica(criteriaUnidad.list(), newlocation + "xxxUNIDADORGANICA.xls", session);
+            errores = geXLS.generadoXLSUnidadOrganica(criteriaUnidad.list(), newlocation +_entidadUE.getCue_entidad()+ "UNIDADORGANICA.xls", session);
         }
             List<LkBatchUnidadOrga> luo = new LinkedList<LkBatchUnidadOrga>();
             luo.addAll(criteriaUnidad.list());
@@ -150,14 +150,14 @@ public class ExportacionBatch  extends GeneralPage {
             if (!lcargo.isEmpty()) {
                 //generacion archivo cargo.csv
                 System.out.println("CARGO");
-                errores = geXLS.generadoXLSCargo(lcargo, newlocation + "xxxCARGO.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSCargo(lcargo, newlocation+_entidadUE.getCue_entidad() + "CARGO.xls", session,_entidadUE);
             }
         Criteria criteriaCargoAsignado = session.createCriteria(LkBatchCargoAsignado.class);
         criteriaCargoAsignado.add(Restrictions.eq("entidadid", _entidadUE.getId()));
         if (!criteriaCargoAsignado.list().isEmpty()) {
 //                //generacion archivo unidad organica.csv
             System.out.println("cargo asignado");
-            errores = geXLS.generadoXLSCargoAsignado(criteriaCargoAsignado.list(), newlocation + "xxxCARGOASIGNADO.xls", session,_entidadUE);
+            errores = geXLS.generadoXLSCargoAsignado(criteriaCargoAsignado.list(), newlocation+_entidadUE.getCue_entidad() + "CARGOASIGNADO.xls", session,_entidadUE);
             List<LkBatchCargoAsignado> lcargoasignado = new LinkedList<LkBatchCargoAsignado>();
             lcargoasignado.addAll(criteriaCargoAsignado.list());
             
@@ -181,16 +181,16 @@ public class ExportacionBatch  extends GeneralPage {
             if(!lremuneracion.isEmpty()){
                 System.out.println("REMUNERACIONPERSONAL");
                 if(_logged.getRolid()!=2){
-                    errores = geXLS.generadoXLSRemuneraciones(lremuneracion, newlocation + "xxxREMUNERACION.xls", session,_entidadUE);
+                    errores = geXLS.generadoXLSRemuneraciones(lremuneracion, newlocation+_entidadUE.getCue_entidad() + "REMUNERACION.xls", session,_entidadUE);
                 }
             }
             if(!levaluacion.isEmpty()){
                 System.out.println("EVALUACIONPERSONAL");
-                errores = geXLS.generadoXLSEvaluaciones(levaluacion, newlocation + "xxxEVALUACION.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSEvaluaciones(levaluacion, newlocation +_entidadUE.getCue_entidad()+ "EVALUACION.xls", session,_entidadUE);
             }
             if(!lconstancia.isEmpty()){
                 System.out.println("CONSTANCIA");
-                errores = geXLS.generadoXLSConstancias(lconstancia, newlocation + "xxxCONSTANCIA.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSConstancias(lconstancia, newlocation +_entidadUE.getCue_entidad()+ "CONSTANCIA.xls", session,_entidadUE);
             }  
         }
         
@@ -199,7 +199,7 @@ public class ExportacionBatch  extends GeneralPage {
         if (!criteriaTrabajador.list().isEmpty()) {
             //generacion archivo unidad organica.csv
             System.out.println("TRABAJADOR");
-            errores = geXLS.generadoXLSTrabajador(criteriaTrabajador.list(), newlocation + "xxxTRABAJADOR.xls", session,_entidadUE);
+            errores = geXLS.generadoXLSTrabajador(criteriaTrabajador.list(), newlocation +_entidadUE.getCue_entidad()+ "TRABAJADOR.xls", session,_entidadUE);
             List<LkBatchTrabajador> ltrabajador = new LinkedList<LkBatchTrabajador>();
             ltrabajador.addAll(criteriaTrabajador.list());
             
@@ -248,27 +248,27 @@ public class ExportacionBatch  extends GeneralPage {
             }
             if(!lestudio.isEmpty()){
                 System.out.println("ESTUDIOS");
-                errores = geXLS.generadoXLSEstudios(lestudio, newlocation + "xxxESTUDIO.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSEstudios(lestudio, newlocation +_entidadUE.getCue_entidad()+ "ESTUDIO.xls", session,_entidadUE);
             }
             if(!lcurso.isEmpty()){
                 System.out.println("CURSOS");
-                errores = geXLS.generadoXLSCursos(lcurso, newlocation + "xxxCURSO.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSCursos(lcurso, newlocation +_entidadUE.getCue_entidad()+ "CURSO.xls", session,_entidadUE);
             }
             if(!lantecedente.isEmpty()){
                 System.out.println("ANTECEDENTES");
-                errores = geXLS.generadoXLSAntecedentes(lantecedente, newlocation + "xxxANTECEDENTE.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSAntecedentes(lantecedente, newlocation +_entidadUE.getCue_entidad()+ "ANTECEDENTE.xls", session,_entidadUE);
             }
             if(!lproduccion.isEmpty()){
                 System.out.println("PRODUCCION");
-                errores = geXLS.generadoXLSPublicaciones(lproduccion, newlocation + "xxxPRODUCCION.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSPublicaciones(lproduccion, newlocation +_entidadUE.getCue_entidad()+ "PRODUCCION.xls", session,_entidadUE);
             }
             if(!lfamiliar.isEmpty()){
                 System.out.println("FAMILIARES");
-                errores = geXLS.generadoXLSFamiliares(lfamiliar, newlocation + "xxxFAMILIAR.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSFamiliares(lfamiliar, newlocation +_entidadUE.getCue_entidad()+ "FAMILIAR.xls", session,_entidadUE);
             }
             if(!ldemerito.isEmpty()){
                 System.out.println("DEMERITO");
-                errores = geXLS.generadoXLSMeritos(ldemerito, newlocation + "xxxDEMERITO.xls", session,_entidadUE);
+                errores = geXLS.generadoXLSMeritos(ldemerito, newlocation +_entidadUE.getCue_entidad()+ "DEMERITO.xls", session,_entidadUE);
             }
             
             

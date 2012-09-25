@@ -6,15 +6,14 @@
 package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
+import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -41,6 +40,10 @@ public class ABMSancion  extends GeneralPage
     private Session session;
     @Inject
     private PropertyAccess _access;
+    @InjectComponent
+    private Envelope envelope;    
+    @Component(id = "formsancion")
+    private Form formsancion;
     
     //campos de la zona modal
     @Property
@@ -101,7 +104,10 @@ public class ABMSancion  extends GeneralPage
     private DatoAuxiliar bregimen;
     @Property
     @Persist
-    private Sancion nuevasancion;    
+    private Sancion nuevasancion; 
+    @Property
+    @Persist
+    private Persona_Sancion nuevapersona; 
     @Property
     @Persist
     private String bestadopuesto;
@@ -150,6 +156,10 @@ public class ABMSancion  extends GeneralPage
     private Zone inhabilitacionZone;
     @InjectComponent
     private Zone autoridadmodalZone;
+    @InjectComponent
+    private Zone autoridadsanZone;
+    @InjectComponent
+    private Zone autoridadnotZone;
      
     //validaciones
     @Property
@@ -170,6 +180,12 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean mostrarnuevof;
+    @Property
+    @Persist
+    private Boolean mostrardocu;
+    @Property
+    @Persist
+    private Boolean autoridad;
     private int elemento=0;
     
     // inicio de la pagina
@@ -179,9 +195,11 @@ public class ABMSancion  extends GeneralPage
         mostrarfecha=false;
         nuevasancion=new Sancion();
         nuevofuncionario=new Funcionario();
+        nuevapersona=new Persona_Sancion();
         if(usuario.getRolid()==2){
             bmostrarrol=false;
             bmostrar=true;
+            mostrardocu=true;
         }
         else{
             bmostrarrol=true;
@@ -249,6 +267,7 @@ public class ABMSancion  extends GeneralPage
     void onSelectedFromBuscarpersona(){
         elemento=3;
     }
+    
     @Log
     @CommitAfter
     Object onSuccessFromformbusqueda() {
@@ -273,6 +292,7 @@ public class ABMSancion  extends GeneralPage
     Object onSuccessFromformvalidacion() {
       if(bestrabajador){
           bmostrar=true;
+          mostrardocu=true;
       }
       else{
           bmostrar=false;
@@ -283,7 +303,15 @@ public class ABMSancion  extends GeneralPage
     @Log
     Object onBuscarautoridadnot(){  
         mostrarnuevof=false;
-        return sancionZone.getBody();
+        autoridad=true;
+        return autoridadmodalZone.getBody();
+    }
+    
+    @Log
+    Object onBuscarautoridadsan(){  
+        mostrarnuevof=false;
+        autoridad=false;
+        return autoridadmodalZone.getBody();
     }
 
      @Log
@@ -351,14 +379,10 @@ public class ABMSancion  extends GeneralPage
         bregimen=btra.getRegimenlaboral();
         bpuesto=btra.getDen_cargo();
         bestadopuesto=btra.getEstadocargo();
-        nuevasancion.setTiem_ser_dia(String.valueOf(btra.getTiempo_dias()));
-        if(btra.getFec_fin()!=null){
-            calcular(btra.getFec_inicio(),btra.getFec_fin());
-        }
-        else{
-            java.util.Date fechaactual = new Date();
-            calcular(btra.getFec_inicio(),fechaactual);
-        }
+        nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getId()));
+//        nuevasancion.setTiem_ser_dia(btra.getTiempo_dias());
+//        nuevasancion.setTiem_ser_dia(btra.getTiempo_dias());
+        calcular(Integer.parseInt(btra.getTiempo_dias()));
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
     
@@ -392,6 +416,23 @@ public class ABMSancion  extends GeneralPage
     @Log
     void onSelectedFromNuevautoridad(){
         elemento=4;
+    }   
+    
+    @Log
+    Object onActionFromSeleccionaFuncionario(LkBusquedaFuncionario fun) {        
+        Funcionario sele=new Funcionario();
+        sele=(Funcionario) session.load(Funcionario.class, fun.getId()); 
+        if(autoridad){
+            autoridadnot=fun.getNombrefuncionario();
+            nuevasancion.setAutoridadnot(sele);            
+        }
+        else{
+            autoridadsan=fun.getNombrefuncionario();
+            nuevasancion.setAutoridadsan(sele); 
+        }
+            
+              
+        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody()).add("autoridadnotZone", autoridadnotZone.getBody());
     }
     
     @Log
@@ -406,6 +447,33 @@ public class ABMSancion  extends GeneralPage
         return autoridadmodalZone.getBody();
     }
     
+    @Log
+    Object onBuscartrabaauto(){  
+        System.out.println("aquiiiiiii"+bnomtrabaautoridad);
+        return autoridadmodalZone.getBody();
+    }
+    
+    @Log
+    Object onCancelmodal3(){  
+        mostrarnuevof=false;
+        return autoridadmodalZone.getBody();
+    }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromformnuevaautoridad(){
+        Criteria c = session.createCriteria(LkBusquedaFuncionario.class);
+        c.add(Restrictions.eq("nroDocumento", nuevofuncionario.getNroDocumento()));
+        if(!c.list().isEmpty()){
+            return autoridadmodalZone.getBody();
+        }
+        session.saveOrUpdate(nuevofuncionario);
+        session.flush();
+        nuevofuncionario=new Funcionario();
+        return autoridadmodalZone.getBody();
+    }
+    
+    
     
     @Log
     private MultiZoneUpdate zonasDatos() {
@@ -414,23 +482,7 @@ public class ABMSancion  extends GeneralPage
                 .add("busquedamodalZone",busquedamodalZone.getBody());
         return mu;
 
-    }
-    
-    @Log
-    Object onValueChangedFromCategoria_sancion(DatoAuxiliar dato) {
-           return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
-    }
-    
-    @Log
-    Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
-           if(dato.getCodigo()==3){
-               mostrarfecha=true;
-           } 
-           else{
-               mostrarfecha=false;
-           }
-           return new MultiZoneUpdate("inhabilitacionZone", inhabilitacionZone.getBody());
-    } 
+    }   
         
     void limpiarbusqueda(){
         bdocidentidad=null;
@@ -443,17 +495,116 @@ public class ABMSancion  extends GeneralPage
         bestadopuesto=null;
     }
     
-    void calcular(Date inicio,Date fin){
-//        long fechaInicial = inicio.getTime(); //Tanto fecha inicial como fecha final son Date. 
-//        long fechaFinal = fin.getTime(); 
-//        long diferencia = fechaInicial - fechaFinal; 
-//        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)); 
-//        System.out.println("diasssssssss"+inicio+"-"+fin+"-"+dias);
+    void calcular(int dias){
+        System.out.println("aquiiiiiii"+dias);
+        int año=dias/365;
+        int mes=(dias%365)/30;
+        int dia=(dias%365)%30;
+        System.out.println("aquiiiiiii"+dia+"-"+mes+"-"+año);
+        nuevasancion.setTiem_ser_anio(String.valueOf(año));
+        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
+        nuevasancion.setTiem_ser_dia(String.valueOf(dia));
+    }
+    @Log
+    @CommitAfter
+    Object onSuccessFromformsancion(){
+//        TipoSancion tiposa=new TipoSancion();
+//        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId());  
+        
+        
+        if(bestrabajador){
+            if(nuevasancion.getTrabajador()==null){
+                formsancion.recordError("Tiene que seleccionar un Trabajador");
+                return zonasDatos();
+            }
+//            else{
+//                nuevasancion.setEstrabajador(true);
+//            }
+        }
+        else{
+            if(!validarpersona()){
+                return zonasDatos();
+            }  
+//            else{
+//                nuevasancion.setEstrabajador(false);
+//                nuevapersona.setDocumentoidentidad(bdocidentidad);
+//                nuevapersona.setApellidoMaterno(bamaterno);
+//                nuevapersona.setApellidoPaterno(bapaterno);
+//                nuevapersona.setNroDocumento(bnumerodocumento);
+//                session.saveOrUpdate(nuevapersona);
+//                session.flush();
+//            }
+        }      
+        if(tiposancion.getCodigo()==1){
+            
+        }
+        return zonasDatos();
     }
     
-
+    boolean validarpersona(){
+        boolean vali=true;
+        if(bdocidentidad==null){
+            formsancion.recordError("Tiene que ingresar Tipo Documento");
+            vali=false;
+        }
+        if(bnumerodocumento==null){
+            formsancion.recordError("Tiene que ingresar Numero Documento");
+            vali=false;
+        }
+        if(bnombres==null){
+            formsancion.recordError("Tiene que ingresar Nombres de la Persona");
+            vali=false;
+        }
+        if(bapaterno==null){
+            formsancion.recordError("Tiene que ingresar Apellido Paterno");
+            vali=false;
+        }
+        if(bamaterno==null){
+            formsancion.recordError("Tiene que ingresar Apellido Materno");
+            vali=false;
+        }        
+        return vali;
+    }
     
-   
+    @Log
+    void onBnomtrabaautoridadChanged() {
+        bnomtrabaautoridad=_request.getParameter("param");
+    }
+    
+    @Log
+    Object onValueChangedFromCategoria_sancion(DatoAuxiliar dato) {
+           return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
+    }
+    
+    @Log
+    Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
+           if(dato!=null){
+               if(dato.getCodigo()==3){
+                    mostrarfecha=true;
+                } 
+                else{
+                    mostrarfecha=false;
+                }
+           }else{
+               mostrarfecha=true;
+           }
+           return new MultiZoneUpdate("inhabilitacionZone", inhabilitacionZone.getBody());
+    } 
+    
+    @Log
+    Object onValueChangedFromDocumento_identidad(DatoAuxiliar dato){
+        if(dato!=null){
+            if(dato.getCodigo()==1)
+                mostrardocu=true;        
+            else
+                mostrardocu=false;
+        }
+        else
+            mostrardocu=false;
+        
+        return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody());
+    } 
+    
     
 
 }

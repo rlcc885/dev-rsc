@@ -52,7 +52,7 @@
                     <div class="f-left">
                         <label>* Tipo Documento</label>
                         <input t:type="Select" t:id="documento_identidad"                                
-                               t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" t:blankOption="ALWAYS" t:disabled="${bmostrar}"/>
+                               t:value="bdocidentidad" model="beandocumentoidentidad" t:zone="busquedaZone" t:disabled="${bmostrar}"/>
                     </div>
                     <div class="f-left">
                         <label>* Número de Documento</label>
@@ -68,15 +68,15 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Nombres</label>
-                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="true"/>
+                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="${mostrardocu}"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Paterno</label>
-                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="true"/>
+                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="${mostrardocu}"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Materno</label>
-                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="true"/>
+                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="${mostrardocu}"/>
                     </div>
                 </div>
                 <br/>
@@ -98,15 +98,15 @@
                         <legend>Tiempo de Servicios</legend>
                             <div class="f-left">
                                 <label>Dias</label>
-                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:disabled="true"/>
+                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5"/>
                             </div>
                             <div class="f-left">
                                 <label>Meses</label>
-                                <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5" t:disabled="true"/>
+                                <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5"/>
                             </div>
                             <div class="f-left">
                                 <label>Años</label>
-                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5" t:disabled="true"/>
+                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5"/>
                             </div>
                         </fieldset>
                    </div>
@@ -143,7 +143,7 @@
                        
                         <label>* Tipo de Sanción</label>
                        <t:zone t:id="tiposancionZone" id="tiposancionZone">
-                        <input t:type="Select" t:id="tipo_sancion"                                
+                        <input t:type="Select" t:id="tipo_sancion" t:validate="required" t:blankOption="ALWAYS"                            
                                t:value="tiposancion" model="beantiposancion" t:zone="inhabilitacionZone"/>
                        </t:zone>
                     </div>
@@ -168,14 +168,14 @@
                        </div>
                    </div>
                    <div class="f-left">
+                      <t:zone t:id="autoridadnotZone" id="autoridadnotZone">
                         <label>* Autoridad que Notifica</label>
                         <input t:type="TextField" t:id="autoridad_not" value="autoridadnot" size="100" t:validate="required" t:disabled="true"/>
+                      </t:zone>
                    </div>
                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                       <t:eventLink t:event="buscarautoridadnot" href="#" class="button f-right" t:zone="sancionZone" onClick="javascript: mostrar2();">                            
-                                <span t:type="any" onClick="javascript: mostrar2();">
-                                    ...
-                                </span> 
+                       <t:eventLink t:event="buscarautoridadnot" href="#" class="button f-right"  style="color: #FFFFFF;" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();">
+                           <span t:type="any" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();"> ...</span>
                        </t:eventLink>
                        <!--<t:actionlink t:id="buscarautoridadnot" zone="sancionZone" onClick="javascript:mostrar();">...</t:actionlink>-->
                         <!--<input t:id="buscarautoridadnot" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>-->
@@ -201,11 +201,16 @@
                        </div>                       
                    </div>
                    <div class="f-left">
+                      <t:zone t:id="autoridadsanZone" id="autoridadsanZone">
                             <label>* Autoridad que Sanciona</label>
                             <input t:type="TextField" t:id="autoridad_san" value="autoridadsan" size="100" t:validate="required" t:disabled="true"/>
+                      </t:zone>
                     </div>
                    <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                        <input t:id="buscarautoridadsan" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>
+                       <t:eventLink t:event="buscarautoridadsan" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();">
+                           <span t:type="any" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();"> ...</span>
+                       </t:eventLink>
+                        <!--<input t:id="buscarautoridadsan" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>-->
                    </div>
                </fieldset>
                <div class="f-wrap">
@@ -223,11 +228,11 @@
                         <div class="f-wrap">                            
                             <div class="f-left">
                                 <label>* Fecha de Inicio</label>
-                                <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="25" t:validate="regexp" t:disabled="${mostrarfecha}" class="fec_inicio pictureInputDate"/>
+                                <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="25" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_inicio pictureInputDate"/>
                             </div>
                             <div class="f-left">
                                 <label>* Fecha de Finalización</label>
-                                <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="25" t:validate="regexp" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
+                                <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="25" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
                             </div>                        
                         </div>
                         </t:zone>
@@ -241,16 +246,19 @@
                         t:validate="maxLength=150"/>
                 <br />
                 <i>(Máximo 150 caracteres)</i>
-              </div>
-               
-            </fieldset>   
+              </div>               
+            </fieldset>  
+            <div class="f-wrap">
+                <t:envelope t:id="envelope"/>
+                <t:errors/> 
+            </div>
             <div class="actions">
                 <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
             </div>
-            </form>
+           
+          </form>
         </t:zone>
-     
         
         
     </div>    
@@ -308,7 +316,7 @@
                     </div>                    
                 </form>
                 <t:if test="mostrarlista">
-                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="btrabajador" include="nombretrabajador,den_cargo,regimenvalor,estadocargo" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom" row="btrabajador" include="nombretrabajador,den_cargo,regimenvalor,estadocargo" inPlace="true">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay Trabajadores encontrados.</div>
                             </t:parameter>
@@ -326,7 +334,7 @@
     </div>
     <div id="shade2"></div>
     <div id="modal2" style="height: 410px;">
-       <t:zone t:id="autoridadmodalZone" t:update="show">
+       <t:zone t:id="autoridadmodalZone">
          <t:if test="mostrarnuevof" negate="true">
            <div class="box-background-title">
                 <span class="box-title-01">
@@ -341,18 +349,18 @@
                 </div>     
                 <div class="f-wrap">
                     <input t:id="nuevautoridad" t:type="submit" value="Nuevo" class="button f-right" />                
-                    <input t:type="Submit" t:id="cancelmodal3" value="Cancelar" class="button f-right" onClick="javascript: ocultar2();"/>
+                    <input t:type="Submit" t:id="cancelmodal3" value="Cancelar" class="button f-right" onClick="javascript: ocultardos();"/>
                     <input id="buscarsubmit3" type="submit" value="Buscar" class="button f-right" />                   
                 </div> 
             </form>
             <t:if test="mostrarlista">
-                Listado de Autoridades
+                Listado de Autoridades Notifica
                 <t:grid source="funcionarios" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Autoridades encontrados.</div>
                         </t:parameter>
                         <p:accionesCell> 
-                            <t:actionlink t:id="seleccionaFuncionario" zone="autoridadmodalZone" context="bfuncionario" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                            <t:actionlink t:id="seleccionaFuncionario" zone="autoridadnotZone" context="bfuncionario" onClick="javascript: ocultardos();">Seleccionar</t:actionlink>                                                      
                         </p:accionesCell>
                 </t:grid>               
                 <div class="f-right"><b>${nroregistros} Registros.</b></div>
@@ -398,7 +406,7 @@
                     </div>
                     <div class="f-left" style="position:relative; top:13px; left:140px;">
                         <input t:id="saveautoridad" t:type="submit" value="Guardar" class="button f-right" />                
-                        <t:eventLink t:event="cancelmodal3" href="#" class="button f-right" t:zone="autoridadmodalZone">
+                        <t:eventLink t:event="cancelmodal3" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
                             <span t:type="any">
                                 Cancelar
                             </span> 
@@ -406,21 +414,27 @@
                     </div>
                 </div>
              </div> 
+           </form>
              <div class="box-background-title">
                 <span class="box-title-01">
                     Listado de Trabajadores
                 </span>
              </div>
              <div id="panel-01" class="box">
+               <form t:type="form" t:id="formnuevaautoridad2" t:zone ="autoridadmodalZone">
                 <div class="f-wrap">
                   <div class="f-left">
                     <label>Apellidos / Nombres</label>
-                    <input t:type="TextField" t:id="nombre_autoridad_trabajador" value="bnomtrabaautoridad" size="100"/>
-                  </div>
-                  <div class="f-left" style="position:relative; top:13px; left:160px;">
-                    <input t:id="buscartrabaautoridad" t:type="submit" value="Buscar" class="button f-right" />
-                  </div>
-                </div>             
+                    <input t:type="TextField" t:id="nombre_autoridad_trabajador" value="bnomtrabaautoridad" size="100"
+                           t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnomtrabaautoridadChanged" t:zone="autoridadmodalZone"/>
+                  </div>                  
+                    <t:eventLink t:event="buscartrabaauto" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
+                        <span t:type="any">
+                            Buscar
+                        </span> 
+                    </t:eventLink>
+                </div>
+               </form>
                 <t:grid source="trabajadoresAuto" rowsPerPage="4" t:add="Acciones" pagerPosition="bottom" row="btrabajadorauto" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados.</div>
@@ -430,7 +444,7 @@
                         </p:accionesCell>
                 </t:grid>
             </div>
-         </form>
+         
          </t:if>
            
        </t:zone>
@@ -452,10 +466,10 @@
         var modal2= document.getElementById('modal2');
         var shade2= document.getElementById('shade2');
         
-        function mostrar2() {
+        function mostrardos() {
         modal2.style.display=shade2.style.display= 'block';
         };
-        function ocultar2() {
+        function ocultardos() {
         modal2.style.display=shade2.style.display= 'none';
         };
     </script>

@@ -21,6 +21,8 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class Funcionario implements Serializable {
     
     @Id    
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_FUNCIONARIO_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private long id;    
     @ManyToOne

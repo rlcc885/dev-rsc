@@ -5,6 +5,7 @@
 package Batch.Helpers;
 
 import Batch.Tratamiento;
+import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
-import jxl.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -55,28 +55,28 @@ public class ValidacionXLS {
         return session;
     }
     
-    public ValidacionXLS(String path, String origenArchivo, Session session, List<String> errores, Usuario usuario) throws IOException, ParseException {
+    public ValidacionXLS(String path, String origenArchivo, Session session, List<String> errores, Usuario usuario,Entidad eu) throws IOException, ParseException {
         this.path = path;
         this.origenArchivo = origenArchivo;
         this.session = session;
         this.errores = errores;
         this.usuario = usuario;
         
-        archivos.add("xxxENTIDAD");
-        archivos.add("xxxCONCEPTO");
-        archivos.add("xxxCARGO");
-        archivos.add("xxxUNIDADORGANICA");
-        archivos.add("xxxCARGOASIGNADO");
-        archivos.add("xxxREMUNERACION");
-        archivos.add("xxxEVALUACION");
-        archivos.add("xxxCONSTANCIA");
-        archivos.add("xxxTRABAJADOR");
-        archivos.add("xxxESTUDIO");
-        archivos.add("xxxCURSO");
-        archivos.add("xxxANTECEDENTE");
-        archivos.add("xxxPRODUCCION");
-        archivos.add("xxxFAMILIAR");
-        archivos.add("xxxDEMERITO");
+        archivos.add(eu.getCue_entidad()+"ENTIDAD");
+        archivos.add(eu.getCue_entidad()+"CONCEPTO");
+        archivos.add(eu.getCue_entidad()+"CARGO");
+        archivos.add(eu.getCue_entidad()+"UNIDADORGANICA");
+        archivos.add(eu.getCue_entidad()+"CARGOASIGNADO");
+        archivos.add(eu.getCue_entidad()+"REMUNERACION");
+        archivos.add(eu.getCue_entidad()+"EVALUACION");
+        archivos.add(eu.getCue_entidad()+"CONSTANCIA");
+        archivos.add(eu.getCue_entidad()+"TRABAJADOR");
+        archivos.add(eu.getCue_entidad()+"ESTUDIO");
+        archivos.add(eu.getCue_entidad()+"CURSO");
+        archivos.add(eu.getCue_entidad()+"ANTECEDENTE");
+        archivos.add(eu.getCue_entidad()+"PRODUCCION");
+        archivos.add(eu.getCue_entidad()+"FAMILIAR");
+        archivos.add(eu.getCue_entidad()+"DEMERITO");
         
         for (int k = 0; k < 15; k++) {
             misCSVs.add("");
@@ -86,22 +86,22 @@ public class ValidacionXLS {
         
         if(usuario.getRolid()!=2){
             if (misCSVs.get(0).equals("")) {
-                errores.add("Archivo xxxENTIDAD no encontrado");
+                errores.add("Archivo "+eu.getCue_entidad()+"ENTIDAD no encontrado");
                 return;
             }
         }
         
         if(usuario.getRolid()==2){
-            if(misCSVs.get(0).equals("xxxENTIDAD")){                
-               errores.add("Archivo xxxENTIDAD no esta permitido de subir"); 
+//            if(misCSVs.get(0).equals("xxxENTIDAD")){                
+//               errores.add("Archivo xxxENTIDAD no esta permitido de subir"); 
+//               return;
+//            }
+            if(misCSVs.get(5).equals(eu.getCue_entidad()+"REMUNERACION")){ 
+               errores.add("Archivo "+eu.getCue_entidad()+"REMUNERACION no esta permitido de subir"); 
                return;
             }
-            if(misCSVs.get(5).equals("xxxREMUNERACION")){ 
-               errores.add("Archivo xxxREMUNERACION no esta permitido de subir"); 
-               return;
-            }
-            if(misCSVs.get(1).equals("xxxCONCEPTO")){ 
-               errores.add("Archivo xxxCONCEPTO no esta permitido de subir"); 
+            if(misCSVs.get(1).equals(eu.getCue_entidad()+"CONCEPTO")){ 
+               errores.add("Archivo "+eu.getCue_entidad()+"CONCEPTO no esta permitido de subir"); 
                return;
             }
         }
@@ -137,10 +137,10 @@ public class ValidacionXLS {
         
         return posicion;
     }
-    public List<LineasArchivos> getCantLineasArchivos(List<String> errores) {
+    public List<LineasArchivos> getCantLineasArchivos(List<String> errores,Entidad eu) {
         List<LineasArchivos> llo = new LinkedList<LineasArchivos>();
         try {
-            llo = ListLineaEntidadUE.getListLineaEntidadUE(path, misCSVs);
+            llo = ListLineaEntidadUE.getListLineaEntidadUE(path, misCSVs,eu);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
             errores.add("Error buscando archivo: " + ex.getMessage());

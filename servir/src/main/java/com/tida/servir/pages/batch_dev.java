@@ -34,6 +34,7 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.services.UploadedFile;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -218,6 +219,11 @@ public class batch_dev  extends GeneralPage {
         //tratamiento
 //        myTratamiento.setTipoProceso(tipoProceso);
 //        errores = myTratamiento.generacionListDesdeCSV();
+        Query query = session.getNamedQuery("callSpProcesoBatch");
+        query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
+        query.setParameter("an_tipoproceso", 2);
+        List result = query.list();
+        session.flush();
         
         if (errores.size() > 0 ) { // hay errores
             for(String error: errores){
@@ -244,9 +250,9 @@ public class batch_dev  extends GeneralPage {
         etapaInicio = true;
         etapaConfirmacion = false;
         
-        Unzip.zippeXLS(lugarArchivo, nombreArchivo);
+//        Unzip.zippeXLS(lugarArchivo, nombreArchivo);
 
-        respuestaOk = true;
+//        respuestaOk = true;
         
         
         return this;
@@ -265,7 +271,8 @@ public class batch_dev  extends GeneralPage {
             int aleatorio = (int) (Math.random() * 1000 + 1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
+//            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
+            lugarArchivo="C:/CARGA/file/";
             paraDescargar = lugarArchivo + nombreArchivo + "TXT.zip";
             String archivoXLS = lugarArchivo + file.getFileName();
             copied = new File(lugarArchivo);
@@ -298,7 +305,7 @@ public class batch_dev  extends GeneralPage {
         System.out.println("-------------------------- Etapa Inicio -------------");
         
         try {
-            myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario);
+            myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario,_entidadUE);
         } catch (IOException ex) {
             Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
             formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
@@ -339,10 +346,10 @@ public class batch_dev  extends GeneralPage {
          * Ahora buscamos que sean consistentes con la base de datos.
         */
 
-        lla = myTratamiento.getCantLineasArchivos(errores);
+        lla = myTratamiento.getCantLineasArchivos(errores,_entidadUE);
         
         if (errores.size() > 0 ) { // hay errores
-            formularioprocesobatch.recordError("Error procesando XLS.");
+            formularioprocesobatch.recordError("Error procesando TXT.");
             for(String error: errores){
                 formularioprocesobatch.recordError(error);
             }

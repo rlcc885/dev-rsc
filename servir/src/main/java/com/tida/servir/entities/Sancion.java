@@ -24,9 +24,9 @@ public class Sancion implements Serializable {
     @Column(name = "ID")
     private long id;    
     @ManyToOne
-    private Trabajador autoridadnot;
+    private Funcionario autoridadnot;
     @ManyToOne
-    private Trabajador autoridadsan;
+    private Funcionario autoridadsan;
     @ManyToOne
     private DatoAuxiliar categoria_sancion;
     private String causa;
@@ -40,19 +40,19 @@ public class Sancion implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaini_inha;
 
-    public Trabajador getAutoridadnot() {
+    public Funcionario getAutoridadnot() {
         return autoridadnot;
     }
 
-    public void setAutoridadnot(Trabajador autoridadnot) {
+    public void setAutoridadnot(Funcionario autoridadnot) {
         this.autoridadnot = autoridadnot;
     }
 
-    public Trabajador getAutoridadsan() {
+    public Funcionario getAutoridadsan() {
         return autoridadsan;
     }
 
-    public void setAutoridadsan(Trabajador autoridadsan) {
+    public void setAutoridadsan(Funcionario autoridadsan) {
         this.autoridadsan = autoridadsan;
     }
 
@@ -110,22 +110,6 @@ public class Sancion implements Serializable {
 
     public void setFechaini_inha(Date fechaini_inha) {
         this.fechaini_inha = fechaini_inha;
-    }
-
-    public Boolean getFunnot() {
-        return funnot;
-    }
-
-    public void setFunnot(Boolean funnot) {
-        this.funnot = funnot;
-    }
-
-    public Boolean getFunsan() {
-        return funsan;
-    }
-
-    public void setFunsan(Boolean funsan) {
-        this.funsan = funsan;
     }
 
     public String getNumdocnot() {
@@ -215,12 +199,7 @@ public class Sancion implements Serializable {
     public void setTrabajador(Trabajador trabajador) {
         this.trabajador = trabajador;
     }
-//    @ManyToOne
-//    private Funcionario funcionarionot;
-//    @ManyToOne
-//    private Funcionario funcionariosan;
-    private Boolean funnot;
-    private Boolean funsan;
+
     private String numdocnot;
     private String numdocsan;
     private String observaciones;
