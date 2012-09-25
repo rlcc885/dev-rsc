@@ -117,7 +117,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private String trabajador_ape;
+    private String nombresTrabajador;
     
     @Property
     @InjectComponent
@@ -125,7 +125,11 @@ public class RepTrabajador extends GeneralPage {
     
     @Persist
     @Property
-    private String nombreTrabajador;
+    private String apepatTrabajador;
+    
+    @Persist
+    @Property
+    private String apematTrabajador;
 
     @Property
     @InjectComponent
@@ -568,20 +572,36 @@ public class RepTrabajador extends GeneralPage {
         return new MultiZoneUpdate("entiTraZone", entiTraZone.getBody());
     }
     
-    @Log
+     @Log
     public List<Trabajador> getTrabajadores() {
         Criteria c = session.createCriteria(Trabajador.class);
-        if (nombreTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase())
-                    .add(Restrictions.like("apellidoMaterno", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase())
-                    .add(Restrictions.like("nombres", nombreTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombreTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        if (nombresTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres ", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+           
+            
         }else
-            if (entidadTraba == null) return null;
-        if (entidadTraba != null)
+            
+             if (apepatTrabajador != null) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno ", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            
+          }else
+           
+            
+                if (apematTrabajador != null) {
+                c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            
+          }else 
+                    
+            if (entidadTraba != null)
             c.add(Restrictions.eq("entidad", entidadTraba));
         
         return c.list();
     }
+     
+  
+          
+        
+  
     
     @Log
     public List<Entidad> getEntidades() {

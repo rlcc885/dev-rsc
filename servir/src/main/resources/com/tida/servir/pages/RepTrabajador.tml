@@ -183,9 +183,17 @@
                     <div class="pane">
                         <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
                             <div class="f-wrap">
-                                <div class="f-left">
-                                    Nombre completo: 
-                                    <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
+                                <div class="f-left"> 
+                                    Nombres: 
+                                    <input t:type="TextField" t:id="nombresTrabajador" t:value="nombresTrabajador" style="width: 300px;"/> 
+                                </div>
+                                <div class="f-left"> 
+                                    Apellido Paterno: 
+                                    <input t:type="TextField" t:id="apepatTrabajador" t:value="apepatTrabajador" style="width: 300px;"/> 
+                                </div>
+                                <div class="f-left"> 
+                                    Apellido Materno:
+                                    <input t:type="TextField" t:id="apematTrabajador" t:value="apematTrabajador" style="width: 300px;"/> 
                                 </div>
                                 <div class="actions f-right">
                                     <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
