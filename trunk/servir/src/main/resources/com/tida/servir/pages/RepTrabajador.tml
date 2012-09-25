@@ -83,22 +83,22 @@
                     <t:if test="mostrarFiltrosUsuario" >
                         <div class="f-wrap">
                             <t:form t:id="usuarioForm" zone="tipoReporteZone">
+                                <script>
+                                    jQuery(document).ready(function() {
+                                        jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
+                                        jQuery('.fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
+                                    });
+                                </script>
                                 <t:zone t:id="usuarioZone" t:update="show">
-                                    <script>
-                                        jQuery(document).ready(function() {
-                                            jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
-                                            jQuery('.fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
-                                        });
-                                    </script>
                                     <div class="f-left">
                                         Usuario: &nbsp;
                                         <input t:type="TextField" t:id="usuarioTx" t:style="width:600px;" t:value="usuarioTx" t:readonly="readonly" /> 
                                         <input t:type="submit" t:id="buscarUsuario" value="..." class="button f-right" onClick="javascript: mostrar();" /> 
                                         <br /><br />
                                         Desde: &nbsp;
-                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresodesde" size="30" class="fechaingresodesde pictureInputDate"/>
+                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" class="fechaingresodesde pictureInputDate"/>
                                         &nbsp; Hasta: &nbsp;
-                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresohasta" size="30" class="fechaingresohasta pictureInputDate"/>
+                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoha" size="30" class="fechaingresohasta pictureInputDate"/>
                                     </div>
                                 </t:zone>
                             </t:form>
@@ -184,16 +184,17 @@
                         <form t:type="form" t:id="formFindTrabajador" t:zone ="busZone">
                             <div class="f-wrap">
                                 <div class="f-left"> 
-                                    Nombres: 
-                                    <input t:type="TextField" t:id="nombresTrabajador" t:value="nombresTrabajador" style="width: 300px;"/> 
-                                </div>
-                                <div class="f-left"> 
                                     Apellido Paterno: 
-                                    <input t:type="TextField" t:id="apepatTrabajador" t:value="apepatTrabajador" style="width: 300px;"/> 
-                                </div>
-                                <div class="f-left"> 
-                                    Apellido Materno:
-                                    <input t:type="TextField" t:id="apematTrabajador" t:value="apematTrabajador" style="width: 300px;"/> 
+                                    <input t:type="TextField" t:id="apepatTrabajador" t:value="apepatTrabajador" style="width: 120px;"/>
+                                    &nbsp; Apellido Materno:
+                                    <input t:type="TextField" t:id="apematTrabajador" t:value="apematTrabajador" style="width: 120px;"/>
+                                    &nbsp; Nombres: 
+                                    <input t:type="TextField" t:id="nombresTrabajador" t:value="nombresTrabajador" style="width: 120px;"/> 
+                                    <br /><br />
+                                    Tipo Documento:
+                                    <input t:type="Select" t:id="documentotra" t:value="valdocumentotra" model="documentotra"  t:blankOption="ALWAYS" />
+                                    &nbsp; Nº de Documento:
+                                    <input t:type="TextField" t:id="nroDocumentoTra" t:value="nroDocumentoTra" style="width: 120px;"/>
                                 </div>
                                 <div class="actions f-right">
                                     <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
@@ -227,15 +228,25 @@
                     <form t:type="form" t:id="formFindUsuario" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
+                                Login:
+                                <input t:type="TextField" t:id="loginUsu" t:value="loginUsu" style="width: 100px;"/>
+                                &nbsp; Estado:
+                                <input t:type="Select" t:id="bEstado" t:value="bEstado" t:model="literal:1=Activo,0=Inactivo,2=Bloqueado" t:style="width: 100px;" />
+                                &nbsp; Rol:
+                                <input t:type="Select" t:id="bselectRol" model="rolUsuario" t:value="bselectRol" style="width: 200px;" />
+                                <br /><br />
                                 Apellido Paterno:
-                                <input t:type="TextField" t:id="apePaUsuario" t:value="apePaUsuario" style="width: 100px;"/>
+                                <input t:type="TextField" t:id="apePaUsuario" t:value="apePaUsuario" style="width: 120px;"/>
                                 &nbsp; Apellido Materno:
-                                <input t:type="TextField" t:id="apeMaUsuario" t:value="apeMaUsuario" style="width: 100px;"/>
+                                <input t:type="TextField" t:id="apeMaUsuario" t:value="apeMaUsuario" style="width: 120px;"/>
                                 &nbsp; Nombres: 
-                                <input t:type="TextField" t:id="nombreUsuario" t:value="nombreUsuario" style="width: 100px;"/>
+                                <input t:type="TextField" t:id="nombreUsuario" t:value="nombreUsuario" style="width: 120px;"/>
                                 <br /><br />
                                 Tipo Documento:
                                 <input t:type="Select" t:id="documentousu" t:value="valdocumentousu" model="documentousu"  t:blankOption="ALWAYS" />
+                                &nbsp; Nº de Documento:
+                                <input t:type="TextField" t:id="nroDocumentoUsu" t:value="nroDocumentoUsu" style="width: 120px;"/>
+                                <br />
                             </div>
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
@@ -302,10 +313,10 @@
                             t:add="Acciones" 
                             pagerPosition="bottom" 
                             row="u" 
-                            include="nombres,apellidopaterno,apellidomaterno,documentoId,numeroDocumento,estado"
+                            include="nombres,apellidopaterno,apellidomaterno,numeroDocumento"
                             reorder="nombres,apellidopaterno,apellidomaterno">
                         <t:parameter name="empty">
-                            No se han encontrado coincidencias.
+                            <div class="no-info">No se han encontrado coincidencias</div>
                         </t:parameter>
                         <p:accionesCell> 
                             <t:actionlink t:id="seleccionaUsuario" zone="usuaZone" context="u" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
