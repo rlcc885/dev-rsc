@@ -254,13 +254,17 @@ public class RepTrabajador extends GeneralPage {
     @InjectComponent
     private Zone usuaZone;
     
-    @Property
-    @Persist
-    private String usuario_ape;
-    
     @Persist
     @Property
     private String nombreUsuario;
+    
+    @Persist
+    @Property
+    private String apePaUsuario;
+    
+    @Persist
+    @Property
+    private String apeMaUsuario;
     
     @Property
     @InjectComponent
@@ -357,6 +361,10 @@ public class RepTrabajador extends GeneralPage {
     @Property
     @InjectComponent
     private Zone sancionZone;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar valdocumentoide;
     
     @Log
     void setupRender() {
@@ -592,11 +600,21 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    public List<UsuarioTrabajador> getUsuarios() {
+    public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public List<Usuario> getUsuarios() {
         Criteria c = session.createCriteria(Usuario.class);
-        if (nombreUsuario != null) {
+        if (nombreUsuario != null)
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }
+        else if (apePaUsuario != null)
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apePaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+        else if (apeMaUsuario != null)
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+        else {return null;}
         return c.list();
     }
     
