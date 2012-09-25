@@ -497,13 +497,13 @@ public class ABMSancion  extends GeneralPage
     
     void calcular(int dias){
         System.out.println("aquiiiiiii"+dias);
-        int año=dias/365;
-        int mes=(dias%365)/30;
-        int dia=(dias%365)%30;
-        System.out.println("aquiiiiiii"+dia+"-"+mes+"-"+año);
-        nuevasancion.setTiem_ser_anio(String.valueOf(año));
-        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
-        nuevasancion.setTiem_ser_dia(String.valueOf(dia));
+//        int año=dias/365;
+//        int mes=(dias%365)/30;
+//        int dia=(dias%365)%30;
+//        System.out.println("aquiiiiiii"+dia+"-"+mes+"-"+año);
+//        nuevasancion.setTiem_ser_anio(String.valueOf(año));
+//        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
+//        nuevasancion.setTiem_ser_dia(String.valueOf(dia));
     }
     @Log
     @CommitAfter
