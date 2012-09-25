@@ -135,9 +135,6 @@
                                         <t:if test="bessubentidad">
                                             &nbsp; Tipo Sub-Entidad:&nbsp;
                                             <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                            <br /><br />
-                                            &nbsp; Sub-Entidad:&nbsp;
-                                            <input t:type="Select" t:id="ssubentidad" t:value="ssubentidad" t:style="width:600px;" model="SubEntidades" t:blankOption="ALWAYS" t:zone="prop:gobiernoZoneId"/>
                                         </t:if>
                                     </t:form>
                                 </div>
@@ -157,8 +154,8 @@
                 </div>
                 
                 <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
-                    <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar"/>
-                    <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank">Generar Reporte</a>
+                    <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar" t:mixins="confirm"/>
+                    <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank" t:mixins="confirm">Generar Reporte</a>
                 </t:form>
             </fieldset>
         </t:if>
@@ -178,7 +175,7 @@
     </script>
     
     <div id="shade"></div>
-    <div id="modal" style="width: fit-content; height: fit-content">
+    <div id="modal" style="width: 800px; height: 500px">
         <t:zone t:id="busZone" t:update="show" >
             <t:if test="mostrarFiltrosTrabajador" >
                 <t:if test="mostrarTrabajadorS">
@@ -228,9 +225,9 @@
                                 <input t:type="TextField" t:id="apeMaUsuario" t:value="apeMaUsuario" style="width: 100px;"/>
                                 &nbsp; Nombres: 
                                 <input t:type="TextField" t:id="nombreUsuario" t:value="nombreUsuario" style="width: 100px;"/>
-                                <br />
+                                <br /><br />
                                 Tipo Documento:
-                                <input t:type="Select" t:id="documentoide" t:value="valdocumentoide" model="documentoide"  t:blankOption="ALWAYS" />
+                                <input t:type="Select" t:id="documentousu" t:value="valdocumentousu" model="documentousu"  t:blankOption="ALWAYS" />
                             </div>
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
