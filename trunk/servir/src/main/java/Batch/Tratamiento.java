@@ -1226,15 +1226,15 @@ public final class Tratamiento {
     public List<LineasArchivos> getCantLineasArchivos(List<String> errores) {
         //recuperacion Lineas de cada archivos
         List<LineasArchivos> llo = new LinkedList<LineasArchivos>();
-        try {
-            llo = ListLineaEntidadUE.getListLineaEntidadUE(path, misCSVs);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            errores.add("Error buscando archivo: " + ex.getMessage());
-        } catch (IOException ex) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
-            errores.add("Error procesando archivo: " + ex.getMessage());
-        }
+//        try {
+//            llo = ListLineaEntidadUE.getListLineaEntidadUE(path, misCSVs);
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            errores.add("Error buscando archivo: " + ex.getMessage());
+//        } catch (IOException ex) {
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            errores.add("Error procesando archivo: " + ex.getMessage());
+//        }
         return llo;
     }
 }

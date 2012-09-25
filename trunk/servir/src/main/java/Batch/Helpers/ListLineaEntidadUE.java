@@ -6,14 +6,13 @@
 package Batch.Helpers;
 
 import Batch.Tratamiento;
+import com.tida.servir.entities.Entidad;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jxl.Sheet;
-import jxl.Workbook;
 
 /**
  *
@@ -21,7 +20,7 @@ import jxl.Workbook;
  */
 public class ListLineaEntidadUE {
     
-    public static List<LineasArchivos> getListLineaEntidadUE(String path, ArrayList<String> misCSVs) throws FileNotFoundException, IOException{
+    public static List<LineasArchivos> getListLineaEntidadUE(String path, ArrayList<String> misCSVs,Entidad eu) throws FileNotFoundException, IOException{
         List<LineasArchivos> llo = new LinkedList<LineasArchivos>();
         LineasArchivos lo;
         try {
@@ -35,7 +34,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxENTIDAD");
+                lo.setArchivo(eu.getCue_entidad()+"ENTIDAD");
                 llo.add(lo);
             }
             if(!misCSVs.get(1).equals("")){
@@ -48,7 +47,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxCONCEPTO");
+                lo.setArchivo(eu.getCue_entidad()+"CONCEPTO");
                 llo.add(lo);
             }
             if(!misCSVs.get(2).equals("")){
@@ -61,7 +60,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxUNIDADORGANICA");
+                lo.setArchivo(eu.getCue_entidad()+"UNIDADORGANICA");
                 llo.add(lo);
             }
             if(!misCSVs.get(3).equals("")){
@@ -74,7 +73,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxCARGO");
+                lo.setArchivo(eu.getCue_entidad()+"CARGO");
                 llo.add(lo);
             }
             if(!misCSVs.get(4).equals("")){
@@ -87,7 +86,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxCARGOASIGNADO");
+                lo.setArchivo(eu.getCue_entidad()+"CARGOASIGNADO");
                 llo.add(lo);
             }
             if(!misCSVs.get(5).equals("")){
@@ -100,7 +99,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxREMUNERACION");
+                lo.setArchivo(eu.getCue_entidad()+"REMUNERACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(6).equals("")){
@@ -113,7 +112,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxEVALUACION");
+                lo.setArchivo(eu.getCue_entidad()+"EVALUACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(7).equals("")){
@@ -126,7 +125,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxCONSTANCIA");
+                lo.setArchivo(eu.getCue_entidad()+"CONSTANCIA");
                 llo.add(lo);
             }
             if(!misCSVs.get(8).equals("")){
@@ -139,7 +138,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxTRABAJADOR");
+                lo.setArchivo(eu.getCue_entidad()+"TRABAJADOR");
                 llo.add(lo);
             }
             if(!misCSVs.get(9).equals("")){
@@ -152,7 +151,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxESTUDIO");
+                lo.setArchivo(eu.getCue_entidad()+"ESTUDIO");
                 llo.add(lo);
             }
             if(!misCSVs.get(10).equals("")){
@@ -165,7 +164,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxCURSO");
+                lo.setArchivo(eu.getCue_entidad()+"CURSO");
                 llo.add(lo);
             }
             if(!misCSVs.get(11).equals("")){
@@ -178,7 +177,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxANTECEDENTE");
+                lo.setArchivo(eu.getCue_entidad()+"ANTECEDENTE");
                 llo.add(lo);
             }
             if(!misCSVs.get(12).equals("")){
@@ -191,7 +190,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxPRODUCCION");
+                lo.setArchivo(eu.getCue_entidad()+"PRODUCCION");
                 llo.add(lo);
             }
             if(!misCSVs.get(13).equals("")){
@@ -204,7 +203,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxFAMILIAR");
+                lo.setArchivo(eu.getCue_entidad()+"FAMILIAR");
                 llo.add(lo);
             }
             if(!misCSVs.get(14).equals("")){
@@ -217,7 +216,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo("xxxDEMERITO");
+                lo.setArchivo(eu.getCue_entidad()+"DEMERITO");
                 llo.add(lo);
             }            
         }catch(Exception ioe) {

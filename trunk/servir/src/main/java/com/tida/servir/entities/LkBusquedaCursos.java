@@ -26,8 +26,15 @@ import org.apache.tapestry5.beaneditor.NonVisual;
     resultClass = LkBusquedaEstudios.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")
+    }),
+    @NamedNativeQuery(name = "callSpProcesoBatch",
+    query = "CALL SP_PROCESODECARGA(?,:as_cue_entidad,:an_tipoproceso)",
+    resultClass = LkBusquedaEstudios.class,
+    hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
     })
 })
+
 public class LkBusquedaCursos implements Serializable {
     @Id
     @NonVisual

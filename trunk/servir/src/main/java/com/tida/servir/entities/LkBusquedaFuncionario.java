@@ -19,6 +19,7 @@ public class LkBusquedaFuncionario implements Serializable {
     @Id
     private long id;
     private String nombrefuncionario;   
+    private String nroDocumento;   
     
     public LkBusquedaFuncionario() {
     }
@@ -38,6 +39,15 @@ public class LkBusquedaFuncionario implements Serializable {
     public void setNombrefuncionario(String nombrefuncionario) {
         this.nombrefuncionario = nombrefuncionario;
     }
+
+    public String getNroDocumento() {
+        return nroDocumento;
+    }
+
+    public void setNroDocumento(String nroDocumento) {
+        this.nroDocumento = nroDocumento;
+    }
+    
     
     
     
