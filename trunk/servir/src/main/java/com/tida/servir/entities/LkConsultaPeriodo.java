@@ -13,7 +13,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  *
  * @author Jurguen Zambrano
  */
-@Entity
+
 @NamedNativeQueries({
     @NamedNativeQuery(name = "callSpCalcularPeriodo",
         query = "CALL SP_CALCULARPERIODO(?,:fecha_ini,:fecha_fin)",
