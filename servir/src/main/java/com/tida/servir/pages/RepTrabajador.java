@@ -5,6 +5,8 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Reportes;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
@@ -352,11 +354,11 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private String fechaingresodesde;
+    private String fechaingresode;
     
     @Property
     @Persist
-    private String fechaingresohasta;
+    private String fechaingresoha;
     
     @Property
     @InjectComponent
@@ -365,6 +367,30 @@ public class RepTrabajador extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar valdocumentousu;
+    
+    @Property
+    @Persist
+    private String nroDocumentoUsu;
+    
+    @Property
+    @Persist
+    private String loginUsu;
+    
+    @Property
+    @Persist
+    private DatoAuxiliar valdocumentotra;
+    
+    @Property
+    @Persist
+    private String nroDocumentoTra;
+    
+    @Persist
+    @Property
+    private String bEstado;
+    
+    @Persist
+    @Property
+    private Perfil bselectRol;
     
     @Log
     void setupRender() {
@@ -383,6 +409,8 @@ public class RepTrabajador extends GeneralPage {
         generarDisabled = false;
         organizacionBool = false;
         entidadTraba = null;
+        fechaingresode = "";
+        fechaingresoha = "";
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
@@ -450,6 +478,14 @@ public class RepTrabajador extends GeneralPage {
     public GenericSelectModel<DatoAuxiliar> getTipoOrganismo() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOORGANISMO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
+    public GenericSelectModel<Perfil> getRolUsuario() {
+        List<Perfil> list;
+        Criteria c = session.createCriteria(Perfil.class);
+        list = c.list();
+        return new GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
     }
     
     @Log
@@ -575,33 +611,22 @@ public class RepTrabajador extends GeneralPage {
      @Log
     public List<Trabajador> getTrabajadores() {
         Criteria c = session.createCriteria(Trabajador.class);
-        if (nombresTrabajador != null) {
+        if (nombresTrabajador != null)
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres ", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-           
-            
-        }else
-            
-             if (apepatTrabajador != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno ", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-            
-          }else
-           
-            
-                if (apematTrabajador != null) {
-                c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-            
-          }else 
-                    
+        else if (apepatTrabajador != null)
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno ", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        else if (apematTrabajador != null)
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+        else if (valdocumentotra != null)
+            c.add(Restrictions.eq("documentoidentidad", valdocumentotra));
+        else if (nroDocumentoTra != null && !nroDocumentoTra.equals(""))
+            c.add(Restrictions.disjunction().add(Restrictions.like("nroDocumento", nroDocumentoTra + "%").ignoreCase()));
+        else {
             if (entidadTraba != null)
-            c.add(Restrictions.eq("entidad", entidadTraba));
-        
+                c.add(Restrictions.eq("entidad", entidadTraba));
+        }
         return c.list();
     }
-     
-  
-          
-        
-  
     
     @Log
     public List<Entidad> getEntidades() {
@@ -622,6 +647,12 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    public GenericSelectModel<DatoAuxiliar> getDocumentotra() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
+    @Log
     public GenericSelectModel<DatoAuxiliar> getDocumentousu() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
@@ -638,7 +669,17 @@ public class RepTrabajador extends GeneralPage {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
         else if (valdocumentousu != null)
             c.add(Restrictions.eq("documentoId", valdocumentousu.getId()));
-        else {return null;}
+        else if (nroDocumentoUsu != null && !nroDocumentoUsu.equals(""))
+            c.add(Restrictions.disjunction().add(Restrictions.like("numeroDocumento", nroDocumentoUsu + "%").ignoreCase()));
+        else if (loginUsu != null)
+            c.add(Restrictions.disjunction().add(Restrictions.like("login", loginUsu + "%").ignoreCase()));
+        else if (bselectRol != null) {
+            if (bEstado == null) return null;
+            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectRol.getId()))));
+        } else if (bEstado != null) {
+            if (bselectRol == null) return null;
+            c.add(Restrictions.disjunction().add(Restrictions.eq("estado", Long.valueOf(bEstado))));
+        } else {return null;}
         return c.list();
     }
     
@@ -664,28 +705,41 @@ public class RepTrabajador extends GeneralPage {
     StreamResponse onActionFromGenerarReporte() {
         Reportes rep = new Reportes();
         Map<String, Object> parametros;
-        if (tipoReporteSelect != null && type != null) {
-            parametros = retornarParametros(tipoReporteSelect.getCodigo());
-            if (parametros == null) return null;
-        } else { return null; }
+        if (tipoReporteSelect != null && type != null)
+            try { parametros = retornarParametros(tipoReporteSelect.getCodigo()); } catch (Exception e) { return null; }
+        else return null;
         StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
         return report;
     }
 
-    Map<String, Object> retornarParametros(String codigo) {
+    Map<String, Object> retornarParametros(String codigo)throws Exception {
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (codigo.equals("A2")) {
-            if (_trabajadorRep == null) return null;
+            if (_trabajadorRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
         } else if (codigo.equals("C2")) {
-            if (_entidadRep == null) return null;
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
         } else if (codigo.equals("B1")) {
-            if (_usuarioRep == null) return null;
+            if (_usuarioRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
-            parametros.put("MandatoryParameter_FechaDesde", fechaingresodesde);
-            if (fechaingresohasta == null) return null;
-            parametros.put("MandatoryParameter_FechaHasta", fechaingresohasta);
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha;
+            if (fechaingresode == null) {
+                fechaingresode = "";
+            }
+            if (fechaingresoha == null) {
+                fechaingresoha = "";
+            }
+            if (!fechaingresode.equals("")) {
+                fecha = dateFormat.parse(fechaingresode);
+                parametros.put("MandatoryParameter_FechaDesde", fecha);
+            }
+            if (!fechaingresoha.equals("")) {
+                fecha = dateFormat.parse(fechaingresoha);
+                parametros.put("MandatoryParameter_FechaHasta", fecha);
+            }
         }
         return parametros;
     }
