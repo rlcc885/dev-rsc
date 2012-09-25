@@ -336,10 +336,6 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private Entidad ssubentidad;
-    
-    @Property
-    @Persist
     private boolean mostrarEntidadTrabajador;
     
     @Property
@@ -364,7 +360,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Property
     @Persist
-    private DatoAuxiliar valdocumentoide;
+    private DatoAuxiliar valdocumentousu;
     
     @Log
     void setupRender() {
@@ -559,6 +555,12 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    Object onSelectedFromCancelFormFindUsuario() {
+        mostrar = false;
+        return new MultiZoneUpdate("usuaZone", usuaZone.getBody());
+    }
+    
+    @Log
     Object onSelectedFromCancelFormFindEntidadTrabajador() {
         mostrarEntidadTrabajador = false;
         mostrarTrabajadorS = true;
@@ -600,7 +602,7 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    public GenericSelectModel<DatoAuxiliar> getDocumentoide() {
+    public GenericSelectModel<DatoAuxiliar> getDocumentousu() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar_td("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
@@ -614,6 +616,8 @@ public class RepTrabajador extends GeneralPage {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apePaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
         else if (apeMaUsuario != null)
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+        else if (valdocumentousu != null)
+            c.add(Restrictions.eq("documentoId", valdocumentousu.getId()));
         else {return null;}
         return c.list();
     }
@@ -857,30 +861,6 @@ public class RepTrabajador extends GeneralPage {
     public GenericSelectModel<DatoAuxiliar> getTipoSubEntidad() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOSUBENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
-    }
-    
-    @Log
-    public GenericSelectModel<Entidad> getSubEntidades() {
-        return new GenericSelectModel<Entidad>(searchSubEntidades(), Entidad.class, "denominacion", "id", _access);
-    }
-    
-    @Log
-    private List<Entidad> searchSubEntidades() {
-        Criteria c = session.createCriteria(Entidad.class);
-        c.add(Restrictions.eq("estado", true));
-        c.add(Restrictions.eq("esSubEntidad", true));
-        if (snivelGobierno != null)
-            c.add(Restrictions.eq("nivelGobierno", snivelGobierno));
-        else return new ArrayList<Entidad>();
-        if (sorganizacionestado != null)
-            c.add(Restrictions.eq("organizacionEstado", sorganizacionestado));
-        if (ssectorGobierno != null)
-            c.add(Restrictions.eq("sectorGobierno", ssectorGobierno));
-        if (stipoOrganismo != null)
-            c.add(Restrictions.eq("tipoOrganismo", stipoOrganismo));
-        if (stipoSubEntidad != null)
-            c.add(Restrictions.eq("tipoSubEntidad", stipoSubEntidad));
-        return c.list();
     }
     
     @Log
