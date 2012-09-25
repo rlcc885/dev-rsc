@@ -222,8 +222,15 @@
                     <form t:type="form" t:id="formFindUsuario" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
-                                Nombre completo: 
-                                <input t:type="TextField" t:id="usuario_ape" t:value="nombreUsuario" style="width: 300px;"/> 
+                                Apellido Paterno:
+                                <input t:type="TextField" t:id="apePaUsuario" t:value="apePaUsuario" style="width: 100px;"/>
+                                &nbsp; Apellido Materno:
+                                <input t:type="TextField" t:id="apeMaUsuario" t:value="apeMaUsuario" style="width: 100px;"/>
+                                &nbsp; Nombres: 
+                                <input t:type="TextField" t:id="nombreUsuario" t:value="nombreUsuario" style="width: 100px;"/>
+                                <br />
+                                Tipo Documento:
+                                <input t:type="Select" t:id="documentoide" t:value="valdocumentoide" model="documentoide"  t:blankOption="ALWAYS" />
                             </div>
                             <div class="actions f-right">
                                 <input id="buscarsubmit" type="submit" value="Buscar" class="button" />
@@ -290,8 +297,8 @@
                             t:add="Acciones" 
                             pagerPosition="bottom" 
                             row="u" 
-                            exclude= "nrodocumento,estadodesc,documentoidentidadid,apellidos,id,md5Clave,intentosFallidos,clave,rolid,ultimoCambioClave,emaillaboral,trabajadorid,estado,entidadid,telefono,cargo,fechacreacion,observacion" 
-                            reorder="login,nombres,apellidopaterno,apellidomaterno">
+                            include="nombres,apellidopaterno,apellidomaterno,documentoId,numeroDocumento,estado"
+                            reorder="nombres,apellidopaterno,apellidomaterno">
                         <t:parameter name="empty">
                             No se han encontrado coincidencias.
                         </t:parameter>
