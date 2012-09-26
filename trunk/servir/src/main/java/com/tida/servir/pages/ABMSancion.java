@@ -201,8 +201,7 @@ public class ABMSancion  extends GeneralPage
     private Boolean mostrardocu;
     @Property
     @Persist
-    private Boolean autoridad;    
-    private LkConsultaPeriodo lkcon;
+    private Boolean autoridad;
     private int elemento=0;
     
     // inicio de la pagina
@@ -530,13 +529,14 @@ public class ABMSancion  extends GeneralPage
     }
     
     void calcular(int dias){
-//        System.out.println("aquiiiiiii"+dias);     
-        int anio=(dias/365);
-        int mes=((dias%365)/30);
-        int dia=((dias%365)%30);
-        nuevasancion.setTiem_ser_anio(String.valueOf(anio));
-        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
-        nuevasancion.setTiem_ser_dia(String.valueOf(dia));     
+//        System.out.println("aquiiiiiii"+dias);
+//        int año=dias/365;
+//        int mes=(dias%365)/30;
+//        int dia=(dias%365)%30;
+//        System.out.println("aquiiiiiii"+dia+"-"+mes+"-"+año);
+//        nuevasancion.setTiem_ser_anio(String.valueOf(año));
+//        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
+//        nuevasancion.setTiem_ser_dia(String.valueOf(dia));
     }
     
     @Log
@@ -552,8 +552,7 @@ public class ABMSancion  extends GeneralPage
          limpiarbusqueda();
          limpiarsancion();
          return zonasDatos();
-     }else{
-        lkcon=new LkConsultaPeriodo();
+     }else{   
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
@@ -575,10 +574,10 @@ public class ABMSancion  extends GeneralPage
         }
         
         if(tiposancion.getCodigo()==1){
-//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-//                return zonasDatos();
-//            }
+            if(calcularperiodo(fecinicio,fechadocnot)!=1){
+                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+                return zonasDatos();
+            }
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
             System.out.println("aquiiiii-"+calcularperiodo(fecfin,fecinicio)+"-"+diastiposamax+"-"+diastiposamin);
@@ -590,10 +589,10 @@ public class ABMSancion  extends GeneralPage
             }
         }
         if(tiposancion.getCodigo()==2){
-//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-//                return zonasDatos();
-//            }
+            if(calcularperiodo(fecinicio,fechadocnot)!=1){
+                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+                return zonasDatos();
+            }
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             System.out.println("aquiiiii-"+calcularperiodo(fecfin,fecinicio)+"-"+diastiposamax);
             if(calcularperiodo(fecfin,fecinicio)<diastiposamax){                
@@ -683,9 +682,8 @@ public class ABMSancion  extends GeneralPage
         String consulta ="SELECT 1 ID,to_number(to_date('"+fec1+"','dd/mm/yyyy') - to_date('"+fec2+"','dd/mm/yyyy')) DIAS from dual";
         Query query =session.createSQLQuery(consulta).addEntity(LkConsultaPeriodo.class);  
         List result = query.list();        
-        LkConsultaPeriodo lkcondos = (LkConsultaPeriodo) result.get(0);        
-        session.flush();
-        return lkcondos.getDias();
+        LkConsultaPeriodo lkcon = (LkConsultaPeriodo) result.get(0);        
+        return lkcon.getDias();
     }
     
     
