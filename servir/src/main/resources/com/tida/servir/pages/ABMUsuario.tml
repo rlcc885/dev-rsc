@@ -14,14 +14,16 @@
     </script>
     <div class="box-background-title">
         <span class="box-title-01">
-            <strong style="cursor:pointer;">+</strong> Buscar Usuarios
+            <strong style="cursor:pointer;">+</strong> Busqueda
         </span>
     </div>
+
     <div id="panel-01" class="pane">
         <t:zone t:id="zonaFormularioBusqueda">
             <t:form t:id="formularioBusqueda"  t:zone="zonaFormularioBusqueda">
                 <fieldset>
                     <t:errors/>
+                    <br/>
                     <div id="filtrosnombres" class="f-wrap">
                         <div class="f-left">
                             <t:label for="bidentificacionBusqueda"/>
@@ -80,25 +82,13 @@
                     <input t:type="Submit" t:id="buscarsubmit" value="Buscar" class="button f-right" />
                     <input t:type="Submit" t:id="buscarreset" value="Limpiar Formulario" t:mixins="confirm" class="button f-right" t:message="Esta seguro de realizar esta acción?"/>
                 </div>
+                <br/>
             </t:form>
         </t:zone>
-    </div> <!-- Zona filtros -->
+
     
     <t:zone t:id="tabla_usuario">
-        <script>
-            jQuery(document).ready(function(){
-            jQuery(".box-title-02").click(function(){
-            jQuery("#panel-02").slideToggle("slow");
-            return true;
-            });
-            });
-        </script>
-        <div class="box-background-title">
-            <span class="box-title-02">
-                <strong style="cursor:pointer;">+</strong> Lista de Usuarios
-            </span>
-        </div>
-        <div id="panel-02" class="box">
+
             <t:grid t:inPlace="true" 
                     t:source="usuarios" 
                     t:rowsPerPage="10" 
@@ -122,13 +112,29 @@
                     <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
                 </p:accionesCell>
             </t:grid>
-        </div>
-    </t:zone>
+            <div class="f-right">
+                <b>${nroregistros} Registros.</b>
+            </div><br/>
 
+    </t:zone>
+    </div> <!-- Zona filtros -->
+    
     <t:zone t:id="editarUsuarioZone" id="editarUsuarioZone">
         <t:if test="muestraEditorUsuario">
-            <h3>Datos del Usuario</h3>
-            <div class="box" id="box_u">
+        <script>
+            jQuery(document).ready(function(){
+            jQuery(".box-title-02").click(function(){
+            jQuery("#panel-02").slideToggle("slow");
+            return true;
+            });
+            });
+        </script>
+            <div class="box-background-title">
+            <span class="box-title-02">
+                <strong style="cursor:pointer;">+</strong> Datos del Usuario
+            </span>
+            </div>
+            <div class="box" id="panel-02">
 <!--                <t:zone t:id="mensajes">-->
                 <script>
                      setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
@@ -300,6 +306,8 @@
             </div>
         </t:if>
     </t:zone>
+    
+    
     <t:zone t:id="perfilZone">
         <t:if test="muestraEditorUsuario" negate="true">
             <h3>Datos del Usuario</h3>
