@@ -16,12 +16,11 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class SancionRegimenPK implements Serializable {
+
     @Basic(optional = false)
-//    @NotNull
     @Column(name = "ID_TIPO_SANCION")
     private Long idTipoSancion;
     @Basic(optional = false)
-//    @NotNull
     @Column(name = "ID_REG_LABORAL")
     private Long idRegLaboral;
 
