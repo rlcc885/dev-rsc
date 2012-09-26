@@ -3,11 +3,14 @@
       xmlns:p="tapestry:parameter">
 
 
-        <div class="organismo_titulo">
+      <!--  <div class="organismo_titulo">
             Entidad /U. Ejecutora: ${oi.denominacion}
-        </div>
+        </div>-->
+    <div id="header3">
+            <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#">Familiares</a>
+    </div>
     
-    <div class="f-wrap">
+   <!-- <div class="f-wrap">
         <div class="f-left">
             <div class="box-background-title">
                 <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span class="box-title">Familiares</span></a>
@@ -23,7 +26,7 @@
                 <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span class="box-title">Documentos</span></a>
             </div>
         </div>
-    </div>
+    </div>-->
     
     
     
