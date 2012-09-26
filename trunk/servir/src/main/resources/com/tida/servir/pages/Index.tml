@@ -64,14 +64,12 @@
         <span id="close">   
             <a href="javascript:popup('textoIndexClave')" style="text-decoration: none">X</a>
         </span>
-        <p>${message:olvidoClave}</p>
     </div>
 
     <div id="textoIndexUsuario" style="display:none">
         <span id="close">   
             <a href="javascript:popup('textoIndexUsuario')" style="text-decoration: none">X</a>
         </span>
-        <p>${message:nuevoUsuario}</p>
     </div>
 
 </html>
