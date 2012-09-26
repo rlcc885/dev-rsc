@@ -52,6 +52,20 @@ label { display:block; width:auto; background-color: transparent; cursor: pointe
     margin-left: 2px;
     text-transform: none;
 }
+.iconsearch {
+    color:#fff;
+    cursor:pointer;
+    background:url(images/iconsearch.png) repeat-x 0 0;
+    /*
+    padding:4px 8px;
+    width:auto !important;
+    overflow:visible;
+    margin:0px;
+    margin-left: 2px;
+    text-transform: none;
+    */
+}
+.iconsearch:hover {background:url(images/iconsearch.png) repeat-x 0 0;}
 .buttonGrey { background-image:url(images/bg-buttongrey.gif); border-color:#676767;}
 .button:hover {background:url(images/bg-buttonO.gif) repeat-x 0 0;}
 .buttonGrey:hover {background:url(images/bg-buttongreyO.gif) repeat-x 0 0;}
