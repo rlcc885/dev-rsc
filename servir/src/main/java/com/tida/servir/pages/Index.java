@@ -24,6 +24,7 @@ import org.apache.tapestry5.services.RequestGlobals;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -87,13 +88,13 @@ public class Index {
         }
 
         clearCacheData();
-        
         // Validamos si el aplicativo está siendo cargado desde un punto OffLine
-        Criteria criteriobusqueda;
-        criteriobusqueda = session.createCriteria(UsuarioTrabajador.class);
-//        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
-
-        if (criteriobusqueda.list().isEmpty()) {
+        //        Criteria criteriobusqueda;
+        //        criteriobusqueda = session.createCriteria(UsuarioTrabajador.class);
+        //        criteriobusqueda.add(Restrictions.eq("login", "jzambrano"));
+        int totalUsuario = ((Long) session.createCriteria(UsuarioTrabajador.class).setProjection(Projections.rowCount()).uniqueResult()).intValue();
+        //int totalUsuario = ((Long) session.createQuery("select count(*) from rsc_usuario").uniqueResult()).intValue();
+        if (totalUsuario == 0) {
             return "Wizard";
         }
 
