@@ -159,6 +159,14 @@ legend {
         
 }
 
+#header3 { 
+    width:950px;
+    background: url("images/horiz-bg.png") repeat-x scroll left top transparent;
+    height: 15px;
+    color:#fff;  
+    float:right;       
+}
+
 #logo{
 }
 #logo-left a { 
@@ -961,7 +969,13 @@ DIV.t-available-values UL LI
     float:left; 
     /*height:20px; */
     /*width:215px; */
-    margin-left: 1px;;}
+    margin-left: 1px;}
+#f-left3{ font-weight:bold;
+    color:#fff;   
+    float:left; 
+    /*height:20px; */
+    /*width:215px; */
+    margin-left: 1px;}
 #f-center3{ font-weight:bold;
     color:#fff;   
     float:left; 
