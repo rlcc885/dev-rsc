@@ -265,6 +265,7 @@ envelope.setContents("Tipos de sancion asignados Correctamente");
     opcionCarga=true;
     listainicial.clear();
     listaSancionesModificables.clear();
+    mostrar=false;
 //
 opcionguardar=false;
 
