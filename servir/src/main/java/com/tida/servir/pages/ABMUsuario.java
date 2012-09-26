@@ -335,9 +335,16 @@ public class ABMUsuario extends GeneralPage {
             c.add(Restrictions.eq("entidadid", bEntidad.getId()));
         }
         List<UsuarioTrabajador> listaUsuarios = c.list();
+        
+        nroregistros = Integer.toString(listaUsuarios.size());
+        
         return listaUsuarios;
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
+    
     @Log
     public List<Perfilporusuario> getAllPerfiles() {
         List<Perfilporusuario> lista = null;
