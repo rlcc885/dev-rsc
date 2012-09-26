@@ -18,6 +18,7 @@ public class LkBusquedaTrabajadorSan implements Serializable {
 
     @Id
     private long id;
+    private Long trabajador_id;
     private String nombretrabajador; 
     private String nrodocumento;
     private String apellidoPaterno;
@@ -37,6 +38,14 @@ public class LkBusquedaTrabajadorSan implements Serializable {
     private Date fec_fin;
     private String tiempo_dias;
 
+    public Long getTrabajador_id() {
+        return trabajador_id;
+    }
+
+    public void setTrabajador_id(Long trabajador_id) {
+        this.trabajador_id = trabajador_id;
+    } 
+    
     public String getTiempo_dias() {
         return tiempo_dias;
     }

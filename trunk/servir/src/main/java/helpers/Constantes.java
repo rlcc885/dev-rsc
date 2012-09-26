@@ -38,6 +38,8 @@ public class Constantes {
    public static final String TRANSFERENCIA_EXITO ="Entidad/Sub Entidad Transferida exitosamente.";
    public static final String FUSION_EXITO ="Unidad Orgánica Fusionada exitosamente.";
    public static final String MIGRACION_EXITO ="Unidad Orgánica Migrada exitosamente.";
+   public static final String SANCION_CREADA_EXITO ="Sancion creada exitosamente.";
+   public static final String SANCION_MODIFICADA_EXITO ="Sancion modificada exitosamente.";
    
    //modificado 10agosto
    public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";

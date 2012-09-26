@@ -98,15 +98,15 @@
                         <legend>Tiempo de Servicios</legend>
                             <div class="f-left">
                                 <label>Dias</label>
-                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5"/>
+                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                             <div class="f-left">
                                 <label>Meses</label>
-                                <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5"/>
+                                <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                             <div class="f-left">
                                 <label>Años</label>
-                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5"/>
+                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                         </fieldset>
                    </div>
@@ -136,7 +136,7 @@
                 <div class="f-wrap">                                
                     <div class="f-left">
                         <label>* Categoría de la Sanción</label>
-                        <input t:type="Select" t:id="categoria_sancion"                                
+                        <input t:type="Select" t:id="categoria_sancion" t:validate="required" t:blankOption="ALWAYS"                               
                                t:value="categoriasancion" model="beancategoriasancion" t:zone="tiposancionZone"/>
                     </div>
                     <div class="f-left">
@@ -196,9 +196,8 @@
                        </div>
                        <div class="f-left">
                             <label>* Fecha</label>
-                            <input t:type="TextField" t:id="fecha_docsan" t:value="fechadocsan" size="25" t:validate="required,regexp" class="fecha_docsan pictureInputDate"
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="fechadocsanChanged" t:zone="sancionZone"/>
-                       </div>                       
+                            <input t:type="TextField" t:id="fecha_docsan" t:value="fechadocsan" size="25" t:validate="required,regexp" class="fecha_docsan pictureInputDate"/>             
+                       </div>
                    </div>
                    <div class="f-left">
                       <t:zone t:id="autoridadsanZone" id="autoridadsanZone">
@@ -225,6 +224,13 @@
                         <fieldset>
                         <legend>Periodo de Inhabilitación</legend>
                         <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">
+                            
+                            <script>  
+                            jQuery(document).ready(function() {    
+                                jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
+                                jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                                });
+                            </script>
                         <div class="f-wrap">                            
                             <div class="f-left">
                                 <label>* Fecha de Inicio</label>

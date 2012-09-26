@@ -66,6 +66,9 @@ public class Wizard {
     @InjectComponent
     @Property
     private Zone zoneDatos;
+    @InjectComponent
+    @Property
+    private Zone zoneUbigeo;
     // Variables
     @Persist
     @Property
