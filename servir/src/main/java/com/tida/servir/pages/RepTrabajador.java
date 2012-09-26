@@ -714,13 +714,68 @@ public class RepTrabajador extends GeneralPage {
 
     Map<String, Object> retornarParametros(String codigo)throws Exception {
         Map<String, Object> parametros = new HashMap<String, Object>();
-        if (codigo.equals("A2")) {
+        if (codigo.equals("A2")) {//Ficha de Datos Personales
             if (_trabajadorRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
-        } else if (codigo.equals("C2")) {
+        } else if (codigo.equals("C2")) {//Cargos/Puestos por Entidad
             if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
-        } else if (codigo.equals("B1")) {
+        } else if (codigo.equals("B1")) {//Trazabilidad de Usuario
+            if (_usuarioRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha;
+            if (fechaingresode == null) {
+                fechaingresode = "";
+            }
+            if (fechaingresoha == null) {
+                fechaingresoha = "";
+            }
+            if (!fechaingresode.equals("")) {
+                fecha = dateFormat.parse(fechaingresode);
+                parametros.put("MandatoryParameter_FechaDesde", fecha);
+            }
+            if (!fechaingresoha.equals("")) {
+                fecha = dateFormat.parse(fechaingresoha);
+                parametros.put("MandatoryParameter_FechaHasta", fecha);
+            }
+        } else if (codigo.equals("C10")) {//Detalle de Cargos Asignados por Entidad
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+        } else if (codigo.equals("D4")) {//Resumen de Entidad
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+        } else if (codigo.equals("D5")) {//Detalle de Conceptos Remunerativos
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+        } else if (codigo.equals("A7")) {//Listado de Hijos de Trabajadores por Sexo y Edad
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+        } else if (codigo.equals("A3")) {//Listado Personal Discapacitado
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+        } else if (codigo.equals("A6")) {//Listado de Personal que debe presentar Declaración Jurada
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+        } else if (codigo.equals("C8")) {//Cuadro de Asignación de Personal
+            if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+        } else if (codigo.equals("A4-1")) {//Cursos del Trabajador
+            if (_trabajadorRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+        } else if (codigo.equals("A4-2")) {//Producción Intelectual del Trabajador
+            if (_trabajadorRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+        } else if (codigo.equals("A4-3")) {//Estudios del Trabajador
+            if (_trabajadorRep == null) throw new Exception("Error en reporte: " + codigo);
+            parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+        } else if (codigo.equals("B3")) {//Accesos del Usuario
             if (_usuarioRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
             
@@ -745,12 +800,34 @@ public class RepTrabajador extends GeneralPage {
     }
 
     Reportes.REPORTE retornarReporte(String codigo) {
-        if (codigo.equals("A2"))
+        if (codigo.equals("A2"))//Ficha de Datos Personales
             return Reportes.REPORTE.A2;
-        if (codigo.equals("B1"))
+        if (codigo.equals("B1"))//Trazabilidad de Usuario
             return Reportes.REPORTE.B1;
-        if (codigo.equals("C2"))
+        if (codigo.equals("C2"))//Cargos/Puestos por Entidad
             return Reportes.REPORTE.C2;
+        if (codigo.equals("C10"))//Detalle de Cargos Asignados por Entidad
+            return Reportes.REPORTE.C10;
+        if (codigo.equals("D4"))//Resumen de Entidad
+            return Reportes.REPORTE.D4;
+        if (codigo.equals("D5"))//Detalle de Conceptos Remunerativos
+            return Reportes.REPORTE.D5;
+        if (codigo.equals("A7"))//Listado de Hijos de Trabajadores por Sexo y Edad
+            return Reportes.REPORTE.A7;
+        if (codigo.equals("A3"))//Listado Personal Discapacitado
+            return Reportes.REPORTE.A3;
+        if (codigo.equals("A6"))//Listado de Personal que debe presentar Declaración Jurada
+            return Reportes.REPORTE.A6;
+        if (codigo.equals("C8"))//Cuadro de Asignación de Personal
+            return Reportes.REPORTE.C8;
+        if (codigo.equals("A4-1"))//Cursos del Trabajador
+            return Reportes.REPORTE.A4_1;
+        if (codigo.equals("A4-2"))//Producción Intelectual del Trabajador
+            return Reportes.REPORTE.A4_2;
+        if (codigo.equals("A4-3"))//Estudios del Trabajador
+            return Reportes.REPORTE.A4_3;
+        if (codigo.equals("B3"))//Accesos del Usuario
+            return Reportes.REPORTE.B3;
         return Reportes.REPORTE.B5;
     }
     
