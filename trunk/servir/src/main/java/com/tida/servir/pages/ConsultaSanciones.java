@@ -12,6 +12,7 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Constantes;
 import helpers.Encriptacion;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,15 @@ public class ConsultaSanciones extends GeneralPage {
     @Inject
     private Session session;
     @SessionState
+    private Usuario loggedUser;
+    @InjectComponent
+    private Envelope envelope;
+    @Component(id = "formmensaje")
+    private Form formmensaje;
+    @InjectComponent
+    @Property
+    private Zone mensajeZone;
+    @SessionState
     @Property
     private UsuarioTrabajador usuarioTrabajador;
     @Property
@@ -47,6 +57,9 @@ public class ConsultaSanciones extends GeneralPage {
     @InjectComponent
     @Property
     private Zone consultaSancionesZone;
+    @InjectComponent
+    @Property
+    private Zone busZone2;
     @Property
     @SessionState
     private Entidad entidadUE;
@@ -78,7 +91,25 @@ public class ConsultaSanciones extends GeneralPage {
     private DatoAuxiliar bdocumentoidentidad;
     @Persist
     @Property
+    private DatoAuxiliar bdocumentoidentidad2;
+    @Persist
+    @Property
+    private DatoAuxiliar bdocumentoidentidad_not;
+    @Persist
+    @Property
     private String bnumeroDocumento;
+    @Persist
+    @Property
+    private String bnumeroDocumento2;
+    @Persist
+    @Property
+    private String bnumeroDocumento_not;
+    @Persist
+    @Property
+    private String juzgado_not;
+    @Persist
+    @Property
+    private String observaciones;
     @Persist
     @Property
     private String bdenoentidad;
@@ -106,6 +137,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     @Property
     private Boolean mostrartodo;
+    @Persist
+    @Property
+    private Boolean bmostrar;
    
     @Persist
     @Property
@@ -128,12 +162,28 @@ public class ConsultaSanciones extends GeneralPage {
     private Form formconsultaSancion;
     @Component(id = "formularioconsultasanciones")
     private Form formularioconsultasanciones;
-
-    
+    @Component(id = "formularioanularsancion")
+    private Form formularioanularsancion;
+  
     @Property
     @Persist
     private Entidad entidad2;  
     private int elemento=0;
+    private int anular=0;
+    
+    @Property
+    @Persist
+    private String errorBorrar;
+    
+    @Property
+    @Persist
+    private Sancion sancion;
+    @Property
+    @Persist
+    private String fechadoc;
+    @Property
+    @Persist
+    private String fechadocnot;
     
     @Log
     @SetupRender
@@ -154,6 +204,14 @@ public class ConsultaSanciones extends GeneralPage {
         esHistorica=false;
         esNoVigente=false;
         esVigente=false;
+        
+        if(loggedUser.getRolid()==3){
+            bmostrar=true;
+        }else{
+            bmostrar=false;
+        }
+            
+        
         
     }
     
@@ -209,20 +267,19 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
         }
         if(esSuspendida==true){
-            c.add(Restrictions.eq("estado_id", 340265));
+            c.add(Restrictions.eq("estado_id", "340265"));
         }
         if(esAnulada==true){
-            c.add(Restrictions.eq("estado_id", 340266));
+            c.add(Restrictions.eq("estado_id", "340266"));
         }    
         if(esHistorica==true){
-            c.add(Restrictions.eq("estado_id", 349546));
+            c.add(Restrictions.eq("estado_id", "349546"));
         }
         if(esNoVigente==true){
-            c.add(Restrictions.eq("estado_id", 340264));
+            c.add(Restrictions.eq("estado_id", "340264"));
         }
-        
         if(esVigente==true){
-            c.add(Restrictions.eq("estado_id", 340263));
+            c.add(Restrictions.eq("estado_id", "340263"));
         }
         if(bregimenLaboral!=null){
             c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
@@ -265,19 +322,13 @@ public class ConsultaSanciones extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioConsultaSanciones() {
         if(elemento == 1)   {
-         
-//         if(cs != null){
-//            if(cs.getTipo_doc_trabajador()!= null){
-//                esTrabajador = true;
-//            }else{
-//                esTrabajador = false;
-//            }
-//         }
-//            cs = new LkBusquedaSancionados();
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 2){
 //            cs = new LkBusquedaSancionados();
+            return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+        } else if (elemento == 3){
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         }
@@ -311,6 +362,39 @@ public class ConsultaSanciones extends GeneralPage {
         bcategoriaSancion = null;
         btipoSancion = null;
     }
+    @Log
+    void onSelectedFromLimpiar() {
+        elemento = 3;
+        entidad_origen= null;
+        entidad_origen_id=null;
+        bapellidoPaterno=null;
+        bapellidoMaterno=null;
+        bnombres=null;
+        bnumeroDocumento=null;
+        esSuspendida=false;
+        esAnulada=false;
+        esHistorica=false;
+        esNoVigente=false;
+        esVigente=false; 
+        bdocumentoidentidad = null;
+        bregimenLaboral = null;
+        bcategoriaSancion = null;
+        btipoSancion = null;
+    }
+    
+    @Log
+    void onSelectedFromLimpiar1() {
+        anular=1;
+        observaciones= "fefrrefrfre";      
+        juzgado_not=null;
+        fechadocnot=null;
+        bnumeroDocumento_not=null;
+        bdocumentoidentidad_not=null;
+        fechadoc=null;
+        bnumeroDocumento2=null;
+        bdocumentoidentidad2 = null;
+        entidad_origen = null;
+    }
      
     @Log
     Object onActionFromSeleccionar(Entidad enti2) {        
@@ -319,4 +403,44 @@ public class ConsultaSanciones extends GeneralPage {
         entidad_origen_id = entidad2.getId();
         return consultaSancionesZone.getBody();  
     }
+    
+    @Log
+    Object onActionFromAnular(LkBusquedaSancionados cs) {        
+        
+         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
+    }
+    
+    @Log
+    Object onActionFromCancel1() {        
+
+         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+    }
+        
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioAnularSancion(){
+        if(anular==1){
+            return busZone2.getBody();
+        }else{
+            
+        }
+        return busZone2.getBody();
+    }
+            
+    @Log
+    @CommitAfter
+    Object onBorrarDato(UnidadOrganica dato) {
+        errorBorrar = null;
+        new Logger().loguearOperacion(session, loggedUser, String.valueOf(dato.getId()), Logger.CODIGO_OPERACION_DELETE, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_UNIDAD_ORGANICA);
+        dato.setEstado(UnidadOrganica.ESTADO_BAJA);
+        session.saveOrUpdate(dato);
+        envelope.setContents("Sancion Eliminada");
+
+        return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+    }
+    
+  
 }
