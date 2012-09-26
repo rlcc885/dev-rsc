@@ -56,6 +56,11 @@ label { display:block; width:auto; background-color: transparent; cursor: pointe
     color:#fff;
     cursor:pointer;
     background:url(images/iconsearch.png) repeat-x 0 0;
+    float: left;
+    height: 25px;
+    width: 26px;
+    margin-top:12px;
+    text-indent: -9999px;
     /*
     padding:4px 8px;
     width:auto !important;

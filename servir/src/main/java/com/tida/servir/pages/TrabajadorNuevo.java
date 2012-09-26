@@ -69,6 +69,10 @@ public class TrabajadorNuevo extends GeneralPage {
     private Zone cargosZone;
     @InjectComponent
     private Zone mensajesZone;
+    @InjectComponent
+    private Zone findReniec;
+    @InjectComponent
+    private Zone zoneApellidos;
     //Formularios
     @Component(id = "formulariotrabajadornuevo")
     private Form formulariotrabajadornuevo;
@@ -146,10 +150,19 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private DatoAuxiliar regimenla;
-    
+    @Property
+    @Persist
+    private String fechacaducidad;
+    @Property
+    @Persist
+    private boolean disabledFechaCaducidad;
+    @Property
+    @Persist
+    private boolean disabledZoneApellidos;
+
     // loguear operación de entrada a pagina
     @CommitAfter
-    Object logueo(){
+    Object logueo() {
         new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ALTA_TRABAJADOR);
         return null;
     }
@@ -173,8 +186,11 @@ public class TrabajadorNuevo extends GeneralPage {
         creaNuevoCargo = false;
         puestoconfianza = false;
         fechaingreso = "";
+        fechacaducidad = "";
+        disabledFechaCaducidad = true;
+        disabledZoneApellidos = false;
         nuevo = new Trabajador();
-        regimenla=null;
+        regimenla = null;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -192,7 +208,6 @@ public class TrabajadorNuevo extends GeneralPage {
 
         }
     }
-
 
     // cargar combos
     @Log
@@ -228,7 +243,6 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<LkCargosDisponibles>(list, LkCargosDisponibles.class, "den_cargo", "id", _access);
     }
 
-
     // formulario de creacion de nueva UO
     @Log
     @CommitAfter
@@ -251,7 +265,6 @@ public class TrabajadorNuevo extends GeneralPage {
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
 
-
     // formulario de creacion de nuevo cargo
     @Log
     @CommitAfter
@@ -259,32 +272,31 @@ public class TrabajadorNuevo extends GeneralPage {
         if (unidadorganica == null) {
             formulariotrabajadornuevo.recordError("Debe seleccionar una Unidad Organica.");
         } else {
-        if (nuevoCargo != null) {            
-            Cargoxunidad ncargo;
-            ncargo = new Cargoxunidad();
-            System.out.println("11111111: " + nuevoCargo);
-            ncargo.setDen_cargo(nuevoCargo);
-            ncargo.setCod_cargo("C9999");
-            nuevaunidadorganica.setId(unidadorganica.getId());
-            ncargo.setUnidadorganica(nuevaunidadorganica);
-            ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
-            ncargo.setRegimenlaboral(regimenla);
-            ncargo.setCtd_puestos_total(1);
-            System.out.println("entroooo: ");
-            session.saveOrUpdate(ncargo);
-            System.out.println("2222222: ");
-            cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class,ncargo.getId());
-            envelope.setContents(helpers.Constantes.CARGO_EXITO);
-        } else {
-            formulariotrabajadornuevo.recordError("No puede agregar un cargo vacio");
+            if (nuevoCargo != null) {
+                Cargoxunidad ncargo;
+                ncargo = new Cargoxunidad();
+                System.out.println("11111111: " + nuevoCargo);
+                ncargo.setDen_cargo(nuevoCargo);
+                ncargo.setCod_cargo("C9999");
+                nuevaunidadorganica.setId(unidadorganica.getId());
+                ncargo.setUnidadorganica(nuevaunidadorganica);
+                ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
+                ncargo.setRegimenlaboral(regimenla);
+                ncargo.setCtd_puestos_total(1);
+                System.out.println("entroooo: ");
+                session.saveOrUpdate(ncargo);
+                System.out.println("2222222: ");
+                cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class, ncargo.getId());
+                envelope.setContents(helpers.Constantes.CARGO_EXITO);
+            } else {
+                formulariotrabajadornuevo.recordError("No puede agregar un cargo vacio");
 
-        }
+            }
         }
 
         return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
-
 
     @Log
     public boolean getDNI() {
@@ -302,17 +314,18 @@ public class TrabajadorNuevo extends GeneralPage {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-@Log
+    @Log
     Object onReset() {
         unidadorganica = null;
         cargo = null;
         tipovinculo = null;
         nuevo = new Trabajador();
         fechaingreso = "";
+        fechacaducidad = "";
+        disabledFechaCaducidad = true;
+        disabledZoneApellidos = false;
         return trabajadorNuevoZone.getBody();
     }
-
-
 
     // formulario principal
     @Log
@@ -332,6 +345,10 @@ public class TrabajadorNuevo extends GeneralPage {
                         .add("mensajesZone", mensajesZone.getBody());
             } else if (nuevo.getNroDocumento() == null) {
                 envelope.setContents("Debe ingresar el Nro. de Documento.");
+                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                        .add("mensajesZone", mensajesZone.getBody());
+            } else if (fechacaducidad == null || fechacaducidad.equalsIgnoreCase("")) {
+                envelope.setContents("Debe ingresar la fecha de caducidad del DNI.");
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             } else if (nuevo.getNombres() == null) {
@@ -361,46 +378,44 @@ public class TrabajadorNuevo extends GeneralPage {
             } else {
                 //Guardar Cargo Asignado 
                 cargoAsignado = new CargoAsignado();
-                    Usuario usuarionuevo=new Usuario();
-                    cargo2=(Cargoxunidad)session.load(Cargoxunidad.class, cargo.getId());
-                    if(getListadoTrabajadores().size()>0){
-                        //Trabajador ya existe
-                       nuevo=(Trabajador) session.load(Trabajador.class, getListadoTrabajadores().get(0).getId());
-                       if(cargo2.getRegimenlaboral()!=null){
-                         if(cargo2.getRegimenlaboral().getFlg_creausuario()==true){ 
-                           if(getListadoUsuario().size()>0){
-                               usuarionuevo=(Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
-                               usuarionuevo.setEntidad(oi);
-                               usuarionuevo.setEstado(1);
-                               usuarionuevo.setFecha_creacion(new Date());
-                           }
-                           else{
-                               seteanuevousuario(usuarionuevo);                               
-                           }                           
-                         }
-                         session.saveOrUpdate(usuarionuevo);
-                       }                        
-                    }
-                    else{
-                        if(cargo2.getRegimenlaboral()!=null){
-                            if(cargo2.getRegimenlaboral().getFlg_creausuario()==true){                            
+                Usuario usuarionuevo = new Usuario();
+                cargo2 = (Cargoxunidad) session.load(Cargoxunidad.class, cargo.getId());
+                if (getListadoTrabajadores().size() > 0) {
+                    //Trabajador ya existe
+                    nuevo = (Trabajador) session.load(Trabajador.class, getListadoTrabajadores().get(0).getId());
+                    if (cargo2.getRegimenlaboral() != null) {
+                        if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
+                            if (getListadoUsuario().size() > 0) {
+                                usuarionuevo = (Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+                                usuarionuevo.setEntidad(oi);
+                                usuarionuevo.setEstado(1);
+                                usuarionuevo.setFecha_creacion(new Date());
+                            } else {
                                 seteanuevousuario(usuarionuevo);
-                                session.saveOrUpdate(usuarionuevo);
                             }
-                        }                       
-                        
+                        }
+                        session.saveOrUpdate(usuarionuevo);
                     }
-                    nuevo.setEntidad(oi);
-                    session.saveOrUpdate(nuevo); 
-                    new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevo.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
-                    //Guardar Legajo
-                    nuevoLegajo = new Legajo();
-                    nuevoLegajo.setEntidad(oi);
-                    nuevoLegajo.setTrabajador(nuevo);
-                    nuevoLegajo.setCod_legajo("L9999");
-                    session.saveOrUpdate(nuevoLegajo);
-                    cargoAsignado.setTrabajador(nuevo);
-                    cargoAsignado.setLegajo(nuevoLegajo);
+                } else {
+                    if (cargo2.getRegimenlaboral() != null) {
+                        if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
+                            seteanuevousuario(usuarionuevo);
+                            session.saveOrUpdate(usuarionuevo);
+                        }
+                    }
+
+                }
+                nuevo.setEntidad(oi);
+                session.saveOrUpdate(nuevo);
+                new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevo.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
+                //Guardar Legajo
+                nuevoLegajo = new Legajo();
+                nuevoLegajo.setEntidad(oi);
+                nuevoLegajo.setTrabajador(nuevo);
+                nuevoLegajo.setCod_legajo("L9999");
+                session.saveOrUpdate(nuevoLegajo);
+                cargoAsignado.setTrabajador(nuevo);
+                cargoAsignado.setLegajo(nuevoLegajo);
 //                }
                 cargoAsignado.setEstado(Constantes.ESTADO_ACTIVO);
 
@@ -429,17 +444,17 @@ public class TrabajadorNuevo extends GeneralPage {
         }
     }
 
-    void seteanuevousuario(Usuario usuarionuevo){
+    void seteanuevousuario(Usuario usuarionuevo) {
         usuarionuevo.setEstado(1);
         usuarionuevo.setIntentos_fallidos(0L);
         usuarionuevo.setLogin(nuevo.getNroDocumento());
         usuarionuevo.setEntidad(oi);
         usuarionuevo.setRolid(1L);
-        usuarionuevo.setTrabajador(nuevo);   
+        usuarionuevo.setTrabajador(nuevo);
         usuarionuevo.setFecha_creacion(new Date());
         usuarionuevo.setMd5Clave(Encriptacion.encriptaEnMD5(nuevo.getNroDocumento()));
     }
-    
+
     @Log
     public List<Evento> getListadoEntidades() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
@@ -447,27 +462,27 @@ public class TrabajadorNuevo extends GeneralPage {
         c.add(Restrictions.eq("estado", true));
         return c.list();
     }
-    
+
     @Log
     public List<LkBusquedaTrabajador> getListadoTrabajadores() {
         Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
         c.add(Restrictions.eq("nrodocumento", nuevo.getNroDocumento()));
         return c.list();
     }
-    
+
     @Log
     public List<UsuarioTrabajador> getListadoUsuario() {
         Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
         query.setParameter("login", nuevo.getNroDocumento());
         return query.list();
     }
-            
+
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanregimen() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("REGIMENLABORAL", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "codigo", _access);
     }
-        
+
     // evento de valor cambiados en los campos
     @Log
     void onDNIChanged() {
@@ -492,5 +507,22 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     Object onValueChangedFromBunidadorganica() {
         return _request.isXHR() ? new MultiZoneUpdate("cargosZone", cargosZone.getBody()) : null;
+    }
+
+    @Log
+    Object onValueChangedFromTipoDocumento(DatoAuxiliar dato) {
+        if (dato.getCodigo() == 1) {
+            disabledFechaCaducidad = false;
+            disabledZoneApellidos = true;
+        } else {
+            disabledFechaCaducidad = true;
+            disabledZoneApellidos = false;
+        }
+        return _request.isXHR() ? new MultiZoneUpdate("findReniec", findReniec.getBody()).add("zoneApellidos", zoneApellidos.getBody()) : null;
+    }
+    
+    @Log
+    Object onFindReniec() {
+        return _request.isXHR() ? new MultiZoneUpdate("zoneApellidos", zoneApellidos.getBody()) : null;
     }
 }
