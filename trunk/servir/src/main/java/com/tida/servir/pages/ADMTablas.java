@@ -10,6 +10,7 @@ import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import java.util.Date;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -53,9 +54,7 @@ private DatoAuxiliar valregimen;
 @Persist
 @Property
 private List<LkSancionRegimen> listaSancionesModificables;
-@Persist
-@Property
-private List<LkSancionRegimen> listaFinal;
+
 
 @Persist
 @Property
@@ -103,6 +102,8 @@ public Object onLimpiar(){
 
     valregimen=null;
     opcionCarga=true;
+    listainicial.clear();
+    listaSancionesModificables.clear();
     
     return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
 
@@ -157,9 +158,15 @@ public List<LkSancionRegimen> cargarPorObjeto(){
 @Property
 private Boolean mostrar;
 
-
-
-
+@Inject  
+private ComponentResources _resources;
+@Property
+@SessionState
+private Usuario _usuario;  
+@Property
+@SessionState
+private UsuarioAcceso usua; 
+    
 @Persist
 @Property
 private Integer setup;
@@ -171,14 +178,29 @@ public void setuprender()
     if (setup==null||setup==1){
     System.out.println("PRIMERA CARGA");
     
-    setup=2;    
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", _usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+//        query.setParameter("in_pagename", "TIPOSANCION");
+        List result = query.list();
+        
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+           usua = (UsuarioAcceso) result.get(0);
+           
+           // MODO DE ACCESO A LA PAGINA
+        }
+        
+    setup=2; 
+    
     }
     else {
     System.out.println("PAGINA YA CARGADA");
     }
     
 }
-List<LkSancionRegimen> listafinal;
+
 
 @Property
 @Persist
@@ -217,7 +239,7 @@ for(LkSancionRegimen num : listainicial)
             System.out.println("C2:"+listaSancionesModificables.get(i).getTiposancion()+listaSancionesModificables.get(i).getOpcion());
             if(listaSancionesModificables.get(i).getOpcion()==false){
                             
-                SancionRegimen objeto = new SancionRegimen(listaSancionesModificables.get(i).getId(),valregimen.getId());
+                SancionRegimen objeto = new SancionRegimen(listaSancionesModificables.get(i).getTiposancionId(),valregimen.getId());
                 
                 session.delete(objeto);
             }
@@ -232,11 +254,19 @@ for(LkSancionRegimen num : listainicial)
         }
 
     }
+    // LIMPIEZA DE LAS LISTAS
 
+    //
 //***    
 envelope.setContents("Tipos de sancion asignados Correctamente");    
 
-opcionCarga=true;
+//
+    valregimen=null;
+    opcionCarga=true;
+    listainicial.clear();
+    listaSancionesModificables.clear();
+//
+opcionguardar=false;
 
 //****
 return new MultiZoneUpdate("tiposancionZone",tiposancionZone.getBody()).add("mensajesZone", mensajesZone.getBody());
@@ -245,7 +275,6 @@ return new MultiZoneUpdate("tiposancionZone",tiposancionZone.getBody()).add("men
     
 
 opcionguardar=false;
-
 //***
 return null;
     
