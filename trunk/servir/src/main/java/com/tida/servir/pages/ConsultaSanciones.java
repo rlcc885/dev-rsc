@@ -43,6 +43,7 @@ public class ConsultaSanciones extends GeneralPage {
     private Usuario loggedUser;
     @InjectComponent
     private Envelope envelope;
+    
     @Component(id = "formmensaje")
     private Form formmensaje;
     @InjectComponent
@@ -267,19 +268,19 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
         }
         if(esSuspendida==true){
-            c.add(Restrictions.eq("estado_id", "340265"));
+            c.add(Restrictions.eq("estado_id", "3"));
         }
         if(esAnulada==true){
-            c.add(Restrictions.eq("estado_id", "340266"));
+            c.add(Restrictions.eq("estado_id", "4"));
         }    
         if(esHistorica==true){
-            c.add(Restrictions.eq("estado_id", "349546"));
+            c.add(Restrictions.eq("estado_id", "5"));
         }
         if(esNoVigente==true){
-            c.add(Restrictions.eq("estado_id", "340264"));
+            c.add(Restrictions.eq("estado_id", "2"));
         }
         if(esVigente==true){
-            c.add(Restrictions.eq("estado_id", "340263"));
+            c.add(Restrictions.eq("estado_id", "1"));
         }
         if(bregimenLaboral!=null){
             c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
