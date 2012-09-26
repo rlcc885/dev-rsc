@@ -1,0 +1,85 @@
+
+<html t:type="layout" title="Editar Títulos"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+    
+
+    
+   <h1>Administración de Tablas (Reg. Laboral - Tipo de Sancion)</h1>
+   <div class="box-background-title">
+       <span class="box-title">Administracion de Tablas</span>
+   </div>  
+   <div class="box">
+       
+   <t:zone t:id="mensajesZone">
+       <script>
+           setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+       </script>
+       <t:form t:id="formularioMensajes">
+           <t:envelope t:id="envelope"/>   
+           <t:errors/>
+       </t:form>      
+   </t:zone>
+ <t:zone t:id="tiposancionZone">     
+   <t:form t:id="formularioTablas" t:zone="mensajesZone">
+
+       <div class="f-wrap">
+         <div class="f-left">
+           <label>* Regimen Laboral/Contractual</label>
+           <t:select model="beanRegimen" value="valregimen" t:id="regimenlaboral" t:zone="tiposancionZone"/>
+         </div>
+       </div>           
+           
+       <div class="f-wrap">
+           <div class="f-right">
+               <t:if test="mostrar">  
+               <t:eventLink t:event="seleccionarTodos" href="#" class="button f-right" t:zone="tiposancionZone">
+                   <span type="any" style="color: white;">Seleccionar Todos</span>
+               </t:eventLink>
+               </t:if>    
+           </div>
+       </div>
+       <br/>
+           
+       <div class="f-wrap" style="width: 700px;margin-left: 70px;">  
+   
+        <t:grid 
+       source="listaTablas" 
+       row="sancionregimen" 
+       rowsPerPage="10"
+       pagerPosition="bottom"
+       
+       t:exclude="id,tiposancion,tiposancionId,reglaboralId"
+       t:add="tipoDeSancion">
+       
+            <t:parameter name="empty">
+		<div class="no-info">No se encontraron registros</div>
+            </t:parameter>
+            <p:tipoDeSancionCell>
+                <input t:type="checkbox" t:value="sancionregimen.opcion" onclick="this.form.submit(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />   ${sancionregimen.tiposancion} 
+            </p:tipoDeSancionCell>
+
+        </t:grid>
+
+       </div>
+
+       <div class="f-wrap">
+           <div class="f-right">
+               <input t:type="submit" t:id="guardar" value="guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  class="button f-right" />               
+           </div>
+           <div class="f-right">
+               <t:eventLink t:event="limpiar" href="#" class="button f-right" t:zone="tiposancionZone">
+                   <span t:type="any" style="color: white;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">Limpiar</span>
+               </t:eventLink>
+           </div>
+       </div>
+           
+           
+
+   </t:form>
+ </t:zone>
+       
+   </div>
+   
+</html>
+   
