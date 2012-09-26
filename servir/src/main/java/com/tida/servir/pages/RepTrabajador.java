@@ -803,7 +803,7 @@ public class RepTrabajador extends GeneralPage {
         if (codigo.equals("A2"))//Ficha de Datos Personales
             return Reportes.REPORTE.A2;
         if (codigo.equals("B1"))//Trazabilidad de Usuario
-            return Reportes.REPORTE.B1;
+            return Reportes.REPORTE.B5;//1;
         if (codigo.equals("C2"))//Cargos/Puestos por Entidad
             return Reportes.REPORTE.C2;
         if (codigo.equals("C10"))//Detalle de Cargos Asignados por Entidad
