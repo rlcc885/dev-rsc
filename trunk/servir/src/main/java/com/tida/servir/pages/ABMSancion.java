@@ -10,6 +10,9 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -20,6 +23,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 /**
@@ -140,6 +144,18 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private String fecfin;
+    @Persist
+    @Property
+    private Date fecha_inicio;
+    @Persist
+    @Property
+    private Date fecha_fin;
+    @Persist
+    @Property
+    private Date fecha_docnot;
+    @Persist
+    @Property
+    private Date fecha_docsan;
     
     //zonas
     @InjectComponent
@@ -230,7 +246,7 @@ public class ABMSancion  extends GeneralPage
             c.add(Restrictions.eq("categoria", categoriasancion.getId()));
         }
         list = c.list();
-        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id", _access);
+        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id_tipo", _access);
     }
     
     @Log
@@ -296,6 +312,12 @@ public class ABMSancion  extends GeneralPage
       }
       else{
           bmostrar=false;
+          mostrardocu=false;
+          bregimen=null;
+          bpuesto=null;
+          bestadopuesto=null;
+          nuevasancion.setTrabajador(null);
+          nuevasancion.setCargoasignado(null);
       }
       return zonasDatos();
     }
@@ -379,9 +401,8 @@ public class ABMSancion  extends GeneralPage
         bregimen=btra.getRegimenlaboral();
         bpuesto=btra.getDen_cargo();
         bestadopuesto=btra.getEstadocargo();
-        nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getId()));
-//        nuevasancion.setTiem_ser_dia(btra.getTiempo_dias());
-//        nuevasancion.setTiem_ser_dia(btra.getTiempo_dias());
+        nuevasancion.setCargoasignado((CargoAsignado) session.load(CargoAsignado.class, btra.getId()));
+        nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getTrabajador_id()));
         calcular(Integer.parseInt(btra.getTiempo_dias()));
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
@@ -495,8 +516,19 @@ public class ABMSancion  extends GeneralPage
         bestadopuesto=null;
     }
     
+    void limpiarsancion(){
+        categoriasancion=null;
+        tiposancion=null;
+        autoridadnot=null;
+        autoridadsan=null;
+        fechadocnot=null;
+        fechadocsan=null;
+        fecinicio=null;
+        fecfin=null;        
+    }
+    
     void calcular(int dias){
-        System.out.println("aquiiiiiii"+dias);
+//        System.out.println("aquiiiiiii"+dias);
 //        int año=dias/365;
 //        int mes=(dias%365)/30;
 //        int dia=(dias%365)%30;
@@ -510,36 +542,119 @@ public class ABMSancion  extends GeneralPage
     Object onSuccessFromformsancion(){
 //        TipoSancion tiposa=new TipoSancion();
 //        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId());  
-        
+        System.out.println("aquiiiii"+calcularperiodo());
         
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
                 return zonasDatos();
             }
-//            else{
-//                nuevasancion.setEstrabajador(true);
-//            }
         }
         else{
             if(!validarpersona()){
                 return zonasDatos();
-            }  
-//            else{
-//                nuevasancion.setEstrabajador(false);
-//                nuevapersona.setDocumentoidentidad(bdocidentidad);
-//                nuevapersona.setApellidoMaterno(bamaterno);
-//                nuevapersona.setApellidoPaterno(bapaterno);
-//                nuevapersona.setNroDocumento(bnumerodocumento);
-//                session.saveOrUpdate(nuevapersona);
-//                session.flush();
-//            }
-        }      
-        if(tiposancion.getCodigo()==1){
-            
+            }
         }
+        if(autoridadnot==null){
+            formsancion.recordError("Tiene que ingresar la Autoridad que notifica");
+            return zonasDatos();
+        }
+        if(autoridadsan==null){
+            formsancion.recordError("Tiene que ingresar la Autoridad que notifica");
+            return zonasDatos();
+        }        
+        if(tiposancion.getCodigo()==1){
+            int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
+            int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
+            System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
+            if(calcularperiodo()>diastiposamin && calcularperiodo()<diastiposamax){             
+            }
+            else{
+                formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a:"+String.valueOf(diastiposamax)+"días y mayor a :"+String.valueOf(diastiposamin)+"dias");
+                return zonasDatos();
+            }
+        }
+        if(tiposancion.getCodigo()==2){
+            int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
+            System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax);
+            if(calcularperiodo()<diastiposamax){                
+            }
+            else{
+                formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a:"+String.valueOf(diastiposamax)+"días");
+                return zonasDatos();
+            }
+        }
+        
+        if (fecinicio != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_inicio = (Date) formatoDelTexto.parse(fecinicio);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (fecfin != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_fin = (Date) formatoDelTexto.parse(fecfin);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (fechadocnot != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_docnot = (Date) formatoDelTexto.parse(fechadocnot);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (fechadocsan != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_docsan = (Date) formatoDelTexto.parse(fechadocsan);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        }       
+        
+        if(bestrabajador){
+            nuevasancion.setEstrabajador(true);
+        }else{
+            nuevasancion.setEstrabajador(false);
+            nuevapersona.setDocumentoidentidad(bdocidentidad);
+            nuevapersona.setApellidoMaterno(bamaterno);
+            nuevapersona.setApellidoPaterno(bapaterno);
+            nuevapersona.setNroDocumento(bnumerodocumento);
+            session.saveOrUpdate(nuevapersona);            
+            session.flush();
+            nuevasancion.setPersona(nuevapersona);
+        }
+        TipoSancion tiposa=new TipoSancion();
+        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId_tipo());
+        nuevasancion.setCategoria_sancion(categoriasancion);
+        nuevasancion.setFecha_docnot(fecha_docnot);
+        nuevasancion.setFecha_docsan(fecha_docsan);
+        nuevasancion.setFechafin_inha(fecha_fin);
+        nuevasancion.setFechaini_inha(fecha_inicio);
+        nuevasancion.setTipo_sancion(tiposa);
+        session.saveOrUpdate(nuevasancion);
+        session.flush();  
+        envelope.setContents(helpers.Constantes.SANCION_CREADA_EXITO);
+        nuevasancion=new Sancion();
+        limpiarbusqueda();
+        limpiarsancion();
         return zonasDatos();
+    }  
+    
+    int calcularperiodo(){   
+        String consulta ="SELECT 1 ID,to_number(to_date('"+fecfin+"','dd/mm/yyyy') - to_date('"+fecinicio+"','dd/mm/yyyy')) DIAS from dual";
+        Query query =session.createSQLQuery(consulta).addEntity(LkConsultaPeriodo.class);  
+        List result = query.list();        
+        LkConsultaPeriodo lkcon = (LkConsultaPeriodo) result.get(0);        
+        return lkcon.getDias();
     }
+    
     
     boolean validarpersona(){
         boolean vali=true;
@@ -588,6 +703,7 @@ public class ABMSancion  extends GeneralPage
            }else{
                mostrarfecha=true;
            }
+           
            return new MultiZoneUpdate("inhabilitacionZone", inhabilitacionZone.getBody());
     } 
     
@@ -605,6 +721,6 @@ public class ABMSancion  extends GeneralPage
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody());
     } 
     
-    
+   
 
 }
