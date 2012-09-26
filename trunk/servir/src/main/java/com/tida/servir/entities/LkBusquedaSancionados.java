@@ -220,5 +220,13 @@ public class LkBusquedaSancionados implements Serializable{
     public void setVeditar(Boolean veditar) {
         this.veditar = veditar;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
  
 }
