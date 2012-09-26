@@ -18,14 +18,12 @@ public class LkBusquedaSancionados implements Serializable{
     
     @Id
     @NonVisual
-    @Column(name = "ID_SANCION")
+    @Column(name = "ID")
     private Long id_sancion;
     @NonVisual
     @Column(name = "ENTIDAD_ID")
     private Long entidad_id;
-    @NonVisual
-    @Column(name = "ESTADO_ID")
-    private Long estado_id;
+    private String estado_id;
     private String apellidos_persona;
     private String nombres_persona;
     private String apellidos_trabajador;
@@ -44,6 +42,7 @@ public class LkBusquedaSancionados implements Serializable{
     private String b_datos_persona;
     private String b_datos_trabajador;
     private Boolean estrabajador;
+    private Boolean veditar;
 
     public String getApellidos_persona() {
         return apellidos_persona;
@@ -181,11 +180,11 @@ public class LkBusquedaSancionados implements Serializable{
         this.id_tipo_sancion = id_tipo_sancion;
     }
 
-    public Long getEstado_id() {
+    public String getEstado_id() {
         return estado_id;
     }
 
-    public void setEstado_id(Long estado_id) {
+    public void setEstado_id(String estado_id) {
         this.estado_id = estado_id;
     }
 
@@ -211,6 +210,14 @@ public class LkBusquedaSancionados implements Serializable{
 
     public void setEstrabajador(Boolean estrabajador) {
         this.estrabajador = estrabajador;
+    }
+
+    public Boolean getVeditar() {
+        return veditar;
+    }
+
+    public void setVeditar(Boolean veditar) {
+        this.veditar = veditar;
     }
  
 }
