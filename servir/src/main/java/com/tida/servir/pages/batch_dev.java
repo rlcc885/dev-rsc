@@ -380,7 +380,7 @@ public class batch_dev  extends GeneralPage {
     private String tipoReporte="";
 
     @OnEvent(value="submit" ,component="reporte") 
-    public StreamResponse getReport() throws ClassNotFoundException, SQLException, JRException, IOException 
+    public StreamResponse getReport() throws ClassNotFoundException, SQLException,  IOException, JRException 
     {
     //PARAMETROS DEL REPORTE    
     HashMap<String,Object> parametros = new HashMap<String,Object>();
