@@ -138,7 +138,8 @@
                                     onClick="javascript: mostraranular();">Anular</t:actionlink>
                                 |
                             <t:if test="${cs.veditar}">
-                                <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>
+                               <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->
+                                <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
                                 |
                             </t:if>
                             <!--<t:if test="${veditar}" negate="true">-->
@@ -156,6 +157,7 @@
           
         </t:form>    
     </div>
+    
       <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
             setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
