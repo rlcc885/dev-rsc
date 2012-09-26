@@ -17,7 +17,6 @@ import org.apache.tapestry5.beaneditor.NonVisual;
 public class Lk_Tipo_Sancion implements Serializable {
     @Id
     @NonVisual
-    @Column(name = "ID_TIPO_SANCION")
     private long id;
 
     public Long getCategoria() {
@@ -80,7 +79,18 @@ public class Lk_Tipo_Sancion implements Serializable {
     private Integer tiempoMaxMeses;
     @Column(name = "TIEMPO_MAX_DIAS")
     private Integer tiempoMaxDias;
+    @Column(name = "ID_TIPO_SANCION" )    
+    private Long id_tipo;
+    
+    
+    public Long getId_tipo() {
+        return id_tipo;
+    }
 
+    public void setId_tipo(Long id_tipo) {
+        this.id_tipo = id_tipo;
+    }
+        
     public Integer getTiempoMaxAnios() {
         return tiempoMaxAnios;
     }

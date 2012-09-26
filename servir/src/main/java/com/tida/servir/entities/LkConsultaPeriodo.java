@@ -14,21 +14,24 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author Jurguen Zambrano
  */
 
-@NamedNativeQueries({
-    @NamedNativeQuery(name = "callSpCalcularPeriodo",
-        query = "CALL SP_CALCULARPERIODO(?,:fecha_ini,:fecha_fin)",
-        resultClass = LkConsultaPeriodo.class,
-        hints = {
-            @QueryHint(name = "org.hibernate.callable", value = "true")
-    })
-})
+@Entity
 public class LkConsultaPeriodo implements Serializable {    
     
     public LkConsultaPeriodo() {
     }
     
     private int dias;
+    @Id
+    private long id;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }    
+    
     public int getDias() {
         return dias;
     }

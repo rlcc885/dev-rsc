@@ -90,9 +90,11 @@
                                 </div>
                             </div>
                             <div class="f-wrap">
-                                <div class="f-left" id="ubigeo_entidadUE"> 
-                                    <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="wizardZone" t:zoneName="wizardZone"/>
-                                </div>
+                               <t:zone t:id="zoneUbigeo">
+                                    <div class="f-left" id="ubigeo_entidadUE"> 
+                                        <input t:type="Ubigeos" t:id="ubigeo_entidadUE" t:ubigeo="ubigeoEntidadUE" t:zone="zoneUbigeo" t:zoneName="zoneUbigeo"/>
+                                    </div>
+                               </t:zone>
                             </div>               
                         </fieldset>
                         <fieldset>
@@ -116,12 +118,12 @@
                             <input t:type="Submit" t:id="guardarentidad" value="Ir al paso 2" class="button f-right"/>
                         </div>
                     </t:form>
-                    <div t:type="zone" t:id="mensajesZone" >
+                    <!--<div t:type="zone" t:id="mensajesZone" >
                         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
                             <t:envelope t:id="envelope"/>
                             <t:errors t:id="errores"/>
                         </t:form>
-                    </div>
+                    </div>-->
                 </div>
             </t:if>
             <t:if test="${paso02}">

@@ -21,6 +21,8 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class Sancion implements Serializable {
     
     @Id    
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_SANCION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private long id;    
     @ManyToOne
@@ -213,12 +215,16 @@ public class Sancion implements Serializable {
     @ManyToOne
     private DatoAuxiliar tipo_documentosan;
     
-    @JoinColumn(name = "TIPO_SANCION_ID", referencedColumnName = "ID_TIPO_sANCION")
+    @JoinColumn(name = "TIPO_SANCION_ID", referencedColumnName = "ID_TIPO_SANCION")
     @ManyToOne
     private TipoSancion tipo_sancion;
     @ManyToOne
     private Trabajador trabajador;
+    @ManyToOne
+    private CargoAsignado cargoasignado;   
     
+    @ManyToOne
+    private DatoAuxiliar sancion_estado;
     
     public long getId() {
         return id;
@@ -227,6 +233,23 @@ public class Sancion implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+    @ManyToOne
+    public DatoAuxiliar getSancion_estado() {
+        return sancion_estado;
+    }
+
+    public void setSancion_estado(DatoAuxiliar sancion_estado) {
+        this.sancion_estado = sancion_estado;
+    }  
+    
+    @ManyToOne
+    public CargoAsignado getCargoasignado() {
+        return cargoasignado;
+    }
+
+    public void setCargoasignado(CargoAsignado cargoasignado) {
+        this.cargoasignado = cargoasignado;
+    }  
     
     @Override
     public int hashCode() {
