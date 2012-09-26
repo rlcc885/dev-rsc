@@ -11,7 +11,8 @@
       <t:zone t:id="consultaSancionesZone">
           <t:form t:id="formularioconsultasanciones" zone="consultaSancionesZone">
               <t:errors/>
-              <fieldset>
+             <t:if test="bmostrar">
+                 <fieldset>
                   <legend>Por Entidad / Sub Entidad</legend> 
                   <div class="f-left">    
                         <label>Entidad/Sub Entidad</label>
@@ -22,6 +23,7 @@
                         <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
                   </div>
               </fieldset>
+             </t:if>  
               <fieldset>
                   <legend>Datos Personales</legend> 
                     <div class="f-wrap"> 
@@ -69,30 +71,35 @@
                    <fieldset>
                       <legend>Estado</legend>
                         <div class="f-wrap"> 
+                        <t:if test="bmostrar">
                                 <div class="f-left">  
-                                <label><input t:type="Checkbox" t:id="esVigente" t:value="esVigente" /> Vigente </label>
+                                    <label><input t:type="Checkbox" t:id="esVigente" t:value="esVigente" /> Vigente </label>
                                 </div>
                                 <div class="f-left">
-                                <label><input t:type="Checkbox" t:id="esNoVigente" t:value="esNoVigente" /> No Vigente </label>
+                                    <label><input t:type="Checkbox" t:id="esNoVigente" t:value="esNoVigente" /> No Vigente </label>
                                 </div>
+                        </t:if>   
                                 <div class="f-left">
                                     <label><input t:type="Checkbox" t:id="esSuspendida" t:value="esSuspendida" /> Suspendidas </label>
                                 </div>
                                 <div class="f-left">
                                     <label><input t:type="Checkbox" t:id="esAnulada" t:value="esAnulada" /> Anuladas </label>
                                 </div>
-                                <div class="f-left">
+                          <t:if test="bmostrar">
+                              <div class="f-left">
                                     <label><input t:type="Checkbox" t:id="esHistorica" t:value="esHistorica" /> Historicas </label>
-                                </div>     
+                                </div> 
+                          </t:if>     
                         </div>
                     </fieldset>
                     
                </fieldset>
                 <div class="f-wrap"> 
                     <div class="actions f-right">
+                        <input t:id="limpiar" t:type="submit" value="Limpiar Formulario" class="button" />
                         <input t:id="buscarsubmit" t:type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
-                        <input t:type="Submit" t:id="limpia" value="Exportar" t:mixins="confirm" class="button"/> 
+                        <input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/> 
                     </div>
                 </div>
           </t:form>
@@ -112,10 +119,10 @@
                             reorder="Nombres,entidad_subentidad,tipo_sancion,tiempo_restante,estado,Acciones"
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
-                                    b_datos_trabajador,estrabajador"
+                                    b_datos_trabajador,estrabajador,veditar"
                             inPlace="true">
                        <t:parameter name="empty">
-                          <div class="no-info">No hay personas/trabajadores sancionados</div>
+                          <div class="no-info">No se encontro coincidencias</div>
                        </t:parameter>
                         <p:nombresCell>
                             <t:if test="${cs.estrabajador}">
@@ -127,17 +134,19 @@
                         </p:nombresCell>
                         <p:accionesCell>    
                          <!--   <t:if test="${veditar}">-->
+                                <t:actionlink t:id="anular" zone="listaConsultaSancionZone" context="cs" 
+                                    onClick="javascript: mostraranular();">Anular</t:actionlink>
+                                |
+                            <t:if test="${cs.veditar}">
                                 <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>
                                 |
-                            <!--</t:if>-->
+                            </t:if>
                             <!--<t:if test="${veditar}" negate="true">-->
-                                <t:actionlink t:id="detalle" zone="listaConsultaSancionZone" context="cs">Detalle</t:actionlink>
+                                
                             <!--</t:if>-->
                             <!--<t:if test="${veliminar}">  --> 
-                                    | 
-                                    <a t:type="eventLink" t:event="borrarDato" t:context="cs"
-                                       t:zone="listaConsultaSancionZone" href="#" >
-                                        <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?">
+                                    <a t:context="cs" t:zone="listaConsultaSancionZone">
+                                        <span t:type="any" >
                                             Imprimir
                                         </span> 
                                     </a>                      
@@ -147,6 +156,15 @@
           
         </t:form>    
     </div>
+      <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
+        <script>
+            setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+        </script>
+        <form t:type="form" t:id="formmensaje" id="formmensaje" t:zone="mensajeZone">
+            <t:envelope t:id="envelope"/>
+            <t:errors/> 
+        </form>
+    </div>   
     
      <div id="shade"></div>
       <div id="modal">           
@@ -182,15 +200,99 @@
             <!-- Eorigen-->
              
              <!-- Edestino-->                          
-    </div>  
+    </div> 
+    
+    <div id="shade2"></div>
+     <div id="modal2" style="height: 450px;">
+        <h1>Anular Registro de Sancion</h1>
+        <div class="pane">
+             <t:zone t:id="busZone2" t:update="show">
+                 <form t:type="form" t:id="formularioanularsancion" t:zone ="busZone2">
+                      <fieldset>
+                          <div class="f-wrap"> 
+                            <div class="f-left">    
+                                <label>*Entidad</label>
+                                <input t:type="TextField" t:id="entidad"
+                                                t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
+                            </div>
+                            <div class="f-left" style="position:relative; top:12px; left:-10px;">
+                                    <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap"> 
+                             <div class="f-left">
+                             <label>*Tipo de Documento</label>
+                                <select t:type="Select" t:id="tipoDocumento2" t:value="bdocumentoidentidad2" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
+                            </div>
+                            <div class="f-left">
+                                <label>*Numero de Documento</label>
+                                <input t:type="TextField" t:id="numeroDocumento2" t:value="bnumeroDocumento2" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
+                            </div> 
+                            <div class="f-left">
+                                <label>*Fecha del Documento</label>
+                                <input t:type="TextField" t:id="fecha_doc" t:value="fechadoc" size="25" t:validate="required" class="fecha_doc pictureInputDate"/>
+                            </div>
+                        </div>
+                        <fieldset>
+                            <legend>Notificacion</legend>
+                                <div class="f-wrap"> 
+                                    <div class="f-left">
+                                    <label>*Tipo de Documento</label>
+                                        <select t:type="Select" t:id="tipoDocumento_not" t:value="bdocumentoidentidad_not" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
+                                    </div>
+                                    <div class="f-left">
+                                        <label>*Numero de Documento</label>
+                                        <input t:type="TextField" t:id="numeroDocumento_not" t:value="bnumeroDocumento_not" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
+                                    </div> 
+                                    <div class="f-left">
+                                        <label>*Fecha del Documento</label>
+                                        <input t:type="TextField" t:id="fechadocnot" t:value="fechadocnot" size="25" t:validate="required" class="fechadocnot pictureInputDate"/>
+                                    </div>
+                                </div>
+                                <div class="f-wrap"> 
+                                        <label>Juzgado</label>
+                                        <input t:type="TextField" t:id="juzgado_not" t:value="juzgado_not" size="53" t:zone="busZone2"/>
+                                </div>
+                        </fieldset>
+                      </fieldset>
+                      <fieldset>
+                          <legend>Observaciones</legend>
+                          <input t:type="TextArea" t:id="observaciones" t:value="observaciones" style="width:70%;" t:zone="busZone2" t:validate="maxlength=500"/>
+                      </fieldset>
+                      <div class="f-wrap"> 
+                        <div class="actions f-right">
+                            <input t:id="limpiar1" t:type="submit" value="Limpiar Formulario" class="button" />
+                            <input t:type="Submit" t:id="save" value="Guardar" class="button"/>
+                            <input t:type="Submit" t:id="cancel1" value="Cancelar" class="button" onClick="javascript: ocultar();"/> 
+                        </div>
+                    </div>
+                        <div>
+                            <script>
+                                jQuery(document).ready(function() {
+                                    jQuery('.fecha_doc').datepick({dateFormat: 'dd/mm/yyyy'});
+                                    jQuery('.fechadocnot').datepick({dateFormat: 'dd/mm/yyyy'});
+                                });
+                            </script>
+                        </div>
+                 </form>
+             </t:zone>
+        </div>
+     </div>
+     
      <script type="text/javascript">
         var modal= document.getElementById('modal');
+        var modal2= document.getElementById('modal2');
         var shade= document.getElementById('shade');
+        var shade2= document.getElementById('shade2');
         function mostrar() {
-        modal.style.display=shade.style.display= 'block';
+            modal.style.display=shade.style.display= 'block';
+        };
+        function mostraranular() {
+            modal2.style.display=shade.style.display= 'block';
         };
         function ocultar() {
-        modal.style.display=shade.style.display= 'none';
+            modal.style.display=shade.style.display= 'none';
+            modal2.style.display=shade.style.display= 'none';
         };
     </script> 
 </html>
