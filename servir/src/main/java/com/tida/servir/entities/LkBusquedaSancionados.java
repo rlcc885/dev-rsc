@@ -19,6 +19,7 @@ public class LkBusquedaSancionados implements Serializable{
     @Id
     @NonVisual
     @Column(name = "ID")
+    private Long id;
     private Long id_sancion;
     @NonVisual
     @Column(name = "ENTIDAD_ID")
