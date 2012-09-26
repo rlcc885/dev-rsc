@@ -614,7 +614,7 @@ public class RepTrabajador extends GeneralPage {
         if (nombresTrabajador != null)
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres ", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         else if (apepatTrabajador != null)
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno ", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         else if (apematTrabajador != null)
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         else if (valdocumentotra != null)
