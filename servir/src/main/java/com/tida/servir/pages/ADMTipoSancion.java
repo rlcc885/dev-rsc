@@ -459,11 +459,18 @@ public class ADMTipoSancion
 
         if (c1.list().isEmpty()){
             
-          c1 = session.createCriteria(SancionRegimen.class);
+/*          c1 = session.createCriteria(SancionRegimen.class);
           c1.add(Restrictions.eq("tipoSancion", tipsancion));
                 if (c1.list().isEmpty()){
                     return true;
+                }*/
+        //****        
+          c1 = session.createCriteria(LkSancionRegimen.class);
+          c1.add(Restrictions.eq("tiposancionId", tipsancion.getId()));
+                if (c1.list().isEmpty()){
+                    return true;
                 }
+                
 
         }
         
