@@ -23,53 +23,53 @@
  <t:zone t:id="tiposancionZone">     
    <t:form t:id="formularioTablas" t:zone="mensajesZone">
 
-       <div class="f-wrap">
+       <div class="f-wrap" style="margin-left: 70px;">
          <div class="f-left">
            <label>* Regimen Laboral/Contractual</label>
            <t:select model="beanRegimen" value="valregimen" t:id="regimenlaboral" t:zone="tiposancionZone"/>
          </div>
        </div>           
            
-       <div class="f-wrap">
+       <div class="f-wrap" style="margin-right: 70px;">
            <div class="f-right">
                <t:if test="mostrar">  
                <t:eventLink t:event="seleccionarTodos" href="#" class="button f-right" t:zone="tiposancionZone">
                    <span type="any" style="color: white;">Seleccionar Todos</span>
                </t:eventLink>
                </t:if>    
-           </div>
+           </div> 
        </div>
        <br/>
            
-       <div class="f-wrap" style="width: 700px;margin-left: 70px;">  
-   
+       <div class="f-wrap" style="margin-left: 70px;margin-right: 70px;">  
+
         <t:grid 
        source="listaTablas" 
        row="sancionregimen" 
        rowsPerPage="10"
        pagerPosition="bottom"
        
-       t:exclude="id,tiposancion,tiposancionId,reglaboralId"
+       t:exclude="id,tiposancion,tiposancionId,reglaboralId,opcion"
        t:add="tipoDeSancion">
        
             <t:parameter name="empty">
 		<div class="no-info">No se encontraron registros</div>
             </t:parameter>
             <p:tipoDeSancionCell>
-                <input t:type="checkbox" t:value="sancionregimen.opcion" onclick="this.form.submit(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />   ${sancionregimen.tiposancion} 
+                <input t:type="checkbox" t:value="sancionregimen.opcion" onclick="this.form.submit(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="mensajesZone" />   ${sancionregimen.tiposancion} 
             </p:tipoDeSancionCell>
 
         </t:grid>
 
        </div>
 
-       <div class="f-wrap">
+       <div class="f-wrap" style="margin-right: 70px;">
            <div class="f-right">
                <input t:type="submit" t:id="guardar" value="guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  class="button f-right" />               
            </div>
            <div class="f-right">
                <t:eventLink t:event="limpiar" href="#" class="button f-right" t:zone="tiposancionZone">
-                   <span t:type="any" style="color: white;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">Limpiar</span>
+                   <span t:type="any" style="color: white;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">Limpiar Formulario</span>
                </t:eventLink>
            </div>
        </div>
