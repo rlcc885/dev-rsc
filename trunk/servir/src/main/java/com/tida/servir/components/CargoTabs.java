@@ -6,28 +6,17 @@
 package com.tida.servir.components;
 
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Legajo;
 import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
-import helpers.Constantes;
-import helpers.Reportes;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.apache.tapestry5.BindingConstants;
-import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Context;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Restrictions;
 /**
  *
  * @author ale
