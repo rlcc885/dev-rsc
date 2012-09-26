@@ -15,19 +15,7 @@
 
     <div t:type="zone" t:id="filtrosZone" class="selectform">
                 <!-- the tabs -->
-        <script>
-                jQuery(document).ready(function(){
-                jQuery(".box-title-02").click(function(){
-                jQuery("#panel-02").slideToggle("slow");
-                return true;
-                });
-                });        
-        </script>
-        <div class="box-background-title">
-                <span class="box-title-02">
-                    <strong style="cursor:pointer;">+</strong>
-                </span>
-        </div>
+
         <div id="panel-02" >                
         <ul id="tabs-top" class="tabs">
             <li>
@@ -184,17 +172,9 @@
                 <div t:type="zone" t:id="empleadoszone" class="selectform">
 <!--                    <t:form t:id="xxx"  zone="empleadoszone">-->
 <!--                        <t:errors/> -->
-                    <script>
-                        jQuery(document).ready(function(){
-                        jQuery(".box-title-01").click(function(){
-                        jQuery("#panel-01").slideToggle("slow");
-                        return true;
-                        });
-                        });        
-                    </script>
                     <div class="box-background-title">
                         <span class="box-title-01">
-                            <strong style="cursor:pointer;">+</strong> Listado de Trabajadores
+                             Listado de Trabajadores
                         </span>
                     </div>
                     <div id="panel-01" class="box">
