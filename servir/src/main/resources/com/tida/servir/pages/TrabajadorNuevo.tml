@@ -29,12 +29,14 @@
                                                 model="tiposDoc" t:blankOption="ALWAYS" t:zone="findReniec" t:validate="required"
                                                 class="selectTipoDocumento" />
                                 </div>
+                                <t:zone t:id="zoneDNI">
                                 <div class="f-left">
                                     <t:label for="nuevo_nroDocumento"/>
                                     <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" 
                                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="DNIChanged"  
                                                t:zone="zoneDNI" size="20" t:validate="required, regexp"/>
                                 </div>
+                                </t:zone>    
                                 <t:zone t:id="findReniec">
                                     <script>
                                         jQuery(document).ready(function() {
@@ -50,8 +52,8 @@
                                                    t:disabled="${disabledFechaCaducidad}"
                                                    class="fecha_caducidad pictureInputDate" />
                                     </div>
-                                    <t:eventLink t:event="findReniec" href="#" class="iconsearch" t:zone="findReniec" t:disabled="${disabledFechaCaducidad}">
-                                    </t:eventLink>
+                                    <a t:type="eventLink" t:event="findReniec" href="#" class="iconsearch" t:zone="findReniec" t:disabled="${disabledFechaCaducidad}">
+                                    </a>
                                 </t:zone>
                             </div>
                             <t:zone t:id="zoneApellidos">
