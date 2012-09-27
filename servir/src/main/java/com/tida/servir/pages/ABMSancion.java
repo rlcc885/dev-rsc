@@ -13,6 +13,7 @@ import helpers.Helpers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -206,7 +207,7 @@ public class ABMSancion  extends GeneralPage
     
     // inicio de la pagina
     @SetupRender
-    void inicio(){
+    void inicio(){        
         bmostrar=false;
         mostrarfecha=false;
         nuevasancion=new Sancion();
@@ -257,13 +258,13 @@ public class ABMSancion  extends GeneralPage
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeantipodocnot() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIASANCION", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeantipodocsan() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIASANCION", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     @Log
@@ -529,14 +530,13 @@ public class ABMSancion  extends GeneralPage
     }
     
     void calcular(int dias){
-//        System.out.println("aquiiiiiii"+dias);
-//        int año=dias/365;
-//        int mes=(dias%365)/30;
-//        int dia=(dias%365)%30;
-//        System.out.println("aquiiiiiii"+dia+"-"+mes+"-"+año);
-//        nuevasancion.setTiem_ser_anio(String.valueOf(año));
-//        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
-//        nuevasancion.setTiem_ser_dia(String.valueOf(dia));
+//        System.out.println("aquiiiiiii"+dias);     
+        int anio=(dias/365);
+        int mes=((dias%365)/30);
+        int dia=((dias%365)%30);
+        nuevasancion.setTiem_ser_anio(String.valueOf(anio));
+        nuevasancion.setTiem_ser_mes(String.valueOf(mes));
+        nuevasancion.setTiem_ser_dia(String.valueOf(dia));     
     }
     
     @Log
@@ -552,7 +552,7 @@ public class ABMSancion  extends GeneralPage
          limpiarbusqueda();
          limpiarsancion();
          return zonasDatos();
-     }else{   
+     }else{        
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
@@ -574,14 +574,18 @@ public class ABMSancion  extends GeneralPage
         }
         
         if(tiposancion.getCodigo()==1){
-            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-                return zonasDatos();
-            }
+//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
+//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+//                return zonasDatos();
+//            }
+//            if(calculardia()!=1){
+//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+//                return zonasDatos();
+//            }
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
-            System.out.println("aquiiiii-"+calcularperiodo(fecfin,fecinicio)+"-"+diastiposamax+"-"+diastiposamin);
-            if(calcularperiodo(fecfin,fecinicio)>diastiposamin && calcularperiodo(fecfin,fecinicio)<diastiposamax){             
+            System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
+            if(calcularperiodo()>diastiposamin && calcularperiodo()<diastiposamax){             
             }
             else{
                 formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a :"+String.valueOf(diastiposamax)+" días y mayor a :"+String.valueOf(diastiposamin)+" dias");
@@ -589,13 +593,14 @@ public class ABMSancion  extends GeneralPage
             }
         }
         if(tiposancion.getCodigo()==2){
-            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-                return zonasDatos();
-            }
+//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
+//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+//                return zonasDatos();
+//            }
+            
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
-            System.out.println("aquiiiii-"+calcularperiodo(fecfin,fecinicio)+"-"+diastiposamax);
-            if(calcularperiodo(fecfin,fecinicio)<diastiposamax){                
+            System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax);
+            if(calcularperiodo()<diastiposamax){                
             }
             else{
                 formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a: "+String.valueOf(diastiposamax)+" días");
@@ -627,6 +632,10 @@ public class ABMSancion  extends GeneralPage
                 fecha_inicio = (Date) formatoDelTexto.parse(fecinicio);
             } catch (ParseException ex) {
                 ex.printStackTrace();
+            }
+            if(calculardia()!=(long)1){
+                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+                return zonasDatos();
             }
         }
         if (fecfin != null) {
@@ -674,18 +683,22 @@ public class ABMSancion  extends GeneralPage
     public List<DatoAuxiliar> getEstados() {
         Criteria c = session.createCriteria(DatoAuxiliar.class);        
         c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
-        c.add(Restrictions.eq("codigo", 1));
+        c.add(Restrictions.eq("codigo", (long) 1));
         return c.list();
     }
     
-    int calcularperiodo(String fec1,String fec2){   
-        String consulta ="SELECT 1 ID,to_number(to_date('"+fec1+"','dd/mm/yyyy') - to_date('"+fec2+"','dd/mm/yyyy')) DIAS from dual";
+    int calcularperiodo(){   
+        String consulta ="SELECT 1 ID,to_number(to_date('"+fecfin+"','dd/mm/yyyy') - to_date('"+fecinicio+"','dd/mm/yyyy')) DIAS from dual";
         Query query =session.createSQLQuery(consulta).addEntity(LkConsultaPeriodo.class);  
         List result = query.list();        
-        LkConsultaPeriodo lkcon = (LkConsultaPeriodo) result.get(0);        
-        return lkcon.getDias();
+        LkConsultaPeriodo lkcondos = (LkConsultaPeriodo) result.get(0);
+        return lkcondos.getDias();
     }
-    
+    long calculardia(){
+        long diferencia = ( fecha_inicio.getTime() - fecha_docnot.getTime() );
+//        System.out.println("aquiiiii222"+(diferencia/(1000*60*60*24)));
+        return diferencia/(1000*60*60*24);
+    }
     
     boolean validarpersona(){
         boolean vali=true;
