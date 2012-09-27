@@ -169,7 +169,9 @@ legend {
     background: url("images/horiz-bg.png") repeat-x scroll left top transparent;
     height: 15px;
     color:#fff;  
-    float:right;       
+    float:right;  
+    
+    text-align: center;
 }
 
 #logo{
