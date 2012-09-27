@@ -611,20 +611,30 @@ public class RepTrabajador extends GeneralPage {
      @Log
     public List<Trabajador> getTrabajadores() {
         Criteria c = session.createCriteria(Trabajador.class);
-        if (nombresTrabajador != null)
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombres ", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (apepatTrabajador != null)
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (apematTrabajador != null)
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (valdocumentotra != null)
-            c.add(Restrictions.eq("documentoidentidad", valdocumentotra));
-        else if (nroDocumentoTra != null && !nroDocumentoTra.equals(""))
-            c.add(Restrictions.disjunction().add(Restrictions.like("nroDocumento", nroDocumentoTra + "%").ignoreCase()));
-        else {
-            if (entidadTraba != null)
-                c.add(Restrictions.eq("entidad", entidadTraba));
+        boolean ok = true;
+        if (nombresTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            ok = false;
         }
+        if (apepatTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            ok = false;
+        }
+        if (apematTrabajador != null) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            ok = false;
+        }
+        if (valdocumentotra != null) {
+            c.add(Restrictions.eq("documentoidentidad", valdocumentotra));
+            ok = false;
+        }
+        if (nroDocumentoTra != null && !nroDocumentoTra.equals("")) {
+            c.add(Restrictions.disjunction().add(Restrictions.like("nroDocumento", nroDocumentoTra + "%").ignoreCase()));
+            ok = false;
+        }
+        if (entidadTraba != null)
+            c.add(Restrictions.eq("entidad", entidadTraba));
+        if (ok) return null;
         return c.list();
     }
     
@@ -661,25 +671,37 @@ public class RepTrabajador extends GeneralPage {
     @Log
     public List<Usuario> getUsuarios() {
         Criteria c = session.createCriteria(Usuario.class);
-        if (nombreUsuario != null)
+        boolean ok = true;
+        if (nombreUsuario != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (apePaUsuario != null)
+            ok = false;
+        }
+        if (apePaUsuario != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apePaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (apeMaUsuario != null)
+            ok = false;
+        }
+        if (apeMaUsuario != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
-        else if (valdocumentousu != null)
+            ok = false;
+        }
+        if (valdocumentousu != null) {
             c.add(Restrictions.eq("documentoId", valdocumentousu.getId()));
-        else if (nroDocumentoUsu != null && !nroDocumentoUsu.equals(""))
+            ok = false;
+        }
+        if (nroDocumentoUsu != null && !nroDocumentoUsu.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("numeroDocumento", nroDocumentoUsu + "%").ignoreCase()));
-        else if (loginUsu != null)
+            ok = false;
+        }
+        if (loginUsu != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("login", loginUsu + "%").ignoreCase()));
-        else if (bselectRol != null) {
-            if (bEstado == null) return null;
+            ok = false;
+        }
+        if (bselectRol != null && bEstado != null) {
             c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectRol.getId()))));
-        } else if (bEstado != null) {
-            if (bselectRol == null) return null;
             c.add(Restrictions.disjunction().add(Restrictions.eq("estado", Long.valueOf(bEstado))));
-        } else {return null;}
+            ok = false;
+        }
+        if (ok) return null;
         return c.list();
     }
     
@@ -803,7 +825,7 @@ public class RepTrabajador extends GeneralPage {
         if (codigo.equals("A2"))//Ficha de Datos Personales
             return Reportes.REPORTE.A2;
         if (codigo.equals("B1"))//Trazabilidad de Usuario
-            return Reportes.REPORTE.B5;//1;
+            return Reportes.REPORTE.B1;
         if (codigo.equals("C2"))//Cargos/Puestos por Entidad
             return Reportes.REPORTE.C2;
         if (codigo.equals("C10"))//Detalle de Cargos Asignados por Entidad
