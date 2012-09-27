@@ -141,6 +141,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     @Property
     private Boolean bmostrar;
+    @Persist
+    @Property
+    private Boolean mostrar_reglab;
    
     @Persist
     @Property
@@ -158,6 +161,10 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private LkBusquedaSancionados cs;
+    
+    @Property
+    @Persist
+    private LkBusquedaSancionadosSinRegLab cs_sinreglab;
     
     @Component(id = "formconsultaSancion")
     private Form formconsultaSancion;
@@ -205,6 +212,7 @@ public class ConsultaSanciones extends GeneralPage {
         esHistorica=false;
         esNoVigente=false;
         esVigente=false;
+        mostrar_reglab=false;
         
         if(loggedUser.getRolid()==3){
             bmostrar=true;
@@ -248,6 +256,51 @@ public class ConsultaSanciones extends GeneralPage {
         return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id", _access);
     }
       
+    @Log
+    public List<LkBusquedaSancionadosSinRegLab> getBusquedaSancionadosSinRegLab(){
+        Criteria c;
+        c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
+        if(entidad_origen_id!=null){
+            c.add(Restrictions.eq("entidad_id",entidad_origen_id));
+        }
+        if(bnombres!=null){
+             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
+        }
+        if(bapellidoPaterno!=null || bapellidoMaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%"),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%")));
+        }
+        if(bdocumentoidentidad !=null){
+            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId())));
+        }
+        if(bnumeroDocumento != null){
+            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
+        }
+        if(esSuspendida==true){
+            c.add(Restrictions.eq("estado_id", "3"));
+        }
+        if(esAnulada==true){
+            c.add(Restrictions.eq("estado_id", "4"));
+        }    
+        if(esHistorica==true){
+            c.add(Restrictions.eq("estado_id", "5"));
+        }
+        if(esNoVigente==true){
+            c.add(Restrictions.eq("estado_id", "2"));
+        }
+        if(esVigente==true){
+            c.add(Restrictions.eq("estado_id", "1"));
+        }
+        if(bregimenLaboral!=null){
+            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
+        }
+        if(bcategoriaSancion!=null){
+            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId()));
+        }
+        if(btipoSancion!=null){
+            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
+        }
+        return c.list();
+      }
     @Log
     public List<LkBusquedaSancionados> getBusquedaSancionados(){
         Criteria c;
@@ -326,6 +379,7 @@ public class ConsultaSanciones extends GeneralPage {
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 2){
+                mostrar_reglab=false;
 //            cs = new LkBusquedaSancionados();
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
@@ -406,7 +460,7 @@ public class ConsultaSanciones extends GeneralPage {
     }
     
     @Log
-    Object onActionFromAnular(LkBusquedaSancionados cs) {        
+    Object onActionFromAnular(LkBusquedaSancionadosSinRegLab cs_sinreglab) {        
         
          return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
