@@ -13,6 +13,7 @@ import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
@@ -409,8 +410,6 @@ public class RepTrabajador extends GeneralPage {
         generarDisabled = false;
         organizacionBool = false;
         entidadTraba = null;
-        fechaingresode = "";
-        fechaingresoha = "";
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
@@ -745,23 +744,10 @@ public class RepTrabajador extends GeneralPage {
         } else if (codigo.equals("B1")) {//Trazabilidad de Usuario
             if (_usuarioRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
-            
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date fecha;
-            if (fechaingresode == null) {
-                fechaingresode = "";
-            }
-            if (fechaingresoha == null) {
-                fechaingresoha = "";
-            }
-            if (!fechaingresode.equals("")) {
-                fecha = dateFormat.parse(fechaingresode);
-                parametros.put("MandatoryParameter_FechaDesde", fecha);
-            }
-            if (!fechaingresoha.equals("")) {
-                fecha = dateFormat.parse(fechaingresoha);
-                parametros.put("MandatoryParameter_FechaHasta", fecha);
-            }
+            if (fechaingresode == null) fechaingresode = "";
+            if (fechaingresoha == null) fechaingresoha = "";
+            if (!fechaingresode.equals("")) parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
+            if (!fechaingresoha.equals("")) parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         } else if (codigo.equals("C10")) {//Detalle de Cargos Asignados por Entidad
             if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
@@ -800,23 +786,10 @@ public class RepTrabajador extends GeneralPage {
         } else if (codigo.equals("B3")) {//Accesos del Usuario
             if (_usuarioRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
-            
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date fecha;
-            if (fechaingresode == null) {
-                fechaingresode = "";
-            }
-            if (fechaingresoha == null) {
-                fechaingresoha = "";
-            }
-            if (!fechaingresode.equals("")) {
-                fecha = dateFormat.parse(fechaingresode);
-                parametros.put("MandatoryParameter_FechaDesde", fecha);
-            }
-            if (!fechaingresoha.equals("")) {
-                fecha = dateFormat.parse(fechaingresoha);
-                parametros.put("MandatoryParameter_FechaHasta", fecha);
-            }
+            if (fechaingresode == null) fechaingresode = "";
+            if (fechaingresoha == null) fechaingresoha = "";
+            if (!fechaingresode.equals("")) parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
+            if (!fechaingresoha.equals("")) parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         }
         return parametros;
     }
