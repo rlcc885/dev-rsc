@@ -26,6 +26,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import helpers.ServicioReniec;
 
 //@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
 /**
@@ -523,76 +524,26 @@ public class TrabajadorNuevo extends GeneralPage {
     
     @Log
     Object onFindReniec() {
-        String token = "", usuario = "SERVIRWS", codigo = "MTkwMTSeR", codTxEmp = "RSC", dniUserEmp = "09399938";
+       
         try {
-            org.reniec.rel.SRELServiceService service = new org.reniec.rel.SRELServiceService();
-            org.reniec.rel.SRELService port = service.getSRELServicePort();
-            // Obtenemos el token para realizar la consulta
-            token = port.getSession(usuario, codigo);
-            
-            System.out.println("Result = " + token);
-            if (Integer.parseInt(token) > 6) {
+            ServicioReniec treniec = new ServicioReniec();
+            treniec.obtenerToken();
+            if (treniec.validarToken()==true){
+                System.out.println("BUSCAR DNI");
                 //  Buscamos DNI
-                java.util.List<java.lang.String> result = port.getRegIdentConsolidada2(token, usuario, codTxEmp, dniUserEmp, nuevo.getNroDocumento());
-                if ("0000".equals(result.get(0))) {
-                    // Todo esta bien
-                    // Las validaciones 
-                    System.out.println("Result = " + result);
-                } else {
-                    // aqui empieza los errrores
-                    if ("NTP".equals(result.get(0))) {
-                        System.out.println("No tienen permisos de acceso al método consulta.");
-                    } else {
-                        if ("SINV".equals(result.get(0))) {
-                            System.out.println("Código de Sesión ingresado inválido.");
-                        } else {
-                            if ("UNL".equals(result.get(0))) {
-                                System.out.println("Aplicación que consulta a Web Service no se ha autenticado.");
-                            } else {
-                                if ("5".equals(result.get(0))) {
-                                    System.out.println("Excedió el máximo número de consultas asignadas por día.");
-                                } else {
-                                    if ("3".equals(result.get(0))) {
-                                        System.out.println("Esta consultando en un día y hora no permitido según convenio.");
-                                    } else {
-                                        if ("DNE".equals(result.get(0))) {
-                                            System.out.println("El DNI consultado es inválido.");
-                                        } else {
-                                            if ("DNV".equals(result.get(0))) {
-                                                System.out.println("El DNI del usuario de la empresa es inválido. No está autorizado a consultar.");
-                                            } else {
-                                                if ("0002".equals(result.get(0))) {
-                                                    System.out.println("El Servidor no puede atender el requerimiento.");
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                List<String> result = treniec.obtenerResultado("09399938");
+                if (treniec.validarEstadoConsulta(result.get(0))==true){
+                    treniec.cargarTrabajador(result);                            
                 }
-            } else {
-                if ("2".equals(token)) {
-                    System.out.println("Error en la operación");
-                } else {
-                    if ("3".equals(token)) {
-                        System.out.println("La Consulta esta fuera del Horario Permitido");
-                    } else {
-                        if ("4".equals(token)) {
-                            System.out.println("Usuario no valido");
-                        } else {
-                            if ("5".equals(token)) {
-                                System.out.println("La Consulta excedió la cantidad máxima permitida");
-                            } else {
-                                if ("6".equals(token)) {
-                                    System.out.println("Usuario no existe");
-                                }
-                            }
-                        }
-                    }
-                }
+                else{
+                    envelope.setContents(treniec.mensajeError);//ERROR EN CONSULTA
+                System.out.println(treniec.mensajeError);
+                }                
+            }else{
+                envelope.setContents(treniec.mensajeError);//ERROR TOKEN
+                System.out.println(treniec.mensajeError);
             }
+
         } catch (Exception ex) {
             System.out.println(ex.getCause());
         }
