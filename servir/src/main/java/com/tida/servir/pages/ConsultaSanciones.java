@@ -301,6 +301,7 @@ public class ConsultaSanciones extends GeneralPage {
         }
         return c.list();
       }
+    
     @Log
     public List<LkBusquedaSancionados> getBusquedaSancionados(){
         Criteria c;
@@ -376,6 +377,9 @@ public class ConsultaSanciones extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularioConsultaSanciones() {
         if(elemento == 1)   {
+             if(bregimenLaboral!=null){
+                 
+             }
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 2){
