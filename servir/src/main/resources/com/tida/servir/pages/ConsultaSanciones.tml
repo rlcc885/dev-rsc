@@ -110,7 +110,7 @@
    
     <div t:type="zone" t:id="listaConsultaSancionZone" class="selectform" >
         <t:form t:id="formconsultaSancion" >
-          <if test="mostrar_reglab">
+          <t:if test="mostrar_reglab">
                <t:grid source="busquedaSancionados" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -119,7 +119,7 @@
                             reorder="Nombres,entidad_subentidad,tipo_sancion,tiempo_restante,estado,Acciones"
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
-                                    b_datos_trabajador,estrabajador,veditar"
+                                    b_datos_trabajador,estrabajador,veditar,id_sancion"
                             inPlace="true">
                        <t:parameter name="empty">
                           <div class="no-info">No se encontro coincidencias</div>
@@ -154,8 +154,8 @@
                         </p:accionesCell>
                        
             </t:grid>
-          </if>
-          <if test="mostrar_reglab" negate="true">
+          </t:if>
+          <t:if test="mostrar_reglab" negate="true">
                <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -164,7 +164,7 @@
                             reorder="Nombres,entidad_subentidad,tipo_sancion,tiempo_restante,estado,Acciones"
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
-                                    b_datos_trabajador,estrabajador,veditar"
+                                    b_datos_trabajador,estrabajador,veditar,id_sancion"
                             inPlace="true">
                        <t:parameter name="empty">
                           <div class="no-info">No se encontro coincidencias</div>
@@ -199,9 +199,7 @@
                         </p:accionesCell>
                        
             </t:grid>
-          </if>
-             
-            
+          </t:if>  
             
           
         </t:form>    
