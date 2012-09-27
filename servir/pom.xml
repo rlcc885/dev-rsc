@@ -219,14 +219,14 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                     </filenames>
                 </configuration>
             </plugin>-->
-            <plugin>
+<!--            <plugin>
                 <groupId>org.apache.tapestry</groupId>
                 <artifactId>tapestry-component-report</artifactId>
                 <version>4.7.0</version>
                 <configuration>
                     <rootPackage>com.tida.servir</rootPackage>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.jvnet.jax-ws-commons</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
