@@ -83,12 +83,6 @@
                     <t:if test="mostrarFiltrosUsuario" >
                         <div class="f-wrap">
                             <t:form t:id="usuarioForm" zone="tipoReporteZone">
-                                <script>
-                                    jQuery(document).ready(function() {
-                                        jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
-                                        jQuery('.fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
-                                    });
-                                </script>
                                 <t:zone t:id="usuarioZone" t:update="show">
                                     <div class="f-left">
                                         Usuario: &nbsp;
@@ -102,6 +96,12 @@
                                     </div>
                                 </t:zone>
                             </t:form>
+                            <script>
+                                jQuery(document).ready(function() {
+                                    jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
+                                    jQuery('.fechaingresohasta').datepick({dateFormat: 'dd/mm/yyyy'});
+                                });
+                            </script>
                         </div>
                     </t:if>
                 </div>
