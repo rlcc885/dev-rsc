@@ -10,10 +10,10 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.ServicioReniec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
@@ -49,6 +49,8 @@ public class ABMSancion  extends GeneralPage
     private Envelope envelope;    
     @Component(id = "formsancion")
     private Form formsancion;
+    @Component(id = "formvalidacion")
+    private Form formvalidacion;
     
     //campos de la zona modal
     @Property
@@ -204,10 +206,27 @@ public class ABMSancion  extends GeneralPage
     @Persist
     private Boolean autoridad;
     private int elemento=0;
+    @Property
+    @Persist
+    private Boolean editando;
+    
+    @PageActivationContext
+    private Sancion modificasancion;
+    
+    @Log
+    public Sancion getModificasancion() {
+        return modificasancion;
+    }
+
+    public void setModificasancion(Sancion modificasancion) {
+        this.modificasancion = modificasancion;
+    }
     
     // inicio de la pagina
+    @Log
     @SetupRender
-    void inicio(){        
+    void inicio(){     
+        editando=false;
         bmostrar=false;
         mostrarfecha=false;
         nuevasancion=new Sancion();
@@ -219,9 +238,79 @@ public class ABMSancion  extends GeneralPage
             mostrardocu=true;
         }
         else{
-            bmostrarrol=true;
-            
+            bmostrarrol=true;            
         }
+        System.out.println("llegooooo"+modificasancion);
+        if(modificasancion!=null){
+            System.out.println("llegooooo"+modificasancion.getId());
+            nuevasancion=modificasancion;            
+            modificasancion=null;
+            mostrar();
+            editando=true;
+        }
+    }
+    
+    @Log
+    Object onActivate(){
+        return zonasDatos();
+    }
+    
+    void mostrar(){
+        limpiarbusqueda();
+        limpiarsancion();
+        if(nuevasancion.getEstrabajador()){
+            bmostrar=true;
+            mostrardocu=true;
+            bestrabajador=true;
+            bdocidentidad=nuevasancion.getTrabajador().getDocumentoidentidad();
+            bnumerodocumento=nuevasancion.getTrabajador().getNroDocumento();
+            bnombres=nuevasancion.getTrabajador().getNombres();            
+            bapaterno=nuevasancion.getTrabajador().getApellidoPaterno();            
+            bamaterno=nuevasancion.getTrabajador().getApellidoMaterno();
+            bregimen=nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral();
+            bpuesto=nuevasancion.getCargoasignado().getCargoxunidad().getDen_cargo();
+            if(nuevasancion.getCargoasignado().getEstado())
+                bestadopuesto="Activo";
+           else
+                bestadopuesto="Inactivo";
+        }
+        else{
+            bmostrar=false;
+            mostrardocu=false;
+            bdocidentidad=nuevasancion.getPersona().getDocumentoidentidad();
+            bnumerodocumento=nuevasancion.getPersona().getNroDocumento();
+            bnombres=nuevasancion.getPersona().getNombres();            
+            bapaterno=nuevasancion.getPersona().getApellidoPaterno();            
+            bamaterno=nuevasancion.getPersona().getApellidoMaterno();
+        }
+        categoriasancion=nuevasancion.getCategoria_sancion();
+        tiposancion=(Lk_Tipo_Sancion) session.load(Lk_Tipo_Sancion.class, getBuscarTipoSancion().get(0).getId());
+        
+        if (nuevasancion.getFecha_docnot()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocnot = formatoDeFecha.format(nuevasancion.getFecha_docnot());
+        }
+        if (nuevasancion.getFecha_docsan()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocsan = formatoDeFecha.format(nuevasancion.getFecha_docsan());
+        }
+        if (nuevasancion.getFechaini_inha()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fecinicio = formatoDeFecha.format(nuevasancion.getFechaini_inha());
+        }
+        if (nuevasancion.getFechafin_inha()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fecfin = formatoDeFecha.format(nuevasancion.getFechafin_inha());
+        }
+        autoridadnot=nuevasancion.getAutoridadnot().getApellidoPaterno()+" "+nuevasancion.getAutoridadnot().getApellidoMaterno()+" "+nuevasancion.getAutoridadnot().getNombres();
+        autoridadsan=nuevasancion.getAutoridadsan().getApellidoPaterno()+" "+nuevasancion.getAutoridadsan().getApellidoMaterno()+" "+nuevasancion.getAutoridadsan().getNombres();
+    }
+    
+    @Log
+    public List<Lk_Tipo_Sancion> getBuscarTipoSancion() {
+        Criteria c = session.createCriteria(Lk_Tipo_Sancion.class);
+        c.add(Restrictions.eq("id_tipo", nuevasancion.getTipo_sancion().getId()));
+        return c.list();
     }
     
     @Log
@@ -229,6 +318,12 @@ public class ABMSancion  extends GeneralPage
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
+    
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeandocumentoidentidadauto() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }   
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanregimenlaboral() {
@@ -267,23 +362,88 @@ public class ABMSancion  extends GeneralPage
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
-    @Log
-    void onSelectedFromBuscarenti() {
+    
+    Object onBuscarenti(){
         mostrarentidad=true;
-        System.out.println("aquiiiiiiiii"+mostrarentidad);
-        elemento=1;
+        mostrarlista=false;
+        bdenoentidad=null;
+        return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("busquedamodalZone",busquedamodalZone.getBody());
     }
-    @Log
-    void onSelectedFromBuscartraba() {        
+    Object onBuscartraba(){
         mostrarentidad=false;
-        System.out.println("aquiiiiiiiii"+mostrarentidad);
-        elemento=2;
+        mostrarlista=false;
+        bnomtrabajador=null;
+        return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("busquedamodalZone",busquedamodalZone.getBody());
+    }
+    Object onBuscarpersona(){
+      formvalidacion.clearErrors();
+      List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
+      if(busqueda.size()>0){
+          bnombres=busqueda.get(0).getNombres();
+          bapaterno=busqueda.get(0).getApellidoPaterno();
+          bamaterno=busqueda.get(0).getApellidoMaterno();
+          formvalidacion.recordError("Persona ya Registrada como Trabajador");
+          return zonasDatos();
+      }      
+      List<Persona_Sancion> busqueda_persona=getListaPersona(bnumerodocumento);
+      if(busqueda_persona.size()>0){
+          bnombres=busqueda_persona.get(0).getNombres();
+          bapaterno=busqueda_persona.get(0).getApellidoPaterno();
+          bamaterno=busqueda_persona.get(0).getApellidoMaterno();
+          formvalidacion.recordError("Persona ya Registrada");
+          return zonasDatos();
+      }
+        try {
+            ServicioReniec sre=new ServicioReniec();
+            sre.obtenerToken();
+            if(sre.validarToken()){
+                List<String> listare= sre.obtenerResultado(bnumerodocumento);
+                if (sre.validarEstadoConsulta(listare.get(0))){
+                    bnombres=listare.get(4);
+                    bapaterno=listare.get(1);
+                    bamaterno=listare.get(2);
+                }else{
+                    formvalidacion.recordError(sre.mensajeError);//ERROR EN CONSULTA
+                    System.out.println("errorrrrr"+bnumerodocumento);
+//                    System.out.println(treniec.mensajeError);
+                }                
+            }else{
+                formvalidacion.recordError(sre.mensajeError);//ERROR TOKEN
+//                System.out.println(treniec.mensajeError);
+            }
+            
+        }catch (Exception ex) {
+            System.out.println(ex.getCause());
+        }
+        
+        return zonasDatos();
     }
     
     @Log
-    void onSelectedFromBuscarpersona(){
-        elemento=3;
+    public List<Trabajador> getListaTrabajador(String documento) {
+         Criteria c = session.createCriteria(Trabajador.class);
+         c.add(Restrictions.eq("nroDocumento", documento));
+         return c.list();
     }
+    
+    @Log
+    public List<Persona_Sancion> getListaPersona(String documento) {
+         Criteria c = session.createCriteria(Persona_Sancion.class);
+         c.add(Restrictions.eq("nroDocumento", documento));
+         return c.list();
+    }
+    
+//    @Log
+//    void onSelectedFromBuscartraba() {        
+//        mostrarentidad=false;
+//        System.out.println("aquiiiiiiiii"+mostrarentidad);
+//        elemento=2;
+//    }
+//    
+//    @Log
+//    void onSelectedFromBuscarpersona(){
+//        elemento=3;
+//    }
     
     @Log
     @CommitAfter
@@ -327,14 +487,14 @@ public class ABMSancion  extends GeneralPage
     Object onBuscarautoridadnot(){  
         mostrarnuevof=false;
         autoridad=true;
-        return autoridadmodalZone.getBody();
+        return  autoridadnotZone.getBody();
     }
     
     @Log
     Object onBuscarautoridadsan(){  
         mostrarnuevof=false;
         autoridad=false;
-        return autoridadmodalZone.getBody();
+        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody());
     }
 
      @Log
@@ -451,10 +611,8 @@ public class ABMSancion  extends GeneralPage
         else{
             autoridadsan=fun.getNombrefuncionario();
             nuevasancion.setAutoridadsan(sele); 
-        }
-            
-              
-        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody()).add("autoridadnotZone", autoridadnotZone.getBody());
+        }              
+        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody()).add("autoridadnotZone", autoridadnotZone.getBody()).add("autoridadmodalZone", autoridadmodalZone.getBody());
     }
     
     @Log
@@ -500,8 +658,7 @@ public class ABMSancion  extends GeneralPage
     @Log
     private MultiZoneUpdate zonasDatos() {
         MultiZoneUpdate mu;
-        mu = new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("validacionZone", validacionZone.getBody()).add("sancionZone", sancionZone.getBody())
-                .add("busquedamodalZone",busquedamodalZone.getBody());
+        mu = new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("validacionZone", validacionZone.getBody()).add("sancionZone", sancionZone.getBody());
         return mu;
 
     }   
@@ -670,8 +827,13 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setTipo_sancion(tiposa);
         nuevasancion.setSancion_estado(this.getEstados().get(0));
         session.saveOrUpdate(nuevasancion);
-        session.flush();  
-        envelope.setContents(helpers.Constantes.SANCION_CREADA_EXITO);
+        session.flush(); 
+        if(editando){
+            envelope.setContents(helpers.Constantes.SANCION_MODIFICADA_EXITO);
+        }
+        else{
+            envelope.setContents(helpers.Constantes.SANCION_CREADA_EXITO);
+        }
         nuevasancion=new Sancion();
         limpiarbusqueda();
         limpiarsancion();
@@ -728,6 +890,26 @@ public class ABMSancion  extends GeneralPage
     @Log
     void onBnomtrabaautoridadChanged() {
         bnomtrabaautoridad=_request.getParameter("param");
+    }
+    
+    @Log
+    void onBnumerodocumentoChanged() {
+        bnumerodocumento=_request.getParameter("param");
+    }
+    
+    @Log
+    void onBnombresChanged() {
+        bnombres=_request.getParameter("param");
+    }
+    
+    @Log
+    void onBapaternoChanged() {
+        bapaterno=_request.getParameter("param");
+    }
+    
+    @Log
+    void onBamaternoChanged() {
+        bamaterno=_request.getParameter("param");
     }
     
     @Log

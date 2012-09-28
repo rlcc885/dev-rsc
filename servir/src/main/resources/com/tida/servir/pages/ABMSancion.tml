@@ -12,6 +12,7 @@
             <legend>Datos del Sancionado</legend>
         <t:zone t:id="validacionZone">
             <form t:type="form" t:id="formvalidacion" t:zone="validacionZone">
+                <t:errors/> 
                 <t:if test="bmostrarrol">
                 <div class="f-wrap">
                     <div class="f-left">                        
@@ -34,9 +35,10 @@
                             <label>* Entidad</label>
                             <input t:type="TextField" t:id="entidad_descripcion"
                                     t:value="bentidad" size="100" t:disabled="true"/>
-                        </div>
-                        <div class="f-left" style="position:relative; top:13px; left:-10px;">
-                            <input t:id="buscarenti" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
+                        </div>                        
+                        <div class="f-left">
+                            <t:eventLink t:event="buscarenti" href="#" class="iconsearch"  t:zone="busquedaZone" onClick="javascript: mostrar();">                           
+                            </t:eventLink>                       
                         </div>
                     </div>
                     </t:if>
@@ -47,10 +49,13 @@
                 <div class="f-left" style="position:relative; top:16px;">
                     <label>Buscar Trabajador</label>
                 </div>
-                <div class="f-left" style="position:relative; top:12px; left:-10px;">
+                <!--<div class="f-left" style="position:relative; top:12px; left:-10px;">
                     <input t:id="buscartraba" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
-                </div>
-
+                </div>-->
+                <div class="f-left">
+                    <t:eventLink t:event="buscartraba" href="#" class="iconsearch"  t:zone="busquedaZone" onClick="javascript: mostrar();">                           
+                    </t:eventLink>                       
+                </div>    
                 </t:if>              
                     <div class="f-left">
                         <label>* Tipo Documento</label>
@@ -59,27 +64,29 @@
                     </div>
                     <div class="f-left">
                         <label>* Número de Documento</label>
-                        <input t:type="TextField" t:id="numero_documento"
-                                t:value="bnumerodocumento" size="30" t:disabled="${bmostrar}"/>
+                        <input t:type="TextField" t:id="numero_documento" t:value="bnumerodocumento" size="30" t:disabled="${bmostrar}"
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnumerodocumentoChanged" t:zone="busquedaZone"/>
                     </div>
                     <t:if test="bmostrar" negate="true">
-                        <div class="f-left" style="position:relative; top:13px; left:-10px;">
-                            <input t:id="buscarpersona" t:type="submit" value="..." class="button"/>
-                        </div>
+                        <t:eventLink t:event="buscarpersona" href="#" class="iconsearch"  t:zone="busquedaZone">                           
+                        </t:eventLink> 
                     </t:if>
                 </div>
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Nombres</label>
-                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="${mostrardocu}"/>
+                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="${mostrardocu}"
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bbnombresoChanged" t:zone="busquedaZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Paterno</label>
-                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="${mostrardocu}"/>
+                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="${mostrardocu}"
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bapaternoChanged" t:zone="busquedaZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Materno</label>
-                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="${mostrardocu}"/>
+                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="${mostrardocu}"
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bamaternoChanged" t:zone="busquedaZone"/>
                     </div>
                 </div>
                 <br/>
@@ -170,19 +177,17 @@
                             <input t:type="TextField" t:id="fecha_docnot" t:value="fechadocnot" size="25" t:validate="required,regexp" class="fecha_docnot pictureInputDate"/>
                        </div>
                    </div>
-                   <div class="f-left">
-                      <t:zone t:id="autoridadnotZone" id="autoridadnotZone">
+                  <t:zone t:id="autoridadnotZone" id="autoridadnotZone">
+                   <div class="f-left">                     
                         <label>* Autoridad que Notifica</label>
                         <input t:type="TextField" t:id="autoridad_not" value="autoridadnot" size="100" t:validate="required" t:disabled="true"/>
-                      </t:zone>
+                      
                    </div>
-                   <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                       <t:eventLink t:event="buscarautoridadnot" href="#" class="button f-right"  style="color: #FFFFFF;" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();">
-                           <span t:type="any" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();"> ...</span>
-                       </t:eventLink>
-                       <!--<t:actionlink t:id="buscarautoridadnot" zone="sancionZone" onClick="javascript:mostrar();">...</t:actionlink>-->
-                        <!--<input t:id="buscarautoridadnot" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>-->
+                   <div class="f-left">
+                       <t:eventLink t:event="buscarautoridadnot" href="#" class="iconsearch"  t:zone="autoridadnotZone" onClick="javascript: mostrardos();">                           
+                       </t:eventLink>                       
                    </div>
+                 </t:zone>
                </fieldset>
                <br/>
                <fieldset>
@@ -202,18 +207,17 @@
                             <input t:type="TextField" t:id="fecha_docsan" t:value="fechadocsan" size="25" t:validate="required,regexp" class="fecha_docsan pictureInputDate"/>             
                        </div>
                    </div>
-                   <div class="f-left">
-                      <t:zone t:id="autoridadsanZone" id="autoridadsanZone">
+                  <t:zone t:id="autoridadsanZone" id="autoridadsanZone">
+                   <div class="f-left">                      
                             <label>* Autoridad que Sanciona</label>
-                            <input t:type="TextField" t:id="autoridad_san" value="autoridadsan" size="100" t:validate="required" t:disabled="true"/>
-                      </t:zone>
+                            <input t:type="TextField" t:id="autoridad_san" value="autoridadsan" size="100" t:validate="required" t:disabled="true"/>                     
                     </div>
-                   <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                       <t:eventLink t:event="buscarautoridadsan" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();">
-                           <span t:type="any" t:zone="autoridadmodalZone" onClick="javascript: mostrardos();"> ...</span>
+                   <div class="f-left">
+                       <t:eventLink t:event="buscarautoridadsan" href="#" class="iconsearch" t:zone="autoridadsanZone" onClick="javascript: mostrardos();">                           
                        </t:eventLink>
                         <!--<input t:id="buscarautoridadsan" t:type="submit" value="..." class="button" onClick="javascript: mostrar2();"/>-->
                    </div>
+                  </t:zone>
                </fieldset>
                <div class="f-wrap">
                     <div class="f-left">
@@ -403,7 +407,8 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Tipo de Documento</label>
-                        
+                        <input t:type="Select" t:id="documento_identidad_auto"                                
+                               t:value="nuevofuncionario.documentoidentidad" model="beandocumentoidentidadauto" t:zone="autoridadmodalZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Número de Documento</label>
@@ -413,7 +418,7 @@
                         <label>* Cargo</label>
                         <input t:type="TextField" t:id="autoridad_cargo" value="nuevofuncionario.den_cargo" size="30" t:validate="required"/>
                     </div>
-                    <div class="f-left" style="position:relative; top:13px; left:140px;">
+                    <div class="f-left" style="position:relative; top:13px; left:20px;">
                         <input t:id="saveautoridad" t:type="submit" value="Guardar" class="button f-right" />                
                         <t:eventLink t:event="cancelmodal3" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
                             <span t:type="any">
