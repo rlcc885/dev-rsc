@@ -9,6 +9,7 @@ import Batch.Helpers.*;
 import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.EstadoEntidad;
 import com.tida.servir.entities.Usuario;
 import helpers.ReporteBatch;
 import java.io.File;
@@ -34,8 +35,10 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.services.UploadedFile;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -183,13 +186,45 @@ public class batch_dev  extends GeneralPage {
     private boolean continuar;
     private boolean cancelar;
 
+@Persist
+@Property
+private Boolean iniciarProceso;
+@Persist
+@Property
+private Boolean procesoFin;
+@Property
+@Persist
+private EstadoEntidad estado;
 
     void onActivate() {
         if (etapaInicio == null) {
             etapaInicio = true;
             etapaConfirmacion = false;
         }
+        // PROCESO EJECUTANDOSE
+       Criteria c = session.createCriteria(EstadoEntidad.class);
+       c.add(Restrictions.eq("estado",2));
+//        c.add(Restrictions.eq("estado", file));
+       estado = (EstadoEntidad)c.uniqueResult();
+      
+       iniciarProceso=true;
+       procesoFin = true;
+       
+       if(!c.list().isEmpty()){
+           // PROCESO EJECUTANDOSE
+           iniciarProceso=false;
+       }
+       
+       c = session.createCriteria(EstadoEntidad.class);
+       c.add(Restrictions.eq("cueEntidad", _entidadUE.getCue_entidad()));
+       c.add(Restrictions.eq("estado", 1));
+       //MOSTRAR LOS REPORTES
+       if (c.list().isEmpty()){
+       procesoFin=false;
+       }
+       
     }
+    
     void onSelectedFromContinuar() {
         continuar=true;
     }
