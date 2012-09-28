@@ -264,7 +264,7 @@
                                 <input t:type="TextField" t:id="entidad"
                                                 t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
                             </div>
-                            <div class="f-left" style="position:relative; top:12px; left:-10px;">
+                            <div class="f-left" style="position:relative; top:10px; left:-10px;">
                                     <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
                             </div>
                         </div>
@@ -279,7 +279,7 @@
                             </div> 
                             <div class="f-left">
                                 <label>*Fecha del Documento</label>
-                                <input t:type="TextField" t:id="fecha_doc" t:value="fechadoc" size="25" t:validate="required" class="fecha_doc pictureInputDate"/>
+                                <input t:type="TextField" t:id="fechadoc" t:value="fechadoc" size="25" t:validate="required" class="fecha_doc pictureInputDate"/>
                             </div>
                         </div>
                         <fieldset>
@@ -310,20 +310,23 @@
                       </fieldset>
                       <div class="f-wrap"> 
                         <div class="actions f-right">
-                            <input t:id="limpiar1" t:type="submit" value="Limpiar Formulario" class="button" />
-                            <input t:type="Submit" t:id="save" value="Guardar" class="button"/>
+                             <t:eventLink t:event="limpiar1" class="button" t:zone="busZone2" >
+                                 <span t:type="any" style="font-size:11px;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                        Limpiar Formulario
+                                 </span> 
+                             </t:eventLink>
+                           <!-- <input t:id="limpiar1" t:type="submit" value="Limpiar Formulario" class="button" />-->
+                            <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="Confirm" t:message="Desea ejecutar esta acción?"/>
                             <input t:type="Submit" t:id="cancel1" value="Cancelar" class="button" onClick="javascript: ocultar();"/> 
                         </div>
-                    </div>
-                        <div>
-                            <script>
-                                jQuery(document).ready(function() {
-                                    jQuery('.fecha_doc').datepick({dateFormat: 'dd/mm/yyyy'});
-                                    jQuery('.fechadocnot').datepick({dateFormat: 'dd/mm/yyyy'});
-                                });
-                            </script>
-                        </div>
+                    </div>   
                  </form>
+                        <script>
+                            jQuery(document).ready(function() {
+                                jQuery('.fecha_doc').datepick({dateFormat: 'dd/mm/yyyy'});
+                                jQuery('.fechadocnot').datepick({dateFormat: 'dd/mm/yyyy'});
+                            });
+                        </script>   
              </t:zone>
         </div>
      </div>
