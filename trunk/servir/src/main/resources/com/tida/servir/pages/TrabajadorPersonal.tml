@@ -7,9 +7,9 @@
             Entidad /U. Ejecutora: ${oi.denominacion}
         </div>-->
     <div id="header3">
-            <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span style="color:#fff;"><b>Familiares  </b></span></a>
-            <a t:type="pagelink" t:page="Meritos" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left: 10px;"><b>  Laborales</b></span></a>
-            <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left: 10px;"><b>Documentos</b></span></a>
+            <a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span style="color:#fff; font-size:15px;"><b>Familiares  </b></span></a>
+            <a t:type="pagelink" t:page="Meritos" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; font-size:15px;"><b>  Laborales</b></span></a>
+            <a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; font-size:15px;"><b>Documentos</b></span></a>
     </div>
      
       <div id = "Datos_Generales">
