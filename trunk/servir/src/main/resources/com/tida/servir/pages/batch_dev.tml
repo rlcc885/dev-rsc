@@ -15,7 +15,8 @@
                 Recuerde que este link esta disponible por unos instantes unicamente.
             </div>
        </t:if>
-
+<!-- CARGA INCICIAL DEL PROCESO BATCH-->
+  <t:if test="iniciarProceso">  
         <t:if test = "etapaInicio">
                 <t:form t:id="formularioprocesobatch">
                 <t:errors/>
@@ -52,9 +53,9 @@
                 </t:form>
 
          </t:if>
-
+  </t:if>
   <!-- REPORTE DE ERRORES --> 
-  
+  <t:if  test="procesoFin" >
     <div class="f-left">
         <fieldset>
             <legend>Reporte de Errores</legend>
@@ -73,7 +74,7 @@
         </t:form>
         </fieldset>
     </div>
-	
+  </t:if>	
     
     
        <t:if test = "etapaConfirmacion">
