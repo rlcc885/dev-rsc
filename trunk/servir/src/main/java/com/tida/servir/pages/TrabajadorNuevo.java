@@ -58,6 +58,9 @@ public class TrabajadorNuevo extends GeneralPage {
     //Zonas
     @InjectComponent
     @Property
+    private Zone datosPersonalesZone;
+    @InjectComponent
+    @Property
     private Zone trabajadorNuevoZone;
     @InjectComponent
     @Property
@@ -70,8 +73,7 @@ public class TrabajadorNuevo extends GeneralPage {
     private Zone cargosZone;
     @InjectComponent
     private Zone mensajesZone;
-    @InjectComponent
-    private Zone findReniec;
+
     @InjectComponent
     private Zone zoneApellidos;
     //Formularios
@@ -81,6 +83,9 @@ public class TrabajadorNuevo extends GeneralPage {
     private Form formularionuevaunidadorganica;
     @Component(id = "formulariomensajes")
     private Form formulariomensajes;
+    @Component(id = "formularioDatos")
+    private Form formularioDatos;
+
     //Entidades
     @Property
     @SessionState
@@ -164,7 +169,7 @@ public class TrabajadorNuevo extends GeneralPage {
     // loguear operación de entrada a pagina
     @CommitAfter
     Object logueo() {
-        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ALTA_TRABAJADOR);
+      //  new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ALTA_TRABAJADOR);
         return null;
     }
 
@@ -213,8 +218,14 @@ public class TrabajadorNuevo extends GeneralPage {
     // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+  //      List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        List<Long> lista = new ArrayList<Long>();
+        lista.add(new Long(1));lista.add(new Long(2));
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla","DOCUMENTOIDENTIDAD"));
+        c.add(Restrictions.in("codigo", lista));
+        return new GenericSelectModel<DatoAuxiliar>(c.list(), DatoAuxiliar.class, "valor", "id", _access);
+//        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
     @Log
@@ -317,6 +328,7 @@ public class TrabajadorNuevo extends GeneralPage {
 
     @Log
     Object onReset() {
+        formulariomensajes.clearErrors();
         unidadorganica = null;
         cargo = null;
         tipovinculo = null;
@@ -325,7 +337,8 @@ public class TrabajadorNuevo extends GeneralPage {
         fechacaducidad = "";
         disabledFechaCaducidad = true;
         disabledZoneApellidos = false;
-        return trabajadorNuevoZone.getBody();
+//        return trabajadorNuevoZone.getBody();
+        return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody()).add("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
     // formulario principal
@@ -377,6 +390,20 @@ public class TrabajadorNuevo extends GeneralPage {
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
             } else {
+                // VALIDACION DE LA EXISTENCIA DEL TRABAJADOR CON DISTINTO TIPO DE DOCUMENTO
+                if (nuevo.getDocumentoidentidad().getCodigo()!=1){
+                Criteria c = session.createCriteria(Trabajador.class);
+                c.add(Restrictions.eq("nroDocumento", nuevo.getNroDocumento()));
+                if (!c.list().isEmpty()){
+                    Trabajador temp = (Trabajador)c.uniqueResult();
+                    if (!temp.getApellidoMaterno().equals(nuevo.getApellidoMaterno())||!temp.getApellidoPaterno().equals(nuevo.getApellidoPaterno())||!temp.getNombres().equals(nuevo.getNombres())){
+                    formulariomensajes.recordError("Datos del Trabajador incorrecto");
+                    
+                    }
+                    else{nuevo = temp;}
+                    
+                }
+                }
                 //Guardar Cargo Asignado 
                 cargoAsignado = new CargoAsignado();
                 Usuario usuarionuevo = new Usuario();
@@ -485,10 +512,7 @@ public class TrabajadorNuevo extends GeneralPage {
     }
 
     // evento de valor cambiados en los campos
-    @Log
-    void onDNIChanged() {
-        nuevo.setNroDocumento(_request.getParameter("param"));
-    }
+
 
     @Log
     void onNombreChanged() {
@@ -498,6 +522,10 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     void onApePatChanged() {
         nuevo.setApellidoPaterno(_request.getParameter("param"));
+    }
+    @Log
+    void onNroDocChanged() {
+        nuevo.setNroDocumento(_request.getParameter("param"));
     }
 
     @Log
@@ -512,20 +540,23 @@ public class TrabajadorNuevo extends GeneralPage {
 
     @Log
     Object onValueChangedFromTipoDocumento(DatoAuxiliar dato) {
-        if (dato.getCodigo() == 1) {
-            disabledFechaCaducidad = false;
-            disabledZoneApellidos = true;
-        } else {
+
+        if (dato==null||dato.getCodigo() != 1){
             disabledFechaCaducidad = true;
-            disabledZoneApellidos = false;
+            disabledZoneApellidos = false;        
         }
-        return _request.isXHR() ? new MultiZoneUpdate("findReniec", findReniec.getBody()).add("zoneApellidos", zoneApellidos.getBody()) : null;
+        else{
+            disabledFechaCaducidad = false;
+            disabledZoneApellidos = true;            
+        }
+        
+        return _request.isXHR() ? new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()) : null;
     }
     
-    @Log
-    Object onFindReniec() {
+ //   @Log
+ //   Object onFindReniec() {
        
-        try {
+    /*    try {
             ServicioReniec treniec = new ServicioReniec();
             treniec.obtenerToken();
             if (treniec.validarToken()==true){
@@ -546,7 +577,85 @@ public class TrabajadorNuevo extends GeneralPage {
 
         } catch (Exception ex) {
             System.out.println(ex.getCause());
-        }
-        return _request.isXHR() ? new MultiZoneUpdate("zoneApellidos", zoneApellidos.getBody()) : null;
+        }*/
+  //      return _request.isXHR() ? new MultiZoneUpdate("zoneApellidos", zoneApellidos.getBody()) : null;
+ //   }
+    @Log
+    public Object onSuccessFromformulariodatos(){
+    
+    DatoAuxiliar temporalTipoDNI = nuevo.getDocumentoidentidad();
+    String temporalnroDNI = nuevo.getNroDocumento();
+    
+    // BUSCAMOS EN LA DB
+    Criteria c = session.createCriteria(Trabajador.class);
+    c.add(Restrictions.eq("nroDocumento", nuevo.getNroDocumento()));
+    if (!c.list().isEmpty()){
+    //VERFICACION DE LA EXISTENCIA - ASIGNAMOS AL ACTUAL
+    nuevo = (Trabajador)c.uniqueResult(); //*************
+    }
+    else{
+    // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES
+        
+        //if (oi.getNroPeticiones() == 0){            
+        //    formulariomensajes.recordError("Se superaron el # de consultas al service de hoy");        
+        //}
+        
+
+        
+    // BUSQUEDA EN EL WEB SERVICE
+        try {
+            ServicioReniec treniec = new ServicioReniec();
+            treniec.obtenerToken();
+            if (treniec.validarToken()==true){
+                  System.out.println("BUSCAR DNI");
+                  //  Buscamos DNI
+                  List<String> result = treniec.obtenerResultado(nuevo.getNroDocumento());
+                  if (treniec.validarEstadoConsulta(result.get(0))==true){
+                      treniec.cargarTrabajador(result);
+                  // DISMINUCION DE NRO DE PETICIONES
+                      //oi.setNroPeticiones(oi.getNroPeticiones()-1);
+                      //session.saveOrUpdate(oi);
+                  // VALIDACIONES PRE CARGA DE LA ENTIDAD 
+                        Date fechaInicial,fechaWS;
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
+                        formatoFecha = new SimpleDateFormat("yyyyMMdd");  fechaWS = formatoFecha.parse(result.get(18));
+                        
+                        if (fechaInicial!=fechaWS){
+                           formulariomensajes.recordError("Fecha de Caducidad Incorrecta"); // MENSAJES DE ERROR                         
+                           return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                        }
+                        
+
+                  //ASIGNACION DEL USUARIO DEL WS A ENTIDAD
+                      nuevo = treniec.getTrabajadorWS(); //****************
+                      nuevo.setDocumentoidentidad(temporalTipoDNI);
+                      nuevo.setNroDocumento(temporalnroDNI);
+                      
+                    //  nuevo.setObtenidoWS(Boolean.TRUE);
+                      // ASIGNACION DE MARCA (QUE IDENTIFIQUE QUE FUE BUSCADO POR EL WS)
+                  }
+                  else{
+                      formulariomensajes.recordError(treniec.mensajeError); // MENSAJES DE ERROR EN CONSULTA
+                      System.out.println(treniec.mensajeError);
+                      return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                  }                
+            }
+            else{
+                formulariomensajes.recordError(treniec.mensajeError); // MENSAJES DE ERROR TOKEN 
+                System.out.println(treniec.mensajeError);
+                return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+            }
+
+          } catch (Exception ex) {
+              System.out.println(ex.getCause());
+          }        
+    }
+    
+    return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+    }
+    
+    private MultiZoneUpdate actualizarZonas(){
+
+        return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 }

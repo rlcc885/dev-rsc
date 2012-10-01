@@ -25,7 +25,9 @@ private final String  dniUserEmp = "09399938";
 public ServicioReniec(){
 
 }    
-
+public Trabajador getTrabajadorWS() {
+   return nuevo;
+}
 public ServicioReniec(String token){
     this.token = token;
 }
@@ -51,7 +53,12 @@ public void cargarTrabajador(List<String> resultado){
 
 if (validarEstadoConsulta(resultado.get(0))==true)
 {
-    nuevo = new Trabajador();    
+    // caragr datos del ws a la entidad
+    nuevo = new Trabajador();
+    nuevo.setApellidoPaterno(resultado.get(1));
+    nuevo.setApellidoMaterno(resultado.get(2));
+    nuevo.setNombres(resultado.get(4));
+    nuevo.setDomicilioDireccion(resultado.get(11));
 }    
     
     

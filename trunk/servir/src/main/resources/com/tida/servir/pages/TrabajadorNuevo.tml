@@ -16,70 +16,67 @@
             <span class="box-title">Alta de Trabajador</span>
         </div>
         <div class="box">
-            <t:zone t:id="trabajadorNuevoZone">
-                <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
-                    <!--                    <t:errors/>-->
+            <t:zone t:id="datosPersonalesZone" t:update="show">
+                <t:form t:id="formularioDatos" zone="datosPersonalesZone">
                     <t:if test="mostrar">
-                        <fieldset>
-                            <legend>Datos Personales</legend>
-                            <div class="f-wrap">
-                                <div class="f-left">
-                                    <t:label for="tipoDocumento"/> 
-                                    <select t:type="Select" t:id="tipoDocumento" t:value="nuevo.documentoidentidad" 
-                                                model="tiposDoc" t:blankOption="ALWAYS" t:zone="findReniec" t:validate="required"
-                                                class="selectTipoDocumento" />
-                                </div>
-                                <t:zone t:id="zoneDNI">
+                    <fieldset>
+                    <legend>Datos Personales</legend>
+                         <div class="f-wrap">
+                             <div class="f-left">
+                             <t:label for="tipoDocumento"/> 
+                             <select t:type="Select" t:id="tipoDocumento" t:value="nuevo.documentoidentidad"  model="tiposDoc" t:blankOption="ALWAYS" 
+                                     t:zone="datosPersonalesZone" t:validate="required"  class="selectTipoDocumento" />
+                             </div>
+                        <t:zone t:id="zoneDNI">
                                 <div class="f-left">
                                     <t:label for="nuevo_nroDocumento"/>
-                                    <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" 
-                                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="DNIChanged"  
-                                               t:zone="zoneDNI" size="20" t:validate="required, regexp"/>
+                                    <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" t:mixins="zoneUpdater" t:clientEvent="keyup"
+                                           t:event="nroDocChanged" t:zone="datosPersonalesZone"  size="20" t:validate="required, regexp"/>
                                 </div>
-                                </t:zone>    
-                                <t:zone t:id="findReniec">
-                                    <script>
+                        </t:zone>    
+                                <script>
                                         jQuery(document).ready(function() {
                                         jQuery('.fecha_caducidad').datepick({dateFormat: 'dd/mm/yyyy'});
                                         });
-                                    </script>
-                                    <div class="f-left">	
-                                        <t:label for="fecha_caducidad"/>
-                                        <input t:type="TextField" 
-                                                   t:id="fecha_caducidad" 
-                                                   t:value="fechacaducidad" 
-                                                   t:validate="required" 
-                                                   t:disabled="${disabledFechaCaducidad}"
-                                                   class="fecha_caducidad pictureInputDate" />
-                                    </div>
-                                    <a t:type="eventLink" t:event="findReniec" href="#" class="iconsearch" t:zone="findReniec" t:disabled="${disabledFechaCaducidad}">
-                                    </a>
-                                </t:zone>
-                            </div>
-                            <t:zone t:id="zoneApellidos">
-                                <div class="f-wrap">
-                                    <div class="f-left">
-                                        <t:label for="nuevo_nombres"/>
-                                        <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="33" t:validate="required,maxlength=150" 
-                                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged" t:zone="zoneApellidos"
-                                               t:disabled="${disabledZoneApellidos}"/>
-                                    </div>
-                                    <div class="f-left">
-                                        <t:label for="nuevo_apellidoPaterno" />
-                                        <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="33" t:validate="required,maxlength=150" 
-                                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged" t:zone="zoneApellidos"
-                                               t:disabled="${disabledZoneApellidos}"/>
-                                    </div>
-                                    <div class="f-left">
-                                        <t:label for="nuevo_apellidoMaterno" />
-                                        <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="33" t:validate="required,maxlength=150" 
-                                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged" t:zone="zoneApellidos"
-                                               t:disabled="${disabledZoneApellidos}"/>
-                                    </div>
+                                </script>
+                                <div class="f-left">	
+                                    <t:label for="fecha_caducidad"/>
+                                    <input t:type="TextField"    t:id="fecha_caducidad"    t:value="fechacaducidad"   t:validate="required"   
+                                           t:disabled="${disabledFechaCaducidad}" class="fecha_caducidad pictureInputDate" />
                                 </div>
-                            </t:zone>
-                        </fieldset>
-                    </t:if>
+                             <t:if test="disabledFechaCaducidad" negate="true">
+                                    <input t:type="submit" class="iconsearch" t:disabled="${disabledFechaCaducidad}" style="border : none;color : transparent;"/>                                                
+                             </t:if>
+                         </div>
+                         <t:zone t:id="zoneApellidos">
+                        
+                              <div class="f-wrap">
+                                 <div class="f-left">
+                                     <t:label for="nuevo_nombres"/>
+                                     <input t:type="TextField" t:id="nuevo_nombres" t:value="nuevo.nombres" size="33" t:validate="required,maxlength=150"   
+                                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="nombreChanged" t:zone="datosPersonalesZone"  t:disabled="${disabledZoneApellidos}"/>
+                                 </div>
+                                 <div class="f-left">
+                                     <t:label for="nuevo_apellidoPaterno" />
+                                     <input t:type="TextField" t:id="nuevo_apellidoPaterno" t:value="nuevo.apellidoPaterno" size="33" t:validate="required,maxlength=150"  
+                                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apePatChanged" t:zone="datosPersonalesZone"  t:disabled="${disabledZoneApellidos}"/>
+                                 </div>
+                                 <div class="f-left">
+                                        <t:label for="nuevo_apellidoMaterno" />
+                                        <input t:type="TextField" t:id="nuevo_apellidoMaterno" t:value="nuevo.apellidoMaterno" size="33" t:validate="required,maxlength=150"
+                                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="apeMatChanged" t:zone="datosPersonalesZone" t:disabled="${disabledZoneApellidos}"/>
+                                 </div>
+                              </div>
+                          </t:zone>
+                    </fieldset>
+                    </t:if>                    
+                </t:form>               
+            </t:zone>
+            
+            
+            <t:zone t:id="trabajadorNuevoZone">
+                
+                <t:form t:id="formulariotrabajadornuevo" zone="trabajadorNuevoZone">
                     <fieldset>
                         <legend> Asignación de Cargo</legend>
                         <div class = "f-wrap">
@@ -143,7 +140,8 @@
                 </t:form>
             </t:zone>
         </div>
-                
+        
+        
         <t:zone t:id="listaentidadZone">
             <t:if test="bTrabajadorRegistrado">
                 <div class="box">
@@ -152,7 +150,7 @@
                                 rowsPerPage="10"
                                 pagerPosition="bottom"
                                 row="listaentidad"
-                                include="id,nombretrabajador,entidad,unidadorganica,cargo,estadocargo"
+                                include="nombretrabajador,entidad,unidadorganica,cargo,estadocargo"
                                 inPlace="true">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
