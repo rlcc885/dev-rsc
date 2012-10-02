@@ -90,6 +90,15 @@ public class LkBatchCargoAsignado implements Serializable {
     public void setTipovinculo(String tipovinculo) {
         this.tipovinculo = tipovinculo;
     }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }    
+    
     private Long entidadid;
     private String tipodocumento;
     private String nrodocumento;
@@ -101,6 +110,7 @@ public class LkBatchCargoAsignado implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fec_fin;
     private String motivo_cese;
+    private Boolean estado;
     
     
     public LkBatchCargoAsignado() {

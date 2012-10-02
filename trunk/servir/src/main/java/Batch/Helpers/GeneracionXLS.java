@@ -250,6 +250,8 @@ public class GeneracionXLS {
             celda.setCellValue("Provincia");
             celda= fila.createCell((short)13);
             celda.setCellValue("Distrito");
+            celda= fila.createCell((short)14);
+            celda.setCellValue("Estado");
             
             for (int i=0;i<lcr.size();i++) {
                 LkBatchUnidadOrga cr= (LkBatchUnidadOrga)lcr.get(i);
@@ -285,6 +287,8 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getCod_ubi_prov()));
                 celda= fila.createCell((short)13);
                 celda.setCellValue(leoCampo(cr.getCod_ubi_dist()));
+                celda= fila.createCell((short)14);
+                celda.setCellValue(BoolFrom(cr.getEstado()));
             } 
             
             ajustaColumnas(hoja1);
@@ -328,6 +332,14 @@ public class GeneracionXLS {
             celda.setCellValue("Es Organico");
             celda= fila.createCell((short)9);
             celda.setCellValue("Presupuestado en el PAP");
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Presenta DJ");
+            celda= fila.createCell((short)11);
+            celda.setCellValue("Supervisa Personal");
+            celda= fila.createCell((short)12);
+            celda.setCellValue("Numero de Plazas");
+            celda= fila.createCell((short)13);
+            celda.setCellValue("Estado");
             
             for (int i=0;i<lcr.size();i++) {
                 LkBatchCargoxUnidad cr=(LkBatchCargoxUnidad)lcr.get(i);
@@ -352,6 +364,14 @@ public class GeneracionXLS {
                 celda.setCellValue(BoolFrom(cr.getEsorganico()));
                 celda= fila.createCell((short)9);
                 celda.setCellValue(BoolFrom(cr.getPresupuestado_PAP()));
+                celda= fila.createCell((short)10);
+                celda.setCellValue(BoolFrom(cr.getDec_jurada_byr()));
+                celda= fila.createCell((short)11);
+                celda.setCellValue(BoolFrom(cr.getSupervisapersonal()));
+                celda= fila.createCell((short)12);
+                celda.setCellValue(leoCampo(String.valueOf(cr.getCtd_puestos_total())));
+                celda= fila.createCell((short)13);
+                celda.setCellValue(BoolFrom(cr.getEstado()));
             }
             ajustaColumnas(hoja1);
             //generar
@@ -392,6 +412,8 @@ public class GeneracionXLS {
             celda.setCellValue("Tipo de Vinculo");
             celda= fila.createCell((short)8);
             celda.setCellValue("Motivo del cese en el cargo");
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Estado del Cargo Asignado");
             
             for (int i=0;i<lcr.size();i++) {
                 LkBatchCargoAsignado cr=(LkBatchCargoAsignado)lcr.get(i);
@@ -414,6 +436,8 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getTipovinculo()));
                 celda= fila.createCell((short)8);
                 celda.setCellValue(leoCampo(cr.getMotivo_cese()));
+                celda= fila.createCell((short)9);
+                celda.setCellValue(BoolFrom(cr.getEstado()));
             }
             
             ajustaColumnas(hoja1);
@@ -446,16 +470,18 @@ public class GeneracionXLS {
             celda= fila.createCell((short)3);
             celda.setCellValue("Codigo del cargo");
             celda= fila.createCell((short)4);
-            celda.setCellValue("Fecha de inicio en el cargo");
+            celda.setCellValue("Codigo de la Unidad Organica");
             celda= fila.createCell((short)5);
-            celda.setCellValue("Tipo Evaluacion");
+            celda.setCellValue("Fecha de inicio en el cargo");
             celda= fila.createCell((short)6);
-            celda.setCellValue("Calificacion");
+            celda.setCellValue("Tipo Evaluacion");
             celda= fila.createCell((short)7);
-            celda.setCellValue("Motivo evaluacion");
+            celda.setCellValue("Calificacion");
             celda= fila.createCell((short)8);
-            celda.setCellValue("Fecha Desde");
+            celda.setCellValue("Motivo evaluacion");
             celda= fila.createCell((short)9);
+            celda.setCellValue("Fecha Desde");
+            celda= fila.createCell((short)10);
             celda.setCellValue("Fecha Hasta");
             
             for (int i=0;i<lcr.size();i++) {
@@ -469,17 +495,19 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getNrodocumento()));
                 celda= fila.createCell((short)3);
                 celda.setCellValue(leoCampo(cr.getCod_cargo()));
-                celda= fila.createCell((short)4);    
+                celda= fila.createCell((short)4);
+                celda.setCellValue(leoCampo(cr.getCod_und_organica()));
+                celda= fila.createCell((short)5);    
                 celda.setCellValue(datetoString(cr.getFec_inicio()));               
-                celda= fila.createCell((short)5);
-                celda.setCellValue(leoCampo(cr.getTipoevaluacion()));
                 celda= fila.createCell((short)6);
-                celda.setCellValue(leoCampo(cr.getCalificacion()));                 
+                celda.setCellValue(leoCampo(cr.getTipoevaluacion()));
                 celda= fila.createCell((short)7);
-                celda.setCellValue(leoCampo(cr.getMotivoevaluacion()));
+                celda.setCellValue(leoCampo(cr.getCalificacion()));                 
                 celda= fila.createCell((short)8);
-                celda.setCellValue(datetoString(cr.getFec_desde()));
+                celda.setCellValue(leoCampo(cr.getMotivoevaluacion()));
                 celda= fila.createCell((short)9);
+                celda.setCellValue(datetoString(cr.getFec_desde()));
+                celda= fila.createCell((short)10);
                 celda.setCellValue(datetoString(cr.getFec_hasta()));
             }
             
@@ -513,10 +541,12 @@ public class GeneracionXLS {
             celda= fila.createCell((short)3);
             celda.setCellValue("Codigo del cargo");
             celda= fila.createCell((short)4);
-            celda.setCellValue("Fecha de inicio");
+            celda.setCellValue("Codigo de la Unidad Organica");
             celda= fila.createCell((short)5);
-            celda.setCellValue("Importe");
+            celda.setCellValue("Fecha de inicio");
             celda= fila.createCell((short)6);
+            celda.setCellValue("Importe");
+            celda= fila.createCell((short)7);
             celda.setCellValue("Codigo del Concepto Remunerativo");
             
             for (int i=0;i<lcr.size();i++) {
@@ -530,11 +560,13 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getNrodocumento()));
                 celda= fila.createCell((short)3);
                 celda.setCellValue(leoCampo(cr.getCod_cargo()));
-                celda= fila.createCell((short)4);    
+                celda= fila.createCell((short)4);
+                celda.setCellValue(leoCampo(cr.getCod_und_organica()));
+                celda= fila.createCell((short)5);    
                 celda.setCellValue(datetoString(cr.getFec_inicio()));              
-                celda= fila.createCell((short)5);
-                celda.setCellValue(leoCampo(cr.getImporte()));
                 celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getImporte()));
+                celda= fila.createCell((short)7);
                 celda.setCellValue(leoCampo(cr.getCodigo()));
             }
             
@@ -568,16 +600,18 @@ public class GeneracionXLS {
             celda= fila.createCell((short)3);
             celda.setCellValue("Codigo del cargo");
             celda= fila.createCell((short)4);
-            celda.setCellValue("Fecha de inicio en el cargo");
+            celda.setCellValue("Codigo de la Unidad Organica");
             celda= fila.createCell((short)5);
-            celda.setCellValue("Categoria de la Constancia");
+            celda.setCellValue("Fecha de inicio en el cargo");
             celda= fila.createCell((short)6);
-            celda.setCellValue("Tipo de Constancia Documental");
+            celda.setCellValue("Categoria de la Constancia");
             celda= fila.createCell((short)7);
-            celda.setCellValue("Fecha de entrega");
+            celda.setCellValue("Tipo de Constancia Documental");
             celda= fila.createCell((short)8);
-            celda.setCellValue("Es Obligatorio");
+            celda.setCellValue("Fecha de entrega");
             celda= fila.createCell((short)9);
+            celda.setCellValue("Es Obligatorio");
+            celda= fila.createCell((short)10);
             celda.setCellValue("Documento Entregado");
             
             for (int i=0;i<lcr.size();i++) {
@@ -591,17 +625,19 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getNrodocumento()));
                 celda= fila.createCell((short)3);
                 celda.setCellValue(leoCampo(cr.getCod_cargo()));
-                celda= fila.createCell((short)4);    
+                celda= fila.createCell((short)4);
+                celda.setCellValue(leoCampo(cr.getCod_und_organica()));
+                celda= fila.createCell((short)5);    
                 celda.setCellValue(datetoString(cr.getFec_inicio()));              
-                celda= fila.createCell((short)5);
-                celda.setCellValue(leoCampo(cr.getCategoriaconstancia()));
                 celda= fila.createCell((short)6);
-                celda.setCellValue(leoCampo(cr.getTipoconstancia()));                 
+                celda.setCellValue(leoCampo(cr.getCategoriaconstancia()));
                 celda= fila.createCell((short)7);
-                celda.setCellValue(datetoString(cr.getFecha()));
+                celda.setCellValue(leoCampo(cr.getTipoconstancia()));                 
                 celda= fila.createCell((short)8);
-                celda.setCellValue(BoolFrom(cr.getObligatorio()));
+                celda.setCellValue(datetoString(cr.getFecha()));
                 celda= fila.createCell((short)9);
+                celda.setCellValue(BoolFrom(cr.getObligatorio()));
+                celda= fila.createCell((short)10);
                 celda.setCellValue(BoolFrom(cr.getEntrego()));
             }
             
@@ -705,9 +741,7 @@ public class GeneracionXLS {
             celda= fila.createCell((short)38);
             celda.setCellValue("Primer Telefono del Contacto");
             celda= fila.createCell((short)39);
-            celda.setCellValue("Segundo Telefono del Contacto");
-            celda= fila.createCell((short)40);
-            celda.setCellValue("Codigo del Legajo en la Entidad"); 
+            celda.setCellValue("Segundo Telefono del Contacto"); 
             
             for (int i=0;i<lcr.size();i++) {
                 LkBatchTrabajador cr=(LkBatchTrabajador)lcr.get(i);
@@ -794,9 +828,7 @@ public class GeneracionXLS {
                 celda= fila.createCell((short)38);
                 celda.setCellValue(leoCampo(cr.getEmergenciaTelefonoAlternativo1()));
                 celda= fila.createCell((short)39);
-                celda.setCellValue(leoCampo(cr.getEmergenciaTelefonoAlternativo2()));
-                celda= fila.createCell((short)40);
-                celda.setCellValue(leoCampo(cr.getCod_legajo()));          
+                celda.setCellValue(leoCampo(cr.getEmergenciaTelefonoAlternativo2()));                          
             }
       
             ajustaColumnas(hoja1);
@@ -1167,7 +1199,7 @@ public class GeneracionXLS {
             objWB.write(archivoSalida);
             archivoSalida.close();
         }catch(Exception e){
-            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxFAMILIAR.xls");
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxFAMILIA.xls");
         }
         
         return errores;
@@ -1192,8 +1224,10 @@ public class GeneracionXLS {
             celda= fila.createCell((short)4);
             celda.setCellValue("Tipo de Merito o Demerito");
             celda= fila.createCell((short)5);
-            celda.setCellValue("Motivo de Merito/Demerito");            
+            celda.setCellValue("Tipo de Documento");
             celda= fila.createCell((short)6);
+            celda.setCellValue("Motivo de Merito/Demerito");            
+            celda= fila.createCell((short)7);
             celda.setCellValue("Fecha");
             
             for (int i=0;i<lcr.size();i++) {

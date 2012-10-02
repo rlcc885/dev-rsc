@@ -138,6 +138,15 @@ public class LkBatchUnidadOrga implements Serializable {
     public void setTipozona(String tipozona) {
         this.tipozona = tipozona;
     }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+        
     private Long entidad;
     private String cod_und_organica;
     private String den_und_organica;
@@ -153,7 +162,7 @@ public class LkBatchUnidadOrga implements Serializable {
     private String desczona;
     private String codunidada;
     private String cue_entidad;
-
+    private Boolean estado;
     
     public LkBatchUnidadOrga() {
     }

@@ -268,6 +268,9 @@
             <div class="actions">
                 <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                <!--<t:if test="${editando}">-->
+                    <a t:type="pagelink" t:page="ABMSuspension" t:context="nuevasancion.id" href="#" class="button f-right">Suspender</a>
+                <!--</t:if>-->
             </div>
            
           </form>
@@ -298,7 +301,7 @@
                 </form>
                     <t:if test="mostrarlista">
                         <t:grid source="listadoEntidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
-                                    row="rowentidad" include="denominacion" inPlace="true" t:zone="organismosZone">
+                                    row="rowentidad" include="denominacion" inPlace="true" t:zone="busquedamodalZone">
                             <t:parameter name="empty">
                                 <div class="no-info">No hay entidades generadas</div>
                             </t:parameter>

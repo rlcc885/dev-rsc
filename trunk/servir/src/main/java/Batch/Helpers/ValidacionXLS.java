@@ -17,6 +17,7 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 /**
  *
  * @author arson
@@ -75,7 +76,7 @@ public class ValidacionXLS {
         archivos.add(eu.getCue_entidad()+"CURSO");
         archivos.add(eu.getCue_entidad()+"ANTECEDENTE");
         archivos.add(eu.getCue_entidad()+"PRODUCCION");
-        archivos.add(eu.getCue_entidad()+"FAMILIAR");
+        archivos.add(eu.getCue_entidad()+"FAMILIA");
         archivos.add(eu.getCue_entidad()+"DEMERITO");
         
         for (int k = 0; k < 15; k++) {
@@ -83,6 +84,7 @@ public class ValidacionXLS {
         }
         
         errores = listArchivosDepositorioClassified(path);
+        errores = listColumnas(path, misCSVs,eu);
         
         if(usuario.getRolid()!=2){
             if (misCSVs.get(0).equals("")) {
@@ -128,7 +130,6 @@ public class ValidacionXLS {
     public static int compareStringDepositorioToArrayListArchivos(String depositorio, ArrayList archivo, List<String> errores) {
 
         int posicion = 0;
-
         posicion = archivo.indexOf(depositorio);
         if (posicion == -1) {
             errores.add("Error en el nombre del archivo.");
@@ -137,6 +138,35 @@ public class ValidacionXLS {
         
         return posicion;
     }
+    
+    public List<String> listColumnas(String path,ArrayList<String> misCSVs,Entidad eu) throws IOException {
+        try {
+            if(!misCSVs.get(0).equals("")){
+                FileReader  fr = new FileReader (path+"/"+misCSVs.get(0)+".txt");
+                BufferedReader  bf = new BufferedReader (fr);
+                String data;
+                int contproo=0;
+                while ((data = bf.readLine())!=null) {
+                    Matcher m1 = p1.matcher(data); // Matcher es una variable global 
+                    if(m1.find()){ 
+                        if(data.split("\t").length==10) {                        
+                            contproo++; 
+                        }
+                        else{
+                            errores.add("Numero de Columnas diferente de Formato, Archivo:"+misCSVs.get(0));
+                        }
+                    }
+
+                }
+            }
+
+        }catch(Exception ioe) {
+            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ioe);
+            System.out.println(""+ ioe.getMessage());
+        }
+        return errores;
+    }
+    
     public List<LineasArchivos> getCantLineasArchivos(List<String> errores,Entidad eu) {
         List<LineasArchivos> llo = new LinkedList<LineasArchivos>();
         try {

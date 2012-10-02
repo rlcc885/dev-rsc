@@ -27,7 +27,7 @@ public class Publicacion implements Serializable {
     private String descripcion;
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private boolean agregadoTrabajador;
+    private Boolean agregadoTrabajador;
     private Boolean validado;
     @ManyToOne
     private Entidad entidad;
