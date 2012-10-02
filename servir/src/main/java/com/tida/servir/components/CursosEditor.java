@@ -403,7 +403,7 @@ public class CursosEditor {
 
             if (!editando) {
                 cursos.setTrabajador(actual);
-                cursos.setEntidad(_usuario.getTrabajador().getEntidad());
+                cursos.setEntidad(_oi);
                 cursos.setValidado(false);
                 if (_usuario.getRolid() == 1) {
                     cursos.setAgregadotrabajador(true);

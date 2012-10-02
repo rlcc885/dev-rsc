@@ -203,7 +203,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"FAMILIAR");
+                lo.setArchivo(eu.getCue_entidad()+"FAMILIA");
                 llo.add(lo);
             }
             if(!misCSVs.get(14).equals("")){

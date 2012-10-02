@@ -353,7 +353,7 @@ public class EstudiosEditor {
                 estudio = new Estudios();
 //                System.out.println("Trabajadorrr"+actual);
                 estudio.setTrabajador(actual);
-                estudio.setEntidad(_usuario.getTrabajador().getEntidad());
+                estudio.setEntidad(_oi);
                 estudio.setValidado(false);
                 if (valestudiando == null) {
                     estudio.setEstudiando(false);

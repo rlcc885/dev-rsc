@@ -59,6 +59,14 @@ public class LkBatchRemuneracion implements Serializable {
         this.tipodocumento = tipodocumento;
     }
 
+    public String getCod_und_organica() {
+        return cod_und_organica;
+    }
+
+    public void setCod_und_organica(String cod_und_organica) {
+        this.cod_und_organica = cod_und_organica;
+    }  
+    
 
     private Long cargoasignadoid;
     private String tipodocumento;
@@ -66,6 +74,7 @@ public class LkBatchRemuneracion implements Serializable {
     private String cod_cargo;
     @Temporal(TemporalType.DATE)
     private Date fec_inicio;
+    private String cod_und_organica;
 
     public String getCodigo() {
         return codigo;

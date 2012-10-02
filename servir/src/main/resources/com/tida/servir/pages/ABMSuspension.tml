@@ -9,48 +9,191 @@
     </div>
     <div id="panel-01" class="box">
         <t:zone t:id="suspensionZone">
+          <div>
+            <script>  
+                jQuery(document).ready(function() {    
+                jQuery('.fecha_docini').datepick({dateFormat: 'dd/mm/yyyy'});
+                jQuery('.fecha_docnoti').datepick({dateFormat: 'dd/mm/yyyy'});
+                jQuery('.fecha_docfin').datepick({dateFormat: 'dd/mm/yyyy'});
+                jQuery('.fecha_docnotf').datepick({dateFormat: 'dd/mm/yyyy'});
+                });
+            </script>
+          </div>
             <form t:type="form" t:id="formaltasuspension" t:zone="suspensionZone">
                 <fieldset>
                     <legend>Inicio de la Suspensión</legend>
-                    <div class="f-wrap">
+                    <div class="f-wrap">     
+                       <t:zone t:id="entidadiniZone" id="entidadiniZone"> 
                         <div class="f-left">
-                            <label>* Entidad</label>
+                            <label>* Entidad</label>                           
                             <input t:type="TextField" t:id="entidad_descripcion"
-                                    t:value="bentidadinicio" size="100" t:disabled="true"/>
+                                    t:value="bentidadinicio" size="100" t:disabled="true"/>                           
                         </div>
-                        <div class="f-left" style="position:relative; top:14px; left:-10px;">
-                            <input t:id="buscarentiini" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
+                        <div class="f-left">                          
+                            <t:eventLink t:event="buscarenti" href="#" class="iconsearch"  t:zone="entidadiniZone" onClick="javascript: mostrar();">                           
+                            </t:eventLink>                       
                         </div>
+                      </t:zone>
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Tipo Documento</label>
                             <input t:type="Select" t:id="tipo_documento_ini"                                
-                                t:value="nuevasuspension.tipo_documentoini" model="beantipo_documentoini" t:zone="suspensionZone" t:blankOption="ALWAYS"/>
+                                t:value="nuevasuspension.tipo_documentoini" model="beantipo_documentoini" t:zone="suspensionZone" t:blankOption="ALWAYS" t:validate="required"/>
                         </div>
                         <div class="f-left">
                             <label>* Número de Documento</label>
                             <input t:type="TextField" t:id="num_docini"
-                                    t:value="nuevasuspension.numdocini" size="30"/>
+                                    t:value="nuevasuspension.numdocini" size="30" t:validate="required"/>
                         </div>
                         <div class="f-left">
                             <label>* Fecha del Documento</label>
-                            <input t:type="TextField" t:id="fecha_docini" t:value="fechadocini" size="25" t:validate="required,regexp" class="fecha_docnot pictureInputDate"/>
+                            <input t:type="TextField" t:id="fecha_docini" t:value="fechadocini" size="25" t:validate="required,regexp" class="fecha_docini pictureInputDate"/>
                        </div>
                     </div>
-                    
-                    
-                    
-                    
+                    <fieldset>
+                    <legend>Notificación</legend>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>* Tipo Documento</label>
+                                <input t:type="Select" t:id="tipo_documento_noti"                                
+                                    t:value="nuevasuspension.tipo_documentonoti" model="beantipo_documentonoti" t:zone="suspensionZone" t:blankOption="ALWAYS" t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Número de Documento</label>
+                                <input t:type="TextField" t:id="num_docnoti"
+                                        t:value="nuevasuspension.numdocnoti" size="30" t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Fecha del Documento</label>
+                                <input t:type="TextField" t:id="fecha_docnoti" t:value="fechadocnoti" size="25" t:validate="required,regexp" class="fecha_docnoti pictureInputDate"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <label>Juzgado</label>
+                            <input t:type="TextField" t:id="juzgado_noti"
+                                        t:value="nuevasuspension.juzgadonoti" size="60"/>
+                        </div>                        
+                    </fieldset>                    
                 </fieldset>
                 <fieldset>
                     <legend>Fin de la Suspensión</legend>
+                    <div class="f-wrap">
+                       <t:zone t:id="entidadfinZone" id="entidadfinZone"> 
+                        <div class="f-left">
+                            <label>* Entidad</label>                          
+                            <input t:type="TextField" t:id="entidadfin_descripcion"
+                                    t:value="bentidadfin" size="100" t:disabled="true"/>                         
+                        </div>
+                        <div class="f-left">
+                            <t:eventLink t:event="buscarentifin" href="#" class="iconsearch"  t:zone="entidadfinZone" onClick="javascript: mostrar();">                           
+                            </t:eventLink>                       
+                        </div>
+                       </t:zone>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Tipo Documento</label>
+                            <input t:type="Select" t:id="tipo_documento_fin"                                
+                                t:value="nuevasuspension.tipo_documentofin" model="beantipo_documentofin" t:zone="suspensionZone" t:blankOption="ALWAYS"  t:validate="required"/>
+                        </div>
+                        <div class="f-left">
+                            <label>* Número de Documento</label>
+                            <input t:type="TextField" t:id="num_docfin"
+                                    t:value="nuevasuspension.numdocfin" size="30"  t:validate="required"/>
+                        </div>
+                        <div class="f-left">
+                            <label>* Fecha del Documento</label>
+                            <input t:type="TextField" t:id="fecha_docfin" t:value="fechadocfin" size="25" t:validate="required,regexp" class="fecha_docfin pictureInputDate"/>
+                       </div>
+                    </div>
+                    <fieldset>
+                    <legend>Notificación</legend>
+                        <div class="f-wrap">
+                            <div class="f-left">
+                                <label>* Tipo Documento</label>
+                                <input t:type="Select" t:id="tipo_documento_notf"                                
+                                    t:value="nuevasuspension.tipo_documentonotf" model="beantipo_documentonotf" t:zone="suspensionZone" t:blankOption="ALWAYS"  t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Número de Documento</label>
+                                <input t:type="TextField" t:id="num_docnotf"
+                                        t:value="nuevasuspension.numdocnotf" size="30" t:validate="required"/>
+                            </div>
+                            <div class="f-left">
+                                <label>* Fecha del Documento</label>
+                                <input t:type="TextField" t:id="fecha_docnotf" t:value="fechadocnotf" size="25" t:validate="required,regexp" class="fecha_docnotf pictureInputDate"/>
+                            </div>
+                        </div>
+                        <div class="f-wrap">
+                            <label>Juzgado</label>
+                            <input t:type="TextField" t:id="juzgado_notf"
+                                        t:value="nuevasuspension.juzgadonotf" size="60"/>
+                        </div>                        
+                    </fieldset>
                 </fieldset>
                 <fieldset>
                     <legend>Observaciones</legend>
+                    <input t:type="TextArea" t:id="observaciones" t:value="nuevasuspension.observacion" style="width: 350px;" rows="5" 
+                        t:validate="maxLength=500"/>
+                    <br />
+                    <i>(Máximo 500 caracteres)</i>
                 </fieldset>
+                <div class="actions">
+                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                    <t:eventLink t:event="reset" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="busquedamodalZone">
+                        <span t:type="any">
+                            Limpiar Formulario
+                        </span> 
+                    </t:eventLink>
+                    <!--<a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion.id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a> -->                  
+                </div>
             </form>
         </t:zone>
     </div>
-       
+    <div id="shade"></div>
+        
+    <div id="modal" style="height: 360px;">
+       <t:zone t:id="busquedamodalZone" t:update="show">            
+            <div class="box-background-title">
+                <span class="box-title-01">
+                    Selección de Entidad
+                </span>
+            </div>
+            <div id="panel-01" class="box">
+            <form t:type="form" t:id="formbusquedaentidad" t:zone ="busquedamodalZone">                    
+                <div class="f-wrap">
+                    <label>Denominación</label>
+                    <input t:type="TextField" t:id="denominacionentidad" value="bdenoentidad" size="100"/>
+                </div>
+                <div class="f-wrap">
+                    <input id="buscarsubmit1" type="submit" value="Buscar" class="button f-right" /> 
+                    <input t:type="Submit" t:id="cancelmodal1" value="Cancelar" class="button f-right" onClick="javascript: ocultar();"/>
+                </div>                    
+            </form>
+                <t:if test="mostrarlista">
+                    <t:grid source="listadoEntidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                                row="rowentidad" include="denominacion" inPlace="true" t:zone="busquedamodalZone">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="seleccionarentidad" zone="entidadiniZone" context="rowentidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>              
+                    <br/>
+                </t:if>
+            </div>            
+       </t:zone>      
+    </div>   
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
 </html>

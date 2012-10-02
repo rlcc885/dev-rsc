@@ -24,6 +24,10 @@ public class LkBatchCargoxUnidad implements Serializable {
     private String regimenlaboral;
     private Boolean presupuestado_PAP;
     private Boolean esorganico;
+    private Integer ctd_puestos_total;
+    private Boolean supervisapersonal;
+    private Boolean dec_jurada_byr;
+    private Boolean estado;
     private String grupoOcupacional;
     private String nivelRemunerativo;
     private String situacioncap;
@@ -108,6 +112,40 @@ public class LkBatchCargoxUnidad implements Serializable {
     public void setUnidadorganicaid(Long unidadorganicaid) {
         this.unidadorganicaid = unidadorganicaid;
     }
+
+    public Integer getCtd_puestos_total() {
+        return ctd_puestos_total;
+    }
+
+    public void setCtd_puestos_total(Integer ctd_puestos_total) {
+        this.ctd_puestos_total = ctd_puestos_total;
+    }
+
+    public Boolean getDec_jurada_byr() {
+        return dec_jurada_byr;
+    }
+
+    public void setDec_jurada_byr(Boolean dec_jurada_byr) {
+        this.dec_jurada_byr = dec_jurada_byr;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getSupervisapersonal() {
+        return supervisapersonal;
+    }
+
+    public void setSupervisapersonal(Boolean supervisapersonal) {
+        this.supervisapersonal = supervisapersonal;
+    }
+    
+    
     
     public LkBatchCargoxUnidad() {
     }

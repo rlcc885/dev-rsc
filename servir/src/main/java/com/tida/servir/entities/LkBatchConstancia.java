@@ -68,7 +68,16 @@ public class LkBatchConstancia implements Serializable {
     private Date fec_inicio;
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    private String cod_und_organica; // Código de la unidad organica
 
+    public String getCod_und_organica() {
+        return cod_und_organica;
+    }
+
+    public void setCod_und_organica(String cod_und_organica) {
+        this.cod_und_organica = cod_und_organica;
+    }
+    
     public String getCategoriaconstancia() {
         return categoriaconstancia;
     }
