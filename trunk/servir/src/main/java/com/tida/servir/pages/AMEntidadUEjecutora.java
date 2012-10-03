@@ -728,7 +728,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             numEntidades+=1;
             NumberFormat formatter = new DecimalFormat("0000");
             String nuevoCUE = formatter.format(numEntidades);
-            String codSERVIR = "RNSC"+nuevoCUE;
+            String codSERVIR = "RSC"+nuevoCUE;
             System.out.println(codSERVIR);
             entidadUE.setCue_entidad(codSERVIR);
             //
