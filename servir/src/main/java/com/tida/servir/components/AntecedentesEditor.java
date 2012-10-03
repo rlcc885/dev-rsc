@@ -331,7 +331,29 @@ public class AntecedentesEditor {
         vNoedita=true;
         return antLaboralZone.getBody();
     }
+    
+    @Log
+    Object onActionFromEditardos(Ant_Laborales antLab) {
+        ant_Laborales = antLab;
 
+        if (ant_Laborales.getFec_ingreso() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(ant_Laborales.getFec_ingreso());
+        }
+        if (ant_Laborales.getFec_egreso() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(ant_Laborales.getFec_egreso());
+        }
+
+        editando = true;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
+        vNoedita=true;
+        return antLaboralZone.getBody();
+    }
+    
     @Log
     @CommitAfter
     Object onActionFromEliminar(Ant_Laborales antLab) {        

@@ -277,12 +277,17 @@
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="rucChanged" t:zone="zoneDatos"/>
                             </div>
                             <div class="f-left">
-                                <t:label for="cueedit"/>
-                                <input t:type="TextField" t:id="cueedit" t:disabled="${vdetalle}"
+                                <label>Codigo Servir</label>
+                                <input t:type="TextField" t:id="cueedit" t:disabled="true"
                                    t:value="entidadUE.cue_entidad" t:validate="maxlength=12" size="12" 
-                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cue_entidadChanged" t:zone="zoneDatos" />
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cue_entidadChanged" t:zone="zoneDatos"/>
                             </div>
-
+                            <div class="f-left">
+                                <label>CUE</label>
+                                <input t:type="TextField" t:id="cueruffedit" t:disabled="${vdetalle}"
+                                   t:value="entidadUE.cue_rufe" t:validate="maxlength=12" size="12" 
+                                   t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="cue_ruffChanged" t:zone="zoneDatos"/>
+                            </div>
                             <div class="f-left">
                                 <t:label for ="proc_batch"/>
                                 <input t:type="Checkbox" t:id="proc_batch" 

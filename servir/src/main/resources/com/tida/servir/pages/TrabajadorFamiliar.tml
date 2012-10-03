@@ -3,11 +3,7 @@
       xmlns:p="tapestry:parameter">
 
 
-        <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${oi.denominacion}
-        </div>
-
-        <t:if test = "haymensajes">
+         <t:if test = "haymensajes">
             <div id="Mensajes">
                 ${mensajes}
             </div>

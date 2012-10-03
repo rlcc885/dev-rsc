@@ -1,9 +1,7 @@
 <html t:type="layout" title="Sistema SERVIR"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-    <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${oi.denominacion}
-    </div>
+
     <div id = "Datos_Generales">
         <h2> Legajo - Datos Laborales </h2>
         <div id= "basicosTrabajador">

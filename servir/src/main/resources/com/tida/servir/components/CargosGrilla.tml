@@ -3,11 +3,14 @@
       xmlns:p="tapestry:parameter">
 
 <t:content>
-     <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Acciones, Den_Cargo"            
-            reorder="Den_Cargo,fec_inicio,fec_fin,Acciones" exclude="tipoVinculo,ctd_per_superv,motivo_cese,estado,puestoconfianza">
+     <t:grid source="cargosAsignados" t:id="grillaCargos" row="ca" t:add="Acciones, Den_Cargo,Unidad_Organica"            
+            reorder="Unidad_Organica,Den_Cargo,fec_inicio,fec_fin,Acciones" exclude="tipoVinculo,ctd_per_superv,motivo_cese,estado,puestoconfianza">
             <t:parameter name="empty">
                 El trabajador no contiene cargos asignados.
             </t:parameter>
+        <p:unidad_organicaCell>
+            ${ca.cargoxunidad.unidadorganica.den_und_organica}
+        </p:unidad_organicaCell>
         <p:den_cargoCell>
             ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>

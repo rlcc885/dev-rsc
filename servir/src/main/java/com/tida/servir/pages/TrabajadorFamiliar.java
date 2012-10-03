@@ -108,7 +108,10 @@ public class TrabajadorFamiliar extends GeneralPage {
         logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
-        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        if(actual==null)
+            query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        else
+            query.setParameter("in_pagename", "BUSQUEDA");
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));

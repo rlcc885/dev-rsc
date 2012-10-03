@@ -203,7 +203,7 @@ private EstadoEntidad estado;
         }
         // PROCESO EJECUTANDOSE
        Criteria c = session.createCriteria(EstadoEntidad.class);
-       c.add(Restrictions.eq("estado",2));
+       c.add(Restrictions.eq("estado",1));
 //        c.add(Restrictions.eq("estado", file));
        estado = (EstadoEntidad)c.uniqueResult();
       
@@ -217,7 +217,7 @@ private EstadoEntidad estado;
        
        c = session.createCriteria(EstadoEntidad.class);
        c.add(Restrictions.eq("cueEntidad", _entidadUE.getCue_entidad()));
-       c.add(Restrictions.eq("estado", 1));
+       c.add(Restrictions.eq("estado", 2));
        //MOSTRAR LOS REPORTES
        if (c.list().isEmpty()){
        procesoFin=false;

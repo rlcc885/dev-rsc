@@ -71,7 +71,16 @@ public class Entidad implements Serializable {
     @NonVisual
     private String validado;
     Boolean estado;
-   
+    private String cue_rufe;
+
+    public String getCue_rufe() {
+        return cue_rufe;
+    }
+
+    public void setCue_rufe(String cue_rufe) {
+        this.cue_rufe = cue_rufe;
+    }
+    
     public String getCue_entidad() {
         return cue_entidad;
     }

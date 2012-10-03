@@ -147,15 +147,15 @@ public class ValidacionXLS {
                 String data;
                 int contproo=0;
                 while ((data = bf.readLine())!=null) {
-                    Matcher m1 = p1.matcher(data); // Matcher es una variable global 
-                    if(m1.find()){ 
-                        if(data.split("\t").length==10) {                        
-                            contproo++; 
-                        }
-                        else{
-                            errores.add("Numero de Columnas diferente de Formato, Archivo:"+misCSVs.get(0));
-                        }
-                    }
+//                    Matcher m1 = p1.matcher(data); // Matcher es una variable global 
+//                    if(m1.find()){ 
+//                        if(data.split("\t").length==10) {                        
+//                            contproo++; 
+//                        }
+//                        else{
+//                            errores.add("Numero de Columnas diferente de Formato, Archivo:"+misCSVs.get(0));
+//                        }
+//                    }
 
                 }
             }
