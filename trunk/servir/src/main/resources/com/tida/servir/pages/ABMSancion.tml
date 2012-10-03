@@ -268,9 +268,9 @@
             <div class="actions">
                 <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                 <input t:type="Submit" t:id="reset" value="Limpiar Formulario" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                <!--<t:if test="${editando}">-->
+                <t:if test="${editando}">
                     <a t:type="pagelink" t:page="ABMSuspension" t:context="nuevasancion.id" href="#" class="button f-right">Suspender</a>
-                <!--</t:if>-->
+                </t:if>
             </div>
            
           </form>

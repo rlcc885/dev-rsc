@@ -8,15 +8,22 @@
             </div>
         </t:if>
 
-      <div id = "Datos_Generales">
-           <h2> Legajo - Datos de Documentos </h2>
-           <div id= "basicosTrabajador">
-               <h3>${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres}</h3>
+    <div id="header3">
+          <a t:type="pagelink" t:page="TrabajadorPersonal" t:context="${actual.id}" href="#"><span style="color:#fff; font-size:11px; margin-left:10px; margin-right:10px;"><b>Personales</b></span></a>
+          <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${actual.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Familiares</b></span></a>
+          <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="Meritos" t:context="${actual.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Laborales</b></span></a>
+            <span style="color:#fff; font-size:12px;"><b>|</b></span><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:14px;"><b>Documentos</b></span>
+    </div>
+    <div id="header3">
+        <span style="color:#fff; font-size:13px;"><b>${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres} </b></span>
+    </div>          
+      <div id = "Datos_Generales">          
+           <div id= "basicosTrabajador">               
            </div>
       </div>
-
     <div class="wrap">
-
+        <br/>
+        <br/>
 
     <!-- the tabs -->
 
