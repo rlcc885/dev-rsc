@@ -619,8 +619,10 @@ public class TrabajadorNuevo extends GeneralPage {
                         Date fechaInicial,fechaWS;
                         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
                         formatoFecha = new SimpleDateFormat("yyyyMMdd");  fechaWS = formatoFecha.parse(result.get(18));
+                        System.out.println("EXC "+fechaInicial);
+                        System.out.println("EXC "+fechaWS);
                         
-                        if (fechaInicial!=fechaWS){
+                        if (!fechaInicial.equals(fechaWS)){
                            formulariomensajes.recordError("Fecha de Caducidad Incorrecta"); // MENSAJES DE ERROR                         
                            return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
                         }
