@@ -171,7 +171,14 @@ private UsuarioAcceso usua;
 @Property
 private Integer setup;
 
-@Log
+    @Persist
+    @Property
+    private Boolean vmodificar;
+    @Persist
+    @Property
+    private Boolean vdetalle;
+
+    @Log
 public void setuprender()
 {
 
@@ -184,12 +191,21 @@ public void setuprender()
 //        query.setParameter("in_pagename", "TIPOSANCION");
         List result = query.list();
         
+        //MODIFICACION PERMISOS
+        vdetalle=true;
+        vmodificar=false;
+        
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
         } else {
            usua = (UsuarioAcceso) result.get(0);
            
            // MODO DE ACCESO A LA PAGINA
+        if (usua.getAccesoselect() == 1){ vdetalle=true;vmodificar = false; }   
+        if (usua.getAccesoreport() == 1 || usua.getAccesoupdate() == 1 ) {vdetalle=false;vmodificar = true;}
+        if (usua.getAccesodelete() == 1) {}
+          
+        //***************   
         }
         
     setup=2; 
