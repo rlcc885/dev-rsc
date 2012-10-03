@@ -94,6 +94,7 @@ public class RemuneracionesPersonalesEditor {
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
+
         Criteria c3 = session.createCriteria(LkBusquedaTrabajador.class);
         c3.add(Restrictions.eq("id", actual.getId()));
         List<LkBusquedaTrabajador> result = c3.list();
@@ -105,7 +106,9 @@ public class RemuneracionesPersonalesEditor {
 
     @Log
     void resetRegistro() {
+
         remuneracion = new RemuneracionPersonal();
+        conceptoseleccionado = null;
         editando = false;
         accesos();
     }
@@ -202,7 +205,10 @@ public class RemuneracionesPersonalesEditor {
 
     @Log
     Object onActionFromEditar(RemuneracionPersonal remu) {
+                conceptoseleccionado = new ConceptoRemunerativo();
+        System.out.println("OBSERVACION "+remu + " "+conceptoseleccionado);
         remuneracion = remu;
+        remuneracion.setImporte(remuneracion.getImporte().replaceAll("\\.", ","));
         conceptoseleccionado.setId(remuneracion.getConceptoremunerativo().getId());
         accesos();
         editando = true;
@@ -223,7 +229,9 @@ public class RemuneracionesPersonalesEditor {
 
     @Log
     Object onActionFromDetalle(RemuneracionPersonal remu) {
+                conceptoseleccionado = new ConceptoRemunerativo();
         remuneracion = remu;
+        
         conceptoseleccionado.setId(remuneracion.getConceptoremunerativo().getId());
         accesos();
         vdetalle = true;
