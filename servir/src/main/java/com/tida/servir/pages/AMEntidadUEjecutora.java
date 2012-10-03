@@ -6,6 +6,8 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Logger;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
@@ -20,6 +22,7 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -716,6 +719,19 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
+
+
+            // GENERACION DEL CODIGO SERVIR
+            
+            Long numEntidades = (Long)session.createCriteria(Entidad.class).setProjection(Projections.rowCount()).uniqueResult();
+            System.out.println("NUMX "+numEntidades);
+            numEntidades+=1;
+            NumberFormat formatter = new DecimalFormat("0000");
+            String nuevoCUE = formatter.format(numEntidades);
+            String codSERVIR = "RNSC"+nuevoCUE;
+            System.out.println(codSERVIR);
+            entidadUE.setCue_entidad(codSERVIR);
+            //
             
             session.saveOrUpdate(entidadUE);
             session.flush();
