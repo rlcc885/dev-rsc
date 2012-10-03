@@ -74,16 +74,17 @@ public class Entidad implements Serializable {
     private String cue_rufe;
 
     @NonVisual
-    @Column(name="PETICIONES_WS_RENIEC")
-    private Integer peticionesReniec;
+    private Integer peticiones_ws_Reniec;
 
-    public Integer getPeticionesReniec() {
-        return peticionesReniec;
+    public Integer getPeticiones_ws_Reniec() {
+        return peticiones_ws_Reniec;
     }
 
-    public void setPeticionesReniec(Integer peticionesReniec) {
-        this.peticionesReniec = peticionesReniec;
+    public void setPeticiones_ws_Reniec(Integer peticiones_ws_Reniec) {
+        this.peticiones_ws_Reniec = peticiones_ws_Reniec;
     }
+
+
     
 
     public String getCue_rufe() {
