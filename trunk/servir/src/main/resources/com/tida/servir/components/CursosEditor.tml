@@ -184,7 +184,12 @@
                                     <t:actionlink t:id="editar" zone="listaZone" context="listacurso">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${listacurso.validado}">
-                                    <t:actionlink t:id="detalles" zone="listaZone" context="listacurso">Detalle</t:actionlink>
+                                   <t:if test="${vrevisado}">
+                                        <t:actionlink t:id="editardos" zone="listaZone" context="listacurso">Editar</t:actionlink>
+                                   </t:if>
+                                   <t:if test="${vrevisado}" negate="true"> 
+                                       <t:actionlink t:id="detalles" zone="listaZone" context="listacurso">Detalle</t:actionlink>
+                                   </t:if>
                                 </t:if>
                             </t:if>
                             <t:if test="${veditar}" negate="true">

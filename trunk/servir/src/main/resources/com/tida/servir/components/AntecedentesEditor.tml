@@ -182,7 +182,12 @@
                                 <t:actionlink t:id="editar" zone="antLaboralZone" context="listaantlaborales">Editar</t:actionlink>
                             </t:if>
                             <t:if test="${listaantlaborales.validado}">
-                                <t:actionlink t:id="detalles" zone="antLaboralZone" context="listaantlaborales">Detalle</t:actionlink>
+                                <t:if test="${bvalidausuario}">
+                                    <t:actionlink t:id="editardos" zone="antLaboralZone" context="listaantlaborales">Editar</t:actionlink>
+                                </t:if>
+                                <t:if test="${bvalidausuario}" negate="true">
+                                    <t:actionlink t:id="detalles" zone="antLaboralZone" context="listaantlaborales">Detalle</t:actionlink>
+                                </t:if>
                             </t:if>
                         </t:if>
                         <t:if test="${veditar}" negate="true">

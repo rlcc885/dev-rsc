@@ -1,11 +1,7 @@
 <html t:type="layout" title="Editar Conceptos Remunerativos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
-
-    <div class="organismo_titulo">
-        Entidad: ${oi.denominacion}
-    </div>
-          <h2> Conceptos Remunerativos </h2>
+        <h2> Conceptos Remunerativos </h2>
     
          <div class="box-background-title">
                 <span class="box-title-01">

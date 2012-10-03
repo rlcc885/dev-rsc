@@ -1201,6 +1201,11 @@ public class AMEntidadUEjecutora extends GeneralPage {
     void onCue_EntidadChanged() {
         entidadUE.setCue_entidad(_request.getParameter("param"));
     }
+    
+    @Log
+    void onCue_ruffChanged() {
+        entidadUE.setCue_rufe(_request.getParameter("param"));
+    }
 
     @Log
     void onDireccionChanged() {

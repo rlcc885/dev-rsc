@@ -505,7 +505,48 @@ public class EstudiosEditor {
 
         return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
     }
+    
+    @Log
+    Object onActionFromEditardos(Estudios estu) {
+        limpiar();
+        estudio = estu;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
+        vNoedita=true;
+        mostrar();
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+            } else {
+                vfechahasta = false;
+            }
+        } else {
+            vfechahasta = false;
+        }
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 9999999) {
+                votro = false;
+            } else {
+                votro = true;
+            }
+        } else {
+            votro = true;
+        }
 
+        if (estudio.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(estudio.getFechainicio());
+        }
+        if (estudio.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(estudio.getFechafin());
+        }
+
+        return new MultiZoneUpdate("primerZone", primerZone.getBody()).add("segundoZone", segundoZone.getBody()).add("tercerZone", tercerZone.getBody()).add("listaZone", listaZone.getBody());
+    }
+    
     @Log
     Object onActionFromDetalle(Estudios estu) {
         limpiar();

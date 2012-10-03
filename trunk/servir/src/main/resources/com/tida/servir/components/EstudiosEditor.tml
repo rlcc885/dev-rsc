@@ -220,7 +220,12 @@
                                     <t:actionlink t:id="editar" zone="listaZone" context="listaestu">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${listaestu.validado}">
-                                    <t:actionlink t:id="detalles" zone="listaZone" context="listaestu">Detalle</t:actionlink>
+                                    <t:if test="${vrevisado}">
+                                        <t:actionlink t:id="editardos" zone="listaZone" context="listaestu">Editar</t:actionlink>
+                                    </t:if>
+                                    <t:if test="${vrevisado}" negate="true">
+                                        <t:actionlink t:id="detalles" zone="listaZone" context="listaestu">Detalle</t:actionlink>
+                                    </t:if>
                                 </t:if>
                             </t:if>
                             <t:if test="${veditar}" negate="true">

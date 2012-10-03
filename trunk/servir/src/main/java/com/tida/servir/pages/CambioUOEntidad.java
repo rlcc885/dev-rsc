@@ -365,14 +365,20 @@ public class CambioUOEntidad extends GeneralPage{
     public List<Integer> getBeanNivel(Entidad eUE, Integer first){
         List<Integer> nivel = new LinkedList<Integer>();
         Integer nivelMax = 0;
-
-        nivelMax = Helpers.maxNivelUO(eUE, session);
+        
+        if(first==1){
+            nivelMax = Helpers.maxNivelUO(eUE, session);
+        }
+        else if(first==2){
+            nivelMax = Helpers.maxNivelUO(eUE, session)+1;
+        }
+        
 
         for(int i=first; i <= nivelMax; i++){
             // Es mas uno porque agregamos hasta un nivel mas
             nivel.add(i);
         }
-
+        
         return nivel; // nivel 0 van asociadas a las entidades directamente
     }
 
@@ -390,10 +396,16 @@ public class CambioUOEntidad extends GeneralPage{
     @Log
     public List<Integer> getBeanNivelDestino(){
         if(entidad2==null){
-            return getBeanNivel(entidadUE,1);
+            if(migras)
+                return getBeanNivel(entidadUE,2);
+            else
+                return getBeanNivel(entidadUE,1);
         }
         else{
-            return getBeanNivel(entidad2, 1);
+            if(migras)
+                return getBeanNivel(entidad2,2);
+            else
+                return getBeanNivel(entidad2, 1);
         }
 
     }

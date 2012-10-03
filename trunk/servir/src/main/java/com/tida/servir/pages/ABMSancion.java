@@ -612,7 +612,7 @@ public class ABMSancion  extends GeneralPage
             autoridadsan=fun.getNombrefuncionario();
             nuevasancion.setAutoridadsan(sele); 
         }              
-        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody()).add("autoridadnotZone", autoridadnotZone.getBody()).add("autoridadmodalZone", autoridadmodalZone.getBody());
+        return new MultiZoneUpdate("autoridadsanZone", autoridadsanZone.getBody()).add("autoridadnotZone", autoridadnotZone.getBody());
     }
     
     @Log

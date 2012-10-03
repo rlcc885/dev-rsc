@@ -15,7 +15,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 @Entity
 public class LkBusquedaTrabajador implements Serializable {
-
+    @NonVisual
     @Id
     private long id;
     private String nombretrabajador;

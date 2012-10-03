@@ -2,10 +2,6 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
     
-    <div class="organismo_titulo">
-        Entidad: ${entidadUE.denominacion}
-    </div>
-
     <h2> Datos de Entidad </h2>
     <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 

@@ -5,11 +5,7 @@
       xmlns:p="tapestry:parameter">
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
        
-        
-    <div class="organismo_titulo">
-        Entidad /U. Ejecutora: ${entidadUE.denominacion}
-    </div>
-
+  
         <div class="box-background-title">
     <span class="box-title-01">
         Migración/Fusión

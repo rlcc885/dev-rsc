@@ -241,7 +241,48 @@ public class CursosEditor {
 
         return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
     }
+    
+    @Log
+    Object onActionFromEditardos(Curso c) {
+        limpiar();
+        cursos = c;
+        vformulario = true;
+        editando = true;
+        vdetalle = false;
+        vbotones = true;
+        vNoedita = true;
+        mostrar();
+        if (valestudiando != null) {
+            if (valestudiando) {
+                vfechahasta = true;
+            } else {
+                vfechahasta = false;
+            }
+        } else {
+            vfechahasta = false;
+        }
+        if (valcentroestudio != null) {
+            if (valcentroestudio.getCodigo() == 999999) {
+                votro = false;
+            } else {
+                votro = true;
+            }
+        } else {
+            votro = true;
+        }
 
+        if (cursos.getFechainicio() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_desde = formatoDeFecha.format(cursos.getFechainicio());
+        }
+        if (cursos.getFechafin() != null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            valfec_hasta = formatoDeFecha.format(cursos.getFechafin());
+        }
+
+        return new MultiZoneUpdate("primeraZone", primeraZone.getBody()).add("listadoZone", listadoZone.getBody());
+    }
+    
     @Log
     Object onActionFromDetalle(Curso c) {
         limpiar();

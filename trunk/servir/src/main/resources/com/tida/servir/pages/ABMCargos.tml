@@ -1,10 +1,6 @@
 <html t:type="layout" title="Servir - Cargos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-      xmlns:p="tapestry:parameter">
-
-    <div class="organismo_titulo">
-        Entidad: ${entidadUE.denominacion}
-    </div>
+      xmlns:p="tapestry:parameter">   
 
     <h2>Administración de Cargos / Puestos</h2>
             <script>
