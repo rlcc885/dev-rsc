@@ -31,13 +31,15 @@
        </div>           
            
        <div class="f-wrap" style="margin-right: 70px;">
+        <t:if test="${vmodificar}">
            <div class="f-right">
                <t:if test="mostrar">  
                <t:eventLink t:event="seleccionarTodos" href="#" class="button f-right" t:zone="tiposancionZone">
                    <span type="any" style="color: white;">Seleccionar Todos</span>
                </t:eventLink>
                </t:if>    
-           </div> 
+           </div>
+        </t:if>   
        </div>
        <br/>
            
@@ -56,7 +58,7 @@
 		<div class="no-info">No se encontraron registros</div>
             </t:parameter>
             <p:tipoDeSancionCell>
-                <input t:type="checkbox" t:value="sancionregimen.opcion" onclick="this.form.submit(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="mensajesZone" />   ${sancionregimen.tiposancion} 
+                <input t:type="checkbox" t:value="sancionregimen.opcion" onclick="this.form.submit(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:zone="mensajesZone" t:disabled="${vdetalle}"/>   ${sancionregimen.tiposancion} 
             </p:tipoDeSancionCell>
 
         </t:grid>
@@ -64,14 +66,16 @@
        </div>
 
        <div class="f-wrap" style="margin-right: 70px;">
+         <t:if test="${vmodificar}">
            <div class="f-right">
                <input t:type="submit" t:id="guardar" value="guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?"  class="button f-right" />               
-           </div>
-           <div class="f-right">
+           </div>           
+           <div class="f-right">               
                <t:eventLink t:event="limpiar" href="#" class="button f-right" t:zone="tiposancionZone">
                    <span t:type="any" style="color: white;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">Limpiar Formulario</span>
                </t:eventLink>
            </div>
+         </t:if> 
        </div>
            
            
