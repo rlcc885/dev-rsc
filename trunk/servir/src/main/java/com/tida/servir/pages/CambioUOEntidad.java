@@ -374,7 +374,7 @@ public class CambioUOEntidad extends GeneralPage{
         }
         
 
-        for(int i=first; i <= nivelMax; i++){
+        for(int i=1; i <= nivelMax; i++){
             // Es mas uno porque agregamos hasta un nivel mas
             nivel.add(i);
         }
