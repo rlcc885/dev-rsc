@@ -20,7 +20,9 @@ import org.apache.tapestry5.beaneditor.Validate;
 @Table(name = "RNSDD_PERSONA")
 public class Persona_Sancion implements Serializable {
     
-    @Id    
+    @Id  
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_PERSONA_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private long id;    
     @ManyToOne
@@ -91,14 +93,6 @@ public class Persona_Sancion implements Serializable {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-
     public String getSexo() {
         return sexo;
     }
@@ -108,7 +102,6 @@ public class Persona_Sancion implements Serializable {
     }
     @Temporal(TemporalType.DATE)
     private Date fecha_nacimiento;
-    private String nacionalidad;
     private String sexo;
     
     public long getId() {

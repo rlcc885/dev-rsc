@@ -4,7 +4,7 @@
 
 
         <h2>
-        Usando archivo Batch
+        Importación
         </h2>
         <t:if test = "respuestaOk">
             <div id='ok_msg'> 
@@ -22,7 +22,7 @@
                     <div class="f-left input_grande">                
                         <label>Origen de los archivos </label>
                          <select t:type="select" t:id="select_origen"
-                            model="origenesArchivos"
+                            t:model="literal:1=Carga masiva de un organismo,2=Carga masiva de multiples organismos"
                              value="origenArchivos" t:validate="required"/>
                     </div>
 
@@ -96,7 +96,7 @@
                     <div class="f-left">                
                     Tipo de Proceso
                      <select t:type="select" t:id="select_tipo_proceso"
-                        model="tiposProceso"
+                        model="literal:1=Solo validacion,2=Validacion y procesaminento"
                          value="tipoProceso" t:validate="required"/>
                     </div>
                     <br/>

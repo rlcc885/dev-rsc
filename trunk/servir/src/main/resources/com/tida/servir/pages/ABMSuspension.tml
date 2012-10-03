@@ -146,7 +146,7 @@
                             Limpiar Formulario
                         </span> 
                     </t:eventLink>
-                    <!--<a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion.id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a> -->                  
+                    <a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion.id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a>                
                 </div>
             </form>
         </t:zone>

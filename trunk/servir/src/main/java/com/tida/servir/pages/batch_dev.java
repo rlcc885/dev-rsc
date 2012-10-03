@@ -93,17 +93,7 @@ public class batch_dev  extends GeneralPage {
     //sdsdsd
     @Property
     @SessionState
-    private Entidad _entidadUE;
-
-    public List<String> getOrigenesArchivos() {
-        List<String> org = new ArrayList<String>();        
-        org.add(OrigenArchivos.CARGA_INICIAL_ORGANISMOS);
-        org.add(OrigenArchivos.CARGA_MASIVA_ORGANISMOS);
-        org.add(OrigenArchivos.CARGA_MASIVA_ORGANISMO);        
-        //org.add(OrigenArchivos.PROCESO_OFFLINE);
-
-        return org;
-    }
+    private Entidad _entidadUE;    
 
     @Persist(PersistenceConstants.FLASH)
     @Property
@@ -153,15 +143,8 @@ public class batch_dev  extends GeneralPage {
 			}
 
 		};
-	}
+	}    
     
-    public List<String> getTiposProceso() {
-        List<String> tipos = new ArrayList<String>();
-        tipos.add(TipoProceso.SOLO_VALIDACION);
-        tipos.add(TipoProceso.VALIDACION_Y_PROCESAMIENTO);
-
-        return tipos;
-    }
 
     @Property
     @Persist
@@ -256,7 +239,7 @@ private EstadoEntidad estado;
 //        errores = myTratamiento.generacionListDesdeCSV();
         Query query = session.getNamedQuery("callSpProcesoBatch");
         query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
-        query.setParameter("an_tipoproceso", 2);
+        query.setParameter("an_tipoproceso", Integer.parseInt(origenArchivos));
         List result = query.list();
         session.flush();
         

@@ -21,6 +21,8 @@ import org.apache.tapestry5.beaneditor.Validate;
 public class Suspension implements Serializable {
     
     @Id    
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_SUSPENSION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private long id;    
     @ManyToOne

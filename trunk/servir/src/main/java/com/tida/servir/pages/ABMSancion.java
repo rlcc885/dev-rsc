@@ -378,11 +378,21 @@ public class ABMSancion  extends GeneralPage
     
     Object onBuscarpersona(){
       formvalidacion.clearErrors();
+      if(bdocidentidad==null){
+          formvalidacion.recordError("Tiene que ingresar Tipo Documento");
+          return zonasDatos();
+      }
+      if(bnumerodocumento==null){
+          formvalidacion.recordError("Tiene que ingresar Numero de Documento");
+          return zonasDatos();
+      }
+      if(bdocidentidad.getCodigo()!=1){
+          formvalidacion.recordError("La consulta solo se permite para DNI");
+          return zonasDatos();
+      }     
+      
       List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
       if(busqueda.size()>0){
-          bnombres=busqueda.get(0).getNombres();
-          bapaterno=busqueda.get(0).getApellidoPaterno();
-          bamaterno=busqueda.get(0).getApellidoMaterno();
           formvalidacion.recordError("Persona ya Registrada como Trabajador");
           return zonasDatos();
       }      
@@ -391,7 +401,10 @@ public class ABMSancion  extends GeneralPage
           bnombres=busqueda_persona.get(0).getNombres();
           bapaterno=busqueda_persona.get(0).getApellidoPaterno();
           bamaterno=busqueda_persona.get(0).getApellidoMaterno();
-          formvalidacion.recordError("Persona ya Registrada");
+          nuevasancion.setPersona(busqueda_persona.get(0));
+          nuevasancion.setTrabajador(null);
+          nuevasancion.setCargoasignado(null);
+          formvalidacion.recordError("Persona ya Registrada");          
           return zonasDatos();
       }
         try {
@@ -403,6 +416,16 @@ public class ABMSancion  extends GeneralPage
                     bnombres=listare.get(4);
                     bapaterno=listare.get(1);
                     bamaterno=listare.get(2);
+                    nuevapersona=new Persona_Sancion();                    
+                    nuevapersona.setDireccion(listare.get(11));
+                    if(listare.get(13).equals("1")){
+                        nuevapersona.setSexo("M");
+                    }
+                    else if(listare.get(13).equals("2")){
+                        nuevapersona.setSexo("F");
+                    }
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
+                    nuevapersona.setFecha_nacimiento(formatoFecha.parse(listare.get(14)));
                 }else{
                     formvalidacion.recordError(sre.mensajeError);//ERROR EN CONSULTA
                     System.out.println("errorrrrr"+bnumerodocumento);
@@ -565,6 +588,8 @@ public class ABMSancion  extends GeneralPage
         bestadopuesto=btra.getEstadocargo();
         nuevasancion.setCargoasignado((CargoAsignado) session.load(CargoAsignado.class, btra.getId()));
         nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getTrabajador_id()));
+        nuevasancion.setPersona(null);
+        nuevapersona=new Persona_Sancion();
         calcular(Integer.parseInt(btra.getTiempo_dias()));
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
@@ -732,14 +757,6 @@ public class ABMSancion  extends GeneralPage
         }
         
         if(tiposancion.getCodigo()==1){
-//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-//                return zonasDatos();
-//            }
-//            if(calculardia()!=1){
-//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-//                return zonasDatos();
-//            }
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
             System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
@@ -751,11 +768,6 @@ public class ABMSancion  extends GeneralPage
             }
         }
         if(tiposancion.getCodigo()==2){
-//            if(calcularperiodo(fecinicio,fechadocnot)!=1){
-//                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
-//                return zonasDatos();
-//            }
-            
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax);
             if(calcularperiodo()<diastiposamax){                
@@ -809,14 +821,26 @@ public class ABMSancion  extends GeneralPage
         if(bestrabajador){
             nuevasancion.setEstrabajador(true);
         }else{
-            nuevasancion.setEstrabajador(false);
-            nuevapersona.setDocumentoidentidad(bdocidentidad);
-            nuevapersona.setApellidoMaterno(bamaterno);
-            nuevapersona.setApellidoPaterno(bapaterno);
-            nuevapersona.setNroDocumento(bnumerodocumento);
-            session.saveOrUpdate(nuevapersona);            
-            session.flush();
-            nuevasancion.setPersona(nuevapersona);
+            
+            if(nuevasancion.getPersona()!=null){
+                nuevasancion.setEstrabajador(false);
+            }
+            else{
+                List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
+                if(busqueda.size()>0){
+                    formsancion.recordError("Persona ya Registrada como Trabajador");
+                    return zonasDatos();
+                }
+                nuevapersona.setApellidoMaterno(bamaterno);
+                nuevapersona.setApellidoPaterno(bapaterno);
+                nuevapersona.setNombres(bnombres);
+                nuevapersona.setDocumentoidentidad(bdocidentidad);
+                nuevapersona.setNroDocumento(bnumerodocumento);
+                nuevasancion.setEstrabajador(false);                
+                session.saveOrUpdate(nuevapersona);            
+                session.flush();
+                nuevasancion.setPersona(nuevapersona);
+            }            
         }
         TipoSancion tiposa=new TipoSancion();
         tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId_tipo());
@@ -826,7 +850,9 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setFechafin_inha(fecha_fin);
         nuevasancion.setFechaini_inha(fecha_inicio);
         nuevasancion.setTipo_sancion(tiposa);
-//        nuevasancion.setSancion_estado(this.getEstados().get(0));
+        if(!editando){
+            nuevasancion.setSancion_estado(this.getEstados().get(0));
+        }
         session.saveOrUpdate(nuevasancion);
         session.flush(); 
         if(editando){
@@ -859,7 +885,6 @@ public class ABMSancion  extends GeneralPage
     }
     long calculardia(){
         long diferencia = ( fecha_inicio.getTime() - fecha_docnot.getTime() );
-//        System.out.println("aquiiiii222"+(diferencia/(1000*60*60*24)));
         return diferencia/(1000*60*60*24);
     }
     
@@ -884,7 +909,8 @@ public class ABMSancion  extends GeneralPage
         if(bamaterno==null){
             formsancion.recordError("Tiene que ingresar Apellido Materno");
             vali=false;
-        }        
+        }
+        List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
         return vali;
     }
     

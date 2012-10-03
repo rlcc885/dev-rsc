@@ -106,7 +106,8 @@ public class ABMSuspension  extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
-        nuevasuspension=new Suspension();       
+        nuevasuspension=new Suspension(); 
+        nuevasuspension.setSancion(modificasancion);
     }
     
     
@@ -223,8 +224,20 @@ public class ABMSuspension  extends GeneralPage {
             }
         }
         session.saveOrUpdate(nuevasuspension);
+        session.flush();
+        modificasancion.setSancion_estado(getEstados().get(0));
+        session.saveOrUpdate(modificasancion);
+        session.flush();
         onReset();
-        return suspensionZone.getBody();
+        return "ConsultaSanciones";
+    }
+    
+    @Log
+    public List<DatoAuxiliar> getEstados() {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);        
+        c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
+        c.add(Restrictions.eq("codigo", (long) 3));
+        return c.list();
     }
     
 }
