@@ -114,7 +114,20 @@ public class Trabajador implements Serializable // extends Persona
     @ManyToOne
     @NonVisual
     private Entidad entidad;
+    
+    @NonVisual
+    @Column(name="CONSULTADO_WS")
+    private Boolean consultadoWS;
 
+    public Boolean getConsultadoWS() {
+        return consultadoWS;
+    }
+
+    public void setConsultadoWS(Boolean consultadoWS) {
+        this.consultadoWS = consultadoWS;
+    }
+
+    
     public Entidad getEntidad() {
         return entidad;
     }
