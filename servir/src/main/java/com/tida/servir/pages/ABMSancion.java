@@ -375,6 +375,7 @@ public class ABMSancion  extends GeneralPage
         bnomtrabajador=null;
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("busquedamodalZone",busquedamodalZone.getBody());
     }
+    
     Object onBuscarpersona(){
       formvalidacion.clearErrors();
       List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
@@ -825,7 +826,7 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setFechafin_inha(fecha_fin);
         nuevasancion.setFechaini_inha(fecha_inicio);
         nuevasancion.setTipo_sancion(tiposa);
-        nuevasancion.setSancion_estado(this.getEstados().get(0));
+//        nuevasancion.setSancion_estado(this.getEstados().get(0));
         session.saveOrUpdate(nuevasancion);
         session.flush(); 
         if(editando){
