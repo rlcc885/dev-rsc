@@ -947,7 +947,5 @@ public class ABMSancion  extends GeneralPage
         
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody());
     } 
-    
-   
 
 }
