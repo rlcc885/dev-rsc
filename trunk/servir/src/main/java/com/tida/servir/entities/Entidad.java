@@ -73,6 +73,19 @@ public class Entidad implements Serializable {
     Boolean estado;
     private String cue_rufe;
 
+    @NonVisual
+    @Column(name="PETICIONES_WS_RENIEC")
+    private Integer peticionesReniec;
+
+    public Integer getPeticionesReniec() {
+        return peticionesReniec;
+    }
+
+    public void setPeticionesReniec(Integer peticionesReniec) {
+        this.peticionesReniec = peticionesReniec;
+    }
+    
+
     public String getCue_rufe() {
         return cue_rufe;
     }
