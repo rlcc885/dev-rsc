@@ -439,21 +439,8 @@ public class ConsultaSanciones extends GeneralPage {
         bregimenLaboral = null;
         bcategoriaSancion = null;
         btipoSancion = null;
-    }
+    }   
     
-    @Log
-    void onSelectedFromLimpiar1() {
-        anular=1;
-        observaciones= "fefrrefrfre";      
-        juzgado_not=null;
-        fechadocnot=null;
-        bnumeroDocumento_not=null;
-        bdocumentoidentidad_not=null;
-        fechadoc=null;
-        bnumeroDocumento2=null;
-        bdocumentoidentidad2 = null;
-        entidad_origen = null;
-    }
      
     @Log
     Object onActionFromSeleccionar(Entidad enti2) {        
