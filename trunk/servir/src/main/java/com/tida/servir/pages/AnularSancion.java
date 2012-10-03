@@ -119,6 +119,11 @@ public class AnularSancion extends GeneralPage {
         entidad2 = enti2;
         entidad_origen=entidad2.getDenominacion();
         entidad_origen_id = entidad2.getId();
-        return busZone2.getBody();  
+        return busZone.getBody();  
     }
+    
+    Object onBuscarentidad(){
+         return busZone.getBody();
+          //return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("busZone", busZone2.getBody());
+      } 
 }
