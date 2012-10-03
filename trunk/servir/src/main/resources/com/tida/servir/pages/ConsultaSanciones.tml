@@ -179,8 +179,7 @@
                         </p:nombresCell>
                         <p:accionesCell>    
                          <!--   <t:if test="${veditar}">-->
-                                <t:actionlink t:id="anular_sinreglab" zone="listaConsultaSancionZone" context="cs_sinreglab" 
-                                    onClick="javascript: mostraranular();">Anular</t:actionlink>
+                                <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
                                 |
                             <t:if test="${cs_sinreglab.veditar}">
                                <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->
@@ -245,10 +244,7 @@
             </t:zone>
             <br/>
             <br/>
-        </div>
-            <!-- Eorigen-->
-             
-             <!-- Edestino-->                          
+        </div>                      
     </div> 
     
     <div id="shade2"></div>
@@ -265,7 +261,7 @@
                                                 t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
                             </div>
                             <div class="f-left" style="position:relative; top:10px; left:-10px;">
-                                    <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
+                                   <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
                             </div>
                         </div>
                         <div class="f-wrap"> 
@@ -279,7 +275,7 @@
                             </div> 
                             <div class="f-left">
                                 <label>*Fecha del Documento</label>
-                                <input t:type="TextField" t:id="fechadoc" t:value="fechadoc" size="25" t:validate="required" class="fecha_doc pictureInputDate"/>
+                                <input t:type="TextField" t:id="fechadoc" t:value="fechadoc" size="25" t:validate="required" class="fechadoc pictureInputDate"/>
                             </div>
                         </div>
                         <fieldset>
@@ -323,7 +319,7 @@
                  </form>
                         <script>
                             jQuery(document).ready(function() {
-                                jQuery('.fecha_doc').datepick({dateFormat: 'dd/mm/yyyy'});
+                                jQuery('.fechadoc').datepick({dateFormat: 'dd/mm/yyyy'});
                                 jQuery('.fechadocnot').datepick({dateFormat: 'dd/mm/yyyy'});
                             });
                         </script>   
