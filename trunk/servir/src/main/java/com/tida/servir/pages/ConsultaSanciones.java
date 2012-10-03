@@ -176,6 +176,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private Entidad entidad2;  
+    @Property
+    @Persist
+    private Anulacion anulacion;  
     private int elemento=0;
     private int anular=0;
     
@@ -218,10 +221,7 @@ public class ConsultaSanciones extends GeneralPage {
             bmostrar=true;
         }else{
             bmostrar=false;
-        }
-            
-        
-        
+        }    
     }
     
       @Log
@@ -253,7 +253,7 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("categoria", bcategoriaSancion.getId()));
         }
         list = c.list();
-        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id", _access);
+        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id_tipo", _access);
     }
       
     @Log
@@ -290,11 +290,8 @@ public class ConsultaSanciones extends GeneralPage {
         if(esVigente==true){
             c.add(Restrictions.eq("estado_id", "1"));
         }
-        if(bregimenLaboral!=null){
-            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
-        }
         if(bcategoriaSancion!=null){
-            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId()));
+            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
         }
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
@@ -337,10 +334,10 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("estado_id", "1"));
         }
         if(bregimenLaboral!=null){
-            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
+            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId().toString()));
         }
         if(bcategoriaSancion!=null){
-            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId()));
+            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
         }
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
@@ -378,7 +375,9 @@ public class ConsultaSanciones extends GeneralPage {
     Object onSuccessFromFormularioConsultaSanciones() {
         if(elemento == 1)   {
              if(bregimenLaboral!=null){
-                 
+                 mostrar_reglab=true;
+             }else{
+                 mostrar_reglab=false;
              }
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
@@ -388,6 +387,7 @@ public class ConsultaSanciones extends GeneralPage {
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 3){
+              mostrar_reglab=false;
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         }
@@ -451,11 +451,17 @@ public class ConsultaSanciones extends GeneralPage {
     }
     
     @Log
-    Object onActionFromAnular(LkBusquedaSancionadosSinRegLab cs_sinreglab) {        
+    Object onActionFromAnular(LkBusquedaSancionados cs) {        
         
          return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
     }
+//    @Log
+//    Object onActionFromAnular_SinRegLab(LkBusquedaSancionadosSinRegLab cs_sinreglab) {        
+//        
+//         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+//                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
+//    }
     
     @Log
     Object onActionFromCancel1() {        
@@ -469,8 +475,6 @@ public class ConsultaSanciones extends GeneralPage {
     Object onSuccessFromFormularioAnularSancion(){
         if(anular==1){
             return busZone2.getBody();
-        }else{
-            
         }
         return busZone2.getBody();
     }
@@ -486,6 +490,13 @@ public class ConsultaSanciones extends GeneralPage {
 
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
+    }
+    
+    @Log
+    Object onActionFromSave(Anulacion anulacion) {        
+        
+        
+        return consultaSancionesZone.getBody();  
     }
     
   
