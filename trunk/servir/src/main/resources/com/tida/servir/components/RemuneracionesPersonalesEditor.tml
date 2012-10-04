@@ -107,6 +107,10 @@
                           
                     </p:accionesCell>
                 </t:grid>
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>
             </t:zone>
         </div>
     </t:content>
