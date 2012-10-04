@@ -10,11 +10,13 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
+import helpers.Logger;
 import helpers.ServicioReniec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -42,6 +44,8 @@ public class ABMSancion  extends GeneralPage
     @Inject
     private Request _request;
     @Inject
+    private ComponentResources _resources;
+    @Inject
     private Session session;
     @Inject
     private PropertyAccess _access;
@@ -51,6 +55,9 @@ public class ABMSancion  extends GeneralPage
     private Form formsancion;
     @Component(id = "formvalidacion")
     private Form formvalidacion;
+    @Property
+    @Persist
+    private UsuarioAcceso usua;
     
     //campos de la zona modal
     @Property
@@ -209,6 +216,12 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean editando;
+    @Property
+    @Persist
+    private Boolean veditar;
+    @Property
+    @Persist
+    private Boolean vregistrar;
     
     @PageActivationContext
     private Sancion modificasancion;
@@ -222,16 +235,39 @@ public class ABMSancion  extends GeneralPage
         this.modificasancion = modificasancion;
     }
     
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SANCION);
+        return null;
+    }
+    
     // inicio de la pagina
     @Log
     @SetupRender
-    void inicio(){     
+    void inicio(){
+        logueo();
         editando=false;
         bmostrar=false;
         mostrarfecha=false;
         nuevasancion=new Sancion();
         nuevofuncionario=new Funcionario();
         nuevapersona=new Persona_Sancion();
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+            usua = (UsuarioAcceso) result.get(0);
+            if (usua.getAccesoupdate() == 1) {
+                veditar = true;
+            }
+            if (usua.getAccesoreport() == 1) {
+                vregistrar = true;
+            }
+        }        
         if(usuario.getRolid()==2){
             bmostrarrol=false;
             bmostrar=true;
@@ -250,10 +286,10 @@ public class ABMSancion  extends GeneralPage
         }
     }
     
-    @Log
-    Object onActivate(){
-        return zonasDatos();
-    }
+//    @Log
+//    Object onActivate(){
+//        return zonasDatos();
+//    }
     
     void mostrar(){
         limpiarbusqueda();
@@ -855,6 +891,7 @@ public class ABMSancion  extends GeneralPage
         }
         session.saveOrUpdate(nuevasancion);
         session.flush(); 
+        new Logger().loguearOperacion(session, usuario, String.valueOf(nuevasancion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SANCION);
         if(editando){
             envelope.setContents(helpers.Constantes.SANCION_MODIFICADA_EXITO);
         }

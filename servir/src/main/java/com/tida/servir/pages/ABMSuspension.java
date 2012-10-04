@@ -8,10 +8,12 @@ import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import helpers.Helpers;
+import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 
@@ -48,6 +50,11 @@ public class ABMSuspension  extends GeneralPage {
     private Suspension nuevasuspension;
     @PageActivationContext
     private Sancion modificasancion;
+    @Inject
+    private ComponentResources _resources;
+    @Property
+    @Persist
+    private UsuarioAcceso usua;
     
     //campos modal
     @Property
@@ -92,6 +99,9 @@ public class ABMSuspension  extends GeneralPage {
     @Property
     @Persist
     private boolean entidadsele;
+    @Property
+    @Persist
+    private Boolean vregistrar;
     
     @Log
     public Sancion getModificasancion() {
@@ -102,12 +112,32 @@ public class ABMSuspension  extends GeneralPage {
         this.modificasancion = modificasancion;
     }
     
+    // loguear operación de entrada a pagina
+    @CommitAfter
+    Object logueo(){
+        new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SUSPENSION);
+        return null;
+    }
+    
     // inicio de la pagina
     @Log
     @SetupRender
     private void inicio() {
+        logueo();
         nuevasuspension=new Suspension(); 
         nuevasuspension.setSancion(modificasancion);
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", _usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+        List result = query.list();
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+            usua = (UsuarioAcceso) result.get(0);            
+            if (usua.getAccesoreport() == 1) {
+                vregistrar = true;
+            }
+        }        
     }
     
     
@@ -225,6 +255,7 @@ public class ABMSuspension  extends GeneralPage {
         }
         session.saveOrUpdate(nuevasuspension);
         session.flush();
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevasuspension.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SUSPENSION);
         modificasancion.setSancion_estado(getEstados().get(0));
         session.saveOrUpdate(modificasancion);
         session.flush();

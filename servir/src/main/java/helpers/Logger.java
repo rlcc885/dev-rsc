@@ -80,6 +80,8 @@ public class Logger {
     public static final String TIPO_OBJETO_ENTIDAD = "Entidad/Sub Entidad";//
     public static final String TIPO_OBJETO_SELECCION_ENTIDAD = "Seleccion Entidad";//
     public static final String TIPO_OBJETO_SELECCION_USUARIO = "Usuario";//
+    public static final String TIPO_OBJETO_SANCION = "Sancion";//
+    public static final String TIPO_OBJETO_SUSPENSION = "Suspension";//
     
     public static final String CODIGO_OPERACION_SELECT = "1";
     public static final String CODIGO_OPERACION_INSERT = "2";
