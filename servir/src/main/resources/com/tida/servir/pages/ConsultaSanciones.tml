@@ -134,8 +134,7 @@
                         </p:nombresCell>
                         <p:accionesCell>    
                          <!--   <t:if test="${veditar}">-->
-                                <t:actionlink t:id="anular" zone="listaConsultaSancionZone" context="cs" 
-                                    onClick="javascript: mostraranular();">Anular</t:actionlink>
+                                <a t:type="pagelink" t:page="AnularSancion" t:context="cs.id_sancion" href="#">Anular</a>
                                 |
                             <t:if test="${cs.veditar}">
                                <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->

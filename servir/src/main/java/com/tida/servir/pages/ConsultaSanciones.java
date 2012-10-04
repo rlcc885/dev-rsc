@@ -450,12 +450,12 @@ public class ConsultaSanciones extends GeneralPage {
         return consultaSancionesZone.getBody();  
     }
     
-    @Log
-    Object onActionFromAnular(LkBusquedaSancionados cs) {        
-        
-         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
-    }
+//    @Log
+//    Object onActionFromAnular(LkBusquedaSancionados cs) {        
+//        
+//         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+//                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone2",busZone2.getBody());  
+//    }
 //    @Log
 //    Object onActionFromAnular_SinRegLab(LkBusquedaSancionadosSinRegLab cs_sinreglab) {        
 //        

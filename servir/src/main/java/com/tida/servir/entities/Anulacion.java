@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package com.tida.servir.entities;
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
@@ -13,33 +13,42 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  * @author arson
  */
 public class Anulacion implements Serializable {
+    
     @Id
     @NonVisual
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
+    @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_ANULARSANCION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
     private Long id;  
-    private Long id_sancion;
+    private Sancion id_sancion;
     private Long id_tipo_doc_san;
     private Long id_tipo_doc_not;
-    private Long numero_doc_san;
-    private Long numero_doc_not;
-    private Long fecha_doc_san;
-    private Long fecha_doc_not;
+    private String numero_doc_san;
+    private String numero_doc_not;
+    
+    @Temporal(TemporalType.DATE)
+    private Date fecha_doc_san;
+    
+    @Temporal(TemporalType.DATE)
+    private Date fecha_doc_not;
+    
     private String juzgado;
     private String observaciones;
+    private Entidad id_entidad;
 
-    public Long getFecha_doc_not() {
+    public Date getFecha_doc_not() {
         return fecha_doc_not;
     }
 
-    public void setFecha_doc_not(Long fecha_doc_not) {
+    public void setFecha_doc_not(Date fecha_doc_not) {
         this.fecha_doc_not = fecha_doc_not;
     }
 
-    public Long getFecha_doc_san() {
+    public Date getFecha_doc_san() {
         return fecha_doc_san;
     }
 
-    public void setFecha_doc_san(Long fecha_doc_san) {
+    public void setFecha_doc_san(Date fecha_doc_san) {
         this.fecha_doc_san = fecha_doc_san;
     }
 
@@ -51,11 +60,11 @@ public class Anulacion implements Serializable {
         this.id = id;
     }
 
-    public Long getId_sancion() {
+    public Sancion getId_sancion() {
         return id_sancion;
     }
 
-    public void setId_sancion(Long id_sancion) {
+    public void setId_sancion(Sancion id_sancion) {
         this.id_sancion = id_sancion;
     }
 
@@ -83,19 +92,19 @@ public class Anulacion implements Serializable {
         this.juzgado = juzgado;
     }
 
-    public Long getNumero_doc_not() {
+    public String getNumero_doc_not() {
         return numero_doc_not;
     }
 
-    public void setNumero_doc_not(Long numero_doc_not) {
+    public void setNumero_doc_not(String numero_doc_not) {
         this.numero_doc_not = numero_doc_not;
     }
 
-    public Long getNumero_doc_san() {
+    public String getNumero_doc_san() {
         return numero_doc_san;
     }
 
-    public void setNumero_doc_san(Long numero_doc_san) {
+    public void setNumero_doc_san(String numero_doc_san) {
         this.numero_doc_san = numero_doc_san;
     }
 
@@ -105,5 +114,39 @@ public class Anulacion implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    } 
+    }
+
+    public Entidad getId_entidad() {
+        return id_entidad;
+    }
+
+    public void setId_entidad(Entidad id_entidad) {
+        this.id_entidad = id_entidad;
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Anulacion other = (Anulacion) obj;
+        if (id != other.id) {
+            return false;
+        }
+        return true;
+    }
 }
