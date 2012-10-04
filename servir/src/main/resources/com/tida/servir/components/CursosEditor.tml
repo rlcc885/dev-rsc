@@ -176,7 +176,7 @@
                             <!--                            </t:if>-->
                         </p:validadoCell>                 
                         <t:parameter name="empty">
-                            <div class="no-info">No existen registros ingresados</div>
+                            <div class="no-info">No se encontraron registros</div>
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="${veditar}">
