@@ -251,6 +251,7 @@ public class PublicacionesEditor {
         accesos();//opcInsertar=true;
         opcMod=false;
         editando = true;
+        vformulario = true;
         //
         vguardar=true;
         return proIntelectualZone.getBody();
@@ -268,6 +269,7 @@ public class PublicacionesEditor {
         Object objeto = onActionFromEditar(publi);
         vdetalle = true;
         vguardar = false;
+        vformulario= true;
         editando = false;
         if (vinserta){}
         else{vinserta=false;}
