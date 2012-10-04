@@ -21,7 +21,9 @@ public class Anulacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
     @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_ANULARSANCION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
-    private Long id;  
+    private Long id;
+    @JoinColumn(name = "ID_SANCION", referencedColumnName = "ID")
+    @ManyToOne
     private Sancion id_sancion;
     private Long id_tipo_doc_san;
     private Long id_tipo_doc_not;
@@ -36,6 +38,8 @@ public class Anulacion implements Serializable {
     
     private String juzgado;
     private String observaciones;
+    @JoinColumn(name = "ID_ENTIDAD", referencedColumnName = "ID")
+    @ManyToOne    
     private Entidad id_entidad;
 
     public Date getFecha_doc_not() {
