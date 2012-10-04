@@ -19,6 +19,10 @@
          |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Baja</a>
         </p:accionesCell>
      </t:grid>
+        <div class="f-right">
+            <b>${nroregistros} Registros.</b>
+        </div>
+        <br/>    
      <fieldset>
             <div t:type="zone" t:id="evaluacionesZone" >
                     <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
