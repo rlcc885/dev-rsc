@@ -149,9 +149,13 @@ public class AntecedentesEditor {
     public List<Ant_Laborales> getListadoAntLaborales() {
         Criteria c = session.createCriteria(Ant_Laborales.class);
         c.add(Restrictions.eq("trabajador", actual));
+        nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
 //    @Log
 //    void onSelectedFromCancel() {
 //        elemento = 2;
