@@ -111,7 +111,7 @@ public class FamiliaresEditor {
     @Log
     public void accesos() {
         bvalidausuario = false;
-        vformulario = true;
+        vformulario = false;
         vinserta = false;
         veditar = false;
         veliminar = false;
@@ -133,7 +133,7 @@ public class FamiliaresEditor {
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
-            //vformulario = true;
+            vformulario = true;
             vguardar = true;
             vdetalle = false;
             bdni = false;
