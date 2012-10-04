@@ -15,6 +15,7 @@
         <div t:type="zone" t:id="remuneracionesZone" id="remuneracionesZone">
             <t:form t:id="formulariobotonesCR"  zone="remuneracionesZone">
                 <fieldset>
+                    <t:if test="${vformulario}">
                     <div class="f-wrap">
                         <div class="f-left" >
                             <t:label for="concepto"/>
@@ -28,14 +29,10 @@
                                    t:validate="required, regexp,maxlength=19" t:disabled="${vdetalle}"/>                               
                         </div>      
                     </div>
-                </fieldset>
-                
+
+                    </t:if>
                 <div class="actions">
-                    <!--                    <t:if test="${vformulario}">-->
-                    <div class="f-left">                        
-                        (*) Campos Obligatorios
-                    </div>
-                    <!--                    </t:if>-->
+
                     <t:if test="${vguardar}">
                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                     </t:if>
@@ -53,25 +50,18 @@
                     </t:eventLink>
                 </div>
                 <br class="clear" />
-                <!--                <div class="f-wrap">
-                    <div class="f-left">
-                        (*) Campos Obligatorios
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="guardarCR" value="Guardar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="cancelCR" value="Cancelar" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                    </div>
-                    <div class="f-right">
-                        <input t:type="Submit" t:id="resetCR" value="Limpiar Formulario" class="button" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  
-                    </div>
-                </div>-->
+                </fieldset>
             </t:form>
         </div>
         
         <div id = "tabla_oi">
             <t:zone t:id="listaRemuneracionesZone"> 
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>            
                 <t:grid t:source="listadoRemuneraciones"
                         t:rowsPerPage="10"
                         t:add="Acciones"

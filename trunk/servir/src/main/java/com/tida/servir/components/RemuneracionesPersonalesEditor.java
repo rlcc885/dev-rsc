@@ -90,6 +90,9 @@ public class RemuneracionesPersonalesEditor {
     @Persist
     @Property
     private long cargoAsignado;
+    @Persist
+    @Property
+    private Boolean vformulario;
 
     @Log
     void setupRender() {
@@ -120,6 +123,7 @@ public class RemuneracionesPersonalesEditor {
         veliminar = false;
         vdetalle = true;
         vguardar = false;
+        vformulario=false;
         if (usuarioAcceso.getAccesoupdate() == 1) {
             veditar = true;
             vdetalle = false;
@@ -132,6 +136,7 @@ public class RemuneracionesPersonalesEditor {
             vinserta = true;
             vguardar = true;
             vdetalle = false;
+            vformulario=true;
         }
     }
 
@@ -215,6 +220,7 @@ public class RemuneracionesPersonalesEditor {
         remuneracion.setImporte(remuneracion.getImporte().replaceAll("\\.", ","));
         conceptoseleccionado.setId(remuneracion.getConceptoremunerativo().getId());
         accesos();
+        vformulario=true;
         editando = true;
         return new MultiZoneUpdate("remuneracionesZone", remuneracionesZone.getBody());
     }
@@ -240,6 +246,7 @@ public class RemuneracionesPersonalesEditor {
         accesos();
         vdetalle = true;
         vguardar = false;
+        vformulario=true;
         return remuneracionesZone.getBody();
     }
 }
