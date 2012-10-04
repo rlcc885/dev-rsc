@@ -197,6 +197,7 @@ public class TrabajadorNuevo extends GeneralPage {
         disabledZoneApellidos = false;
         nuevo = new Trabajador();
         regimenla = null;
+        formulariomensajes.clearErrors();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -581,10 +582,10 @@ public class TrabajadorNuevo extends GeneralPage {
   //      return _request.isXHR() ? new MultiZoneUpdate("zoneApellidos", zoneApellidos.getBody()) : null;
  //   }
     @Log
+    @CommitAfter
     public Object onSuccessFromformulariodatos(){
-    
+    formulariomensajes.clearErrors();
     DatoAuxiliar temporalTipoDNI = nuevo.getDocumentoidentidad();
-    String temporalnroDNI = nuevo.getNroDocumento();
     
     // BUSCAMOS EN LA DB
     Criteria c = session.createCriteria(Trabajador.class);
@@ -594,11 +595,23 @@ public class TrabajadorNuevo extends GeneralPage {
     nuevo = (Trabajador)c.uniqueResult(); //*************
     }
     else{
-    // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES
-        
-        //if (oi.getNroPeticiones() == 0){            
-        //    formulariomensajes.recordError("Se superaron el # de consultas al service de hoy");        
-        //}
+    System.out.println(oi.getDenominacion()+" "+oi.getPeticiones_ws_Reniec());
+
+   // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES TOTALES
+        c = session.createCriteria(ConfiguracionAcceso.class);
+       ConfiguracionAcceso parametro =  (ConfiguracionAcceso)c.uniqueResult();
+       System.out.println("NRO CONSULTAS - EN TOTAL "+parametro.getNroConsultasActuales());
+       if (parametro.getNroConsultasActuales()==null ||parametro.getNroConsultasActuales()==0){
+            formulariomensajes.recordError("Se superaron el # de consultas al service por el dia de hoy");
+            return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());        
+       }
+       
+    // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
+       System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+oi.getPeticiones_ws_Reniec());
+       if (oi.getPeticiones_ws_Reniec()==null || oi.getPeticiones_ws_Reniec()== 0){ 
+            formulariomensajes.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
+            return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());            
+        }
         
 
         
@@ -611,10 +624,13 @@ public class TrabajadorNuevo extends GeneralPage {
                   //  Buscamos DNI
                   List<String> result = treniec.obtenerResultado(nuevo.getNroDocumento());
                   if (treniec.validarEstadoConsulta(result.get(0))==true){
-                      treniec.cargarTrabajador(result);
+                      
                   // DISMINUCION DE NRO DE PETICIONES
-                      //oi.setNroPeticiones(oi.getNroPeticiones()-1);
-                      //session.saveOrUpdate(oi);
+                      oi.setPeticiones_ws_Reniec(oi.getPeticiones_ws_Reniec()-1);
+                      session.saveOrUpdate(oi);
+                      parametro.setNroConsultasActuales(parametro.getNroConsultasActuales()-1);
+                      session.saveOrUpdate(parametro);
+                      
                   // VALIDACIONES PRE CARGA DE LA ENTIDAD 
                         Date fechaInicial,fechaWS;
                         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
@@ -629,12 +645,10 @@ public class TrabajadorNuevo extends GeneralPage {
                         
 
                   //ASIGNACION DEL USUARIO DEL WS A ENTIDAD
+                      treniec.cargarTrabajador(result);
                       nuevo = treniec.getTrabajadorWS(); //****************
                       nuevo.setDocumentoidentidad(temporalTipoDNI);
-                      nuevo.setNroDocumento(temporalnroDNI);
-                      
-                    //  nuevo.setObtenidoWS(Boolean.TRUE);
-                      // ASIGNACION DE MARCA (QUE IDENTIFIQUE QUE FUE BUSCADO POR EL WS)
+
                   }
                   else{
                       formulariomensajes.recordError(treniec.mensajeError); // MENSAJES DE ERROR EN CONSULTA
@@ -649,7 +663,7 @@ public class TrabajadorNuevo extends GeneralPage {
             }
 
           } catch (Exception ex) {
-              System.out.println(ex.getCause());
+              System.out.println(ex.toString());
           }        
     }
     

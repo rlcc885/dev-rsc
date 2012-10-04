@@ -23,6 +23,39 @@ public class ConfiguracionAcceso implements Serializable {
     private String SMTP_usuario;
     private String SMTP_clave;
     private String SMTP_puerto;
+    @Column(name = "CONSULTAS_RENIEC_MAX_DIA")
+    private Integer consultasReniecxDia;
+    @Column(name = "CONSULTAS_RENIEC_MAX_ENTIDAD")
+    private Integer consultasReniecxEntidad;
+    @Column (name = "NRO_CONSULTAS_RESTANTES")
+    private Integer nroConsultasActuales;
+
+    public Integer getNroConsultasActuales() {
+        return nroConsultasActuales;
+    }
+
+    public void setNroConsultasActuales(Integer nroConsultasActuales) {
+        this.nroConsultasActuales = nroConsultasActuales;
+    }
+    
+    public Integer getConsultasReniecxDia() {
+        return consultasReniecxDia;
+    }
+
+    public void setConsultasReniecxDia(Integer consultasReniecxDia) {
+        this.consultasReniecxDia = consultasReniecxDia;
+    }
+
+    public Integer getConsultasReniecxEntidad() {
+        return consultasReniecxEntidad;
+    }
+
+    public void setConsultasReniecxEntidad(Integer consultasReniecxEntidad) {
+        this.consultasReniecxEntidad = consultasReniecxEntidad;
+    }
+    
+    
+    
     @Temporal(TemporalType.DATE)
     private Date fec_actualizacion;
     @Override
