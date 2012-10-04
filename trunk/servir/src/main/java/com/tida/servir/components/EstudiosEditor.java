@@ -159,9 +159,14 @@ public class EstudiosEditor {
     public List<LkBusquedaEstudios> getEstudios() {
         Criteria c = session.createCriteria(LkBusquedaEstudios.class);
         c.add(Restrictions.eq("trabajador", actual.getId()));
+        nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
 
+    @Persist
+    @Property
+    private String nroregistros;
+    
     @Log
     public GenericSelectModel<DatoAuxiliar> getTipoestudios() {
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPOESTUDIO", null, 0, session);
