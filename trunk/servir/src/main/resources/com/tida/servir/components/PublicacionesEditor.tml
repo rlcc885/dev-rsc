@@ -21,8 +21,8 @@
                 </script>
             </div>
             <t:form t:id="formularioprointelectual" zone="proIntelectualZone">
-        <!--        <t:if test="opcInsertar"> -->
                 <fieldset>
+                <t:if test="vformulario"> 
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Clase: </label>
@@ -64,12 +64,9 @@
                             </div>
                         </t:if>
                     </div>
-                </fieldset>
-     <!--           </t:if> -->   
+
+                </t:if>   
                 <div class="actions">
-                    <div class="f-left">                        
-                        (*) Campos Obligatorios
-                    </div>
                     <t:if test="${vguardar}">
                         <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                     </t:if>
@@ -86,11 +83,18 @@
                         </span> 
                     </t:eventLink>
                 </div>
+                </fieldset>                    
             </t:form>
             <br class="clear" />
         </div>
         <div id = "tabla_oi">
-            <t:zone t:id="listaProIntelectualZone">   
+            <t:zone t:id="listaProIntelectualZone">                 
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>
                 <t:grid source="listadoProIntelectual" 
                         rowsPerPage="10" 
                         t:add="Clase,Tipo,Revisado,Acciones" 
