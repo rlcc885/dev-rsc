@@ -219,8 +219,11 @@ public class RepTrabajador extends GeneralPage {
     private boolean generarDisabled;
     
     @Property
-    @Persist
     private Reportes.TIPO type;
+    
+    @Property
+    @Persist
+    private Reportes.TIPO typo;
     
     @Property
     @Persist
@@ -560,6 +563,11 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
+    void onSuccessFromTipoReporteForm() {
+        typo = type;
+    }
+    
+    @Log
     Object onSelectedFromBuscarTitular() {
         return new MultiZoneUpdate("busZone", busZone.getBody());
     }
@@ -723,13 +731,14 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    StreamResponse onActionFromGenerarReporte() {
+    StreamResponse onGenerarReporte() {
         Reportes rep = new Reportes();
         Map<String, Object> parametros;
-        if (tipoReporteSelect != null && type != null)
+        if (tipoReporteSelect != null && typo != null)
             try { parametros = retornarParametros(tipoReporteSelect.getCodigo()); } catch (Exception e) { return null; }
         else return null;
-        StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
+        StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), typo, parametros, context);
+        typo = null;
         return report;
     }
 
@@ -746,8 +755,8 @@ public class RepTrabajador extends GeneralPage {
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
             if (fechaingresode == null) fechaingresode = "";
             if (fechaingresoha == null) fechaingresoha = "";
-            if (!fechaingresode.equals("")) parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
-            if (!fechaingresoha.equals("")) parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
+            parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
+            parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         } else if (codigo.equals("C10")) {//Detalle de Cargos Asignados por Entidad
             if (_entidadRep == null) throw new Exception("Error en reporte: " + codigo);
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
@@ -788,8 +797,8 @@ public class RepTrabajador extends GeneralPage {
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
             if (fechaingresode == null) fechaingresode = "";
             if (fechaingresoha == null) fechaingresoha = "";
-            if (!fechaingresode.equals("")) parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
-            if (!fechaingresoha.equals("")) parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
+            parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
+            parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         }
         return parametros;
     }

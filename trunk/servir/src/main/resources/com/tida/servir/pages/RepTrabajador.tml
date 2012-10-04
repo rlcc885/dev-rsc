@@ -30,8 +30,8 @@
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
                 &nbsp; Formato del Reporte: &nbsp;
                 <t:radiogroup t:id="type">
-                    Excel <t:radio t:id="excel" value="excel"/>
-                    PDF <t:radio t:id="pdf" value="pdf"/>
+                    Excel <t:radio onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:id="excel" value="excel" />
+                    PDF <t:radio t:id="pdf" value="pdf" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
                 </t:radiogroup>
             </fieldset>
         </t:form>
@@ -155,7 +155,7 @@
                 
                 <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
                     <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar" t:mixins="confirm"/>
-                    <a t:type="actionlink" t:id="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" target="blank" t:mixins="confirm">Generar Reporte</a>
+                    <a t:type="eventLink" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</a>
                 </t:form>
             </fieldset>
         </t:if>
