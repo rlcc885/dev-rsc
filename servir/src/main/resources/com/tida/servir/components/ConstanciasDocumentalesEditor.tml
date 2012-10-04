@@ -15,7 +15,7 @@
 
         <fieldset>
             <t:zone t:id="primerZone">
-                <t:if test="vformulario">
+           <!--     <t:if test="vformulario"> -->
                     <t:form t:id="formularioDocumento" t:zone="primerZone">
                        <div class="f-wrap">                                                     
                             <!-- <t:if test="opcionADM">
@@ -30,13 +30,13 @@
                                 <input t:type="Select" t:id="valcategoriaconstancia" model="beanCategoria" t:value="valcategoriaconstancia" t:disabled="${vdetalle}" t:zone="primerZone"/>
                             </div> 
                             <div class="f-left">
-                                <label>* Tipo Documento</label>
+                                <label>* Tipo de Documento</label>
                                 <input t:type="Select" t:id="valtipoconstancia" model="beanTipoDocumento" t:value="valtipoconstancia" t:disabled="${vdetalle}" t:zone="primerZone" /> <!-- onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" -->
                             </div>
                             <br/>
                        </div>                        
                     </t:form>
-                </t:if>
+             <!--   </t:if> -->
             </t:zone>
             <t:zone t:id="tercerZone">
                     <div>
@@ -48,7 +48,7 @@
                         </script>
                     </div>            
            <t:form t:id="formulariobotones" t:zone="mensajesZone">  
-                <t:if test="vformulario">
+           <!--     <t:if test="vformulario"> -->
                         <div class="f-wrap">
                           <t:if test="opcionADM">    
                              <div class="f-left">
@@ -68,7 +68,7 @@
                                 <input t:type="Checkbox" t:id="revisado" t:value="valentregado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                             </div>
                         </t:if>
-                  </t:if>
+              <!--    </t:if> -->
                         <div class="actions">
                               
                             <t:if test="${vbotones}">
