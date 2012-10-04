@@ -164,9 +164,13 @@ public class RemuneracionesPersonalesEditor {
     public List<LkBusquedaRemuneracion> getListadoRemuneraciones() {
         Criteria c2 = session.createCriteria(LkBusquedaRemuneracion.class);
         c2.add(Restrictions.eq("cargoasignado_id", cargoAsignado));
+        nroregistros = Integer.toString(c2.list().size());
         return c2.list();
     }
-
+    @Persist
+    @Property
+    private String nroregistros;
+    
     @Log
     @CommitAfter
     Object onSuccess() {
