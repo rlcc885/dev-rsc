@@ -133,11 +133,15 @@ public class PublicacionesEditor {
   //      if (vinserta == true){opcInsetar = false;}
        // if (usua.getAccesoupdate() == 1 && vinserta==false){opcInsertar=false;}
     }
-
+    @Persist
+    @Property
+    private String nroregistros;
+    
     @Log
     public List<Publicacion> getListadoProIntelectual() {
         Criteria c = session.createCriteria(Publicacion.class);
         c.add(Restrictions.eq("trabajador", actual));
+        nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
 
