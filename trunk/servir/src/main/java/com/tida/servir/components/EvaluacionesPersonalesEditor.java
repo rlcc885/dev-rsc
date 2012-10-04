@@ -264,7 +264,12 @@ public class EvaluacionesPersonalesEditor {
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                     .add("evaluacionesZone2", evaluacionesZone2.getBody());
             } 
-            
+            if (fecha_desde.after(new Date())){
+                  formulariomensajese.recordError("La fecha de Ingreso debe ser menor a la fecha actual");  
+                  return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
+                    .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
+                    .add("evaluacionesZone2", evaluacionesZone2.getBody());            
+            }
             evaluacion.setFec_desde(fecha_desde);
             evaluacion.setFec_hasta(fecha_hasta);
             if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
