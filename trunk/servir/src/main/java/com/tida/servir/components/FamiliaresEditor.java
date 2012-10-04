@@ -99,7 +99,10 @@ public class FamiliaresEditor {
     @Property
     private Date fecha;
     //Inicio de lac carga de la pagina
-
+    @Persist
+    @Property
+    private Boolean vrevisado;
+    
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
@@ -125,10 +128,18 @@ public class FamiliaresEditor {
             veditar = true;
             vdetalle = false;
             bdni = false;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }
+
 
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }
+            
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
@@ -136,6 +147,10 @@ public class FamiliaresEditor {
             vguardar = true;
             vdetalle = false;
             bdni = false;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }
+
         }
     }
 
@@ -362,6 +377,11 @@ public class FamiliaresEditor {
     @Persist
     private Long idVerificacion;
 
+    @Log
+    Object onActionFromEditar2(Familiar fam){
+    return onActionFromEditar(fam);
+    }
+    
     @Log
     Object onActionFromEditar(Familiar fami) {
         familiarActual = fami;
