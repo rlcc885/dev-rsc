@@ -444,7 +444,7 @@ public class AMUnidadOrganica extends GeneralPage {
                         unidadOrganica.setEntidad(entidadUE);
                         unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                     }
-                    c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica())));
+                    c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
                     c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                     if (c.list().size() > 0) {
                         formmensaje.recordError(Errores.ERROR_COD_UND_ORG_UNICA);
@@ -509,7 +509,7 @@ public class AMUnidadOrganica extends GeneralPage {
                     unidadOrganica.setEntidad(entidadUE);
                     unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                 }
-                c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica())));
+                c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", unidadOrganica.getCod_und_organica()).ignoreCase()));
                 c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
 
                 if (c.list().size() > 0) {
@@ -525,7 +525,7 @@ public class AMUnidadOrganica extends GeneralPage {
                         unidadOrganica.setEntidad(entidadUE);
                         unidadOrganica.setEstado(UnidadOrganica.ESTADO_ALTA);
                     }
-                    c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()));
+                    c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()).ignoreCase());
                     c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
 
                     if (c.list().size() > 0) {
