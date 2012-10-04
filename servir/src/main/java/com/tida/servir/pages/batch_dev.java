@@ -238,7 +238,14 @@ private EstadoEntidad estado;
 //        myTratamiento.setTipoProceso(tipoProceso);
 //        errores = myTratamiento.generacionListDesdeCSV();
         
-        
+        try{
+            myTratamiento.listArchivosDepositorioCopied(lugarArchivo);
+//            System.out.println("aquiiiii"+lugarEliminar);
+//            File f = new File(lugarEliminar); 
+//            f.delete();                  
+        }catch(Exception e){
+
+        }
         
         Query query = session.getNamedQuery("callSpProcesoBatch");
         query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
@@ -377,17 +384,7 @@ private EstadoEntidad estado;
             }
             return this;
 
-        }
-        else{
-            try{
-                myTratamiento.listArchivosDepositorioCopied(lugarArchivo);
-                System.out.println("aquiiiii"+lugarEliminar);
-                File f = new File(lugarEliminar); 
-                f.delete();                  
-            }catch(Exception e){
-
-            }
-        }
+        }        
         etapaInicio = false;
         etapaConfirmacion = true;
         return this;

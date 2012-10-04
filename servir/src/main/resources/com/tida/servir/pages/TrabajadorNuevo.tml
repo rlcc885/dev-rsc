@@ -1,6 +1,7 @@
 <html t:type="layout" title="Sistema SERVIR"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"    
-      xmlns:p="tapestry:parameter">
+      xmlns:p="tapestry:parameter"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
      <div t:type="zone" t:id="mensajesZone" >
         <t:form t:id="formulariomensajes"  zone="mensajesZone"> 
@@ -175,17 +176,31 @@
     </t:if>
     
     <div id="shade"></div>
-    <div id="modalNuevaUnidadOrganica" style="height: 100px;">
+    <div id="modalNuevaUnidadOrganica" style="height: 200px;width: 400px;">
         <t:zone t:id="nuevaUnidadZone">
             <t:form t:id="formularionuevaunidadorganica" t:zone="nuevaUnidadZone">
+              <fieldset>
                 <t:errors/>
+                <t:if test="mensajeUO">                
+                    <script>
+                        setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
+                    </script>                
+                    <div class="exito messageSavePerfil">${mensajeUO}</div>
+                </t:if>
                 <div class="f-wrap">
-                    <t:label for="unidadorganica2"/>
-                    <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="33"/>
+                    <div class="f-left">
+                        <label>Código</label>
+                        <input t:type="TextField" t:id="codunidad" t:value="codigoUOrganica" size="15" t:validate="required"/>                        
+                    </div>
+                    <div class="f-left">
+                        <label>Denominación</label>
+                        <input t:type="TextField" t:id="unidadorganica2" t:value="nuevaUOrganica" size="30" t:validate="required"/>
+                    </div>
                 </div>
+              </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button f-right" onClick="javascript: ocultar();"/>
+                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button f-right"/>
                     <a onClick="javascript: ocultar();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
@@ -195,23 +210,36 @@
         <br/>
     </div>
     <div id="shade2"></div>
-    <div id="modalNuevoCargo" style="height: 100px; width: 300px;">
+    <div id="modalNuevoCargo" style="height: 260px; width: 400px;">
         <t:zone t:id="nuevoCargoZone">
             <t:form t:id="formularionuevocargo" t:zone="nuevoCargoZone">
+               <fieldset>
+                <t:errors/>
+                <t:if test="mensajeCargo">                
+                    <script>
+                        setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
+                    </script>                
+                    <div class="exito messageSavePerfil">${mensajeCargo}</div>
+                </t:if>
                 <div class ="f-wrap">
                     <div class="f-left">
-                        <t:label for="cargo2"/>
-                        <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="33"/>                        
+                        <label>Código</label>
+                        <input t:type="TextField" t:id="codcargo" t:value="codigoCargo" size="15" t:validate="required"/>                        
                     </div>
+                    <div class="f-left">
+                        <label>Denominación</label>
+                        <input t:type="TextField" t:id="cargo2" t:value="nuevoCargo" size="30" t:validate="required"/>                        
+                    </div>
+                </div>
                     <div class="f-left">
                         <label>*Regimen Laboral</label>
                         <input t:type="Select" t:id="regimen" t:value="regimenla" 
                                model="beanregimen" encoder="beanregimen" onChange="this.form.fire()" t:validate="required"/>
-                    </div>
-                </div>
+                    </div>                
+               </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right" onClick="javascript: ocultarCargo();"/>
+                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right"/>
                     <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>

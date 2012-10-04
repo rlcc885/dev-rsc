@@ -5,10 +5,7 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.CargosSelectModel;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Constantes;
-import helpers.Encriptacion;
-import helpers.Helpers;
-import helpers.Logger;
+import helpers.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +23,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import helpers.ServicioReniec;
 
 //@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
 /**
@@ -85,7 +81,8 @@ public class TrabajadorNuevo extends GeneralPage {
     private Form formulariomensajes;
     @Component(id = "formularioDatos")
     private Form formularioDatos;
-
+    @Component(id = "formularionuevocargo")
+    private Form formularionuevocargo;
     //Entidades
     @Property
     @SessionState
@@ -112,7 +109,13 @@ public class TrabajadorNuevo extends GeneralPage {
     private String nuevaUOrganica;
     @Persist
     @Property
+    private String codigoUOrganica;
+    @Persist
+    @Property
     private String nuevoCargo;
+    @Persist
+    @Property
+    private String codigoCargo;
     @Property
     @Persist
     private DatoAuxiliar tipovinculo;
@@ -165,7 +168,13 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private boolean disabledZoneApellidos;
-
+    @Property
+    @Persist
+    private String mensajeUO;
+    @Property
+    @Persist
+    private String mensajeCargo;
+    
     // loguear operación de entrada a pagina
     @CommitAfter
     Object logueo() {
@@ -183,7 +192,11 @@ public class TrabajadorNuevo extends GeneralPage {
         cargo = new LkCargosDisponibles();
         cargo2 = new Cargoxunidad();
         nuevaUOrganica = "";
+        mensajeUO="";
+        codigoUOrganica="";
         nuevoCargo = "";
+        mensajeCargo="";
+        codigoCargo="";
         tipovinculo = null;
         bTrabajadorRegistrado = false;
         nuevoLegajo = new Legajo();
@@ -260,20 +273,28 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {
+        mensajeUO=null;
+        formularionuevaunidadorganica.clearErrors();
         System.out.println("entroo aaa" + nuevaUOrganica);
-        if (nuevaUOrganica == null) {
-            formulariotrabajadornuevo.recordError("No puede agregar una Unidad Organica vacia.");
-        } else {
-            System.out.println("entroo ccc");
-            nuevaunidadorganica = new UnidadOrganica();
-            nuevaunidadorganica.setDen_und_organica(nuevaUOrganica);
-            nuevaunidadorganica.setNivel(1);
-            nuevaunidadorganica.setEntidad(oi);
-            nuevaunidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
-            session.saveOrUpdate(nuevaunidadorganica);
-            envelope.setContents(helpers.Constantes.UNIDAD_ORGANICA_EXITO);
+        Criteria c= session.createCriteria(UnidadOrganica.class);
+        c.add(Restrictions.disjunction().add(Restrictions.like("cod_und_organica", codigoUOrganica).ignoreCase()));
+        c.add(Restrictions.eq("entidad",oi));
+        if (c.list().size() > 0){
+             formularionuevaunidadorganica.recordError("Codigo de unidad organica ya Existente");
+             return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
+                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
         }
-
+        System.out.println("entroo ccc");
+        nuevaunidadorganica = new UnidadOrganica();
+        nuevaunidadorganica.setDen_und_organica(nuevaUOrganica);
+        nuevaunidadorganica.setNivel(1);
+        nuevaunidadorganica.setEntidad(oi);
+        nuevaunidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
+        nuevaunidadorganica.setCod_und_organica(codigoUOrganica);
+        session.saveOrUpdate(nuevaunidadorganica);
+        mensajeUO=helpers.Constantes.UNIDAD_ORGANICA_EXITO;
+        codigoUOrganica=null;
+        nuevaUOrganica=null;
         return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
     }
@@ -283,28 +304,31 @@ public class TrabajadorNuevo extends GeneralPage {
     @CommitAfter
     Object onSuccessFromFormularionuevocargo() {
         if (unidadorganica == null) {
-            formulariotrabajadornuevo.recordError("Debe seleccionar una Unidad Organica.");
+            formularionuevocargo.recordError("Debe seleccionar una Unidad Organica.");
         } else {
-            if (nuevoCargo != null) {
-                Cargoxunidad ncargo;
-                ncargo = new Cargoxunidad();
-                System.out.println("11111111: " + nuevoCargo);
-                ncargo.setDen_cargo(nuevoCargo);
-                ncargo.setCod_cargo("C9999");
-                nuevaunidadorganica.setId(unidadorganica.getId());
-                ncargo.setUnidadorganica(nuevaunidadorganica);
-                ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
-                ncargo.setRegimenlaboral(regimenla);
-                ncargo.setCtd_puestos_total(1);
-                System.out.println("entroooo: ");
-                session.saveOrUpdate(ncargo);
-                System.out.println("2222222: ");
-                cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class, ncargo.getId());
-                envelope.setContents(helpers.Constantes.CARGO_EXITO);
-            } else {
-                formulariotrabajadornuevo.recordError("No puede agregar un cargo vacio");
-
+            Criteria c= session.createCriteria(Cargoxunidad.class);
+            c.add(Restrictions.disjunction().add(Restrictions.like("cod_cargo", codigoCargo).ignoreCase()));
+            c.createAlias("unidadorganica", "unidadorganica");
+            c.add(Restrictions.eq("unidadorganica.entidad", oi ));
+            if (c.list().size() > 0){
+             formularionuevocargo.recordError("Codigo de Cargo ya Existente");
+             return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
+                .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
             }
+            mensajeCargo=null;
+            Cargoxunidad ncargo;
+            ncargo = new Cargoxunidad();
+//            System.out.println("11111111: " + nuevoCargo);
+            ncargo.setDen_cargo(nuevoCargo);
+            ncargo.setCod_cargo(codigoCargo);
+            nuevaunidadorganica.setId(unidadorganica.getId());
+            ncargo.setUnidadorganica(nuevaunidadorganica);
+            ncargo.setEstado(UnidadOrganica.ESTADO_ALTA);
+            ncargo.setRegimenlaboral(regimenla);
+            ncargo.setCtd_puestos_total(1);
+            session.saveOrUpdate(ncargo);
+            cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class, ncargo.getId());
+            mensajeCargo=helpers.Constantes.CARGO_EXITO;            
         }
 
         return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
