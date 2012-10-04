@@ -112,6 +112,13 @@ public class AnularSancion extends GeneralPage {
     private int elemento=0;
     
     @Log
+    @SetupRender
+    private void inicio() {
+        anulacion=new Anulacion(); 
+//        modificasancion.setSancion(modificasancion);
+    }
+     
+    @Log
     public Sancion getModificasancion() {
         return modificasancion;
     }
@@ -161,7 +168,7 @@ public class AnularSancion extends GeneralPage {
     }
     
     @Log
-    void onSelectedFromSave(){
+    void onSelectedFromSave(){ 
         elemento=1;
     } 
      
@@ -190,27 +197,38 @@ public class AnularSancion extends GeneralPage {
              formularioanularsancion.recordError("Falta la Fecha del Documento ");
              return busZone2.getBody();
          }
-         if(fechadocnot!=null){
+//         System.out.println(anulacion);
+         
+         if(fechadocnot!= null){
              SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                fechadoc_not = (Date) formatoDelTexto.parse(fechadocnot);
+                anulacion.setFecha_doc_not((Date) formatoDelTexto.parse(fechadocnot));
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
          }
-         if(fechadoc!=null){
+         if(fechadoc != null){
              SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                fecha_doc = (Date) formatoDelTexto.parse(fechadoc);
+                anulacion.setFecha_doc_san((Date) formatoDelTexto.parse(fechadoc));
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
          }
          
-         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          System.out.println("juzgado    "+juzgado_not);
+          System.out.println("observaciones    "+observaciones);
+          System.out.println("modificasancion   "+modificasancion);
+          System.out.println("bdocumentoidentidad_not   "+bdocumentoidentidad_not.getId());
+          System.out.println("bdocumentoidentidad2      "+bdocumentoidentidad2.getId());
+          System.out.println("bnumeroDocumento_not     "+bnumeroDocumento_not);
+          System.out.println("bnumeroDocumento2     "+bnumeroDocumento2);
+          System.out.println(entidad2);
+          
          
-         anulacion.setFecha_doc_not(fechadoc_not);
-         anulacion.setFecha_doc_san(fecha_doc);
+         //anulacion.setFecha_doc_not(fechadoc_not);
+        
+        // (fecha_doc);
          anulacion.setJuzgado(juzgado_not);
          anulacion.setObservaciones(observaciones);
          anulacion.setId_sancion(modificasancion);
