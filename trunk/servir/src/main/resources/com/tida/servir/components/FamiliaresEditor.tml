@@ -164,18 +164,14 @@
                         </t:if>
                     </p:apellidoMaternoCell>
                     <p:revisadoCell>
-<!--                        <t:if test="${bvalidausuario}">-->
                         <t:if test="${listafamiliar.validado}">
                             <label class="datofalse">SI</label>  
                         </t:if>
                         <t:if test="${listafamiliar.validado}" negate="true">
                             <label class="datotrue">NO</label>  
                         </t:if>
-<!--                        </t:if>-->
-                    </p:revisadoCell>
-                    
+                    </p:revisadoCell>                   
                     <p:accionesCell>
-<!--                        <t:if test="${bvalidausuario}" negate="true">-->
                             <t:if test="${listafamiliar.validado}" negate="true"> <!-- no validado -->
                                 <t:if test="${veditar}"> <!-- si edita -->
                                     <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
@@ -185,7 +181,14 @@
                                 </t:if>
                             </t:if>
                             <t:if test="${listafamiliar.validado}"> <!-- validado -->
-                                <t:actionlink t:id="detalle" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>
+                                
+                                   <t:if test="${vrevisado}">
+                                    <t:actionlink t:id="editar2" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
+                                   </t:if>
+                                   <t:if test="${vrevisado}" negate="true"> 
+                                       <t:actionlink t:id="detalle" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>                                   
+                                   </t:if>
+                                
                             </t:if>
                             <t:if test="${listafamiliar.validado}" negate="true">
                                 <t:if test="${veliminar}">
@@ -197,30 +200,6 @@
                                     </t:actionlink>
                                 </t:if>
                             </t:if>
-<!--                        </t:if>-->
-<!--                        <t:if test="${bvalidausuario}">
-                            <t:if test="${listafamiliar.validado}" negate="true">
-                                <t:if test="${veditar}">
-                                    <t:actionlink t:id="editar2" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
-                                </t:if>
-                                <t:if test="${veditar}" negate="true">
-                                    <t:actionlink t:id="detalle2" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>
-                                </t:if>                               
-                            </t:if>   
-                            <t:if test="${listafamiliar.validado}">
-                                <t:actionlink t:id="detalle4" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>                                
-                            </t:if>
-                            <t:if test="${listafamiliar.validado}" negate="true">                            
-                                <t:if test="${veliminar}">
-                                    |
-                                    <t:actionlink t:id="eliminar2" zone="listaFamiliaresZone" context="listafamiliar"> 
-                                        <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
-                                            Eliminar
-                                        </span>
-                                    </t:actionlink>
-                                </t:if>
-                            </t:if>
-                        </t:if>-->
                     </p:accionesCell>
                 </t:grid>
             </t:zone>
