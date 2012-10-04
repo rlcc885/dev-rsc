@@ -403,7 +403,7 @@ public class ConstanciasDocumentalesEditor {
         vdetalle = true;
         vbotones = false;
   //cambios:
-            if (usua.getAccesoupdate() !=1){}
+            if (usua.getAccesoreport() != 1){vNoedita=false;}
             else{vNoedita=true;}
   //---------  
   //          vNoedita=true;

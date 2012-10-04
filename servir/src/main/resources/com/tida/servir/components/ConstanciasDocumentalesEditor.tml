@@ -14,8 +14,9 @@
         </t:zone>
 
         <fieldset>
+ 
             <t:zone t:id="primerZone">
-           <!--     <t:if test="vformulario"> -->
+          <t:if test="vformulario">
                     <t:form t:id="formularioDocumento" t:zone="primerZone">
                        <div class="f-wrap">                                                     
                             <!-- <t:if test="opcionADM">
@@ -36,7 +37,7 @@
                             <br/>
                        </div>                        
                     </t:form>
-             <!--   </t:if> -->
+          </t:if>  
             </t:zone>
             <t:zone t:id="tercerZone">
                     <div>
@@ -48,7 +49,7 @@
                         </script>
                     </div>            
            <t:form t:id="formulariobotones" t:zone="mensajesZone">  
-           <!--     <t:if test="vformulario"> -->
+           <t:if test="vformulario"> 
                         <div class="f-wrap">
                           <t:if test="opcionADM">    
                              <div class="f-left">
@@ -68,7 +69,7 @@
                                 <input t:type="Checkbox" t:id="revisado" t:value="valentregado" t:disabled="${vdetalle}" t:zone="tercerZone"/>     
                             </div>
                         </t:if>
-              <!--    </t:if> -->
+           </t:if>
                         <div class="actions">
                               
                             <t:if test="${vbotones}">
