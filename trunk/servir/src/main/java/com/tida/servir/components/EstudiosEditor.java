@@ -307,6 +307,7 @@ public class EstudiosEditor {
             }
         }
         
+        
         if (elemento == 3) {
             if (_usuario.getRolid() == 1) {
                 return "TrabajadorPersonal";
@@ -367,6 +368,9 @@ public class EstudiosEditor {
                 }
 
             }
+            
+            if(estudio.getEstudiando()==true){estudio.setFechafin(null);}
+            
             if (vrevisado == true) {
                 //System.out.println("aquiiii"+valrevisado);
                 if (valrevisado == null) {
