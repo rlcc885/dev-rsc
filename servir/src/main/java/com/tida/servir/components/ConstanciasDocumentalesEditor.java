@@ -129,9 +129,14 @@ public class ConstanciasDocumentalesEditor {
         c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
         c2.add(Restrictions.eq("legajo",buscarlegajo()));
         c2.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        nroregistros = Integer.toString(c2.list().size());    
         return c2.list();
     }
     
+    @Persist
+    @Property
+    private String nroregistros;
+        
     @Log
     public Legajo buscarlegajo(){
          Criteria c1 = session.createCriteria(Legajo.class);  
