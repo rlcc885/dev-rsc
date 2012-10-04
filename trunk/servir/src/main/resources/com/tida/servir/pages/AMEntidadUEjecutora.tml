@@ -350,7 +350,7 @@
                             <div class="f-left">
                                 <t:label for="emailinstitucional"/>
                                 <input t:type="TextField" t:id="emailinstitucional"
-                                   t:value="entidadUE.emailInstitucional" t:disabled="${vdetalle}"
+                                   t:value="entidadUE.emailInstitucional" t:disabled="${vdetalle}" t:validate="regexp"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="emailInstitucionalChanged"  t:zone="zoneOtrosDatos" />
                             </div>
                             <div class="f-left">
