@@ -22,6 +22,7 @@
             </div>
             <t:form t:id="formularioclase" zone="claseZone">
                 <fieldset>
+                    <t:if test="${vformulario}">
                     <div class="f-wrap">
                         <div class="f-left" >
                             <t:label for="clase"/>
@@ -58,15 +59,8 @@
                                    t:validate="regexp" class="fec_ingreso pictureInputDate"/>
                         </div> 
                     </div>
+                    </t:if>    
                     <div class="actions">
-                        <div class="f-left">                        
-                            (*) Campos Obligatorios
-                        </div>
-<!--                        <t:if test="${vformulario}">
-                            <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
-                        </t:if>
-                        <input t:type="Submit" t:id="cancelME" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" /> 
-                        <input t:type="Submit" t:id="resetME" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />  -->
                         <t:if test="${vguardar}">
                             <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                         </t:if>
@@ -88,6 +82,12 @@
         </div> 
         
         <div id = "tabla_oi">
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>      
             <t:zone t:id="listaMeritosZone">   
                 <t:grid source="listadoMeritos" 
                         rowsPerPage="10" 

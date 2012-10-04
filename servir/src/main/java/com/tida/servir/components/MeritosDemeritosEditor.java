@@ -96,6 +96,9 @@ public class MeritosDemeritosEditor {
     @Persist
     @Property
     private String clase;
+    @Persist
+    @Property
+    private Boolean vformulario;
 
     //Inicio de la carga de la pagina
     @Log
@@ -122,6 +125,7 @@ public class MeritosDemeritosEditor {
         veliminar = false;
         vdetalle = true;
         vguardar = false;
+        vformulario = false;
         if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
             bvalidausuario = true;
         }
@@ -137,6 +141,7 @@ public class MeritosDemeritosEditor {
             vinserta = true;
             vguardar = true;
             vdetalle = false;
+            vformulario = true;
         }
     }
 
@@ -265,6 +270,7 @@ public class MeritosDemeritosEditor {
         }
         clase = String.valueOf(merito.getClasemeritodemerito_id());
         accesos();
+        vformulario = true;
         editando = true;
         return claseZone.getBody();
     }
@@ -287,6 +293,7 @@ public class MeritosDemeritosEditor {
         vdetalle = true;
         vguardar = false;
         editando = false;
+        vformulario = true;
         return objeto;
     }
 
