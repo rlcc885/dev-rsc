@@ -125,7 +125,6 @@ public class FamiliaresEditor {
             veditar = true;
             vdetalle = false;
             bdni = false;
-            vguardar = true;
 
         }
         if (usua.getAccesodelete() == 1) {
@@ -388,6 +387,7 @@ public class FamiliaresEditor {
         editando = true;
         accesos();
         vformulario=true;
+        vguardar = true;
         return familiaresZone.getBody();
     }
 
