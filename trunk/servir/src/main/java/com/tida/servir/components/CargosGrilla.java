@@ -88,12 +88,16 @@ public class CargosGrilla {
           c.add(Restrictions.eq("legajo.entidad", _oi));
           c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+          nroregistros = Integer.toString(c.list().size());
           return c.list();
           
     }
+
+    @Persist
+    @Property
+    private String nroregistros;
     
     @Log
-    
    Object  onSelectedFromCancel() {
         if (_usuario.getRolid() == 1) {
                 return "TrabajadorLaboral";
