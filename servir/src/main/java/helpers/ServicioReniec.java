@@ -4,9 +4,16 @@
  */
 package helpers;
 
+import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.Trabajador;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import org.apache.tapestry5.annotations.Log;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -22,6 +29,7 @@ private final String codigo = "MTkwMTSeR";
 private final String  codTxEmp = "RSC";
 private final String  dniUserEmp = "09399938";
 
+
 public ServicioReniec(){
 
 }    
@@ -35,9 +43,9 @@ public ServicioReniec(String token){
 @Log
 public Boolean validarToken()
  {
-     System.out.println("TOKEN : "+token);
+     System.out.println("estado del TOKEN : "+token);
      
-  if (token==null||"".equals(token)) { mensajeError="Error"; return false; }    
+  if (token==null||"".equals(token)) { mensajeError="Error no identificado"; return false; }    
   if ("2".equals(token)) { mensajeError="Error en la operación"; return false; }
   if ("3".equals(token)) { mensajeError="La Consulta esta fuera del Horario Permitido";return false; }
   if ("4".equals(token)) { mensajeError="Usuario no valido";return false;  }
@@ -49,16 +57,36 @@ public Boolean validarToken()
  }
 
 @Log
-public void cargarTrabajador(List<String> resultado){
+public void cargarTrabajador(List<String> resultado) throws ParseException{
 
 if (validarEstadoConsulta(resultado.get(0))==true)
 {
+    for (int i=0;i<resultado.size();i++)
+    {
+    System.out.println("REGEXP "+i+" "+resultado.get(i));
+    }
+    
+//    Criteria c = session.createCriteria(DatoAuxiliar.class);
     // caragr datos del ws a la entidad
     nuevo = new Trabajador();
     nuevo.setApellidoPaterno(resultado.get(1));
     nuevo.setApellidoMaterno(resultado.get(2));
     nuevo.setNombres(resultado.get(4));
+
+ /*   nuevo.setCod_dom_dept(null);
+    nuevo.setCod_dom_dist(null);
+    nuevo.setCod_dom_prov(null);*/
     nuevo.setDomicilioDireccion(resultado.get(11));
+/*    c.add(Restrictions.eq("nombreTabla","ESTADOCIVIL"));
+    c.add(Restrictions.eq("codigo",Long.getLong(resultado.get(5))));
+    nuevo.setEstadocivil((DatoAuxiliar)c.uniqueResult());*/
+    if ((Integer.parseInt(resultado.get(13)))==1){nuevo.setSexo("M");}else{nuevo.setSexo("F");}
+    SimpleDateFormat formatoFecha;
+    formatoFecha = new SimpleDateFormat("yyyyMMdd");
+    nuevo.setFechaNacimiento(formatoFecha.parse(resultado.get(14)));                  
+    nuevo.setNroDocumento(resultado.get(20));
+    // ASIGNACION DE MARCA (QUE IDENTIFIQUE QUE FUE BUSCADO POR EL WS)    
+    nuevo.setConsultado_WS(Boolean.TRUE);
 }    
     
     
@@ -66,7 +94,7 @@ if (validarEstadoConsulta(resultado.get(0))==true)
 @Log
 public Boolean validarEstadoConsulta(String estado){
 
-    System.err.println("estado : "+estado);
+    System.err.println("estado validar consulta: "+estado);
     
     if ("NTP".equals(estado)) { mensajeError="No tienen permisos de acceso al método consulta.";return false; } 
     if ("SINV".equals(estado)) { mensajeError="Código de Sesión ingresado inválido.";return false; } 
@@ -77,8 +105,9 @@ public Boolean validarEstadoConsulta(String estado){
     if ("DNV".equals(estado)) { mensajeError="El DNI del usuario de la empresa es inválido. No está autorizado a consultar.";return false;} 
     if ("0002".equals(estado)) { mensajeError="El Servidor no puede atender el requerimiento.";return false;}
     //OK
-    if ("0000".equals(estado)) { mensajeError="";return true;}
+    if ("0000".equals(estado)) { return true;}
 
+    mensajeError = "Error no identificado";
     return false;
 }
 
