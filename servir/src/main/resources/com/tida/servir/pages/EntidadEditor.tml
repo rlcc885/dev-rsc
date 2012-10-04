@@ -149,7 +149,7 @@
                     <div class="f-wrap">
                         <div class="f-left">
                             <t:label for="emailinstitucional"/>
-                            <input t:type="TextField" t:id="emailinstitucional"
+                            <input t:type="TextField" t:id="emailinstitucional" t:validate="regexp"
                                    t:value="entidadUE.emailInstitucional"
                                    t:mixins="zoneUpdater" 
                                    t:clientEvent="keyup" 
@@ -253,7 +253,6 @@
                 <t:form t:id="formulariobotones" zone="botonesZone">
                     <div class="f-wrap">
                         <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
-                        <input t:type="Submit" t:id="reset" value="Limpiar Formulario" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>  
                         <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
                     </div>
                 </t:form>
