@@ -145,7 +145,13 @@
                                     <t:actionlink t:id="editar" zone="listaDocumentosZone" context="documento">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${documento.entrego}">
+                                   <t:if test="${ventregado}">
+                                    <t:actionlink t:id="editar2" zone="listaDocumentosZone" context="documento">Editar</t:actionlink>
+                                   </t:if>
+                                   <t:if test="${ventregado}" negate="true"> 
                                     <t:actionlink t:id="detalles" zone="listaDocumentosZone" context="documento">Detalle</t:actionlink>
+                                   </t:if>
+                                    
                                 </t:if>
                             </t:if>
                             <t:if test="${veditar}" negate="true">

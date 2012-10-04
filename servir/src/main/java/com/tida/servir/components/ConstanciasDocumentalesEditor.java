@@ -370,6 +370,11 @@ public class ConstanciasDocumentalesEditor {
     }
 
     @Log
+    Object onActionFromEditar2(ConstanciaDocumental constancia) {
+    return onActionFromEditar(constancia);
+    }
+    
+    @Log
     Object onActionFromEditar(ConstanciaDocumental cons) {
         constancia = cons;
         vformulario = true;
@@ -424,9 +429,14 @@ public class ConstanciasDocumentalesEditor {
                 add("listaDocumentosZone", listaDocumentosZone.getBody()).add("primerZone", primerZone.getBody());
     }
 
+    @Persist
+    @Property
+    private Boolean ventregado;
+    
     @Log
 //    @SetupRender
     void setupRender() {
+        ventregado = false;
         vrevisado = false;
         vdetalle=false;
         vformulario=false;
@@ -438,7 +448,7 @@ public class ConstanciasDocumentalesEditor {
             veditar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
             {
-                vrevisado = true;
+                vrevisado = true;ventregado=true;
             }
         }
         if (usua.getAccesodelete() == 1) 
@@ -446,7 +456,7 @@ public class ConstanciasDocumentalesEditor {
             veliminar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
             {
-                vrevisado = true;
+                vrevisado = true;ventregado=true;
             }
         }
         if (usua.getAccesoreport() == 1) 
@@ -459,7 +469,7 @@ public class ConstanciasDocumentalesEditor {
   //---------          
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) 
             {
-                vrevisado = true;
+                vrevisado = true;ventregado=true;
             }
   //cambios          
             if (usua.getAccesodelete() != 1)
