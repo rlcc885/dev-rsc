@@ -101,7 +101,7 @@ public class GeneracionXLS {
             celda= fila.createCell((short)18);
             celda.setCellValue("Tipo de Sub-Entidad");
             celda= fila.createCell((short)19);
-            celda.setCellValue("Código de la Entidad (CUE) antecesora");
+            celda.setCellValue("Codigo de la Entidad (CUE) antecesora");
             //data
             fila = hoja1.createRow((short)(1));            
             celda= fila.createCell((short)0);

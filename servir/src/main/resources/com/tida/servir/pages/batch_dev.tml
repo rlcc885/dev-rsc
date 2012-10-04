@@ -92,13 +92,7 @@
                     Carga en curso... 
                 </div>
 
-                <div class="f-wrap">
-                    <div class="f-left">                
-                    Tipo de Proceso
-                     <select t:type="select" t:id="select_tipo_proceso"
-                        model="literal:1=Solo validacion,2=Validacion y procesaminento"
-                         value="tipoProceso" t:validate="required"/>
-                    </div>
+                <div class="f-wrap">                    
                     <br/>
                     <div class="clear f-wrap">                        
                         <input t:id="continuar" t:type="submit" value="Continuar" class="button f-right" onclick="extraStep();"/>
