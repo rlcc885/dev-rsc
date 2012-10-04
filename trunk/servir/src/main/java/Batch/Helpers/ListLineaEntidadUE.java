@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class ListLineaEntidadUE {
     
-    public static List<LineasArchivos> getListLineaEntidadUE(String path, ArrayList<String> misCSVs,Entidad eu) throws FileNotFoundException, IOException{
+    public static List<LineasArchivos> getListLineaEntidadUE(String path, ArrayList<String> misCSVs,Entidad eu,Integer tipo) throws FileNotFoundException, IOException{
         List<LineasArchivos> llo = new LinkedList<LineasArchivos>();
         LineasArchivos lo;
         try {
@@ -34,7 +34,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"ENTIDAD");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"ENTIDAD");
+                else
+                    lo.setArchivo("ENTIDAD");
                 llo.add(lo);
             }
             if(!misCSVs.get(1).equals("")){
@@ -47,7 +50,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"CONCEPTO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"CONCEPTO");
+                else
+                    lo.setArchivo("CONCEPTO");
                 llo.add(lo);
             }
             if(!misCSVs.get(2).equals("")){
@@ -60,7 +66,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"UNIDADORGANICA");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"CARGO");
+                else
+                    lo.setArchivo("CARGO");
                 llo.add(lo);
             }
             if(!misCSVs.get(3).equals("")){
@@ -73,7 +82,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"CARGO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"UNIDADORGANICA");
+                else
+                    lo.setArchivo("UNIDADORGANICA");
                 llo.add(lo);
             }
             if(!misCSVs.get(4).equals("")){
@@ -86,7 +98,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"CARGOASIGNADO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"CARGOASIGNADO");
+                else
+                    lo.setArchivo("CARGOASIGNADO");
                 llo.add(lo);
             }
             if(!misCSVs.get(5).equals("")){
@@ -99,7 +114,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"REMUNERACION");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"REMUNERACION");
+                else
+                    lo.setArchivo("REMUNERACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(6).equals("")){
@@ -112,7 +130,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"EVALUACION");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"EVALUACION");
+                else
+                    lo.setArchivo("EVALUACION");
                 llo.add(lo);
             }
             if(!misCSVs.get(7).equals("")){
@@ -125,7 +146,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"CONSTANCIA");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"CONSTANCIA");
+                else
+                    lo.setArchivo("CONSTANCIA");
                 llo.add(lo);
             }
             if(!misCSVs.get(8).equals("")){
@@ -138,7 +162,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"TRABAJADOR");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"TRABAJADOR");
+                else
+                    lo.setArchivo("TRABAJADOR");
                 llo.add(lo);
             }
             if(!misCSVs.get(9).equals("")){
@@ -151,7 +178,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"ESTUDIO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"ESTUDIO");
+                else
+                    lo.setArchivo("ESTUDIO");
                 llo.add(lo);
             }
             if(!misCSVs.get(10).equals("")){
@@ -164,7 +194,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"CURSO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"CURSO");
+                else
+                    lo.setArchivo("CURSO");
                 llo.add(lo);
             }
             if(!misCSVs.get(11).equals("")){
@@ -177,7 +210,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"ANTECEDENTE");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"ANTECEDENTE");
+                else
+                    lo.setArchivo("ANTECEDENTE");
                 llo.add(lo);
             }
             if(!misCSVs.get(12).equals("")){
@@ -190,7 +226,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"PRODUCCION");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"PRODUCCION");
+                else
+                    lo.setArchivo("PRODUCCION");
                 llo.add(lo);
             }
             if(!misCSVs.get(13).equals("")){
@@ -203,7 +242,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"FAMILIA");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"FAMILIA");
+                else
+                    lo.setArchivo("FAMILIA");
                 llo.add(lo);
             }
             if(!misCSVs.get(14).equals("")){
@@ -216,7 +258,10 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                lo.setArchivo(eu.getCue_entidad()+"DEMERITO");
+                if(tipo==1)
+                    lo.setArchivo(eu.getCue_entidad()+"DEMERITO");
+                else
+                    lo.setArchivo("DEMERITO");
                 llo.add(lo);
             }            
         }catch(Exception ioe) {

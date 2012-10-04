@@ -45,7 +45,7 @@ import org.hibernate.criterion.Restrictions;
  * @author Morgan
  */
 public class batch_dev  extends GeneralPage {
-    private final String STARTPATH = "ArchivosCSV";
+    private final String STARTPATH = "ArchivosXLS";
     private final String ARCHIVO_UPLOAD_DIFFERENTE_ZIP= "Por favor necesita de ingresar un archivo que tiene un extension .zip o .ZIP!";
 
     @Property
@@ -54,6 +54,8 @@ public class batch_dev  extends GeneralPage {
     
     @Persist
     private String lugarArchivo ;
+    @Persist
+    private String lugarEliminar ;
     
     @Persist
     private String nombreArchivo;
@@ -78,8 +80,6 @@ public class batch_dev  extends GeneralPage {
     private Session session;
     @Property
     private String origenArchivos;
-    @Property
-    private String tipoProceso;
     
    
     /*@Property
@@ -237,6 +237,9 @@ private EstadoEntidad estado;
         //tratamiento
 //        myTratamiento.setTipoProceso(tipoProceso);
 //        errores = myTratamiento.generacionListDesdeCSV();
+        
+        
+        
         Query query = session.getNamedQuery("callSpProcesoBatch");
         query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
         query.setParameter("an_tipoproceso", Integer.parseInt(origenArchivos));
@@ -289,8 +292,9 @@ private EstadoEntidad estado;
             int aleatorio = (int) (Math.random() * 1000 + 1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-//            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
-            lugarArchivo="C:/CARGA/file/";
+            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
+            lugarEliminar=STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio;
+//            lugarArchivo="C:/CARGA/file/";
             paraDescargar = lugarArchivo + nombreArchivo + "TXT.zip";
             String archivoXLS = lugarArchivo + file.getFileName();
             copied = new File(lugarArchivo);
@@ -320,10 +324,10 @@ private EstadoEntidad estado;
             return this;
         }
         
-        System.out.println("-------------------------- Etapa Inicio -------------");
+        System.out.println("-------------------------- Etapa Inicio -------------"+origenArchivos);
         
         try {
-            myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario,_entidadUE);
+            myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario,_entidadUE,Integer.parseInt(origenArchivos));
         } catch (IOException ex) {
             Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
             formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
@@ -364,7 +368,7 @@ private EstadoEntidad estado;
          * Ahora buscamos que sean consistentes con la base de datos.
         */
 
-        lla = myTratamiento.getCantLineasArchivos(errores,_entidadUE);
+        lla = myTratamiento.getCantLineasArchivos(errores,_entidadUE,Integer.parseInt(origenArchivos));
         
         if (errores.size() > 0 ) { // hay errores
             formularioprocesobatch.recordError("Error procesando TXT.");
@@ -373,6 +377,16 @@ private EstadoEntidad estado;
             }
             return this;
 
+        }
+        else{
+            try{
+                myTratamiento.listArchivosDepositorioCopied(lugarArchivo);
+                System.out.println("aquiiiii"+lugarEliminar);
+                File f = new File(lugarEliminar); 
+                f.delete();                  
+            }catch(Exception e){
+
+            }
         }
         etapaInicio = false;
         etapaConfirmacion = true;

@@ -304,7 +304,7 @@ public class CambioUOEntidad extends GeneralPage{
                 return botonZone.getBody();
             }
             if(entidad1==null){ //validar x usuario 
-                if(entidadUE.getEntidad()==entidad2.getEntidad()){
+                if(entidadUE.getId()==entidad2.getId()){
                     formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
                     return botonZone.getBody();
                 }
@@ -314,9 +314,8 @@ public class CambioUOEntidad extends GeneralPage{
                 }
 
             }
-            else{      
-
-                if(entidad1.getEntidad()==entidad2.getEntidad()){
+            else{
+                if(entidad1.getId()==entidad2.getId()){
                     formBotones.recordError("La Entidad Origen debe ser diferente a la Entidad Destino");
                     return botonZone.getBody();
                 }
