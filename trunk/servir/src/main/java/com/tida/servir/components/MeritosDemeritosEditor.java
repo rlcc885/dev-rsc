@@ -150,9 +150,13 @@ public class MeritosDemeritosEditor {
     public List<LkBusquedaMeritoDemerito> getListadoMeritos() {
         Criteria c = session.createCriteria(LkBusquedaMeritoDemerito.class);
         c.add(Restrictions.eq("trabajador_id", actual.getId()));
+        nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
-
+    @Persist
+    @Property
+    private String nroregistros;
+    
     //para obtener datos de la Clase de Merito
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {
