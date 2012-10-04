@@ -12,6 +12,8 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  *
  * @author arson
  */
+@Entity
+@Table(name = "RNSDD_ANULACION")
 public class Anulacion implements Serializable {
     
     @Id
