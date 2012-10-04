@@ -75,7 +75,7 @@
                       </fieldset>
                       <div class="f-wrap"> 
                         <div class="actions f-right">
-                             <t:eventLink t:event="limpiar1" class="button" t:zone="busZone2" >
+                             <t:eventLink t:event="limpiar" class="button" t:zone="busZone2" >
                                  <span t:type="any" style="font-size:11px;" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                                         Limpiar Formulario
                                  </span> 

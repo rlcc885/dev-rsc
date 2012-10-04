@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -83,7 +82,13 @@ public class AnularSancion extends GeneralPage {
     private String fechadoc;
     @Property
     @Persist
+    private Date fecha_doc;
+    @Property
+    @Persist
     private String fechadocnot;
+    @Property
+    @Persist
+    private Date fechadoc_not;
      @Persist
     @Property
     private String juzgado_not;
@@ -98,6 +103,22 @@ public class AnularSancion extends GeneralPage {
     @Persist
     @Property
     private Long entidad_origen_id;
+
+    @Property
+    @Persist
+    private Anulacion anulacion;
+    @PageActivationContext
+    private Sancion modificasancion;
+    private int elemento=0;
+    
+    @Log
+    public Sancion getModificasancion() {
+        return modificasancion;
+    }
+    
+     public void setModificasancion(Sancion modificasancion) {
+        this.modificasancion = modificasancion;
+    }
      
      @Log
       public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
@@ -119,11 +140,104 @@ public class AnularSancion extends GeneralPage {
         entidad2 = enti2;
         entidad_origen=entidad2.getDenominacion();
         entidad_origen_id = entidad2.getId();
-        return busZone.getBody();  
+        return busZone2.getBody();  
     }
     
     Object onBuscarentidad(){
-         return busZone.getBody();
-          //return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("busZone", busZone2.getBody());
+         //return busZone.getBody();
+          return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("busZone", busZone.getBody());
       } 
+    
+    @Log
+    Object onLimpiar() {        
+        entidad_origen=null;
+        bnumeroDocumento_not=null;
+        observaciones=null;
+        juzgado_not=null;
+        bnumeroDocumento2=null;
+        fechadoc=null;
+        fechadocnot=null;
+        return busZone2.getBody();  
+    }
+    
+    @Log
+    void onSelectedFromSave(){
+        elemento=1;
+    } 
+     
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormularioAnularSancion(){
+        if(elemento==1){
+             if(entidad_origen_id==null)
+         {
+             formularioanularsancion.recordError("Tiene que seleccionar una Entidad");
+                return busZone2.getBody();
+         }
+         if(bnumeroDocumento_not==null){
+             formularioanularsancion.recordError("Falta el Numero de documento de Notificacion");
+             return busZone2.getBody();
+         }
+         if(bnumeroDocumento2==null){
+             formularioanularsancion.recordError("Falta el Numero de documento");
+             return busZone2.getBody();
+         }
+         if(fechadocnot==null){
+             formularioanularsancion.recordError("Falta la Fecha del Documento de Notificacion");
+             return busZone2.getBody();
+         }
+         if(fechadoc==null){
+             formularioanularsancion.recordError("Falta la Fecha del Documento ");
+             return busZone2.getBody();
+         }
+         if(fechadocnot!=null){
+             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fechadoc_not = (Date) formatoDelTexto.parse(fechadocnot);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+         }
+         if(fechadoc!=null){
+             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_doc = (Date) formatoDelTexto.parse(fechadoc);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+         }
+         
+         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
+         anulacion.setFecha_doc_not(fechadoc_not);
+         anulacion.setFecha_doc_san(fecha_doc);
+         anulacion.setJuzgado(juzgado_not);
+         anulacion.setObservaciones(observaciones);
+         anulacion.setId_sancion(modificasancion);
+         anulacion.setId_tipo_doc_not(bdocumentoidentidad_not.getId());
+         anulacion.setId_tipo_doc_san(bdocumentoidentidad2.getId());
+         anulacion.setNumero_doc_not(bnumeroDocumento_not);
+         anulacion.setNumero_doc_san(bnumeroDocumento2);
+         anulacion.setId_entidad(entidad2);
+         session.saveOrUpdate(anulacion);            
+         session.flush();
+         
+         modificasancion.setSancion_estado(getEstados().get(0));
+         session.saveOrUpdate(modificasancion);   
+         session.flush();
+         //modificasancion
+         envelope.setContents("Sancion Anulada con Exito");
+         onLimpiar();
+         return "ConsultaSanciones";
+        }
+         return "ConsultaSanciones";
+     }
+    
+    @Log
+    public List<DatoAuxiliar> getEstados() {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);        
+        c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
+        c.add(Restrictions.eq("codigo", (long) 4));
+        return c.list();
+    }
 }
