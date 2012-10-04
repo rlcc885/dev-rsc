@@ -27,53 +27,54 @@
             </div>
             <t:form t:id="formulariofamiliares"  zone="familiaresZone" t:name="formulariofamiliares">
                 <fieldset>
+                    <t:if test="${vformulario}">
                     <div class="f-wrap">                             
                         <div class="f-left" >
-                            <t:label for="parentesco"/>
+                            <label>* Parentesco</label>
                             <select t:type="Select" t:id="parentesco" value="familiarActual.parentesco" 
                                         model="beanParentesco"  t:disabled="${vdetalle}"
                                         t:validate="required" t:blankOption="ALWAYS"/>       
                         </div>
                         <div class="f-left" >	
-                            <t:label for="sexo"/>
-                            <select t:type="Select" t:id="sexo" value="valsexo" 
+                            <label> Sexo</label>
+                                <select t:type="Select" t:id="sexo" value="valsexo" 
                                         model="beanSexo" t:disabled="${vdetalle}"
                                         t:blankOption="ALWAYS" />
                         </div>
                         <div class="f-left">	
-                            <t:label for="fechaNacimiento"/>
+                            <label>* Fecha de Nacimiento</label>
                             <input t:type="TextField" t:id="fechaNacimiento" t:disabled="${vdetalle}" t:value="nuevafecha" 
                                        t:validate="regexp" class="fechaNacimiento pictureInputDate"/>
                         </div>
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <t:label for="nombres"/>
+                            <label>* Nombres</label>
                             <input t:type="TextField" t:id="nombres" t:disabled="${vdetalle}"  t:validate="required,maxlength=150" t:value="familiarActual.nombres" maxlength="255" size="33"/>
                         </div>
                         <div class="f-left">
-                            <t:label for="apellidoPaterno" />
+                            <label>* Apellido Paterno</label>
                             <input t:type="TextField" t:id="apellidoPaterno" t:validate="required,maxlength=150" t:disabled="${vdetalle}" t:value="familiarActual.apellidoPaterno" maxlength="255" size="33"/>
                         </div>
                         <div class="f-left">
-                            <t:label for="apellidoMaterno" />
+                            <label>* Apellido Materno</label>
                             <input t:type="TextField" t:id="apellidoMaterno" t:validate="required,maxlength=150" t:disabled="${vdetalle}" t:value="familiarActual.apellidoMaterno" maxlength="255" size="33"/>
                         </div>
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <t:label for="tipoDocumento" />
+                            <label>* Tipo de Documento</label>
                             <select t:type="Select" t:id="tipoDocumento" value="familiarActual.tipoDocumento" 
                                         model="beanTiposDoc" disabled="${bdni}"
                                         t:validate="required" t:blankOption="ALWAYS" />
                         </div>
                         <div class="f-left">
-                            <t:label for="nroDocumento"/>
+                            <label>* Número de Documento</label>
                             <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" 
                                        t:validate="regexp, required" disabled="${bdni}" size="33" />
                         </div>
                         <div class="f-left">
-                            <t:label for="estadoCivil" />
+                            <label> Estado Civil</label>
                             <select t:type="Select" t:id="estadocivil" value="valEstadoCivil" 
                                         model="beanEstadoCivil" t:disabled="${vdetalle}"
                                         t:blankOption="ALWAYS"/>
@@ -87,12 +88,8 @@
                             </div>
                         </t:if>
                     </div>
-                    <div class="actions">
-                        <t:if test="${vformulario}">
-                            <div class="f-left">                        
-                                (*) Campos Obligatorios
-                            </div>
-                        </t:if>    
+                    </t:if>
+                        <div class="actions">   
                         <t:if test="${vguardar}">
                             <input t:type="Submit" t:id="guardar" value="Guardar" class="button f-right" t:mixins="confirm" t:message="Desea ejecutar esta acción?" />
                         </t:if>
@@ -109,13 +106,20 @@
                             </span> 
                         </t:eventLink>
                     </div>
+        
                 </fieldset>
             </t:form>  
         </div>
         
   
         <div id = "tabla_oi">
-            <t:zone t:id="listaFamiliaresZone">   
+            <t:zone t:id="listaFamiliaresZone">
+                <t:if test="${vformulario}">  
+                    <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+                    </div> 
+                </t:if>
+                <br/>
                 <t:grid source="listadoFamiliares" 
                         rowsPerPage="10" 
                         t:add="Parentesco,Revisado,Acciones" 
