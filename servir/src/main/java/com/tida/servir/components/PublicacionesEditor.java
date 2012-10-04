@@ -87,6 +87,9 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean vinserta;
+    @Persist
+    @Property
+    private Boolean vformulario;
 //modificacion******
     @Persist
     @Property
@@ -105,6 +108,7 @@ public class PublicacionesEditor {
         veliminar = false;
         vdetalle = true;
         vguardar = false;//opcMod=false;
+        vformulario = false;
   //modificacion
    //     opcInsertar = true;
         
@@ -122,6 +126,7 @@ public class PublicacionesEditor {
             //if(usua.getAccesoupdate() != 1){vdetalle=false;}
         }
         if (usua.getAccesoreport() == 1) {
+            vformulario=true;
             vinserta = true;
             vguardar = true;
             vdetalle = false;
