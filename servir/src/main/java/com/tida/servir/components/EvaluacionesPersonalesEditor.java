@@ -161,8 +161,13 @@ public class EvaluacionesPersonalesEditor {
         System.out.println("aaaaaaaaaaaaaa"+cargoasignado);
         c.add(Restrictions.eq("cargoasignado",cargoasignado));
         c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        nroregistros = Integer.toString(c.list().size());        
         return c.list();
     }
+
+    @Persist
+    @Property
+    private String nroregistros;
     
      //para obtener datos del Tipo de Evaluacion
     @Log
