@@ -362,7 +362,7 @@ public class TrabajadorNuevo extends GeneralPage {
                 envelope.setContents("Debe ingresar el Nro. de Documento.");
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
-            } else if (fechacaducidad == null || fechacaducidad.equalsIgnoreCase("")) {
+            } else if (nuevo.getDocumentoidentidad().getCodigo()==1 && (fechacaducidad == null || fechacaducidad.equalsIgnoreCase(""))) {
                 envelope.setContents("Debe ingresar la fecha de caducidad del DNI.");
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
