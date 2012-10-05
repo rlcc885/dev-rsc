@@ -756,7 +756,7 @@ public class RepTrabajador extends GeneralPage {
             report = rep.callReporte(tipoReporteSelect, type, parametros, context);
             showLinkReport = true;
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             report = null;
             showLinkReport = false;
         }
