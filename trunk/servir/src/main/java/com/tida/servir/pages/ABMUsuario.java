@@ -136,9 +136,9 @@ public class ABMUsuario extends GeneralPage {
     @Persist
     @Property
     private String bNombreEntidad;
-    @Persist
-    @Property
-    private Perfil bselectPerfil;
+//    @Persist
+//    @Property
+//    private Perfil bselectPerfil;
     @Property
     @Persist
     private Rol bselectRol;
@@ -240,7 +240,8 @@ public class ABMUsuario extends GeneralPage {
         bNombreEntidad = null;
         bidentificacionBusqueda = null;
         bEstado = null;
-        bselectPerfil = null;
+//        bselectPerfil = null;
+        bselectRol = null;
     }
 
     @Log
@@ -314,9 +315,13 @@ public class ABMUsuario extends GeneralPage {
         if (bEstado != null) {
             c.add(Restrictions.disjunction().add(Restrictions.eq("estado", Integer.valueOf(bEstado))));
         }
-        if (bselectPerfil != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectPerfil.getId()))));
-        }
+//        if (bselectPerfil != null) {
+//            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectPerfil.getId()))));
+//        }
+        if (bselectRol != null){
+            c.add(Restrictions.disjunction().add(Restrictions.eq("rolid", Long.valueOf(bselectRol.getId()))));        
+        } 
+        
         if (bNumeroDocumento != null && !bNumeroDocumento.equals("")) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento + "%").ignoreCase()).
                     add(Restrictions.like("nrodocumento", "%" + bNumeroDocumento.replaceAll("ñ", "n") + "%").ignoreCase()).
