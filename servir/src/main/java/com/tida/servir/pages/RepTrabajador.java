@@ -402,6 +402,14 @@ public class RepTrabajador extends GeneralPage {
     @Property
     private Perfil bselectRol;
     
+    @Property
+    @Persist
+    private StreamResponse report;
+    
+    @Property
+    @Persist
+    private boolean showLinkReport;
+    
     @Log
     void setupRender() {
         vselect = true;
@@ -650,7 +658,7 @@ public class RepTrabajador extends GeneralPage {
     public List<Entidad> getEntidades() {
         Criteria c = session.createCriteria(Entidad.class);
         if (nombreEntidad != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", nombreEntidad + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidad.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + nombreEntidad + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + nombreEntidad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + nombreEntidad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         return c.list();
     }
@@ -659,7 +667,7 @@ public class RepTrabajador extends GeneralPage {
     public List<Entidad> getEntidadesTra() {
         Criteria c = session.createCriteria(Entidad.class);
         if (nombreEntidadTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", nombreEntidadTrabajador + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidadTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", nombreEntidadTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + nombreEntidadTrabajador + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + nombreEntidadTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("denominacion", "%" + nombreEntidadTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
         }
         return c.list();
     }
@@ -731,14 +739,6 @@ public class RepTrabajador extends GeneralPage {
         return new GenericSelectModel<Reporte>(c.list(), Reporte.class, "nombre", "id", _access);
     }
 
-    @Property
-    @Persist
-    private StreamResponse report;
-    
-    @Property
-    @Persist
-    private boolean showLinkReport;
-    
     @Log
     StreamResponse onVerReporte() {
         return report;
@@ -805,6 +805,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = false;
         mostrarFiltrosSancion = false;
         generarDisabled = true;
+        showLinkReport = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -820,6 +821,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = false;
         mostrarFiltrosSancion = false;
         generarDisabled = true;
+        showLinkReport = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -832,6 +834,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = false;
         mostrarFiltrosSancion = false;
         generarDisabled = true;
+        showLinkReport = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -844,6 +847,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = true;
         mostrarFiltrosSancion = false;
         generarDisabled = true;
+        showLinkReport = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -856,6 +860,7 @@ public class RepTrabajador extends GeneralPage {
         mostrarFiltrosGobierno = false;
         mostrarFiltrosSancion = true;
         generarDisabled = true;
+        showLinkReport = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody()).add("categoriaZone",categoriaZone.getBody());
     }
     
@@ -982,6 +987,7 @@ public class RepTrabajador extends GeneralPage {
             entidadTx = "";
             _entidadRep = null;
         }
+        showLinkReport = false;
         titular = "";
         _trabajadorRep = null;
         nivelo = null;
