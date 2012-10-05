@@ -174,7 +174,19 @@ public class PagePerfil {
         lista = criterios.list();
         return lista;
     }
-
+    
+    @Log
+    public Boolean getPerfilAsignado(){
+//        Criteria c = session.createCriteria(Perfilporusuario.class);
+//        c.add(Restrictions.eq("perfilId", rowPerfil.getId()));
+        if(rowPerfil.getUsuarioCollection().size() > 0){
+//        if(c.list().isEmpty()){
+            return false;
+        }
+        //   rowPerfil;
+        return true;
+    }
+    
     @Log
     public List<MenuPorPerfil> getAllPermisos() {
         List<MenuPorPerfil> lista = null;
@@ -187,6 +199,7 @@ public class PagePerfil {
     @Log
     @CommitAfter
     Object onEliminaPerfil(Perfil lperfil) {
+        System.out.println("PERFILX - "+lperfil.getDescperfil()+" "+lperfil.getId());
         formulariomensajese.clearErrors();
         if (lperfil.getUsuarioCollection().size() > 0) {
             formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen usuarios asignados al perfil.");
@@ -202,7 +215,8 @@ public class PagePerfil {
                 }
             }
         }
-        return this;
+      //  return this;
+      return new MultiZoneUpdate("listaZone", listaZone.getBody()).add("mensajesEZone",mensajesEZone.getBody());  
     }
     // EDITA EL PERFIL
 
@@ -211,7 +225,7 @@ public class PagePerfil {
         perfil = lperfil;
         mostrarNew = true;
         errorMessageSavePerfil = "";
-       formulariomensajese.clearErrors();
+        formulariomensajese.clearErrors();
         editaPerfil = true;
         if (perfil.getId() <= 8) {
             vNoeditaperfil = true;
