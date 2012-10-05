@@ -38,13 +38,16 @@
                 <t:actionlink t:id="editaPerfil" zone="editZone" t:context="rowPerfil">Editar</t:actionlink>
                 |
                 <t:actionlink t:id="permisoPerfil" zone="listaPermisoZone" t:context="rowPerfil">Derechos</t:actionlink>
-                <t:if test="eliminaPerfil">
+                <t:if test="perfilAsignado">
+                    <t:if test="eliminaPerfil">                        
                     |
                     <a t:type="eventLink" t:event="eliminaPerfil" t:context="rowPerfil" href="#" t:zone="listaZone">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                             Eliminar
                         </span> 
                     </a>
+                    
+                    </t:if>
                 </t:if>
             </p:accionesCell>
         </t:grid>
