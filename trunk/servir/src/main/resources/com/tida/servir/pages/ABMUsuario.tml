@@ -219,8 +219,8 @@
                                             t:style="width: 183px;"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="nrodocumentoedit"/>
-                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,regexp,maxlength=20"
+                                    <label>* Nº Documento</label>
+                                    <input t:type="TextField" t:id="nrodocumentoedit" t:value="usuariotrabajadoredit.nrodocumento" t:validate="required,maxlength=20"
                                            t:disabled="${noEditaUsuario}" 
                                            t:size="32"/>
                                 </div>
@@ -339,7 +339,7 @@
                                             t:style="width: 183px;"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="nrodocumentodetalle"/>
+                                    <label>* Nº Documento</label>
                                     <input t:type="TextField" t:id="nrodocumentodetalle" t:value="usuariotrabajadoredit.nrodocumento" t:disabled="true" t:size="32"/>
                                 </div>
                                 <div class="f-left">
