@@ -221,6 +221,7 @@ public class AntecedentesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioantlaboral() {
+            formulariomensajesantecedente.clearErrors();
         if (valfec_desde != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -242,8 +243,13 @@ public class AntecedentesEditor {
         ant_Laborales.setFec_ingreso(fecha_desde);
         ant_Laborales.setFec_egreso(fecha_hasta);
 
+        
+        if (ant_Laborales.getFec_egreso().after(new Date())){
+            formulariomensajesantecedente.recordError("La fecha de finalización de la experiencia laboral no puede ser mayor a la fecha del sistema");
+            return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("antLaboralZone", antLaboralZone.getBody());        
+        }
         if (ant_Laborales.getFec_egreso().before(ant_Laborales.getFec_ingreso()) || ant_Laborales.getFec_egreso().equals(ant_Laborales.getFec_ingreso())) {
-            formulariomensajesantecedente.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
+            formulariomensajesantecedente.recordError("Las fecha de inicio debe ser menor a la fecha de finalización");
             return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("antLaboralZone", antLaboralZone.getBody());
         } else {
             Logger logger = new Logger();
@@ -266,6 +272,9 @@ public class AntecedentesEditor {
 
             session.saveOrUpdate(ant_Laborales);
             session.flush();
+            
+
+            
             new Logger().loguearOperacion(session, _usuario, String.valueOf(ant_Laborales.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_EXPERIENCIA_LABORAL);  
             if (!editando) {
                 logger.loguearEvento(session, logger.MODIFICACION_EXPERIENCIA, actual.getEntidad().getId(), actual.getId(), _usuario.getId(), logger.MOTIVO_PERSONALES_EXPERIENCIA, ant_Laborales.getId());
