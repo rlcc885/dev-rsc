@@ -144,7 +144,7 @@
                 
                 <div>
                     <t:if test="showLinkReport">
-                        <t:eventLink t:event="verReporte" href="#" class="button f-left" style="color: #FFFFFF" target="_blank">Ver Reporte</t:eventLink>
+                        <t:eventLink t:event="verReporte" href="#" class="button f-right" style="color: #FFFFFF" target="_blank">Ver Reporte</t:eventLink>
                     </t:if>
                 </div>
 

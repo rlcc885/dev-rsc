@@ -62,12 +62,13 @@ public class ReportesFormulario {
                             params += param + " " + URLEncoder.encode((String)parametros.get(param), "UTF-8") + " ";
                         else
                             params += param + " " + URLEncoder.encode(((Long) parametros.get(param)).toString(), "UTF-8") + " ";
-
                     }
                     System.out.println("---------------- Ejecutado: "+ JRE + " -cp " + reportesPath + "lib -jar " +
                             reportesPath +  REPORTE_EXEC + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params);
                     p = Runtime.getRuntime().exec(JRE + " -cp " + reportesPath + "lib -jar " +
                             reportesPath +  REPORTE_EXEC + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params );
+//                    p = Runtime.getRuntime().exec(JRE + " -cp " + reportesPath + "lib -jar " +
+//                            "C:/Users/servir/Documents/NetBeansProjects/reportes" + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params );
 
                     DataGobbler outputGobbler = new DataGobbler(p.getInputStream(), sb, OUT_TYPE);
                     outputGobbler.start();
