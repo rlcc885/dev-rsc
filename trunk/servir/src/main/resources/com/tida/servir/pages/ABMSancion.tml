@@ -47,7 +47,7 @@
                 
                 <t:if test="bmostrar">
                 <div class="f-left" style="position:relative; top:16px;">
-                    <label>Buscar Trabajador</label>
+                    <label>Buscar al Trabajador</label>
                 </div>
                 <!--<div class="f-left" style="position:relative; top:12px; left:-10px;">
                     <input t:id="buscartraba" t:type="submit" value="..." class="button" onClick="javascript: mostrar();"/>
@@ -107,7 +107,7 @@
                         <fieldset>
                         <legend>Tiempo de Servicios</legend>
                             <div class="f-left">
-                                <label>Dias</label>
+                                <label>Días</label>
                                 <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                             <div class="f-left">
