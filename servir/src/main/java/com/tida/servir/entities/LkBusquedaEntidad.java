@@ -32,6 +32,8 @@ public class LkBusquedaEntidad implements Serializable {
     private String tiposubentidad;
     @Column(name = "SIGLA")
     private String SIGLA;
+    @Column (name = "SUBENTIDAD_ID")
+    private Long subId;
     @Column(name = "SUBENTIDAD")
     private String subentidad;
     private String ruc;
@@ -45,6 +47,14 @@ public class LkBusquedaEntidad implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Long getSubId() {
+        return subId;
+    }
+
+    public void setSubId(Long subId) {
+        this.subId = subId;
     }
 
     public String getDenominacion() {

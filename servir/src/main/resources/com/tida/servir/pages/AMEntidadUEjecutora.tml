@@ -153,7 +153,7 @@
                     rowsPerPage="10" 
                     pagerPosition="bottom"
                     row="listaentidad" 
-                    exclude="id,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
+                    exclude="id,subId,nivelgobierno,sectorgobierno,organizacionestado,tipoorganismo,estado,provincia,distrito,subentidad,tiposubentidad,essubentidad" 
                     reorder="ruc,denominacion,sigla,cue_entidad,departamento,acciones"
                     inPlace="true" 
                     t:add="Acciones">
@@ -171,9 +171,11 @@
 <!--                    <t:actionlink t:id="editarSeleccion" context="listaentidad">Editar</t:actionlink> | -->
                         <t:actionlink t:id="eliminarSeleccion" zone="listaentidadZone" context="listaentidad">
                             <t:if test="${listaentidad.estado}">
+                                <t:if test="tieneSubentidad" >
                                 <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                     | Eliminar
                                 </span>
+                                </t:if>
                             </t:if>    
                             <t:if test="${listaentidad.estado}" negate="true">
                                 <span t:type="any" t:mixins="Confirm" t:message="Desea revertir el registro?">
