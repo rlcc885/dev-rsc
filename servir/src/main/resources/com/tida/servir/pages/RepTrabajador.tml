@@ -23,24 +23,24 @@
         Categoría: ${categoria}
     </div>
     
+    <t:alerts/>
+    
     <div t:type="zone" t:id="tipoReporteZone" update="show">
-        <t:form t:id="tipoReporteForm" zone="tipoReporteZone">
+        <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
             <fieldset>
                 Reporte: &nbsp;
                 <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
                 &nbsp; Formato del Reporte: &nbsp;
                 <t:radiogroup t:id="type">
-                    Excel <t:radio onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:id="excel" value="excel" />
-                    PDF <t:radio t:id="pdf" value="pdf" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" />
+                    Excel <input t:type="radio" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" value="excel" />
+                    PDF <input t:type="radio" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" value="pdf" />
                 </t:radiogroup>
             </fieldset>
-        </t:form>
         <t:if test="generarDisabled">     
             <fieldset>
                 <div>
                     <t:if test="mostrarFiltrosTrabajador" >
                         <div class="f-wrap">
-                            <t:form t:id="trabajadorForm" zone="tipoReporteZone">
                                 <t:zone t:id="trabajadorZone" t:update="show">
                                     <div class="f-left">
                                         <t:if test="visualEntidad">
@@ -54,14 +54,12 @@
                                         <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
                                     </div>
                                 </t:zone>
-                            </t:form>
                         </div>
                     </t:if>
                 </div>
                 
                 <div>
                     <t:if test="mostrarFiltrosEntidad" >
-                        <t:form t:id="entidadForm" zone="tipoReporteZone">
                             <div class="f-wrap">                             
                                 <t:zone t:id="entidadZone" t:update="show">
                                     <div class="f-left">
@@ -75,14 +73,12 @@
                                     </div>
                                 </t:zone>
                             </div>
-                        </t:form>
                     </t:if>
                 </div>
                 
                 <div>
                     <t:if test="mostrarFiltrosUsuario" >
                         <div class="f-wrap">
-                            <t:form t:id="usuarioForm" zone="tipoReporteZone">
                                 <t:zone t:id="usuarioZone" t:update="show">
                                     <div class="f-left">
                                         Usuario: &nbsp;
@@ -95,7 +91,6 @@
                                         <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoha" size="30" class="fechaingresohasta pictureInputDate"/>
                                     </div>
                                 </t:zone>
-                            </t:form>
                             <script>
                                 jQuery(document).ready(function() {
                                     jQuery('.fechaingresodesde').datepick({dateFormat: 'dd/mm/yyyy'});
@@ -111,32 +106,28 @@
                         <div class="f-wrap">    
                             <t:zone t:id="gobiernoZone" id="gobiernoZone" t:update="show">
                                 <div class="f-left">
-                                    <t:form t:id="gobierForm" zone="gobiernoZone">
-                                        Nivel de Gobierno: &nbsp;
-                                        <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                        <t:if test="organizacionBool">
-                                            &nbsp; Organización Estado: &nbsp;
-                                            <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                        </t:if>
-                                        <t:if test="sectorBool">
-                                            <br /><br />
-                                            Sector: &nbsp;
-                                            <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                        </t:if>
-                                        <t:if test="organoBool">
-                                            &nbsp; Tipo Organismo: &nbsp;
-                                            <input t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo" model="TipoOrganismo" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                        </t:if>
-                                    </t:form>
-                                    <t:form t:id="gobiernoForm" zone="gobiernoZone">
+                                    Nivel de Gobierno: &nbsp;
+                                    <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    <t:if test="organizacionBool">
+                                        &nbsp; Organización Estado: &nbsp;
+                                        <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
+                                    <t:if test="sectorBool">
                                         <br /><br />
-                                        Es Sub-Entidad: &nbsp;
-                                        <input t:type="Checkbox" t:id="sessubentidad" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:value="bessubentidad2" />
-                                        <t:if test="bessubentidad">
-                                            &nbsp; Tipo Sub-Entidad:&nbsp;
-                                            <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
-                                        </t:if>
-                                    </t:form>
+                                        Sector: &nbsp;
+                                        <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
+                                    <t:if test="organoBool">
+                                        &nbsp; Tipo Organismo: &nbsp;
+                                        <input t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo" model="TipoOrganismo" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
+                                    <br /><br />
+                                    Es Sub-Entidad: &nbsp;
+                                    <input t:type="Checkbox" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" t:value="bessubentidad2" />
+                                    <t:if test="bessubentidad">
+                                        &nbsp; Tipo Sub-Entidad:&nbsp;
+                                        <input t:type="Select" t:id="stipoSubEntidad" t:value="stipoSubEntidad" model="TipoSubEntidad"  t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
+                                    </t:if>
                                 </div>
                             </t:zone>
                         </div>
@@ -153,12 +144,12 @@
                     </t:if>
                 </div>
                 
-                <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
+
                     <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar" t:mixins="confirm"/>
                     <a t:type="eventLink" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</a>
-                </t:form>
             </fieldset>
         </t:if>
+        </t:form>
     </div>
 
     <script type="text/javascript">
