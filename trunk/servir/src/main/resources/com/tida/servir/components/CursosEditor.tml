@@ -180,7 +180,7 @@
                         </t:parameter>
                         <p:accionesCell>
                             <t:if test="${veditar}">
-                                <t:if test="${listacurso.validado}" negate="true" >
+                                <t:if test="${listacurso.validado}" negate="true">
                                     <t:actionlink t:id="editar" zone="listaZone" context="listacurso">Editar</t:actionlink>
                                 </t:if>
                                 <t:if test="${listacurso.validado}">

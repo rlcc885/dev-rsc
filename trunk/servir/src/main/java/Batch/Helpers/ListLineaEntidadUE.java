@@ -34,7 +34,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"ENTIDAD");
                 else
                     lo.setArchivo("ENTIDAD");
@@ -50,7 +50,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"CONCEPTO");
                 else
                     lo.setArchivo("CONCEPTO");
@@ -66,7 +66,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"CARGO");
                 else
                     lo.setArchivo("CARGO");
@@ -82,7 +82,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"UNIDADORGANICA");
                 else
                     lo.setArchivo("UNIDADORGANICA");
@@ -98,7 +98,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"CARGOASIGNADO");
                 else
                     lo.setArchivo("CARGOASIGNADO");
@@ -114,7 +114,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"REMUNERACION");
                 else
                     lo.setArchivo("REMUNERACION");
@@ -130,7 +130,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"EVALUACION");
                 else
                     lo.setArchivo("EVALUACION");
@@ -146,7 +146,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"CONSTANCIA");
                 else
                     lo.setArchivo("CONSTANCIA");
@@ -162,7 +162,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"TRABAJADOR");
                 else
                     lo.setArchivo("TRABAJADOR");
@@ -178,7 +178,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"ESTUDIO");
                 else
                     lo.setArchivo("ESTUDIO");
@@ -194,7 +194,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"CURSO");
                 else
                     lo.setArchivo("CURSO");
@@ -210,7 +210,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"ANTECEDENTE");
                 else
                     lo.setArchivo("ANTECEDENTE");
@@ -226,7 +226,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"PRODUCCION");
                 else
                     lo.setArchivo("PRODUCCION");
@@ -242,7 +242,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"FAMILIA");
                 else
                     lo.setArchivo("FAMILIA");
@@ -258,7 +258,7 @@ public class ListLineaEntidadUE {
                 }
                 lo = new LineasArchivos();
                 lo.setLineas(lNumeroLineas-1);
-                if(tipo==1)
+                if(tipo==2)
                     lo.setArchivo(eu.getCue_entidad()+"DEMERITO");
                 else
                     lo.setArchivo("DEMERITO");

@@ -63,7 +63,7 @@ public class ValidacionXLS {
         this.session = session;
         this.errores = errores;
         this.usuario = usuario;
-        if(tipo==1){
+        if(tipo==2){
             archivos.add(eu.getCue_entidad()+"ENTIDAD");
             archivos.add(eu.getCue_entidad()+"CONCEPTO");
             archivos.add(eu.getCue_entidad()+"CARGO");

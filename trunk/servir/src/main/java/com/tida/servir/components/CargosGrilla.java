@@ -5,12 +5,7 @@
 
 package com.tida.servir.components;
 
-import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Legajo;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Permisos;
-import com.tida.servir.entities.Trabajador;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import com.tida.servir.pages.Busqueda;
 import helpers.Constantes;
 import helpers.Reportes;
@@ -62,13 +57,21 @@ public class CargosGrilla {
     @Property
     @SessionState
     private Entidad _oi;
+    
+    @SessionState
+    private UsuarioAcceso usua;
 
     @Inject
-   private Context context;
+    private Context context;
     
     @InjectComponent
     private Zone evaluacionesZone; 
-   
+    @Persist
+    @Property
+    private Boolean veditar;
+    @Persist
+    @Property
+    private Boolean veliminar;
     private int elemento=0;
     
     public boolean getEvaluodesasignar() {
@@ -79,6 +82,12 @@ public class CargosGrilla {
         if (actual == null) {
             actual = new Trabajador();
         } 
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
+        }
+        if (usua.getAccesodelete() == 1) {
+            veliminar = true;
+        }
     }
 
     public List<CargoAsignado> getCargosAsignados() {

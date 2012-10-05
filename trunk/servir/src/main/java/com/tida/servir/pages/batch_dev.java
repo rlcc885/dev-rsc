@@ -79,6 +79,7 @@ public class batch_dev  extends GeneralPage {
     @Inject
     private Session session;
     @Property
+    @Persist
     private String origenArchivos;
     
    
