@@ -172,17 +172,25 @@ public class PagePerfil {
         criterios = session.createCriteria(Perfil.class);
         criterios.addOrder(Order.asc("descperfil"));
         lista = criterios.list();
+        nroregistros = Integer.toString(lista.size());        
         return lista;
     }
+
+    @Persist
+    @Property
+    private String nroregistros;
     
     @Log
     public Boolean getPerfilAsignado(){
+        System.out.println(rowPerfil);
 //        Criteria c = session.createCriteria(Perfilporusuario.class);
 //        c.add(Restrictions.eq("perfilId", rowPerfil.getId()));
+       if (rowPerfil.getUsuarioCollection()!=null){ 
         if(rowPerfil.getUsuarioCollection().size() > 0){
 //        if(c.list().isEmpty()){
             return false;
         }
+       }
         //   rowPerfil;
         return true;
     }
