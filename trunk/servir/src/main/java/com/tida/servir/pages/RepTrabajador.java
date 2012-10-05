@@ -5,6 +5,8 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Reportes;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -12,6 +14,9 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -19,6 +24,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Response;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -219,11 +225,8 @@ public class RepTrabajador extends GeneralPage {
     private boolean generarDisabled;
     
     @Property
-    private Reportes.TIPO type;
-    
-    @Property
     @Persist
-    private Reportes.TIPO typo;
+    private Reportes.TIPO type;
     
     @Property
     @Persist
@@ -416,7 +419,7 @@ public class RepTrabajador extends GeneralPage {
         
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
-        type = pdf;
+        type = excel;
         
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -557,14 +560,9 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    Object onSuccessFromGobiernoForm() {
-        bessubentidad = !bessubentidad;
-        return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
-    }
-    
-    @Log
-    void onSuccessFromTipoReporteForm() {
-        typo = type;
+    Object onSuccessFromFormularioReporte() {
+        bessubentidad = bessubentidad2;
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody());
     }
     
     @Log
@@ -730,15 +728,22 @@ public class RepTrabajador extends GeneralPage {
         return new GenericSelectModel<Reporte>(c.list(), Reporte.class, "nombre", "id", _access);
     }
     
+    @Inject
+    private AlertManager alertManager;
+    
     @Log
     StreamResponse onGenerarReporte() {
         Reportes rep = new Reportes();
         Map<String, Object> parametros;
-        if (tipoReporteSelect != null && typo != null)
-            try { parametros = retornarParametros(tipoReporteSelect.getCodigo()); } catch (Exception e) { return null; }
-        else return null;
-        StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), typo, parametros, context);
-        typo = null;
+        try {
+            if (tipoReporteSelect != null && type != null)
+                parametros = retornarParametros(tipoReporteSelect.getCodigo()); 
+            else throw new Exception ("Error en tipo reporte o formato reporte");
+        } catch (Exception e) {
+            alertManager.alert(Duration.SINGLE, Severity.INFO, "No ha ingresado todos los datos obligatorios. " + e.getMessage());
+            return null;
+        }
+        StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
         return report;
     }
 
@@ -1032,14 +1037,8 @@ public class RepTrabajador extends GeneralPage {
         unidadRep = null;
         usuarioTx = "";
         _usuarioRep = null;
-//        fechaingresodesde = null;
-//        fechaingresohasta = null;
-//        stipoOrganismo = null;
-//        ssectorGobierno = null;
-//        sorganizacionestado = null;
-//        snivelGobierno = null;
-//        ssubentidad = null;
-//        stipoSubEntidad = null;
+        fechaingresode = "";
+        fechaingresoha = "";
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody());
     }
 }
