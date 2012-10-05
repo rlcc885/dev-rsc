@@ -262,8 +262,14 @@ public class ABMUsuario extends GeneralPage {
 
     @Log
     public GenericSelectModel<DatoAuxiliar> getDocumentoIdentidad() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+  //      List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+  //      return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+         List<Long> lista = new ArrayList<Long>();
+        lista.add(new Long(1));lista.add(new Long(2));
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla","DOCUMENTOIDENTIDAD"));
+        c.add(Restrictions.in("codigo", lista));
+        return new GenericSelectModel<DatoAuxiliar>(c.list(), DatoAuxiliar.class, "valor", "id", _access);       
     }
 
     @Log
@@ -513,6 +519,11 @@ public class ABMUsuario extends GeneralPage {
             errores = true;
         }
 
+        if (documentoIdentidadEdit.getCodigo()==1 && usuariotrabajadoredit.getNrodocumento().length()>8){
+            formmensaje.recordError("El número de documento debe tener 8 dígitos (y solo números)");
+            errores = true;
+        }
+        
         if (!noEditaUsuario) {
             // Busca usuarios con el mismo DNI ingresado
             if (!numeroDNIanterior.equals(usuariotrabajadoredit.getNrodocumento())) {
@@ -524,6 +535,8 @@ public class ABMUsuario extends GeneralPage {
                 }
             }
         }
+        
+        
         if (errores) {
             return zonasTotal();
         }
