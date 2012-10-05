@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.swing.JOptionPane;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
@@ -20,6 +21,7 @@ import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
+import org.apache.tapestry5.internal.services.ResponseImpl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
@@ -416,10 +418,10 @@ public class RepTrabajador extends GeneralPage {
         generarDisabled = false;
         organizacionBool = false;
         entidadTraba = null;
-        
+
         excel = Reportes.TIPO.EXCEL;
         pdf = Reportes.TIPO.PDF;
-        type = excel;
+        type = pdf;
         
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -727,12 +729,9 @@ public class RepTrabajador extends GeneralPage {
             c.add(Restrictions.eq("categoria_id", RepTrabajador.NINGUNO));
         return new GenericSelectModel<Reporte>(c.list(), Reporte.class, "nombre", "id", _access);
     }
-    
-    @Inject
-    private AlertManager alertManager;
-    
+
     @Log
-    StreamResponse onGenerarReporte() {
+    Object onGenerarReporte() {
         Reportes rep = new Reportes();
         Map<String, Object> parametros;
         try {
@@ -740,7 +739,7 @@ public class RepTrabajador extends GeneralPage {
                 parametros = retornarParametros(tipoReporteSelect.getCodigo()); 
             else throw new Exception ("Error en tipo reporte o formato reporte");
         } catch (Exception e) {
-            alertManager.alert(Duration.SINGLE, Severity.INFO, "No ha ingresado todos los datos obligatorios. " + e.getMessage());
+            System.out.println(e);
             return null;
         }
         StreamResponse report = rep.callReporte(retornarReporte(tipoReporteSelect.getCodigo()), type, parametros, context);
