@@ -29,7 +29,7 @@
                                 <div class="f-left">
                                     <t:label for="nuevo_nroDocumento"/>
                                     <input t:type="TextField" t:id="nuevo_nroDocumento" t:value="nuevo.nroDocumento" t:mixins="zoneUpdater" t:clientEvent="keyup"
-                                           t:event="nroDocChanged" t:zone="datosPersonalesZone"  size="20" t:validate="required, regexp"/>
+                                           t:event="nroDocChanged" t:zone="datosPersonalesZone"  size="20" t:validate="required"/>
                                 </div>
                         </t:zone>    
                                 <script>

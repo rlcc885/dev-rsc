@@ -70,12 +70,12 @@
                         <div class="f-left">
                             <label>Email Personal</label>
                             <input t:type="TextField" t:id="emailp" t:value="actual.emailPersonal" size="34" t:disabled="${vdatosubicacion}"
-                                   t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="epersonalChanged" t:zone="zonaGeneral"/>
+                                   t:validate="regexp,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="epersonalChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>Email Laboral</label>
                             <input t:type="TextField" t:id="emaill" t:value="actual.emailLaboral" size="34" t:disabled="${votros}"
-                                   t:validate="email,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="elaboralChanged" t:zone="zonaGeneral"/>
+                                   t:validate="regexp,maxlength=200" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="elaboralChanged" t:zone="zonaGeneral"/>
                         </div>
                         <div class="f-left">
                             <label>RUC</label>

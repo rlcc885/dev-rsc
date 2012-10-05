@@ -209,6 +209,7 @@ public class TrabajadorNuevo extends GeneralPage {
         disabledFechaCaducidad = true;
         disabledZoneApellidos = false;
         nuevo = new Trabajador();
+        nuevo.setConsultado_WS(false);
         regimenla = null;
         formulariomensajes.clearErrors();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
@@ -358,6 +359,7 @@ public class TrabajadorNuevo extends GeneralPage {
         cargo = null;
         tipovinculo = null;
         nuevo = new Trabajador();
+        nuevo.setConsultado_WS(false);
         fechaingreso = "";
         fechacaducidad = "";
         disabledFechaCaducidad = true;
@@ -610,6 +612,14 @@ public class TrabajadorNuevo extends GeneralPage {
     public Object onSuccessFromformulariodatos(){
     formulariomensajes.clearErrors();
     DatoAuxiliar temporalTipoDNI = nuevo.getDocumentoidentidad();
+    // VALIDACION DEL DOCUMENTO DE IDENTIDAD
+        if (temporalTipoDNI.getCodigo()==1){
+            if(nuevo.getNroDocumento().length()>8){ 
+                formulariomensajes.recordError("El número de documento debe tener 8 dígitos (y solo números)");   return actualizarZonas();}
+            try { Integer.parseInt(nuevo.getNroDocumento());} catch (NumberFormatException ex) {
+                formulariomensajes.recordError("El número de documento debe tener 8 dígitos (y solo números)"); return actualizarZonas();}            
+        }
+
     
     // BUSCAMOS EN LA DB
     Criteria c = session.createCriteria(Trabajador.class);
@@ -627,14 +637,14 @@ public class TrabajadorNuevo extends GeneralPage {
        System.out.println("NRO CONSULTAS - EN TOTAL "+parametro.getNroConsultasActuales());
        if (parametro.getNroConsultasActuales()==null ||parametro.getNroConsultasActuales()==0){
             formulariomensajes.recordError("Se superaron el # de consultas al service por el dia de hoy");
-            return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());        
+            return actualizarZonas();        
        }
        
     // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
        System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+oi.getPeticiones_ws_Reniec());
        if (oi.getPeticiones_ws_Reniec()==null || oi.getPeticiones_ws_Reniec()== 0){ 
             formulariomensajes.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
-            return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());            
+            return actualizarZonas();            
         }
         
 
@@ -664,7 +674,7 @@ public class TrabajadorNuevo extends GeneralPage {
                         
                         if (!fechaInicial.equals(fechaWS)){
                            formulariomensajes.recordError("Fecha de Caducidad Incorrecta"); // MENSAJES DE ERROR                         
-                           return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                           return actualizarZonas();
                         }
                         
 
@@ -677,13 +687,13 @@ public class TrabajadorNuevo extends GeneralPage {
                   else{
                       formulariomensajes.recordError(treniec.mensajeError); // MENSAJES DE ERROR EN CONSULTA
                       System.out.println(treniec.mensajeError);
-                      return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                      return actualizarZonas();
                   }                
             }
             else{
                 formulariomensajes.recordError(treniec.mensajeError); // MENSAJES DE ERROR TOKEN 
                 System.out.println(treniec.mensajeError);
-                return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                return actualizarZonas();
             }
 
           } catch (Exception ex) {
@@ -691,11 +701,14 @@ public class TrabajadorNuevo extends GeneralPage {
           }        
     }
     
-    return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+    return actualizarZonas();
     }
     
+    @Log
     private MultiZoneUpdate actualizarZonas(){
 
         return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
+    
+    
 }
