@@ -163,6 +163,7 @@ public class FamiliaresEditor {
 //        vdetalle = false;
         bdni = false;
         valsexo = null;
+        formulariomensajesf.clearErrors();
         accesos();
     }
 
@@ -338,12 +339,32 @@ public class FamiliaresEditor {
             return actualizar();
         }
       }
-        
+        // NUEVAS VALIDACIONES DNI
+        if (familiarActual.getTipoDocumento().getCodigo()==1){
+            if(familiarActual.getNroDocumento().length()>8){ 
+                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)");   return actualizar();}
+            try { Integer.parseInt(familiarActual.getNroDocumento());} catch (NumberFormatException ex) {
+                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)"); return actualizar();}            
+        }
         
         if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
             envelope.setContents("Debe ingresar la fecha");
             return actualizar();
         }else{
+            // validacion fecha de nacimiento
+            if (familiarActual.getFechaNacimiento().after(new Date())){
+                   formulariomensajesf.recordError("La fecha de nacimiento debe ser menor a la fecha actual");            
+                   return actualizar();
+            }
+            // validaciones con respecto al progenitor
+        /*    if (familiarActual.getParentesco().getCodigo()==1){
+                   if (familiarActual.getFechaNacimiento().after(actual.getFechaNacimiento())){
+                   formulariomensajesf.recordError("La fecha de nacimiento del progenitor debe ser menor a la del trabajador");
+                   }
+
+                    
+            }*/
+            
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
             session.saveOrUpdate(familiarActual);

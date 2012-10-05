@@ -71,7 +71,7 @@
                         <div class="f-left">
                             <label>* Número de Documento</label>
                             <input t:type="TextField" t:id="nroDocumento" t:value="familiarActual.nroDocumento" 
-                                       t:validate="regexp, required" disabled="${bdni}" size="33" />
+                                       t:validate="required" disabled="${bdni}" size="33" />
                         </div>
                         <div class="f-left">
                             <label> Estado Civil</label>
