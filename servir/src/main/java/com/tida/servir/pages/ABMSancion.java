@@ -560,6 +560,7 @@ public class ABMSancion  extends GeneralPage
      @Log
      public List<LkBusquedaEntidad> getListadoEntidades() {
          Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+         c.add(Restrictions.eq("estado", true));
          if (bdenoentidad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("denominacion", "%" + bdenoentidad + "%").ignoreCase()).
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).

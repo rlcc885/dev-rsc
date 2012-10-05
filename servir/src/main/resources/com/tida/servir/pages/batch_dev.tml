@@ -22,7 +22,7 @@
                     <div class="f-left input_grande">                
                         <label>Origen de los archivos </label>
                          <select t:type="select" t:id="select_origen"
-                            t:model="literal:1=Carga masiva de un organismo,2=Carga masiva de multiples organismos"
+                            t:model="literal:2=Carga masiva de un organismo,1=Carga masiva de multiples organismos"
                              value="origenArchivos" t:validate="required"/>
                     </div>
 
