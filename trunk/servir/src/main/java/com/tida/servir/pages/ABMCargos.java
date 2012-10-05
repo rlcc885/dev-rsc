@@ -560,7 +560,7 @@ public class ABMCargos extends GeneralPage {
                         + "JOIN RSC_UNIDADORGANICA S2 ON S2.ID=S1.UNIDADORGANICA_ID "
                         + "LEFT JOIN RSC_DATOAUXILIAR S3 ON S3.ID=S1.SITUACIONCAP_ID "
                         + "LEFT JOIN RSC_DATOAUXILIAR S4 ON S4.ID=S1.REGIMENLABORAL_ID "
-                        + "WHERE S2.ENTIDAD_ID='" + entidadUE.getId() + "' AND UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "')";
+                        + "WHERE S2.ENTIDAD_ID='" + entidadUE.getId() + "' AND S1.UNIDADORGANICA_ID='"+cargo.getUnidadorganica().getId()+"' AND UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "')";
                 if (editando) {
                     consulta += ("AND S1.ID!='" + cargo.getId() + "'");
                 }
