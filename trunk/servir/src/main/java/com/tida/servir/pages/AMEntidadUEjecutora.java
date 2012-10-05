@@ -1345,4 +1345,17 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("entiZone", entiZone.getBody());
         return mu;
     }
+
+ @Log   
+ public Boolean getTieneSubentidad(){
+
+     Criteria c = session.createCriteria(LkBusquedaEntidad.class);
+     c.add(Restrictions.eq("subId", listaentidad.getSubId()));
+     if (!c.list().isEmpty())
+     {
+         return true;
+     }  
+     return false;
+ }
+ 
 }
