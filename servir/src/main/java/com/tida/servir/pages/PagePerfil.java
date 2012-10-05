@@ -204,16 +204,29 @@ public class PagePerfil {
         if (lperfil.getUsuarioCollection().size() > 0) {
             formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen usuarios asignados al perfil.");
         } else {
-            if (lperfil.getMenuCollection().size() > 0) {
-                formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen opciones de menu asociados.");
-            } else {
+          //  if (lperfil.getMenuCollection().size() > 0) {
+          //      formulariomensajese.recordError("El Perfil no puede ser eliminado porque existen opciones de menu asociados.");
+          //  } else {
                 try {
+                    Criteria c = session.createCriteria(MenuPorPerfil.class);
+                    c.add(Restrictions.eq("perfilId", lperfil.getId()));                            
+                    List<MenuPorPerfil> lista = c.list();
+                    if (!c.list().isEmpty())
+                    {
+                    for (MenuPorPerfil men : lista)
+                      {
+                        Menuperfil perfilE = new Menuperfil(men.getMenuId(), men.getPerfilId());
+                        session.delete(perfilE);
+                      }
+                    }
                     session.delete(lperfil);
+                    envelope.setContents("Perfil Eliminado satisfactoriamente.");
+
                     nuevoPerfil();
                 } catch (Exception e) {
                     formulariomensajese.recordError("Otro error que pueda suceder :) ");
                 }
-            }
+          //  }
         }
       //  return this;
       return new MultiZoneUpdate("listaZone", listaZone.getBody()).add("mensajesEZone",mensajesEZone.getBody());  
