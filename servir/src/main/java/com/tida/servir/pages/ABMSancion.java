@@ -455,7 +455,7 @@ public class ABMSancion  extends GeneralPage
        
     // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
        System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+eue.getPeticiones_ws_Reniec());
-       if (eue.getPeticiones_ws_Reniec()==null || eue.getPeticiones_ws_Reniec()== 0){ 
+       if (usuario.getEntidad().getPeticiones_ws_Reniec()==null || usuario.getEntidad().getPeticiones_ws_Reniec()== 0){ 
             formvalidacion.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
             return zonasDatos();           
         }
@@ -465,6 +465,12 @@ public class ABMSancion  extends GeneralPage
             sre.obtenerToken();
             if(sre.validarToken()){
                 List<String> listare= sre.obtenerResultado(bnumerodocumento);
+                // DISMINUCION DE NRO DE PETICIONES
+                usuario.getEntidad().setPeticiones_ws_Reniec(usuario.getEntidad().getPeticiones_ws_Reniec()-1);
+                session.saveOrUpdate(usuario.getEntidad());
+                parametro.setNroConsultasActuales(parametro.getNroConsultasActuales()-1);
+                session.saveOrUpdate(parametro);
+                
                 if (sre.validarEstadoConsulta(listare.get(0))){
                     bnombres=listare.get(4);
                     bapaterno=listare.get(1);
@@ -761,6 +767,7 @@ public class ABMSancion  extends GeneralPage
         bregimen=null;
         bpuesto=null;
         bestadopuesto=null;
+        bentidad=null;
     }
     
     void limpiarsancion(){
