@@ -33,7 +33,9 @@ public class Solicitud_Acceso implements Serializable {
     private Date fec_resolucion;
     private String documento;
     private Boolean estado;
-
+    @ManyToOne
+    private Perfil perfil;
+    
     public String getDocumento() {
         return documento;
     }
@@ -83,6 +85,15 @@ public class Solicitud_Acceso implements Serializable {
         this.estado = estado;
     }
     
+    @ManyToOne
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+        
     
     @Override
     public int hashCode() {

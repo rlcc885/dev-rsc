@@ -79,8 +79,9 @@
                         <input t:type="TextField" t:id="cargo" value="bcargo" size="30" t:disabled="true"/>
                     </div>
                     <div class="f-left">
-                        <label>Perfil</label>
-                        
+                        <label>* Perfil</label>
+                        <input t:type="Select" t:id="perfil"                                
+                               t:value="bperfil" model="beanperfil" t:zone="solicitudZone" t:validate="required" t:blankOption="ALWAYS"/>
                     </div>
                  </div>            
              </fieldset>                

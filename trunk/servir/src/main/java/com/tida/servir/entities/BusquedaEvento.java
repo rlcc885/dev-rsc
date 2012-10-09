@@ -15,9 +15,14 @@ import org.apache.tapestry5.beaneditor.NonVisual;
     resultClass = BusquedaEvento.class,
     hints = {
         @QueryHint(name = "org.hibernate.callable", value = "true")
+    }),
+    @NamedNativeQuery(name = "callSpEventoSolicitud",
+    query = "CALL SP_EVENTOSOLICITUD(?,:in_rol_id,:in_tipoevento_id,:in_entidad_id)",
+    resultClass = BusquedaEvento.class,
+    hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
     })
-  })
- 
+  }) 
 
 @Entity
 @Table(name = "LkBusquedaEvento")
