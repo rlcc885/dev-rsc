@@ -4,15 +4,23 @@
  */
 package helpers;
 
+import com.tida.servir.entities.DirectorioReporte;
+import com.tida.servir.entities.LkBusquedaCargo;
+import com.tida.servir.entities.LkBusquedaUnidad;
 import com.tida.servir.entities.Reporte;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Response;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -26,7 +34,6 @@ public class ReportesFormulario {
     
     private static String JRE = "java ";
     private static String REPORTE_EXEC = "Reporte.jar";
-    private static String REPORTE_DIR = "reportes/";
     
     public String reportesPath;
     public Reporte reporte;
@@ -34,15 +41,17 @@ public class ReportesFormulario {
     Map<String, Object> parametros;
     public Process p;
     
-    public StreamResponse callReporte(Reporte report, TIPO reptip, Map<String, Object> params, Context context) {
+    public StreamResponse callReporte(Reporte report, TIPO reptip, Map<String, Object> params, Session session) throws Exception {
         reporte = report;
         reptipo = reptip;
         parametros = params;
-        try {
-            reportesPath = context.getRealFile("/").getCanonicalPath();
-        } catch (IOException ex) {
-            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        Criteria c = session.createCriteria(DirectorioReporte.class);
+        List<DirectorioReporte> list = c.list();
+        
+        if (list.size() < 1) throw new Exception ("No se ha encontrado el directorio de los reportes.");
+        
+        reportesPath = list.get(list.size() - 1).getDir();
 
         return new StreamResponse() {
 
@@ -56,19 +65,17 @@ public class ReportesFormulario {
                     String params = "";
                     response.setHeader("Content-Disposition", "inline; filename=" + reporte.getCodigo() + (reptipo == TIPO.PDF? ".pdf":".xls"));
                 try {
-                    reportesPath += "/" + REPORTE_DIR;
                     for(String param: parametros.keySet()) {
                         if(parametros.get(param).getClass().equals(String.class))
                             params += param + " " + URLEncoder.encode((String)parametros.get(param), "UTF-8") + " ";
                         else
                             params += param + " " + URLEncoder.encode(((Long) parametros.get(param)).toString(), "UTF-8") + " ";
                     }
+
                     System.out.println("---------------- Ejecutado: "+ JRE + " -cp " + reportesPath + "lib -jar " +
                             reportesPath +  REPORTE_EXEC + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params);
                     p = Runtime.getRuntime().exec(JRE + " -cp " + reportesPath + "lib -jar " +
                             reportesPath +  REPORTE_EXEC + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params );
-//                    p = Runtime.getRuntime().exec(JRE + " -cp " + reportesPath + "lib -jar " +
-//                            "C:/Users/servir/Documents/NetBeansProjects/reportes" + " " + reporte.getCodigo() + ".prpt" + " " + (reptipo == TIPO.PDF? "PDF":"XLS") + " " + params );
 
                     DataGobbler outputGobbler = new DataGobbler(p.getInputStream(), sb, OUT_TYPE);
                     outputGobbler.start();

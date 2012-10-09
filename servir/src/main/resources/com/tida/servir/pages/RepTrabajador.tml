@@ -141,15 +141,15 @@
                         </div>
                     </t:if>
                 </div>
-                
+
+                <t:eventLink t:zone="tipoReporteZone" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</t:eventLink>
+                <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar Formulario" t:mixins="confirm"/>
+
                 <div>
                     <t:if test="showLinkReport">
                         <t:eventLink t:event="verReporte" href="#" class="button f-right" style="color: #FFFFFF" target="_blank">Ver Reporte</t:eventLink>
                     </t:if>
                 </div>
-
-                <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar Formulario" t:mixins="confirm"/>
-                <t:eventLink t:zone="tipoReporteZone" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</t:eventLink>
             </fieldset>
         </t:if>
         </t:form>
