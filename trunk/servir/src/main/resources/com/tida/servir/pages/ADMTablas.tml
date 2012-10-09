@@ -25,8 +25,8 @@
 
        <div class="f-wrap" style="margin-left: 70px;">
          <div class="f-left">
-           <label>* Regimen Laboral/Contractual</label>
-           <t:select model="beanRegimen" value="valregimen" t:id="regimenlaboral" t:zone="tiposancionZone"/>
+           <label>* Régimen Laboral/Contractual</label>
+           <t:select model="beanRegimen" value="valregimen" t:id="regimenlaboral" t:zone="tiposancionZone" t:validate="required"  t:blankOption="ALWAYS"/>
          </div>
        </div>           
            
@@ -50,7 +50,6 @@
        row="sancionregimen" 
        rowsPerPage="10"
        pagerPosition="bottom"
-       
        t:exclude="id,tiposancion,tiposancionId,reglaboralId,opcion"
        t:add="tipoDeSancion">
        
@@ -62,9 +61,13 @@
             </p:tipoDeSancionCell>
 
         </t:grid>
+        <div class="f-right">
+           <b>${nroregistros} Registros.</b>
+        </div>
+        <br/>
 
        </div>
-
+       <br/>
        <div class="f-wrap" style="margin-right: 70px;">
          <t:if test="${vmodificar}">
            <div class="f-right">

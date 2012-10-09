@@ -78,7 +78,7 @@ public Object onValueChangedFromregimenlaboral(DatoAuxiliar dato){
     opcionCarga =true;
 
 
-    if (dato != null){mostrar=true;}else{mostrar=false;}
+    if (dato != null){mostrar=true;}else{mostrar=false;nroregistros=String.valueOf(0);}
     
     return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
 }
@@ -104,7 +104,8 @@ public Object onLimpiar(){
     opcionCarga=true;
     listainicial.clear();
     listaSancionesModificables.clear();
-    
+    nroregistros=String.valueOf(0);
+    mostrar=false;
     return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
 
 }
@@ -134,9 +135,11 @@ public List<LkSancionRegimen> getListaTablas(){
     return null;
     
 }
-
+    @Persist
+    @Property
+    private String nroregistros;
+    
 @Log
-
     @SuppressWarnings("unchecked")
 public List<LkSancionRegimen> cargarPorSQL(){
      
@@ -144,6 +147,7 @@ public List<LkSancionRegimen> cargarPorSQL(){
    query.setParameter("reg_id", valregimen.getId());
    listaSancionesModificables = query.list();
    listainicial = query.list();
+   nroregistros = Integer.toString(query.list().size());
    return query.list();
 }
 
@@ -184,7 +188,8 @@ public void setuprender()
 
     if (setup==null||setup==1){
     System.out.println("PRIMERA CARGA");
-    
+        nroregistros=String.valueOf(0);
+
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -274,7 +279,7 @@ for(LkSancionRegimen num : listainicial)
 
     //
 //***    
-envelope.setContents("Tipos de sancion asignados Correctamente");    
+envelope.setContents("Tipos de Sanción asignados Correctamente");    
 
 //
     valregimen=null;
@@ -284,6 +289,8 @@ envelope.setContents("Tipos de sancion asignados Correctamente");
     mostrar=false;
 //
 opcionguardar=false;
+
+    nroregistros=String.valueOf(0);
 
 //****
 return new MultiZoneUpdate("tiposancionZone",tiposancionZone.getBody()).add("mensajesZone", mensajesZone.getBody());
