@@ -305,6 +305,7 @@ public class ABMSancion  extends GeneralPage
             bamaterno=nuevasancion.getTrabajador().getApellidoMaterno();
             bregimen=nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral();
             bpuesto=nuevasancion.getCargoasignado().getCargoxunidad().getDen_cargo();
+            bentidad=nuevasancion.getTrabajador().getEntidad().getDenominacion();
             if(nuevasancion.getCargoasignado().getEstado())
                 bestadopuesto="Activo";
            else
