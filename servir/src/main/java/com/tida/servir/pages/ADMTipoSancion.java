@@ -270,7 +270,7 @@ public class ADMTipoSancion
 
             editando = false;
             limpiar();
-            envelope.setContents("Tipo de sancion creado / modificado con exito");         
+            envelope.setContents("Tipo de Sanción creado / modificado con exito");         
         
         
         return actualizarZonas();
@@ -289,9 +289,13 @@ public class ADMTipoSancion
     @Log
      public List<LkTipoSancion> getListadoTipoSanciones() {
         Criteria c2 = session.createCriteria(LkTipoSancion.class);
+        nroregistros = Integer.toString(c2.list().size());
         return c2.list();
     }
-	
+    
+    @Persist
+    @Property
+    private String nroregistros;	
      
     @Log
     //para obtener datatos de la categoria de la sancion
@@ -422,7 +426,7 @@ public class ADMTipoSancion
     @CommitAfter
     Object onBorrarDato(TipoSancion dato) {
        session.delete(dato);
-       envelope.setContents("Tipo de Sancion Eliminado");
+       envelope.setContents("Tipo de Sanción Eliminado");
        limpiar();
         return actualizarZonas();
     }
@@ -438,7 +442,7 @@ public class ADMTipoSancion
            return "NO TIENE";
        }
 
-       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DIAS ";}
+       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DÍAS ";}
        if(tipsancion.getMeses()!=0){cadena+=tipsancion.getMeses()+" MESES ";}
        if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÑOS ";}
     
@@ -535,7 +539,7 @@ public class ADMTipoSancion
 
         if (max < min)
         {
-            formularioMensajes.recordError("El Periodo de Inhabilitacion Maximo debe ser mayor que el Periodo Minimo");
+            formularioMensajes.recordError("El Periodo de Inhabilitación Máximo debe ser mayor que el Periodo Minimo");
             return false;
         }
         //***************************
@@ -552,7 +556,7 @@ public class ADMTipoSancion
         
         if (!c.list().isEmpty())
         {
-            formularioMensajes.recordError("El Tipo de Sancion deberia tener diferente Categoria");
+            formularioMensajes.recordError("El Tipo de Sanción deberia tener diferente Categoría");
             return false;            
         }
         //***************************
@@ -561,7 +565,7 @@ public class ADMTipoSancion
         if (tiposancionactual.getTipoInhabilitacion().getCodigo()==2)
         {
             if (max==0){
-                formularioMensajes.recordError("Periodo Maximo invalido");
+                formularioMensajes.recordError("Periodo Máximo invalido");
                 return false;
                 }
         }

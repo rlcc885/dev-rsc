@@ -34,7 +34,7 @@
                    <fieldset> 
                    <div class="f-wrap">
                        <div class="f-left">
-                           <label>* Descripción</label>
+                           <label>* Descripción</label><t:if test="false"><t:label for="descripcion"/></t:if>
                            <input t:type="textfield" t:id="descripcion" t:value="valdescripcion" size="85" t:validate="required"  t:disabled="${vdetalle}"/>
                        </div>
                        <div class="f-left">
@@ -46,14 +46,14 @@
 
                    <div class="f-wrap" style="width: 600px;">
                        <div class="f-left">
-                           <label>* Tipo de Inhabilitación</label>
-                           <select t:type="select" t:id="tipoinhabilitacion" t:value="valtipo" t:zone="periodoZone" model="beanTipo" t:validate="required" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
+                           <label>* Tipo de Inhabilitación</label><t:if test="false"><t:label for="tipoInhabilitacion" /></t:if>
+                           <select t:type="select" t:id="tipoInhabilitacion" t:value="valtipo" t:zone="periodoZone" model="beanTipo" t:validate="required" t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                        </div>
                        <div class="f-right">
                            <fieldset>
                                <legend>* Tiempo de Visualización </legend>
                                <div class="f-left">
-                                   <label><center>Dias</center></label>                                   
+                                   <label><center>Días</center></label>                                   
                                <input t:type="textfield" t:id="tiempovisualizacion1" t:value="valtiempoD" size="10" t:validate="regexp,required,max=365,min=0" t:disabled="${vdetalle}"/>                                   
                                </div>
                                <div class="f-left">
@@ -73,7 +73,7 @@
                    <div class="f-wrap" style="width: 600px;">
                        <div class="f-left">
                            <fieldset>
-                               <legend>* Periodo de Inhabilitacion Min</legend>
+                               <legend>* Periodo de Inhabilitación Min</legend>
                                <div class="f-left">                               
                                    <label><center>Días</center></label>
                                <input t:type="textfield" t:id="ndias1" t:value="valdiasMin" size="10" t:validate="regexp,required,max=365,min=0" t:disabled="${detallemin}"/>
@@ -90,7 +90,7 @@
                        </div>
                        <div class="f-right">
                            <fieldset>
-                               <legend>* Periodo de Inhabilitacion Max</legend>
+                               <legend>* Periodo de Inhabilitación Max</legend>
                                <div class="f-left">                               
                                    <label><center>Días</center></label>
                                <input t:type="textfield" t:id="ndias2" t:value="valdiasMax" size="10" t:validate="regexp,required,max=365,min=0" t:disabled="${detallemax}"/>
@@ -191,7 +191,10 @@
 				</t:if>
 			</p:accionesCell> 
 		</t:grid>            
-            
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>            
             
             
         </div>
