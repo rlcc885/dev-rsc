@@ -443,6 +443,23 @@ public class ABMSancion  extends GeneralPage
           formvalidacion.recordError("Persona ya Registrada");          
           return zonasDatos();
       }
+      Criteria c;
+      // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES TOTALES
+       c = session.createCriteria(ConfiguracionAcceso.class);
+       ConfiguracionAcceso parametro =  (ConfiguracionAcceso)c.uniqueResult();
+       System.out.println("NRO CONSULTAS - EN TOTAL "+parametro.getNroConsultasActuales());
+       if (parametro.getNroConsultasActuales()==null ||parametro.getNroConsultasActuales()==0){
+            formvalidacion.recordError("Se superaron el # de consultas al service por el dia de hoy");
+            return zonasDatos();    
+       }
+       
+    // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
+       System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+eue.getPeticiones_ws_Reniec());
+       if (eue.getPeticiones_ws_Reniec()==null || eue.getPeticiones_ws_Reniec()== 0){ 
+            formvalidacion.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
+            return zonasDatos();           
+        }
+      
         try {
             ServicioReniec sre=new ServicioReniec();
             sre.obtenerToken();
