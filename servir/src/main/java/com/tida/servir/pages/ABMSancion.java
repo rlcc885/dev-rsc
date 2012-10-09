@@ -566,7 +566,7 @@ public class ABMSancion  extends GeneralPage
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("ñ", "n") + "%").ignoreCase()).
                     add(Restrictions.like("denominacion", "%" + bdenoentidad.replaceAll("n", "ñ") + "%").ignoreCase()));
          }
-         nroregistros = Integer.toString(c.list().size());
+         nroentidad = Integer.toString(c.list().size());
          return c.list();
     }
      
@@ -579,7 +579,13 @@ public class ABMSancion  extends GeneralPage
      
     @Persist
     @Property
-    private String nroregistros; 
+    private String nroentidad; 
+    @Persist
+    @Property
+    private String nrotrabajador;
+    @Persist
+    @Property
+    private String nroautoridad;
     
     @Log
     public List<LkBusquedaTrabajadorSan> getTrabajadores() {
@@ -594,7 +600,8 @@ public class ABMSancion  extends GeneralPage
             if(entidadbusqueda!=null){
                 c.add(Restrictions.eq("entidad_id", entidadbusqueda.getId()));
             }
-        }        
+        }
+        nrotrabajador = Integer.toString(c.list().size());
         return c.list();
     }
     
@@ -622,9 +629,10 @@ public class ABMSancion  extends GeneralPage
         bamaterno=btra.getApellidoMaterno();
         bregimen=btra.getRegimenlaboral();
         bpuesto=btra.getDen_cargo();
-        bestadopuesto=btra.getEstadocargo();
+        bestadopuesto=btra.getEstadocargo();        
         nuevasancion.setCargoasignado((CargoAsignado) session.load(CargoAsignado.class, btra.getId()));
         nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getTrabajador_id()));
+        bentidad=nuevasancion.getTrabajador().getEntidad().getDenominacion();
         nuevasancion.setPersona(null);
         nuevapersona=new Persona_Sancion();
         calcular(Integer.parseInt(btra.getTiempo_dias()));
@@ -636,7 +644,8 @@ public class ABMSancion  extends GeneralPage
         Criteria c = session.createCriteria(LkBusquedaFuncionario.class);
         if (bnomautoridad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad + "%").ignoreCase()).add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombrefuncionario","%"+ bnomautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
-        }     
+        } 
+        nroautoridad=Integer.toString(c.list().size());
         return c.list();
     }
     
@@ -760,19 +769,16 @@ public class ABMSancion  extends GeneralPage
     }
     
     @Log
-    void onSelectedFromReset(){
-        elemento=6;
+    Object onReset(){
+        nuevasancion=new Sancion();
+        limpiarbusqueda();
+        limpiarsancion();
+        return zonasDatos();
     }
     
     @Log
     @CommitAfter
-    Object onSuccessFromformsancion(){
-     if(elemento==6){
-         nuevasancion=new Sancion();
-         limpiarbusqueda();
-         limpiarsancion();
-         return zonasDatos();
-     }else{        
+    Object onSuccessFromformsancion(){            
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
@@ -903,7 +909,6 @@ public class ABMSancion  extends GeneralPage
         limpiarbusqueda();
         limpiarsancion();
         return zonasDatos();
-     }
     }  
     
     @Log
@@ -1006,9 +1011,10 @@ public class ABMSancion  extends GeneralPage
             else
                 mostrardocu=false;
         }
-        else
+        else{
             mostrardocu=false;
-        
+        }
+        limpiarbusqueda();        
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody());
     } 
 

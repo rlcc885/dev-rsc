@@ -52,9 +52,6 @@ public class ABMSuspension  extends GeneralPage {
     private Sancion modificasancion;
     @Inject
     private ComponentResources _resources;
-    @Property
-    @Persist
-    private UsuarioAcceso usua;
     
     //campos modal
     @Property
@@ -99,9 +96,6 @@ public class ABMSuspension  extends GeneralPage {
     @Property
     @Persist
     private boolean entidadsele;
-    @Property
-    @Persist
-    private Boolean vregistrar;
     
     @Log
     public Sancion getModificasancion() {
@@ -125,19 +119,7 @@ public class ABMSuspension  extends GeneralPage {
     private void inicio() {
         logueo();
         nuevasuspension=new Suspension(); 
-        nuevasuspension.setSancion(modificasancion);
-        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_login", _usuario.getLogin());
-        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        List result = query.list();
-        if (result.isEmpty()) {
-            System.out.println(String.valueOf("Vacio:"));
-        } else {
-            usua = (UsuarioAcceso) result.get(0);            
-            if (usua.getAccesoreport() == 1) {
-                vregistrar = true;
-            }
-        }        
+        nuevasuspension.setSancion(modificasancion);           
     }
     
     
@@ -208,7 +190,14 @@ public class ABMSuspension  extends GeneralPage {
     }
     
     Object onReset(){
-        nuevasuspension=new Suspension();
+//        nuevasuspension.tipo_documentoini
+//        nuevasuspension.numdocini
+//        nuevasuspension.tipo_documentonoti 
+//        nuevasuspension.numdocnoti
+//        nuevasuspension.juzgadonoti
+//        nuevasuspension.tipo_documentofin
+        nuevasuspension=new Suspension(); 
+        nuevasuspension.setSancion(modificasancion);  
         bentidadinicio=null;
         fechadocini=null;
         fechadocnoti=null;        
