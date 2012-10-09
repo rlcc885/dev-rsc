@@ -127,7 +127,9 @@ public class ABMSolicitud
     private long traba;
     @Persist 
     private long entidad;
-    
+    @Property
+    @Persist
+    private Perfil bperfil;
     
     // inicio de la pagina
     @Log
@@ -148,6 +150,16 @@ public class ABMSolicitud
         List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
         return new com.tida.servir.services.GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
+    
+    @Log
+    public com.tida.servir.services.GenericSelectModel<Perfil> getBeanperfil() {
+        List<Perfil> list;
+        Criteria c = session.createCriteria(Perfil.class);
+        c.add(Restrictions.in( "id", new Long[] { 9L, 10L} ));
+        list = c.list();
+        return new com.tida.servir.services.GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
+    }
+    
     @Log
     public List<LkBusquedaTrabajador> getTrabajador(String nrodocumento) throws ParseException {
         Criteria criterio = session.createCriteria(LkBusquedaTrabajador.class);
@@ -294,7 +306,8 @@ public class ABMSolicitud
         file.write(nuevo);
         nuevasolicitud.setDocumento(path + nombreArchivos);
         nuevasolicitud.setTrabajador(trabajador);
-        nuevasolicitud.setEstado(false);     
+        nuevasolicitud.setEstado(false);    
+        nuevasolicitud.setPerfil(bperfil);
         if (fecharesolu != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {

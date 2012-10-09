@@ -59,7 +59,8 @@
                     </div>
                     <div class="f-left">
                         <label>Perfil</label>
-                        
+                        <input t:type="Select" t:id="perfil"                                
+                               t:value="nuevasolicitud.perfil" model="beanperfil" t:zone="solicitudZone" t:disabled="true"/>
                     </div>
                  </div>
             </fieldset>

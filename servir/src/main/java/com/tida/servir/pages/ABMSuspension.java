@@ -190,12 +190,6 @@ public class ABMSuspension  extends GeneralPage {
     }
     
     Object onReset(){
-//        nuevasuspension.tipo_documentoini
-//        nuevasuspension.numdocini
-//        nuevasuspension.tipo_documentonoti 
-//        nuevasuspension.numdocnoti
-//        nuevasuspension.juzgadonoti
-//        nuevasuspension.tipo_documentofin
         nuevasuspension=new Suspension(); 
         nuevasuspension.setSancion(modificasancion);  
         bentidadinicio=null;

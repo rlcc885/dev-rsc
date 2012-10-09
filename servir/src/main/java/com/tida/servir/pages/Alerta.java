@@ -7,6 +7,7 @@ import com.tida.servir.entities.Usuario;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
+import helpers.Logger;
 import java.util.List;
 import org.apache.tapestry5.annotations.*;
 
@@ -186,10 +187,9 @@ public class Alerta  extends GeneralPage {
     
     @Log
     public List<BusquedaEvento> getSolicitudesservir() {
-        Query query = session.getNamedQuery("callSpEventoAcceso");
+        Query query = session.getNamedQuery("callSpEventoSolicitud");
         query.setParameter("in_rol_id",_usuario.getRolid());
-        query.setParameter("in_tipoevento_id",17);
-        query.setParameter("in_perfil_id",""); 
+        query.setParameter("in_tipoevento_id",Logger.SOLICITUD_SANCION); 
         query.setParameter("in_entidad_id","");  
         List result = query.list(); 
         
@@ -202,10 +202,9 @@ public class Alerta  extends GeneralPage {
     
     @Log
     public List<BusquedaEvento> getSolicitudesentidad() {
-        Query query = session.getNamedQuery("callSpEventoAcceso");
+        Query query = session.getNamedQuery("callSpEventoSolicitud");
         query.setParameter("in_rol_id",_usuario.getRolid());
-        query.setParameter("in_tipoevento_id",17);
-        query.setParameter("in_perfil_id",""); 
+        query.setParameter("in_tipoevento_id",Logger.SOLICITUD_SANCION);
         query.setParameter("in_entidad_id",entidadUE.getId());  
         List result = query.list(); 
         

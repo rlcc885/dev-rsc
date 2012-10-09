@@ -7,9 +7,11 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
+import helpers.Encriptacion;
 import helpers.Helpers;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,6 +80,15 @@ public class RespuestaSolicitud  extends GeneralPage
     }
     
     @Log
+    public com.tida.servir.services.GenericSelectModel<Perfil> getBeanperfil() {
+        List<Perfil> list;
+        Criteria c = session.createCriteria(Perfil.class);
+        c.add(Restrictions.in( "id", new Long[] { 9L, 10L} ));
+        list = c.list();
+        return new com.tida.servir.services.GenericSelectModel<Perfil>(list, Perfil.class, "descperfil", "id", _access);
+    }
+    
+    @Log
     @CommitAfter
     Object onSuccessFromformAltasolicitud(){ 
         nuevasolicitud.setEstado(Boolean.TRUE);
@@ -88,11 +99,23 @@ public class RespuestaSolicitud  extends GeneralPage
         Query query = session.createSQLQuery(hql);
         int rowCount = query.executeUpdate();
         session.flush();
+        if(getUsuarios().size()==0){
+            Usuario usuarionuevo = new Usuario();
+            usuarionuevo.setEstado(1);
+            usuarionuevo.setIntentos_fallidos(0L);
+            usuarionuevo.setLogin(nuevasolicitud.getTrabajador().getNroDocumento());
+            usuarionuevo.setEntidad(nuevasolicitud.getTrabajador().getEntidad());
+            usuarionuevo.setRolid(1L);
+            usuarionuevo.setTrabajador(nuevasolicitud.getTrabajador());
+            usuarionuevo.setFecha_creacion(new Date());
+            usuarionuevo.setMd5Clave(Encriptacion.encriptaEnMD5(nuevasolicitud.getTrabajador().getNroDocumento()));
+            session.save(usuarionuevo);
+            session.flush();
+        }
         Perfilusuario permiso = new Perfilusuario();
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK();
-//        System.out.println("usuariooooooo"+usuario.getId());
         perfilusuariopk.setUsuarioId(getUsuarios().get(0).getId());
-        perfilusuariopk.setPerfilId((long)515);
+        perfilusuariopk.setPerfilId(nuevasolicitud.getPerfil().getId());
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
         return "Alerta";
