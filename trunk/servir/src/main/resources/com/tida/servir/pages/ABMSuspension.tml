@@ -140,11 +140,9 @@
                     <i>(Máximo 500 caracteres)</i>
                 </fieldset>
                 <div class="actions">
-                    <t:if test="${vregistrar}">
-                        <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                    </t:if>
-                    <t:eventLink t:event="reset" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="busquedamodalZone">
-                        <span t:type="any">
+                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                    <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="suspensionZone">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Limpiar Formulario
                         </span> 
                     </t:eventLink>
