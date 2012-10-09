@@ -1,0 +1,94 @@
+<html t:type="layout" title="Servir - Solicitud de Acceso"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<!--     <h2> Selección de Entidad /U. Ejecutora </h2>-->
+     <div class="box-background-title">
+         <span class="box-title">Solicitud de Acceso</span></div>
+    <div class="box">
+        <t:zone t:id="solicitudZone"> 
+           <form t:type="form" t:id="formAltasolicitud" t:zone="solicitudZone">
+            <fieldset>
+            <legend>Datos del Usuario</legend>
+                <div class="f-wrap">
+                     <div class="f-left">    
+                        <label>* Entidad/Sub Entidad</label>
+                        <input t:type="TextField" t:id="entidad"
+                                    t:value="trabajador.entidad" t:disabled="true" style="width: 400px;"/>                            
+                    </div>                   
+                    <div class="f-left">
+                        <a onClick="javascript: mostrar();" class="iconsearch"></a>                       
+                    </div>
+                 </div>
+                 <div class="f-wrap">
+                     <div class="f-left">
+                        <label>* Tipo de Documento</label>
+                        <input t:type="Select" t:id="tipo_documento"                                
+                               t:value="bdocumentoidentidad" model="beandocumentoidentidad" t:zone="solicitudZone" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Número de Documento</label>
+                        <input t:type="TextField" t:id="nrodocumento" value="trabajador.nroDocumento" size="30" t:disabled="true"/>
+                    </div>
+                 </div>                 
+                 <div class="f-wrap">                     
+                    <div class="f-left">
+                        <label>Apellido Paterno</label>
+                        <input t:type="TextField" t:id="apaterno" value="trabajador.apellidoPaterno" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Apellido Materno</label>
+                        <input t:type="TextField" t:id="amaterno" value="trabajador.apellidoMaterno" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Nombres</label>
+                        <input t:type="TextField" t:id="nombres" value="trabajador.nombres" size="30" t:disabled="true"/>
+                    </div>
+                 </div>
+                 <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Email</label>
+                        <input t:type="TextField" t:id="email" value="trabajador.emailLaboral" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Telefono</label>
+                        <input t:type="TextField" t:id="telefono" value="trabajador.telefonofijo" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Cargo/Puesto</label>
+                        <input t:type="TextField" t:id="cargo" value="trabajador.cargo" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Perfil</label>
+                        
+                    </div>
+                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Cargo/Puesto</legend>                
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Número Resolución</label>
+                            <input t:type="TextField" t:id="num_resolu" value="nuevasolicitud.num_resolucion" size="30" t:disabled="true"/>
+                        </div>      
+                        <div class="f-left">
+                            <label>* Fecha</label>
+                            <input t:type="TextField" t:id="fecha_resolucion" t:value="fecharesolu" size="25" t:disabled="true"/>
+                        </div>
+                        <div class="f-left">
+                            <label><a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar documento</a></label>
+                        </div>
+                    </div>             
+            </fieldset>
+               <div class="actions">              
+                    <input t:type="Submit" t:id="save" value="Aprobar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>            
+                    <t:eventLink t:event="cancel" href="#" class="button f-right">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                            Cancelar
+                        </span> 
+                    </t:eventLink>
+                </div>
+         </form>            
+        </t:zone>
+
+    </div>
+</html>

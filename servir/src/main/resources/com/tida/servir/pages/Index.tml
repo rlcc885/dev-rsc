@@ -40,7 +40,7 @@
                         <a t:type="pagelink" page="RecuperarClave" title="Recuperar Clave">Recuperar Clave</a>
                     </div>
                     <div id="acceso-sancion">
-                        <a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>
+                        <a t:type="pagelink" t:page="ABMSolicitud" href="#">Solicitud de acceso al módulo de sanciones</a>
                     </div>
                     <div id="consulta-ciudadana">
                         <a href="http://172.16.19.56/Consultas" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
@@ -50,10 +50,12 @@
                         <a t:type="pagelink" page="RecuperarClave" title="Recuperar Clave">Recuperar Clave</a>
                     </div>
                     <div id="acceso-sancion-enlace">
-                        <a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>
+                        <a t:type="pagelink" t:page="ABMSolicitud" href="#">Solicitud de acceso al módulo de sanciones</a>
+                        <!--<a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>-->
                     </div>
                     <div id="consulta-ciudadana-enlace">
                         <a href="http://172.16.19.56/Transparencia" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
+                        
                     </div>
                 </div>
             </div>

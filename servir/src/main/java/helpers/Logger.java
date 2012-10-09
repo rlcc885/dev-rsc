@@ -24,7 +24,8 @@ public class Logger {
     public static final long MODIFICACION_PRODUCCION = 13;
     public static final long MODIFICACION_FAMILIAR = 14;
     public static final long MODIFICACION_MERITOS = 15;
-    public static final long MODIFICACION_DOCUMENTOS = 16;    
+    public static final long MODIFICACION_DOCUMENTOS = 16;  
+    public static final long SOLICITUD_SANCION = 17;
     
     public static final String LOGIN_STATUS_OK = "OK";
     public static final String LOGIN_STATUS_ERROR = "ERROR";
@@ -101,6 +102,7 @@ public class Logger {
     public static final String MOTIVO_FAMILIARES = "FAMILIARES DEL TRABAJADOR MODIFICADOS";
     public static final String MOTIVO_LABORALES_MERITOS = "METIROS/DEMERITOS DEL TRABAJADOR MODIFICADOS";
     public static final String MOTIVO_DOCUMENTOS_DOCUMENTOS = "DOCUMENTOS DEL TRABAJADOR MODIFICADOS";
+    public static final String MOTIVO_SOLICITUD_SANCION = "SOLICITUD DE ACCESO A SANCIONES";
     @Inject
     private HttpServletRequest requestGlobal;
 
