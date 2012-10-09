@@ -38,6 +38,20 @@
                         <div class="f-right"><b>${nroeventos} Registros.</b></div><br/>
 
                     </div>
+                    <br/><br/>
+                    <h2>Solicitudes de Acceso al Módulo de Sanciones</h2>
+                    <div id = "tabla_cargo">
+                        <t:grid source="solicitudesservir" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventoservir3" reorder="nombres,entidad,fechaevento" exclude="desctipo">
+                            <t:parameter name="empty">
+                                <div class="no-info">No se han registrado solicitudes</div>
+                            </t:parameter>
+                            <p:accionesCell>                           
+                                    <a t:type="pagelink" t:page="${eventoservir3.pagina}" t:context="eventoservir3.tabla" href="#">Aprobar</a>
+                            </p:accionesCell>
+                        </t:grid>                        
+                        <div class="f-right"><b>${nroeventosoliser} Registros.</b></div><br/>
+                    </div>
                 </t:form>
             </t:if>
         </div> <!-- tabla eventos -->
@@ -56,11 +70,23 @@
                             <p:accionesCell>                           
                                     <a t:type="pagelink" t:page="${eventoentidad.pagina}" t:context="eventoentidad.trabajadorid" href="#">Detalle</a>
                             </p:accionesCell>
-                        </t:grid>
-                        
+                        </t:grid>                        
                         <div class="f-right"><b>${nrotrabajadores} Registros.</b></div><br/>
-
-                    </div>                    
+                    </div> 
+                    <br/><br/>
+                    <h2>Solicitudes de Acceso al Módulo de Sanciones</h2>
+                    <div id = "tabla_cargo">
+                        <t:grid source="solicitudesentidad" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
+                                row="eventoentidad2" reorder="nombres,entidad,fechaevento" exclude="desctipo">
+                            <t:parameter name="empty">
+                                <div class="no-info">No se han registrado solicitudes</div>
+                            </t:parameter>
+                            <p:accionesCell>                           
+                                    <a t:type="pagelink" t:page="${eventoentidad2.pagina}" t:context="eventoentidad2.tabla" href="#">Aprobar</a>
+                            </p:accionesCell>
+                        </t:grid>                        
+                        <div class="f-right"><b>${nroeventosolienti} Registros.</b></div><br/>
+                    </div>
                 </t:form>
             </t:if>
         </div> <!-- tabla eventos -->
@@ -86,17 +112,5 @@
                     </div>                    
                 </t:form>
             </t:if>
-        </div> <!-- tabla eventos -->
-        <!--
-        <div id = "tabla_cargo">
-                        <t:grid source="cargos" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom"
-                                row="le" >
-                            <t:parameter name="empty">
-                                <div class="no-info">No se han registrado eventos</div>
-                            </t:parameter>
-                            <p:accionesCell>                           
-                                   
-                            </p:accionesCell>
-                        </t:grid>
-                    </div>-->
+        </div>
 </html>

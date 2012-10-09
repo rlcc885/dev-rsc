@@ -68,7 +68,13 @@ public class Alerta  extends GeneralPage {
     private BusquedaEvento eventoservir2;
     @Property
     @Persist
+    private BusquedaEvento eventoservir3;
+    @Property
+    @Persist
     private BusquedaEvento eventoentidad;
+    @Property
+    @Persist
+    private BusquedaEvento eventoentidad2;
     @Property
     @Persist
     private BusquedaEvento eventosistemas;
@@ -95,19 +101,25 @@ public class Alerta  extends GeneralPage {
             mostrarse=false;
         }        
     }
-@Property    
-@Persist
-private String nroeventos;
-@Property    
-@Persist
-private String nrotrabajadoresservir;
-@Property    
-@Persist
-private String nrotrabajadores;
-@Property    
-@Persist
-private String nroeventossis;
-
+    @Property    
+    @Persist
+    private String nroeventos;
+    @Property    
+    @Persist
+    private String nrotrabajadoresservir;
+    @Property    
+    @Persist
+    private String nrotrabajadores;
+    @Property    
+    @Persist
+    private String nroeventossis;
+    @Property    
+    @Persist
+    private String nroeventosoliser;
+    @Property    
+    @Persist
+    private String nroeventosolienti;
+    
     @Log
     public List<BusquedaEvento> getEventos() {
         Query query = session.getNamedQuery("callSpEventoAcceso");
@@ -169,6 +181,38 @@ private String nroeventossis;
             BusquedaEvento usu = (BusquedaEvento) result.get(i);
         }
         nroeventossis = Integer.toString(result.size());
+        return result;
+    }
+    
+    @Log
+    public List<BusquedaEvento> getSolicitudesservir() {
+        Query query = session.getNamedQuery("callSpEventoAcceso");
+        query.setParameter("in_rol_id",_usuario.getRolid());
+        query.setParameter("in_tipoevento_id",17);
+        query.setParameter("in_perfil_id",""); 
+        query.setParameter("in_entidad_id","");  
+        List result = query.list(); 
+        
+        for (int i = 0; i < result.size(); i++) {
+            BusquedaEvento usu = (BusquedaEvento) result.get(i);
+        }
+        nroeventosoliser = Integer.toString(result.size());
+        return result;
+    }
+    
+    @Log
+    public List<BusquedaEvento> getSolicitudesentidad() {
+        Query query = session.getNamedQuery("callSpEventoAcceso");
+        query.setParameter("in_rol_id",_usuario.getRolid());
+        query.setParameter("in_tipoevento_id",17);
+        query.setParameter("in_perfil_id",""); 
+        query.setParameter("in_entidad_id",entidadUE.getId());  
+        List result = query.list(); 
+        
+        for (int i = 0; i < result.size(); i++) {
+            BusquedaEvento usu = (BusquedaEvento) result.get(i);
+        }
+        nroeventosolienti = Integer.toString(result.size());
         return result;
     }
    

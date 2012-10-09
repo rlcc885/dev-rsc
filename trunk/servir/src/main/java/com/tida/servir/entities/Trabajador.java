@@ -200,7 +200,8 @@ public class Trabajador implements Serializable // extends Persona
     public String getTelefonofijo() {
         return telefonofijo;
     }
-
+    
+    @ManyToOne
     public DatoAuxiliar getDocumentoidentidad() {
         return documentoidentidad;
     }
@@ -506,6 +507,9 @@ public class Trabajador implements Serializable // extends Persona
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
     public List<Curso> cursos = new ArrayList<Curso>();
+    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
+    @NonVisual
+    public List<Solicitud_Acceso> solicitud = new ArrayList<Solicitud_Acceso>();
 
     public List<CargoAsignado> getCargosAsignados() {
         return cargosAsignados;
@@ -525,6 +529,14 @@ public class Trabajador implements Serializable // extends Persona
 
     public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
+    }
+    
+    public List<Solicitud_Acceso> getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(List<Solicitud_Acceso> solicitud) {
+        this.solicitud = solicitud;
     }
 
 //    public void setTitulos(List<Titulo> titulos) {

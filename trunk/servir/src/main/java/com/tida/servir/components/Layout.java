@@ -78,7 +78,7 @@ public class Layout {
     @Property
     @Persist
     private boolean esadministradorentidad;
-     @Property
+    @Property
     @SessionState
     private Usuario _usuario;
      @Property
@@ -88,6 +88,7 @@ public class Layout {
     @Log
     @SetupRender
     private void inicio() {
+        
         if(_usuario.getRolid()==4){
             esadministradorsistemas=true;
             esadministradorentidad=false;
@@ -111,7 +112,7 @@ public class Layout {
             esadministradorentidad=false;
             esadministradorservir=false;
             esadministradorsistemas=false;
-        }        
+        }
     }
 
     // add an IE-only style sheet if browser is IE

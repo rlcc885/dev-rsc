@@ -1,0 +1,190 @@
+<html t:type="layoutlogin" title="Servir - Solicitud de Acceso"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<!--     <h2> Selección de Entidad /U. Ejecutora </h2>-->
+
+     <t:if test = "respuestaOk">
+        <script>
+            setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+        </script>
+        <div id='ok_msg'> 
+            Solicitud Enviada Exisotamente.            
+        </div>
+    </t:if>
+     <div class="box-background-title">
+         <span class="box-title">Envio de Solicitud de Acceso</span></div>
+     <div class="box">
+       
+       <t:zone t:id="solicitudZone"> 
+         <t:if test="etapaInicio">
+          <script>
+                setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
+          </script>
+          <form t:type="form" t:id="formSolicitud" t:zone="solicitudZone">
+            <fieldset>
+            <legend>Datos del Usuario</legend>
+                 <t:errors/> 
+                 <t:envelope t:id="envelope"/>
+                 <div class="f-wrap">
+                     <div class="f-left">    
+                        <label>* Entidad/Sub Entidad</label>
+                        <input t:type="TextField" t:id="entidad"
+                                    t:value="bentidad" t:disabled="true" style="width: 400px;"/>                            
+                    </div>                   
+                    <div class="f-left">
+                        <a onClick="javascript: mostrar();" class="iconsearch"></a>                       
+                    </div>
+                 </div>
+                 <div class="f-wrap">
+                     <div class="f-left">
+                        <label>* Tipo de Documento</label>
+                        <input t:type="Select" t:id="tipo_documento"                                
+                               t:value="bdocumentoidentidad" model="beandocumentoidentidad" t:zone="solicitudZone"/>
+                    </div>
+                    <div class="f-left">
+                        <label>* Número de Documento</label>
+                        <input t:type="TextField" t:id="nrodocumento" value="bnroDocumento" size="30" t:validate="required"
+                              t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnroDocumentoChanged" t:zone="solicitudZone"/>
+                    </div>
+                    <div class="f-left">
+                       <t:eventLink t:event="buscartraba" href="#" class="iconsearch"  t:zone="solicitudZone">                           
+                       </t:eventLink>                       
+                    </div>
+                 </div>                 
+                 <div class="f-wrap">                     
+                    <div class="f-left">
+                        <label>Apellido Paterno</label>
+                        <input t:type="TextField" t:id="apaterno" value="bapellidoPaterno" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Apellido Materno</label>
+                        <input t:type="TextField" t:id="amaterno" value="bapellidoMaterno" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Nombres</label>
+                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="true"/>
+                    </div>
+                 </div>
+                 <div class="f-wrap">
+                    <div class="f-left">
+                        <label>Email</label>
+                        <input t:type="TextField" t:id="email" value="bemailLaboral" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Telefono</label>
+                        <input t:type="TextField" t:id="telefono" value="btelefonofijo" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Cargo/Puesto</label>
+                        <input t:type="TextField" t:id="cargo" value="bcargo" size="30" t:disabled="true"/>
+                    </div>
+                    <div class="f-left">
+                        <label>Perfil</label>
+                        
+                    </div>
+                 </div>            
+             </fieldset>                
+                <div class="actions">              
+                    <input t:type="Submit" t:id="save" value="Continuar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                 
+                    <t:eventLink t:event="reset" href="#" class="button f-right">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                            Limpiar Formulario
+                        </span> 
+                    </t:eventLink>
+                    <t:eventLink t:event="cancel" href="#" class="button f-right">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                            Cancelar
+                        </span> 
+                    </t:eventLink>
+                </div>
+             </form>
+          </t:if>
+         </t:zone>
+     
+    <t:if test="procesoFin" >
+         <div>                 
+            <script>  
+                jQuery(document).ready(function() {    
+                jQuery('.fecha_resolucion').datepick({dateFormat: 'dd/mm/yyyy'});
+                });
+            </script>    
+         </div>
+         <form t:type="form" t:id="formsubida">
+             <fieldset>
+                <legend>Cargo/Puesto</legend>                
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>* Número Resolución</label>
+                            <input t:type="TextField" t:id="num_resolu" value="nuevasolicitud.num_resolucion" size="30" t:validate="required,regexp"/>
+                        </div>      
+                        <div class="f-left">
+                            <label>* Fecha</label>
+                            <input t:type="TextField" t:id="fecha_resolucion" t:value="fecharesolu" size="25" t:validate="required,regexp" class="fecha_resolucion pictureInputDate"/>
+                        </div>
+                    </div>
+                    <div class="f-wrap">
+                        <div class="f-left">
+                            <label>Cargar Documento</label>
+                            <input t:type="upload" t:id="file" validate="required"/>
+                        </div>
+                    </div>
+                    <div class="actions">              
+                        <input t:type="Submit" t:id="send" value="Enviar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                 
+                        <t:eventLink t:event="cancelar" href="#" class="button f-right">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Cancelar
+                            </span> 
+                        </t:eventLink>            
+                    </div>
+              </fieldset>
+             
+         </form>
+     </t:if>
+    </div>
+
+    <div id="shade"></div>        
+    <div id="modal" style="height: 360px;">
+       <t:zone t:id="busquedamodalZone" t:update="show">            
+            <div class="box-background-title">
+                <span class="box-title-01">
+                    Selección de Entidad
+                </span>
+            </div>
+            <div id="panel-01" class="box">
+            <form t:type="form" t:id="formbusquedaentidad" t:zone ="busquedamodalZone">                    
+                <div class="f-wrap">
+                    <label>Denominación</label>
+                    <input t:type="TextField" t:id="denominacionentidad" value="bdenoentidad" size="100"/>
+                </div>
+                <div class="f-wrap">
+                    <input id="buscarsubmit1" type="submit" value="Buscar" class="button f-right" /> 
+                    <input t:type="Submit" t:id="cancelmodal1" value="Cancelar" class="button f-right" onClick="javascript: ocultar();"/>
+                </div>                    
+            </form>
+                <t:if test="mostrarlista">
+                    <t:grid source="listadoEntidades" rowsPerPage="6" t:add="Acciones" pagerPosition="bottom"
+                                row="rowentidad" include="denominacion" inPlace="true" t:zone="busquedamodalZone">
+                        <t:parameter name="empty">
+                            <div class="no-info">No hay entidades generadas</div>
+                        </t:parameter>
+                        <p:accionesCell>                            
+                            <t:actionlink t:id="seleccionarentidad" zone="solicitudZone" context="rowentidad" onClick="javascript: ocultar();">Seleccionar</t:actionlink>                                                      
+                        </p:accionesCell>
+                    </t:grid>              
+                    <br/>
+                </t:if>
+            </div>            
+       </t:zone>      
+    </div>   
+    <script type="text/javascript">
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };
+    </script>
+</html>

@@ -47,6 +47,26 @@ public class LkBusquedaTrabajador implements Serializable {
     private Date fechanacimiento;
     @NonVisual
     private Long caid;
+    @NonVisual
+    private String telefonofijo;
+    @NonVisual
+    private String emailLaboral;
+
+    public String getEmailLaboral() {
+        return emailLaboral;
+    }
+
+    public void setEmailLaboral(String emailLaboral) {
+        this.emailLaboral = emailLaboral;
+    }
+
+    public String getTelefonofijo() {
+        return telefonofijo;
+    }
+
+    public void setTelefonofijo(String telefonofijo) {
+        this.telefonofijo = telefonofijo;
+    } 
 
     public long getEntidad_id() {
         return entidad_id;

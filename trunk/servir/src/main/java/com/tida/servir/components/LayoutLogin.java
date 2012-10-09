@@ -15,9 +15,14 @@ import org.apache.tapestry5.services.javascript.StylesheetOptions;
  */
 @Import(stylesheet = {"context:layout/layout.css",
     "context:layout/tabs-layout.css",
-    "context:layout/tabs.css"},
+    "context:layout/tabs.css",
+    "context:layout/jquery.datepick.css"},
 library = {"context:layout/protofish-min.js",
-    "context:layout/navegador.js"})
+    "context:layout/jquery.tools.min.js",
+    "context:layout/navegador.js",
+    "context:layout/selectorder.js",
+    "context:layout/jquery.datepick.js",
+    "context:layout/jquery.datepick-es-PE.js"})
 public class LayoutLogin {
 
     /**
