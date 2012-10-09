@@ -99,8 +99,10 @@ public class GeneracionXLS {
             celda= fila.createCell((short)17);
             celda.setCellValue("Telefono de la Entidad");
             celda= fila.createCell((short)18);
-            celda.setCellValue("Tipo de Sub-Entidad");
+            celda.setCellValue("EsSubentidad");
             celda= fila.createCell((short)19);
+            celda.setCellValue("Tipo de Sub-Entidad");
+            celda= fila.createCell((short)20);
             celda.setCellValue("Codigo de la Entidad (CUE) antecesora");
             //data
             fila = hoja1.createRow((short)(1));            
@@ -141,8 +143,10 @@ public class GeneracionXLS {
             celda= fila.createCell((short)17);
             celda.setCellValue(leoCampo(oi.getTelefonoEntidad()));
             celda= fila.createCell((short)18);
-            celda.setCellValue(datoAuxiliarToString(oi.getTipoSubEntidad()));
+            celda.setCellValue(BoolFrom(oi.getEsSubEntidad()));
             celda= fila.createCell((short)19);
+            celda.setCellValue(datoAuxiliarToString(oi.getTipoSubEntidad()));
+            celda= fila.createCell((short)20);
             if(oi.getEntidad()!=null && !oi.getEntidad().equals(""))
                 celda.setCellValue(leoCampo(oi.getEntidad().getCue_entidad()));
             else
