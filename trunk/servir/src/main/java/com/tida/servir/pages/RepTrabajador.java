@@ -753,7 +753,7 @@ public class RepTrabajador extends GeneralPage {
                 parametros = retornarParametros(tipoReporteSelect.getCategoria_id()); 
             else throw new Exception ("Error en tipo reporte o formato reporte");
             
-            report = rep.callReporte(tipoReporteSelect, type, parametros, context);
+            report = rep.callReporte(tipoReporteSelect, type, parametros, session);
             showLinkReport = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -875,6 +875,12 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onValueChangedFromSTipoSubEntidad() {
         return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
+    }
+    
+    @Log
+    Object onValueChangedFromTipoReporteSelect() {
+        showLinkReport = false;
+        return new MultiZoneUpdate("tipoReporteZone",tipoReporteZone.getBody());
     }
     
     @Log
