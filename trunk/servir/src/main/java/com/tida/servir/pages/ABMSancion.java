@@ -745,6 +745,7 @@ public class ABMSancion  extends GeneralPage
         session.saveOrUpdate(nuevofuncionario);
         session.flush();
         nuevofuncionario=new Funcionario();
+        mostrarnuevof=false;
         return autoridadmodalZone.getBody();
     }
     

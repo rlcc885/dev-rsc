@@ -384,7 +384,7 @@
             </form>
             <t:if test="mostrarlista">
                 Listado de Autoridades Notifica
-                <t:grid source="funcionarios" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario" inPlace="true">
+                <t:grid source="funcionarios" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario,cargo" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Autoridades encontrados.</div>
                         </t:parameter>
