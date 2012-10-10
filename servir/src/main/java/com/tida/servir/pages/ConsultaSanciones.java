@@ -498,6 +498,19 @@ public class ConsultaSanciones extends GeneralPage {
         
         return consultaSancionesZone.getBody();  
     }
+    public Boolean getSancionAnulada(){
+        if (Integer.valueOf(cs.getEstado_id())==4){
+        return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+    
+    public Boolean getSancionAnulada_sinregla(){
+        if (Integer.valueOf(cs_sinreglab.getEstado_id())==4){
+        return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
     
   
 }
