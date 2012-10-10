@@ -394,11 +394,11 @@ public class EntidadEditor extends GeneralPage {
         entidadUE.setSigla(_request.getParameter("param"));
     }
 
-    void onDireccionEntChanged() {
+    void onDireccionChanged() {
         entidadUE.setDescvia(_request.getParameter("param"));
     }
 
-    void onDescZonaEntChanged() {
+    void onDescZonaChanged() {
         entidadUE.setDescZona(_request.getParameter("param"));
     }
 
