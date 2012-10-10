@@ -14,9 +14,6 @@
                         <label>* Entidad/Sub Entidad</label>
                         <input t:type="TextField" t:id="entidad"
                                     t:value="trabajador.entidad" t:disabled="true" style="width: 400px;"/>                            
-                    </div>                   
-                    <div class="f-left">
-                        <a onClick="javascript: mostrar();" class="iconsearch"></a>                       
                     </div>
                  </div>
                  <div class="f-wrap">

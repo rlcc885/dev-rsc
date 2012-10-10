@@ -673,12 +673,17 @@ public class ABMSancion  extends GeneralPage
         return c.list();
     }
     
+    @Persist
+    @Property
+    private String nrotrabaauto;
+    
     @Log
     public List<LkBusquedaTrabajadorAuto> getTrabajadoresAuto() {
         Criteria c = session.createCriteria(LkBusquedaTrabajadorAuto.class);
         if (bnomtrabaautoridad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
         }     
+        nrotrabaauto=Integer.toString(c.list().size());
         return c.list();
     }
     
@@ -687,7 +692,8 @@ public class ABMSancion  extends GeneralPage
         nuevofuncionario.setApellidoMaterno(traauto.getApellidoMaterno());
         nuevofuncionario.setApellidoPaterno(traauto.getApellidoPaterno());
         nuevofuncionario.setNombres(traauto.getNombres());
-        nuevofuncionario.setNroDocumento(traauto.getNroDocumento());       
+        nuevofuncionario.setNroDocumento(traauto.getNroDocumento());    
+        nuevofuncionario.setDocumentoidentidad(traauto.getDocumentoidentidad());
         return autoridadmodalZone.getBody();
     }
     
@@ -732,6 +738,11 @@ public class ABMSancion  extends GeneralPage
     @Log
     Object onCancelmodal3(){  
         mostrarnuevof=false;
+        return autoridadmodalZone.getBody();
+    }
+    @Log
+    Object onResetmodal(){  
+        nuevofuncionario=new Funcionario();
         return autoridadmodalZone.getBody();
     }
     
@@ -800,6 +811,10 @@ public class ABMSancion  extends GeneralPage
         limpiarbusqueda();
         limpiarsancion();
         return zonasDatos();
+    }
+    @Log
+    Object onCancel(){
+        return "ConsultaSanciones";
     }
     
     @Log
