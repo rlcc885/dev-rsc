@@ -13,7 +13,7 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  *
  * @author Jurguen Zambrano
  */
-
+@Entity
 public class LkSumaFecha implements Serializable {    
     
     public LkSumaFecha() {

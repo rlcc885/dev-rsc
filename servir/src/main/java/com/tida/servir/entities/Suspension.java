@@ -24,11 +24,9 @@ public class Suspension implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
     @SequenceGenerator(name = "MYENTITY_SEQ", sequenceName = "RNSDD_SUSPENSION_ID_SEQ", allocationSize = 1)
     @Column(name = "ID")
-    private long id;    
-    @ManyToOne
-    private Sancion sancion;
-    @ManyToOne
-    private Entidad entidad_ini;
+    private long id;
+    private Long sancion_id;
+    private Long entidad_ini_id;
     @ManyToOne
     private DatoAuxiliar tipo_documentoini;
     private String numdocini;
@@ -40,8 +38,7 @@ public class Suspension implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha_docnoti;
     private String juzgadonoti;
-    @ManyToOne
-    private Entidad entidad_fin;
+    private Long entidad_fin_id;
     @ManyToOne
     private DatoAuxiliar tipo_documentofin;
     private String numdocfin;
@@ -63,21 +60,21 @@ public class Suspension implements Serializable {
         this.id = id;
     }
 
-    public Entidad getEntidad_fin() {
-        return entidad_fin;
+    public long getEntidad_fin_id() {
+        return entidad_fin_id;
     }
 
-    public void setEntidad_fin(Entidad entidad_fin) {
-        this.entidad_fin = entidad_fin;
+    public void setEntidad_fin_id(long entidad_fin_id) {
+        this.entidad_fin_id = entidad_fin_id;
     }
 
-    public Entidad getEntidad_ini() {
-        return entidad_ini;
+    public long getEntidad_ini_id() {
+        return entidad_ini_id;
     }
 
-    public void setEntidad_ini(Entidad entidad_ini) {
-        this.entidad_ini = entidad_ini;
-    }
+    public void setEntidad_ini_id(long entidad_ini_id) {
+        this.entidad_ini_id = entidad_ini_id;
+    }      
 
     public Date getFecha_docfin() {
         return fecha_docfin;
@@ -167,13 +164,22 @@ public class Suspension implements Serializable {
         this.observacion = observacion;
     }
 
-    public Sancion getSancion() {
-        return sancion;
+//    public Sancion getSancion() {
+//        return sancion;
+//    }
+//
+//    public void setSancion(Sancion sancion) {
+//        this.sancion = sancion;
+//    }
+
+    public long getSancion_id() {
+        return sancion_id;
     }
 
-    public void setSancion(Sancion sancion) {
-        this.sancion = sancion;
+    public void setSancion_id(long sancion_id) {
+        this.sancion_id = sancion_id;
     }
+    
 
     public DatoAuxiliar getTipo_documentofin() {
         return tipo_documentofin;
