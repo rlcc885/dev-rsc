@@ -103,6 +103,11 @@ public class ABMSuspension  extends GeneralPage {
     @Property
     @Persist
     private boolean entidadsele;
+    @Persist
+    private List<LkBusquedaSuspension> busqueda;
+    @Property
+    @Persist
+    private boolean editando;
     
     @Log
     public Sancion getModificasancion() {
@@ -124,20 +129,41 @@ public class ABMSuspension  extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
-        logueo();        
-        System.out.println("aquiiiiiii1111");   
+        logueo();  
         nuevasuspension=new Suspension();
-        System.out.println("aquiiiiiii2222"+modificasancion.getId());
-        List<LkBusquedaSuspension> busqueda=getBeanSuspension();
+        busqueda=getBeanSuspension();
+        editando=false;
         if(busqueda.size()>0){
-            System.out.println("aquiiiiiii2222");
             nuevasuspension=(Suspension) session.load(Suspension.class, busqueda.get(0).getId());
+            mostrar();
+            bentidadinicio=busqueda.get(0).getEntidadini();
+            bentidadfin=busqueda.get(0).getEntidadfin();
+            editando=true;
         }
-        else{
-            nuevasuspension.setSancion(modificasancion);
+        else{ 
+            nuevasuspension.setSancion_id(modificasancion.getId());
         }
-    } 
-  
+    }
+    
+    void mostrar(){
+        if (nuevasuspension.getFecha_docini()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocini = formatoDeFecha.format(nuevasuspension.getFecha_docini());
+        }
+        if (nuevasuspension.getFecha_docnoti()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocnoti = formatoDeFecha.format(nuevasuspension.getFecha_docnoti());
+        }
+        if (nuevasuspension.getFecha_docfin()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocfin = formatoDeFecha.format(nuevasuspension.getFecha_docfin());
+        }
+        if (nuevasuspension.getFecha_docnotf()!= null) {
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fechadocnotf = formatoDeFecha.format(nuevasuspension.getFecha_docnotf());
+        }
+    }
+    
     @Log
     public List<LkBusquedaSuspension>  getBeanSuspension() {
         Criteria c = session.createCriteria(LkBusquedaSuspension.class);
@@ -194,11 +220,11 @@ public class ABMSuspension  extends GeneralPage {
     @Log
     Object onActionFromSeleccionarentidad(Entidad enti) {               
         if(entidadsele){
-            nuevasuspension.setEntidad_ini(enti);
+            nuevasuspension.setEntidad_ini_id(enti.getId());
             bentidadinicio=enti.getDenominacion();
         }
         else{
-            nuevasuspension.setEntidad_fin(enti); 
+            nuevasuspension.setEntidad_fin_id(enti.getId()); 
             bentidadfin=enti.getDenominacion();
         }
         return new MultiZoneUpdate("entidadiniZone", entidadiniZone.getBody()).add("entidadfinZone", entidadfinZone.getBody());
@@ -213,12 +239,12 @@ public class ABMSuspension  extends GeneralPage {
     
     Object onReset(){
         nuevasuspension=new Suspension(); 
-//        if(getBeanSuspension().size()>0){
-//            nuevasuspension=(Suspension) session.load(Suspension.class, getBeanSuspension().get(0).getId());
-//        }
-//        else{
-//            nuevasuspension.setSancion(modificasancion);
-//        }    
+        if(getBeanSuspension().size()>0){
+            nuevasuspension=(Suspension) session.load(Suspension.class, busqueda.get(0).getId());
+        }
+        else{
+            nuevasuspension.setSancion_id(modificasancion.getId());
+        }    
         bentidadinicio=null;
         fechadocini=null;
         fechadocnoti=null;        
@@ -245,11 +271,11 @@ public class ABMSuspension  extends GeneralPage {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 nuevasuspension.setFecha_docnoti((Date) formatoDelTexto.parse(fechadocnoti));
-                if(nuevasuspension.getFecha_docnoti().before(nuevasuspension.getSancion().getFechaini_inha())){
+                if(nuevasuspension.getFecha_docnoti().before(modificasancion.getFechaini_inha())){
                    formularioMensajes.recordError("La Fecha de Inicio debe ser mayor a la Fecha de Inicio de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
-                if(nuevasuspension.getFecha_docnoti().after(nuevasuspension.getSancion().getFechafin_inha())){
+                if(nuevasuspension.getFecha_docnoti().after(modificasancion.getFechafin_inha())){
                    formularioMensajes.recordError("La Fecha de Inicio debe ser menor a la Fecha de Fin de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
@@ -281,19 +307,18 @@ public class ABMSuspension  extends GeneralPage {
                 ex.printStackTrace();
             }
         }
-        
-        
+              
         session.saveOrUpdate(nuevasuspension);
         session.flush();
         envelope.setContents(helpers.Constantes.SUSPENSION_EXITO);
-        new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevasuspension.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SUSPENSION);        
+        new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevasuspension.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SUSPENSION);        
         session.saveOrUpdate(modificasancion);
         session.flush();        
         return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
     }
     
     int calcularperiodoprimero(){   
-        String consulta ="SELECT 1 ID,to_number(to_date('"+fechadocfin+"','dd/mm/yyyy') - to_date('"+fechadocini+"','dd/mm/yyyy')) DIAS from dual";
+        String consulta ="SELECT 1 ID,to_number(to_date('"+fechadocnotf+"','dd/mm/yyyy') - to_date('"+fechadocnoti+"','dd/mm/yyyy')) DIAS from dual";
         Query query =session.createSQLQuery(consulta).addEntity(LkConsultaPeriodo.class);  
         List result = query.list();        
         LkConsultaPeriodo lkcondos = (LkConsultaPeriodo) result.get(0);
