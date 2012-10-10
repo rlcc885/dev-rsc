@@ -249,6 +249,8 @@ public class ConsultaSanciones extends GeneralPage {
             filtro_entidad = loggedUser.getEntidad().getId();
         }  
         
+        System.out.println("dddddddddddddddddddffffffffffffffff"+usua.getAccesoupdate());
+        
         if(usua.getAccesoupdate() == 1){
              v_editar = true;
         }else{
