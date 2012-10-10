@@ -719,21 +719,26 @@ public class AMEntidadUEjecutora extends GeneralPage {
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
-
-
-            // GENERACION DEL CODIGO SERVIR
+            // VERIFICACION QUE ES UNA CREACION
+            System.out.println("CODXZ  "+entidadUE.getId()+"    "+entidadUE.getCue_entidad());
+            boolean crearCodigoServir = false;
+            if (entidadUE.getCue_entidad() == null || entidadUE.getCue_entidad().length()==0){crearCodigoServir = true;}
             
-            Long numEntidades = (Long)session.createCriteria(Entidad.class).setProjection(Projections.rowCount()).uniqueResult();
-            System.out.println("NUMX "+numEntidades);
-            numEntidades+=1;
+            session.saveOrUpdate(entidadUE);
+
+            // GENERACION DEL CODIGO SERVIR           
+            if (crearCodigoServir==true){
             NumberFormat formatter = new DecimalFormat("0000");
-            String nuevoCUE = formatter.format(numEntidades);
+            String nuevoCUE;
+
+            if (String.valueOf(entidadUE.getId()).length()<4){ nuevoCUE = formatter.format(entidadUE.getId());}
+            else{ nuevoCUE = String.valueOf(entidadUE.getId()).substring(0, 4);}
             String codSERVIR = "RSC"+nuevoCUE;
             System.out.println(codSERVIR);
             entidadUE.setCue_entidad(codSERVIR);
-            //
+            session.saveOrUpdate(entidadUE);        
+            }
             
-            session.saveOrUpdate(entidadUE);
             session.flush();
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
             insertarentidad = false;
