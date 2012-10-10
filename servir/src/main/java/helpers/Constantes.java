@@ -40,6 +40,7 @@ public class Constantes {
    public static final String MIGRACION_EXITO ="Unidad Orgánica Migrada exitosamente.";
    public static final String SANCION_CREADA_EXITO ="Sancion creada exitosamente.";
    public static final String SANCION_MODIFICADA_EXITO ="Sancion modificada exitosamente.";
+   public static final String SUSPENSION_EXITO ="Suspension creada / modificada exitosamente.";
    
    //modificado 10agosto
    public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
