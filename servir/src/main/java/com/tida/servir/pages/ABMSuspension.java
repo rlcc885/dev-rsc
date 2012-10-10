@@ -16,6 +16,7 @@ import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
+import org.apache.tapestry5.corelib.components.Form;
 
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
@@ -88,7 +89,10 @@ public class ABMSuspension  extends GeneralPage {
     private Zone entidadiniZone;
     @InjectComponent
     private Zone entidadfinZone;
-    
+    @InjectComponent
+    private Zone mensajesZone;
+    @Component(id ="formularioMensajes")
+    private Form formularioMensajes;
     //validaciones
     @Property
     @Persist
@@ -198,12 +202,14 @@ public class ABMSuspension  extends GeneralPage {
         fechadocfin=null;
         fechadocnotf=null;
         bentidadfin=null;
+        formularioMensajes.clearErrors();
         return suspensionZone.getBody();
     }
     
     @Log
     @CommitAfter
     Object onSuccessFromformaltasuspension(){
+        formularioMensajes.clearErrors();
         if (fechadocini != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -236,6 +242,12 @@ public class ABMSuspension  extends GeneralPage {
                 ex.printStackTrace();
             }
         }
+        if (nuevasuspension.getFecha_docnoti().after(nuevasuspension.getFecha_docnotf())){
+         formularioMensajes.recordError("La fecha de inicio de la notificación debe ser menor a la fecha de fin");
+            return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("suspensionZone",suspensionZone.getBody());     
+            
+        }
+        
         session.saveOrUpdate(nuevasuspension);
         session.flush();
         new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevasuspension.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SUSPENSION);
