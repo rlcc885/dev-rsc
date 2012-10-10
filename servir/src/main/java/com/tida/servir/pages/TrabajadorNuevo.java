@@ -629,7 +629,7 @@ public class TrabajadorNuevo extends GeneralPage {
     nuevo = (Trabajador)c.uniqueResult(); //*************
     }
     else{
-    System.out.println(oi.getDenominacion()+" "+oi.getPeticiones_ws_Reniec());
+    System.out.println(_usuario.getEntidad().getDenominacion()+" "+_usuario.getEntidad().getPeticiones_ws_Reniec());
 
    // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES TOTALES
         c = session.createCriteria(ConfiguracionAcceso.class);
@@ -641,14 +641,14 @@ public class TrabajadorNuevo extends GeneralPage {
        }
        
     // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
-       System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+oi.getPeticiones_ws_Reniec());
-       if (oi.getPeticiones_ws_Reniec()==null || oi.getPeticiones_ws_Reniec()== 0){ 
+       System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+_usuario.getEntidad().getPeticiones_ws_Reniec());
+       if (_usuario.getEntidad().getPeticiones_ws_Reniec()==null || _usuario.getEntidad().getPeticiones_ws_Reniec()== 0){ 
             formulariomensajes.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
             return actualizarZonas();            
         }
         
 
-        
+
     // BUSQUEDA EN EL WEB SERVICE
         try {
             ServicioReniec treniec = new ServicioReniec();
@@ -657,14 +657,14 @@ public class TrabajadorNuevo extends GeneralPage {
                   System.out.println("BUSCAR DNI");
                   //  Buscamos DNI
                   List<String> result = treniec.obtenerResultado(nuevo.getNroDocumento());
-                  if (treniec.validarEstadoConsulta(result.get(0))==true){
-                      
-                  // DISMINUCION DE NRO DE PETICIONES
-                      oi.setPeticiones_ws_Reniec(oi.getPeticiones_ws_Reniec()-1);
-                      session.saveOrUpdate(oi);
+                  
+                      // DISMINUCION DE NRO DE PETICIONES
+                      _usuario.getEntidad().setPeticiones_ws_Reniec(_usuario.getEntidad().getPeticiones_ws_Reniec()-1);
+                      session.saveOrUpdate(_usuario.getEntidad());                    
                       parametro.setNroConsultasActuales(parametro.getNroConsultasActuales()-1);
                       session.saveOrUpdate(parametro);
-                      
+
+                  if (treniec.validarEstadoConsulta(result.get(0))==true){                      
                   // VALIDACIONES PRE CARGA DE LA ENTIDAD 
                         Date fechaInicial,fechaWS;
                         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
