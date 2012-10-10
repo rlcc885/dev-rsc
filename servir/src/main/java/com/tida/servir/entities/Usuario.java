@@ -69,7 +69,7 @@ public class Usuario implements Serializable {
     private String emaillaboral;
     @Column(name = "TELEFONO")
     private String telefono;
-    @Column(name = "FECHA_CREACION", insertable = false)
+    @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_creacion;
     @Column(name = "OBSERVACION")
