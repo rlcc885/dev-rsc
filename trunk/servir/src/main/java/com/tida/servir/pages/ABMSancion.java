@@ -847,7 +847,7 @@ public class ABMSancion  extends GeneralPage
             if(calcularperiodo()>diastiposamin && calcularperiodo()<diastiposamax){             
             }
             else{
-                formsancion.recordError("El Periodo de Inhabilitación debe ser menor a : "+String.valueOf(diastiposamin)+" días y mayor a : "+String.valueOf(diastiposamax)+" dias");
+                formsancion.recordError("El Periodo de Inhabilitación debe ser mayor a : "+String.valueOf(diastiposamin)+" días y menor a : "+String.valueOf(diastiposamax)+" dias");
                 return zonasDatos();
             }
         }

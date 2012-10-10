@@ -90,7 +90,7 @@
                     <div class="f-wrap">
                        <t:zone t:id="entidadfinZone" id="entidadfinZone"> 
                         <div class="f-left">
-                            <label>* Entidad</label>                          
+                            <label>Entidad</label>                          
                             <input t:type="TextField" t:id="entidadfin_descripcion"
                                     t:value="bentidadfin" size="100" t:disabled="true"/>                         
                         </div>
@@ -102,36 +102,36 @@
                     </div>
                     <div class="f-wrap">
                         <div class="f-left">
-                            <label>* Tipo Documento</label>
+                            <label>Tipo Documento</label>
                             <input t:type="Select" t:id="tipo_documento_fin"                                
-                                t:value="nuevasuspension.tipo_documentofin" model="beantipo_documentofin" t:zone="suspensionZone" t:blankOption="ALWAYS"  t:validate="required"/>
+                                t:value="nuevasuspension.tipo_documentofin" model="beantipo_documentofin" t:zone="suspensionZone" t:blankOption="ALWAYS" />
                         </div>
                         <div class="f-left">
-                            <label>* Número de Documento</label>
+                            <label>Número de Documento</label>
                             <input t:type="TextField" t:id="num_docfin"
-                                    t:value="nuevasuspension.numdocfin" size="30"  t:validate="required"/>
+                                    t:value="nuevasuspension.numdocfin" size="30" />
                         </div>
                         <div class="f-left">
-                            <label>* Fecha del Documento</label>
-                            <input t:type="TextField" t:id="fecha_docfin" t:value="fechadocfin" size="25" t:validate="required,regexp" class="fecha_docfin pictureInputDate"/>
+                            <label>Fecha del Documento</label>
+                            <input t:type="TextField" t:id="fecha_docfin" t:value="fechadocfin" size="25" t:validate="regexp" class="fecha_docfin pictureInputDate"/>
                        </div>
                     </div>
                     <fieldset>
                     <legend>Notificación</legend>
                         <div class="f-wrap">
                             <div class="f-left">
-                                <label>* Tipo Documento</label>
+                                <label>Tipo Documento</label>
                                 <input t:type="Select" t:id="tipo_documento_notf"                                
-                                    t:value="nuevasuspension.tipo_documentonotf" model="beantipo_documentonotf" t:zone="suspensionZone" t:blankOption="ALWAYS"  t:validate="required"/>
+                                    t:value="nuevasuspension.tipo_documentonotf" model="beantipo_documentonotf" t:zone="suspensionZone" t:blankOption="ALWAYS"/>
                             </div>
                             <div class="f-left">
-                                <label>* Número de Documento</label>
+                                <label>Número de Documento</label>
                                 <input t:type="TextField" t:id="num_docnotf"
-                                        t:value="nuevasuspension.numdocnotf" size="30" t:validate="required"/>
+                                        t:value="nuevasuspension.numdocnotf" size="30"/>
                             </div>
                             <div class="f-left">
-                                <label>* Fecha del Documento</label>
-                                <input t:type="TextField" t:id="fecha_docnotf" t:value="fechadocnotf" size="25" t:validate="required,regexp" class="fecha_docnotf pictureInputDate"/>
+                                <label>Fecha del Documento</label>
+                                <input t:type="TextField" t:id="fecha_docnotf" t:value="fechadocnotf" size="25" t:validate="regexp" class="fecha_docnotf pictureInputDate"/>
                             </div>
                         </div>
                         <div class="f-wrap">
