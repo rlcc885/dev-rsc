@@ -290,7 +290,7 @@ public class PagePerfil {
         MenuperfilPK menuperfilpk = new MenuperfilPK(lPermiso.getMenuId(), lPermiso.getPerfilId());
         permiso = (Menuperfil) session.get(Menuperfil.class, menuperfilpk);
         editPermiso = true;
-        if (perfil.getId() <= 8) {
+        if (perfil.getId() <= 10) {
             vNoeditaperfil = true;
         } else {
             vNoeditaperfil = false;
