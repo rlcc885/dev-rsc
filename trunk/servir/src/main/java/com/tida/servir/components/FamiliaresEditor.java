@@ -171,9 +171,14 @@ public class FamiliaresEditor {
     public List<Familiar> getListadoFamiliares() {
         Criteria c = session.createCriteria(Familiar.class);
         c.add(Restrictions.eq("trabajador", actual));
+        nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
-
+    
+    @Persist
+    @Property
+    private String nroregistros;
+    
     //para obtener datos del Parentesco
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanParentesco() {
