@@ -53,18 +53,18 @@
               </fieldset>
               
                <fieldset>
-                   <legend>Datos de la Sancion</legend>
+                   <legend>Datos de la Sanción</legend>
                    <div class="f-wrap"> 
                          <div class="f-left">
-                             <t:label for="regimenLaboral"/> 
+                             <label>Régimen Laboral</label> 
                               <select t:type="Select" t:id="regimenLaboral" t:value="bregimenLaboral" model="regimenLaboral" t:zone="consultaSancionesZone"/>
                          </div>
                          <div class="f-left">
-                              <label>Categoria de Sancion</label>
+                              <label>Categoría de Sanción</label>
                               <select t:type="Select" t:id="categoriaSancion" t:value="bcategoriaSancion"  model="categoriaSancion" t:zone="consultaSancionesZone" />
                          </div>
                          <div class="f-left">
-                             <label>Tipos de Sancion</label>
+                             <label>Tipos de Sanción</label>
                              <select t:type="Select" t:id="tiposancion" t:value="btipoSancion"  model="tipoSancion" t:zone="consultaSancionesZone"/>
                          </div>    
                    </div>
@@ -246,7 +246,7 @@
     
     <div id="shade2"></div>
      <div id="modal2" style="height: 450px;">
-        <h1>Anular Registro de Sancion</h1>
+        <h1>Anular Registro de Sanción</h1>
         <div class="pane">
              <t:zone t:id="busZone2" t:update="show">
                  <form t:type="form" t:id="formularioanularsancion" t:zone ="busZone2">

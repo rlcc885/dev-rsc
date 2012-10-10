@@ -499,17 +499,18 @@ public class ConsultaSanciones extends GeneralPage {
         return consultaSancionesZone.getBody();  
     }
     public Boolean getSancionAnulada(){
+        System.out.println("EST5ADOX  "+cs.getEstado_id());
         if (Integer.valueOf(cs.getEstado_id())==4){
-        return Boolean.TRUE;
-        }
         return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
     
     public Boolean getSancionAnulada_sinregla(){
         if (Integer.valueOf(cs_sinreglab.getEstado_id())==4){
-        return Boolean.TRUE;
-        }
         return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
     
   
