@@ -1355,8 +1355,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
  public Boolean getTieneSubentidad(){
 
      Criteria c = session.createCriteria(LkBusquedaEntidad.class);
-     c.add(Restrictions.eq("subId", listaentidad.getSubId()));
-     if (!c.list().isEmpty())
+     c.setProjection(Projections.distinct(Projections.property("subId")));
+     c.add(Restrictions.eq("subId",listaentidad.getId()));
+     if (c.list().isEmpty())
      {
          return true;
      }  

@@ -171,7 +171,7 @@
 <!--                    <t:actionlink t:id="editarSeleccion" context="listaentidad">Editar</t:actionlink> | -->
                         <t:actionlink t:id="eliminarSeleccion" zone="listaentidadZone" context="listaentidad">
                             <t:if test="${listaentidad.estado}">
-                                <t:if test="tieneSubentidad" >
+                                <t:if test="${tieneSubentidad}">
                                 <span t:type="any" t:mixins="Confirm" t:message="Desea eliminar el registro?">
                                     | Eliminar
                                 </span>
