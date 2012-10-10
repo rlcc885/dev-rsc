@@ -847,7 +847,7 @@ public class ABMSancion  extends GeneralPage
             if(calcularperiodo()>diastiposamin && calcularperiodo()<diastiposamax){             
             }
             else{
-                formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a :"+String.valueOf(diastiposamax)+" días y mayor a :"+String.valueOf(diastiposamin)+" dias");
+                formsancion.recordError("El Periodo de Inhabilitación debe ser menor a : "+String.valueOf(diastiposamin)+" días y mayor a : "+String.valueOf(diastiposamax)+" dias");
                 return zonasDatos();
             }
         }
@@ -857,7 +857,7 @@ public class ABMSancion  extends GeneralPage
             if(calcularperiodo()<diastiposamax){                
             }
             else{
-                formsancion.recordError("El Periodo de Inhabilitacion debe ser menor a: "+String.valueOf(diastiposamax)+" días");
+                formsancion.recordError("El Periodo de Inhabilitación debe ser menor a: "+String.valueOf(diastiposamax)+" días");
                 return zonasDatos();
             }
         }
@@ -888,7 +888,7 @@ public class ABMSancion  extends GeneralPage
                 ex.printStackTrace();
             }
             if(calculardia()!=(long)1){
-                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitacion) debe ser mayor en un 1 día a la Fecha de Notificacion");
+                formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitación) debe ser mayor en un 1 día a la Fecha de Notificacion");
                 return zonasDatos();
             }
         }
@@ -986,15 +986,15 @@ public class ABMSancion  extends GeneralPage
             vali=false;
         }
         if(bnombres==null){
-            formsancion.recordError("Tiene que ingresar Nombres de la Persona");
+            formsancion.recordError("Tiene que ingresar el Nombre de la Persona");
             vali=false;
         }
         if(bapaterno==null){
-            formsancion.recordError("Tiene que ingresar Apellido Paterno");
+            formsancion.recordError("Tiene que ingresar el Apellido Paterno");
             vali=false;
         }
         if(bamaterno==null){
-            formsancion.recordError("Tiene que ingresar Apellido Materno");
+            formsancion.recordError("Tiene que ingresar el Apellido Materno");
             vali=false;
         }
         List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
