@@ -136,9 +136,11 @@
                             <t:if test="SancionAnulada">
                                 <a t:type="pagelink" t:page="AnularSancion" t:context="cs.id_sancion" href="#">Anular</a>
                                 |
-                            <t:if test="${cs.veditar}">
-                                <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
-                                |
+                            <t:if test="v_editar">
+                                <t:if test="${cs.veditar}">
+                                    <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
+                                    |
+                                </t:if>
                             </t:if>
                             </t:if>    
                                     <a t:context="cs" t:zone="listaConsultaSancionZone">
