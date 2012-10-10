@@ -8,6 +8,15 @@
         </span>
     </div>
     <div id="panel-01" class="box">
+        <t:zone t:id="mensajesZone">
+            <script>
+                setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
+            </script>
+            <t:form t:id="formularioMensajes">
+                <t:envelope t:id="envelope"/>   
+                <t:errors/>
+        </t:form>      
+        </t:zone>    
         <t:zone t:id="suspensionZone">
           <div>
             <script>  
