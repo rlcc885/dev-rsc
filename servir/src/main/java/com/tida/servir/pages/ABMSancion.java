@@ -272,6 +272,7 @@ public class ABMSancion  extends GeneralPage
             bmostrarrol=false;
             bmostrar=true;
             mostrardocu=true;
+            bestrabajador=true;
         }
         else{
             bmostrarrol=true;            
