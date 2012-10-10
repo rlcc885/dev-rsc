@@ -124,17 +124,20 @@ public class ABMSuspension  extends GeneralPage {
     @Log
     @SetupRender
     private void inicio() {
-        logueo();
-        nuevasuspension=new Suspension(); 
-        
-        if(getBeanSuspension().size()>0){
-            nuevasuspension=(Suspension) session.load(Suspension.class, getBeanSuspension().get(0).getId());
+        logueo();        
+        System.out.println("aquiiiiiii1111");   
+        nuevasuspension=new Suspension();
+        System.out.println("aquiiiiiii2222"+modificasancion.getId());
+        List<LkBusquedaSuspension> busqueda=getBeanSuspension();
+        if(busqueda.size()>0){
+            System.out.println("aquiiiiiii2222");
+            nuevasuspension=(Suspension) session.load(Suspension.class, busqueda.get(0).getId());
         }
         else{
             nuevasuspension.setSancion(modificasancion);
         }
-    }
-    
+    } 
+  
     @Log
     public List<LkBusquedaSuspension>  getBeanSuspension() {
         Criteria c = session.createCriteria(LkBusquedaSuspension.class);
@@ -211,10 +214,10 @@ public class ABMSuspension  extends GeneralPage {
     Object onReset(){
         nuevasuspension=new Suspension(); 
 //        if(getBeanSuspension().size()>0){
-//            nuevasuspension=getBeanSuspension().get(0);
+//            nuevasuspension=(Suspension) session.load(Suspension.class, getBeanSuspension().get(0).getId());
 //        }
 //        else{
-            nuevasuspension.setSancion(modificasancion);
+//            nuevasuspension.setSancion(modificasancion);
 //        }    
         bentidadinicio=null;
         fechadocini=null;
@@ -242,9 +245,7 @@ public class ABMSuspension  extends GeneralPage {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 nuevasuspension.setFecha_docnoti((Date) formatoDelTexto.parse(fechadocnoti));
-                System.out.println("aquiiiiiiiiiiiii11111");
                 if(nuevasuspension.getFecha_docnoti().before(nuevasuspension.getSancion().getFechaini_inha())){
-                   System.out.println("aquiiiiiiiiiiii222222");
                    formularioMensajes.recordError("La Fecha de Inicio debe ser mayor a la Fecha de Inicio de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
