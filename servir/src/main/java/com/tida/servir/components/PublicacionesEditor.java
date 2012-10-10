@@ -94,6 +94,10 @@ public class PublicacionesEditor {
     @Persist
     @Property
     private Boolean opcMod;
+    @Persist
+    @Property
+    private Boolean vrevisado;
+    
     @Log
     void setupRender() {
         // No mover la inicializacion de variables
@@ -102,6 +106,7 @@ public class PublicacionesEditor {
 
     @Log
     public void accesos() {
+        vrevisado= false;
         bvalidausuario = false;
         vinserta = false;
         veditar = false;
@@ -119,17 +124,26 @@ public class PublicacionesEditor {
             veditar = true;
             vdetalle = false;
             vguardar = true;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }            
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
             // modificacion
             //if(usua.getAccesoupdate() != 1){vdetalle=false;}
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }            
         }
         if (usua.getAccesoreport() == 1) {
             vformulario=true;
             vinserta = true;
             vguardar = true;
             vdetalle = false;
+            if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                vrevisado = true;
+            }            
         }
         
         if (!editando){opcMod=false;}
@@ -257,6 +271,12 @@ public class PublicacionesEditor {
         return proIntelectualZone.getBody();
     }
 
+    @Log
+    Object onActionFromEditar2(Publicacion publi)
+    {
+        return onActionFromEditar(publi);
+    }
+    
     @Log
     Object onActionFromDetalle(Publicacion publi) {
 //        publicacion = publi;
