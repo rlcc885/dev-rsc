@@ -896,8 +896,8 @@ public class ABMSancion  extends GeneralPage
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 fecha_fin = (Date) formatoDelTexto.parse(fecfin);
-                if(fecha_fin.after(fecha_inicio)) {
-                   formsancion.recordError("La Fecha de Fin no puede ser mayor a la Fecha de Inicio");
+                if(fecha_fin.before(fecha_inicio)) {
+                   formsancion.recordError("La Fecha de Fin no puede ser menor a la Fecha de Inicio");
                    return zonasDatos();
                 }                
             } catch (ParseException ex) {
