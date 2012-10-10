@@ -17,11 +17,10 @@ public class DatoAuxiliar implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 //implements Serializable {
 
-    public enum TipoDeAcceso {
-        SoloLectura,
-        ValorEditable,
+/*    public enum TipoDeAcceso {
+        Lectura,
         Editable
-    }
+    }*/
 //	@Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -35,8 +34,10 @@ public class DatoAuxiliar implements Serializable {
     private long relacionCodigo; // el valor a matchear en la tabla relacio
     private String valor; // El valor del campo
     private long codigo; // el codigo definido para ese valor. Debe ser único en la tabla
-    private TipoDeAcceso tipoDeAcceso;
+    private Boolean editable;
 
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -109,14 +110,13 @@ public class DatoAuxiliar implements Serializable {
         this.valor = valor;
     }
 
-    public TipoDeAcceso getTipoDeAcceso() {
-        return tipoDeAcceso;
+    public Boolean getEditable() {
+        return editable;
     }
-
-    public void setTipoDeAcceso(TipoDeAcceso tipoDeAcceso) {
-        this.tipoDeAcceso = tipoDeAcceso;
+    public void setEditable(Boolean editable){
+        this.editable = editable;
     }
-
+    
     public Boolean getFlg_altatrabajador() {
         return flg_altatrabajador;
     }
