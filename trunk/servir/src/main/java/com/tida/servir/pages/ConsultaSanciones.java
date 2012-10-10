@@ -27,6 +27,7 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -111,6 +112,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     @Property
     private String observaciones;
+    @Property
+    @SessionState
+    private Usuario _usuario;   
     @Persist
     @Property
     private String bdenoentidad;
@@ -144,9 +148,12 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     @Property
     private Boolean mostrar_reglab;
-   
     @Persist
     @Property
+    private Boolean v_editar;
+    
+    @Property
+    @Persist
     private DatoAuxiliar bregimenLaboral;
     @Persist
     @Property
@@ -195,10 +202,28 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private String fechadocnot;
+    @Inject  
+    private ComponentResources _resources;
+    @Property
+    @Persist
+    private Long filtro_entidad;
     
     @Log
     @SetupRender
     void initializeValue() {
+        
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", _usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+//        query.setParameter("in_pagename", "TIPOSANCION");
+        List result = query.list();
+        
+        
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+           usua = (UsuarioAcceso) result.get(0);
+         }
         nuevo = new Trabajador();
         entidad_origen= "";
         entidad_origen_id=null;
@@ -221,7 +246,15 @@ public class ConsultaSanciones extends GeneralPage {
             bmostrar=true;
         }else{
             bmostrar=false;
-        }    
+            filtro_entidad = loggedUser.getEntidad().getId();
+        }  
+        
+        if(usua.getAccesoupdate() == 1){
+             v_editar = true;
+        }else{
+            v_editar = false;
+        }
+            
     }
     
       @Log
@@ -262,6 +295,8 @@ public class ConsultaSanciones extends GeneralPage {
         c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
+        }else if(filtro_entidad != null){
+            c.add(Restrictions.eq("entidad_id",filtro_entidad.toString()));
         }
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
@@ -305,6 +340,8 @@ public class ConsultaSanciones extends GeneralPage {
         c = session.createCriteria(LkBusquedaSancionados.class);
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
+        }else if(filtro_entidad != null){
+            c.add(Restrictions.eq("entidad_id",filtro_entidad.toString()));
         }
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
