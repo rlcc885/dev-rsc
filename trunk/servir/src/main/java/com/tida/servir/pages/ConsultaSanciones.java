@@ -296,7 +296,7 @@ public class ConsultaSanciones extends GeneralPage {
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
         }else if(filtro_entidad != null){
-            c.add(Restrictions.eq("entidad_id",filtro_entidad.toString()));
+            c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
@@ -341,7 +341,7 @@ public class ConsultaSanciones extends GeneralPage {
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
         }else if(filtro_entidad != null){
-            c.add(Restrictions.eq("entidad_id",filtro_entidad.toString()));
+            c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
