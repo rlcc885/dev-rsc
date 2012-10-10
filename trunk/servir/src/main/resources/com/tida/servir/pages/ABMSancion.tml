@@ -276,13 +276,20 @@
                     <input t:type="Submit" t:id="savedos" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
                  </t:if>
               </t:if>
+                <t:if test="${editando}" negate="true">
                 <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="sancionZone">
                     <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                         Limpiar Formulario
                     </span> 
                 </t:eventLink>
+                </t:if>
                 <t:if test="${editando}">
                     <a t:type="pagelink" t:page="ABMSuspension" t:context="nuevasancion.id" href="#" class="button f-right">Suspender</a>
+                    <t:eventLink t:event="cancel" href="#" class="button f-right">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                            Cancelar
+                        </span> 
+                    </t:eventLink>
                 </t:if>
             </div>
            
@@ -362,7 +369,7 @@
          </t:zone>
     </div>
     <div id="shade2"></div>
-    <div id="modal2" style="height: 410px;">
+    <div id="modal2" style="height: 430px;">
        <t:zone t:id="autoridadmodalZone">
          <t:if test="mostrarnuevof" negate="true">
            <div class="box-background-title">
@@ -383,8 +390,7 @@
                 </div> 
             </form>
             <t:if test="mostrarlista">
-                Listado de Autoridades Notifica
-                <t:grid source="funcionarios" rowsPerPage="5" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario,cargo" inPlace="true">
+                <t:grid source="funcionarios" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="bfuncionario" include="nombrefuncionario,cargo" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Autoridades encontrados.</div>
                         </t:parameter>
@@ -409,33 +415,38 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Apellido Paterno</label>
-                        <input t:type="TextField" t:id="autoridad_apaterno" value="nuevofuncionario.apellidoPaterno" size="30" t:validate="required"/>
+                        <input t:type="TextField" t:id="autoridad_apaterno" value="nuevofuncionario.apellidoPaterno" size="28" t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Materno</label>
-                        <input t:type="TextField" t:id="autoridad_amaterno" value="nuevofuncionario.apellidoMaterno" size="30" t:validate="required"/>
+                        <input t:type="TextField" t:id="autoridad_amaterno" value="nuevofuncionario.apellidoMaterno" size="28" t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>* Nombres</label>
-                        <input t:type="TextField" t:id="autoridad_nombres" value="nuevofuncionario.nombres" size="30" t:validate="required"/>
+                        <input t:type="TextField" t:id="autoridad_nombres" value="nuevofuncionario.nombres" size="28" t:validate="required"/>
                     </div>
                 </div>
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Tipo de Documento</label>
-                        <input t:type="Select" t:id="documento_identidad_auto"                                
+                        <input t:type="Select" t:id="documento_identidad_auto" style="width: 180px" t:blankOption="ALWAYS" t:validate="required"                              
                                t:value="nuevofuncionario.documentoidentidad" model="beandocumentoidentidadauto" t:zone="autoridadmodalZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Número de Documento</label>
-                        <input t:type="TextField" t:id="autoridad_nrodocumento" value="nuevofuncionario.nroDocumento" size="30" t:validate="required"/>
+                        <input t:type="TextField" t:id="autoridad_nrodocumento" value="nuevofuncionario.nroDocumento" size="28" t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>* Cargo</label>
-                        <input t:type="TextField" t:id="autoridad_cargo" value="nuevofuncionario.den_cargo" size="30" t:validate="required"/>
+                        <input t:type="TextField" t:id="autoridad_cargo" value="nuevofuncionario.den_cargo" size="28" t:validate="required"/>
                     </div>
-                    <div class="f-left" style="position:relative; top:13px; left:20px;">
-                        <input t:id="saveautoridad" t:type="submit" value="Guardar" class="button f-right" />                
+                    <div class="f-left" style="position:relative; top:13px;">
+                        <input t:id="saveautoridad" t:type="submit" value="Guardar" class="button f-right" /> 
+                        <t:eventLink t:event="resetmodal" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
+                            <span t:type="any">
+                                Limpiar
+                            </span> 
+                        </t:eventLink>
                         <t:eventLink t:event="cancelmodal3" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
                             <span t:type="any">
                                 Cancelar
@@ -457,7 +468,7 @@
                     <label>Apellidos / Nombres</label>
                     <input t:type="TextField" t:id="nombre_autoridad_trabajador" value="bnomtrabaautoridad" size="100"
                            t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnomtrabaautoridadChanged" t:zone="autoridadmodalZone"/>
-                  </div>                  
+                  </div>
                     <t:eventLink t:event="buscartrabaauto" href="#" class="button f-right" style="color: #FFFFFF;" t:zone="autoridadmodalZone">
                         <span t:type="any">
                             Buscar
@@ -473,6 +484,8 @@
                             <t:actionlink t:id="seleccionaTrabajadorAuto" zone="autoridadmodalZone" context="btrabajadorauto">Seleccionar</t:actionlink>                                                      
                         </p:accionesCell>
                 </t:grid>
+                 <div class="f-right"><b>${nrotrabaauto} Registros.</b></div>
+                 <br/>
             </div>
          
          </t:if>
