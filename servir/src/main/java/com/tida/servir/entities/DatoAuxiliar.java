@@ -35,7 +35,15 @@ public class DatoAuxiliar implements Serializable {
     private String valor; // El valor del campo
     private long codigo; // el codigo definido para ese valor. Debe ser único en la tabla
     private Boolean editable;
+    private String abrev;
 
+    public String getAbrev() {
+        return abrev;
+    }
+
+    public void setAbrev(String abrev) {
+        this.abrev = abrev;
+    }
     
     
     @Override
