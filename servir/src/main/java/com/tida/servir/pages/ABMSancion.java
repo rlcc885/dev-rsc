@@ -275,7 +275,7 @@ public class ABMSancion  extends GeneralPage
             bestrabajador=true;
         }
         else{
-            bmostrarrol=true;            
+            bmostrarrol=true;
         }
         System.out.println("llegooooo"+modificasancion);
         if(modificasancion!=null){
