@@ -3,12 +3,12 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <div class="organismo_titulo">
+<!--    <div class="organismo_titulo">
         Entidad : ${entidadUE.denominacion}
     </div>
     <div class = "mensajes">
         ${mensajes}
-    </div>
+    </div>-->
     <div t:type="zone" t:id="categoriasZone">
         <fieldset>
             Seleccione la Categoría:&nbsp;
