@@ -235,9 +235,9 @@ public class ConsultaSanciones extends GeneralPage {
         bnombres="";
         bnumeroDocumento="";
         bdocumentoidentidad = null;
-//        bregimenLaboral = new DatoAuxiliar();
-//        bcategoriaSancion = new DatoAuxiliar();
-//        btipoSancion = new Lk_Tipo_Sancion();
+        bregimenLaboral = null;
+        bcategoriaSancion = null;
+//        btipoSancion = null;
         esSuspendida=false;
         esAnulada=false;
         esHistorica=false;
@@ -319,7 +319,7 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
         }
         if(bnumeroDocumento != null){
-            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
+            c.add(Restrictions.or(Restrictions.like("nro_doc_trabajador","%"+bnumeroDocumento+"%"),Restrictions.eq("nro_doc_persona","%"+bnumeroDocumento+"%")));
         }
         if(esSuspendida==true){
             c.add(Restrictions.eq("estado_id", "3"));
@@ -361,10 +361,10 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%"),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%")));
         }
         if(bdocumentoidentidad !=null){
-            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId())));
+            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
         }
         if(bnumeroDocumento != null){
-            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
+            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador","%"+bnumeroDocumento.toString()+"%"),Restrictions.eq("nro_doc_persona","%"+bnumeroDocumento.toString()+"%")));
         }
         if(esSuspendida==true){
             c.add(Restrictions.eq("estado_id", "3"));
