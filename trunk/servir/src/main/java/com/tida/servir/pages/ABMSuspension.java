@@ -294,6 +294,10 @@ public class ABMSuspension  extends GeneralPage {
                    formularioMensajes.recordError("La Fecha de Inicio debe ser menor a la Fecha de Fin de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
+                if(nuevasuspension.getFecha_docini().after(nuevasuspension.getFecha_docnoti())) {
+                   formularioMensajes.recordError("La Fecha de Notificación debe ser menor a la Fecha de Inicio");
+                   return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
+                }
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
@@ -311,11 +315,15 @@ public class ABMSuspension  extends GeneralPage {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {                
                 nuevasuspension.setFecha_docnotf((Date) formatoDelTexto.parse(fechadocnotf));
+                if(nuevasuspension.getFecha_docfin().after(nuevasuspension.getFecha_docnotf())) {
+                   formularioMensajes.recordError("La Fecha de Notificación debe ser menor a la Fecha de Fin");
+                   return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
+                }                
                 if (nuevasuspension.getFecha_docnoti().after(nuevasuspension.getFecha_docnotf())){
                     formularioMensajes.recordError("La fecha de inicio de la notificación debe ser menor a la fecha de fin");
                     return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("suspensionZone",suspensionZone.getBody());     
 
-                }
+                }                
                 modificasancion.setFechafin_inha(calcularfecha()); 
                 modificasancion.setSancion_estado(getEstados((long)1).get(0));
             } catch (ParseException ex) {

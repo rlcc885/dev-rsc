@@ -876,6 +876,10 @@ public class ABMSancion  extends GeneralPage
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 fecha_docsan = (Date) formatoDelTexto.parse(fechadocsan);
+                if(fecha_docnot.after(fecha_docsan)) {
+                   formsancion.recordError("La Fecha de Notificación debe ser menor a la Fecha de Documento");
+                   return zonasDatos();
+                }
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
