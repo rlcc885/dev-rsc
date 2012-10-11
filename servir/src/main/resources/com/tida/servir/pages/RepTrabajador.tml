@@ -27,7 +27,7 @@
         <t:form t:id="formularioReporte" zone="tipoReporteZone" target="_blank">
             <fieldset>
                 Reporte: &nbsp;
-                <input t:type="Select" t:id="tipoReporteSelect" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
+                <input t:type="Select" t:id="tipoReporteSelect" t:style="width:300px;" t:value="tipoReporteSelect" model="TipoReportes" t:zone="tipoReporteZone" t:blankOption="ALWAYS"/>
                 &nbsp; Formato del Reporte: &nbsp;
                 <t:radiogroup t:id="type">
                     Excel <input t:type="radio" onchange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)" value="excel" />
@@ -47,7 +47,7 @@
                                             <input t:type="submit" t:id="buscarEntidadTrabajador" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
                                             <br /><br />
                                         </t:if>
-                                        Trabajador: &nbsp;
+                                        Trabajador: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input t:type="TextField" t:id="titular" t:style="width:600px;" t:value="titular" t:readonly="readonly" /> 
                                         <input t:type="submit" t:id="buscarTitular" value="..." class="button f-right" onClick="javascript: mostrar();" />             
                                     </div>
@@ -64,9 +64,9 @@
                                         Entidad/Sub Entidad: &nbsp;
                                         <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
                                         <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
-                                        <br /><br />Nivel Organizacional:&nbsp;
+                                        <br /><br />Nivel Organizacional:&nbsp;&nbsp;
                                         <input t:type="select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:entidadZoneId"/>
-                                        &nbsp; Unidad Orgánica: &nbsp;
+                                        &nbsp; &nbsp;&nbsp;Unidad Orgánica: &nbsp;
                                         <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:entidadZoneId"/> 
                                     </div>
                                 </t:zone>
@@ -79,14 +79,14 @@
                         <div class="f-wrap">
                                 <t:zone t:id="usuarioZone" t:update="show">
                                     <div class="f-left">
+                                        Desde: &nbsp;&nbsp;
+                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" class="fechaingresodesde pictureInputDate"/>
+                                        &nbsp;&nbsp; Hasta: &nbsp;
+                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoha" size="30" class="fechaingresohasta pictureInputDate"/>
+                                        <br /><br />
                                         Usuario: &nbsp;
                                         <input t:type="TextField" t:id="usuarioTx" t:style="width:600px;" t:value="usuarioTx" t:readonly="readonly" /> 
                                         <input t:type="submit" t:id="buscarUsuario" value="..." class="button f-right" onClick="javascript: mostrar();" /> 
-                                        <br /><br />
-                                        Desde: &nbsp;
-                                        <input t:type="TextField" t:id="fechaingresodesde" t:value="fechaingresode" size="30" class="fechaingresodesde pictureInputDate"/>
-                                        &nbsp; Hasta: &nbsp;
-                                        <input t:type="TextField" t:id="fechaingresohasta" t:value="fechaingresoha" size="30" class="fechaingresohasta pictureInputDate"/>
                                     </div>
                                     <script>
                                         jQuery(document).ready(function() {
@@ -104,19 +104,19 @@
                         <div class="f-wrap">    
                             <t:zone t:id="gobiernoZone" id="gobiernoZone" t:update="show">
                                 <div class="f-left">
-                                    Nivel de Gobierno: &nbsp;
+                                    Nivel de Gobierno: &nbsp;&nbsp;&nbsp;
                                     <input t:type="Select" t:id="snivelGobierno" t:value="snivelGobierno" model="NivelGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
                                     <t:if test="organizacionBool">
-                                        &nbsp; Organización Estado: &nbsp;
+                                        &nbsp;&nbsp; Organización Estado: &nbsp;
                                         <input t:type="Select" t:id="sorganizacionestado" t:value="sorganizacionestado" model="OrganizacionEstado" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
                                     </t:if>
                                     <t:if test="sectorBool">
                                         <br /><br />
-                                        Sector: &nbsp;
+                                        Sector: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input t:type="Select" t:id="ssectorgobierno" t:value="ssectorgobierno" model="SectorGobierno" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
                                     </t:if>
                                     <t:if test="organoBool">
-                                        &nbsp; Tipo Organismo: &nbsp;
+                                        &nbsp;&nbsp; Tipo Organismo: &nbsp;
                                         <input t:type="Select" t:id="stipoOrganismo" t:value="stipoOrganismo" model="TipoOrganismo" t:zone="prop:gobiernoZoneId" t:blankOption="ALWAYS" />
                                     </t:if>
                                     <br /><br />
@@ -142,8 +142,8 @@
                     </t:if>
                 </div>
 
-                <t:eventLink t:zone="tipoReporteZone" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</t:eventLink>
                 <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar Formulario" t:mixins="confirm"/>
+                <t:eventLink t:zone="tipoReporteZone" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</t:eventLink>
 
                 <div>
                     <t:if test="showLinkReport">
@@ -222,7 +222,7 @@
                     <form t:type="form" t:id="formFindUsuario" t:zone ="busZone">
                         <div class="f-wrap">
                             <div class="f-left">
-                                Login:
+                                Login:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input t:type="TextField" t:id="loginUsu" t:value="loginUsu" style="width: 100px;"/>
                                 &nbsp; Estado:
                                 <input t:type="Select" t:id="bEstado" t:value="bEstado" t:model="literal:1=Activo,0=Inactivo,2=Bloqueado" t:style="width: 100px;" />
