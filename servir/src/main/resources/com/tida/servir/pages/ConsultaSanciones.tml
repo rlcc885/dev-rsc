@@ -117,7 +117,7 @@
                             t:add="Nombres,Acciones" 
                             pagerPosition="bottom"
                             row="cs"
-                            reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                            reorder="Nombres,tipo_sancion,tiempo_restante,estado,Acciones"
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                     b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad,veditar_anular"
