@@ -298,11 +298,17 @@ public class ABMSuspension  extends GeneralPage {
                    formularioMensajes.recordError("La Fecha de Notificación debe ser menor a la Fecha de Inicio");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
+                if(nuevasuspension.getFecha_docnoti().before(new Date()) || nuevasuspension.getFecha_docnoti().equals(new Date())){
+                    modificasancion.setSancion_estado(getEstados((long) 3).get(0));
+                }
+                else{
+                    modificasancion.setSancion_estado(getEstados((long) 1).get(0));
+                }
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
         }
-        modificasancion.setSancion_estado(getEstados((long)3).get(0));
+        
         if (fechadocfin != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -324,8 +330,13 @@ public class ABMSuspension  extends GeneralPage {
                     return new MultiZoneUpdate("mensajesZone", mensajesZone.getBody()).add("suspensionZone",suspensionZone.getBody());     
 
                 }                
-                modificasancion.setFechafin_inha(calcularfecha()); 
-                modificasancion.setSancion_estado(getEstados((long)1).get(0));
+                modificasancion.setFechafin_inha(calcularfecha());
+                if(nuevasuspension.getFecha_docnotf().before(new Date())){
+                    modificasancion.setSancion_estado(getEstados((long) 1).get(0));
+                }
+                else{
+                    modificasancion.setSancion_estado(getEstados((long) 3).get(0));
+                }
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
