@@ -56,6 +56,9 @@ public class ABMSuspension  extends GeneralPage {
     private ComponentResources _resources;
     @InjectComponent
     private Envelope envelope;
+    @SessionState
+    @Property
+    private UsuarioAcceso usua;
     
     //campos modal
     @Property
@@ -108,6 +111,12 @@ public class ABMSuspension  extends GeneralPage {
     @Property
     @Persist
     private boolean editando;
+    @Property
+    @Persist
+    private boolean vregistrar;
+    @Property
+    @Persist
+    private boolean veditar;
     
     @Log
     public Sancion getModificasancion() {
@@ -142,7 +151,13 @@ public class ABMSuspension  extends GeneralPage {
         }
         else{ 
             nuevasuspension.setSancion_id(modificasancion.getId());
+        }       
+        if (usua.getAccesoupdate() == 1) {
+            veditar = true;
         }
+        if (usua.getAccesoreport() == 1) {
+            vregistrar = true;
+        }        
     }
     
     void mostrar(){

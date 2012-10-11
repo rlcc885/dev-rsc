@@ -149,12 +149,23 @@
                     <i>(Máximo 500 caracteres)</i>
                 </fieldset>
                 <div class="actions">
-                    <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
-                    <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="suspensionZone">
-                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
-                            Limpiar Formulario
-                        </span> 
-                    </t:eventLink>
+                    <t:if test="${vregistrar}">
+                        <t:if test="${editando}" negate="true">
+                            <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        </t:if>
+                    </t:if>
+                    <t:if test="${veditar}">
+                        <t:if test="${editando}">
+                            <input t:type="Submit" t:id="savedos" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>
+                        </t:if>
+                    </t:if>                    
+                    <t:if test="${editando}" negate="true">                    
+                        <t:eventLink t:event="reset" href="#" class="button f-right" t:zone="suspensionZone">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                                Limpiar Formulario
+                            </span> 
+                        </t:eventLink>
+                    </t:if>
                     <a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion_id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a>             
                 </div>
             </form>

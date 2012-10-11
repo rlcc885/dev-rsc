@@ -53,8 +53,8 @@ public class ConsultaSanciones extends GeneralPage {
     @SessionState
     @Property
     private UsuarioTrabajador usuarioTrabajador;
+    @SessionState
     @Property
-    @Persist
     private UsuarioAcceso usua;
     @InjectComponent
     @Property
