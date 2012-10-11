@@ -55,6 +55,9 @@ public class AnularSancion extends GeneralPage {
     private Zone busZone2;
     @InjectComponent
     @Property
+    private Zone mensajeZone;
+    @InjectComponent
+    @Property
     private Zone busZone;
      @Persist
     @Property
@@ -166,6 +169,10 @@ public class AnularSancion extends GeneralPage {
         fechadocnot=null;
         return busZone2.getBody();  
     }
+     @Log
+     Object onCancel1() {
+         return "ConsultaSanciones";
+     }
     
     @Log
     void onSelectedFromSave(){ 
@@ -175,6 +182,7 @@ public class AnularSancion extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioAnularSancion(){
+        formmensaje.clearErrors();
         if(elemento==1){
              if(entidad_origen_id==null)
          {
@@ -197,16 +205,25 @@ public class AnularSancion extends GeneralPage {
              formularioanularsancion.recordError("Falta la Fecha del Documento ");
              return busZone2.getBody();
          }
-//         System.out.println(anulacion);
-         
-         if(fechadocnot!= null){
+        if(fechadocnot!= null){
              SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                anulacion.setFecha_doc_not((Date) formatoDelTexto.parse(fechadocnot));
+                fechadoc_not =((Date) formatoDelTexto.parse(fechadocnot));
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }
          }
+        
+         if(fechadoc_not.after(modificasancion.getFechafin_inha())){
+             formmensaje.recordError("La fecha del Documento de Notificacion no puede ser menor a la Fecha Final de la Sancion");
+             return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
+         }
+         
+         if(fechadoc_not.before(modificasancion.getFechaini_inha())){
+             formmensaje.recordError("La fecha del Documento de Notificacion no puede ser menor a la Fecha Inicial de la Sancion");
+             return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
+         }
+          
          if(fechadoc != null){
              SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -216,19 +233,11 @@ public class AnularSancion extends GeneralPage {
             }
          }
          
-          System.out.println("juzgado    "+juzgado_not);
-          System.out.println("observaciones    "+observaciones);
-          System.out.println("modificasancion   "+modificasancion);
-          System.out.println("bdocumentoidentidad_not   "+bdocumentoidentidad_not.getId());
-          System.out.println("bdocumentoidentidad2      "+bdocumentoidentidad2.getId());
-          System.out.println("bnumeroDocumento_not     "+bnumeroDocumento_not);
-          System.out.println("bnumeroDocumento2     "+bnumeroDocumento2);
-          System.out.println(entidad2);
-          
          
          //anulacion.setFecha_doc_not(fechadoc_not);
         
         // (fecha_doc);
+         anulacion.setFecha_doc_not(fechadoc_not);
          anulacion.setJuzgado(juzgado_not);
          anulacion.setObservaciones(observaciones);
          anulacion.setId_sancion(modificasancion);
