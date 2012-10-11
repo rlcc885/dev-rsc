@@ -234,7 +234,7 @@ public class ConsultaSanciones extends GeneralPage {
         bapellidoMaterno="";
         bnombres="";
         bnumeroDocumento="";
-        //bdocumentoidentidad = new DatoAuxiliar();
+        bdocumentoidentidad = null;
 //        bregimenLaboral = new DatoAuxiliar();
 //        bcategoriaSancion = new DatoAuxiliar();
 //        btipoSancion = new Lk_Tipo_Sancion();
@@ -245,16 +245,20 @@ public class ConsultaSanciones extends GeneralPage {
         esVigente=false;
         mostrar_reglab=false;
         
+        if(loggedUser.getRolid()==2){
+             entidadsubentidad=true;
+        }else{
+            entidadsubentidad=false;
+        }
+            
         if(loggedUser.getRolid()==3){
             bmostrar=true;
-            entidadsubentidad=true;
         }else{
             bmostrar=false;
-            entidadsubentidad=false;
             filtro_entidad = loggedUser.getEntidad().getId();
         }  
         
-        System.out.println("dddddddddddddddddddffffffffffffffff"+usua.getAccesoupdate());
+        System.out.println("dddddddddddddddddddffffffffffffffff"+loggedUser.getRolid());
         
         if(usua.getAccesoupdate() == 1){
              v_editar = true;
@@ -312,7 +316,7 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%"),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%")));
         }
         if(bdocumentoidentidad !=null){
-            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId())));
+            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
         }
         if(bnumeroDocumento != null){
             c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador",bnumeroDocumento),Restrictions.eq("nro_doc_persona",bdocumentoidentidad)));
