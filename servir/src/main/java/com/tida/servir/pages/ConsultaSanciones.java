@@ -151,6 +151,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     @Property
     private Boolean v_editar;
+    @Persist
+    @Property
+    private Boolean entidadsubentidad;
     
     @Property
     @Persist
@@ -244,8 +247,10 @@ public class ConsultaSanciones extends GeneralPage {
         
         if(loggedUser.getRolid()==3){
             bmostrar=true;
+            entidadsubentidad=true;
         }else{
             bmostrar=false;
+            entidadsubentidad=false;
             filtro_entidad = loggedUser.getEntidad().getId();
         }  
         
