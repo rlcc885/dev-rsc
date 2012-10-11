@@ -43,7 +43,17 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
     private String b_datos_trabajador;
     private Boolean estrabajador;
     private Boolean veditar;
+    private Boolean veditar_anular;
 
+    public Boolean getVeditar_anular() {
+        return veditar_anular;
+    }
+
+    public void setVeditar_anular(Boolean veditar_anular) {
+        this.veditar_anular = veditar_anular;
+    }
+
+    
     public String getApellidos_persona() {
         return apellidos_persona;
     }
