@@ -844,6 +844,7 @@ public class ABMSancion  extends GeneralPage
         if(tiposancion.getCodigo()==1){
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
+            int diasvisu=(tiposancion.getTiempoVisualizaAnios()*365)+(tiposancion.getTiempoVisualizaMeses()*30)+(tiposancion.getTiempoVisualizaDias());
             System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
             if(calcularperiodo()>diastiposamin && calcularperiodo()<diastiposamax){             
             }
@@ -851,14 +852,27 @@ public class ABMSancion  extends GeneralPage
                 formsancion.recordError("El Periodo de Inhabilitación debe ser mayor a : "+String.valueOf(diastiposamin)+" días y menor a : "+String.valueOf(diastiposamax)+" dias");
                 return zonasDatos();
             }
+            if(calcularperiodo()<diasvisu){             
+            }
+            else{
+                formsancion.recordError("El Periodo de Inhabilitación debe ser menor al Tiempo de Visualizacion");
+                return zonasDatos();
+            }
         }
         if(tiposancion.getCodigo()==2){
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
+            int diasvisu=(tiposancion.getTiempoVisualizaAnios()*365)+(tiposancion.getTiempoVisualizaMeses()*30)+(tiposancion.getTiempoVisualizaDias());
             System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax);
             if(calcularperiodo()<diastiposamax){                
             }
             else{
                 formsancion.recordError("El Periodo de Inhabilitación debe ser menor a: "+String.valueOf(diastiposamax)+" días");
+                return zonasDatos();
+            }
+            if(calcularperiodo()<diasvisu){             
+            }
+            else{
+                formsancion.recordError("El Periodo de Inhabilitación debe ser menor al Tiempo de Visualizacion");
                 return zonasDatos();
             }
         }
