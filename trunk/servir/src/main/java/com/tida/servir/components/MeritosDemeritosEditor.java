@@ -233,6 +233,10 @@ public class MeritosDemeritosEditor {
                 return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());
             }
 
+            if (fecha_desde.after(new Date())){
+                formulariomensajesME.recordError("La fecha debe ser menor a la fecha actual");
+                return new MultiZoneUpdate("mensajesMEZone", mensajesMEZone.getBody()).add("claseZone", claseZone.getBody());            
+            }
             if (_usuario.getRolid() == 1) {
                 formulariomensajesME.recordError("Ud, no tiene permisos para Insertar Datos");
 //            envelope.setContents("Ud, no tiene permisos para Insertar Datos");
