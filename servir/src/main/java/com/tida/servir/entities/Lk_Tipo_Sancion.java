@@ -81,6 +81,12 @@ public class Lk_Tipo_Sancion implements Serializable {
     private Integer tiempoMaxDias;
     @Column(name = "ID_TIPO_SANCION" )    
     private Long id_tipo;
+    @Column(name = "TIEMPO_VISUALIZA_DIAS")
+    private Integer tiempoVisualizaDias;
+    @Column(name = "TIEMPO_VISUALIZA_ANIOS")
+    private Integer tiempoVisualizaAnios;
+    @Column(name = "TIEMPO_VISUALIZA_MESES")
+    private Integer tiempoVisualizaMeses;
     
     
     public Long getId_tipo() {
@@ -137,6 +143,30 @@ public class Lk_Tipo_Sancion implements Serializable {
 
     public void setTiempoMinMeses(Integer tiempoMinMeses) {
         this.tiempoMinMeses = tiempoMinMeses;
+    }
+
+    public Integer getTiempoVisualizaAnios() {
+        return tiempoVisualizaAnios;
+    }
+
+    public void setTiempoVisualizaAnios(Integer tiempoVisualizaAnios) {
+        this.tiempoVisualizaAnios = tiempoVisualizaAnios;
+    }
+
+    public Integer getTiempoVisualizaDias() {
+        return tiempoVisualizaDias;
+    }
+
+    public void setTiempoVisualizaDias(Integer tiempoVisualizaDias) {
+        this.tiempoVisualizaDias = tiempoVisualizaDias;
+    }
+
+    public Integer getTiempoVisualizaMeses() {
+        return tiempoVisualizaMeses;
+    }
+
+    public void setTiempoVisualizaMeses(Integer tiempoVisualizaMeses) {
+        this.tiempoVisualizaMeses = tiempoVisualizaMeses;
     }
     
     
