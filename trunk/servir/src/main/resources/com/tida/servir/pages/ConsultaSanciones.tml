@@ -111,6 +111,7 @@
     <div t:type="zone" t:id="listaConsultaSancionZone" class="selectform" >
         <t:form t:id="formconsultaSancion" >
           <t:if test="mostrar_reglab">
+              <t:if test="entidadsubentidad">
                <t:grid source="busquedaSancionados" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -132,11 +133,6 @@
                                 ${cs.b_datos_persona}
                             </t:if>    
                         </p:nombresCell>
-                        <p:entidadsubentidadCell>
-                            <t:if test="entidadsubentidad">
-                                ${cs.entidad_subentidad}
-                            </t:if>  
-                        </p:entidadsubentidadCell>    
                         <p:accionesCell>
                             <t:if test="SancionAnulada">
                                 <a t:type="pagelink" t:page="AnularSancion" t:context="cs.id_sancion" href="#">Anular</a>
@@ -156,14 +152,61 @@
                         </p:accionesCell>
                        
             </t:grid>
+            </t:if>
+                <t:if test="entidadsubentidad" negate="true">
+                    <t:grid source="busquedaSancionados" 
+                                    rowsPerPage="10" 
+                                    t:add="Nombres,EntidadSubEntidad,Acciones" 
+                                    pagerPosition="bottom"
+                                    row="cs"
+                                    reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                                    exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
+                                            id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
+                                            b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad"
+                                    inPlace="true">
+                            <t:parameter name="empty">
+                                <div class="no-info">No se encontro coincidencias</div>
+                            </t:parameter>
+                                <p:nombresCell>
+                                    <t:if test="${cs.estrabajador}">
+                                        ${cs.b_datos_trabajador}
+                                    </t:if>
+                                    <t:if test="${cs.estrabajador}" negate="true">
+                                        ${cs.b_datos_persona}
+                                    </t:if>    
+                                </p:nombresCell>
+                                <p:entidadsubentidadCell>
+                                    ${cs.entidad_subentidad}
+                                </p:entidadsubentidadCell>    
+                                <p:accionesCell>
+                                    <t:if test="SancionAnulada">
+                                        <a t:type="pagelink" t:page="AnularSancion" t:context="cs.id_sancion" href="#">Anular</a>
+                                        |
+                                    <t:if test="v_editar">
+                                        <t:if test="${cs.veditar}">
+                                            <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
+                                            |
+                                        </t:if>
+                                    </t:if>
+                                    </t:if>    
+                                            <a t:context="cs" t:zone="listaConsultaSancionZone">
+                                                <span t:type="any" >
+                                                    Imprimir
+                                                </span> 
+                                            </a>                      
+                                </p:accionesCell>
+
+                    </t:grid>
+                </t:if>
           </t:if>
           <t:if test="mostrar_reglab" negate="true">
+              <t:if test="entidadsubentidad">
                <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
-                            t:add="Nombres,EntidadSubEntidad,Acciones" 
+                            t:add="Nombres,Acciones" 
                             pagerPosition="bottom"
                             row="cs_sinreglab"
-                            reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                            reorder="Nombres,tipo_sancion,tiempo_restante,estado,Acciones"
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                     b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad"
@@ -179,11 +222,6 @@
                                 ${cs_sinreglab.b_datos_persona}
                             </t:if>    
                         </p:nombresCell>
-                        <p:entidadsubentidadCell>
-                            <t:if test="entidadsubentidad">
-                                ${cs_sinreglab.entidad_subentidad}
-                            </t:if>    
-                        </p:entidadsubentidadCell> 
                         <p:accionesCell>    
                          <!--   <t:if test="${veditar}">-->
                             <t:if test="SancionAnulada_sinregla"> 
@@ -208,7 +246,59 @@
                                     </a>                      
                         </p:accionesCell>
                        
-            </t:grid>
+            </t:grid>               
+            </t:if>
+            <t:if test="entidadsubentidad" negate="true">
+                <t:grid source="busquedaSancionadossinreglab" 
+                            rowsPerPage="10" 
+                            t:add="Nombres,EntidadSubEntidad,Acciones" 
+                            pagerPosition="bottom"
+                            row="cs_sinreglab"
+                            reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                            exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
+                                    id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
+                                    b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad"
+                            inPlace="true">
+                       <t:parameter name="empty">
+                          <div class="no-info">No se encontro coincidencias</div>
+                       </t:parameter>
+                        <p:nombresCell>
+                            <t:if test="${cs_sinreglab.estrabajador}">
+                                ${cs_sinreglab.b_datos_trabajador}
+                            </t:if>
+                            <t:if test="${cs_sinreglab.estrabajador}" negate="true">
+                                ${cs_sinreglab.b_datos_persona}
+                            </t:if>    
+                        </p:nombresCell>
+                            <p:entidadsubentidadCell>
+                                ${cs_sinreglab.entidad_subentidad}
+                            </p:entidadsubentidadCell>   
+                        <p:accionesCell>    
+                         <!--   <t:if test="${veditar}">-->
+                            <t:if test="SancionAnulada_sinregla"> 
+                                <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
+                                |
+                                <t:if test="v_editar">
+                                    <t:if test="${cs_sinreglab.veditar}">
+                                    <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->
+                                        <a t:type="pagelink" t:page="ABMSancion" t:context="cs_sinreglab.id_sancion" href="#">Editar</a>
+                                        |
+                                    </t:if>
+                                </t:if>    
+                            </t:if>    
+                            <!--<t:if test="${veditar}" negate="true">-->
+                                
+                            <!--</t:if>-->
+                            <!--<t:if test="${veliminar}">  --> 
+                                    <a t:context="cs_sinreglab" t:zone="listaConsultaSancionZone">
+                                        <span t:type="any" >
+                                            Imprimir
+                                        </span> 
+                                    </a>                      
+                        </p:accionesCell>
+                       
+                </t:grid>
+            </t:if>  
           </t:if>  
             
           
