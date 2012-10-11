@@ -284,7 +284,9 @@
                 </t:eventLink>
                 </t:if>
                 <t:if test="${editando}">
-                    <a t:type="pagelink" t:page="ABMSuspension" t:context="nuevasancion.id" href="#" class="button f-right">Suspender</a>
+                    <t:if test="${vsuspender}">
+                        <a t:type="pagelink" t:page="ABMSuspension" t:context="nuevasancion.id" href="#" class="button f-right">Suspender</a>
+                    </t:if>
                     <t:eventLink t:event="cancel" href="#" class="button f-right">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Cancelar

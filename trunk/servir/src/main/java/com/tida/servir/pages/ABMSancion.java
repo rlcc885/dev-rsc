@@ -222,6 +222,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean vregistrar;
+    @Property
+    @Persist
+    private Boolean vsuspender;
     
     @PageActivationContext
     private Sancion modificasancion;
@@ -284,6 +287,10 @@ public class ABMSancion  extends GeneralPage
             modificasancion=null;
             mostrar();
             editando=true;
+            if(nuevasancion.getTipo_sancion().getTipoInhabilitacion().getCodigo()==3)
+                vsuspender=false;
+            else
+                vsuspender=true;
         }
     }
     
@@ -910,6 +917,12 @@ public class ABMSancion  extends GeneralPage
                 formsancion.recordError("La Fecha de Inicio (Periodo de Inhabilitación) debe ser mayor en un 1 día a la Fecha de Notificacion");
                 return zonasDatos();
             }
+            if(fecha_inicio.before(new Date()) || fecha_inicio.equals(new Date())){
+                nuevasancion.setSancion_estado(getEstados((long) 1).get(0));
+            }
+            else{
+                nuevasancion.setSancion_estado(getEstados((long) 2).get(0));
+            }            
         }
         if (fecfin != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
@@ -956,10 +969,7 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setFecha_docsan(fecha_docsan);
         nuevasancion.setFechafin_inha(fecha_fin);
         nuevasancion.setFechaini_inha(fecha_inicio);
-        nuevasancion.setTipo_sancion(tiposa);
-        if(!editando){
-            nuevasancion.setSancion_estado(this.getEstados().get(0));
-        }
+        nuevasancion.setTipo_sancion(tiposa);       
         session.saveOrUpdate(nuevasancion);
         session.flush(); 
         new Logger().loguearOperacion(session, usuario, String.valueOf(nuevasancion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SANCION);
@@ -976,10 +986,10 @@ public class ABMSancion  extends GeneralPage
     }  
     
     @Log
-    public List<DatoAuxiliar> getEstados() {
+    public List<DatoAuxiliar> getEstados(long cod) {
         Criteria c = session.createCriteria(DatoAuxiliar.class);        
         c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
-        c.add(Restrictions.eq("codigo", (long) 1));
+        c.add(Restrictions.eq("codigo", cod));
         return c.list();
     }
     
