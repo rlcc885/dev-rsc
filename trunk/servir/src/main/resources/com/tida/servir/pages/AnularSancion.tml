@@ -82,7 +82,13 @@
                              </t:eventLink>
                            <!-- <input t:id="limpiar1" t:type="submit" value="Limpiar Formulario" class="button" />-->
                             <input t:type="Submit" t:id="save" value="Guardar" class="button" t:mixins="Confirm" t:message="Desea ejecutar esta acción?"/>
-                            <input t:type="Submit" t:id="cancel1" value="Cancelar" class="button" onClick="javascript: ocultar();"/> 
+                            <!--<input t:type="Submit" t:id="cancel1" value="Cancelar" class="button" onClick="javascript: ocultar();"/> -->
+                            <t:eventLink t:event="cancel1" class="button" t:zone="busZone2" >
+                                 <span t:type="any" style="font-size:11px;">
+                                        Cancelar
+                                 </span> 
+                             </t:eventLink>
+                            <!--<a t:type="pagelink" style="font-size:11px;" t:page="ConsultaSanciones" href="#">Cancelar_</a>-->
                         </div>
                     </div>   
                  </form>
