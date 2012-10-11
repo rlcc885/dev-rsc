@@ -248,8 +248,12 @@ public class AnularSancion extends GeneralPage {
          anulacion.setId_entidad(entidad2);
          session.saveOrUpdate(anulacion);            
          session.flush();
+         if(fechadoc_not.before(new Date()) || fechadoc_not.equals(new Date())){
+             modificasancion.setSancion_estado(getEstados().get(0));
+         }else{
+             modificasancion.setSancion_estado(getEstado_v().get(0));
+         }
          
-         modificasancion.setSancion_estado(getEstados().get(0));
          session.saveOrUpdate(modificasancion);   
          session.flush();
          //modificasancion
@@ -265,6 +269,13 @@ public class AnularSancion extends GeneralPage {
         Criteria c = session.createCriteria(DatoAuxiliar.class);        
         c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
         c.add(Restrictions.eq("codigo", (long) 4));
+        return c.list();
+    }
+    @Log
+    public List<DatoAuxiliar> getEstado_v() {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);        
+        c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
+        c.add(Restrictions.eq("codigo", (long) 1));
         return c.list();
     }
 }
