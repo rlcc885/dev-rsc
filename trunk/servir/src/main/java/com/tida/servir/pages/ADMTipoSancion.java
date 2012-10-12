@@ -27,6 +27,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import com.tida.servir.entities.TipoSancion;
+import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -459,8 +460,8 @@ public class ADMTipoSancion
     {
         
         Criteria c1 = session.createCriteria(Sancion.class);
-        c1.add(Restrictions.eq("tipo_sancion", tipsancion));
-
+        c1.add(Restrictions.eq("tipo_sancion.id", tipsancion.getId()));
+        c1.setProjection(Projections.property("id"));
         if (c1.list().isEmpty()){
             
 /*          c1 = session.createCriteria(SancionRegimen.class);
@@ -469,9 +470,9 @@ public class ADMTipoSancion
                     return true;
                 }*/
         //****        
-          c1 = session.createCriteria(LkSancionRegimen.class);
-          c1.add(Restrictions.eq("tiposancionId", tipsancion.getId()));
-                if (c1.list().isEmpty()){
+         Criteria c2 = session.createCriteria(LkSancionRegimen.class);
+          c2.add(Restrictions.eq("tiposancionId", tipsancion.getId()));
+                if (c2.list().isEmpty()){
                     return true;
                 }
                 
