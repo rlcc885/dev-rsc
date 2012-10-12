@@ -14,17 +14,14 @@
     </t:if>-->
     <h2>Modificación de clave</h2>
     
-     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
-        <script>
-          setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
-        </script>
+     <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">        
         <form t:type="form" t:id="formmensaje" t:zone="mensajeZone">
             <t:envelope t:id="envelope"/>
              
         </form>
     </div>
     
-    <div class="box-background-title" style="width:472px; margin:auto; margin-top:100px;">
+    <div class="box-background-title" style="width:472px; margin:auto; margin-top:50px;">
         <span class="box-title">Cambiar Clave</span>
     </div>
     <div class="box" style="width:450px; margin: auto;">

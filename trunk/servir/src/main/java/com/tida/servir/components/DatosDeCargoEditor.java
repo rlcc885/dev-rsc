@@ -167,6 +167,10 @@ public class DatosDeCargoEditor {
                 SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                 try {
                     fecha_fin = (Date) formatoDelTexto.parse(valfec_fin);
+                    if(fecha_fin.after(new Date())){
+                        formulariodatosdecargoasignado.recordError("La Fecha de Finalizacion debe ser menor a la Actual.");
+                        return datosDeCargoZone.getBody();
+                    }
                 } catch (ParseException ex) {
                     ex.printStackTrace();
                 }

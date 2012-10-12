@@ -148,10 +148,10 @@ public class CambiarClave extends GeneralPage {
                 return zone.getBody(); 
             }
             
-            envelope.setContents("Clave modificada con éxito.");
+            envelope.setContents("Clave modificada con exito.");
             
             if (this.cambioForzado) {
-                envelope.setContents("Clave modificada con éxito. <a href='/servir'>Reingresar al sistema.</a>");
+                envelope.setContents("Clave modificada con exito. <a href='/servir'>Reingresar al sistema.</a>");
             }     
             _usuario.setMd5Clave(Encriptacion.encriptaEnMD5(newPass1));
             _usuario.setUltimo_cambio_clave(new Date());

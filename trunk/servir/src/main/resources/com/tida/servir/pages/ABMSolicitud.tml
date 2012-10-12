@@ -112,11 +112,12 @@
          </div>
          <form t:type="form" t:id="formsubida">
              <fieldset>
-                <legend>Cargo/Puesto</legend>                
+                <legend>Cargo/Puesto</legend>
+                <t:errors/> 
                     <div class="f-wrap">
                         <div class="f-left">
                             <label>* Número Resolución</label>
-                            <input t:type="TextField" t:id="num_resolu" value="nuevasolicitud.num_resolucion" size="30" t:validate="required,regexp"/>
+                            <input t:type="TextField" t:id="num_resolu" value="nuevasolicitud.num_resolucion" size="30" t:validate="required"/>
                         </div>      
                         <div class="f-left">
                             <label>* Fecha</label>

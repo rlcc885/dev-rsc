@@ -10,6 +10,7 @@ import com.tida.servir.entities.*;
 import helpers.Encriptacion;
 import helpers.Helpers;
 import helpers.Logger;
+import helpers.SMTPConfig;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,6 +81,8 @@ public class ABMSolicitud
     private String bcargo;
     @Component(id = "formSolicitud")
     private Form formSolicitud;
+    @Component(id = "formsubida")
+    private Form formsubida;
     @InjectComponent
     private Zone solicitudZone;
     @Property
@@ -282,7 +285,20 @@ public class ABMSolicitud
     
     @Log
     @CommitAfter
-    Object onSuccessFromformsubida(){      
+    Object onSuccessFromformsubida(){ 
+        formsubida.clearErrors();
+        if (fecharesolu != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                nuevasolicitud.setFec_resolucion((Date) formatoDelTexto.parse(fecharesolu));
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        } 
+        if(nuevasolicitud.getFec_resolucion().after(new Date())){
+            formsubida.recordError("La Fecha de Resolucion debe ser menor a la Actual");
+            return this;
+        }
         Date date = new Date();
         int aleatorio = (int) (Math.random() * 1000 + 1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -307,18 +323,19 @@ public class ABMSolicitud
         nuevasolicitud.setDocumento(path + nombreArchivos);
         nuevasolicitud.setTrabajador(trabajador);
         nuevasolicitud.setEstado(false);    
-        nuevasolicitud.setPerfil(bperfil);
-        if (fecharesolu != null) {
-            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                nuevasolicitud.setFec_resolucion((Date) formatoDelTexto.parse(fecharesolu));
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-        }       
+        nuevasolicitud.setPerfil(bperfil);              
         session.saveOrUpdate(nuevasolicitud);
         session.flush();
-        new Logger().loguearEvento(session, Logger.SOLICITUD_SANCION, entidad, traba, 0, Logger.MOTIVO_SOLICITUD_SANCION, nuevasolicitud.getId());
+        ConfiguracionAcceso ca = (ConfiguracionAcceso) session.load(ConfiguracionAcceso.class, 1L);
+        new Logger().loguearEvento(session, Logger.SOLICITUD_SANCION, entidad, traba, 0, Logger.MOTIVO_SOLICITUD_SANCION, nuevasolicitud.getId());        
+        
+        if (SMTPConfig.sendMail("Datos de acceso al Modulo de Sanciones - Servir", "Por favor espere la aprobación de su solicitud con un mensaje en su bandeja del correo registrado en el Sistema", bemailLaboral, ca)) {
+            System.out.println("Envío Correcto");
+        } else{                
+                Logger logger = new Logger();
+                logger.loguearEvento(session, logger.ERROR_SERVIDOR_DE_CORREO, entidad, traba,0, Logger.CORREO_FAIL_RESET_PASSWORD, 0); 
+        }
+        
         bnombres=null;        
         bapellidoPaterno=null;
         bapellidoMaterno=null;
@@ -335,7 +352,7 @@ public class ABMSolicitud
         etapaInicio = true;
         procesoFin = false;
         respuestaOk=true;
-        return this;
+        return "Index";
     }
     
 }
