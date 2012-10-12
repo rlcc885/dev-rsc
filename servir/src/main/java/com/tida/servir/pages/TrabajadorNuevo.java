@@ -452,8 +452,8 @@ public class TrabajadorNuevo extends GeneralPage {
                         session.saveOrUpdate(usuarionuevo);
                     }
                 } else {
-                    if (getListadoUsuario().size() > 0) {
-                        Usuario usuarioeliminar = (Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+                    if (getListadoUsuariodos().size() > 0) {
+                        Usuario usuarioeliminar = (Usuario) session.load(Usuario.class, getListadoUsuariodos().get(0).getId());
                         session.delete(usuarioeliminar);
                     }
                     if (cargo2.getRegimenlaboral() != null) {
@@ -536,8 +536,15 @@ public class TrabajadorNuevo extends GeneralPage {
 
     @Log
     public List<UsuarioTrabajador> getListadoUsuario() {
-        Query query = session.getNamedQuery("UsuarioTrabajador.findByLogin");
-        query.setParameter("login", nuevo.getNroDocumento());
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByTrabajador");
+        query.setParameter("trabajadorid", nuevo.getId());
+        return query.list();
+    }
+    
+    @Log
+    public List<UsuarioTrabajador> getListadoUsuariodos() {
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumentousuario");
+        query.setParameter("nrodocumentousuario", nuevo.getNroDocumento());
         return query.list();
     }
 
