@@ -210,10 +210,15 @@ public class PublicacionesEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioprointelectual() {
+        formulariomensajespi.clearErrors();
         if (valfec_desde != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 fecha_desde = (Date) formatoDelTexto.parse(valfec_desde);
+                if(fecha_desde.after(new Date())){
+                    formulariomensajespi.recordError("La Fecha de la Producción debe ser menor a la Actual");
+                    return new MultiZoneUpdate("mensajesPIZone", mensajesPIZone.getBody()).add("listaProIntelectualZone", listaProIntelectualZone.getBody()).add("proIntelectualZone", proIntelectualZone.getBody());
+                }
                 publicacion.setFecha(fecha_desde);
             } catch (ParseException ex) {
                 ex.printStackTrace();
