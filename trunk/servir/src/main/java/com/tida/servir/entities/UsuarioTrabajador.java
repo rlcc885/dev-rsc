@@ -27,7 +27,9 @@ import javax.persistence.*;
     @NamedQuery(name = "UsuarioTrabajador.findByUltimoCambioClave", query = "SELECT u FROM UsuarioTrabajador u WHERE u.ultimoCambioClave = :ultimoCambioClave"),
     @NamedQuery(name = "UsuarioTrabajador.findByEstado", query = "SELECT u FROM UsuarioTrabajador u WHERE u.estado = :estado"),
     @NamedQuery(name = "UsuarioTrabajador.findById", query = "SELECT u FROM UsuarioTrabajador u WHERE u.id = :id"),
-    @NamedQuery(name = "UsuarioTrabajador.findByLogin", query = "SELECT u FROM UsuarioTrabajador u WHERE u.login = :login")
+    @NamedQuery(name = "UsuarioTrabajador.findByLogin", query = "SELECT u FROM UsuarioTrabajador u WHERE u.login = :login"),
+    @NamedQuery(name = "UsuarioTrabajador.findByTrabajador", query = "SELECT u FROM UsuarioTrabajador u WHERE u.trabajadorid = :trabajadorid"),
+    @NamedQuery(name = "UsuarioTrabajador.findByNrodocumentousuario", query = "SELECT u FROM UsuarioTrabajador u WHERE u.nrodocumentousuario = :nrodocumentousuario")
 })
 
 public class UsuarioTrabajador implements Serializable {
@@ -81,6 +83,8 @@ public class UsuarioTrabajador implements Serializable {
     private Date fechacreacion;
     @Column(name = "OBSERVACION")
     private String observacion;
+    @Column(name = "USUARIO_DOCUMENTO")
+    private String nrodocumentousuario;
     
     public UsuarioTrabajador() {
     }
@@ -259,6 +263,14 @@ public class UsuarioTrabajador implements Serializable {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public String getNrodocumentousuario() {
+        return nrodocumentousuario;
+    }
+
+    public void setNrodocumentousuario(String nrodocumentousuario) {
+        this.nrodocumentousuario = nrodocumentousuario;
     }
     
 }
