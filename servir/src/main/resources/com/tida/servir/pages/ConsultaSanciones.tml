@@ -140,10 +140,8 @@
                                 |
                                 </t:if> 
                             <t:if test="v_editar">
-                                <t:if test="${cs.veditar}">
-                                    <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
+                                <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
                                     |
-                                </t:if>
                             </t:if>
                             </t:if>    
                                     <a t:context="cs" t:zone="listaConsultaSancionZone">
@@ -186,11 +184,9 @@
                                             <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
                                         |
                                         </t:if>
-                                    <t:if test="v_editar">
-                                        <t:if test="${cs.veditar}">
+                                    <t:if test="v_editar">                                        
                                             <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
                                             |
-                                        </t:if>
                                     </t:if>
                                     </t:if>    
                                             <a t:context="cs" t:zone="listaConsultaSancionZone">
@@ -234,11 +230,9 @@
                                 |
                                 </t:if>
                                 <t:if test="v_editar">
-                                    <t:if test="${cs_sinreglab.veditar}">
                                     <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->
                                         <a t:type="pagelink" t:page="ABMSancion" t:context="cs_sinreglab.id_sancion" href="#">Editar</a>
                                         |
-                                    </t:if>
                                 </t:if>    
                             </t:if>    
                             <!--<t:if test="${veditar}" negate="true">-->
@@ -287,11 +281,9 @@
                                 |
                                 </t:if> 
                                 <t:if test="v_editar">
-                                    <t:if test="${cs_sinreglab.veditar}">
                                     <!-- <t:actionlink t:id="editar" zone="listaConsultaSancionZone" context="cs">Editar</t:actionlink>-->
                                         <a t:type="pagelink" t:page="ABMSancion" t:context="cs_sinreglab.id_sancion" href="#">Editar</a>
                                         |
-                                    </t:if>
                                 </t:if>    
                             </t:if>    
                             <!--<t:if test="${veditar}" negate="true">-->
