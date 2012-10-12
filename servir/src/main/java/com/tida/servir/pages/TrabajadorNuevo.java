@@ -485,6 +485,11 @@ public class TrabajadorNuevo extends GeneralPage {
                     }
                 }
 
+                if (cargoAsignado.getFec_inicio().after(new Date())){
+                    formulariomensajes.recordError("La fecha de inicio debe ser menor a la fecha del sistema");
+                 return new MultiZoneUpdate("trabajadorNuevoZone",trabajadorNuevoZone.getBody()).add("mensajesZone",mensajesZone.getBody());
+                }
+                
                 cargoAsignado.setTipovinculo(tipovinculo);
                 cargoAsignado.setCargoxunidad(cargo2);
                 cargoAsignado.setPuestoconfianza(puestoconfianza);
