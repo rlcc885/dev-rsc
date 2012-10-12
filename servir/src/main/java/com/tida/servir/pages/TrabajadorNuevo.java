@@ -452,6 +452,10 @@ public class TrabajadorNuevo extends GeneralPage {
                         session.saveOrUpdate(usuarionuevo);
                     }
                 } else {
+                    if (getListadoUsuario().size() > 0) {
+                        Usuario usuarioeliminar = (Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+                        session.delete(usuarioeliminar);
+                    }
                     if (cargo2.getRegimenlaboral() != null) {
                         if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
                             seteanuevousuario(usuarionuevo);
