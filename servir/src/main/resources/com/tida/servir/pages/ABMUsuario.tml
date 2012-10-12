@@ -108,8 +108,8 @@
                     <t:eventLink t:event="editaPerfil" t:context="u" href="#" t:zone="tabla_usuario">
                         Perfiles
                     </t:eventLink>
-                    |
-                    <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>
+                    <!--|
+                    <a t:type="actionlink" t:id="reporteUsuario" t:context="u.id" href="#">Trazabilidad del Usuario</a>-->
                 </p:accionesCell>
             </t:grid>
             <div class="f-right">

@@ -396,13 +396,13 @@ public class ABMUsuario extends GeneralPage {
         return new MultiZoneUpdate("formularioEntidadZone", formularioEntidadZone.getBody()).add("busZone", busZone.getBody()).add("entiZone", entiZone.getBody());
     }
 
-    @Log
-    StreamResponse onActionFromReporteUsuario(Long userID) {
-        Reportes rep = new Reportes();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("MandatoryParameter_UsuarioID", userID);
-        return rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
-    }
+//    @Log
+//    StreamResponse onActionFromReporteUsuario(Long userID) {
+//        Reportes rep = new Reportes();
+//        Map<String, Object> parametros = new HashMap<String, Object>();
+//        parametros.put("MandatoryParameter_UsuarioID", userID);
+//        return rep.callReporte(Reportes.REPORTE.B5, Reportes.TIPO.PDF, parametros, context);
+//    }
 
     @Log
     private MultiZoneUpdate zonasTotal() {
