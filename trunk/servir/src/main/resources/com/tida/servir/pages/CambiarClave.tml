@@ -42,11 +42,15 @@
                                 <t:label for="clave_nueva_1"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_1"
                                        t:value="newPass1" size="20" t:validate="maxlength=50" onkeyup="javascript: verificar();" />
+                                <br/>
+                                <label style="color:red;">(mínimo 6 caracteres)</label>
                             </div>
                             <div class="f-left">
                                 <t:label for="clave_nueva_2"/>
                                 <input t:type="PasswordField" t:id="clave_nueva_2"
                                        t:value="newPass2" size="20" t:validate="maxlength=50" />
+                                <br/>
+                                <label style="color:red;">(mínimo 6 caracteres)</label>
                             </div>
                         </div>
                        <div class="f-wrap" id="complejidadclave"> 
