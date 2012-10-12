@@ -800,7 +800,12 @@ public class ABMSancion  extends GeneralPage
         fechadocsan=null;
         fecinicio=null;
         fecfin=null;  
-        bestrabajador=false;
+        if(usuario.getRolid()==2){
+            bestrabajador=true;
+        }
+        else{
+            bestrabajador=false;
+        }
     }
     
     void calcular(int dias){
