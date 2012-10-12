@@ -461,6 +461,7 @@ public class FamiliaresEditor {
         vdetalle = true;vformulario=true;
         bdni = true;
         vguardar = false;
+        bvalidausuario = false;
         return familiaresZone.getBody();
     }
 
