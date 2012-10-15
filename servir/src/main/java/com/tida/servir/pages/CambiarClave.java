@@ -158,7 +158,7 @@ public class CambiarClave extends GeneralPage {
             _usuario.setIntentos_fallidos(0L);
             session.saveOrUpdate(_usuario);
 
-            return new MultiZoneUpdate("zone2", zone.getBody())                             
+            return new MultiZoneUpdate("zone", zone.getBody())                             
                     .add("mensajeZone",mensajeZone.getBody()); 
          }
     }
