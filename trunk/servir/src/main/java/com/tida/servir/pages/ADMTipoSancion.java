@@ -271,7 +271,7 @@ public class ADMTipoSancion
 
             editando = false;
             limpiar();
-            envelope.setContents("Tipo de Sanción creado / modificado con exito");         
+            envelope.setContents("Tipo de SanciÃ³n creado / modificado con exito");         
         
         
         return actualizarZonas();
@@ -443,9 +443,9 @@ public class ADMTipoSancion
            return "NO TIENE";
        }
 
-       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DÍAS ";}
+       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DÃAS ";}
        if(tipsancion.getMeses()!=0){cadena+=tipsancion.getMeses()+" MESES ";}
-       if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÑOS ";}
+       if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÃ‘OS ";}
     
     return cadena;
 
@@ -455,35 +455,6 @@ public class ADMTipoSancion
         this.periodomaximoinhabilitacion = periodomaximoinhabilitacion;
     }
     
-    
-    public boolean geteliminarSN()
-    {
-        
-        Criteria c1 = session.createCriteria(Sancion.class);
-        c1.add(Restrictions.eq("tipo_sancion.id", tipsancion.getId()));
-        c1.setProjection(Projections.property("id"));
-        if (c1.list().isEmpty()){
-            
-/*          c1 = session.createCriteria(SancionRegimen.class);
-          c1.add(Restrictions.eq("tipoSancion", tipsancion));
-                if (c1.list().isEmpty()){
-                    return true;
-                }*/
-        //****        
-         Criteria c2 = session.createCriteria(LkSancionRegimen.class);
-          c2.add(Restrictions.eq("tiposancionId", tipsancion.getId()));
-                if (c2.list().isEmpty()){
-                    return true;
-                }
-                
-
-        }
-        
-        
-        
-        return false;
-    }
-
     @Persist
     @Property
     private Boolean detallemin;
