@@ -3,8 +3,7 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.DatoAuxiliar;
-
-
+import com.tida.servir.entities.LkDatoauxiliar;
 import helpers.Errores;
 import com.tida.servir.entities.Usuario;
 import java.util.ArrayList;
@@ -17,11 +16,18 @@ import org.apache.tapestry5.corelib.components.*;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.*;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
+import com.tida.servir.services.GenericSelectModel;
+import java.util.ArrayList;
+import java.util.Map;
 import org.hibernate.criterion.Order;
 /**
  *
@@ -91,14 +97,19 @@ public class ABMDatoAuxiliar extends GeneralPage {
     @Persist
     @Property
     private DatoAuxiliar nuevoRegistro;
+    @Persist
+    @Property
+    private Boolean editando;
+
     public ABMDatoAuxiliar() {
     }
-    
+   
     void setuprender(){
     nuevoRegistro = new DatoAuxiliar();
-    relacionada = Boolean.FALSE;
-    noRelacionada = Boolean.FALSE;
-            
+    
+    if ((relacionada == null) && (noRelacionada == null)){
+       relacionada = Boolean.FALSE;noRelacionada = Boolean.FALSE;
+    }        
             
     }
     
@@ -106,22 +117,38 @@ public class ABMDatoAuxiliar extends GeneralPage {
     @Persist
     private String tablaActual;
     
+    
+    @Persist
+    private DatoAuxiliar tablaTemporal;
+    
+    
     @Log
     public List<String> getTablasAuxiliares() {
         tablaRelacion = null;
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.setProjection(Projections.distinct(Projections.property("nombreTabla")));
-      //  c.add(Restrictions.ne("editable", Boolean.FALSE));
+        c.add(Restrictions.ne("editable", Boolean.FALSE));
         c.addOrder(Order.asc("nombreTabla"));
         return c.list();
     }
     
     @Persist
-    private DatoAuxiliar tablaTemporal;
+    @Property
+    private  Boolean relacionada;
+    @Persist
+    @Property
+    private  Boolean noRelacionada;
+    
+    
     @Log
     public Object onValueChangedFromTablaSeleccionada(String nombreTabla) {
+        editando = Boolean.FALSE;
         relacionada = Boolean.FALSE;
         noRelacionada = Boolean.FALSE;
+        nuevoRegistro = new DatoAuxiliar();
+        formularioMensajes.clearErrors();
+        valDatoRelacionado = null;
+        tablaRelacionada = null;
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla",nombreTabla ));
         tablaTemporal = (DatoAuxiliar)c.list().get(0);
@@ -132,52 +159,205 @@ public class ABMDatoAuxiliar extends GeneralPage {
         relacionada = Boolean.TRUE;        
         }
         return dosZones();
-
-    }
+   }
     
-    @Persist
-    @Property
-    private  Boolean relacionada;
-    @Persist
-    @Property
-    private  Boolean noRelacionada;
     
     private MultiZoneUpdate dosZones() {
         return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody());
     }
 
     @Property
-    @Persist
-    private DatoAuxiliar tabla1;
-    @Property
-    @Persist
-    private DatoAuxiliar tabla2;
     @Component(id = "formularioMensajes")
     private Form formularioMensajes;
 
+    @Persist
+    @Property
+    private LkDatoauxiliar tabla1;
+    
     @Log
-    public List<DatoAuxiliar> getTablaAux1(){
-    Criteria c = session.createCriteria(DatoAuxiliar.class);
+    public List<LkDatoauxiliar> getTablaAux1(){
+    Criteria c = session.createCriteria(LkDatoauxiliar.class);
     c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
+    c.add(Restrictions.isNull("tablaRelacion"));
+    c.addOrder(Order.asc("codigo"));
     return c.list();
+    }
+
+    @Property
+    @Persist
+    private LkDatoauxiliar tabla2;
+
+    @Log
+    public List<LkDatoauxiliar> getTablaAux2(){
+    Criteria c = session.createCriteria(LkDatoauxiliar.class);
+    c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
+    c.addOrder(Order.asc("codigo"));
+    return c.list();
+    }    
+
+    
+    public Object onEditarDato(LkDatoauxiliar dato){
+        editando = Boolean.TRUE;
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("id", dato.getId()));
+        nuevoRegistro = (DatoAuxiliar)c.uniqueResult();
+        return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody());
+    }
+    
+    public Object onEditarDato2(LkDatoauxiliar dato){
+        editando = Boolean.TRUE;
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("id", dato.getId()));
+        nuevoRegistro = (DatoAuxiliar)c.uniqueResult();
+        tablaRelacionada = nuevoRegistro.getTablaRelacion();
+        c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("id", dato.getRelacionId()));
+        valDatoRelacionado = (DatoAuxiliar)c.uniqueResult();
+        return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody());
     }
     
     @Log
-    public List<DatoAuxiliar> getTablaAux2(){
-    return getTablaAux1();
-    }    
-
-    private List<DatoAuxiliar> obtenerTabla(String tablaRelacion, long relacionCodigo) {
-        Criteria c = session.createCriteria(DatoAuxiliar.class);
-        if (tablaRelacion != null) {
-            c.add(Restrictions.eq("tablaRelacion", tablaRelacion));
-            c.add(Restrictions.eq("relacionCodigo", relacionCodigo));
-        } else {
-            // No hay restricciones, muestro toda la tabla
-            c.add(Restrictions.eq("nombreTabla", tabla));
-        }
-        return c.list();
+    @CommitAfter
+    public Object onBorrarDato(LkDatoauxiliar dato){
+        nuevoRegistro.setId(dato.getId());
+        session.delete(nuevoRegistro);
+        envelope.setContents("Registro eliminado con exito");
+        return new MultiZoneUpdate("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+    }
+    
+    @Log
+    @CommitAfter
+    public Object onBorrarDato2(LkDatoauxiliar dato){
+        nuevoRegistro.setId(dato.getId());
+        session.delete(nuevoRegistro);
+        envelope.setContents("Registro eliminado con exito");
+        return new MultiZoneUpdate("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
+    @Log
+    public Object onCancel(){
+    return "Alerta";
+    }
 
+    @Log
+    public Object onCancel2(){
+    return "Alerta";
+    }
+    
+   @Log
+   @CommitAfter        
+   Object onSuccessFromFormulariosTablasSinRelacion(){
+       formularioMensajes.clearErrors();
+       Criteria c = session.createCriteria(DatoAuxiliar.class);
+       c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
+       
+       if (Boolean.FALSE.equals(editando)){
+            Criterion c1 =Restrictions.eq("valor", nuevoRegistro.getValor());
+            Criterion c2 = Restrictions.eq("codigo", nuevoRegistro.getCodigo());           
+            c.add(Restrictions.or(c1, c2));
+       }else{
+            c.add(Restrictions.eq("valor", nuevoRegistro.getValor()));
+            c.add(Restrictions.ne("id", nuevoRegistro.getId()));
+       }
+       
+       if (!c.list().isEmpty()){
+          formularioMensajes.recordError("Codigo y/o Descripcion duplicada");
+           return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+       }
+       
+       if (!editando){
+       nuevoRegistro.setNombreTabla(tablaTemporal.getNombreTabla());
+       nuevoRegistro.setEditable(tablaTemporal.getEditable());
+       nuevoRegistro.setRelacionCodigo(tablaTemporal.getRelacionCodigo());
+       }
+       session.saveOrUpdate(nuevoRegistro);
+       System.out.println("TABLAX --id-- "+nuevoRegistro.getId());
+       System.out.println("TABLAX --codigo-- "+nuevoRegistro.getCodigo());       
+       System.out.println("TABLAX --valor-- "+nuevoRegistro.getValor());
+       System.out.println("TABLAX --nombretabla-- "+nuevoRegistro.getNombreTabla());
+       System.out.println("TABLAX --tablarelacion-- "+nuevoRegistro.getTablaRelacion());
+       System.out.println("TABLAX --editable-- "+nuevoRegistro.getEditable());
+
+       nuevoRegistro = new DatoAuxiliar();
+       editando = Boolean.FALSE;
+       valDatoRelacionado = null;
+       tablaRelacionada = null;       
+       envelope.setContents("Registro creado/modificado con exito");
+       return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+   }
+
+   @Log
+   @CommitAfter        
+   Object onSuccessFromFormulariosTablasConRelacion(){
+
+       formularioMensajes.clearErrors();
+       Criteria c = session.createCriteria(DatoAuxiliar.class);
+       c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
+       
+       if (Boolean.FALSE.equals(editando)){
+            Criterion c1 =Restrictions.eq("valor", nuevoRegistro.getValor());
+            Criterion c2 = Restrictions.eq("codigo", nuevoRegistro.getCodigo());           
+            c.add(Restrictions.or(c1, c2));
+       }else{
+            c.add(Restrictions.eq("valor", nuevoRegistro.getValor()));
+            c.add(Restrictions.ne("id", nuevoRegistro.getId()));
+       }
+       
+       if (!c.list().isEmpty()){
+          formularioMensajes.recordError("Codigo y/o Descripcion duplicada");
+           return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+       }
+       
+       if ( Boolean.FALSE == editando){
+       nuevoRegistro.setNombreTabla(tablaTemporal.getNombreTabla());
+       nuevoRegistro.setEditable(tablaTemporal.getEditable());
+       }
+       nuevoRegistro.setRelacionCodigo(valDatoRelacionado.getCodigo());
+       
+       session.saveOrUpdate(nuevoRegistro);
+       System.out.println("TABLAX --id-- "+nuevoRegistro.getId());
+       System.out.println("TABLAX --codigo-- "+nuevoRegistro.getCodigo());       
+       System.out.println("TABLAX --valor-- "+nuevoRegistro.getValor());
+       System.out.println("TABLAX --nombretabla-- "+nuevoRegistro.getNombreTabla());
+       System.out.println("TABLAX --tablarelacion-- "+nuevoRegistro.getTablaRelacion());
+       System.out.println("TABLAX --editable-- "+nuevoRegistro.getEditable());
+       nuevoRegistro = new DatoAuxiliar();
+       editando = Boolean.FALSE;
+       valDatoRelacionado = null;
+       tablaRelacionada = null;
+       envelope.setContents("Registro creado/modificado con exito");
+       return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());       
+   }
+    
+     @Inject
+     private PropertyAccess _access;
+   
+    
+    @Log
+    public List<String> getTablaRelacion() {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
+        c.setProjection(Projections.distinct(Projections.property("tablaRelacion")));
+        return c.list();
+    }
+    
+
+    @Persist
+    private String tablaRelacionada;
+    @Log
+    public Object onValueChangedFromtablarelacion2(String campo){
+        tablaRelacionada = campo;
+        return new MultiZoneUpdate("tablasAuxiliaresZone",tablasAuxiliaresZone.getBody());
+    }
+    @Property
+    @Persist
+    private DatoAuxiliar valDatoRelacionado;
+    
+    public GenericSelectModel<DatoAuxiliar> getDatoRelacionadoBean(){
+        System.out.println("XXXXSXSXSX"+tablaRelacionada);
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla", tablaRelacionada));
+        c.addOrder(Order.asc("valor"));
+        return new GenericSelectModel<DatoAuxiliar>(c.list(), DatoAuxiliar.class, "valor", "id", _access);
+    }
 }
