@@ -1,4 +1,3 @@
-                                             
 <html t:type="layout" title="Servir - Cargos"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
@@ -15,23 +14,44 @@
                      </div>
                 </t:form>
 	</t:zone>	
-
-        
-        
+        <br/>
         <t:zone t:id="listaRegistrosTablaZone">
             <t:if test="noRelacionada">
-                <t:grid source="tablaAux1" rowsPerPage="10" pagerPosition="bottom" row="tabla1"
-                        add="Acciones" t:exclude="nombreTabla,flg_altatrabajador,flg_creausuario,tablaRelacion,relacionCodigo,editable" >
-                    
+                <t:grid source="tablaAux1" rowsPerPage="10" pagerPosition="bottom" row="tabla1" inplace="true"
+                        add="Acciones" reorder="codigo,valor"
+                        t:exclude="id,nombreTabla,editable,tieneHijos,abrev,tablaRelacion,relacionCodigo,datoRelacionado,relacionId" >
+                        <t:parameter name="empty">
+                                <div class="no-info">No se han registrado eventos</div>
+                        </t:parameter>
+                        <p:accionesCell>                           
+                        <a t:type="eventLink" t:event="editarDato" t:context="tabla1" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
+                        <t:if test="tabla1.tieneHijos" negate="true">					| 
+                        <a t:type="eventLink" t:event="borrarDato" t:context="tabla1"  href="#" t:zone="listaRegistrosTablaZone">
+                           <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
+                        </a>
+                        </t:if>    
+                        </p:accionesCell>                    
                 </t:grid>
             </t:if>
             <t:if test="relacionada">
                 <t:grid source="tablaAux2" rowsPerPage="10"  pagerPosition="bottom" row="tabla2"
-                        t:add="Acciones2" t:exclude="nombreTabla,flg_altatrabajador,flg_creausuario,editable">
-                    
+                        reorder="tablaRelacion,relacionCodigo,datoRelacionado,codigo,valor" inplace="true"
+                        t:add="Acciones" t:exclude="id,nombreTabla,editable,tieneHijos,abrev,relacionId">
+                        <t:parameter name="empty">
+                                <div class="no-info">No se han registrado eventos</div>
+                        </t:parameter>
+                        <p:accionesCell>                           
+                        <a t:type="eventLink" t:event="editarDato2" t:context="tabla2" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
+                        <t:if test="tabla2.tieneHijos" negate="true">					| 
+                        <a t:type="eventLink" t:event="borrarDato2" t:context="tabla2"  href="#" t:zone="listaRegistrosTablaZone">
+                           <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
+                        </a>
+                        </t:if>                                        
+                        </p:accionesCell>                     
                 </t:grid>                
             </t:if>            
         </t:zone>
+        <br/>
         <t:zone t:id="mensajesZone">
             <script>
                 setTimeout(function(){ jQuery("#ok_msg").fadeOut(1000);}, 4000);
@@ -41,62 +61,65 @@
                 <t:errors/>
             </t:form>      
         </t:zone>
+        <br/>
         <t:zone t:id="tablasAuxiliaresZone">
             <t:if test="noRelacionada">
-            <t:form t:id="formulariosTablasSinRelacion">
+            <t:form t:id="formulariosTablasSinRelacion" t:zone="tablasAuxiliaresZone">
+            <div class="box">
+            <h3>Crear / Editar Tabla Auxiliar</h3>
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>Codigo</label>
-                        <t:textfield t:id="codigo" t:value="nuevoRegistro.codigo"/>
+                        <t:textfield t:id="codigo" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp"/>
                     </div>
                     <div class="f-left">
                         <label>Descripción</label>
-                        <t:textfield t:id="descripcion" t:value="nuevoRegistro.valor"/>
+                        <t:textfield t:id="descripcion" t:value="nuevoRegistro.valor" t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>Abreviatura</label>
                         <t:textfield t:id="abreviatura" t:value="nuevoRegistro.abrev"/>
                     </div>
-                </div>
-                <div class="f-wrap">
-                       
-               <!--    <t:if test="${vbotones}"> -->
+                    <div class="actions f-right">                       
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
-               <!--    </t:if> -->
                     <t:eventLink t:event="cancel" href="#" class="button f-right">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Cancelar
                         </span> 
                     </t:eventLink>                 
-                   
+                    </div>
                 </div>
+            </div>
             </t:form>
             </t:if>
             <t:if test="relacionada">
-            <t:form t:id="formulariosTablasConRelacion">
-               <div class="f-wrap">
+            <t:form t:id="formulariosTablasConRelacion" t:zone="mensajesZone">
+            <div class="box">
+            <h3>Crear / Editar Tabla Auxiliar</h3>
+                <div class="f-wrap">
                     <div class="f-left">
                         <label>Tabla Relación</label>
-                        <t:textfield t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion"/>
+<!--                        <t:textfield t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion"/> -->
+                        <select t:type="select" t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion" t:zone="tablasAuxiliaresZone" model="tablaRelacion" t:blankOption="ALWAYS"/>
                     </div>
                     <div class="f-left">
                         <label>Dato Relacionado</label>
-                        <t:textfield t:id="datorelacionado2" t:value="nuevoRegistro.relacionCodigo"/>
+<!--                        <t:textfield t:id="datorelacionado2" t:value="nuevoRegistro.relacionCodigo"/> -->
+                        <t:select t:id="datorelacionado2" model="datoRelacionadoBean" t:value="valDatoRelacionado" t:blankOption="ALWAYS" />
                     </div>
                    <div class="f-left">
                         <label>Codigo</label>
-                        <t:textfield t:id="codigo2" t:value="nuevoRegistro.codigo"/>
+                        <t:textfield t:id="codigo2" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp"/>
                     </div>
                     <div class="f-left">
                         <label>Descripción</label>
-                        <t:textfield t:id="descripcion2" t:value="nuevoRegistro.valor"/>
+                        <t:textfield t:id="descripcion2" t:value="nuevoRegistro.valor" t:validate="required"/>
                     </div>
                     <div class="f-left">
                         <label>Abreviatura</label>
                         <t:textfield t:id="abreviatura2" t:value="nuevoRegistro.abrev"/>
                     </div>
-                </div>
-                <div class="f-wrap">
+                    <div class="actions f-right">
                        
                <!--    <t:if test="${vbotones}"> -->
                         <input t:type="Submit" t:id="save2" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
@@ -105,9 +128,10 @@
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Cancelar
                         </span> 
-                    </t:eventLink>                 
-                   
-                </div>
+                    </t:eventLink>
+                    </div>
+            </div>
+            </div>
             </t:form>
             </t:if>
         </t:zone>
