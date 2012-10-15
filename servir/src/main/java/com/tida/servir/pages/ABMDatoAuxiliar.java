@@ -186,6 +186,12 @@ public class ABMDatoAuxiliar extends GeneralPage {
     
     @Log
     public Object onValueChangedFromTablaSeleccionada(String nombreTabla) {
+        
+        if (nombreTabla == null){
+            relacionada = Boolean.FALSE;noRelacionada = Boolean.FALSE;
+        }
+        else{
+
         editando = Boolean.FALSE;
         relacionada = Boolean.FALSE;
         noRelacionada = Boolean.FALSE;
@@ -196,13 +202,16 @@ public class ABMDatoAuxiliar extends GeneralPage {
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla",nombreTabla ));
         tablaTemporal = (DatoAuxiliar)c.list().get(0);
-        if (tablaTemporal.getTablaRelacion()== null || tablaTemporal.getTablaRelacion().length()==0){
-        noRelacionada = Boolean.TRUE;        
-        }
-        else{
-        relacionada = Boolean.TRUE;        
-        }
+            if (tablaTemporal.getTablaRelacion()== null || tablaTemporal.getTablaRelacion().length()==0){
+            noRelacionada = Boolean.TRUE;        
+            }
+            else{
+            relacionada = Boolean.TRUE;        
+            }
         permisos();
+            
+        }
+        
         return dosZones();
    }
     
