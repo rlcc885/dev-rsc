@@ -4,10 +4,8 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.LkDatoauxiliar;
-import helpers.Errores;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioAcceso;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 
@@ -22,13 +20,8 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
-import org.hibernate.HibernateException;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Order;
 import com.tida.servir.services.GenericSelectModel;
-import java.util.ArrayList;
-import java.util.Map;
 import org.apache.tapestry5.ComponentResources;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -225,6 +218,10 @@ public class ABMDatoAuxiliar extends GeneralPage {
     @Persist
     @Property
     private LkDatoauxiliar tabla1;
+
+    @Persist
+    @Property
+    private String nroregistros;
     
     @Log
     public List<LkDatoauxiliar> getTablaAux1(){
@@ -232,7 +229,9 @@ public class ABMDatoAuxiliar extends GeneralPage {
     c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
     c.add(Restrictions.isNull("tablaRelacion"));
     c.addOrder(Order.asc("codigo"));
-    return c.list();
+    List<LkDatoauxiliar> lista = c.list();
+    nroregistros = Integer.toString(lista.size());
+    return lista;
     }
 
     @Property
@@ -244,7 +243,9 @@ public class ABMDatoAuxiliar extends GeneralPage {
     Criteria c = session.createCriteria(LkDatoauxiliar.class);
     c.add(Restrictions.eq("nombreTabla", tablaTemporal.getNombreTabla()));
     c.addOrder(Order.asc("codigo"));
-    return c.list();
+    List<LkDatoauxiliar> lista = c.list();
+    nroregistros = Integer.toString(lista.size());
+    return lista;
     }    
 
     
