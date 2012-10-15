@@ -32,6 +32,8 @@ public class LkDatoauxiliar implements Serializable {
     private Boolean tieneHijos;
     private Long relacionId;
 
+    
+    
     public Long getRelacionId() {
         return relacionId;
     }
