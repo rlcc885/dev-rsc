@@ -16,6 +16,7 @@
 	</t:zone>	
         <br/>
         <t:zone t:id="listaRegistrosTablaZone">
+            
             <t:if test="noRelacionada">
                 <t:grid source="tablaAux1" rowsPerPage="10" pagerPosition="bottom" row="tabla1" inplace="true"
                         add="Acciones" reorder="codigo,valor"
@@ -23,13 +24,17 @@
                         <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                         </t:parameter>
-                        <p:accionesCell>                           
-                        <a t:type="eventLink" t:event="editarDato" t:context="tabla1" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
-                        <t:if test="tabla1.tieneHijos" negate="true">					| 
-                        <a t:type="eventLink" t:event="borrarDato" t:context="tabla1"  href="#" t:zone="listaRegistrosTablaZone">
-                           <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
-                        </a>
-                        </t:if>    
+                        <p:accionesCell>
+                            <t:if test ="opcModificar">    
+                                <a t:type="eventLink" t:event="editarDato" t:context="tabla1" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
+                            </t:if>
+                            <t:if test="opcEliminar">
+                            <t:if test="tabla1.tieneHijos" negate="true">					| 
+                                <a t:type="eventLink" t:event="borrarDato" t:context="tabla1"  href="#" t:zone="listaRegistrosTablaZone">
+                                <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
+                                </a>
+                            </t:if>
+                            </t:if>    
                         </p:accionesCell>                    
                 </t:grid>
             </t:if>
@@ -40,16 +45,21 @@
                         <t:parameter name="empty">
                                 <div class="no-info">No se han registrado eventos</div>
                         </t:parameter>
-                        <p:accionesCell>                           
+                        <p:accionesCell>
+                            <t:if test="opcModificar">    
                         <a t:type="eventLink" t:event="editarDato2" t:context="tabla2" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
+                            </t:if>
+                            <t:if test="opcEliminar" >
                         <t:if test="tabla2.tieneHijos" negate="true">					| 
                         <a t:type="eventLink" t:event="borrarDato2" t:context="tabla2"  href="#" t:zone="listaRegistrosTablaZone">
                            <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
                         </a>
-                        </t:if>                                        
+                        </t:if> 
+                            </t:if>
                         </p:accionesCell>                     
                 </t:grid>                
-            </t:if>            
+            </t:if> 
+            
         </t:zone>
         <br/>
         <t:zone t:id="mensajesZone">
@@ -63,6 +73,7 @@
         </t:zone>
         <br/>
         <t:zone t:id="tablasAuxiliaresZone">
+          <t:if test="opcInsertar">  
             <t:if test="noRelacionada">
             <t:form t:id="formulariosTablasSinRelacion" t:zone="tablasAuxiliaresZone">
             <div class="box">
@@ -134,6 +145,7 @@
             </div>
             </t:form>
             </t:if>
+          </t:if>
         </t:zone>
 
 

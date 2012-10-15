@@ -6,6 +6,7 @@ import com.tida.servir.entities.DatoAuxiliar;
 import com.tida.servir.entities.LkDatoauxiliar;
 import helpers.Errores;
 import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.UsuarioAcceso;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -28,6 +29,8 @@ import org.hibernate.criterion.Order;
 import com.tida.servir.services.GenericSelectModel;
 import java.util.ArrayList;
 import java.util.Map;
+import org.apache.tapestry5.ComponentResources;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 /**
  *
@@ -100,17 +103,67 @@ public class ABMDatoAuxiliar extends GeneralPage {
     @Persist
     @Property
     private Boolean editando;
-
+    @Property
+    @SessionState
+    private Usuario _usuario;    
+    @Inject  
+    private ComponentResources _resources;
+    @Property
+    @SessionState
+    private UsuarioAcceso usua;
+    @Property
+    @Persist
+    private Boolean opcEliminar;
+    @Property
+    @Persist
+    private Boolean opcModificar;
+    @Property
+    @Persist
+    private Boolean opcInsertar;
     public ABMDatoAuxiliar() {
     }
    
     void setuprender(){
+        
     nuevoRegistro = new DatoAuxiliar();
     
     if ((relacionada == null) && (noRelacionada == null)){
        relacionada = Boolean.FALSE;noRelacionada = Boolean.FALSE;
     }        
-            
+    
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", _usuario.getLogin());
+        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+//        query.setParameter("in_pagename", "TIPOSANCION");
+        List result = query.list();
+        
+ //       opcEliminar = Boolean.FALSE;        
+ //       opcModificar = Boolean.FALSE;        
+ //       opcInsertar = Boolean.FALSE;
+        
+        if (result.isEmpty()) {
+            System.out.println(String.valueOf("Vacio:"));
+        } else {
+           usua = (UsuarioAcceso) result.get(0);
+                permisos();
+//        if (usua.getAccesoupdate() == 1) {opcModificar = Boolean.TRUE;}
+//        if (usua.getAccesodelete() == 1) {opcEliminar  = Boolean.TRUE;}
+//        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}
+
+        }
+    
+    
+    }
+    
+    private void permisos(){
+        opcEliminar = Boolean.FALSE;        
+        opcModificar = Boolean.FALSE;        
+        opcInsertar = Boolean.FALSE;
+    
+        if (usua.getAccesoupdate() == 1) {opcModificar = Boolean.TRUE;}
+        if (usua.getAccesodelete() == 1) {opcEliminar  = Boolean.TRUE;}
+        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}
+    
     }
     
     @Property
@@ -158,6 +211,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
         else{
         relacionada = Boolean.TRUE;        
         }
+        permisos();
         return dosZones();
    }
     
@@ -201,6 +255,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("id", dato.getId()));
         nuevoRegistro = (DatoAuxiliar)c.uniqueResult();
+        opcInsertar = Boolean.TRUE;
         return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody());
     }
     
@@ -213,6 +268,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
         c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("id", dato.getRelacionId()));
         valDatoRelacionado = (DatoAuxiliar)c.uniqueResult();
+        opcInsertar = Boolean.TRUE;
         return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody());
     }
     
@@ -281,7 +337,8 @@ public class ABMDatoAuxiliar extends GeneralPage {
        nuevoRegistro = new DatoAuxiliar();
        editando = Boolean.FALSE;
        valDatoRelacionado = null;
-       tablaRelacionada = null;       
+       tablaRelacionada = null;
+       permisos();
        envelope.setContents("Registro creado/modificado con exito");
        return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());
    }
@@ -325,6 +382,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
        editando = Boolean.FALSE;
        valDatoRelacionado = null;
        tablaRelacionada = null;
+       permisos();
        envelope.setContents("Registro creado/modificado con exito");
        return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody()).add("mensajesZone", mensajesZone.getBody());       
    }
