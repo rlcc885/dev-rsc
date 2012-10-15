@@ -205,6 +205,12 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private String fechadocnot;
+    @Property
+    @Persist
+    private String nro_sanciones;
+    @Property
+    @Persist
+    private String nro_sanciones_sinreglab;
     @Inject  
     private ComponentResources _resources;
     @Property
@@ -340,6 +346,9 @@ public class ConsultaSanciones extends GeneralPage {
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
+        List result = c.list();
+        nro_sanciones_sinreglab = Integer.toString(result.size());
+        
         return c.list();
       }
     
@@ -388,6 +397,10 @@ public class ConsultaSanciones extends GeneralPage {
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
+        
+        List result = c.list();
+        nro_sanciones = Integer.toString(result.size());
+        
         return c.list();
       }
     
