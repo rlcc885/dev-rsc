@@ -190,6 +190,11 @@ public class ABMConceptosRemunerativos extends GeneralPage {
             if(!validando()){
                 return zonas();
             }
+            System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+conceptoRemunerativo.getCodigo());
+            if(conceptoRemunerativo.getCodigo() == null){
+                formmensajes.recordError("Debe Ingresar un Codigo");
+                return zonas();
+            }
             if(conceptoRemunerativo.getDescripcion()== null){
                 formmensajes.recordError("Debe Ingresar una Descripcion");
                 return zonas();
@@ -222,16 +227,20 @@ public class ABMConceptosRemunerativos extends GeneralPage {
     boolean validando(){
       boolean fin=true;
       Criteria c;
-        c = session.createCriteria(LkBusquedaConRemunerativo.class);
-        c.add(Restrictions.eq("entidad", _oi.getId()));
-        c.add(Restrictions.disjunction().add(Restrictions.like("codigo", conceptoRemunerativo.getCodigo()).ignoreCase()));
-        if (editando) {
-            c.add(Restrictions.ne("id", conceptoRemunerativo.getId()));
+      
+        if(conceptoRemunerativo.getCodigo() != null){
+            c = session.createCriteria(LkBusquedaConRemunerativo.class);
+            c.add(Restrictions.eq("entidad", _oi.getId()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("codigo", conceptoRemunerativo.getCodigo()).ignoreCase()));
+            if (editando) {
+                c.add(Restrictions.ne("id", conceptoRemunerativo.getId()));
+            }
+            if (c.list().size() > 0) {
+                formmensajes.recordError("Código de Concepto Remunerativo ya Existente");
+                return false;
+            }
         }
-        if (c.list().size() > 0) {
-            formmensajes.recordError("Código de Concepto Remunerativo ya Existente");
-            return false;
-        }
+        
         c = session.createCriteria(LkBusquedaConRemunerativo.class);
         c.add(Restrictions.eq("entidad", _oi.getId()));
         c.add(Restrictions.disjunction().add(Restrictions.like("descripcion", conceptoRemunerativo.getDescripcion()).ignoreCase()));
