@@ -756,7 +756,7 @@ public class ABMSancion  extends GeneralPage
     @Log
     Object onBuscartrabaauto(){  
         System.out.println("aquiiiiiii"+bnomtrabaautoridad);
-        if(bnomtrabaautoridad!=null || !bnomtrabaautoridad.equals("")){
+        if(bnomtrabaautoridad!=null && !bnomtrabaautoridad.equals("")){
             mostrarautoridad=true;
         }
         else{
