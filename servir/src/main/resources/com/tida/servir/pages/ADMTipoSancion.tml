@@ -165,7 +165,7 @@
                         rowsPerPage="10"  
                         inPlace="true"
                         pagerPosition="bottom"
-                        t:exclude="id,categoriaId,tipoinhabilitacionId,anios,meses,dias"
+                        t:exclude="id,categoriaId,tipoinhabilitacionId,anios,meses,dias,opcEliminar"
                         t:add="periodoMaximoInhabilitacion,acciones" >
 			<t:parameter name="empty">
 			    <div class="no-info">No se encontraron registros</div>
@@ -182,7 +182,7 @@
 					<t:actionlink t:id="detalle" zone="listaTipoSancionZone" t:context="tipsancion">Detalle</t:actionlink>
 				</t:if>
 				<t:if test="${veliminar}">
-                                    <t:if test="${eliminarSN}">
+                                    <t:if test="tipsancion.opcEliminar">
 					| 
                                 <a t:type="eventLink" t:event="borrarDato" t:context="tipsancion" t:zone="listaTipoSancionZone" href="#">
                                     <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
