@@ -157,6 +157,7 @@
                         </p:accionesCell>
                        
             </t:grid>
+            <div class="f-right"><b>${nro_sanciones}  Registros.</b></div><br/> 
             </t:if>
                 <t:if test="entidadsubentidad" negate="true">
                     <t:grid source="busquedaSancionados" 
@@ -204,6 +205,7 @@
                                 </p:accionesCell>
 
                     </t:grid>
+                    <div class="f-right"><b>${nro_sanciones} Registros.</b></div><br/> 
                 </t:if>
           </t:if>
           <t:if test="mostrar_reglab" negate="true">
@@ -255,7 +257,8 @@
                                     </a>                      
                         </p:accionesCell>
                        
-            </t:grid>               
+            </t:grid>  
+            <div class="f-right"><b>${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>
             <t:if test="entidadsubentidad" negate="true">
                 <t:grid source="busquedaSancionadossinreglab" 
@@ -309,6 +312,7 @@
                         </p:accionesCell>
                        
                 </t:grid>
+                <div class="f-right"><b> ${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>  
           </t:if>  
             
