@@ -257,9 +257,7 @@ public class ConsultaSanciones extends GeneralPage {
             bmostrar=false;
             filtro_entidad = loggedUser.getEntidad().getId();
         }  
-        
-        System.out.println("dddddddddddddddddddffffffffffffffff"+loggedUser.getRolid());
-        
+                
         if(usua.getAccesoupdate() == 1){
              v_editar = true;
         }else{
@@ -393,6 +391,11 @@ public class ConsultaSanciones extends GeneralPage {
         return c.list();
       }
     
+     Object onBuscarpersona(){
+         return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone",busZone.getBody());
+//          return consultaSancionesZone.getBody();
+     }
+     
     @Log
     @CommitAfter
     Object onSuccessFromFormulariobusqueda() {
