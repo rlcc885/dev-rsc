@@ -263,7 +263,7 @@ public class ConsultaSanciones extends GeneralPage {
         if(usua.getAccesoupdate() == 1){
              v_editar = true;
         }else{
-            v_editar = false;
+             v_editar = false;
         }
             
     }
