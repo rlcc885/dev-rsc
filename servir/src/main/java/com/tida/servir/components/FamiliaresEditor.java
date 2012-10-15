@@ -18,6 +18,7 @@ import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class FamiliaresEditor {
@@ -159,6 +160,7 @@ public class FamiliaresEditor {
         familiarActual = new Familiar();
         editando = false;
         nuevafecha = "";
+        valEstadoCivil = null;
 //        vguardar = true;
 //        vdetalle = false;
         bdni = false;
@@ -222,6 +224,7 @@ public class FamiliaresEditor {
     @Log
     Object onReset() {
         resetRegistro();
+        formulariomensajesf.clearErrors();
         return familiaresZone.getBody();
     }
 
@@ -269,6 +272,7 @@ public class FamiliaresEditor {
         else {familiarActual.setEstadoCivil(null);
         }
         
+        System.out.println("FAMILIAR - "+familiarActual.getParentesco());
 //        if(elemento==3){
         Logger logger = new Logger();
         String consulta = "SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
@@ -310,9 +314,23 @@ public class FamiliaresEditor {
             Criteria c = session.createCriteria(Familiar.class);
             c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
 
-            if (!c.list().isEmpty()) {
-                envelope.setContents("nro de dni duplicado");
-                return actualizar();
+                List<Familiar> familiares = c.list();
+            if (!familiares.isEmpty()) {
+             //   envelope.setContents("nro de dni duplicado");
+                // VALIDACION DE PODER INGRESAR EL MISMO FAMILIAR CON OTRO TRABAJADOR
+                    for (Familiar f : familiares){
+                        if (f.getTrabajador().getEntidad() == actual.getEntidad()){
+                           formulariomensajesf.recordError("no se puede asignar el mismo familiar en la misma entidad");
+                           return actualizar();
+                        }
+                    }
+                   Familiar  familiarTemporal = familiares.get(0); 
+                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) || !familiarActual.getApellidoMaterno().equals(familiarTemporal.getApellidoMaterno()) || !familiarActual.getApellidoPaterno().equals(familiarTemporal.getApellidoPaterno())){
+                           formulariomensajesf.recordError("los datos del familiar son incorrectos");
+                           return actualizar();                        
+                    }
+                 //   formulariomensajesf.recordError("nro de dni duplicado"); 
+                 //   return actualizar();
             }
         } else {
             if (_usuario.getRolid() == 1) {
@@ -330,8 +348,10 @@ public class FamiliaresEditor {
             Criteria c = session.createCriteria(Familiar.class);
             c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
             c.add(Restrictions.ne("id", idVerificacion));
+            c.setProjection(Projections.property("id"));
             if (!c.list().isEmpty()) {
-                envelope.setContents("nro de dni duplicado");
+               // envelope.setContents("nro de dni duplicado");
+                formulariomensajesf.recordError("nro de dni duplicado");
                 return actualizar();
             }
         }
@@ -391,14 +411,14 @@ public class FamiliaresEditor {
             familiarActual = new Familiar();
             nuevafecha = "";
             valsexo = null;
-
+            valEstadoCivil = null;
             return actualizar();
         }
     }
 
     private MultiZoneUpdate actualizar() {
         //return new MultiZoneUpdate("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("mensajesFZone", mensajesFZone.getBody());
-        return new MultiZoneUpdate("mensajesFZone", mensajesFZone.getBody()).add("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody());
+        return new MultiZoneUpdate("listaFamiliaresZone", listaFamiliaresZone.getBody()).add("familiaresZone", familiaresZone.getBody()).add("mensajesFZone", mensajesFZone.getBody());
     }
     @Persist
     private Long idVerificacion;
