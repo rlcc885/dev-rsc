@@ -37,6 +37,10 @@
                             </t:if>    
                         </p:accionesCell>                    
                 </t:grid>
+            <div class="f-right">
+              <b>${nroregistros} Registros.</b>
+            </div>
+              <br/> 
             </t:if>
             <t:if test="relacionada">
                 <t:grid source="tablaAux2" rowsPerPage="10"  pagerPosition="bottom" row="tabla2"
@@ -58,8 +62,12 @@
                             </t:if>
                         </p:accionesCell>                     
                 </t:grid>                
+              <div class="f-right">
+                <b>${nroregistros} Registros.</b>
+              </div>
+              <br/> 
             </t:if> 
-            
+
         </t:zone>
         <br/>
         <t:zone t:id="mensajesZone">
