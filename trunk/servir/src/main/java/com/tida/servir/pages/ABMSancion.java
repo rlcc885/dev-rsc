@@ -225,6 +225,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean vsuspender;
+    @Property
+    @Persist
+    private Boolean mostrarautoridad;
     
     @PageActivationContext
     private Sancion modificasancion;
@@ -687,6 +690,18 @@ public class ABMSancion  extends GeneralPage
     
     @Log
     public List<LkBusquedaTrabajadorAuto> getTrabajadoresAuto() {
+//        List<LkBusquedaTrabajadorAuto> cre=null;
+//        Criteria c; 
+//        if (bnomtrabaautoridad != null) {
+//            c= session.createCriteria(LkBusquedaTrabajadorAuto.class);
+//            c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
+//            nrotrabaauto=Integer.toString(c.list().size());
+//            cre=c.list();
+//        }
+//        else{
+//            cre=null;
+//        }
+//        return cre;
         Criteria c = session.createCriteria(LkBusquedaTrabajadorAuto.class);
         if (bnomtrabaautoridad != null) {
             c.add(Restrictions.disjunction().add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombretrabajador","%"+ bnomtrabaautoridad.replaceAll("n", "ñ") + "%").ignoreCase()));
@@ -730,6 +745,7 @@ public class ABMSancion  extends GeneralPage
     Object onSuccessFromformbusquedaautoridad(){
         if(elemento==4){
             mostrarnuevof=true;
+            mostrarautoridad=false;
         }else{
             mostrarlista=true;
         }
@@ -740,6 +756,12 @@ public class ABMSancion  extends GeneralPage
     @Log
     Object onBuscartrabaauto(){  
         System.out.println("aquiiiiiii"+bnomtrabaautoridad);
+        if(bnomtrabaautoridad!=null || !bnomtrabaautoridad.equals("")){
+            mostrarautoridad=true;
+        }
+        else{
+            mostrarautoridad=false;
+        }
         return autoridadmodalZone.getBody();
     }
     

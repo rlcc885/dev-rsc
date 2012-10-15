@@ -478,6 +478,7 @@
                     </t:eventLink>
                 </div>
                </form>
+              <t:if test="mostrarautoridad">
                 <t:grid source="trabajadoresAuto" rowsPerPage="4" t:add="Acciones" pagerPosition="bottom" row="btrabajadorauto" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados.</div>
@@ -488,6 +489,7 @@
                 </t:grid>
                  <div class="f-right"><b>${nrotrabaauto} Registros.</b></div>
                  <br/>
+              </t:if>
             </div>
          
          </t:if>
