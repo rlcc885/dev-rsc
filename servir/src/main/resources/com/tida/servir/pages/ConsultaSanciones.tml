@@ -19,9 +19,12 @@
                         <input t:type="TextField" t:id="entidad_den"
                                     t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
                   </div>
-                  <div class="f-left" style="position:relative; top:14px; left:-10px;">
+                 <!-- <div class="f-left" style="position:relative; top:14px; left:-10px;">
                         <input id="buscarsubmit" type="submit" value="..." class="button"  onClick="javascript: mostrar();"/>
-                  </div>
+                        
+                  </div>-->
+                  <t:eventLink t:event="buscarpersona" href="#" class="iconsearch"  t:zone="consultaSancionesZone" onClick="javascript: mostrar();">                           
+                  </t:eventLink> 
               </fieldset>
              </t:if>  
               <fieldset>
