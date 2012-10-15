@@ -349,11 +349,11 @@ public class FamiliaresEditor {
             c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
             c.add(Restrictions.ne("id", idVerificacion));
             c.setProjection(Projections.property("id"));
-            if (!c.list().isEmpty()) {
+          //  if (!c.list().isEmpty()) {
                // envelope.setContents("nro de dni duplicado");
-                formulariomensajesf.recordError("nro de dni duplicado");
-                return actualizar();
-            }
+          //      formulariomensajesf.recordError("nro de dni duplicado");
+          //      return actualizar();
+          //  }
         }
 
        if(valEstadoCivil!=null)     
