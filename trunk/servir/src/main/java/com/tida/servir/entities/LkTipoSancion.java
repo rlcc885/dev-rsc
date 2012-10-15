@@ -31,7 +31,17 @@ public class LkTipoSancion implements Serializable {
     private Integer anios;
     private Integer meses;
     private Integer dias;
+    @Column(name = "OPC_ELIMINAR")
+    private Boolean opcEliminar;
 
+    public Boolean getOpcEliminar() {
+        return opcEliminar;
+    }
+
+    public void setOpcEliminar(Boolean opcEliminar) {
+        this.opcEliminar = opcEliminar;
+    }
+    
     public LkTipoSancion() {
     }
 
