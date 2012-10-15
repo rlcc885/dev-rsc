@@ -150,9 +150,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
 //        if (usua.getAccesodelete() == 1) {opcEliminar  = Boolean.TRUE;}
 //        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}
 
-        }
-    
-    
+        }   
     }
     
     private void permisos(){
