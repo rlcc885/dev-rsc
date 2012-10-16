@@ -35,7 +35,7 @@
                    <div class="f-wrap">
                        <div class="f-left">
                            <label>* Descripción</label><!--CABECERA DEL GRID--><t:if test="false"><t:label for="descripcion"/></t:if>
-                           <input t:type="textfield" t:id="descripcion" t:value="valdescripcion" size="85" t:validate="required"  t:validate="maxLength=200"  t:disabled="${vdetalle}"/>
+                           <input t:type="textfield" t:id="descripcion" t:value="valdescripcion" size="85" t:validate="required,maxLength=200"  t:disabled="${vdetalle}"/>
                        </div>
                        <div class="f-left">
                            <label>* Categoría</label><!--CABECERA DEL GRID--><t:if test="false"><t:label for="categoria"/></t:if>
