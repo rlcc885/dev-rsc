@@ -86,7 +86,7 @@
                                             t:value="unidadorganica"   
                                             model="beanUOrganicas" 
                                             t:zone="cargosZone" style="width: 300px"/>
-                                    <a onClick="javascript: mostrar();" class="button">...</a>
+                                    <a onClick="javascript: mostrar();" class="button_agregar">..</a>
                                 </div>
                             </t:zone>
                             <t:zone t:id="cargosZone" id="cargosZone">
@@ -95,7 +95,7 @@
                                     <input t:type="Select" t:id="cargo" t:value="cargo" 
                                            model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
                                            t:blankOption="ALWAYS" style="width: 300px"/>
-                                    <a onClick="javascript: mostrarCargo();" class="button">...</a>
+                                    <a onClick="javascript: mostrarCargo();" class="button_agregar">..</a>
                                 </div>
                             </t:zone>
                         </div>
@@ -200,7 +200,7 @@
               </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarUO" value="Agregar" class="button f-right"/>
+                    <input t:type="Submit" t:id="agregarUO" value="Guardar" class="button f-right"/>
                     <a onClick="javascript: ocultar();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
@@ -239,7 +239,7 @@
                </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarCargo" value="Agregar" class="button f-right"/>
+                    <input t:type="Submit" t:id="agregarCargo" value="Guardar" class="button f-right"/>
                     <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
