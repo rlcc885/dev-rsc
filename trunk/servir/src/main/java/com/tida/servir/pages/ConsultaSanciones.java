@@ -485,9 +485,28 @@ public class ConsultaSanciones extends GeneralPage {
         bcategoriaSancion = null;
         btipoSancion = null;
     }
+//    @Log
+//    void onSelectedFromLimpiar() {
+//        elemento = 3;
+//        entidad_origen= null;
+//        entidad_origen_id=null;
+//        bapellidoPaterno=null;
+//        bapellidoMaterno=null;
+//        bnombres=null;
+//        bnumeroDocumento=null;
+//        esSuspendida=false;
+//        esAnulada=false;
+//        esHistorica=false;
+//        esNoVigente=false;
+//        esVigente=false; 
+//        bdocumentoidentidad = null;
+//        bregimenLaboral = null;
+//        bcategoriaSancion = null;
+//        btipoSancion = null;
+//    }  
+    
     @Log
-    void onSelectedFromLimpiar() {
-        elemento = 3;
+    Object onLimpiar() {    
         entidad_origen= null;
         entidad_origen_id=null;
         bapellidoPaterno=null;
@@ -503,7 +522,9 @@ public class ConsultaSanciones extends GeneralPage {
         bregimenLaboral = null;
         bcategoriaSancion = null;
         btipoSancion = null;
-    }   
+        return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+    }
     
      
     @Log
