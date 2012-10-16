@@ -47,6 +47,8 @@ public class ConsultaSanciones extends GeneralPage {
     
     @Component(id = "formmensaje")
     private Form formmensaje;
+//    @Component(id = "formulariosatosSancion")
+//    private Form formulariosatosSancion;
     @InjectComponent
     @Property
     private Zone mensajeZone;
@@ -59,6 +61,9 @@ public class ConsultaSanciones extends GeneralPage {
     @InjectComponent
     @Property
     private Zone consultaSancionesZone;
+    @InjectComponent
+    @Property
+    private Zone datosSancionZone;
     @InjectComponent
     @Property
     private Zone busZone2;
@@ -523,6 +528,7 @@ public class ConsultaSanciones extends GeneralPage {
         bcategoriaSancion = null;
         btipoSancion = null;
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("datosSancionZone",datosSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
     }
     
@@ -552,6 +558,7 @@ public class ConsultaSanciones extends GeneralPage {
     Object onActionFromCancel1() {        
 
          return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("datosSancionZone",datosSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
     }
         
@@ -581,7 +588,8 @@ public class ConsultaSanciones extends GeneralPage {
     Object onActionFromSave(Anulacion anulacion) {        
         
         
-        return consultaSancionesZone.getBody();  
+        return new MultiZoneUpdate("datosSancionZone",datosSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody()); 
     }
     public Boolean getSancionAnulada(){
         System.out.println("EST5ADOX  "+cs.getEstado_id());
