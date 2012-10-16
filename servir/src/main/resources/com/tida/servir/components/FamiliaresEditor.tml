@@ -194,6 +194,7 @@
                                 
                             </t:if>
                             <t:if test="${listafamiliar.validado}" negate="true">
+                                <t:if test="esTrabajador" >
                                 <t:if test="${veliminar}">
                                     |
                                     <t:actionlink t:id="eliminar" zone="listaFamiliaresZone" context="listafamiliar"> 
@@ -201,6 +202,7 @@
                                             Eliminar
                                         </span>
                                     </t:actionlink>
+                                </t:if>
                                 </t:if>
                             </t:if>
                     </p:accionesCell>
