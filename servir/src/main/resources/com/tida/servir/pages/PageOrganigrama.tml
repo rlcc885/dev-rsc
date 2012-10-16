@@ -9,7 +9,7 @@
     <body>
         <center>
         <h2>Organigrama</h2>
-        <h3>${entidad.denominacion}</h3>
+        
         </center>
         <t:OrganigramaC entidadId="entidad.id"/>
     </body>
