@@ -305,7 +305,7 @@ public class FamiliaresEditor {
             if (actual.getEstadocivil()!=null && actual.getEstadocivil().getCodigo()==1)
             {
                 if (familiarActual.getEstadoCivil()!=null && (familiarActual.getParentesco().getCodigo()==1  && familiarActual.getEstadoCivil().getCodigo()==2)){                
-                formulariomensajesf.recordError("No se puede agregar un conyuge a un trabajador soltero");    
+                formulariomensajesf.recordError("No se puede agregar un conyuge casado a un trabajador soltero");    
                     return Boolean.FALSE;                
                 }
             }        
