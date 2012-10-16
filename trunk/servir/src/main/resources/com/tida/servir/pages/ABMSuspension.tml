@@ -53,7 +53,7 @@
                         <div class="f-left">
                             <label>* Número de Documento</label>
                             <input t:type="TextField" t:id="num_docini"
-                                    t:value="nuevasuspension.numdocini" size="30" t:validate="required"/>
+                                    t:value="nuevasuspension.numdocini" size="30" t:validate="required,maxlength=15"/>
                         </div>
                         <div class="f-left">
                             <label>* Fecha del Documento</label>
@@ -71,7 +71,7 @@
                             <div class="f-left">
                                 <label>* Número de Documento</label>
                                 <input t:type="TextField" t:id="num_docnoti"
-                                        t:value="nuevasuspension.numdocnoti" size="30" t:validate="required"/>
+                                        t:value="nuevasuspension.numdocnoti" size="30" t:validate="required,maxlength=15"/>
                             </div>
                             <div class="f-left">
                                 <label>* Fecha del Documento</label>
@@ -81,7 +81,7 @@
                         <div class="f-wrap">
                             <label>Juzgado</label>
                             <input t:type="TextField" t:id="juzgado_noti"
-                                        t:value="nuevasuspension.juzgadonoti" size="60"/>
+                                        t:value="nuevasuspension.juzgadonoti" size="60" t:validate="maxlength=50"/>
                         </div>                        
                     </fieldset>                    
                 </fieldset>
@@ -109,7 +109,7 @@
                         <div class="f-left">
                             <label>Número de Documento</label>
                             <input t:type="TextField" t:id="num_docfin"
-                                    t:value="nuevasuspension.numdocfin" size="30" />
+                                    t:value="nuevasuspension.numdocfin" size="30" t:validate="maxlength=15"/>
                         </div>
                         <div class="f-left">
                             <label>Fecha del Documento</label>
@@ -127,7 +127,7 @@
                             <div class="f-left">
                                 <label>Número de Documento</label>
                                 <input t:type="TextField" t:id="num_docnotf"
-                                        t:value="nuevasuspension.numdocnotf" size="30"/>
+                                        t:value="nuevasuspension.numdocnotf" size="30" t:validate="maxlength=15"/>
                             </div>
                             <div class="f-left">
                                 <label>Fecha del Documento</label>
@@ -137,7 +137,7 @@
                         <div class="f-wrap">
                             <label>Juzgado</label>
                             <input t:type="TextField" t:id="juzgado_notf"
-                                        t:value="nuevasuspension.juzgadonotf" size="60"/>
+                                        t:value="nuevasuspension.juzgadonotf" size="60" t:validate="maxlength=50"/>
                         </div>                        
                     </fieldset>
                 </fieldset>

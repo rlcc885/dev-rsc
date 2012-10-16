@@ -73,6 +73,15 @@ public class TrabajadorPersonal extends GeneralPage {
     @Property
     @SessionState
     private UsuarioAcceso usua;
+//    @Property
+//    @Persist
+//    private Boolean vfamiliar;
+//    @Property
+//    @Persist
+//    private Boolean vlaboral;
+//    @Property
+//    @Persist
+//    private Boolean vdocumento;
 
     public TrabajadorPersonal() {
     }
@@ -132,4 +141,17 @@ public class TrabajadorPersonal extends GeneralPage {
         }
 
     }
+    
+//    void verificarventanas(){
+//        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+//        query.setParameter("in_login", _usuario.getLogin());
+//        if(actual==null)
+//            query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+//        else
+//            query.setParameter("in_pagename", "BUSQUEDA");
+//        List result = query.list();
+//        if (!result.isEmpty()) {
+//            System.out.println(String.valueOf("Vacio:"));
+//        }
+//    }
 }
