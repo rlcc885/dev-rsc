@@ -132,15 +132,12 @@ public class FamiliaresEditor {
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
-
-
         }
         if (usua.getAccesodelete() == 1) {
             veliminar = true;
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
-            }
-            
+            }            
         }
         if (usua.getAccesoreport() == 1) {
             vinserta = true;
@@ -151,10 +148,18 @@ public class FamiliaresEditor {
             if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
                 vrevisado = true;
             }
-
         }
-    }
-
+        
+       
+   }
+        
+        @Log
+        public Boolean getEsTrabajador(){
+         if (_usuario.getRolid() == 1 && listafamiliar.getParentesco().getCodigo()==3)
+         {return Boolean.FALSE;}
+            return Boolean.TRUE;
+        }
+        
     @Log
     void resetRegistro() {
         familiarActual = new Familiar();
@@ -208,14 +213,6 @@ public class FamiliaresEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
 
-//    void onSelectedFromCancel() {
-//        elemento = 2;
-//    }
-
-//    void onSelectedFromReset() {
-//        elemento = 1;
-//    }
-
     void onSelectedFromGuardar() {
         System.out.println("onSelectedFromGuardar");
         elemento = 3;
@@ -241,10 +238,86 @@ public class FamiliaresEditor {
     @Property
     @Persist
     private DatoAuxiliar valEstadoCivil;
+    
+    @Log
+    private Boolean validaciones(){
+ 
+        if(valEstadoCivil!=null && (familiarActual.getParentesco().getCodigo() == 1 && valEstadoCivil.getCodigo()==1)){
+       formulariomensajesf.recordError("El estado civil de un Conyuge no puede ser Soltero/a");
+            return Boolean.FALSE;
+        }
+            // validacion fecha de nacimiento
+        if (familiarActual.getFechaNacimiento().after(new Date())){
+            formulariomensajesf.recordError("La fecha de nacimiento debe ser menor a la fecha actual");                         
+            return Boolean.FALSE;
+        }
+        if (_usuario.getRolid() == 1) {
+            if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3) {
+       formulariomensajesf.recordError("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
+            return Boolean.FALSE;
+            }
+        }
+        // NUEVAS VALIDACIONES DNI
+        if (familiarActual.getTipoDocumento().getCodigo()==1){
+            if(familiarActual.getNroDocumento().length()>8){ 
+       formulariomensajesf.recordError("El número de documento debe tener 8 dígitos (y solo números)");   
+            return Boolean.FALSE;
+            }
+            try { Integer.parseInt(familiarActual.getNroDocumento());} catch (NumberFormatException ex) {
+       formulariomensajesf.recordError("El número de documento debe tener 8 dígitos (y solo números)"); 
+            return Boolean.FALSE;
+            }            
+        }
+        
+        Criteria c = session.createCriteria(Familiar.class);
+            c.add(Restrictions.eq("parentesco", familiarActual.getParentesco()));
+            c.add(Restrictions.eq("trabajador", actual));
+            if (editando){
+            c.add(Restrictions.ne("id", idVerificacion));
+            }
+            c.setProjection(Projections.rowCount());
+            int q2 =  Integer.parseInt(c.uniqueResult().toString());
+            
+            if (q2 > 0 && familiarActual.getParentesco().getCodigo() != 3) {
+       formulariomensajesf.recordError("No es posible registrar mas de un Pariente que no sea un hijo");
+            return Boolean.FALSE;
+            }         
+
+           
+           if (familiarActual.getParentesco().getCodigo()==3)
+            {  
+                  if(familiarActual.getFechaNacimiento().before(actual.getFechaNacimiento())){
+       formulariomensajesf.recordError("la fecha de nacimiento del hijo no debe ser mayor a la del Trabajador");
+                  return Boolean.FALSE;
+                  }
+            }
+
+            if (familiarActual.getParentesco().getCodigo()==4 || familiarActual.getParentesco().getCodigo()==5)
+            {  
+                  if(familiarActual.getFechaNacimiento().after(actual.getFechaNacimiento())){
+       formulariomensajesf.recordError("la fecha de nacimiento del padre/madre no debe ser mayor a la del Trabajador");
+                  return Boolean.FALSE;
+                  }
+            }
+
+             System.out.println("1er "+familiarActual.getFechaNacimiento()+actual.getFechaNacimiento());          
+           
+            if (actual.getEstadocivil()!=null && actual.getEstadocivil().getCodigo()==1)
+            {
+                if (familiarActual.getEstadoCivil()!=null && (familiarActual.getParentesco().getCodigo()==1  && familiarActual.getEstadoCivil().getCodigo()==2)){                
+                formulariomensajesf.recordError("No se puede agregar un conyuge a un trabajador soltero");    
+                    return Boolean.FALSE;                
+                }
+            }        
+             System.out.println("1er "+familiarActual.getParentesco());
+                    
+        return Boolean.TRUE;
+    }
+    
     @Log
     @CommitAfter
     Object onSuccessFromFormulariofamiliares() {
-
+        formulariomensajesf.clearErrors();
         if (nuevafecha != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -261,26 +334,36 @@ public class FamiliaresEditor {
             } else if (valsexo.equals("FEMENINO")) {
                 familiarActual.setSexo("F");
             }
-        } else {
-            familiarActual.setSexo(null);
         }
+   //     else {
+   //         familiarActual.setSexo(null);
+   //     }
         
         if (valEstadoCivil != null)
         {
           familiarActual.setEstadoCivil(valEstadoCivil);  
         }
-        else {familiarActual.setEstadoCivil(null);
-        }
-        
+    //    else {familiarActual.setEstadoCivil(null);
+     //   }
+         
+
+
+            
+            
         System.out.println("FAMILIAR - "+familiarActual.getParentesco());
 //        if(elemento==3){
         Logger logger = new Logger();
-        String consulta = "SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
-                + "WHERE DA.CODIGO = " + familiarActual.getParentesco().getCodigo() + " AND F.TRABAJADOR_ID = '" + actual.getId() + "'";
+    //    String consulta = "SELECT COUNT(*) FROM RSC_FAMILIAR F JOIN RSC_DATOAUXILIAR DA ON (F.PARENTESCO_ID = DA.ID)"
+    //            + "WHERE DA.CODIGO = " + familiarActual.getParentesco().getCodigo() + " AND F.TRABAJADOR_ID = '" + actual.getId() + "'";
 
+        if (validaciones()==Boolean.FALSE){
+            return actualizar();
+        }
+  
+            
         if (!editando) { // Si no edita, está insertando
             //Codigo de Progenitor = 4
-            if (familiarActual.getParentesco().getCodigo() == 4) {
+       /*     if (familiarActual.getParentesco().getCodigo() == 4) {
                 Criteria c1 = session.createCriteria(Familiar.class);
                 c1.add(Restrictions.eq("trabajador", actual));
                 c1.add(Restrictions.eq("parentesco", familiarActual.getParentesco()));
@@ -293,22 +376,11 @@ public class FamiliaresEditor {
                 c2.add(Restrictions.eq("parentesco", familiarActual.getParentesco()));
                 listaParentescoC = c2.list();
             }
+            */
+            
             if (_usuario.getRolid() == 1) { // Si es trabajador 
                 familiarActual.setAgregadoTrabajador(true);
                 familiarActual.setValidado(false);
-            }
-            if (_usuario.getRolid() == 1) {
-                if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3) {
-                    envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
-                    return actualizar();
-                }
-            }
-
-            Query q1 = session.createSQLQuery(consulta);
-            int numFamDupl = Integer.parseInt(q1.list().get(0).toString());
-            if (numFamDupl > 0 && familiarActual.getParentesco().getCodigo() != 3) {
-                envelope.setContents("No es posible registrar mas de un Pariente que no sea un hijo");
-                return actualizar();
             }
 
             Criteria c = session.createCriteria(Familiar.class);
@@ -324,72 +396,31 @@ public class FamiliaresEditor {
                            return actualizar();
                         }
                     }
-                   Familiar  familiarTemporal = familiares.get(0); 
-                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) || !familiarActual.getApellidoMaterno().equals(familiarTemporal.getApellidoMaterno()) || !familiarActual.getApellidoPaterno().equals(familiarTemporal.getApellidoPaterno())){
-                           formulariomensajesf.recordError("los datos del familiar son incorrectos");
-                           return actualizar();                        
+                   Familiar  familiarTemporal = familiares.get(0);
+                   
+                   SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                    String  fecha1 = formatoDelTexto.format(familiarActual.getFechaNacimiento());
+                    String  fecha2 = formatoDelTexto.format(familiarTemporal.getFechaNacimiento());
+                    System.out.println("FECHAX "+fecha1+"  "+fecha2);
+                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) ||
+                         familiarActual.getTipoDocumento()!=familiarTemporal.getTipoDocumento()||
+                         !fecha1.equals(fecha2)||
+                        !familiarActual.getSexo().equals(familiarTemporal.getSexo())||
+                        !familiarActual.getApellidoMaterno().equals(familiarTemporal.getApellidoMaterno()) || 
+                        !familiarActual.getApellidoPaterno().equals(familiarTemporal.getApellidoPaterno()))
+                    {
+                      System.out.println(" DATOS - "+familiarActual.getNombres()+familiarActual.getTipoDocumento().getValor()+familiarActual.getFechaNacimiento()+familiarActual.getSexo()+familiarActual.getApellidoMaterno()+familiarActual.getApellidoPaterno());  
+                      System.out.println(" DATOS - "+familiarTemporal.getNombres()+familiarTemporal.getTipoDocumento().getValor()+familiarTemporal.getFechaNacimiento()+familiarTemporal.getSexo()+familiarTemporal.getApellidoMaterno()+familiarTemporal.getApellidoPaterno());
+                      formulariomensajesf.recordError("los datos del familiar son incorrectos");
+                       return actualizar();                        
                     }
                  //   formulariomensajesf.recordError("nro de dni duplicado"); 
                  //   return actualizar();
             }
-        } else {
-            if (_usuario.getRolid() == 1) {
-                if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3) {
-                    envelope.setContents("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
-                    return actualizar();
-                }
-            }
-            Query q1 = session.createSQLQuery(consulta + "AND F.ID !='" + idVerificacion + "'");
-            int numFamDupl = Integer.parseInt(q1.list().get(0).toString());
-            if (numFamDupl > 0 && familiarActual.getParentesco().getCodigo() != 3) {
-                envelope.setContents("No es posible registrar mas de un Pariente que no sea un hijo");
-                return actualizar();
-            }
-            Criteria c = session.createCriteria(Familiar.class);
-            c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
-            c.add(Restrictions.ne("id", idVerificacion));
-            c.setProjection(Projections.property("id"));
-          //  if (!c.list().isEmpty()) {
-               // envelope.setContents("nro de dni duplicado");
-          //      formulariomensajesf.recordError("nro de dni duplicado");
-          //      return actualizar();
-          //  }
-        }
+        } 
 
-       if(valEstadoCivil!=null)     
-      {
-        if(familiarActual.getParentesco().getCodigo() == 1 && valEstadoCivil.getCodigo()==1)
-        {
-            envelope.setContents("El estado civil de un Conyuge no puede ser Soltero/a");
-            return actualizar();
-        }
-      }
-        // NUEVAS VALIDACIONES DNI
-        if (familiarActual.getTipoDocumento().getCodigo()==1){
-            if(familiarActual.getNroDocumento().length()>8){ 
-                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)");   return actualizar();}
-            try { Integer.parseInt(familiarActual.getNroDocumento());} catch (NumberFormatException ex) {
-                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)"); return actualizar();}            
-        }
-        
-        if (nuevafecha == null || nuevafecha.equalsIgnoreCase("")) {
-            envelope.setContents("Debe ingresar la fecha");
-            return actualizar();
-        }else{
-            // validacion fecha de nacimiento
-            if (familiarActual.getFechaNacimiento().after(new Date())){
-                   formulariomensajesf.recordError("La fecha de nacimiento debe ser menor a la fecha actual");            
-                   return actualizar();
-            }
-            // validaciones con respecto al progenitor
-        /*    if (familiarActual.getParentesco().getCodigo()==1){
-                   if (familiarActual.getFechaNacimiento().after(actual.getFechaNacimiento())){
-                   formulariomensajesf.recordError("La fecha de nacimiento del progenitor debe ser menor a la del trabajador");
-                   }
-
-                    
-            }*/
-            
+            System.out.println("FFFF  "+valEstadoCivil);
+            familiarActual.setEstadoCivil(valEstadoCivil);
             familiarActual.setTrabajador(actual);
             familiarActual.setEntidad(_oi);
             session.saveOrUpdate(familiarActual);
@@ -413,7 +444,7 @@ public class FamiliaresEditor {
             valsexo = null;
             valEstadoCivil = null;
             return actualizar();
-        }
+        
     }
 
     private MultiZoneUpdate actualizar() {
