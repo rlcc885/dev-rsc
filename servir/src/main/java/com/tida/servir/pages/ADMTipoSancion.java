@@ -443,9 +443,9 @@ public class ADMTipoSancion
            return "NO TIENE";
        }
 
-       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DÃAS ";}
+       if(tipsancion.getDias()!=0){cadena+=tipsancion.getDias()+" DÍAS ";}
        if(tipsancion.getMeses()!=0){cadena+=tipsancion.getMeses()+" MESES ";}
-       if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÃ‘OS ";}
+       if(tipsancion.getAnios()!=0){cadena+=tipsancion.getAnios()+" AÑOS ";}
     
     return cadena;
 
