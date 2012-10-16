@@ -39,7 +39,8 @@
                                 <select t:type="Select" t:id="tipoDocumento2" t:value="bdocumentoidentidad2" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
                             </div>
                             <div class="f-left">
-                                <label>*Numero de Documento</label>
+                                <!--<label>*Numero de Documento</label>-->
+                                <t:label for="numeroDocumento2"/>
                                 <input t:type="TextField" t:id="numeroDocumento2" t:value="bnumeroDocumento2" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
                             </div> 
                             <div class="f-left">
@@ -55,7 +56,8 @@
                                         <select t:type="Select" t:id="tipoDocumento_not" t:value="bdocumentoidentidad_not" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
                                     </div>
                                     <div class="f-left">
-                                        <label>*Numero de Documento</label>
+                                        <!--<label>*Numero de Documento</label>-->
+                                        <t:label for="numeroDocumento_not"/>
                                         <input t:type="TextField" t:id="numeroDocumento_not" t:value="bnumeroDocumento_not" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
                                     </div> 
                                     <div class="f-left">
@@ -64,8 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="f-wrap"> 
-                                        <label>Juzgado</label>
-                                        <input t:type="TextField" t:id="juzgado_not" t:value="juzgado_not" size="53" t:zone="busZone2"/>
+                                        <t:label for="juzgado_not"/>
+                                        <input t:type="TextField" t:id="juzgado_not" t:value="juzgado_not" size="53" t:zone="busZone2" t:validate="maxlength=250"/>
                                 </div>
                         </fieldset>
                       </fieldset>
