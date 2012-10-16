@@ -25,6 +25,10 @@ a:hover {
 }
 #bouttons a, #bouttons a:visited, #bouttons a:link { font-size:11px; color:#ffffff; text-decoration:none;}
 
+prueba_{
+    font-size:11px; color:#e10827; text-decoration:none;
+    background: url("images/Botonagregar.png")
+}
 input, select, textarea {
     padding:4px;
     color:#555454;
@@ -52,6 +56,20 @@ label { display:block; width:auto; background-color: transparent; cursor: pointe
     margin-left: 2px;
     text-transform: none;
 }
+
+.button_agregar {
+    color:#fff;
+    cursor:pointer;
+    background:url(images/Botonagregar.png) repeat-x 0 0;
+    border:1px solid #be0a16;
+    padding:4px 8px;
+    width:auto !important;
+    overflow:visible;
+    margin:0px;
+    margin-left: 2px;
+    text-transform: none;
+}
+
 .iconsearch {
     color:#fff;
     cursor:pointer;
