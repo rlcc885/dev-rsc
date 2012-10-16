@@ -44,7 +44,7 @@
                         <div class="f-left">	
                             <label>* Fecha de Nacimiento</label>
                             <input t:type="TextField" t:id="fechaNacimiento" t:disabled="${vdetalle}" t:value="nuevafecha" 
-                                       t:validate="regexp" class="fechaNacimiento pictureInputDate"/>
+                                       t:validate="required,regexp" class="fechaNacimiento pictureInputDate"/>
                         </div>
                     </div>
                     <div class="f-wrap">
@@ -174,16 +174,19 @@
                     <p:accionesCell>
                             <t:if test="${listafamiliar.validado}" negate="true"> <!-- no validado -->
                                 <t:if test="${veditar}"> <!-- si edita -->
+                                    <t:if test="esTrabajador">
                                     <t:actionlink t:id="editar" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
+                                    </t:if>
                                 </t:if>
                                 <t:if test="${veditar}" negate="true"> <!-- si no edita -->
                                     <t:actionlink t:id="detalle3" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>
                                 </t:if>
                             </t:if>
                             <t:if test="${listafamiliar.validado}"> <!-- validado -->
-                                
                                    <t:if test="${vrevisado}">
+                                   <t:if test="esTrabajador" >                                        
                                     <t:actionlink t:id="editar2" zone="familiaresZone" context="listafamiliar">Editar</t:actionlink>
+                                   </t:if>
                                    </t:if>
                                    <t:if test="${vrevisado}" negate="true"> 
                                        <t:actionlink t:id="detalle" zone="familiaresZone" context="listafamiliar">Detalle</t:actionlink>                                   
