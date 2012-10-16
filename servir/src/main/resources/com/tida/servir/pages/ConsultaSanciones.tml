@@ -57,24 +57,25 @@
               
                <fieldset>
 
-                   <t:zone t:id="datosSancionZone">
+                   
                             <legend>Datos de la Sanción</legend>
                             <br/>
                             <div class="f-wrap"> 
                                     <div class="f-left">
                                         <label>Régimen Laboral</label> 
-                                        <select t:type="Select" t:id="regimenLaboral" t:value="bregimenLaboral" model="regimenLaboral" t:zone="datosSancionZone"/>
+                                        <select t:type="Select" t:id="regimenLaboral" t:value="bregimenLaboral" model="regimenLaboral" t:zone="tiposancionZone"/>
                                     </div>
                                     <div class="f-left">
                                         <label>Categoría de Sanción</label>
-                                        <select t:type="Select" t:id="categoriaSancion" t:value="bcategoriaSancion"  model="categoriaSancion" t:zone="datosSancionZone" />
+                                        <select t:type="Select" t:id="categoriaSancion" t:value="bcategoriaSancion"  model="categoriaSancion" t:zone="tiposancionZone" />
                                     </div>
                                     <div class="f-left">
                                         <label>Tipos de Sanción</label>
-                                        <select t:type="Select" t:id="tiposancion" t:value="btipoSancion"  model="tipoSancion" t:zone="datosSancionZone"/>
+                                        <t:zone t:id="tiposancionZone" id="tiposancionZone">
+                                            <select t:type="Select" t:id="tiposancion" t:value="btipoSancion"  model="tipoSancion" t:zone="tiposancionZone"/>
+                                        </t:zone>
                                     </div>    
                             </div>
-                 </t:zone>
                  
                    <fieldset>
                       <legend>Estado</legend>

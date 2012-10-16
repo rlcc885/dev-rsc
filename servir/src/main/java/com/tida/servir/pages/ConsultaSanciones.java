@@ -63,7 +63,7 @@ public class ConsultaSanciones extends GeneralPage {
     private Zone consultaSancionesZone;
     @InjectComponent
     @Property
-    private Zone datosSancionZone;
+    private Zone tiposancionZone;
     @InjectComponent
     @Property
     private Zone busZone2;
@@ -431,12 +431,12 @@ public class ConsultaSanciones extends GeneralPage {
       
     @Log
     Object onValueChangedFromCategoriaSancion(DatoAuxiliar dato) {
-        return consultaSancionesZone.getBody();
+        return tiposancionZone.getBody();
     }     
     
     @Log
     Object onValueChangedFromRegimenLaboral(DatoAuxiliar dato) {
-        return consultaSancionesZone.getBody();
+        return tiposancionZone.getBody();
     }     
     
     @Log
@@ -528,7 +528,6 @@ public class ConsultaSanciones extends GeneralPage {
         bcategoriaSancion = null;
         btipoSancion = null;
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("datosSancionZone",datosSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
     }
     
@@ -558,7 +557,6 @@ public class ConsultaSanciones extends GeneralPage {
     Object onActionFromCancel1() {        
 
          return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("datosSancionZone",datosSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
     }
         
@@ -588,8 +586,7 @@ public class ConsultaSanciones extends GeneralPage {
     Object onActionFromSave(Anulacion anulacion) {        
         
         
-        return new MultiZoneUpdate("datosSancionZone",datosSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody()); 
+        return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()); 
     }
     public Boolean getSancionAnulada(){
         System.out.println("EST5ADOX  "+cs.getEstado_id());
