@@ -170,7 +170,7 @@
                        </div>
                        <div class="f-left">
                             <label>* Descripción o Número</label>
-                            <input t:type="TextField" t:id="num_docnot" value="nuevasancion.numdocnot" size="30" t:validate="required"/>
+                            <input t:type="TextField" t:id="num_docnot" value="nuevasancion.numdocnot" size="30" t:validate="required,maxlength=15"/>
                        </div>
                        <div class="f-left">
                             <label>* Fecha</label>
@@ -200,7 +200,7 @@
                        </div>
                        <div class="f-left">
                             <label>* Descripción o Número</label>
-                            <input t:type="TextField" t:id="num_docsan" value="nuevasancion.numdocsan" size="30" t:validate="required"/>
+                            <input t:type="TextField" t:id="num_docsan" value="nuevasancion.numdocsan" size="30" t:validate="required,maxlength=15"/>
                        </div>
                        <div class="f-left">
                             <label>* Fecha</label>
