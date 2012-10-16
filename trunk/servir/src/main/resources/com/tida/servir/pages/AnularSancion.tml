@@ -76,7 +76,7 @@
                       <fieldset>
                           <legend>Observaciones</legend>
                           <input t:type="TextArea" t:id="observaciones" t:value="observaciones" style="width:70%;" t:zone="busZone2" t:validate="maxlength=500"/>
-                          <div>Máx 500 Caracteres</div>
+                          <div>Máximo 500 Caracteres</div>
                       </fieldset>
                       <div class="f-wrap"> 
                         <div class="f-left">
