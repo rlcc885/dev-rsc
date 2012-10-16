@@ -99,7 +99,12 @@
                </fieldset>
                 <div class="f-wrap"> 
                     <div class="actions f-right">
-                        <input t:id="limpiar" t:type="submit" value="Limpiar Formulario" class="button" />
+                        <!--<input t:id="limpiar" t:type="submit" value="Limpiar Formulario" class="button" />-->
+                        <t:eventLink t:event="limpiar" class="button" t:zone="consultaSancionesZone" >
+                            <span t:type="any" style="font-size:11px;" >
+                                Limpiar Formulario
+                            </span> 
+                        </t:eventLink>
                         <input t:id="buscarsubmit" t:type="submit" value="Buscar" class="button" />
                         <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
                         <input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/> 
