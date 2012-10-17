@@ -269,8 +269,8 @@ public class EvaluacionesPersonalesEditor {
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                     .add("evaluacionesZone2", evaluacionesZone2.getBody());
             } 
-            if (fecha_desde.after(new Date())){
-                  formulariomensajese.recordError("La fecha de Ingreso debe ser mayor a la fecha actual");  
+            if (fecha_desde.after(new Date())||fecha_hasta.after(new Date())){
+                  formulariomensajese.recordError("La fecha no puede ser mayor a la del sistema");  
                   return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                     .add("evaluacionesZone2", evaluacionesZone2.getBody());            
