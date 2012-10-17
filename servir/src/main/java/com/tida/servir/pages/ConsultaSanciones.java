@@ -256,20 +256,20 @@ public class ConsultaSanciones extends GeneralPage {
         esVigente=false;
         mostrar_reglab=false;
         
-        if(loggedUser.getRolid()==2){
+        if(loggedUser.getRolid()==2){ //Administrador de Entidad
              entidadsubentidad=true;
         }else{
             entidadsubentidad=false;
         }
             
-        if(loggedUser.getRolid()==3){
+        if(loggedUser.getRolid()==3){ //administrador de Servir
             bmostrar=true;
         }else{
             bmostrar=false;
             filtro_entidad = loggedUser.getEntidad().getId();
         }  
                 
-        if(usua.getAccesoupdate() == 1){
+        if(usua.getAccesoupdate() == 1){ 
              v_editar = true;
         }else{
              v_editar = false;
