@@ -132,7 +132,7 @@ public class AnularSancion extends GeneralPage {
      
      @Log
       public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("TIPODOCUMENTO", null, 0, session);
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
      
