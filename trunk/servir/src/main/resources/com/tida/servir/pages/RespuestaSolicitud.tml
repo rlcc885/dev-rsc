@@ -77,8 +77,13 @@
                         </div>
                     </div>             
             </fieldset>
-               <div class="actions">              
+               <div class="actions">
+                   <t:if test="vaprobar">
+                       <label style="color:red;">Usuario ya tiene acceso al módulo de Sanciones</label>
+                   </t:if>
+                   <t:if test="vaprobar" negate="true">
                     <input t:type="Submit" t:id="save" value="Aprobar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>            
+                   </t:if>
                     <t:eventLink t:event="cancel" href="#" class="button f-right">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Cancelar
