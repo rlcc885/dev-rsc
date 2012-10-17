@@ -768,6 +768,8 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosTrabajador) {
             if (_trabajadorRep == null) throw new Exception("Error en categoría Trabajador");
             parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
+            if (tipoReporteSelect.getFormato() == 0)
+                parametros.put("MandatoryParameter_EntidadID", entidadTraba.getId());
         }
         if(mostrarFiltrosEntidad) {
             if (_entidadRep == null) throw new Exception("Error en categoría Entidad");
