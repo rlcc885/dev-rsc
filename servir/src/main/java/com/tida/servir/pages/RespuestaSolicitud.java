@@ -54,6 +54,9 @@ public class RespuestaSolicitud  extends GeneralPage
     @Property
     @Persist 
     private DatoAuxiliar bdocumentoidentidad;
+    @Property
+    @Persist 
+    private Boolean vaprobar;
     
     @Log
     public Solicitud_Acceso getNuevasolicitud() {
@@ -71,6 +74,24 @@ public class RespuestaSolicitud  extends GeneralPage
         SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
         fecharesolu = formatoDeFecha.format(nuevasolicitud.getFec_resolucion());
         bdocumentoidentidad=nuevasolicitud.getTrabajador().getDocumentoidentidad();
+        if(getUsuarios(nuevasolicitud.getTrabajador().getId()).size()>0){
+            if(getAllPerfiles(getUsuarios(nuevasolicitud.getTrabajador().getId()).get(0).getId()).size()>0){
+                vaprobar=true;
+            }
+        }
+    }
+    
+    @Log
+    public List<Perfilporusuario> getAllPerfiles(long usuid) {
+        List<Perfilporusuario> lista = null;
+        Criteria c = session.createCriteria(Perfilporusuario.class);
+        c.add(Restrictions.eq("usuarioId", usuid));
+//        Query query = session.getNamedQuery("Perfilporusuario.findByUsuarioId");
+//        query.setParameter("usuarioId", usuid);
+//        query.setParameter("perfilId", long(9)));
+        c.add(Restrictions.in( "perfilId", new Long[] { 9L, 10L} ));
+//        lista = query.list();
+        return c.list();
     }
     
     @Log
@@ -99,7 +120,7 @@ public class RespuestaSolicitud  extends GeneralPage
         Query query = session.createSQLQuery(hql);
         int rowCount = query.executeUpdate();
         session.flush();
-        if(getUsuarios().size()==0){
+        if(getUsuarios(nuevasolicitud.getTrabajador().getId()).size()==0){
             Usuario usuarionuevo = new Usuario();
             usuarionuevo.setEstado(1);
             usuarionuevo.setIntentos_fallidos(0L);
@@ -114,7 +135,7 @@ public class RespuestaSolicitud  extends GeneralPage
         }
         Perfilusuario permiso = new Perfilusuario();
         PerfilusuarioPK perfilusuariopk = new PerfilusuarioPK();
-        perfilusuariopk.setUsuarioId(getUsuarios().get(0).getId());
+        perfilusuariopk.setUsuarioId(getUsuarios(nuevasolicitud.getTrabajador().getId()).get(0).getId());
         perfilusuariopk.setPerfilId(nuevasolicitud.getPerfil().getId());
         permiso.setPerfilusuarioPK(perfilusuariopk);
         session.save(permiso);
@@ -122,11 +143,12 @@ public class RespuestaSolicitud  extends GeneralPage
     }
     
     @Log
-    public List<UsuarioTrabajador> getUsuarios(){
+    public List<UsuarioTrabajador> getUsuarios(long trabaid){
         Criteria c = session.createCriteria(UsuarioTrabajador.class);
-        c.add(Restrictions.eq("trabajadorid", nuevasolicitud.getTrabajador().getId()));
+        c.add(Restrictions.eq("trabajadorid", trabaid));
         return c.list();
     }
+    
     Object onCancel(){
         return "Alerta";
     }
