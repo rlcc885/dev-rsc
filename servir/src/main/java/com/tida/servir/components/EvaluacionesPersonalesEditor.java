@@ -311,6 +311,8 @@ public class EvaluacionesPersonalesEditor {
         vdetalle = false;
         vbotones = true;
         vNoedita = true;
+        evaluacion.setCalificacion(evalu.getCalificacion().replaceAll("\\.", ","));
+        
         if(evaluacion.getFec_desde()!=null){
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             valfec_desde=formatoDeFecha.format(evaluacion.getFec_desde());
