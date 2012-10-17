@@ -25,7 +25,7 @@ private Trabajador nuevo;
 public String mensajeError;
 private String token="";
 private final String usuario = "SERVIRWS";
-private final String codigo = "MTkwMTSeR";
+private final String codigo = "MjA5NDA4Nzc=";
 private final String  codTxEmp = "RSC";
 private final String  dniUserEmp = "09399938";
 

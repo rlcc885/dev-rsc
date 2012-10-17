@@ -502,6 +502,11 @@ public class TrabajadorNuevo extends GeneralPage {
 
                 envelope.setContents(helpers.Constantes.EUE_EXITO);
                 new Logger().loguearOperacion(session, _usuario, String.valueOf(cargoAsignado.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO_ASIGNADO);
+                if(getSancionados().size()>0){
+                    envelope.setContents("El Trabajador tiene Sanciones");
+                    onReset();
+                    return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody()).add("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                }
                 envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
                 return Busqueda.class;
             }
@@ -539,6 +544,13 @@ public class TrabajadorNuevo extends GeneralPage {
         Query query = session.getNamedQuery("UsuarioTrabajador.findByTrabajador");
         query.setParameter("trabajadorid", nuevo.getId());
         return query.list();
+    }
+    @Log
+    public List<LkBusquedaSancionadosSinRegLab> getSancionados() {
+        Criteria c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
+        c.add(Restrictions.eq("nro_doc_trabajador", nuevo.getNroDocumento()));
+        c.add(Restrictions.eq("estado", "VIGENTE"));
+        return c.list();
     }
     
     @Log
