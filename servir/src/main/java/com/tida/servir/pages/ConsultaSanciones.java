@@ -493,13 +493,13 @@ public class ConsultaSanciones extends GeneralPage {
                 if (!f.exists()) {
                     f.mkdirs();
                 }
-                if(getBusquedaSancionados().size()>0){
-                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), "C:/CONSULTASANCIONADOS.xls", session);
-                    System.out.println("_GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGg");
+                if(bregimenLaboral!=null){
+                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), "D:/CONSULTASANCIONADOS.xls", session);
+                    System.out.println("CON REG");
                 }else{
-                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), "C:/CONSULTASANCIONADOS.xls", session);
-                    System.out.println("_GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGg");
-                }
+                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), "D:/CONSULTASANCIONADOS.xls", session);
+                    System.out.println("SIN REG");
+                }                
               
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
