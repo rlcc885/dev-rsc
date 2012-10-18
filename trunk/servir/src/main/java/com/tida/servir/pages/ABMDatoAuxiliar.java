@@ -2,10 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
-import com.tida.servir.entities.DatoAuxiliar;
-import com.tida.servir.entities.LkDatoauxiliar;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UsuarioAcceso;
+import com.tida.servir.entities.*;
 import java.util.List;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 
@@ -22,6 +19,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import com.tida.servir.services.GenericSelectModel;
+import java.util.Iterator;
 import org.apache.tapestry5.ComponentResources;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
@@ -127,34 +125,26 @@ public class ABMDatoAuxiliar extends GeneralPage {
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-//        query.setParameter("in_pagename", "TIPOSANCION");
         List result = query.list();
-        
- //       opcEliminar = Boolean.FALSE;        
- //       opcModificar = Boolean.FALSE;        
- //       opcInsertar = Boolean.FALSE;
         
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
         } else {
            usua = (UsuarioAcceso) result.get(0);
                 permisos();
-//        if (usua.getAccesoupdate() == 1) {opcModificar = Boolean.TRUE;}
-//        if (usua.getAccesodelete() == 1) {opcEliminar  = Boolean.TRUE;}
-//        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}
-
-        }   
+        }
+        
+        
+        
     }
     
     private void permisos(){
         opcEliminar = Boolean.FALSE;        
         opcModificar = Boolean.FALSE;        
-        opcInsertar = Boolean.FALSE;
-    
+        opcInsertar = Boolean.FALSE;    
         if (usua.getAccesoupdate() == 1) {opcModificar = Boolean.TRUE;}
         if (usua.getAccesodelete() == 1) {opcEliminar  = Boolean.TRUE;}
-        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}
-    
+        if (usua.getAccesoreport() == 1) {opcInsertar  = Boolean.TRUE;}   
     }
     
     @Property
@@ -185,6 +175,7 @@ public class ABMDatoAuxiliar extends GeneralPage {
     
     
     @Log
+    @SuppressWarnings("unchecked")
     public Object onValueChangedFromTablaSeleccionada(String nombreTabla) {
         
         if (nombreTabla == null){
@@ -208,14 +199,44 @@ public class ABMDatoAuxiliar extends GeneralPage {
             else{
             relacionada = Boolean.TRUE;        
             }
-        permisos();
-            
+        // VALIDAR SI EL REGISTRO ESTA SIENDO UTILIZADO    
+        c = session.createCriteria(LkOpcDatoAuxiliar.class);
+        c.add(Restrictions.eq("tabla", nombreTabla));
+      //  c.add(Restrictions.isNotNull("id"));
+        c.setProjection(Projections.property("id"));
+        tablasEliminables = c.list();
+   
+           for (Long i : tablasEliminables) {
+           System.out.println("ID - "+i);
+           }     
+        permisos();           
         }
         
         return dosZones();
    }
-    
-    
+   @Persist 
+   private List<Long> tablasEliminables;
+   
+   @Log        
+   public Boolean getEliminarRegistro(){
+       Long num;
+       if (relacionada==Boolean.TRUE){num = tabla2.getId();System.out.println(tabla2.getId());
+}
+       else{num = tabla1.getId();System.out.println(tabla1.getId());}
+       
+        for (Long i : tablasEliminables) {
+            if (num.equals(i)){
+                return Boolean.FALSE;
+            }
+        }
+       return Boolean.TRUE;
+   
+   } 
+ 
+ 
+   
+   
+   
     private MultiZoneUpdate dosZones() {
         return new MultiZoneUpdate("tablasAuxiliaresZone", tablasAuxiliaresZone.getBody()).add("listaRegistrosTablaZone", listaRegistrosTablaZone.getBody());
     }
@@ -335,13 +356,6 @@ public class ABMDatoAuxiliar extends GeneralPage {
        nuevoRegistro.setRelacionCodigo(tablaTemporal.getRelacionCodigo());
        }
        session.saveOrUpdate(nuevoRegistro);
-       System.out.println("TABLAX --id-- "+nuevoRegistro.getId());
-       System.out.println("TABLAX --codigo-- "+nuevoRegistro.getCodigo());       
-       System.out.println("TABLAX --valor-- "+nuevoRegistro.getValor());
-       System.out.println("TABLAX --nombretabla-- "+nuevoRegistro.getNombreTabla());
-       System.out.println("TABLAX --tablarelacion-- "+nuevoRegistro.getTablaRelacion());
-       System.out.println("TABLAX --editable-- "+nuevoRegistro.getEditable());
-
        nuevoRegistro = new DatoAuxiliar();
        editando = Boolean.FALSE;
        valDatoRelacionado = null;
@@ -377,15 +391,8 @@ public class ABMDatoAuxiliar extends GeneralPage {
        nuevoRegistro.setNombreTabla(tablaTemporal.getNombreTabla());
        nuevoRegistro.setEditable(tablaTemporal.getEditable());
        }
-       nuevoRegistro.setRelacionCodigo(valDatoRelacionado.getCodigo());
-       
+       nuevoRegistro.setRelacionCodigo(valDatoRelacionado.getCodigo());       
        session.saveOrUpdate(nuevoRegistro);
-       System.out.println("TABLAX --id-- "+nuevoRegistro.getId());
-       System.out.println("TABLAX --codigo-- "+nuevoRegistro.getCodigo());       
-       System.out.println("TABLAX --valor-- "+nuevoRegistro.getValor());
-       System.out.println("TABLAX --nombretabla-- "+nuevoRegistro.getNombreTabla());
-       System.out.println("TABLAX --tablarelacion-- "+nuevoRegistro.getTablaRelacion());
-       System.out.println("TABLAX --editable-- "+nuevoRegistro.getEditable());
        nuevoRegistro = new DatoAuxiliar();
        editando = Boolean.FALSE;
        valDatoRelacionado = null;
@@ -420,10 +427,23 @@ public class ABMDatoAuxiliar extends GeneralPage {
     private DatoAuxiliar valDatoRelacionado;
     
     public GenericSelectModel<DatoAuxiliar> getDatoRelacionadoBean(){
-        System.out.println("XXXXSXSXSX"+tablaRelacionada);
         Criteria c = session.createCriteria(DatoAuxiliar.class);
         c.add(Restrictions.eq("nombreTabla", tablaRelacionada));
         c.addOrder(Order.asc("valor"));
         return new GenericSelectModel<DatoAuxiliar>(c.list(), DatoAuxiliar.class, "valor", "id", _access);
     }
+
+    private List<Long> listaId;
+            
+    @Log
+    private Boolean validacionEliminarRegistro(){
+        
+        for (Long i : listaId){
+            if (i == tabla1.getId()){
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
+    
 }

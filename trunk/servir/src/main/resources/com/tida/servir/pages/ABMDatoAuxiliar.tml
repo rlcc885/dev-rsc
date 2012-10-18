@@ -29,11 +29,13 @@
                                 <a t:type="eventLink" t:event="editarDato" t:context="tabla1" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
                             </t:if>
                             <t:if test="opcEliminar">
-                            <t:if test="tabla1.tieneHijos" negate="true">					| 
+                            <t:if test="tabla1.tieneHijos" negate="true">
+                            <t:if test="eliminarRegistro">  | 
                                 <a t:type="eventLink" t:event="borrarDato" t:context="tabla1"  href="#" t:zone="listaRegistrosTablaZone">
                                 <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
                                 </a>
                             </t:if>
+                            </t:if>    
                             </t:if>    
                         </p:accionesCell>                    
                 </t:grid>
@@ -54,10 +56,12 @@
                         <a t:type="eventLink" t:event="editarDato2" t:context="tabla2" href="#" t:zone="tablasAuxiliaresZone">Editar</a>
                             </t:if>
                             <t:if test="opcEliminar" >
-                        <t:if test="tabla2.tieneHijos" negate="true">					| 
+                        <t:if test="tabla2.tieneHijos" negate="true">
+                            <t:if test="eliminarRegistro">    | 
                         <a t:type="eventLink" t:event="borrarDato2" t:context="tabla2"  href="#" t:zone="listaRegistrosTablaZone">
                            <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
                         </a>
+                            </t:if>    
                         </t:if> 
                             </t:if>
                         </p:accionesCell>                     
@@ -89,7 +93,7 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Código</label>
-                        <t:textfield t:id="codigo" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp,maxLength=19"/>
+                        <t:textfield t:id="codigo" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp,max=999999999,min=0"/>
                     </div>
                     <div class="f-left">
                         <label>* Descripción</label>
@@ -128,7 +132,7 @@
                     </div>
                    <div class="f-left">
                         <label>* Código</label>
-                        <t:textfield t:id="codigo2" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp,maxLength=19"/>
+                        <t:textfield t:id="codigo2" t:value="nuevoRegistro.codigo" t:disabled="editando" t:validate="required,regexp,max=999999999,min=0"/>
                     </div>
                     <div class="f-left">
                         <label>* Descripción</label>
