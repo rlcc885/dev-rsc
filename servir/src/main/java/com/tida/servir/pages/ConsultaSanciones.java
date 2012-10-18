@@ -481,23 +481,22 @@ public class ConsultaSanciones extends GeneralPage {
               mostrar_reglab=false;
               
               //Exportando en Excel
-              GeneracionXLS geXLS=new GeneracionXLS();   
-              Date date = new Date();
-              String nombreArchivo = "";
-              SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
-              nombreArchivo = "ArchivosXLS - "+sdf.format(date);
-              String newlocation = STARTPATH + "GeneracionXLS/" + nombreArchivo +"/";
-              archivoDescargar = newlocation + nombreArchivo +".xls";  
+              GeneracionXLS geXLS=new GeneracionXLS();                 
+              archivoDescargar = STARTPATH  +"CONSULTASANCIONES.xls";  
               
-              File f = new File(newlocation);
+                File f = new File(STARTPATH);
                 if (!f.exists()) {
                     f.mkdirs();
                 }
+                File fa = new File(STARTPATH+"CONSULTASANCIONES.xls");
+                if (!fa.exists()) {
+                    fa.delete();
+                }
                 if(bregimenLaboral!=null){
-                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), "D:/CONSULTASANCIONADOS.xls", session);
+                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);
                     System.out.println("CON REG");
                 }else{
-                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), "D:/CONSULTASANCIONADOS.xls", session);
+                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
                     System.out.println("SIN REG");
                 }                
               
