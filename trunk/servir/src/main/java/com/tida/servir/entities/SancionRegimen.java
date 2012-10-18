@@ -23,12 +23,6 @@ public class SancionRegimen implements Serializable {
     @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
-//    @JoinColumn(name = "ID_REG_LABORAL", referencedColumnName = "ID", insertable = false, updatable = false)
-//    @ManyToOne(optional = false)
-//    private DatoAuxiliar datoauxiliar;
-//    @JoinColumn(name = "ID_TIPO_SANCION", referencedColumnName = "ID_TIPO_SANCION", insertable = false, updatable = false)
-//    @ManyToOne(optional = false)
-//    private TipoSancion tipoSancion;
 
     public SancionRegimen() {
     }
@@ -56,23 +50,7 @@ public class SancionRegimen implements Serializable {
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
-/*
-    public DatoAuxiliar getDatoauxiliar() {
-        return datoauxiliar;
-    }
 
-    public void setDatoauxiliar(DatoAuxiliar datoauxiliar) {
-        this.datoauxiliar = datoauxiliar;
-    }
-
-    public TipoSancion getTipoSancion() {
-        return tipoSancion;
-    }
-
-    public void setTipoSancion(TipoSancion tipoSancion) {
-        this.tipoSancion = tipoSancion;
-    }
-*/
     @Override
     public int hashCode() {
         int hash = 0;
