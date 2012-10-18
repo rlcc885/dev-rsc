@@ -57,6 +57,7 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
     private String observaciones;
     private String causa_destitucion; 
     private String direccion_entidad;
+    @NonVisual
     private String tipo_doc_identidad;
 
     public Boolean getVeditar_anular() {
