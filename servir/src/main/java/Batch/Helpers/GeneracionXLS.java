@@ -218,6 +218,238 @@ public class GeneracionXLS {
         return errores;
     }
     
+    
+    public List<String> generadoXLSConsultaSancionados(List<LkBusquedaSancionados> lcr,String path,Session session){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Consulta Sancionados"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Sancionado");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo Documento Identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Num. Doc. Sancionado"); 
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Institucion"); 
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Direccion Institucion");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Cargo"); 
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Tipo Doc. Notifica");  
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Descripcion Doc. Notifica");  
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Fecha Doc. Notifica");   
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Tipo Doc. Sanciona");  
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Descripcion Doc. Sanciona");  
+            celda= fila.createCell((short)11);
+            celda.setCellValue("Fecha Doc. Sanciona");  
+            celda= fila.createCell((short)12);
+            celda.setCellValue("Autoridad Sanciona");  
+            celda= fila.createCell((short)13);
+            celda.setCellValue("Tipo Sancion");  
+            celda= fila.createCell((short)14);
+            celda.setCellValue("Estado");  
+            celda= fila.createCell((short)15);
+            celda.setCellValue("Inicio Inhabilitacion");  
+            celda= fila.createCell((short)16);
+            celda.setCellValue("Fin Inhabilitacion");  
+            celda= fila.createCell((short)17);
+            celda.setCellValue("Tiempo Restante");  //
+            celda= fila.createCell((short)18);
+            celda.setCellValue("Causa Destitucion");  
+            celda= fila.createCell((short)19);
+            celda.setCellValue("Observaciones");  
+            
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBusquedaSancionados cr=(LkBusquedaSancionados)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                if(cr.getB_datos_trabajador()!=null){
+                    celda.setCellValue(leoCampo(cr.getB_datos_trabajador())); // Es un trabajador
+                }else{
+                    celda.setCellValue(leoCampo(cr.getB_datos_persona())); // Es una persona
+                }
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_ientidad()));
+                celda= fila.createCell((short)2);
+                if(cr.getNro_doc_persona()!=null){
+                    celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
+                }else{
+                    celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador
+                }
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getEntidad_subentidad()));
+                celda= fila.createCell((short)4);
+                celda.setCellValue(leoCampo(cr.getDireccion_entidad()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getCargo()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_notifica())); 
+                celda= fila.createCell((short)7);
+                celda.setCellValue(leoCampo(cr.getDescripcion_doc_notifica())); 
+                celda= fila.createCell((short)8);
+                celda.setCellValue(datetoString(cr.getFecha_doc_notifica())); 
+                celda= fila.createCell((short)9);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_sanciona())); 
+                celda= fila.createCell((short)10);
+                celda.setCellValue(leoCampo(cr.getDescripcion_doc_sanciona())); 
+                celda= fila.createCell((short)11);
+                celda.setCellValue(datetoString(cr.getFecha_doc_sanciona())); 
+                celda= fila.createCell((short)12);
+                celda.setCellValue(leoCampo(cr.getAutoridad_sanciona())); 
+                celda= fila.createCell((short)13);
+                celda.setCellValue(leoCampo(cr.getTipo_sancion())); 
+                celda= fila.createCell((short)14);
+                celda.setCellValue(leoCampo(cr.getEstado())); 
+                celda= fila.createCell((short)15);
+                celda.setCellValue(datetoString(cr.getINI_INHABILITACION())); 
+                celda= fila.createCell((short)16);
+                celda.setCellValue(datetoString(cr.getFIN_INHABILITACION())); 
+                celda= fila.createCell((short)17);
+                celda.setCellValue(leoCampo(cr.getTiempo_restante())); 
+                celda= fila.createCell((short)18);
+                celda.setCellValue(leoCampo(cr.getCausa_destitucion())); 
+                celda= fila.createCell((short)19);
+                celda.setCellValue(leoCampo(cr.getObservaciones())); 
+            }                      
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxxxConsultaSancionados.xls");
+        }
+        
+        return errores;
+    }
+    
+    
+    public List<String> generadoXLSConsultaSancionadosSinRegLab(List<LkBusquedaSancionadosSinRegLab> lcr,String path,Session session){
+        List<String> errores = new LinkedList<String>();
+        try{
+            HSSFWorkbook objWB = new HSSFWorkbook();
+            HSSFSheet hoja1 = objWB.createSheet("Consulta Sancionados"); 
+            //titulos
+            HSSFRow fila = hoja1.createRow((short)(0));
+            HSSFCell celda;
+            celda= fila.createCell((short)0);
+            celda.setCellValue("Sancionado");
+            celda= fila.createCell((short)1);
+            celda.setCellValue("Tipo Documento Identidad");
+            celda= fila.createCell((short)2);
+            celda.setCellValue("Num. Doc. Sancionado"); 
+            celda= fila.createCell((short)3);
+            celda.setCellValue("Institucion"); 
+            celda= fila.createCell((short)4);
+            celda.setCellValue("Direccion Institucion");
+            celda= fila.createCell((short)5);
+            celda.setCellValue("Cargo"); 
+            celda= fila.createCell((short)6);
+            celda.setCellValue("Tipo Doc. Notifica");  
+            celda= fila.createCell((short)7);
+            celda.setCellValue("Descripcion Doc. Notifica");  
+            celda= fila.createCell((short)8);
+            celda.setCellValue("Fecha Doc. Notifica");   
+            celda= fila.createCell((short)9);
+            celda.setCellValue("Tipo Doc. Sanciona");  
+            celda= fila.createCell((short)10);
+            celda.setCellValue("Descripcion Doc. Sanciona");  
+            celda= fila.createCell((short)11);
+            celda.setCellValue("Fecha Doc. Sanciona");  
+            celda= fila.createCell((short)12);
+            celda.setCellValue("Autoridad Sanciona");  
+            celda= fila.createCell((short)13);
+            celda.setCellValue("Tipo Sancion");  
+            celda= fila.createCell((short)14);
+            celda.setCellValue("Estado");  
+            celda= fila.createCell((short)15);
+            celda.setCellValue("Inicio Inhabilitacion");  
+            celda= fila.createCell((short)16);
+            celda.setCellValue("Fin Inhabilitacion");  
+            celda= fila.createCell((short)17);
+            celda.setCellValue("Tiempo Restante");  //
+            celda= fila.createCell((short)18);
+            celda.setCellValue("Causa Destitucion");  
+            celda= fila.createCell((short)19);
+            celda.setCellValue("Observaciones");  
+            
+            
+            for (int i=0;i<lcr.size();i++) {
+                LkBusquedaSancionadosSinRegLab cr=(LkBusquedaSancionadosSinRegLab)lcr.get(i);
+                fila = hoja1.createRow((short)(i+1));            
+                celda= fila.createCell((short)0);
+                if(cr.getB_datos_trabajador()!=null){
+                    celda.setCellValue(leoCampo(cr.getB_datos_trabajador())); // Es un trabajador
+                }else{
+                    celda.setCellValue(leoCampo(cr.getB_datos_persona())); // Es una persona
+                }
+                celda= fila.createCell((short)1);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_ientidad()));
+                celda= fila.createCell((short)2);
+                if(cr.getNro_doc_persona()!=null){
+                    celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
+                }else{
+                    celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador
+                }
+                celda= fila.createCell((short)3);
+                celda.setCellValue(leoCampo(cr.getEntidad_subentidad()));
+                celda= fila.createCell((short)4);
+                celda.setCellValue(leoCampo(cr.getDireccion_entidad()));
+                celda= fila.createCell((short)5);
+                celda.setCellValue(leoCampo(cr.getCargo()));
+                celda= fila.createCell((short)6);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_notifica())); 
+                celda= fila.createCell((short)7);
+                celda.setCellValue(leoCampo(cr.getDescripcion_doc_notifica())); 
+                celda= fila.createCell((short)8);
+                celda.setCellValue(datetoString(cr.getFecha_doc_notifica())); 
+                celda= fila.createCell((short)9);
+                celda.setCellValue(leoCampo(cr.getTipo_doc_sanciona())); 
+                celda= fila.createCell((short)10);
+                celda.setCellValue(leoCampo(cr.getDescripcion_doc_sanciona())); 
+                celda= fila.createCell((short)11);
+                celda.setCellValue(datetoString(cr.getFecha_doc_sanciona())); 
+                celda= fila.createCell((short)12);
+                celda.setCellValue(leoCampo(cr.getAutoridad_sanciona())); 
+                celda= fila.createCell((short)13);
+                celda.setCellValue(leoCampo(cr.getTipo_sancion())); 
+                celda= fila.createCell((short)14);
+                celda.setCellValue(leoCampo(cr.getEstado())); 
+                celda= fila.createCell((short)15);
+                celda.setCellValue(datetoString(cr.getINI_INHABILITACION())); 
+                celda= fila.createCell((short)16);
+                celda.setCellValue(datetoString(cr.getFIN_INHABILITACION())); 
+                celda= fila.createCell((short)17);
+                celda.setCellValue(leoCampo(cr.getTiempo_restante())); 
+                celda= fila.createCell((short)18);
+                celda.setCellValue(leoCampo(cr.getCausa_destitucion())); 
+                celda= fila.createCell((short)19);
+                celda.setCellValue(leoCampo(cr.getObservaciones())); 
+            }                      
+            ajustaColumnas(hoja1);
+            //generar
+            File objFile = new File(path);
+            FileOutputStream archivoSalida = new FileOutputStream(objFile);
+            objWB.write(archivoSalida);
+            archivoSalida.close();
+        }catch(Exception e){
+            errores.add(ERROR_GENERANDO_EL_ARCHIVO + "xxxConsultaSancionados.xls");
+        }
+        
+        return errores;
+    }
+    
     public List<String> generadoXLSUnidadOrganica(List<LkBatchUnidadOrga> lcr,String path,Session session){
         List<String> errores = new LinkedList<String>();
         try{
