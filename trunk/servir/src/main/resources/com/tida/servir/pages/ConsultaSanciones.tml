@@ -137,7 +137,8 @@
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                     b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad,veditar_anular,CARGO,TIPO_DOC_NOTIFICA,DESCRIPCION_DOC_NOTIFICA,
-                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION"
+                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION,
+                                    DIRECCION_ENTIDAD,TIPO_DOC_IDENTIDAD"
                             inPlace="true">
                        <t:parameter name="empty">
                           <div class="no-info">No se encontro coincidencias</div>
@@ -183,7 +184,8 @@
                                     exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                             id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                             b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad,veditar_anular,CARGO,TIPO_DOC_NOTIFICA,DESCRIPCION_DOC_NOTIFICA,
-                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION"
+                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION,
+                                    DIRECCION_ENTIDAD,TIPO_DOC_IDENTIDAD"
                                     inPlace="true">
                             <t:parameter name="empty">
                                 <div class="no-info">No se encontro coincidencias</div>
@@ -234,7 +236,8 @@
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                     b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad,veditar_anular,CARGO,TIPO_DOC_NOTIFICA,DESCRIPCION_DOC_NOTIFICA,
-                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION"
+                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION,
+                                    DIRECCION_ENTIDAD,tipo_doc_identidad"
                             inPlace="true">
                        <t:parameter name="empty">
                           <div class="no-info">No se encontro coincidencias</div>
@@ -286,7 +289,8 @@
                             exclude="tipo_doc_trabajador,tipo_doc_persona,nro_doc_persona,nro_doc_trabajador,categoria_sancion_id,id_reg_laboral,
                                     id_tipo_sancion,estado_id,apellidos_persona,nombres_persona,apellidos_trabajador,nombres_trabajador,b_datos_persona,
                                     b_datos_trabajador,estrabajador,veditar,id_sancion,entidad_subentidad,veditar_anular,CARGO,TIPO_DOC_NOTIFICA,DESCRIPCION_DOC_NOTIFICA,
-                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION"
+                                    FECHA_DOC_NOTIFICA,AUTORIDAD_NOTIFICA,DESCRIPCION_DOC_SANCIONA,FECHA_DOC_SANCIONA,AUTORIDAD_SANCIONA,OBSERVACIONES,CAUSA_DESTITUCION,
+                                    DIRECCION_ENTIDAD,tipo_doc_identidad"
                             inPlace="true">
                        <t:parameter name="empty">
                           <div class="no-info">No se encontro coincidencias</div>
