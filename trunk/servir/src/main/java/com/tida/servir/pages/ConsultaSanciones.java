@@ -348,8 +348,9 @@ public class ConsultaSanciones extends GeneralPage {
         if(bcategoriaSancion!=null){
             c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
         }
+        
         if(btipoSancion!=null){
-            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
+            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId_tipo()));
         }
         List result = c.list();
         nro_sanciones_sinreglab = Integer.toString(result.size());
@@ -400,7 +401,7 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
         }
         if(btipoSancion!=null){
-            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
+            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId_tipo()));
         }
         
         List result = c.list();
