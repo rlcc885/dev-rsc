@@ -14,14 +14,16 @@ import helpers.Constantes;
 import helpers.Encriptacion;
 import helpers.Helpers;
 import helpers.Logger;
-import java.io.File;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -29,6 +31,7 @@ import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.Response;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -224,11 +227,14 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private Long filtro_entidad;
+    @Property
+    @Persist
+    private Boolean vexportar;
     
     @Log
     @SetupRender
     void initializeValue() {
-        
+        vexportar=false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -457,6 +463,7 @@ public class ConsultaSanciones extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularioConsultaSanciones() {
+        vexportar=false;
         if(elemento == 1)   {
              if(bregimenLaboral!=null){
                  mostrar_reglab=true;
@@ -498,14 +505,51 @@ public class ConsultaSanciones extends GeneralPage {
                 }else{
                     errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
                     System.out.println("SIN REG");
-                }                
+                }
+                vexportar=true;
               
-            return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+            return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody());
         }
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
          // return listaConsultaSancionZone.getBody();
+    }
+    
+    StreamResponse onActionFromReturnStreamResponse() {
+		return new StreamResponse() {
+			InputStream inputStream;
+
+                    @Override
+                    public void prepareResponse(Response response) {
+                            File fileADescargar = new File(archivoDescargar);
+
+                            try {
+                                inputStream = new FileInputStream(fileADescargar);
+                            } catch (FileNotFoundException ex){
+                                java.util.logging.Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            try {
+                                response.setHeader("Content-Type", "application/x-zip");
+                                response.setHeader("Content-Disposition", "inline; filename="+fileADescargar.getName());
+                                response.setHeader("Content-Length", "" + inputStream.available());
+                            }
+                            catch (IOException e) {
+                                java.util.logging.Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, e);
+                            }
+                    }
+
+                    @Override
+                    public String getContentType() {
+                            return "application/x-zip";
+                    }
+
+                    @Override
+                    public InputStream getStream() throws IOException {
+                            return inputStream;
+                    }
+
+            };
     }
     
     @Log
