@@ -46,6 +46,7 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
     private Boolean veditar_anular;
     private String cargo;
     private String tipo_doc_notifica;
+    private String tipo_doc_sanciona;
     private String descripcion_doc_notifica;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha_doc_notifica;
@@ -59,6 +60,10 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
     private String direccion_entidad;
     @NonVisual
     private String tipo_doc_identidad;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date INI_INHABILITACION;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date FIN_INHABILITACION;
 
     public Boolean getVeditar_anular() {
         return veditar_anular;
@@ -339,6 +344,38 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
 
     public void setTipo_doc_ientidad(String tipo_doc_ientidad) {
         this.tipo_doc_identidad = tipo_doc_ientidad;
+    }
+
+    public String getTipo_doc_identidad() {
+        return tipo_doc_identidad;
+    }
+
+    public void setTipo_doc_identidad(String tipo_doc_identidad) {
+        this.tipo_doc_identidad = tipo_doc_identidad;
+    }
+
+    public String getTipo_doc_sanciona() {
+        return tipo_doc_sanciona;
+    }
+
+    public void setTipo_doc_sanciona(String tipo_doc_sanciona) {
+        this.tipo_doc_sanciona = tipo_doc_sanciona;
+    }
+
+    public Date getFIN_INHABILITACION() {
+        return FIN_INHABILITACION;
+    }
+
+    public void setFIN_INHABILITACION(Date FIN_INHABILITACION) {
+        this.FIN_INHABILITACION = FIN_INHABILITACION;
+    }
+
+    public Date getINI_INHABILITACION() {
+        return INI_INHABILITACION;
+    }
+
+    public void setINI_INHABILITACION(Date INI_INHABILITACION) {
+        this.INI_INHABILITACION = INI_INHABILITACION;
     }
     
 }
