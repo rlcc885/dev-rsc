@@ -467,10 +467,10 @@ public class ConsultaSanciones extends GeneralPage {
         if(elemento == 1)   {
              if(bregimenLaboral!=null){
                  mostrar_reglab=true;
-                 cs_sinreglab=null;
+ 
              }else{
                  mostrar_reglab=false;
-                 cs=null;
+              
              }
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
