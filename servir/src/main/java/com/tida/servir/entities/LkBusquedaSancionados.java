@@ -45,6 +45,20 @@ public class LkBusquedaSancionados implements Serializable{
     private Boolean estrabajador;
     private Boolean veditar;
     private Boolean veditar_anular;
+    private String cargo;
+    private String tipo_doc_notifica;
+    private String descripcion_doc_notifica;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha_doc_notifica;
+    private String autoridad_notifica;
+    private String descripcion_doc_sanciona;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha_doc_sanciona;
+    private String autoridad_sanciona;
+    private String observaciones;
+    private String causa_destitucion; 
+    private String direccion_entidad;
+    private String tipo_doc_identidad;
 
     public Boolean getVeditar_anular() {
         return veditar_anular;
@@ -237,6 +251,102 @@ public class LkBusquedaSancionados implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAutoridad_notifica() {
+        return autoridad_notifica;
+    }
+
+    public void setAutoridad_notifica(String autoridad_notifica) {
+        this.autoridad_notifica = autoridad_notifica;
+    }
+
+    public String getAutoridad_sanciona() {
+        return autoridad_sanciona;
+    }
+
+    public void setAutoridad_sanciona(String autoridad_sanciona) {
+        this.autoridad_sanciona = autoridad_sanciona;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getCausa_destitucion() {
+        return causa_destitucion;
+    }
+
+    public void setCausa_destitucion(String causa_destitucion) {
+        this.causa_destitucion = causa_destitucion;
+    }
+
+    public String getDescripcion_doc_notifica() {
+        return descripcion_doc_notifica;
+    }
+
+    public void setDescripcion_doc_notifica(String descripcion_doc_notifica) {
+        this.descripcion_doc_notifica = descripcion_doc_notifica;
+    }
+
+    public String getDescripcion_doc_sanciona() {
+        return descripcion_doc_sanciona;
+    }
+
+    public void setDescripcion_doc_sanciona(String descripcion_doc_sanciona) {
+        this.descripcion_doc_sanciona = descripcion_doc_sanciona;
+    }
+
+    public String getDireccion_entidad() {
+        return direccion_entidad;
+    }
+
+    public void setDireccion_entidad(String direccion_entidad) {
+        this.direccion_entidad = direccion_entidad;
+    }
+
+    public Date getFecha_doc_notifica() {
+        return fecha_doc_notifica;
+    }
+
+    public void setFecha_doc_notifica(Date fecha_doc_notifica) {
+        this.fecha_doc_notifica = fecha_doc_notifica;
+    }
+
+    public Date getFecha_doc_sanciona() {
+        return fecha_doc_sanciona;
+    }
+
+    public void setFecha_doc_sanciona(Date fecha_doc_sanciona) {
+        this.fecha_doc_sanciona = fecha_doc_sanciona;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getTipo_doc_notifica() {
+        return tipo_doc_notifica;
+    }
+
+    public void setTipo_doc_notifica(String tipo_doc_notifica) {
+        this.tipo_doc_notifica = tipo_doc_notifica;
+    }
+
+    public String getTipo_doc_ientidad() {
+        return tipo_doc_identidad;
+    }
+
+    public void setTipo_doc_ientidad(String tipo_doc_ientidad) {
+        this.tipo_doc_identidad = tipo_doc_ientidad;
     }
  
 }
