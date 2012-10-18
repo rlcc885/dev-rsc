@@ -1,32 +1,29 @@
 package com.tida.servir.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 /**
  *
  * @author ale
  */
+/*
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "callSpDatoAuxiliar",
+        query = "CALL SP_DATOAUXILIAR(?,:tabla)",
+        resultClass = Long.class,    
+        hints = {
+        @QueryHint(name = "org.hibernate.callable", value = "true")
+    })
+})
+*/
 @Entity
 @Table(name = "RSC_DATOAUXILIAR")
 public class DatoAuxiliar implements Serializable {
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-//implements Serializable {
 
-/*    public enum TipoDeAcceso {
-        Lectura,
-        Editable
-    }*/
-//	@Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NonVisual
     private Long id;
-//    @ManyToOne(optional = false)
     private String nombreTabla;
     private Boolean flg_altatrabajador; //flag 
     private Boolean flg_creausuario;
