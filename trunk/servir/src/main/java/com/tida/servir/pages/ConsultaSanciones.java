@@ -322,10 +322,15 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
         if(bnombres!=null){
-             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
+             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres.toUpperCase()+"%"),Restrictions.like("nombres_persona","%"+bnombres.toUpperCase()+"%")));
         }
-        if(bapellidoPaterno!=null || bapellidoMaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%"),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%")));
+        
+        if(bapellidoPaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+"%").ignoreCase()));
+        }else if (bapellidoMaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoMaterno+"%").ignoreCase()));
+        }else if(bapellidoPaterno!=null && bapellidoMaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase()));
         }
         if(bdocumentoidentidad !=null){
             c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
@@ -371,10 +376,10 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
         if(bnombres!=null){
-             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%"),Restrictions.like("nombres_persona","%"+bnombres+"%")));
+             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres.toUpperCase()+"%"),Restrictions.like("nombres_persona","%"+bnombres.toUpperCase()+"%")));
         }
         if(bapellidoPaterno!=null || bapellidoMaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%"),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%")));
+            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase()));
         }
         if(bdocumentoidentidad !=null){
             c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
@@ -455,8 +460,10 @@ public class ConsultaSanciones extends GeneralPage {
         if(elemento == 1)   {
              if(bregimenLaboral!=null){
                  mostrar_reglab=true;
+                 cs_sinreglab=null;
              }else{
                  mostrar_reglab=false;
+                 cs=null;
              }
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
