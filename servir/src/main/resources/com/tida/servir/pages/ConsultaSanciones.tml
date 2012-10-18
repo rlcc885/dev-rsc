@@ -177,7 +177,7 @@
                                     t:add="Nombres,EntidadSubEntidad,Acciones" 
                                     pagerPosition="bottom"
                                     row="cs"
-                                    include="tipo_sancion,tiempo_restante,estado"
+                                    include="EntidadSubEntidad,tipo_sancion,tiempo_restante,estado"
                                     reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
                                     
                                     inPlace="true">
@@ -226,7 +226,7 @@
                             t:add="Nombres,Acciones" 
                             pagerPosition="bottom"
                             row="cs_sinreglab"
-                            include="EntidadSubEntidad,tipo_sancion,tiempo_restante,estado"
+                            include="tipo_sancion,tiempo_restante,estado"
                             reorder="Nombres,tipo_sancion,tiempo_restante,estado,Acciones"
                             
                             inPlace="true">
