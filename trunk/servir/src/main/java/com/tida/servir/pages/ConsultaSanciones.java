@@ -4,6 +4,7 @@
  */
 package com.tida.servir.pages;
 
+import Batch.Helpers.GeneracionXLS;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
@@ -13,10 +14,12 @@ import helpers.Constantes;
 import helpers.Encriptacion;
 import helpers.Helpers;
 import helpers.Logger;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -440,6 +443,12 @@ public class ConsultaSanciones extends GeneralPage {
         return tiposancionZone.getBody();
     }     
     
+    private final String STARTPATH = "ArchivosXLS/";
+    @Property
+    @Persist
+    private String archivoDescargar;
+    private List<String> errores = new LinkedList<String>();
+    
     @Log
     @CommitAfter
     Object onSuccessFromFormularioConsultaSanciones() {
@@ -458,6 +467,33 @@ public class ConsultaSanciones extends GeneralPage {
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 3){
               mostrar_reglab=false;
+            return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+        }else if (elemento == 5){
+            
+              mostrar_reglab=false;
+              
+              //Exportando en Excel
+              GeneracionXLS geXLS=new GeneracionXLS();   
+              Date date = new Date();
+              String nombreArchivo = "";
+              SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
+              nombreArchivo = "ArchivosXLS - "+sdf.format(date);
+              String newlocation = STARTPATH + "GeneracionXLS/" + nombreArchivo +"/";
+              archivoDescargar = newlocation + nombreArchivo +".xls";  
+              
+              File f = new File(newlocation);
+                if (!f.exists()) {
+                    f.mkdirs();
+                }
+                if(getBusquedaSancionados().size()>0){
+                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), "C:/CONSULTASANCIONADOS.xls", session);
+                    System.out.println("_GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGg");
+                }else{
+                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), "C:/CONSULTASANCIONADOS.xls", session);
+                    System.out.println("_GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGg");
+                }
+              
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         }
@@ -491,6 +527,12 @@ public class ConsultaSanciones extends GeneralPage {
         bcategoriaSancion = null;
         btipoSancion = null;
     }
+    
+    
+    @Log
+    void onSelectedFromExportar() {
+         elemento = 5;
+     }
 //    @Log
 //    void onSelectedFromLimpiar() {
 //        elemento = 3;
