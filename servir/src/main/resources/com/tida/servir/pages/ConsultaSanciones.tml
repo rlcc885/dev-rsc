@@ -103,7 +103,7 @@
                     </fieldset>
                     
                </fieldset>
-                <div class="f-wrap"> 
+                <div class="f-wrap">                    
                     <div class="actions f-right">
                         <!--<input t:id="limpiar" t:type="submit" value="Limpiar Formulario" class="button" />-->
                         <t:eventLink t:event="limpiar" class="button" t:zone="consultaSancionesZone" >
@@ -115,8 +115,11 @@
                         <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
                         <t:if test="bmostrar">
                            <input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/>  
-                        </t:if>
+                        </t:if>                                              
                     </div>
+                    <t:if test="vexportar">
+                        <label><a t:type="actionlink" t:id="returnstreamresponse" href="#">Ver Exportación</a></label>
+                    </t:if> 
                 </div>
           </t:form>
       </t:zone>
