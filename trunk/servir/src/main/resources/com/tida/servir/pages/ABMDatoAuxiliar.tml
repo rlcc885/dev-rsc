@@ -121,14 +121,16 @@
             <h3>Crear / Editar Tabla Auxiliar</h3>
                 <div class="f-wrap">
                     <div class="f-left">
-                        <label>Tabla Relación</label>
+                        <label>* Tabla Relación</label>
 <!--                        <t:textfield t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion"/> -->
-                        <select t:type="select" t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion" t:zone="tablasAuxiliaresZone" model="tablaRelacion" t:blankOption="ALWAYS"/>
+                        <select t:type="select" t:id="tablarelacion2" t:value="nuevoRegistro.tablaRelacion" t:zone="tablasAuxiliaresZone" 
+                                t:validate="required" model="tablaRelacion" t:blankOption="ALWAYS"/>
                     </div>
                     <div class="f-left">
-                        <label>Dato Relacionado</label>
+                        <label>* Dato Relacionado</label>
 <!--                        <t:textfield t:id="datorelacionado2" t:value="nuevoRegistro.relacionCodigo"/> -->
-                        <t:select t:id="datorelacionado2" model="datoRelacionadoBean" t:value="valDatoRelacionado" t:blankOption="ALWAYS" />
+                        <t:select t:id="datorelacionado2" model="datoRelacionadoBean" t:value="valDatoRelacionado" 
+                                 t:validate="required" t:blankOption="ALWAYS" />
                     </div>
                    <div class="f-left">
                         <label>* Código</label>
