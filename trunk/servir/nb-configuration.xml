@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-shared-configuration>
+<?xml version="1.0" encoding="UTF-8"?><project-shared-configuration>
     <!--
 This file contains additional configuration written by modules in the NetBeans IDE.
 The configuration is intended to be shared among all the users of project and
@@ -14,6 +13,6 @@ That way multiple projects can share the same settings (useful for formatting ru
 Any value defined here will override the pom.xml file value but is only applicable to the current project.
 -->
         <netbeans.compile.on.save>all</netbeans.compile.on.save>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_SRELServiceService>http://ws.reniec.gob.pe/SRELServicePre/SRELServiceService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_SRELServiceService>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_SRELServiceService>http://ws.reniec.gob.pe/SRELService/SRELServiceService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_SRELServiceService>
     </properties>
 </project-shared-configuration>
