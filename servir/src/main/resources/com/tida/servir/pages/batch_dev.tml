@@ -4,7 +4,7 @@
 
 
         <h2>
-        Importación
+        Importación de Archivos
         </h2>
         <t:if test = "respuestaOk">
             <div id='ok_msg'> 
