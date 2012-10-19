@@ -444,10 +444,10 @@ public class RepTrabajador extends GeneralPage {
             
             switch ((int)usu.getRolid()) {//usu.getNivel()
                 case 3://1://Administrador SERVIR
-                    trabajadorLink = entidadLink = gobiernoLink = usuarioLink = sancionLink = true;//CORREGIR: quitar usuario y elegir quienes ven sanciones
+                    trabajadorLink = entidadLink = gobiernoLink = sancionLink = true;
                     break;
                 case 2://Administrador de Entidad
-                    trabajadorLink = entidadLink = true;
+                    trabajadorLink = entidadLink = sancionLink = true;
                     break;
                 case 4://3://Administrador del Sistema
                     usuarioLink = true;
@@ -745,7 +745,7 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    Object onGenerarReporte() {
+    Object onGenerarReporte() {//Como el T:Mixin manda el confirmar, porque si pongo cancel igual se ejecuta ... a menos que sea por una accion y no submit
         ReportesFormulario rep = new ReportesFormulario();
         Map<String, Object> parametros;
         try {
@@ -797,7 +797,7 @@ public class RepTrabajador extends GeneralPage {
     Object onActionFromMostrarTrabajador() {
         categoria = "Trabajador";
         if (usu.getRolid() == 3) bEntidad = false;
-        if (usu.getRolid() == 2) {
+        if (usu.getRolid() == 2 || usu.getRolid() == 1 || usu.getRolid() == 5) {
             visualEntidad = false;
             if (_entidadUE != null) { entidadTrabajador = _entidadUE.getDenominacion(); entidadTraba = _entidadUE; }
         }
