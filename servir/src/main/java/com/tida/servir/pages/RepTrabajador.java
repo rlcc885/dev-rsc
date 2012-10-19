@@ -814,7 +814,7 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onActionFromMostrarEntidad() {
         categoria = "Entidad";
-        if (usu.getRolid() == 2)
+        if (usu.getRolid() == 2 || usu.getRolid() == 5)
             if (_entidadUE != null) { entidadTx = _entidadUE.getDenominacion(); _entidadRep = _entidadUE; }
         if (usu.getRolid() == 3) bEntidad = false;
         mostrarFiltrosTrabajador = false;
