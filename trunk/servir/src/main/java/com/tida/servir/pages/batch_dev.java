@@ -146,6 +146,43 @@ public class batch_dev  extends GeneralPage {
 		};
 	}    
     
+    StreamResponse onActionFromReturnstream() {
+		return new StreamResponse() {
+			InputStream inputStream;
+
+			@Override
+			public void prepareResponse(Response response) {
+                                File fileADescargar = new File(STARTPATH+"/formatos.zip");
+                                
+                                try {
+                                    inputStream = new FileInputStream(fileADescargar);
+                                } catch (FileNotFoundException ex) {
+                                    Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                try {
+                                    response.setHeader("Content-Type", "application/x-zip");
+                                    response.setHeader("Content-Disposition", "inline; filename="+fileADescargar.getName());
+                                    response.setHeader("Content-Length", "" + inputStream.available());
+				}
+				catch (IOException e) {
+			            Logger.getLogger(batch_dev.class.getName()).log(Level.SEVERE, null, e);
+				}
+			}
+			
+			@Override
+			public String getContentType() {
+				return "application/x-zip";
+			}
+			
+			@Override
+			public InputStream getStream() throws IOException {
+				return inputStream;
+			}
+
+		};
+	}   
+    
 
     @Property
     @Persist

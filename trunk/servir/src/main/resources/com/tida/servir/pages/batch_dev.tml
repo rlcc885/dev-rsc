@@ -32,6 +32,9 @@
 
                             <input t:type="upload" t:id="file" validate="required"/>
                     </div>
+                    <div class="f-left">
+                            <a t:type="actionlink" t:id="returnstream" href="#">Descargar formatos</a>
+                    </div>
                 </div>
                     <input type="submit" value="Upload" onclick="extraStep();" class="button f-left"/>
                     <div id= "cargo" style = "color:red"> 
