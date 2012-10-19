@@ -238,9 +238,9 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>ws.reniec.gob.pe/SRELServicePre/SRELServiceService.wsdl</wsdlFile>
+                                <wsdlFile>ws.reniec.gob.pe/SRELService/SRELServiceService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <wsdlLocation>http://ws.reniec.gob.pe/SRELServicePre/SRELServiceService?wsdl</wsdlLocation>
+                            <wsdlLocation>http://ws.reniec.gob.pe/SRELService/SRELServiceService?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SRELServiceService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SRELServiceService</id>
