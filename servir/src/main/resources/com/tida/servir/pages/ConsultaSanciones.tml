@@ -112,14 +112,8 @@
                             </span> 
                         </t:eventLink>
                         <input t:id="buscarsubmit" t:type="submit" value="Buscar" class="button" />
-                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>
-                        <t:if test="bmostrar">
-                           <input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/>  
-                        </t:if>                                              
-                    </div>
-                    <t:if test="vexportar">
-                        <label><a t:type="actionlink" t:id="returnstreamresponse" href="#">Ver Exportación</a></label>
-                    </t:if> 
+                        <input t:type="Submit" t:id="muestra" value="Mostrar Todo" class="button"/>                                                                      
+                    </div>                    
                 </div>
           </t:form>
       </t:zone>
@@ -327,7 +321,19 @@
                 <div class="f-right"><b> ${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>  
           </t:if>  
-            
+          <t:if test="bmostrarexportar">  
+            <t:if test="bmostrar">
+                <!--<input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/>  -->
+                <t:eventLink t:event="exportar" href="#" t:zone="consultaSancionesZone">
+                    <span t:type="any">
+                        Exportar
+                    </span> 
+                </t:eventLink>
+            </t:if>
+            <t:if test="vexportar">
+                <label> | <a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar Exportación</a></label>
+            </t:if>   
+          </t:if>  
           
         </t:form>    
     </div>

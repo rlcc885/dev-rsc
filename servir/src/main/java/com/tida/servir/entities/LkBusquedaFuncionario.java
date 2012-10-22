@@ -19,7 +19,7 @@ public class LkBusquedaFuncionario implements Serializable {
     @Id
     private long id;
     private String nombrefuncionario;   
-    private String nroDocumento;   
+    private String nroDocumento;
     private String cargo;   
     
     public LkBusquedaFuncionario() {
