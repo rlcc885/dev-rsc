@@ -259,6 +259,8 @@ public class ABMSancion  extends GeneralPage
         nuevasancion=new Sancion();
         nuevofuncionario=new Funcionario();
         nuevapersona=new Persona_Sancion();
+        limpiarbusqueda();
+        limpiarsancion();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
@@ -358,6 +360,8 @@ public class ABMSancion  extends GeneralPage
     public List<Lk_Tipo_Sancion> getBuscarTipoSancion() {
         Criteria c = session.createCriteria(Lk_Tipo_Sancion.class);
         c.add(Restrictions.eq("id_tipo", nuevasancion.getTipo_sancion().getId()));
+        if(nuevasancion.getEstrabajador())
+            c.add(Restrictions.eq("reg_laboral", nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral().getId()));
         return c.list();
     }
     
@@ -910,8 +914,8 @@ public class ABMSancion  extends GeneralPage
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 fecha_docsan = (Date) formatoDelTexto.parse(fechadocsan);
-                if(fecha_docnot.after(fecha_docsan)) {
-                   formsancion.recordError("La Fecha de Notificación debe ser menor a la Fecha de Documento");
+                if(fecha_docsan.after(fecha_docnot)){
+                   formsancion.recordError("La Fecha de Documento que Sanciona debe ser menor a la Fecha de Notificación");
                    return zonasDatos();
                 }
             } catch (ParseException ex) {

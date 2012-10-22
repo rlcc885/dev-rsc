@@ -459,6 +459,9 @@ public class ConsultaSanciones extends GeneralPage {
     @Persist
     private String archivoDescargar;
     private List<String> errores = new LinkedList<String>();
+    @Persist
+    @Property
+    private Boolean bmostrarexportar;
     
     @Log
     @CommitAfter
@@ -472,6 +475,7 @@ public class ConsultaSanciones extends GeneralPage {
                  mostrar_reglab=false;
               
              }
+             bmostrarexportar=true;
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
         } else if (elemento == 2){
@@ -483,32 +487,6 @@ public class ConsultaSanciones extends GeneralPage {
               mostrar_reglab=false;
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
-        }else if (elemento == 5){
-            
-              mostrar_reglab=false;
-              
-              //Exportando en Excel
-              GeneracionXLS geXLS=new GeneracionXLS();                 
-              archivoDescargar = STARTPATH  +"CONSULTASANCIONES.xls";  
-              
-                File f = new File(STARTPATH);
-                if (!f.exists()) {
-                    f.mkdirs();
-                }
-                File fa = new File(STARTPATH+"CONSULTASANCIONES.xls");
-                if (!fa.exists()) {
-                    fa.delete();
-                }
-                if(bregimenLaboral!=null){
-                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);
-                    System.out.println("CON REG");
-                }else{
-                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
-                    System.out.println("SIN REG");
-                }
-                vexportar=true;
-              
-            return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody());
         }
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
@@ -516,6 +494,7 @@ public class ConsultaSanciones extends GeneralPage {
     }
     
     StreamResponse onActionFromReturnStreamResponse() {
+                
 		return new StreamResponse() {
 			InputStream inputStream;
 
@@ -579,10 +558,32 @@ public class ConsultaSanciones extends GeneralPage {
     }
     
     
-    @Log
-    void onSelectedFromExportar() {
-         elemento = 5;
-     }
+    Object onExportar() {
+        vexportar=true;
+         mostrar_reglab=false;              
+              //Exportando en Excel
+              GeneracionXLS geXLS=new GeneracionXLS();                 
+              archivoDescargar = STARTPATH  +"CONSULTASANCIONES.xls";  
+              
+                File f = new File(STARTPATH);
+                if (!f.exists()) {
+                    f.mkdirs();
+                }
+                File fa = new File(STARTPATH+"CONSULTASANCIONES.xls");
+                if (!fa.exists()) {
+                    fa.delete();
+                }
+                if(bregimenLaboral!=null){
+                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);
+                    System.out.println("CON REG");
+                }else{
+                    errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
+                    System.out.println("SIN REG");
+                }
+                
+              
+            return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("listaConsultaSancionZone",listaConsultaSancionZone.getBody());
+    }
 //    @Log
 //    void onSelectedFromLimpiar() {
 //        elemento = 3;
