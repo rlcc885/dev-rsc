@@ -14,7 +14,11 @@
             </div>
        </t:if>
 <!-- CARGA INCICIAL DEL PROCESO BATCH-->
-  <t:if test="iniciarProceso">  
+  <t:if test="iniciarProceso">
+        <div class="f-right">
+                <a t:type="actionlink" t:id="returnstream" href="#" class="f">Descargar Formatos</a>
+                | <a t:type="actionlink" t:id="returnstreamtabla" href="#" class="f">Descargar Tablas Paramétricas</a>
+        </div>
         <t:if test = "etapaInicio">
                 <t:form t:id="formularioprocesobatch">
                 <t:errors/>
@@ -32,9 +36,7 @@
 
                             <input t:type="upload" t:id="file" validate="required"/>
                     </div>
-                    <div class="f-left">
-                            <a t:type="actionlink" t:id="returnstream" href="#">Descargar formatos</a>
-                    </div>
+                    
                 </div>
                     <input type="submit" value="Upload" onclick="extraStep();" class="button f-left"/>
                     <div id= "cargo" style = "color:red"> 
