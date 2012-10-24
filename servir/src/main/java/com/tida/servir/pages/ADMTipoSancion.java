@@ -271,7 +271,7 @@ public class ADMTipoSancion
 
             editando = false;
             limpiar();
-            envelope.setContents("Tipo de SanciÃ³n creado / modificado con exito");         
+            envelope.setContents("Tipo de Sanción creado / modificado con exito");         
         
         
         return actualizarZonas();
@@ -475,12 +475,12 @@ public class ADMTipoSancion
                 detallemin = false;
                 detallemax = false;
             }
-            if (dato.getCodigo()==2){
+    /*        if (dato.getCodigo()==2){
                 detallemin = true;
                 detallemax = false;
                 valdiasMin = "0";valmesesMin = "0";valaniosMin = "0";
-            }
-            if (dato.getCodigo()==3){
+            }*/
+            if (dato.getCodigo()==2){
                 detallemin = true;
                 detallemax = true;
                 valdiasMin = "0";valmesesMin = "0";valaniosMin = "0";
@@ -534,13 +534,13 @@ public class ADMTipoSancion
         //***************************
  
         // TERCERA RESTRICCION (TIPO INAHBILITACION MAXIMA)
-        if (tiposancionactual.getTipoInhabilitacion().getCodigo()==2)
+     /*   if (tiposancionactual.getTipoInhabilitacion().getCodigo()==2)
         {
             if (max==0){
                 formularioMensajes.recordError("Periodo Máximo invalido");
                 return false;
                 }
-        }
+        }*/
         
         return true;
     }
