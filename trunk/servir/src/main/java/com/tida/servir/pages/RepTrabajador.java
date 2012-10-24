@@ -444,10 +444,10 @@ public class RepTrabajador extends GeneralPage {
             
             switch ((int)usu.getRolid()) {//usu.getNivel()
                 case 3://1://Administrador SERVIR
-                    trabajadorLink = entidadLink = gobiernoLink = sancionLink = true;
+                    trabajadorLink = entidadLink = gobiernoLink = true;
                     break;
                 case 2://Administrador de Entidad
-                    trabajadorLink = entidadLink = sancionLink = true;
+                    trabajadorLink = entidadLink = true;
                     break;
                 case 4://3://Administrador del Sistema
                     usuarioLink = true;
@@ -842,7 +842,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onActionFromMostrarGobierno() {
-        categoria = "Consolidado";
+        categoria = "Consolidados";
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = false;
         mostrarFiltrosUsuario = false;
@@ -870,8 +870,9 @@ public class RepTrabajador extends GeneralPage {
     Object onValueChangedFromUo_nivelo(Integer dato) {
         if (dato != null) {
             nivelo = dato;
+            unidadRep = null;
         }
-        return entidadZone.getClientId();
+        return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody());
     }
     
     @Log
@@ -1004,6 +1005,14 @@ public class RepTrabajador extends GeneralPage {
         _usuarioRep = null;
         fechaingresode = "";
         fechaingresoha = "";
+        snivelGobierno = null;
+        sorganizacionestado = null;
+        ssectorGobierno = null;
+        stipoOrganismo = null;
+        stipoSubEntidad = null;
+        organizacionBool = false;
+        sectorBool = false;
+        organoBool = false;
         return new MultiZoneUpdate("tipoReporteZone", tipoReporteZone.getBody());
     }
 }
