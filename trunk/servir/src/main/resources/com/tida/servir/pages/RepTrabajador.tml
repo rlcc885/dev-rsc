@@ -12,10 +12,10 @@
     <div t:type="zone" t:id="categoriasZone">
         <fieldset>
             Seleccione la Categoría:&nbsp;
-            <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> &nbsp;-&nbsp;</t:if>
-            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidado</a> &nbsp;-&nbsp;</t:if>
+            <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp; - &nbsp;</t:if>
+            <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> &nbsp; - &nbsp;</t:if>
+            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> &nbsp; - &nbsp;</t:if>
+            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidados</a> &nbsp; - &nbsp;</t:if>
             <t:if test="sancionLink" ><a t:type="actionlink" t:id="mostrarSancion" zone="tipoReporteZone">Sanciones</a></t:if>
         </fieldset>
     </div>
@@ -65,9 +65,9 @@
                                         <input t:type="TextField" t:id="entidadTx" t:style="width:600px;" t:value="entidadTx" t:readonly="readonly" /> 
                                         <input t:type="submit" t:id="buscarEntidad" value="..." class="button f-right" onClick="javascript: mostrar();" disabled="bEntidad"/> 
                                         <br /><br />Nivel Organizacional:&nbsp;&nbsp;
-                                        <input t:type="select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="prop:entidadZoneId"/>
+                                        <input t:type="select" t:id="uo_nivelo" t:value="nivelo" model="beanNivelOrigen" t:zone="tipoReporteZone" t:blankOption="ALWAYS" t:blankLabel="Todos"/>
                                         &nbsp; &nbsp;&nbsp;Unidad Orgánica: &nbsp;
-                                        <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="prop:entidadZoneId"/> 
+                                        <input t:type="select" t:id="select_unidadOrganicaOrigen" model="beanUOrganicasOrigen" encoder="beanUOrganicasOrigen" value="unidadRep" t:zone="tipoReporteZone"/> 
                                     </div>
                                 </t:zone>
                             </div>
@@ -142,12 +142,14 @@
                     </t:if>
                 </div>
 
-                <input t:type="submit" t:id="reset" class="button f-right" disabled="bEntidad" value="Limpiar Formulario" t:mixins="confirm"/>
+                <input t:type="submit" t:id="reset" class="button f-right" value="Limpiar Formulario" t:mixins="confirm"/>
                 <t:eventLink t:zone="tipoReporteZone" t:event="generarReporte" href="#" class="button f-right" style="color: #FFFFFF" t:mixins="confirm">Generar Reporte</t:eventLink>
 
                 <div>
                     <t:if test="showLinkReport">
-                        <t:eventLink t:event="verReporte" href="#" class="button f-right" style="color: #FFFFFF" target="_blank">Ver Reporte</t:eventLink>
+                        <br />
+                        <t:eventLink t:event="verReporte" href="#" target="_blank">Ver Reporte</t:eventLink>
+                        <br />
                     </t:if>
                 </div>
             </fieldset>

@@ -85,11 +85,11 @@ public class ReportesFormulario {
                     
                     try {
                         p.waitFor();
-                    } catch (InterruptedException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
