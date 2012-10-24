@@ -396,11 +396,11 @@ public class ADMTipoSancion
                 detallemin = false;
                 detallemax = false;
             }
-            if (valtipo.getCodigo()==2){
+         /*   if (valtipo.getCodigo()==2){
                 detallemin = true;
                 detallemax = false;                
-            }
-            if (valtipo.getCodigo()==3){
+            } */
+            if (valtipo.getCodigo()==2){
                 detallemin = true;
                 detallemax = true;                  
             }
@@ -515,6 +515,7 @@ public class ADMTipoSancion
             return false;
         }
         //***************************
+        
         
         // SEGUNDA RESTRICCION (CATEGORIA DE SANCION)
         Criteria c = session.createCriteria(TipoSancion.class);
