@@ -732,7 +732,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             String nuevoCUE;
 
             if (String.valueOf(entidadUE.getId()).length()<4){ nuevoCUE = formatter.format(entidadUE.getId());}
-            else{ nuevoCUE = String.valueOf(entidadUE.getId()).substring(0, 4);}
+            else{ nuevoCUE = String.valueOf(entidadUE.getId()).substring(String.valueOf(entidadUE.getId()).length() - 4);}
             String codSERVIR = "RSC"+nuevoCUE;
             System.out.println(codSERVIR);
             entidadUE.setCue_entidad(codSERVIR);
