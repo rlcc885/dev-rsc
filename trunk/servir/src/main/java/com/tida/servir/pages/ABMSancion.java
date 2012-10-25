@@ -168,13 +168,13 @@ public class ABMSancion  extends GeneralPage
     private Date fecha_docsan;
     @Property
     @Persist
-    private Integer ayudadia;
+    private String ayudadia;
     @Property
     @Persist
-    private Integer ayudames;
+    private String ayudames;
     @Property
     @Persist
-    private Integer ayudaanio;
+    private String ayudaanio;
     
     //zonas
     @InjectComponent
@@ -866,7 +866,9 @@ public class ABMSancion  extends GeneralPage
     }
     
     void onSelectedFromCalc() {
-        elemento=1;
+        elemento=1;        
+        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+        fecfin = formatoDeFecha.format(calcularfecha());
     }
     
     @Log
@@ -905,18 +907,7 @@ public class ABMSancion  extends GeneralPage
                 formsancion.recordError("El Periodo de Inhabilitación debe ser mayor a : "+String.valueOf(diastiposamin)+" días y menor a : "+String.valueOf(diastiposamax)+" dias");
                 return zonasDatos();
             }
-        }
-        if(tiposancion.getCodigo()==2){
-            int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
-            System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax);
-            if(calcularperiodo()<diastiposamax){                
-            }
-            else{
-                formsancion.recordError("El Periodo de Inhabilitación debe ser menor a: "+String.valueOf(diastiposamax)+" días");
-                return zonasDatos();
-            }
-        }
-        
+        }        
         
         if (fechadocnot != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
@@ -956,6 +947,8 @@ public class ABMSancion  extends GeneralPage
             else{
                 nuevasancion.setSancion_estado(getEstados((long) 2).get(0));
             }            
+        }else{
+            nuevasancion.setSancion_estado(getEstados((long) 2).get(0));
         }
         if (fecfin != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
@@ -1038,6 +1031,21 @@ public class ABMSancion  extends GeneralPage
         long diferencia = ( fecha_inicio.getTime() - fecha_docnot.getTime() );
         return diferencia/(1000*60*60*24);
     }
+    Date calcularfecha(){
+        int dias,meses,anios;
+        if(ayudadia==null) dias=0;
+        else dias=Integer.parseInt(ayudadia);
+        if(ayudames==null) meses=0;
+        else meses=Integer.parseInt(ayudames);
+        if(ayudaanio==null) anios=0;
+        else anios=Integer.parseInt(ayudaanio);
+        int totaldias=dias+meses*30+anios*365;
+        String consulta ="SELECT 1 ID,to_date('"+fecinicio+"','dd/mm/yyyy') + to_number('"+totaldias+"') FECHA  from dual";
+        Query query =session.createSQLQuery(consulta).addEntity(LkSumaFecha.class);  
+        List result = query.list();        
+        LkSumaFecha lkcondos = (LkSumaFecha) result.get(0);
+        return lkcondos.getFecha();
+    }
     
     boolean validarpersona(){
         boolean vali=true;
@@ -1100,9 +1108,16 @@ public class ABMSancion  extends GeneralPage
            if(dato!=null){
                if(dato.getCodigo()==2){
                     mostrarfecha=true;
+                    fecinicio=null;
+                    fecfin=null;
                 } 
                 else{
                     mostrarfecha=false;
+                    if(dato.getTiempoMaxAnios()==dato.getTiempoMinAnios() && dato.getTiempoMaxMeses()==dato.getTiempoMinMeses() &&dato.getTiempoMaxDias()==dato.getTiempoMinDias()){
+                        mostrarfecha=true;
+                        fecinicio=null;
+                        fecfin=null;
+                    }
                 }
            }else{
                mostrarfecha=true;
