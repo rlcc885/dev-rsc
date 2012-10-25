@@ -796,7 +796,7 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onActionFromMostrarTrabajador() {
         categoria = "Trabajador";
-        if (usu.getRolid() == 3) bEntidad = false;
+        if (usu.getRolid() == 3 || usu.getRolid() == 6) bEntidad = false;
         if (usu.getRolid() == 2 || usu.getRolid() == 1 || usu.getRolid() == 5) {
             visualEntidad = false;
             if (_entidadUE != null) { entidadTrabajador = _entidadUE.getDenominacion(); entidadTraba = _entidadUE; }
@@ -816,7 +816,7 @@ public class RepTrabajador extends GeneralPage {
         categoria = "Entidad";
         if (usu.getRolid() == 2 || usu.getRolid() == 5)
             if (_entidadUE != null) { entidadTx = _entidadUE.getDenominacion(); _entidadRep = _entidadUE; }
-        if (usu.getRolid() == 3) bEntidad = false;
+        if (usu.getRolid() == 3 || usu.getRolid() == 6) bEntidad = false;
         mostrarFiltrosTrabajador = false;
         mostrarFiltrosEntidad = true;
         mostrarFiltrosUsuario = false;
@@ -990,7 +990,7 @@ public class RepTrabajador extends GeneralPage {
     
     @Log
     Object onSelectedFromReset() {
-        if (usu.getRolid() == 3) {
+        if (usu.getRolid() == 3  || usu.getRolid() == 6) {
             entidadTrabajador = ""; 
             entidadTraba = null;
             entidadTx = "";
