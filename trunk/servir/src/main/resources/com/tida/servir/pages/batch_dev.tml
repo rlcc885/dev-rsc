@@ -57,7 +57,11 @@
 
          </t:if>
   </t:if>
-  <!-- REPORTE DE ERRORES --> 
+    <t:if test="iniciarProceso" negate="true">
+    <label>Proceso Batch en Progreso</label>
+    </t:if>    
+    <br/>
+<!-- REPORTE DE ERRORES --> 
   <t:if  test="procesoFin" >
     <div class="f-left">
         <fieldset>
@@ -77,7 +81,10 @@
         </t:form>
         </fieldset>
     </div>
-  </t:if>	
+  </t:if>
+  <t:if test="procesoExitoso">
+      <label>Proceso Batch Terminado sin Errores</label>
+  </t:if>
     
     
        <t:if test = "etapaConfirmacion">
