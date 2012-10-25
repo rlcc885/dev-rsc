@@ -6,9 +6,55 @@
 
     
    <h1>Administración de Tipos de Sanciones</h1>
-    <br/><br/>
+    <br/>
     
+       <div t:type="zone" t:id="listaTipoSancionZone" class="selectform">
+        <div class="box-background-title">
+            <span class="box-title-01">
+                 Listado de Tipo de Sanción
+            </span>
+        </div>
+        <div id="panel-01" class="box">
 
+		<t:grid source="listadoTipoSanciones" 
+                        row="tipsancion" 
+                        rowsPerPage="10"  
+                        inPlace="true"
+                        pagerPosition="bottom"
+                        t:exclude="id,categoriaId,tipoinhabilitacionId,anios,meses,dias,opcEliminar"
+                        t:add="periodoMaximoInhabilitacion,acciones" >
+			<t:parameter name="empty">
+			    <div class="no-info">No se encontraron registros</div>
+			</t:parameter>
+                        <p:periodoMaximoInhabilitacionCell>
+                            <label>${periodomaximoinhabilitacion}</label>
+                        </p:periodoMaximoInhabilitacionCell>
+                        <p:accionesCell>
+				<t:if test="${veditar}">
+					<t:actionlink t:id="editar" zone="listaTipoSancionZone" t:context="tipsancion">Editar</t:actionlink>
+				<!--	<t:actionlink t:id="detalles" zone="listaTipoSancionZone" context="tsancion">Detalle</t:actionlink> -->
+				</t:if>
+				<t:if test="${veditar}" negate="true">
+					<t:actionlink t:id="detalle" zone="listaTipoSancionZone" t:context="tipsancion">Detalle</t:actionlink>
+				</t:if>
+				<t:if test="${veliminar}">
+                                    <t:if test="tipsancion.opcEliminar">
+					| 
+                                <a t:type="eventLink" t:event="borrarDato" t:context="tipsancion" t:zone="listaTipoSancionZone" href="#">
+                                    <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
+                                </a>
+                                    </t:if>  
+				</t:if>
+			</p:accionesCell> 
+		</t:grid>            
+              <div class="f-right">
+                 <b>${nroregistros} Registros.</b>
+              </div>
+              <br/>            
+            
+            
+        </div>
+    </div>
 
 
     <div class="box-background-title">
@@ -148,54 +194,7 @@
 
     </div>    
     
-    <br/>
     
-       <div t:type="zone" t:id="listaTipoSancionZone" class="selectform">
-        <div class="box-background-title">
-            <span class="box-title-01">
-                 Listado de Tipo de Sanción
-            </span>
-        </div>
-        <div id="panel-01" class="box">
 
-		<t:grid source="listadoTipoSanciones" 
-                        row="tipsancion" 
-                        rowsPerPage="10"  
-                        inPlace="true"
-                        pagerPosition="bottom"
-                        t:exclude="id,categoriaId,tipoinhabilitacionId,anios,meses,dias,opcEliminar"
-                        t:add="periodoMaximoInhabilitacion,acciones" >
-			<t:parameter name="empty">
-			    <div class="no-info">No se encontraron registros</div>
-			</t:parameter>
-                        <p:periodoMaximoInhabilitacionCell>
-                            <label>${periodomaximoinhabilitacion}</label>
-                        </p:periodoMaximoInhabilitacionCell>
-                        <p:accionesCell>
-				<t:if test="${veditar}">
-					<t:actionlink t:id="editar" zone="listaTipoSancionZone" t:context="tipsancion">Editar</t:actionlink>
-				<!--	<t:actionlink t:id="detalles" zone="listaTipoSancionZone" context="tsancion">Detalle</t:actionlink> -->
-				</t:if>
-				<t:if test="${veditar}" negate="true">
-					<t:actionlink t:id="detalle" zone="listaTipoSancionZone" t:context="tipsancion">Detalle</t:actionlink>
-				</t:if>
-				<t:if test="${veliminar}">
-                                    <t:if test="tipsancion.opcEliminar">
-					| 
-                                <a t:type="eventLink" t:event="borrarDato" t:context="tipsancion" t:zone="listaTipoSancionZone" href="#">
-                                    <span t:type="any" t:mixins="Confirm" t:message="¿Desea eliminar el registro?"> Eliminar</span>
-                                </a>
-                                    </t:if>  
-				</t:if>
-			</p:accionesCell> 
-		</t:grid>            
-              <div class="f-right">
-                 <b>${nroregistros} Registros.</b>
-              </div>
-              <br/>            
-            
-            
-        </div>
-    </div>
     
 </html>
