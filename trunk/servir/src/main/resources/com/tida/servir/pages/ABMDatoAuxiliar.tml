@@ -97,11 +97,11 @@
                     </div>
                     <div class="f-left">
                         <label>* Descripción</label>
-                        <t:textfield t:id="descripcion" t:value="nuevoRegistro.valor" t:validate="required,maxLength=250"/>
+                        <t:textfield t:id="descripcion" t:value="nuevoRegistro.valor" size="50" t:validate="required,maxLength=250"/>
                     </div>
                     <div class="f-left">
                         <label>Abreviatura</label>
-                        <t:textfield t:id="abreviatura" t:value="nuevoRegistro.abrev" t:validate="maxLength=250"/>
+                        <t:textfield t:id="abreviatura" t:value="nuevoRegistro.abrev" size="50" t:validate="maxLength=250"/>
                     </div>
                     <div class="actions f-right">                       
                         <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
