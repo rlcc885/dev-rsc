@@ -37,6 +37,7 @@ import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.upload.services.UploadedFile;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -251,7 +252,9 @@ private Boolean procesoFin;
 @Property
 @Persist
 private EstadoEntidad estado;
-
+@Property
+@Persist
+private Boolean procesoExitoso;
     void onActivate() {
         if (etapaInicio == null) {
             etapaInicio = true;
@@ -262,7 +265,7 @@ private EstadoEntidad estado;
        c.add(Restrictions.eq("estado",1));
 //        c.add(Restrictions.eq("estado", file));
        estado = (EstadoEntidad)c.uniqueResult();
-      
+      procesoExitoso = false;
        iniciarProceso=true;
        procesoFin = true;
        
@@ -273,10 +276,17 @@ private EstadoEntidad estado;
        
        c = session.createCriteria(EstadoEntidad.class);
        c.add(Restrictions.eq("cueEntidad", _entidadUE.getCue_entidad()));
+       System.out.println("ent "+_entidadUE.getCue_entidad());
        c.add(Restrictions.eq("estado", 2));
        //MOSTRAR LOS REPORTES
        if (c.list().isEmpty()){
        procesoFin=false;
+       }else{
+       Query q = session.createSQLQuery("SELECT * FROM LKERRORESBATCH");
+          if (q.list().isEmpty()){
+          procesoFin = false;
+          procesoExitoso = true;
+          }
        }
        
     }
