@@ -227,7 +227,7 @@
                         <br />
                         <i>(Máximo 500 caracteres)</i>
                     </div>
-                    <div class="f-left" style="width: 200px; height: 130px;">
+                    <div class="f-left" style="width: 500px; height: 120px;">
                         <fieldset>
                         <legend>Periodo de Inhabilitación</legend>
                         <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">
@@ -238,19 +238,33 @@
                                 jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
                                 });
                             </script>
-                        <div class="f-wrap">                            
-                            <div class="f-left">
+                        <div class="f-left">                            
+                            <div class="f-wrap">
                                 <label>* Fecha de Inicio</label>
                                 <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="25" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_inicio pictureInputDate"/>
                             </div>
-                            <div class="f-left">
+                            <div class="f-wrap">                            
                                 <label>* Fecha de Finalización</label>
                                 <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="25" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
-                            </div>                        
+                            </div>                            
                         </div>
-                        </t:zone>
-                        </fieldset>
-                        
+                        <div class="logoentidad" style="position:relative; top:-80 px; left:10px;">                                 
+                            <fieldset>
+                               <legend>Ayuda</legend>
+                                <div class="f-left">
+                                    <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2"/>
+                                </div>
+                                <div class="f-left">
+                                    <input t:type="TextField" t:id="ayuda_mes" value="ayudames" size="2"/>
+                                </div>
+                                <div class="f-left">
+                                    <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2"/>
+                                </div>
+                                <input t:type="Submit" t:id="calc" value="Calcular" class="button f-right"/>
+                            </fieldset>
+                        </div>
+                        </t:zone>                                            
+                        </fieldset>                        
                     </div>
               </div>
               <div class="f-left">

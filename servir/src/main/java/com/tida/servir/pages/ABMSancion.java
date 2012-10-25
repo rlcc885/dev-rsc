@@ -166,6 +166,15 @@ public class ABMSancion  extends GeneralPage
     @Persist
     @Property
     private Date fecha_docsan;
+    @Property
+    @Persist
+    private Integer ayudadia;
+    @Property
+    @Persist
+    private Integer ayudames;
+    @Property
+    @Persist
+    private Integer ayudaanio;
     
     //zonas
     @InjectComponent
@@ -856,9 +865,16 @@ public class ABMSancion  extends GeneralPage
         return "ConsultaSanciones";
     }
     
+    void onSelectedFromCalc() {
+        elemento=1;
+    }
+    
     @Log
     @CommitAfter
-    Object onSuccessFromformsancion(){            
+    Object onSuccessFromformsancion(){    
+        if(elemento==1){
+            return new MultiZoneUpdate("sancionZone", sancionZone.getBody());
+        }else{
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
@@ -1000,6 +1016,7 @@ public class ABMSancion  extends GeneralPage
         limpiarbusqueda();
         limpiarsancion();
         return zonasDatos();
+        }
     }  
     
     @Log
@@ -1081,7 +1098,7 @@ public class ABMSancion  extends GeneralPage
     @Log
     Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
            if(dato!=null){
-               if(dato.getCodigo()==3){
+               if(dato.getCodigo()==2){
                     mostrarfecha=true;
                 } 
                 else{

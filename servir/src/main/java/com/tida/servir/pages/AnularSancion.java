@@ -113,12 +113,21 @@ public class AnularSancion extends GeneralPage {
     @PageActivationContext
     private Sancion modificasancion;
     private int elemento=0;
+    @Property
+    @Persist
+    private String texto;
     
     @Log
     @SetupRender
     private void inicio() {
         anulacion=new Anulacion(); 
 //        modificasancion.setSancion(modificasancion);
+        if(modificasancion.getEstrabajador()){
+            texto="Trabajador Sancionado: "+modificasancion.getTrabajador().getApellidoPaterno()+" "+modificasancion.getTrabajador().getApellidoMaterno()+" "+modificasancion.getTrabajador().getNombres();
+            texto+=" / Entidad que Sanciona: "+modificasancion.getCargoasignado().getLegajo().getEntidad().getDenominacion();
+        }else{
+            texto="Persona Sancionada: "+modificasancion.getPersona().getApellidoPaterno()+" "+modificasancion.getPersona().getApellidoMaterno()+" "+modificasancion.getPersona().getNombres();
+        }
     }
      
     @Log
