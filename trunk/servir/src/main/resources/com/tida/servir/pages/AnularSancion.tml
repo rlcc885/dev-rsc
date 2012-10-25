@@ -2,11 +2,10 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-
+    <h1>${texto}</h1>
 <div class="box-background-title">
       <span class="box-title">Anular Registro de Sancion</span>
- </div>
- 
+ </div> 
  <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
             setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);
@@ -19,11 +18,12 @@
  
         <div class="box">
              <t:zone t:id="busZone2" t:update="show">
-                 <form t:type="form" t:id="formularioanularsancion" t:zone ="busZone2">
+                 <form t:type="form" t:id="formularioanularsancion" t:zone ="busZone2">                      
                       <fieldset>
+                          <legend>Datos del Documento que Anula la Sanción</legend>
                           <div class="f-wrap"> 
                             <div class="f-left">    
-                                <label>*Entidad</label>
+                                <label>* Entidad</label>
                                 <input t:type="TextField" t:id="entidad"
                                                 t:value="entidad_origen" disabled="true" style="width:500px;"/>                            
                             </div>
@@ -35,34 +35,35 @@
                         </div>
                         <div class="f-wrap"> 
                              <div class="f-left">
-                             <label>*Tipo de Documento</label>
+                             <label>* Tipo de Documento</label>
                                 <select t:type="Select" t:id="tipoDocumento2" t:value="bdocumentoidentidad2" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
                             </div>
                             <div class="f-left">
-                                <label>*Numero de Documento</label>
+                                <label>* Número de Documento</label>
                                 <!--<t:label for="numeroDocumento2"/>-->
                                 <input t:type="TextField" t:id="numeroDocumento2" t:value="bnumeroDocumento2" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
                             </div> 
                             <div class="f-left">
-                                <label>*Fecha del Documento</label>
+                                <label>* Fecha del Documento</label>
                                 <!--<t:label for="fechadoc"/>-->
                                 <input t:type="TextField" t:id="fechadoc" t:value="fechadoc" size="25" t:validate="required" class="fechadoc pictureInputDate"/>
                             </div>
-                        </div>
+                        </div>                      
+                      </fieldset>
                         <fieldset>
-                            <legend>Notificacion</legend>
+                            <legend>Datos del Documento de Notificación al Registrado</legend>
                                 <div class="f-wrap"> 
                                     <div class="f-left">
-                                    <label>*Tipo de Documento</label>
+                                    <label>* Tipo de Documento</label>
                                         <select t:type="Select" t:id="tipoDocumento_not" t:value="bdocumentoidentidad_not" onChange="this.form.fire()" model="tiposDoc" t:validate="required" />
                                     </div>
                                     <div class="f-left">
-                                        <label>*Numero de Documento</label>
+                                        <label>* Número de Documento</label>
                                         <!--<t:label for="numeroDocumento_not"/>-->
                                         <input t:type="TextField" t:id="numeroDocumento_not" t:value="bnumeroDocumento_not" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
                                     </div> 
                                     <div class="f-left">
-                                        <label>*Fecha del Documento Notificacion</label>
+                                        <label>* Fecha del Documento Notificacion</label>
                                         <!--<t:label for="fechadocnot"/>-->
                                         <input t:type="TextField" t:id="fechadocnot" t:value="fechadocnot" size="25" t:validate="required" class="fechadocnot pictureInputDate"/>
                                     </div>
@@ -72,7 +73,6 @@
                                         <input t:type="TextField" t:id="juzgado_not" t:value="juzgado_not" size="53" t:zone="busZone2" t:validate="maxlength=250"/>
                                 </div>
                         </fieldset>
-                      </fieldset>
                       <fieldset>
                           <legend>Observaciones</legend>
                           <input t:type="TextArea" t:id="observaciones" t:value="observaciones" style="width:70%;" t:zone="busZone2" t:validate="maxlength=500"/>
