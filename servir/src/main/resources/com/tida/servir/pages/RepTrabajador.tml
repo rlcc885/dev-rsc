@@ -12,10 +12,10 @@
     <div t:type="zone" t:id="categoriasZone">
         <fieldset>
             Seleccione la Categoría:&nbsp;
-            <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> &nbsp; - &nbsp;</t:if>
-            <t:if test="entidadLink" ><a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> &nbsp; - &nbsp;</t:if>
-            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> &nbsp; - &nbsp;</t:if>
-            <t:if test="gobiernoLink" ><a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidados</a> &nbsp; - &nbsp;</t:if>
+            <t:if test="trabajadorLink" ><a t:type="actionlink" t:id="mostrarTrabajador" zone="tipoReporteZone">Trabajador</a> </t:if>
+            <t:if test="entidadLink" >&nbsp; - &nbsp;<a t:type="actionlink" t:id="mostrarEntidad" zone="tipoReporteZone">Entidad</a> </t:if>
+            <t:if test="usuarioLink" ><a t:type="actionlink" t:id="mostrarUsuario" zone="tipoReporteZone">Sistema</a> </t:if>
+            <t:if test="gobiernoLink" >&nbsp; - &nbsp;<a t:type="actionlink" t:id="mostrarGobierno" zone="tipoReporteZone">Consolidados</a> </t:if>
             <t:if test="sancionLink" ><a t:type="actionlink" t:id="mostrarSancion" zone="tipoReporteZone">Sanciones</a></t:if>
         </fieldset>
     </div>
