@@ -312,7 +312,7 @@ public class ABMSolicitud
 //        }
 //        File nuevo = new File(archivoSOlI);
 //        file.write(nuevo);
-        String path = globals.getServletContext().getRealPath("/") + "documentosolicitud/";
+        String path = "/home/documentosolicitud/";
         String nombreArchivos = file.getFileName().substring(0, file.getFileName().length() - 4)+String.valueOf(sdf.format(date)+ "-"+aleatorio) + file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivos);
         copied = new File(path);
