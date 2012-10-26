@@ -250,7 +250,7 @@ public class EvaluacionesPersonalesEditor {
                 ex.printStackTrace();
                 }
             }else{
-                  formulariomensajese.recordError("Debe ingresar una fecha de Ingreso");  
+                  formulariomensajese.recordError("Debe ingresar la Fecha Desde");  
                   return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                     .add("evaluacionesZone2", evaluacionesZone2.getBody());
@@ -264,7 +264,7 @@ public class EvaluacionesPersonalesEditor {
                 ex.printStackTrace();
                 }
             }else{
-                  formulariomensajese.recordError("Debe ingresar una fecha de Egreso");  
+                  formulariomensajese.recordError("Debe ingresar la Fecha Hasta");  
                   return new MultiZoneUpdate("mensajesEZone", mensajesEZone.getBody())                             
                     .add("listaEvaluacionZone", listaEvaluacionZone.getBody())
                     .add("evaluacionesZone2", evaluacionesZone2.getBody());
@@ -279,7 +279,7 @@ public class EvaluacionesPersonalesEditor {
             evaluacion.setFec_hasta(fecha_hasta);
             if (evaluacion.getFec_hasta().before(evaluacion.getFec_desde()) || evaluacion.getFec_desde().equals(evaluacion.getFec_hasta())) {
                 //envelope.setContents("Las fecha de ingreso debe ser menor a la fecha de egreso");
-                formulariomensajese.recordError("Las fecha de ingreso debe ser menor a la fecha de egreso");
+                formulariomensajese.recordError("Las Fecha Desde debe ser menor a la Fecha Hasta");
             } else {
                 if(editando){
                    if (usua.getAccesoreport() == 0) {
