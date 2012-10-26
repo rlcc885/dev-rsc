@@ -229,7 +229,7 @@
                         <br />
                         <i>(Máximo 500 caracteres)</i>
                     </div>
-                    <div class="f-left" style="width: 400px; height: 160px;">
+                    <div class="f-left" style="width: 450px; height: 130px;">
                         <fieldset>
                         <legend>Periodo de Inhabilitación</legend>
                         <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">                            
@@ -250,9 +250,9 @@
                                     <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
                                 </div>                            
                             </div>
-                              <div class="f-left"><!-- style="left:150px; top:-95px; width:230px;"-->                                 
+                           <div class="f-left" style="width: 230px;"><!-- style="left:150px; top:-95px; width:230px;"-->                                 
                             <fieldset>
-                               <!--<legend>Ayuda</legend>
+                               <legend>Ayuda</legend>
                                 <div class="f-left">
                                     <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=30,min=0"/>
                                 </div>
@@ -261,7 +261,7 @@
                                 </div>
                                 <div class="f-left">
                                     <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=365,min=0"/>
-                                </div>-->
+                                </div>
                                 <t:if test="${mostrarfecha}" negate="true">
                                     <input t:type="Submit" t:id="calc" value="Calcular" class="button f-right"/>
                                 </t:if>
