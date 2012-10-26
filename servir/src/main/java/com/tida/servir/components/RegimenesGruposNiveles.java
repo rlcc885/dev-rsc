@@ -138,7 +138,7 @@ public class RegimenesGruposNiveles {
 
         DatoAuxiliar d;
        if (regimengruponivel.getRegimen() != null) {
-            lrgn = Helpers.getDatoAuxiliar("GRUPOOCUPACIONAL", "REGIMENLABORALCONTRACTUAL",
+            lrgn = Helpers.getDatoAuxiliar("GRUPOOCUPACIONAL", "REGIMENLABORAL",
                     regimengruponivel.getRegimen().getCodigo(), session);
         } else {
             regimengruponivel.setGrupo(null);

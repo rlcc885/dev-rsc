@@ -184,6 +184,7 @@ public class ABMCargos extends GeneralPage {
         }        
         // Utilizado para ocultar o mostrar los botones de cancelar y limpiar formulario.
         vNoedita = true;
+        cantidadPuestos="1";
         
     }
 
