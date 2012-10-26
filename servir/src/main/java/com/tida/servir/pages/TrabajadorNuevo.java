@@ -452,8 +452,18 @@ public class TrabajadorNuevo extends GeneralPage {
                         session.saveOrUpdate(usuarionuevo);
                     }
                 } else {
+                    //trabajador no existe
+                    //trabajador tiene usuario
                     if (getListadoUsuariodos().size() > 0) {
+                        //eliminar usuario                        
                         Usuario usuarioeliminar = (Usuario) session.load(Usuario.class, getListadoUsuariodos().get(0).getId());
+                        //eliminar perfiles del usuario
+                        if(getListadoPerfil().size() > 0){
+                            for(int i=0;i<getListadoPerfil().size();i++){                            
+                                Perfilporusuario perfileliminar = (Perfilporusuario) session.load(Perfilporusuario.class, getListadoPerfil().get(i).getId());
+                                session.delete(perfileliminar);
+                            }
+                        }    
                         session.delete(usuarioeliminar);
                     }
                     if (cargo2.getRegimenlaboral() != null) {
@@ -558,6 +568,21 @@ public class TrabajadorNuevo extends GeneralPage {
         Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumentousuario");
         query.setParameter("nrodocumentousuario", nuevo.getNroDocumento());
         return query.list();
+    }
+    
+    @Log
+    public List<UsuarioTrabajador> getListadoPerfil() {
+        Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumentousuario");
+        query.setParameter("nrodocumentousuario", nuevo.getNroDocumento());
+        return query.list();
+    }
+    
+    @Log
+    public List<Perfilporusuario> getAllPerfiles(long usuid) {
+        List<Perfilporusuario> lista = null;
+        Criteria c = session.createCriteria(Perfilporusuario.class);
+        c.add(Restrictions.eq("usuarioId", usuid));
+        return c.list();
     }
 
     @Log
