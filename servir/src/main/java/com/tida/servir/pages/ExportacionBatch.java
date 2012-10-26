@@ -30,7 +30,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class ExportacionBatch  extends GeneralPage {
     
-    private final String STARTPATH = "ArchivosXLS/";
+    private final String STARTPATH = "/RSC/";
 
     @Component(id = "formulariodescargarzip")
     private Form formulariodescargarzip;
