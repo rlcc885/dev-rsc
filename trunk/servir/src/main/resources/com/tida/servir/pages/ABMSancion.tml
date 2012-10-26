@@ -135,10 +135,24 @@
             <div>
                 <script>
                     jQuery(document).ready(function() {
-                    jQuery('.fecha_docnot').datepick({dateFormat: 'dd/mm/yyyy'});
+                    jQuery('.fecha_docnot').datepick({
+                        dateFormat: 'dd/mm/yyyy',
+                        onSelect: function(){
+                            var date = new Date(jQuery('.fecha_docnot').datepick('getDate')[0].getTime());                            
+                            jQuery.datepick.add(date,1,'d');
+                            jQuery('.fec_inicio').val(jQuery.datepick.formatDate('dd/mm/yyyy',date));
+                        },
+                        showTrigger: '#calImg'
+                    });
                     jQuery('.fecha_docsan').datepick({dateFormat: 'dd/mm/yyyy'});
                     jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
                     jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
+                    
+                    jQuery('#save').click(function(){
+                    if(jQuery('.fec_inicio').attr('value')!=''){
+                        jQuery('.fec_inicio').attr('value')
+                    }
+                    });
                     });
                 </script>
             </div>  
@@ -151,15 +165,13 @@
                         <input t:type="Select" t:id="categoria_sancion" t:validate="required" t:blankOption="ALWAYS"                               
                                t:value="categoriasancion" model="beancategoriasancion" t:zone="tiposancionZone"/>
                     </div>
-                    <div class="f-left">
-                       
+                    <div class="f-left">                       
                         <label>* Tipo de Sanción</label>
                        <t:zone t:id="tiposancionZone" id="tiposancionZone">
                         <input t:type="Select" t:id="tipo_sancion" t:validate="required" t:blankOption="ALWAYS"                            
-                               t:value="tiposancion" model="beantiposancion" t:zone="inhabilitacionZone"/>
+                               t:value="tiposancion" model="beantiposancion" t:zone="inhabilitacionZone"/>                        
                        </t:zone>
-                    </div>
-                   
+                    </div> 
                 </div>
                <br/>
                <fieldset>
@@ -229,10 +241,10 @@
                         <br />
                         <i>(Máximo 500 caracteres)</i>
                     </div>
-                    <div class="f-left" style="width: 450px; height: 130px;">
-                        <fieldset>
-                        <legend>Periodo de Inhabilitación</legend>
-                        <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">                            
+                    <div class="f-left" style="width: 450px; height: 140px;">
+                        <fieldset style="height: 100px;">
+                        <legend>Periodo de Inhabilitación</legend>   
+                        <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">  
                             <script>  
                             jQuery(document).ready(function() {    
                                 jQuery('.fec_inicio').datepick({dateFormat: 'dd/mm/yyyy'});
@@ -242,13 +254,16 @@
                          <div class="f-wrap">
                             <div class="f-left">                            
                                 <div class="f-wrap">
+                                    <!--<input t:type="TextField" t:id="dias_categ" value="diascate" size="30"/>-->
                                     <label>* Fecha de Inicio</label>
                                     <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="20" t:validate="regexp,required" t:disabled="true" class="fec_inicio pictureInputDate"/>
                                 </div>
+                                 
                                 <div class="f-wrap">                            
                                     <label>* Fecha de Finalización</label>
                                     <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
-                                </div>                            
+                                </div>
+                                  
                             </div>
                            <div class="f-left" style="width: 230px;"><!-- style="left:150px; top:-95px; width:230px;"-->                                 
                             <fieldset>
@@ -268,7 +283,7 @@
                             </fieldset>
                             </div>
                         </div>     
-                        </t:zone>                                            
+                        </t:zone>            
                         </fieldset>                        
                     </div>
               </div>
