@@ -436,22 +436,28 @@ public class TrabajadorNuevo extends GeneralPage {
                 Usuario usuarionuevo = new Usuario();
                 cargo2 = (Cargoxunidad) session.load(Cargoxunidad.class, cargo.getId());
                 if (getListadoTrabajadores().size() > 0) {
+                    
                     //Trabajador ya existe
                     nuevo = (Trabajador) session.load(Trabajador.class, getListadoTrabajadores().get(0).getId());
+                    
                     if (cargo2.getRegimenlaboral() != null) {
                         if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
-                            if (getListadoUsuario().size() > 0) {
-                                usuarionuevo = (Usuario) session.load(Usuario.class, getListadoUsuario().get(0).getId());
+                            
+                            if (getListadoUsuario(nuevo.getId()).size() > 0) {
+                                //usuario ya existe                                
+                                usuarionuevo = (Usuario) session.load(Usuario.class, getListadoUsuario(nuevo.getId()).get(0).getId());
                                 usuarionuevo.setEntidad(oi);
                                 usuarionuevo.setEstado(1);
                                 usuarionuevo.setFecha_creacion(new Date());
                             } else {
+                                //usuario nuevo                                
                                 seteanuevousuario(usuarionuevo);
                             }
-                        }
-                        session.saveOrUpdate(usuarionuevo);
+                            session.saveOrUpdate(usuarionuevo);
+                        }                        
                     }
                 } else {
+                    
                     //trabajador no existe
                     //trabajador tiene usuario
                     if (getListadoUsuariodos().size() > 0) {
@@ -543,16 +549,16 @@ public class TrabajadorNuevo extends GeneralPage {
     }
 
     @Log
-    public List<LkBusquedaTrabajador> getListadoTrabajadores() {
-        Criteria c = session.createCriteria(LkBusquedaTrabajador.class);
-        c.add(Restrictions.eq("nrodocumento", nuevo.getNroDocumento()));
+    public List<LkBusquedaTrabajadorAuto> getListadoTrabajadores() {
+        Criteria c = session.createCriteria(LkBusquedaTrabajadorAuto.class);
+        c.add(Restrictions.eq("nroDocumento", nuevo.getNroDocumento()));
         return c.list();
     }
 
     @Log
-    public List<UsuarioTrabajador> getListadoUsuario() {
+    public List<UsuarioTrabajador> getListadoUsuario(long idtrabajador) {
         Query query = session.getNamedQuery("UsuarioTrabajador.findByTrabajador");
-        query.setParameter("trabajadorid", nuevo.getId());
+        query.setParameter("trabajadorid", idtrabajador);
         return query.list();
     }
     @Log
