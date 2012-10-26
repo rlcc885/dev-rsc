@@ -238,6 +238,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private Boolean mostrarautoridad;
+    @Property
+    @Persist
+    private Boolean ocultar;
     
     @PageActivationContext
     private Sancion modificasancion;
@@ -308,6 +311,7 @@ public class ABMSancion  extends GeneralPage
                 vsuspender=true;
         }
         mostrarlista=false;
+        diascate="0";
     }
     
 //    @Log
@@ -1132,6 +1136,7 @@ public class ABMSancion  extends GeneralPage
            return new MultiZoneUpdate("tiposancionZone", tiposancionZone.getBody());
     }
     @Persist
+    @Property
     private String diascate;
     @Log
     Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
@@ -1140,11 +1145,11 @@ public class ABMSancion  extends GeneralPage
                     mostrarfecha=true;
                     fecinicio=null;
                     fecfin=null;
-                    diascate=null;
+                    diascate="0";
                 } 
                 else{
                     mostrarfecha=false;
-                    diascate=null;
+                    diascate="0";
                     if(dato.getTiempoMaxAnios()==dato.getTiempoMinAnios() && dato.getTiempoMaxMeses()==dato.getTiempoMinMeses() &&dato.getTiempoMaxDias()==dato.getTiempoMinDias()){
                         mostrarfecha=true;
                         fecinicio=null;
