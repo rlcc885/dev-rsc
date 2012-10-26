@@ -745,7 +745,7 @@ public class RepTrabajador extends GeneralPage {
     }
     
     @Log
-    Object onGenerarReporte() {//Como el T:Mixin manda el confirmar, porque si pongo cancel igual se ejecuta ... a menos que sea por una accion y no submit
+    Object onGenerarReporte() {
         ReportesFormulario rep = new ReportesFormulario();
         Map<String, Object> parametros;
         try {
@@ -785,7 +785,7 @@ public class RepTrabajador extends GeneralPage {
             parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         }
         if(mostrarFiltrosGobierno) {
-            throw new Exception("Error en categoría Consolidado");
+            throw new Exception("Error en categoría Consolidados");
         }
         if(mostrarFiltrosSancion) {
             throw new Exception("Error en categoría Sanciones");
