@@ -58,7 +58,7 @@
                             </div>
                          </t:if>
                               <div class="f-left">
-                                   <label>* Fecha de entrega</label>
+                                   <label>* Fecha de Entrega</label>
                                    <input t:type="TextField" t:id="fec_inicio" t:value="valfec_desde" size="15" t:disabled="${vdetalle}" t:validate="regexp" class="fec_inicio pictureInputDate"/>
                               </div>
                       </div>
