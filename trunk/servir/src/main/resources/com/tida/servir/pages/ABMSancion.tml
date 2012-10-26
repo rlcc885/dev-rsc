@@ -261,9 +261,9 @@
                          <div class="f-wrap">
                             <div class="f-left">                            
                                 <div class="f-wrap">
-                                    <t:if test="ocultar">
-                                        <input t:type="TextField" t:id="dias_categ" value="diascate" class="dias_categ" size="30"/>
-                                    </t:if>
+                                    
+                                        <input t:type="Hidden" t:id="dias_categ" value="diascate" class="dias_categ" size="30"/>
+                                    
                                     <label>* Fecha de Inicio</label>
                                     <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="20" t:validate="regexp,required" t:disabled="true" class="fec_inicio pictureInputDate"/>
                                 </div>
