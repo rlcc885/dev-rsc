@@ -189,7 +189,7 @@ public class DatosDeCargoEditor {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
-                    String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
+                    String hql = "update RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
                     registrar(false);
@@ -210,7 +210,7 @@ public class DatosDeCargoEditor {
                         formulariodatosdecargoasignado.recordError("La fecha de fin debe ser previa a la fecha actual.");
                         return datosDeCargoZone.getBody();
                     }
-                    String hql = "update rnsc.RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
+                    String hql = "update RSC_USUARIO set ESTADO=0 where login='" + actual_asignado.getTrabajador().getNroDocumento()  + "'";
                     Query query = session.createSQLQuery(hql);
                     int rowCount = query.executeUpdate();
                     registrar(false);
