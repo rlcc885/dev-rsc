@@ -117,6 +117,9 @@ public class ABMSuspension  extends GeneralPage {
     @Property
     @Persist
     private boolean veditar;
+    @Property
+    @Persist
+    private String texto;
     
     @Log
     public Sancion getModificasancion() {
@@ -157,7 +160,13 @@ public class ABMSuspension  extends GeneralPage {
         }
         if (usua.getAccesoreport() == 1) {
             vregistrar = true;
-        }        
+        }     
+        if(modificasancion.getEstrabajador()){
+            texto="Trabajador Sancionado: "+modificasancion.getTrabajador().getApellidoPaterno()+" "+modificasancion.getTrabajador().getApellidoMaterno()+" "+modificasancion.getTrabajador().getNombres();
+            texto+=" / Entidad que Sanciona: "+modificasancion.getCargoasignado().getLegajo().getEntidad().getDenominacion();
+        }else{
+            texto="Persona Sancionada: "+modificasancion.getPersona().getApellidoPaterno()+" "+modificasancion.getPersona().getApellidoMaterno()+" "+modificasancion.getPersona().getNombres();
+        }
     }
     
     void mostrar(){
