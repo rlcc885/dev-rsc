@@ -861,6 +861,9 @@ public class ABMSancion  extends GeneralPage
         else{
             bestrabajador=false;
         }
+        ayudadia=null;
+        ayudames=null;
+        ayudaanio=null;
     }
     
     void calcular(int dias){
