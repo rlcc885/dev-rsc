@@ -1038,6 +1038,8 @@ public class ABMSancion  extends GeneralPage
             
             if(nuevasancion.getPersona()!=null){
                 nuevasancion.setEstrabajador(false);
+                session.saveOrUpdate(nuevapersona);  
+                session.flush();
             }
             else{
                 List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
