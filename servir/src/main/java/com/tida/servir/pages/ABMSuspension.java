@@ -145,6 +145,7 @@ public class ABMSuspension  extends GeneralPage {
         nuevasuspension=new Suspension();
         busqueda=getBeanSuspension();
         editando=false;
+        onReset();
         if(busqueda.size()>0){
             nuevasuspension=(Suspension) session.load(Suspension.class, busqueda.get(0).getId());
             mostrar();
