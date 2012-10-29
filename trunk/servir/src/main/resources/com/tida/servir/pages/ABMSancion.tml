@@ -248,8 +248,8 @@
                         <br />
                         <i>(Máximo 500 caracteres)</i>
                     </div>
-                    <div class="f-left" style="width: 450px; height: 140px;">
-                        <fieldset style="height: 100px;">
+                    <div class="f-left" style="width: 420px; height: 140px;">
+                        <fieldset style="height: 110px;">
                         <legend>Periodo de Inhabilitación</legend>   
                         <t:zone t:id="inhabilitacionZone" id="inhabilitacionZone">  
                             <script>  
@@ -270,7 +270,7 @@
                                  
                                 <div class="f-wrap">                            
                                     <label>* Fecha de Finalización</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp,required" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
                                 </div>
                                   
                             </div>
@@ -278,12 +278,15 @@
                             <fieldset>
                                <legend>Ayuda</legend>
                                 <div class="f-left">
+                                    <label>Días</label>
                                     <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=30,min=0"/>
                                 </div>
                                 <div class="f-left">
+                                    <label>Meses</label>
                                     <input t:type="TextField" t:id="ayuda_mes" value="ayudames" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=12,min=0"/>
                                 </div>
                                 <div class="f-left">
+                                    <label>Años</label>
                                     <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=365,min=0"/>
                                 </div>
                                 <t:if test="${mostrarfecha}" negate="true">

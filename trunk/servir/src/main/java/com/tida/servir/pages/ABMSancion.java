@@ -350,7 +350,16 @@ public class ABMSancion  extends GeneralPage
         }
         categoriasancion=nuevasancion.getCategoria_sancion();
         tiposancion=(Lk_Tipo_Sancion) session.load(Lk_Tipo_Sancion.class, getBuscarTipoSancion().get(0).getId());
-        
+        if(tiposancion.getCodigo()==1){
+            int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
+            int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
+            if(diastiposamax==diastiposamin){
+                mostrarfecha=true;
+            }
+        }
+        else{
+            mostrarfecha=true;
+        }
         if (nuevasancion.getFecha_docnot()!= null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             fechadocnot = formatoDeFecha.format(nuevasancion.getFecha_docnot());
@@ -877,18 +886,54 @@ public class ABMSancion  extends GeneralPage
     }
     
     void onSelectedFromCalc() {
-        elemento=1;        
-        SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-        fecfin = formatoDeFecha.format(calcularfecha());
+        elemento=1;       
+        if (fechadocnot != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_docnot = (Date) formatoDelTexto.parse(fechadocnot);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+            fecha_inicio=calcularfechainicio();
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fecinicio = formatoDeFecha.format(fecha_inicio);
+            fecfin = formatoDeFecha.format(calcularfecha());
+        }       
+        
     }
     
     @Log
     @CommitAfter
-    Object onSuccessFromformsancion(){    
+    Object onSuccessFromformsancion(){ 
+        formsancion.clearErrors();
         if(elemento==1){
             return new MultiZoneUpdate("sancionZone", sancionZone.getBody());
         }else{
-        System.out.println("iniciooooooooooo"+fecinicio);    
+        
+        
+        if (fechadocnot != null) {
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fecha_docnot = (Date) formatoDelTexto.parse(fechadocnot);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+            fecha_inicio=calcularfechainicio();
+            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+            fecinicio = formatoDeFecha.format(fecha_inicio);
+            if(tiposancion.getCodigo()==1){
+                int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
+                int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
+                if(diastiposamax==diastiposamin){
+                    fecha_fin=calcularfechafin();
+                    formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+                    fecfin = formatoDeFecha.format(fecha_fin);
+                    System.out.println("finnnnnn"+fecha_fin);
+                }
+            }
+        }
+        
+        
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
                 formsancion.recordError("Tiene que seleccionar un Trabajador");
@@ -937,8 +982,7 @@ public class ABMSancion  extends GeneralPage
                     return zonasDatos();
                 }
             }
-        }        
-        
+        }       
         
         if (fechadocsan != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
