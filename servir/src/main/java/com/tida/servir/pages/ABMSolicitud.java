@@ -110,8 +110,7 @@ public class ABMSolicitud
     @Persist
     private String nombreArchivo;
     @Persist
-    private String lugarArchivo ;
-    private final String STARTPATH = "DocumentosSolicitudes";
+    private String lugarArchivo ;    
     @Property
     @Persist
     private File copied;
@@ -133,12 +132,20 @@ public class ABMSolicitud
     @Property
     @Persist
     private Perfil bperfil;
-    
+    @Persist    
+    private String STARTPATH;
     // inicio de la pagina
     @Log
     @SetupRender
     private void inicio() {
         nuevasolicitud=new Solicitud_Acceso();
+        STARTPATH=getRuta().get(0).getRuta_final();
+    }
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
     }
     
     void onActivate() {
@@ -312,7 +319,7 @@ public class ABMSolicitud
 //        }
 //        File nuevo = new File(archivoSOlI);
 //        file.write(nuevo);
-        String path = "/home/documentosolicitud/";
+        String path = STARTPATH+"documentosolicitud/";
         String nombreArchivos = file.getFileName().substring(0, file.getFileName().length() - 4)+String.valueOf(sdf.format(date)+ "-"+aleatorio) + file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivos);
         copied = new File(path);
