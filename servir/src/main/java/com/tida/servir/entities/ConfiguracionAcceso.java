@@ -29,6 +29,7 @@ public class ConfiguracionAcceso implements Serializable {
     private Integer consultasReniecxEntidad;
     @Column (name = "NRO_CONSULTAS_RESTANTES")
     private Integer nroConsultasActuales;
+    private String ruta_final;
 
     public Integer getNroConsultasActuales() {
         return nroConsultasActuales;
@@ -159,4 +160,14 @@ public class ConfiguracionAcceso implements Serializable {
     public void setFec_actualizacion(Date Fec_actualizacion) {
         fec_actualizacion = Fec_actualizacion;
     }
+
+    public String getRuta_final() {
+        return ruta_final;
+    }
+
+    public void setRuta_final(String ruta_final) {
+        this.ruta_final = ruta_final;
+    }
+    
+    
 }
