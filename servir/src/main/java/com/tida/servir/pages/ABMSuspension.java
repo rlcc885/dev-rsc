@@ -303,7 +303,7 @@ public class ABMSuspension  extends GeneralPage {
                    formularioMensajes.recordError("La Fecha de Inicio debe ser menor a la Fecha de Fin de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
-                if(nuevasuspension.getFecha_docini().after(nuevasuspension.getFecha_docnoti())) {
+                if(nuevasuspension.getFecha_docini().before(nuevasuspension.getFecha_docnoti())) {
                    formularioMensajes.recordError("La Fecha de Notificación debe ser menor a la Fecha de Inicio");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
