@@ -23,14 +23,15 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 /**
  *
  * @author ale
  */
 public class ExportacionBatch  extends GeneralPage {
-    
-    private final String STARTPATH = "/RSC/";
+    @Persist    
+    private String STARTPATH;
 
     @Component(id = "formulariodescargarzip")
     private Form formulariodescargarzip;
@@ -60,8 +61,14 @@ public class ExportacionBatch  extends GeneralPage {
     
     @SetupRender
     void inicio(){
-        
-    }        
+        STARTPATH=getRuta().get(0).getRuta_final();
+    }     
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
+    }
     
     StreamResponse onActionFromReturnStreamResponse() {
 		return new StreamResponse() {
