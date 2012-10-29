@@ -305,7 +305,7 @@ public class ABMSancion  extends GeneralPage
             modificasancion=null;
             mostrar();
             editando=true;
-            if(nuevasancion.getTipo_sancion().getTipoInhabilitacion().getCodigo()==3)
+            if(nuevasancion.getTipo_sancion().getTipoInhabilitacion().getCodigo()==2)
                 vsuspender=false;
             else
                 vsuspender=true;
@@ -917,11 +917,11 @@ public class ABMSancion  extends GeneralPage
                 fecha_docnot = (Date) formatoDelTexto.parse(fechadocnot);
             } catch (ParseException ex) {
                 ex.printStackTrace();
-            }
-            fecha_inicio=calcularfechainicio();
-            SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
-            fecinicio = formatoDeFecha.format(fecha_inicio);
+            }            
             if(tiposancion.getCodigo()==1){
+                fecha_inicio=calcularfechainicio();
+                SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
+                fecinicio = formatoDeFecha.format(fecha_inicio);
                 int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
                 int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
                 if(diastiposamax==diastiposamin){
@@ -966,6 +966,7 @@ public class ABMSancion  extends GeneralPage
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
             //System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
+            
             fecha_inicio=calcularfechainicio();
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             fecinicio = formatoDeFecha.format(fecha_inicio);            
