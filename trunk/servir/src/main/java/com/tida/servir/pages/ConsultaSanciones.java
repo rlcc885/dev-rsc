@@ -234,6 +234,7 @@ public class ConsultaSanciones extends GeneralPage {
     @Log
     @SetupRender
     void initializeValue() {
+        STARTPATH=getRuta().get(0).getRuta_final();
         vexportar=false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
@@ -283,7 +284,7 @@ public class ConsultaSanciones extends GeneralPage {
         }else{
              v_editar = false;
         }
-        STARTPATH=getRuta().get(0).getRuta_final();           
+                
     }
     
     @Log
@@ -462,6 +463,7 @@ public class ConsultaSanciones extends GeneralPage {
     
     @Persist
     private String STARTPATH;
+    
     @Property
     @Persist
     private String archivoDescargar;
@@ -571,7 +573,7 @@ public class ConsultaSanciones extends GeneralPage {
               //Exportando en Excel
               GeneracionXLS geXLS=new GeneracionXLS();                 
               archivoDescargar = STARTPATH  +"CONSULTASANCIONES.xls";  
-              
+//              System.out.println("aquiiiiiii"+STARTPATH);
                 File f = new File(STARTPATH);
                 if (!f.exists()) {
                     f.mkdirs();
