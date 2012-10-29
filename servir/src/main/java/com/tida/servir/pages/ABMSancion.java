@@ -95,19 +95,7 @@ public class ABMSancion  extends GeneralPage
     private boolean bestrabajador;
     @Property
     @Persist
-    private DatoAuxiliar bdocidentidad;    
-    @Property
-    @Persist
-    private String bnumerodocumento;
-    @Property
-    @Persist
-    private String bnombres;
-    @Property
-    @Persist
-    private String bapaterno;
-    @Property
-    @Persist
-    private String bamaterno;
+    private DatoAuxiliar bdocidentidad;
     @Property
     @Persist
     private String bentidad;
@@ -327,10 +315,10 @@ public class ABMSancion  extends GeneralPage
             mostrardocu=true;
             bestrabajador=true;
             bdocidentidad=nuevasancion.getTrabajador().getDocumentoidentidad();
-            bnumerodocumento=nuevasancion.getTrabajador().getNroDocumento();
-            bnombres=nuevasancion.getTrabajador().getNombres();            
-            bapaterno=nuevasancion.getTrabajador().getApellidoPaterno();            
-            bamaterno=nuevasancion.getTrabajador().getApellidoMaterno();
+            nuevapersona.setNroDocumento(nuevasancion.getTrabajador().getNroDocumento());
+            nuevapersona.setNombres(nuevasancion.getTrabajador().getNombres());            
+            nuevapersona.setApellidoPaterno(nuevasancion.getTrabajador().getApellidoPaterno());            
+            nuevapersona.setApellidoMaterno(nuevasancion.getTrabajador().getApellidoMaterno());
             bregimen=nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral();
             bpuesto=nuevasancion.getCargoasignado().getCargoxunidad().getDen_cargo();
             bentidad=nuevasancion.getTrabajador().getEntidad().getDenominacion();
@@ -343,10 +331,10 @@ public class ABMSancion  extends GeneralPage
             bmostrar=false;
             mostrardocu=false;
             bdocidentidad=nuevasancion.getPersona().getDocumentoidentidad();
-            bnumerodocumento=nuevasancion.getPersona().getNroDocumento();
-            bnombres=nuevasancion.getPersona().getNombres();            
-            bapaterno=nuevasancion.getPersona().getApellidoPaterno();            
-            bamaterno=nuevasancion.getPersona().getApellidoMaterno();
+            nuevapersona.setNroDocumento(nuevasancion.getPersona().getNroDocumento());
+            nuevapersona.setNombres(nuevasancion.getPersona().getNombres());            
+            nuevapersona.setApellidoPaterno(nuevasancion.getPersona().getApellidoPaterno());            
+            nuevapersona.setApellidoMaterno(nuevasancion.getPersona().getApellidoMaterno());
         }
         categoriasancion=nuevasancion.getCategoria_sancion();
         tiposancion=(Lk_Tipo_Sancion) session.load(Lk_Tipo_Sancion.class, getBuscarTipoSancion().get(0).getId());
@@ -458,7 +446,7 @@ public class ABMSancion  extends GeneralPage
           formvalidacion.recordError("Tiene que ingresar Tipo Documento");
           return zonasDatos();
       }
-      if(bnumerodocumento==null){
+      if(nuevapersona.getNroDocumento()==null){
           formvalidacion.recordError("Tiene que ingresar Numero de Documento");
           return zonasDatos();
       }
@@ -467,16 +455,16 @@ public class ABMSancion  extends GeneralPage
           return zonasDatos();
       }     
       
-      List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
+      List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
       if(busqueda.size()>0){
           formvalidacion.recordError("Persona ya Registrada como Trabajador");
           return zonasDatos();
       }      
-      List<Persona_Sancion> busqueda_persona=getListaPersona(bnumerodocumento);
+      List<Persona_Sancion> busqueda_persona=getListaPersona(nuevapersona.getNroDocumento());
       if(busqueda_persona.size()>0){
-          bnombres=busqueda_persona.get(0).getNombres();
-          bapaterno=busqueda_persona.get(0).getApellidoPaterno();
-          bamaterno=busqueda_persona.get(0).getApellidoMaterno();
+          nuevapersona.setNombres(busqueda_persona.get(0).getNombres());
+          nuevapersona.setApellidoPaterno(busqueda_persona.get(0).getApellidoPaterno());
+          nuevapersona.setApellidoMaterno(busqueda_persona.get(0).getApellidoMaterno());
           nuevasancion.setPersona(busqueda_persona.get(0));
           nuevasancion.setTrabajador(null);
           nuevasancion.setCargoasignado(null);
@@ -504,7 +492,7 @@ public class ABMSancion  extends GeneralPage
             ServicioReniec sre=new ServicioReniec();
             sre.obtenerToken();
             if(sre.validarToken()){
-                List<String> listare= sre.obtenerResultado(bnumerodocumento);
+                List<String> listare= sre.obtenerResultado(nuevapersona.getNroDocumento());
                 // DISMINUCION DE NRO DE PETICIONES
                 usuario.getEntidad().setPeticiones_ws_Reniec(usuario.getEntidad().getPeticiones_ws_Reniec()-1);
                 session.saveOrUpdate(usuario.getEntidad());
@@ -512,9 +500,9 @@ public class ABMSancion  extends GeneralPage
                 session.saveOrUpdate(parametro);
                 
                 if (sre.validarEstadoConsulta(listare.get(0))){
-                    bnombres=listare.get(4);
-                    bapaterno=listare.get(1);
-                    bamaterno=listare.get(2);
+                    nuevapersona.setNombres(listare.get(4));
+                    nuevapersona.setApellidoPaterno(listare.get(1));
+                    nuevapersona.setApellidoMaterno(listare.get(2));
                     nuevapersona=new Persona_Sancion();                    
                     nuevapersona.setDireccion(listare.get(11));
                     if(listare.get(13).equals("1")){
@@ -527,7 +515,7 @@ public class ABMSancion  extends GeneralPage
                     nuevapersona.setFecha_nacimiento(formatoFecha.parse(listare.get(14)));
                 }else{
                     formvalidacion.recordError(sre.mensajeError);//ERROR EN CONSULTA
-                    System.out.println("errorrrrr"+bnumerodocumento);
+//                    System.out.println("errorrrrr"+bnumerodocumento);
 //                    System.out.println(treniec.mensajeError);
                 }                
             }else{
@@ -691,10 +679,10 @@ public class ABMSancion  extends GeneralPage
     Object onActionFromSeleccionaTrabajador(LkBusquedaTrabajadorSan btra) {
         limpiarbusqueda();
         bdocidentidad=btra.getDocumentoidentidad();
-        bnumerodocumento=btra.getNrodocumento();
-        bnombres=btra.getNombres();
-        bapaterno=btra.getApellidoPaterno();
-        bamaterno=btra.getApellidoMaterno();
+        nuevapersona.setNroDocumento(btra.getNrodocumento());
+        nuevapersona.setNombres(btra.getNombres());
+        nuevapersona.setApellidoPaterno(btra.getApellidoPaterno());
+        nuevapersona.setApellidoMaterno(btra.getApellidoMaterno());
         bregimen=btra.getRegimenlaboral();
         bpuesto=btra.getDen_cargo();
         bestadopuesto=btra.getEstadocargo();        
@@ -836,10 +824,7 @@ public class ABMSancion  extends GeneralPage
         
     void limpiarbusqueda(){
         bdocidentidad=null;
-        bnumerodocumento=null;
-        bnombres=null;
-        bapaterno=null;
-        bamaterno=null;
+        nuevapersona=new Persona_Sancion();
         bregimen=null;
         bpuesto=null;
         bestadopuesto=null;
@@ -1042,16 +1027,12 @@ public class ABMSancion  extends GeneralPage
                 session.flush();
             }
             else{
-                List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
+                List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
                 if(busqueda.size()>0){
                     formsancion.recordError("Persona ya Registrada como Trabajador");
                     return zonasDatos();
-                }
-                nuevapersona.setApellidoMaterno(bamaterno);
-                nuevapersona.setApellidoPaterno(bapaterno);
-                nuevapersona.setNombres(bnombres);
+                }                
                 nuevapersona.setDocumentoidentidad(bdocidentidad);
-                nuevapersona.setNroDocumento(bnumerodocumento);
                 nuevasancion.setEstrabajador(false);                
                 session.saveOrUpdate(nuevapersona);            
                 session.flush();
@@ -1136,23 +1117,23 @@ public class ABMSancion  extends GeneralPage
             formsancion.recordError("Tiene que ingresar Tipo Documento");
             vali=false;
         }
-        if(bnumerodocumento==null){
+        if(nuevapersona.getNroDocumento()==null){
             formsancion.recordError("Tiene que ingresar Numero Documento");
             vali=false;
         }
-        if(bnombres==null){
+        if(nuevapersona.getNombres()==null){
             formsancion.recordError("Tiene que ingresar el Nombre de la Persona");
             vali=false;
         }
-        if(bapaterno==null){
+        if(nuevapersona.getApellidoPaterno()==null){
             formsancion.recordError("Tiene que ingresar el Apellido Paterno");
             vali=false;
         }
-        if(bamaterno==null){
+        if(nuevapersona.getApellidoMaterno()==null){
             formsancion.recordError("Tiene que ingresar el Apellido Materno");
             vali=false;
         }
-        List<Trabajador> busqueda=getListaTrabajador(bnumerodocumento);
+        List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
         return vali;
     }
     
@@ -1163,22 +1144,22 @@ public class ABMSancion  extends GeneralPage
     
     @Log
     void onBnumerodocumentoChanged() {
-        bnumerodocumento=_request.getParameter("param");
+        nuevapersona.setNroDocumento(_request.getParameter("param"));
     }
     
     @Log
     void onBnombresChanged() {
-        bnombres=_request.getParameter("param");
+        nuevapersona.setNombres(_request.getParameter("param"));
     }
     
     @Log
     void onBapaternoChanged() {
-        bapaterno=_request.getParameter("param");
+        nuevapersona.setApellidoPaterno(_request.getParameter("param"));
     }
     
     @Log
     void onBamaternoChanged() {
-        bamaterno=_request.getParameter("param");
+        nuevapersona.setApellidoMaterno(_request.getParameter("param"));
     }
     
     @Log

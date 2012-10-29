@@ -64,7 +64,7 @@
                     </div>
                     <div class="f-left">
                         <label>* Número de Documento</label>
-                        <input t:type="TextField" t:id="numero_documento" t:value="bnumerodocumento" size="30" t:disabled="${bmostrar}"
+                        <input t:type="TextField" t:id="numero_documento" t:value="nuevapersona.nroDocumento" size="30" t:disabled="${bmostrar}"
                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnumerodocumentoChanged" t:zone="busquedaZone" t:validate="regexp,required"/>
                     </div>
                     <t:if test="bmostrar" negate="true">
@@ -75,17 +75,17 @@
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>* Nombres</label>
-                        <input t:type="TextField" t:id="nombres" value="bnombres" size="30" t:disabled="${mostrardocu}"
+                        <input t:type="TextField" t:id="nombres" value="nuevapersona.nombres" size="30" t:disabled="${mostrardocu}"
                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnombresChanged" t:zone="busquedaZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Paterno</label>
-                        <input t:type="TextField" t:id="apellido_Paterno" value="bapaterno" size="30" t:disabled="${mostrardocu}"
+                        <input t:type="TextField" t:id="apellido_Paterno" value="nuevapersona.apellidoPaterno" size="30" t:disabled="${mostrardocu}"
                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bapaternoChanged" t:zone="busquedaZone"/>
                     </div>
                     <div class="f-left">
                         <label>* Apellido Materno</label>
-                        <input t:type="TextField" t:id="apellido_Materno" value="bamaterno" size="30" t:disabled="${mostrardocu}"
+                        <input t:type="TextField" t:id="apellido_Materno" value="nuevapersona.apellidoMaterno" size="30" t:disabled="${mostrardocu}"
                                t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bamaternoChanged" t:zone="busquedaZone"/>
                     </div>
                 </div>
