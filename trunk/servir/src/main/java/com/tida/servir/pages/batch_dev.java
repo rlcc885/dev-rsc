@@ -8,9 +8,7 @@ package com.tida.servir.pages;
 import Batch.Helpers.*;
 import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.EstadoEntidad;
-import com.tida.servir.entities.Usuario;
+import com.tida.servir.entities.*;
 import helpers.ReporteBatch;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +44,8 @@ import org.hibernate.criterion.Restrictions;
  * @author Morgan
  */
 public class batch_dev  extends GeneralPage {
-    private final String STARTPATH = "ArchivosXLS";
+    @Persist
+    private  String STARTPATH;
     private final String ARCHIVO_UPLOAD_DIFFERENTE_ZIP= "Por favor necesita de ingresar un archivo que tiene un extension .zip o .ZIP!";
 
     @Property
@@ -255,6 +254,19 @@ private EstadoEntidad estado;
 @Property
 @Persist
 private Boolean procesoExitoso;
+    @Log
+    @SetupRender
+    private void inicio() {        
+        STARTPATH=getRuta().get(0).getRuta_final();
+    }
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
+    } 
+
+
     void onActivate() {
         if (etapaInicio == null) {
             etapaInicio = true;
@@ -382,8 +394,8 @@ private Boolean procesoExitoso;
             int aleatorio = (int) (Math.random() * 1000 + 1);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             nombreArchivo = file.getFileName().substring(0, file.getFileName().length() - 4);
-            lugarArchivo = STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
-            lugarEliminar=STARTPATH + "/" + nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio;
+            lugarArchivo = STARTPATH +"SUBIDA TXT/"+ nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio+"/";
+            lugarEliminar=STARTPATH +"SUBIDA TXT/"+ nombreArchivo + "-" +sdf.format(date)+ "-"+aleatorio;
 //            lugarArchivo="C:/CARGA/file/";
             paraDescargar = lugarArchivo + nombreArchivo + "TXT.zip";
             String archivoXLS = lugarArchivo + file.getFileName();

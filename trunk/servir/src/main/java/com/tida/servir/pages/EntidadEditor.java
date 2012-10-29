@@ -155,7 +155,8 @@ public class EntidadEditor extends GeneralPage {
     private ComponentResources _resources;
     @Persist
     private UsuarioAcceso usua;
-
+    @Persist    
+    private String STARTPATH;
     public void onActivate() {
         entidadUE = entidadSession;
     }
@@ -194,11 +195,11 @@ public class EntidadEditor extends GeneralPage {
                 vbotones=true; 
             }
         }
-        
+        STARTPATH=getRuta().get(0).getRuta_final();
         entidad_origen="";        
         
         File copied;
-        copied = new File(globals.getServletContext().getRealPath("/") + "images/logotipo/"+entidadUE.getLogotipo());
+        copied = new File(STARTPATH+ "logotipo/"+entidadUE.getLogotipo());
         if (!copied.exists()) {
             entidadUE.setLogotipo(null);
         }
@@ -238,7 +239,13 @@ public class EntidadEditor extends GeneralPage {
         else{entidad_origen="";}
 
     }
-
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
+    }
+    
     @CommitAfter
     Object onSuccessFromFormulariologoentidad() {
         File copied;
@@ -246,7 +253,7 @@ public class EntidadEditor extends GeneralPage {
             formulariologoentidad.recordError("Seleccione imagen a subir.");
             return this;
         }
-        String path = globals.getServletContext().getRealPath("/") + "images/logotipo/";
+        String path = STARTPATH+ "logotipo/";
         String nombreArchivo = Encriptacion.encriptaEnMD5( String.valueOf(entidadUE.getId()) ) + file.getFileName().substring(file.getFileName().length() - 4);
         File nuevo = new File(path + nombreArchivo);
         copied = new File(path);

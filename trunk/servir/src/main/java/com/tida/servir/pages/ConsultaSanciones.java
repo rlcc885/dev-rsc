@@ -283,7 +283,13 @@ public class ConsultaSanciones extends GeneralPage {
         }else{
              v_editar = false;
         }
-            
+        STARTPATH=getRuta().get(0).getRuta_final();           
+    }
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
     }
     
       @Log
@@ -454,7 +460,8 @@ public class ConsultaSanciones extends GeneralPage {
         return tiposancionZone.getBody();
     }     
     
-    private final String STARTPATH = "ArchivosXLS/";
+    @Persist
+    private String STARTPATH;
     @Property
     @Persist
     private String archivoDescargar;
