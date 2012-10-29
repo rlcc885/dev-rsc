@@ -51,7 +51,7 @@
                         </div>                      
                       </fieldset>
                         <fieldset>
-                            <legend>Datos del Documento de Notificación al Registrado</legend>
+                            <legend>Datos del Documento de Notificación al Registrador</legend>
                                 <div class="f-wrap"> 
                                     <div class="f-left">
                                     <label>* Tipo de Documento</label>
