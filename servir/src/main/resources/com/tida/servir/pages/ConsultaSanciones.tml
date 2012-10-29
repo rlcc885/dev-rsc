@@ -322,6 +322,7 @@
             </t:if>  
           </t:if>  
           <t:if test="bmostrarexportar">  
+            <div class="f-left">  
             <t:if test="bmostrar">
                 <!--<input t:type="Submit" t:id="exportar" value="Exportar" t:mixins="confirm" class="button"/>  -->
                 <t:eventLink t:event="exportar" href="#" t:zone="consultaSancionesZone">
@@ -330,9 +331,12 @@
                     </span> 
                 </t:eventLink>
             </t:if>
+            </div>
+            <div class="f-left">  
             <t:if test="vexportar">
                 <label> | <a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar Exportación</a></label>
-            </t:if>   
+            </t:if> 
+            </div>     
           </t:if>  
           
         </t:form>    
