@@ -166,7 +166,7 @@ public class ValidacionXLS {
                 if (list[i].getName().endsWith(".txt") || list[i].getName().endsWith(".TXT")) {
                     misCSVs.set(compareStringDepositorioToArrayListArchivos(list[i].getName().substring(0, (list[i].getName().length()) - 4), archivos, errores), list[i].getName().substring(0, (list[i].getName().length()) - 4));
                     File origen = new File(path+list[i].getName());
-                    File destino = new File("C:/CARGA/file/"+list[i].getName());
+                    File destino = new File("/home/carga/file/"+list[i].getName());
                     InputStream in = new FileInputStream(origen);
                     OutputStream out = new FileOutputStream(destino);   
                     byte[] buf = new byte[1024];
