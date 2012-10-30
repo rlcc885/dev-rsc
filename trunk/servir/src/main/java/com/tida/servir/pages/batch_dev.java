@@ -342,11 +342,11 @@ private Boolean procesoExitoso;
 
         }
         
-        Query query = session.getNamedQuery("callSpProcesoBatch");
-        query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
-        query.setParameter("an_tipoproceso", Integer.parseInt(origenArchivos));
-        List result = query.list();
-        session.flush();
+//        Query query = session.getNamedQuery("callSpProcesoBatch");
+//        query.setParameter("as_cue_entidad", _entidadUE.getCue_entidad());
+//        query.setParameter("an_tipoproceso", Integer.parseInt(origenArchivos));
+//        List result = query.list();
+//        session.flush();
         
         if (errores.size() > 0 ) { // hay errores
             for(String error: errores){
