@@ -690,7 +690,6 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getTrabajador_id()));
         bentidad=nuevasancion.getTrabajador().getEntidad().getDenominacion();
         nuevasancion.setPersona(null);
-        nuevapersona=new Persona_Sancion();
         calcular(Integer.parseInt(btra.getTiempo_dias()));
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
