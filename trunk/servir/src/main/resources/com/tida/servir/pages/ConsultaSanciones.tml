@@ -1,6 +1,7 @@
 <html t:type="layout" title="Sistema SERVIR"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"    
-      xmlns:p="tapestry:parameter">
+      xmlns:p="tapestry:parameter"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
           
           
  <div class="box-background-title">
@@ -125,6 +126,7 @@
         <t:form t:id="formconsultaSancion" >
           <t:if test="mostrar_reglab">
               <t:if test="entidadsubentidad">
+                  <label>N1</label>
                <t:grid source="busquedaSancionados" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -146,6 +148,7 @@
                             </t:if>    
                         </p:nombresCell>
                         <p:accionesCell>
+                            
                             <t:if test="SancionAnulada">
                                 <t:if test="${cs.veditar_anular}" negate="true">
                                     <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
@@ -169,13 +172,14 @@
             <div class="f-right"><b>${nro_sanciones}  Registros.</b></div><br/> 
             </t:if>
                 <t:if test="entidadsubentidad" negate="true">
+                                     <label>N2</label>
                     <t:grid source="busquedaSancionados" 
                                     rowsPerPage="10" 
-                                    t:add="Nombres,EntidadSubEntidad,Acciones" 
+                                    t:add="Nombres,Acciones" 
                                     pagerPosition="bottom"
                                     row="cs"
-                                    include="EntidadSubEntidad,tipo_sancion,tiempo_restante,estado"
-                                    reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                                    include="Entidad_SubEntidad,tipo_sancion,tiempo_restante,estado"
+                                    reorder="Nombres,Entidad_SubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
                                     
                                     inPlace="true">
                             <t:parameter name="empty">
@@ -188,10 +192,7 @@
                                     <t:if test="${cs.estrabajador}" negate="true">
                                         ${cs.b_datos_persona}
                                     </t:if>    
-                                </p:nombresCell>
-                                <p:entidadsubentidadCell>
-                                    ${cs.entidad_subentidad}
-                                </p:entidadsubentidadCell>    
+                                </p:nombresCell>    
                                 <p:accionesCell>
                                     <t:if test="SancionAnulada">
                                         <t:if test="${cs.veditar_anular}" negate="true">
@@ -218,6 +219,7 @@
           </t:if>
           <t:if test="mostrar_reglab" negate="true">
               <t:if test="entidadsubentidad">
+                 <label>N3</label>                  
                <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -268,6 +270,7 @@
             <div class="f-right"><b>${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>
             <t:if test="entidadsubentidad" negate="true">
+                 <label>N4</label>                 
                 <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
                             t:add="Nombres,EntidadSubEntidad,Acciones" 

@@ -17,10 +17,7 @@ import helpers.Logger;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.StreamResponse;
@@ -35,6 +32,7 @@ import org.apache.tapestry5.services.Response;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -174,18 +172,18 @@ public class ConsultaSanciones extends GeneralPage {
     private DatoAuxiliar bcategoriaSancion;
     @Persist
     @Property
-    private Lk_Tipo_Sancion btipoSancion;
+    private TipoSancion btipoSancion;
           
     @Property
     @Persist
     private LkBusquedaEntidad entio;
     @Property
     @Persist
-    private LkBusquedaSancionados cs;
+    private LkBusquedaSancion cs;
     
     @Property
     @Persist
-    private LkBusquedaSancionadosSinRegLab cs_sinreglab;
+    private LkBusquedaSancion cs_sinreglab;
     
     @Component(id = "formconsultaSancion")
     private Form formconsultaSancion;
@@ -312,8 +310,14 @@ public class ConsultaSanciones extends GeneralPage {
     }
       
       @Log
-      public GenericSelectModel<Lk_Tipo_Sancion> getTipoSancion() {
+      public GenericSelectModel<TipoSancion> getTipoSancion() {
         List<Lk_Tipo_Sancion> list;
+        Criteria c1 = session.createCriteria(TipoSancion.class);
+        
+        if (bregimenLaboral==null&&bcategoriaSancion==null){
+        return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);        
+        }
+        
         Criteria c = session.createCriteria(Lk_Tipo_Sancion.class); 
         if(bregimenLaboral!=null){
             c.add(Restrictions.eq("reg_laboral", bregimenLaboral.getId()));
@@ -321,115 +325,167 @@ public class ConsultaSanciones extends GeneralPage {
         if(bcategoriaSancion!=null){
             c.add(Restrictions.eq("categoria", bcategoriaSancion.getId()));
         }
+        c.setProjection(Projections.distinct(Projections.property("id_tipo")));
+       
+        if (!c.list().isEmpty()){            
+        c1.add(Restrictions.in("id", c.list()));
+        return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);
+        
+        }
+        else{
+        
+        c1.add(Restrictions.isNull("id"));}
+        
         list = c.list();
-        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id_tipo", _access);
+        return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);
     }
       
     @Log
-    public List<LkBusquedaSancionadosSinRegLab> getBusquedaSancionadosSinRegLab(){
+    public List<LkBusquedaSancion> getBusquedaSancionadosSinRegLab(){
         Criteria c;
-        c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
+        c = session.createCriteria(LkBusquedaSancion.class);
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
-        }else if(filtro_entidad != null){
-            c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
+        
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres.toUpperCase()+"%"),Restrictions.like("nombres_persona","%"+bnombres.toUpperCase()+"%")));
         }
         
         if(bapellidoPaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+"%").ignoreCase()));
+            c.add(Restrictions.or(Restrictions.like("apellidopat_trabajador","%"+bapellidoPaterno+"%").ignoreCase(),Restrictions.like("apellidopat_persona","%"+bapellidoPaterno+"%").ignoreCase()));
         }else if (bapellidoMaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoMaterno+"%").ignoreCase()));
-        }else if(bapellidoPaterno!=null && bapellidoMaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase()));
+            c.add(Restrictions.or(Restrictions.like("apellidomat_trabajador","%"+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidomat_persona","%"+bapellidoMaterno+"%").ignoreCase()));
         }
+        
         if(bdocumentoidentidad !=null){
-            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
+            c.add(Restrictions.or(Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId()),Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId())));
         }
         if(bnumeroDocumento != null){
-            c.add(Restrictions.or(Restrictions.like("nro_doc_trabajador","%"+bnumeroDocumento+"%"),Restrictions.eq("nro_doc_persona","%"+bnumeroDocumento+"%")));
+            c.add(Restrictions.or(Restrictions.like("nro_doc_persona","%"+bnumeroDocumento+"%").ignoreCase(),Restrictions.eq("nro_doc_trabajador","%"+bnumeroDocumento+"%").ignoreCase()));
         }
+
+
+        List<String> estados = new ArrayList<String>();
+        
         if(esSuspendida==true){
-            c.add(Restrictions.eq("estado_id", "3"));
+            estados.add("3");
+        //    c.add(Restrictions.eq("estado_id", "3"));
         }
         if(esAnulada==true){
-            c.add(Restrictions.eq("estado_id", "4"));
+            estados.add("4");            
+        //    c.add(Restrictions.eq("estado_id", "4"));
         }    
         if(esHistorica==true){
-            c.add(Restrictions.eq("estado_id", "5"));
+            estados.add("5");            
+        //   c.add(Restrictions.eq("estado_id", "5"));
         }
         if(esNoVigente==true){
-            c.add(Restrictions.eq("estado_id", "2"));
+            estados.add("2");            
+        //    c.add(Restrictions.eq("estado_id", "2"));
         }
         if(esVigente==true){
-            c.add(Restrictions.eq("estado_id", "1"));
+            estados.add("1");
+        //    c.add(Restrictions.eq("estado_id", "1"));
         }
+
+        if (!estados.isEmpty()){
+        c.add(Restrictions.in("estado_id", estados));
+        }
+        
         if(bcategoriaSancion!=null){
-            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
+            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId()));
         }
         
         if(btipoSancion!=null){
-            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId_tipo()));
+            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
         List result = c.list();
         nro_sanciones_sinreglab = Integer.toString(result.size());
         
-        return c.list();
+        List<LkBusquedaSancion> lista = c.list();
+        
+        c.setProjection(Projections.property("id_sancion"));
+        listaExport = c.list();
+        return lista;     
       }
     
     @Log
-    public List<LkBusquedaSancionados> getBusquedaSancionados(){
+    public List<LkBusquedaSancion> getBusquedaSancionados(){
         Criteria c;
-        c = session.createCriteria(LkBusquedaSancionados.class);
+        c = session.createCriteria(LkBusquedaSancion.class);
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
-        }else if(filtro_entidad != null){
-            c.add(Restrictions.eq("entidad_id",filtro_entidad));
         }
+        
         if(bnombres!=null){
              c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres.toUpperCase()+"%"),Restrictions.like("nombres_persona","%"+bnombres.toUpperCase()+"%")));
         }
-        if(bapellidoPaterno!=null || bapellidoMaterno!=null){
-            c.add(Restrictions.or(Restrictions.like("apellidos_trabajador","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidos_persona","%"+bapellidoPaterno+" "+bapellidoMaterno+"%").ignoreCase()));
+        if(bapellidoPaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidopat_trabajador","%"+bapellidoPaterno+"%").ignoreCase(),Restrictions.like("apellidopat_persona","%"+bapellidoPaterno+"%").ignoreCase()));
+        }else if (bapellidoMaterno!=null){
+            c.add(Restrictions.or(Restrictions.like("apellidomat_trabajador","%"+bapellidoMaterno+"%").ignoreCase(),Restrictions.like("apellidomat_persona","%"+bapellidoMaterno+"%").ignoreCase()));
         }
+        
         if(bdocumentoidentidad !=null){
-            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId().toString()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId().toString())));
+            c.add(Restrictions.or(Restrictions.eq("tipo_doc_trabajador",bdocumentoidentidad.getId()),Restrictions.eq("tipo_doc_persona",bdocumentoidentidad.getId())));
         }
         if(bnumeroDocumento != null){
-            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador","%"+bnumeroDocumento.toString()+"%"),Restrictions.eq("nro_doc_persona","%"+bnumeroDocumento.toString()+"%")));
+            System.out.println("NRODOX "+bnumeroDocumento);
+            c.add(Restrictions.or(Restrictions.eq("nro_doc_trabajador","%"+bnumeroDocumento+"%").ignoreCase(),Restrictions.eq("nro_doc_persona","%"+bnumeroDocumento+"%").ignoreCase()));
         }
+
+        List<String> estados = new ArrayList<String>();
+        
         if(esSuspendida==true){
-            c.add(Restrictions.eq("estado_id", "3"));
+            estados.add("3");
+        //    c.add(Restrictions.eq("estado_id", "3"));
         }
         if(esAnulada==true){
-            c.add(Restrictions.eq("estado_id", "4"));
+            estados.add("4");            
+        //    c.add(Restrictions.eq("estado_id", "4"));
         }    
         if(esHistorica==true){
-            c.add(Restrictions.eq("estado_id", "5"));
+            estados.add("5");            
+        //   c.add(Restrictions.eq("estado_id", "5"));
         }
         if(esNoVigente==true){
-            c.add(Restrictions.eq("estado_id", "2"));
+            estados.add("2");            
+        //    c.add(Restrictions.eq("estado_id", "2"));
         }
         if(esVigente==true){
-            c.add(Restrictions.eq("estado_id", "1"));
+            estados.add("1");
+        //    c.add(Restrictions.eq("estado_id", "1"));
         }
+
+        if (!estados.isEmpty()){
+        c.add(Restrictions.in("estado_id", estados));
+        }
+        
+        
         if(bregimenLaboral!=null){
-            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId().toString()));
+            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
         }
         if(bcategoriaSancion!=null){
-            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId().toString()));
+            c.add(Restrictions.eq("categoria_sancion_id", bcategoriaSancion.getId()));
         }
         if(btipoSancion!=null){
-            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId_tipo()));
+            c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
         
         List result = c.list();
         nro_sanciones = Integer.toString(result.size());
         
-        return c.list();
+        List<LkBusquedaSancion> lista = c.list();
+        
+        c.setProjection(Projections.property("id_sancion"));
+        listaExport = c.list();
+        return lista;
       }
+ 
+    @Persist
+    @Property
+    private List<Long> listaExport;
     
      Object onBuscarpersona(){
          return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone",busZone.getBody());
@@ -583,9 +639,16 @@ public class ConsultaSanciones extends GeneralPage {
                     fa.delete();
                 }
                 if(bregimenLaboral!=null){
+                 //   Criteria c = session.createCriteria(LkBusquedaSancionados.class);
+                 //   c.add(Restrictions.in("id_sancion", listaExport));
+                    
                     errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);
+                    
                     System.out.println("CON REG");
                 }else{
+                 //   Criteria c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
+                 //   c.add(Restrictions.in("id_sancion", listaExport));
+                 //   System.out.println("TAMAX "+ c.list().size());
                     errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
                     System.out.println("SIN REG");
                 }

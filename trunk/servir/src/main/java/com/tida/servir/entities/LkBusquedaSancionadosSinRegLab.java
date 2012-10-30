@@ -15,19 +15,20 @@ import org.apache.tapestry5.beaneditor.NonVisual;
  */
 
 @Entity
+@Table(name = "LKBUSQUEDASANCIONADOSSINREG2")
 public class LkBusquedaSancionadosSinRegLab implements Serializable{
      @Id
     @NonVisual
-    @Column(name = "ID")
-    private Long id;
     private Long id_sancion;
     @NonVisual
     @Column(name = "ENTIDAD_ID")
     private Long entidad_id;
     private String estado_id;
-    private String apellidos_persona;
+    private String apellidopat_persona;
+    private String apellidomat_persona;    
     private String nombres_persona;
-    private String apellidos_trabajador;
+    private String apellidopat_trabajador;
+    private String apellidomat_trabajador;
     private String nombres_trabajador;
     private String entidad_subentidad;
     private String tipo_sancion;
@@ -73,22 +74,38 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
         this.veditar_anular = veditar_anular;
     }
 
-    
-    public String getApellidos_persona() {
-        return apellidos_persona;
+    public String getApellidopat_persona() {
+        return apellidopat_persona;
     }
 
-    public void setApellidos_persona(String apellidos_persona) {
-        this.apellidos_persona = apellidos_persona;
+    public void setApellidopat_persona(String apellidopat_persona) {
+        this.apellidopat_persona = apellidopat_persona;
     }
 
-    public String getApellidos_trabajador() {
-        return apellidos_trabajador;
+    public String getApellidomat_persona() {
+        return apellidomat_persona;
     }
 
-    public void setApellidos_trabajador(String apellidos_trabajador) {
-        this.apellidos_trabajador = apellidos_trabajador;
+    public void setApellidomat_persona(String apellidomat_persona) {
+        this.apellidomat_persona = apellidomat_persona;
     }
+
+    public String getApellidopat_trabajador() {
+        return apellidopat_trabajador;
+    }
+
+    public void setApellidopat_trabajador(String apellidopat_trabajador) {
+        this.apellidopat_trabajador = apellidopat_trabajador;
+    }
+
+    public String getApellidomat_trabajador() {
+        return apellidomat_trabajador;
+    }
+
+    public void setApellidomat_trabajador(String apellidomat_trabajador) {
+        this.apellidomat_trabajador = apellidomat_trabajador;
+    }
+
 
     public String getB_datos_persona() {
         return b_datos_persona;
@@ -152,14 +169,6 @@ public class LkBusquedaSancionadosSinRegLab implements Serializable{
 
     public void setEstrabajador(Boolean estrabajador) {
         this.estrabajador = estrabajador;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getId_sancion() {
