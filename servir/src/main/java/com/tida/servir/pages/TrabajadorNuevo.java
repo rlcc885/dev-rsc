@@ -227,7 +227,7 @@ public class TrabajadorNuevo extends GeneralPage {
 
             }
 
-        }
+        }        
     }
 
     // cargar combos
@@ -416,7 +416,13 @@ public class TrabajadorNuevo extends GeneralPage {
                 envelope.setContents("Debe ingresar la fecha de Ingreso.");
                 return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
                         .add("mensajesZone", mensajesZone.getBody());
-            } else {
+            } else if (getListadoAutoridadSan().size()>0) {
+                if (getListadoAutoridadSan().get(0).getFec_fin().after(new Date()) || getListadoAutoridadSan().get(0).getFec_fin().equals(new Date())){
+                    envelope.setContents("La fecha de inicio en el cargo debe ser diferente y menor a la fecha de finalizacion del ultimo cargo");
+                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
+                        .add("mensajesZone", mensajesZone.getBody());
+                }
+            }else {
                 // VALIDACION DE LA EXISTENCIA DEL TRABAJADOR CON DISTINTO TIPO DE DOCUMENTO
                 if (nuevo.getDocumentoidentidad().getCodigo()!=1){
                 Criteria c = session.createCriteria(Trabajador.class);
@@ -527,6 +533,7 @@ public class TrabajadorNuevo extends GeneralPage {
                 return Busqueda.class;
             }
         }
+        return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody()).add("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
     void seteanuevousuario(Usuario usuarionuevo) {
@@ -581,6 +588,16 @@ public class TrabajadorNuevo extends GeneralPage {
         Query query = session.getNamedQuery("UsuarioTrabajador.findByNrodocumentousuario");
         query.setParameter("nrodocumentousuario", nuevo.getNroDocumento());
         return query.list();
+    }
+    
+    @Log
+    public List<LkBusquedaTrabajadorSan> getListadoAutoridadSan() {
+        List<LkBusquedaTrabajadorSan> lista = null;
+        Criteria c = session.createCriteria(LkBusquedaTrabajadorSan.class);
+        c.add(Restrictions.eq("nrodocumento", nuevo.getNroDocumento()));
+        c.add(Restrictions.eq("estadocargo", "INACTIVO").ignoreCase());
+        c.addOrder(org.hibernate.criterion.Order.desc("fec_fin"));
+        return c.list();
     }
     
     @Log

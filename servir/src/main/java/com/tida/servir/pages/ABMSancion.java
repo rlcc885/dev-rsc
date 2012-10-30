@@ -374,6 +374,7 @@ public class ABMSancion  extends GeneralPage
         c.add(Restrictions.eq("id_tipo", nuevasancion.getTipo_sancion().getId()));
         if(nuevasancion.getEstrabajador())
             c.add(Restrictions.eq("reg_laboral", nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral().getId()));
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return c.list();
     }
     
