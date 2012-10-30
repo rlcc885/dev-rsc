@@ -219,7 +219,7 @@ public class GeneracionXLS {
     }
     
     
-    public List<String> generadoXLSConsultaSancionados(List<LkBusquedaSancionados> lcr,String path,Session session){
+    public List<String> generadoXLSConsultaSancionados(List<LkBusquedaSancion> lcr,String path,Session session){
         List<String> errores = new LinkedList<String>();
         try{
             HSSFWorkbook objWB = new HSSFWorkbook();
@@ -270,18 +270,18 @@ public class GeneracionXLS {
             
             
             for (int i=0;i<lcr.size();i++) {
-                LkBusquedaSancionados cr=(LkBusquedaSancionados)lcr.get(i);
+                LkBusquedaSancion cr=(LkBusquedaSancion)lcr.get(i);
                 fila = hoja1.createRow((short)(i+1));            
                 celda= fila.createCell((short)0);
-                if(cr.getB_datos_trabajador()!=null){
+                if(cr.getEstrabajador()==true){
                     celda.setCellValue(leoCampo(cr.getB_datos_trabajador())); // Es un trabajador
                 }else{
                     celda.setCellValue(leoCampo(cr.getB_datos_persona())); // Es una persona
                 }
                 celda= fila.createCell((short)1);
-                celda.setCellValue(leoCampo(cr.getTipo_doc_ientidad()));
+                celda.setCellValue(leoCampo(cr.getTipo_doc_identidad()));
                 celda= fila.createCell((short)2);
-                if(cr.getNro_doc_persona()!=null){
+                if(cr.getEstrabajador()==true){
                     celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
                 }else{
                     celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador
@@ -295,29 +295,29 @@ public class GeneracionXLS {
                 celda= fila.createCell((short)6);
                 celda.setCellValue(leoCampo(cr.getTipo_doc_notifica())); 
                 celda= fila.createCell((short)7);
-                celda.setCellValue(leoCampo(cr.getDescripcion_doc_notifica())); 
+                celda.setCellValue(leoCampo(cr.getDescripcionDocNotifica())); 
                 celda= fila.createCell((short)8);
-                celda.setCellValue(datetoString(cr.getFecha_doc_notifica())); 
+                celda.setCellValue(datetoString(cr.getFechaDocNotifica())); 
                 celda= fila.createCell((short)9);
                 celda.setCellValue(leoCampo(cr.getTipo_doc_sanciona())); 
                 celda= fila.createCell((short)10);
-                celda.setCellValue(leoCampo(cr.getDescripcion_doc_sanciona())); 
+                celda.setCellValue(leoCampo(cr.getDescripcionDocSanciona())); 
                 celda= fila.createCell((short)11);
-                celda.setCellValue(datetoString(cr.getFecha_doc_sanciona())); 
+                celda.setCellValue(datetoString(cr.getFechaDocSanciona())); 
                 celda= fila.createCell((short)12);
-                celda.setCellValue(leoCampo(cr.getAutoridad_sanciona())); 
+                celda.setCellValue(leoCampo(cr.getAutoridadSanciona())); 
                 celda= fila.createCell((short)13);
                 celda.setCellValue(leoCampo(cr.getTipo_sancion())); 
                 celda= fila.createCell((short)14);
                 celda.setCellValue(leoCampo(cr.getEstado())); 
                 celda= fila.createCell((short)15);
-                celda.setCellValue(datetoString(cr.getINI_INHABILITACION())); 
+                celda.setCellValue(datetoString(cr.getIniInhabilitacion())); 
                 celda= fila.createCell((short)16);
-                celda.setCellValue(datetoString(cr.getFIN_INHABILITACION())); 
+                celda.setCellValue(datetoString(cr.getFinInhabilitacion())); 
                 celda= fila.createCell((short)17);
-                celda.setCellValue(leoCampo(cr.getTiempo_restante())); 
+                celda.setCellValue(leoCampo(cr.getTiempo_Restante())); 
                 celda= fila.createCell((short)18);
-                celda.setCellValue(leoCampo(cr.getCausa_destitucion())); 
+                celda.setCellValue(leoCampo(cr.getCausaDestitucion())); 
                 celda= fila.createCell((short)19);
                 celda.setCellValue(leoCampo(cr.getObservaciones())); 
             }                      
@@ -335,7 +335,7 @@ public class GeneracionXLS {
     }
     
     
-    public List<String> generadoXLSConsultaSancionadosSinRegLab(List<LkBusquedaSancionadosSinRegLab> lcr,String path,Session session){
+    public List<String> generadoXLSConsultaSancionadosSinRegLab(List<LkBusquedaSancion> lcr,String path,Session session){
         List<String> errores = new LinkedList<String>();
         try{
             HSSFWorkbook objWB = new HSSFWorkbook();
@@ -386,18 +386,18 @@ public class GeneracionXLS {
             
             
             for (int i=0;i<lcr.size();i++) {
-                LkBusquedaSancionadosSinRegLab cr=(LkBusquedaSancionadosSinRegLab)lcr.get(i);
+                LkBusquedaSancion cr=(LkBusquedaSancion)lcr.get(i);
                 fila = hoja1.createRow((short)(i+1));            
                 celda= fila.createCell((short)0);
-                if(cr.getB_datos_trabajador()!=null){
+                if(cr.getEstrabajador()==true){
                     celda.setCellValue(leoCampo(cr.getB_datos_trabajador())); // Es un trabajador
                 }else{
                     celda.setCellValue(leoCampo(cr.getB_datos_persona())); // Es una persona
                 }
                 celda= fila.createCell((short)1);
-                celda.setCellValue(leoCampo(cr.getTipo_doc_ientidad()));
+                celda.setCellValue(leoCampo(cr.getTipo_doc_identidad()));
                 celda= fila.createCell((short)2);
-                if(cr.getNro_doc_persona()!=null){
+                if(cr.getEstrabajador()==true){
                     celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
                 }else{
                     celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador
@@ -411,29 +411,29 @@ public class GeneracionXLS {
                 celda= fila.createCell((short)6);
                 celda.setCellValue(leoCampo(cr.getTipo_doc_notifica())); 
                 celda= fila.createCell((short)7);
-                celda.setCellValue(leoCampo(cr.getDescripcion_doc_notifica())); 
+                celda.setCellValue(leoCampo(cr.getDescripcionDocNotifica())); 
                 celda= fila.createCell((short)8);
-                celda.setCellValue(datetoString(cr.getFecha_doc_notifica())); 
+                celda.setCellValue(datetoString(cr.getFechaDocNotifica())); 
                 celda= fila.createCell((short)9);
                 celda.setCellValue(leoCampo(cr.getTipo_doc_sanciona())); 
                 celda= fila.createCell((short)10);
-                celda.setCellValue(leoCampo(cr.getDescripcion_doc_sanciona())); 
+                celda.setCellValue(leoCampo(cr.getDescripcionDocSanciona())); 
                 celda= fila.createCell((short)11);
-                celda.setCellValue(datetoString(cr.getFecha_doc_sanciona())); 
+                celda.setCellValue(datetoString(cr.getFechaDocSanciona())); 
                 celda= fila.createCell((short)12);
-                celda.setCellValue(leoCampo(cr.getAutoridad_sanciona())); 
+                celda.setCellValue(leoCampo(cr.getAutoridadSanciona())); 
                 celda= fila.createCell((short)13);
                 celda.setCellValue(leoCampo(cr.getTipo_sancion())); 
                 celda= fila.createCell((short)14);
                 celda.setCellValue(leoCampo(cr.getEstado())); 
                 celda= fila.createCell((short)15);
-                celda.setCellValue(datetoString(cr.getINI_INHABILITACION())); 
+                celda.setCellValue(datetoString(cr.getIniInhabilitacion())); 
                 celda= fila.createCell((short)16);
-                celda.setCellValue(datetoString(cr.getFIN_INHABILITACION())); 
+                celda.setCellValue(datetoString(cr.getFinInhabilitacion())); 
                 celda= fila.createCell((short)17);
-                celda.setCellValue(leoCampo(cr.getTiempo_restante())); 
+                celda.setCellValue(leoCampo(cr.getTiempo_Restante())); 
                 celda= fila.createCell((short)18);
-                celda.setCellValue(leoCampo(cr.getCausa_destitucion())); 
+                celda.setCellValue(leoCampo(cr.getCausaDestitucion())); 
                 celda= fila.createCell((short)19);
                 celda.setCellValue(leoCampo(cr.getObservaciones())); 
             }                      
