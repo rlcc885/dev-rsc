@@ -29,6 +29,7 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 /**
  *
@@ -124,7 +125,7 @@ public class ABMSancion  extends GeneralPage
     private DatoAuxiliar categoriasancion;
     @Property
     @Persist
-    private Lk_Tipo_Sancion tiposancion;
+    private TipoSancion tiposancion;
     @Property
     @Persist
     private String fechadocnot;
@@ -253,6 +254,7 @@ public class ABMSancion  extends GeneralPage
     @Log
     @SetupRender
     void inicio(){
+        diascate="0";
         logueo();
         editando=false;
         bmostrar=false;
@@ -299,7 +301,7 @@ public class ABMSancion  extends GeneralPage
                 vsuspender=true;
         }
         mostrarlista=false;
-        diascate="0";
+        
     }
     
 //    @Log
@@ -337,17 +339,19 @@ public class ABMSancion  extends GeneralPage
             nuevapersona.setApellidoMaterno(nuevasancion.getPersona().getApellidoMaterno());
         }
         categoriasancion=nuevasancion.getCategoria_sancion();
-        tiposancion=(Lk_Tipo_Sancion) session.load(Lk_Tipo_Sancion.class, getBuscarTipoSancion().get(0).getId());
-        if(tiposancion.getCodigo()==1){
+        tiposancion=nuevasancion.getTipo_sancion();
+        if(tiposancion.getTipoInhabilitacion().getCodigo()==1){
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
             if(diastiposamax==diastiposamin){
                 mostrarfecha=true;
+                diascate=String.valueOf(tiposancion.getTiempoMaxAnios()*365+tiposancion.getTiempoMaxMeses()*30+tiposancion.getTiempoMaxDias());
+                System.out.println("aquiiiii"+diascate);
             }
         }
         else{
             mostrarfecha=true;
-        }
+        }       
         if (nuevasancion.getFecha_docnot()!= null) {
             SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
             fechadocnot = formatoDeFecha.format(nuevasancion.getFecha_docnot());
@@ -368,15 +372,10 @@ public class ABMSancion  extends GeneralPage
         autoridadsan=nuevasancion.getAutoridadsan().getApellidoPaterno()+" "+nuevasancion.getAutoridadsan().getApellidoMaterno()+" "+nuevasancion.getAutoridadsan().getNombres();
     }
     
-    @Log
-    public List<Lk_Tipo_Sancion> getBuscarTipoSancion() {
-        Criteria c = session.createCriteria(Lk_Tipo_Sancion.class);
-        c.add(Restrictions.eq("id_tipo", nuevasancion.getTipo_sancion().getId()));
-        if(nuevasancion.getEstrabajador())
-            c.add(Restrictions.eq("reg_laboral", nuevasancion.getCargoasignado().getCargoxunidad().getRegimenlaboral().getId()));
-        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        return c.list();
-    }
+//    @Log
+//    public GenericSelectModel<TipoSancion> getBuscarTipoSancion() {
+//        
+//    }
     
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeandocumentoidentidad() {
@@ -397,8 +396,12 @@ public class ABMSancion  extends GeneralPage
     }
     
     @Log
-    public GenericSelectModel<Lk_Tipo_Sancion> getBeantiposancion() {
+    public GenericSelectModel<TipoSancion> getBeantiposancion() {
         List<Lk_Tipo_Sancion> list;
+        Criteria c1 = session.createCriteria(TipoSancion.class);
+        if (bregimen==null && categoriasancion==null){
+            return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);        
+        }
         Criteria c = session.createCriteria(Lk_Tipo_Sancion.class); 
         if(bregimen!=null){
             c.add(Restrictions.eq("reg_laboral", bregimen.getId()));
@@ -406,8 +409,16 @@ public class ABMSancion  extends GeneralPage
         if(categoriasancion!=null){
             c.add(Restrictions.eq("categoria", categoriasancion.getId()));
         }
+        c.setProjection(Projections.distinct(Projections.property("id_tipo")));
+        
+        if (!c.list().isEmpty()){            
+            c1.add(Restrictions.in("id", c.list()));
+            return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);        
+        }else{        
+        c1.add(Restrictions.isNull("id"));}
         list = c.list();
-        return new GenericSelectModel<Lk_Tipo_Sancion>(list, Lk_Tipo_Sancion.class, "descripcion", "id_tipo", _access);
+        return new GenericSelectModel<TipoSancion>(c1.list(), TipoSancion.class, "descripcion", "id", _access);
+        
     }
     
     @Log
@@ -906,7 +917,7 @@ public class ABMSancion  extends GeneralPage
             } catch (ParseException ex) {
                 ex.printStackTrace();
             }            
-            if(tiposancion.getCodigo()==1){
+            if(tiposancion.getTipoInhabilitacion().getCodigo()==1){
                 fecha_inicio=calcularfechainicio();
                 SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
                 fecinicio = formatoDeFecha.format(fecha_inicio);
@@ -950,7 +961,7 @@ public class ABMSancion  extends GeneralPage
             }
         }
         
-        if(tiposancion.getCodigo()==1){
+        if(tiposancion.getTipoInhabilitacion().getCodigo()==1){
             int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
             int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
             //System.out.println("aquiiiii-"+calcularperiodo()+"-"+diastiposamax+"-"+diastiposamin);
@@ -1039,14 +1050,14 @@ public class ABMSancion  extends GeneralPage
                 nuevasancion.setPersona(nuevapersona);
             }            
         }
-        TipoSancion tiposa=new TipoSancion();
-        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId_tipo());
+//        TipoSancion tiposa=new TipoSancion();
+//        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId_tipo());
         nuevasancion.setCategoria_sancion(categoriasancion);
         nuevasancion.setFecha_docnot(fecha_docnot);
         nuevasancion.setFecha_docsan(fecha_docsan);
         nuevasancion.setFechafin_inha(fecha_fin);
         nuevasancion.setFechaini_inha(fecha_inicio);
-        nuevasancion.setTipo_sancion(tiposa);       
+        nuevasancion.setTipo_sancion(tiposancion);       
         session.saveOrUpdate(nuevasancion);
         session.flush(); 
         new Logger().loguearOperacion(session, usuario, String.valueOf(nuevasancion.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_SANCION);
@@ -1170,9 +1181,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     private String diascate;
     @Log
-    Object onValueChangedFromTipo_sancion(Lk_Tipo_Sancion dato) {
+    Object onValueChangedFromTipo_sancion(TipoSancion dato) {
            if(dato!=null){
-               if(dato.getCodigo()==2){
+               if(dato.getTipoInhabilitacion().getCodigo()==2){
                     mostrarfecha=true;
                     fecinicio=null;
                     fecfin=null;
