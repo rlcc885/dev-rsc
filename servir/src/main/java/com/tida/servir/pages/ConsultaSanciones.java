@@ -400,14 +400,14 @@ public class ConsultaSanciones extends GeneralPage {
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
-        List result = c.list();
-        nro_sanciones_sinreglab = Integer.toString(result.size());
-        
-        List<LkBusquedaSancion> lista = c.list();
-        
-        c.setProjection(Projections.property("id_sancion"));
-        listaExport = c.list();
-        return lista;     
+//        List result = c.list();
+        nro_sanciones_sinreglab = Integer.toString(c.list().size());
+//        
+//        List<LkBusquedaSancion> lista = c.list();
+//        
+//        c.setProjection(Projections.property("id_sancion"));
+//        listaExport = c.list();
+        return c.list();     
       }
     
     @Log
@@ -473,14 +473,14 @@ public class ConsultaSanciones extends GeneralPage {
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
         
-        List result = c.list();
-        nro_sanciones = Integer.toString(result.size());
+//        List result = c.list();
+        nro_sanciones = Integer.toString(c.list().size());
         
-        List<LkBusquedaSancion> lista = c.list();
-        
-        c.setProjection(Projections.property("id_sancion"));
-        listaExport = c.list();
-        return lista;
+//        List<LkBusquedaSancion> lista = c.list();
+//        
+//        c.setProjection(Projections.property("id_sancion"));
+//        listaExport = c.list();
+        return c.list();
       }
  
     @Persist
