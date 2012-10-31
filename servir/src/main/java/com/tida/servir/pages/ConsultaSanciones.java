@@ -222,9 +222,7 @@ public class ConsultaSanciones extends GeneralPage {
     private String nro_sanciones_sinreglab;
     @Inject  
     private ComponentResources _resources;
-    @Property
-    @Persist
-    private Long filtro_entidad;
+
     @Property
     @Persist
     private Boolean vexportar;
@@ -274,7 +272,6 @@ public class ConsultaSanciones extends GeneralPage {
             bmostrar=true;
         }else{
             bmostrar=false;
-            filtro_entidad = loggedUser.getEntidad().getId();
         }  
                 
         if(usua.getAccesoupdate() == 1){ 
@@ -293,8 +290,12 @@ public class ConsultaSanciones extends GeneralPage {
     
       @Log
       public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("DOCUMENTOIDENTIDAD", null, 0, session);
-        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+        List<Long> lista = new ArrayList<Long>();
+        lista.add(new Long(1));lista.add(new Long(2));
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla","DOCUMENTOIDENTIDAD"));
+        c.add(Restrictions.in("codigo", lista));
+        return new GenericSelectModel<DatoAuxiliar>(c.list(), DatoAuxiliar.class, "valor", "id", _access);
     }
     
       @Log
@@ -344,12 +345,17 @@ public class ConsultaSanciones extends GeneralPage {
     public List<LkBusquedaSancion> getBusquedaSancionadosSinRegLab(){
         Criteria c;
         c = session.createCriteria(LkBusquedaSancion.class);
+        if (loggedUser.getRolid()==2){ // adm entidad
+            c.add(Restrictions.eq("entidad_id", loggedUser.getEntidad().getId()));
+        }
+        else if(loggedUser.getRolid()==3){ // adm servir
         if(entidad_origen_id!=null){
             c.add(Restrictions.eq("entidad_id",entidad_origen_id));
+        }        
         }
         
         if(bnombres!=null){
-             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres.toUpperCase()+"%"),Restrictions.like("nombres_persona","%"+bnombres.toUpperCase()+"%")));
+             c.add(Restrictions.or(Restrictions.like("nombres_trabajador","%"+bnombres+"%").ignoreCase(),Restrictions.like("nombres_persona","%"+bnombres+"%").ignoreCase()));
         }
         
         if(bapellidoPaterno!=null){
@@ -368,29 +374,18 @@ public class ConsultaSanciones extends GeneralPage {
 
         List<String> estados = new ArrayList<String>();
         
-        if(esSuspendida==true){
-            estados.add("3");
-        //    c.add(Restrictions.eq("estado_id", "3"));
-        }
-        if(esAnulada==true){
-            estados.add("4");            
-        //    c.add(Restrictions.eq("estado_id", "4"));
-        }    
-        if(esHistorica==true){
-            estados.add("5");            
-        //   c.add(Restrictions.eq("estado_id", "5"));
-        }
-        if(esNoVigente==true){
-            estados.add("2");            
-        //    c.add(Restrictions.eq("estado_id", "2"));
-        }
-        if(esVigente==true){
-            estados.add("1");
-        //    c.add(Restrictions.eq("estado_id", "1"));
-        }
+        if(esSuspendida==true){  estados.add("3");}
+        if(esAnulada==true){     estados.add("4");}    
+        if(esHistorica==true){   estados.add("5");}
+        if(esNoVigente==true){   estados.add("2");}
+        if(esVigente==true){     estados.add("1");}
 
         if (!estados.isEmpty()){
         c.add(Restrictions.in("estado_id", estados));
+        }
+        
+        if(bregimenLaboral!=null){
+            c.add(Restrictions.eq("id_reg_laboral", bregimenLaboral.getId()));
         }
         
         if(bcategoriaSancion!=null){
@@ -400,22 +395,18 @@ public class ConsultaSanciones extends GeneralPage {
         if(btipoSancion!=null){
             c.add(Restrictions.eq("id_tipo_sancion", btipoSancion.getId()));
         }
-//        List result = c.list();
+
         nro_sanciones_sinreglab = Integer.toString(c.list().size());
-//        
-//        List<LkBusquedaSancion> lista = c.list();
-//        
-//        c.setProjection(Projections.property("id_sancion"));
-//        listaExport = c.list();
+
         return c.list();     
       }
-    
+/*    
     @Log
     public List<LkBusquedaSancion> getBusquedaSancionados(){
         Criteria c;
         c = session.createCriteria(LkBusquedaSancion.class);
         if(entidad_origen_id!=null){
-            c.add(Restrictions.eq("entidad_id",entidad_origen_id));
+            c.add(Restrictions.eq("entidad_id",entidad2.getId()));
         }
         
         if(bnombres!=null){
@@ -483,9 +474,7 @@ public class ConsultaSanciones extends GeneralPage {
         return c.list();
       }
  
-    @Persist
-    @Property
-    private List<Long> listaExport;
+*/
     
      Object onBuscarpersona(){
          return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("busZone",busZone.getBody());
@@ -542,17 +531,13 @@ public class ConsultaSanciones extends GeneralPage {
              }
              bmostrarexportar=true;
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("exportarZone",exportarZone.getBody());
         } else if (elemento == 2){
                 mostrar_reglab=false;
 //            cs = new LkBusquedaSancionados();
             return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
-        } else if (elemento == 3){
-              mostrar_reglab=false;
-            return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
-        }
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("exportarZone",exportarZone.getBody());
+        } 
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
                   .add("consultaSancionesZone",consultaSancionesZone.getBody());
          // return listaConsultaSancionZone.getBody();
@@ -622,7 +607,10 @@ public class ConsultaSanciones extends GeneralPage {
         btipoSancion = null;
     }
     
-    
+   @InjectComponent
+   @Property
+    private Zone exportarZone;
+   
     Object onExportar() {
         vexportar=true;
          mostrar_reglab=false;              
@@ -638,43 +626,18 @@ public class ConsultaSanciones extends GeneralPage {
                 if (!fa.exists()) {
                     fa.delete();
                 }
-                if(bregimenLaboral!=null){
-                 //   Criteria c = session.createCriteria(LkBusquedaSancionados.class);
-                 //   c.add(Restrictions.in("id_sancion", listaExport));
-                    
-                    errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);
-                    
-                    System.out.println("CON REG");
-                }else{
-                 //   Criteria c = session.createCriteria(LkBusquedaSancionadosSinRegLab.class);
-                 //   c.add(Restrictions.in("id_sancion", listaExport));
-                 //   System.out.println("TAMAX "+ c.list().size());
+              //  if(bregimenLaboral!=null){
+              //      errores=geXLS.generadoXLSConsultaSancionados(getBusquedaSancionados(), STARTPATH+"CONSULTASANCIONES.xls", session);                   
+              //      System.out.println("CON REG");
+              //  }else{
                     errores=geXLS.generadoXLSConsultaSancionadosSinRegLab(getBusquedaSancionadosSinRegLab(), STARTPATH+"CONSULTASANCIONES.xls", session);
                     System.out.println("SIN REG");
-                }
+              //  }
                 
-              
-            return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("listaConsultaSancionZone",listaConsultaSancionZone.getBody());
+            return new MultiZoneUpdate("exportarZone", exportarZone.getBody());  
+//            return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()).add("listaConsultaSancionZone",listaConsultaSancionZone.getBody());
     }
-//    @Log
-//    void onSelectedFromLimpiar() {
-//        elemento = 3;
-//        entidad_origen= null;
-//        entidad_origen_id=null;
-//        bapellidoPaterno=null;
-//        bapellidoMaterno=null;
-//        bnombres=null;
-//        bnumeroDocumento=null;
-//        esSuspendida=false;
-//        esAnulada=false;
-//        esHistorica=false;
-//        esNoVigente=false;
-//        esVigente=false; 
-//        bdocumentoidentidad = null;
-//        bregimenLaboral = null;
-//        bcategoriaSancion = null;
-//        btipoSancion = null;
-//    }  
+
     
     @Log
     Object onLimpiar() {    
@@ -693,8 +656,9 @@ public class ConsultaSanciones extends GeneralPage {
         bregimenLaboral = null;
         bcategoriaSancion = null;
         btipoSancion = null;
+        bmostrarexportar = Boolean.FALSE;
         return new MultiZoneUpdate("listaConsultaSancionZone", listaConsultaSancionZone.getBody())
-                  .add("consultaSancionesZone",consultaSancionesZone.getBody());
+                  .add("consultaSancionesZone",consultaSancionesZone.getBody()).add("exportarZone",exportarZone.getBody());
     }
     
      
@@ -754,6 +718,7 @@ public class ConsultaSanciones extends GeneralPage {
         
         return new MultiZoneUpdate("consultaSancionesZone",consultaSancionesZone.getBody()); 
     }
+   
     public Boolean getSancionAnulada(){
         System.out.println("EST5ADOX  "+cs.getEstado_id());
         if (Integer.valueOf(cs.getEstado_id())==4){
