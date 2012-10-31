@@ -728,7 +728,10 @@ public class ConsultaSanciones extends GeneralPage {
     }
     
     public Boolean getSancionAnulada_sinregla(){
-        if (Integer.valueOf(cs_sinreglab.getEstado_id())==4){
+        System.out.println("ANULADAX "+cs_sinreglab.getEstado_id());
+        System.out.println("ANULADAX "+cs_sinreglab.getVeditar_anular());
+        
+        if (cs_sinreglab.getEstado_id().equals("4")){
         return Boolean.FALSE;
         }
         return Boolean.TRUE;
