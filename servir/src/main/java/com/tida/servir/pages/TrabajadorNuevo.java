@@ -22,6 +22,7 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 //@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
@@ -377,52 +378,26 @@ public class TrabajadorNuevo extends GeneralPage {
             envelope.setContents(helpers.Constantes.EUE_EXITO);
             envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
             bTrabajadorRegistrado = true;
-            return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                    .add("mensajesZone", mensajesZone.getBody());
+            return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());
         } else {
-            if (nuevo.getDocumentoidentidad() == null) {
-                envelope.setContents("Debe ingresar el Tipo de Documento.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (nuevo.getNroDocumento() == null) {
-                envelope.setContents("Debe ingresar el Nro. de Documento.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (nuevo.getDocumentoidentidad().getCodigo()==1 && (fechacaducidad == null || fechacaducidad.equalsIgnoreCase(""))) {
-                envelope.setContents("Debe ingresar la fecha de caducidad del DNI.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (nuevo.getNombres() == null) {
-                envelope.setContents("Debe ingresar el Nombre del Trabajador.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (nuevo.getApellidoMaterno() == null) {
-                envelope.setContents("Debe ingresar el Apellido Materno del Trabajador");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (nuevo.getApellidoPaterno() == null) {
-                envelope.setContents("Debe ingresar el Apellido Paterno del Trabajador.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (cargo == null) {
-                envelope.setContents("Debe ingresar el Cargo.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (tipovinculo == null) {
-                envelope.setContents("Debe ingresar el Tipo de Vinculo.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (fechaingreso == null || fechaingreso.equalsIgnoreCase("")) {
-                envelope.setContents("Debe ingresar la fecha de Ingreso.");
-                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-            } else if (getListadoAutoridadSan().size()>0) {
-                if (getListadoAutoridadSan().get(0).getFec_fin().after(new Date()) || getListadoAutoridadSan().get(0).getFec_fin().equals(new Date())){
-                    envelope.setContents("La fecha de inicio en el cargo debe ser diferente y menor a la fecha de finalizacion del ultimo cargo");
-                    return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody())
-                        .add("mensajesZone", mensajesZone.getBody());
-                }
-            }else {
+            
+        Criteria c2 = session.createCriteria(LkBusquedaTrabajador.class);
+        c2.add(Restrictions.eq("nrodocumento", nuevo.getNroDocumento()));
+        c2.add(Restrictions.eq("estado", false));
+        
+        if(c2.list().isEmpty()){
+            if (getFechaAntiguoCargo()== Boolean.FALSE){
+            formulariomensajes.recordError("La fecha de ingreso debe ser mayor a la fecha de finalizacion del cargo anterior.");
+            return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());            }
+        }
+            
+          //  if (getListadoAutoridadSan().size()>0) {
+          //      if (getListadoAutoridadSan().get(0).getFec_fin().after(new Date()) || getListadoAutoridadSan().get(0).getFec_fin().equals(new Date())){
+          //          envelope.setContents("La fecha de inicio en el cargo debe ser diferente y menor a la fecha de finalizacion del ultimo cargo");
+          //          return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+          //      }
+          //  }else
+          //  {
                 // VALIDACION DE LA EXISTENCIA DEL TRABAJADOR CON DISTINTO TIPO DE DOCUMENTO
                 if (nuevo.getDocumentoidentidad().getCodigo()!=1){
                 Criteria c = session.createCriteria(Trabajador.class);
@@ -531,9 +506,9 @@ public class TrabajadorNuevo extends GeneralPage {
                 }
                 envelope.setContents("Alta del trabajador se realizo satisfactoriamente.");
                 return Busqueda.class;
-            }
+            //}
+        //return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody()).add("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());            
         }
-        return new MultiZoneUpdate("trabajadorNuevoZone", trabajadorNuevoZone.getBody()).add("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
     void seteanuevousuario(Usuario usuarionuevo) {
@@ -729,7 +704,7 @@ public class TrabajadorNuevo extends GeneralPage {
         try {
             ServicioReniec treniec = new ServicioReniec();
             treniec.obtenerToken();
-            if (treniec.validarToken()==true){
+            if (treniec.validarToken(session)==true){
                   System.out.println("BUSCAR DNI");
                   //  Buscamos DNI
                   List<String> result = treniec.obtenerResultado(nuevo.getNroDocumento());
@@ -740,7 +715,7 @@ public class TrabajadorNuevo extends GeneralPage {
                       parametro.setNroConsultasActuales(parametro.getNroConsultasActuales()-1);
                       session.saveOrUpdate(parametro);
 
-                  if (treniec.validarEstadoConsulta(result.get(0))==true){                      
+                  if (treniec.validarEstadoConsulta(result.get(0),session)==true){                      
                   // VALIDACIONES PRE CARGA DE LA ENTIDAD 
                         Date fechaInicial,fechaWS;
                         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
@@ -755,7 +730,7 @@ public class TrabajadorNuevo extends GeneralPage {
                         
 
                   //ASIGNACION DEL USUARIO DEL WS A ENTIDAD
-                      treniec.cargarTrabajador(result);
+                      treniec.cargarTrabajador(result,session);
                       nuevo = treniec.getTrabajadorWS(); //****************
                       nuevo.setDocumentoidentidad(temporalTipoDNI);
 
@@ -786,5 +761,31 @@ public class TrabajadorNuevo extends GeneralPage {
         return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
     
-    
+        public Boolean getFechaAntiguoCargo(){
+        Criteria c = session.createCriteria(CargoAsignado.class);
+        c.add(Restrictions.eq("trabajador", nuevo));
+        c.add(Restrictions.eq("estado", false));
+        if (c.list().isEmpty()){return Boolean.TRUE;}
+        c.setProjection(Projections.max("fec_fin"));
+        Date fecha_fin = (Date)c.uniqueResult();
+        
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha1 = new Date();
+                    try {
+                        fecha1 = (Date) formatoDelTexto.parse(fechaingreso);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+            
+           System.out.println("FECHAX2 "+fecha1+" - "+fecha_fin);         
+                
+           if (fecha1.after(fecha_fin)){
+               System.out.println("FECHAXX TRUE");
+           return Boolean.TRUE;           
+           }else{
+           return Boolean.FALSE;
+           }
+    }
+        
+        
 }
