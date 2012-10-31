@@ -124,102 +124,7 @@
    
     <div t:type="zone" t:id="listaConsultaSancionZone" class="selectform" >
         <t:form t:id="formconsultaSancion" >
-          <t:if test="mostrar_reglab">
-              <t:if test="entidadsubentidad">
-                  <label>N1</label>
-               <t:grid source="busquedaSancionados" 
-                            rowsPerPage="10" 
-                            t:add="Nombres,Acciones" 
-                            pagerPosition="bottom"
-                            row="cs"
-                            include="tipo_sancion,tiempo_restante,estado"
-                            reorder="Nombres,tipo_sancion,tiempo_restante,estado,Acciones"
-                            
-                            inPlace="true">
-                       <t:parameter name="empty">
-                          <div class="no-info">No se encontro coincidencias</div>
-                       </t:parameter>
-                        <p:nombresCell>
-                            <t:if test="${cs.estrabajador}">
-                                ${cs.b_datos_trabajador}
-                            </t:if>
-                            <t:if test="${cs.estrabajador}" negate="true">
-                                ${cs.b_datos_persona}
-                            </t:if>    
-                        </p:nombresCell>
-                        <p:accionesCell>
-                            
-                            <t:if test="SancionAnulada">
-                                <t:if test="${cs.veditar_anular}" negate="true">
-                                    <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
-                                |
-                                </t:if> 
-                            <t:if test="v_editar">
-                                <t:if test="${cs.veditar}">
-                                <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
-                                    |
-                                </t:if>
-                            </t:if>
-                            </t:if>    
-                                    <a t:context="cs" t:zone="listaConsultaSancionZone">
-                                        <span t:type="any" >
-                                            Imprimir
-                                        </span> 
-                                    </a>                      
-                        </p:accionesCell>
-                       
-            </t:grid>
-            <div class="f-right"><b>${nro_sanciones}  Registros.</b></div><br/> 
-            </t:if>
-                <t:if test="entidadsubentidad" negate="true">
-                                     <label>N2</label>
-                    <t:grid source="busquedaSancionados" 
-                                    rowsPerPage="10" 
-                                    t:add="Nombres,Acciones" 
-                                    pagerPosition="bottom"
-                                    row="cs"
-                                    include="Entidad_SubEntidad,tipo_sancion,tiempo_restante,estado"
-                                    reorder="Nombres,Entidad_SubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
-                                    
-                                    inPlace="true">
-                            <t:parameter name="empty">
-                                <div class="no-info">No se encontro coincidencias</div>
-                            </t:parameter>
-                                <p:nombresCell>
-                                    <t:if test="${cs.estrabajador}">
-                                        ${cs.b_datos_trabajador}
-                                    </t:if>
-                                    <t:if test="${cs.estrabajador}" negate="true">
-                                        ${cs.b_datos_persona}
-                                    </t:if>    
-                                </p:nombresCell>    
-                                <p:accionesCell>
-                                    <t:if test="SancionAnulada">
-                                        <t:if test="${cs.veditar_anular}" negate="true">
-                                            <a t:type="pagelink" t:page="AnularSancion" t:context="cs_sinreglab.id_sancion" href="#">Anular</a>
-                                        |
-                                        </t:if>
-                                    <t:if test="v_editar">
-                                        <t:if test="${cs.veditar}">
-                                            <a t:type="pagelink" t:page="ABMSancion" t:context="cs.id_sancion" href="#">Editar</a>
-                                            |
-                                        </t:if>
-                                    </t:if>
-                                    </t:if>    
-                                            <a t:context="cs" t:zone="listaConsultaSancionZone">
-                                                <span t:type="any" >
-                                                    Imprimir
-                                                </span> 
-                                            </a>                      
-                                </p:accionesCell>
-
-                    </t:grid>
-                    <div class="f-right"><b>${nro_sanciones} Registros.</b></div><br/> 
-                </t:if>
-          </t:if>
-          <t:if test="mostrar_reglab" negate="true">
-              <t:if test="entidadsubentidad">
-                 <label>N3</label>                  
+              <t:if test="entidadsubentidad">                
                <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
                             t:add="Nombres,Acciones" 
@@ -255,10 +160,6 @@
                                     </t:if>    
                                 </t:if>    
                             </t:if>    
-                            <!--<t:if test="${veditar}" negate="true">-->
-                                
-                            <!--</t:if>-->
-                            <!--<t:if test="${veliminar}">  --> 
                                     <a t:context="cs_sinreglab" t:zone="listaConsultaSancionZone">
                                         <span t:type="any" >
                                             Imprimir
@@ -269,8 +170,7 @@
             </t:grid>  
             <div class="f-right"><b>${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>
-            <t:if test="entidadsubentidad" negate="true">
-                 <label>N4</label>                 
+            <t:if test="entidadsubentidad" negate="true">                
                 <t:grid source="busquedaSancionadossinreglab" 
                             rowsPerPage="10" 
                             t:add="Nombres,EntidadSubEntidad,Acciones" 
@@ -309,10 +209,6 @@
                                     </t:if>    
                                 </t:if>    
                             </t:if>    
-                            <!--<t:if test="${veditar}" negate="true">-->
-                                
-                            <!--</t:if>-->
-                            <!--<t:if test="${veliminar}">  --> 
                                     <a t:context="cs_sinreglab" t:zone="listaConsultaSancionZone">
                                         <span t:type="any" >
                                             Imprimir
@@ -323,7 +219,14 @@
                 </t:grid>
                 <div class="f-right"><b> ${nro_sanciones_sinreglab} Registros.</b></div><br/> 
             </t:if>  
-          </t:if>  
+ 
+            
+            
+ 
+          
+        </t:form>    
+    </div>
+   <div t:type="zone" t:id="exportarZone">
           <t:if test="bmostrarexportar">  
             <div class="f-left">  
             <t:if test="bmostrar">
@@ -337,14 +240,11 @@
             </div>
             <div class="f-left">  
             <t:if test="vexportar">
-                <label> | <a t:type="actionlink" t:id="returnstreamresponse" href="#">Descargar Exportación</a></label>
+                <label> | <a t:type="actionlink" t:id="returnstreamresponse" href="#"> Descargar Exportación</a></label>
             </t:if> 
-            </div>     
+            </div>
           </t:if>  
-          
-        </t:form>    
-    </div>
-    
+   </div>   
       <div t:type="zone" t:id="mensajeZone" class="abmform" t:update="show">
         <script>
             setTimeout(function(){ jQuery("#ok_msg").animate({ top:"+=40px",height:"35px",opacity:0 }).fadeOut(1000);},4000);

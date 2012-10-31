@@ -398,9 +398,9 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getTipo_doc_identidad()));
                 celda= fila.createCell((short)2);
                 if(cr.getEstrabajador()==true){
-                    celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
+                    celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador 
                 }else{
-                    celda.setCellValue(leoCampo(cr.getNro_doc_trabajador()));  //Nro documento trabajador
+                    celda.setCellValue(leoCampo(cr.getNro_doc_persona())); //Nro docuento persona
                 }
                 celda= fila.createCell((short)3);
                 celda.setCellValue(leoCampo(cr.getEntidad_subentidad()));
