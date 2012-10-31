@@ -50,8 +50,8 @@ public class LkBusquedaSancion implements Serializable {
     private String b_datos_persona;
     private String b_datos_trabajador;
     private Boolean estrabajador;
-    private Long veditar;
-    private Long veditar_anular;
+    private Boolean veditar;
+    private Boolean veditar_anular;
     private String cargo;
     private String tipo_doc_notifica;
     private String tipo_doc_sanciona;
@@ -86,6 +86,22 @@ public class LkBusquedaSancion implements Serializable {
 
     public void setEstrabajador(Boolean estrabajador) {
         this.estrabajador = estrabajador;
+    }
+
+    public Boolean getVeditar() {
+        return veditar;
+    }
+
+    public void setVeditar(Boolean veditar) {
+        this.veditar = veditar;
+    }
+
+    public Boolean getVeditar_anular() {
+        return veditar_anular;
+    }
+
+    public void setVeditar_anular(Boolean veditar_anular) {
+        this.veditar_anular = veditar_anular;
     }
 
     
@@ -289,13 +305,6 @@ public class LkBusquedaSancion implements Serializable {
         this.b_datos_trabajador = b_datos_trabajador;
     }
 
-    public Long getVeditar_anular() {
-        return veditar_anular;
-    }
-
-    public void setVeditar_anular(Long veditar_anular) {
-        this.veditar_anular = veditar_anular;
-    }
 
     public String getTipo_doc_notifica() {
         return tipo_doc_notifica;
@@ -311,15 +320,6 @@ public class LkBusquedaSancion implements Serializable {
 
     public void setTipo_doc_sanciona(String tipo_doc_sanciona) {
         this.tipo_doc_sanciona = tipo_doc_sanciona;
-    }
-
-
-    public Long getVeditar() {
-        return veditar;
-    }
-
-    public void setVeditar(Long veditar) {
-        this.veditar = veditar;
     }
 
 
