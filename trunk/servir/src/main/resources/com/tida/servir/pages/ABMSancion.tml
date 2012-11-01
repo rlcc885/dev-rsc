@@ -65,7 +65,7 @@
                     <div class="f-left">
                         <label>* Número de Documento</label>
                         <input t:type="TextField" t:id="numero_documento" t:value="nuevapersona.nroDocumento" size="30" t:disabled="${bmostrar}"
-                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnumerodocumentoChanged" t:zone="busquedaZone" t:validate="regexp,required"/>
+                               t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="bnumerodocumentoChanged" t:zone="busquedaZone" t:validate="required"/>
                     </div>
                     <t:if test="bmostrar" negate="true">
                         <t:eventLink t:event="buscarpersona" href="#" class="iconsearch"  t:zone="busquedaZone">                           
@@ -306,7 +306,9 @@
                         t:validate="maxLength=500"/>
                 <br />
                 <i>(Máximo 500 caracteres)</i>
-              </div>               
+              </div>
+
+
             </fieldset>  
             <div class="f-wrap">
                 <t:envelope t:id="envelope"/>
@@ -341,7 +343,9 @@
                     </t:eventLink>
                 </t:if>
             </div>
-           
+               <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+               </div>            
           </form>
         </t:zone>
         
