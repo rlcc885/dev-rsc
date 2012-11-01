@@ -434,6 +434,9 @@
                                 </t:if>
                         </t:if>
                     </div>
+               <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+               </div>                      
                 </t:form>
             </t:if>
         </div>
