@@ -41,7 +41,7 @@ public ServicioReniec(String token){
 }
 
 @Log
-public Boolean validarToken()
+public Boolean validarToken(Session session)
  {
      System.out.println("estado del TOKEN : "+token);
      
@@ -57,9 +57,9 @@ public Boolean validarToken()
  }
 
 @Log
-public void cargarTrabajador(List<String> resultado) throws ParseException{
+public void cargarTrabajador(List<String> resultado,Session session) throws ParseException{
 
-if (validarEstadoConsulta(resultado.get(0))==true)
+if (validarEstadoConsulta(resultado.get(0),session)==true)
 {
     for (int i=0;i<resultado.size();i++)
     {
@@ -92,7 +92,7 @@ if (validarEstadoConsulta(resultado.get(0))==true)
     
 }
 @Log
-public Boolean validarEstadoConsulta(String estado){
+public Boolean validarEstadoConsulta(String estado,Session session){
 
     System.err.println("estado validar consulta: "+estado);
     
