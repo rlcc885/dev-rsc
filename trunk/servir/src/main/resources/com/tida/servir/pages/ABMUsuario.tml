@@ -301,12 +301,15 @@
                                 </t:eventLink>
                             </t:if>
                         </div>
+                   <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+               </div>                         
                     </t:form>
                 </div>
             </div>
         </t:if>
     </t:zone>
-    
+
     
     <t:zone t:id="perfilZone">
         <t:if test="muestraEditorUsuario" negate="true">
