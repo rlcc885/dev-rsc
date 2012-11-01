@@ -461,6 +461,7 @@ public class AMUnidadOrganica extends GeneralPage {
 //                        c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()));
                         c.add(Restrictions.disjunction().add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()).ignoreCase()));
                         c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
+                        c.add(Restrictions.eq("estado", Boolean.TRUE));
                         if (c.list().size() > 0) {
                             formmensaje.recordError("Denominación existente para la entidad: "
                                     + ((UnidadOrganica) c.list().get(0)).getDen_und_organica());
