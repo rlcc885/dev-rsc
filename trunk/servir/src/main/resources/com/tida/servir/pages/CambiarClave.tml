@@ -63,7 +63,11 @@
                             <div class="f-right">
                                 <input t:type="Submit" t:id="reset" t:mixins="confirm"  value="Limpiar Formulario" class="button" t:message="Desea ejecutar esta acción?" />
                             </div>
+                         <div class="f-left">
+                            (*) Campos Obligatorios
+                        </div> 
                         </div>
+                       
                     </t:if>
                 </t:form>
             </t:zone>
