@@ -291,7 +291,10 @@ public class ABMSancion  extends GeneralPage
         System.out.println("llegooooo"+modificasancion);
         if(modificasancion!=null){
             System.out.println("llegooooo"+modificasancion.getId());
-            nuevasancion=modificasancion;            
+            nuevasancion=modificasancion;
+            if (nuevasancion.getEstrabajador()==Boolean.FALSE){
+            nuevapersona = nuevasancion.getPersona();
+            }
             modificasancion=null;
             mostrar();
             editando=true;
@@ -308,8 +311,9 @@ public class ABMSancion  extends GeneralPage
 //    Object onActivate(){
 //        return zonasDatos();
 //    }
-    
+    @Log
     void mostrar(){
+        System.out.println("MOSTRARX");
         limpiarbusqueda();
         limpiarsancion();
         if(nuevasancion.getEstrabajador()){
@@ -333,6 +337,10 @@ public class ABMSancion  extends GeneralPage
             bmostrar=false;
             mostrardocu=false;
             bdocidentidad=nuevasancion.getPersona().getDocumentoidentidad();
+            System.out.println("IDX"+nuevasancion.getPersona().getId());
+            Criteria c = session.createCriteria(Persona_Sancion.class);
+            c.add(Restrictions.eq("id", nuevasancion.getPersona().getId()));
+            nuevapersona = (Persona_Sancion)c.uniqueResult();
             nuevapersona.setNroDocumento(nuevasancion.getPersona().getNroDocumento());
             nuevapersona.setNombres(nuevasancion.getPersona().getNombres());            
             nuevapersona.setApellidoPaterno(nuevasancion.getPersona().getApellidoPaterno());            
@@ -503,7 +511,7 @@ public class ABMSancion  extends GeneralPage
         try {
             ServicioReniec sre=new ServicioReniec();
             sre.obtenerToken();
-            if(sre.validarToken()){
+            if(sre.validarToken(session)){
                 List<String> listare= sre.obtenerResultado(nuevapersona.getNroDocumento());
                 // DISMINUCION DE NRO DE PETICIONES
                 usuario.getEntidad().setPeticiones_ws_Reniec(usuario.getEntidad().getPeticiones_ws_Reniec()-1);
@@ -511,7 +519,7 @@ public class ABMSancion  extends GeneralPage
                 parametro.setNroConsultasActuales(parametro.getNroConsultasActuales()-1);
                 session.saveOrUpdate(parametro);
                 
-                if (sre.validarEstadoConsulta(listare.get(0))){
+                if (sre.validarEstadoConsulta(listare.get(0),session)){
                     nuevapersona.setNombres(listare.get(4));
                     nuevapersona.setApellidoPaterno(listare.get(1));
                     nuevapersona.setApellidoMaterno(listare.get(2));
@@ -904,12 +912,21 @@ public class ABMSancion  extends GeneralPage
     @Log
     @CommitAfter
     Object onSuccessFromformsancion(){ 
+        
         formsancion.clearErrors();
         if(elemento==1){
             return new MultiZoneUpdate("sancionZone", sancionZone.getBody());
         }else{
         
-        
+            // VALIDACION DEL DOCUMENTO DE IDENTIDAD
+        if (bdocidentidad.getCodigo()==1){
+            if(nuevapersona.getNroDocumento().length()>8){ 
+                formsancion.recordError("El número de documento debe tener 8 dígitos (y solo números)");   return zonasDatos();}
+            try { Integer.parseInt(nuevapersona.getNroDocumento());} catch (NumberFormatException ex) {
+                formsancion.recordError("El número de documento debe tener 8 dígitos (y solo números)");  return zonasDatos(); }      
+        }
+            
+            
         if (fechadocnot != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -1028,11 +1045,12 @@ public class ABMSancion  extends GeneralPage
         }
             
         
-        if(bestrabajador){
+        if(bestrabajador){           
             nuevasancion.setEstrabajador(true);
         }else{
             
             if(nuevasancion.getPersona()!=null){
+//                System.out.println("PERSONA "+modificasancion.getPersona().getId()+" - "+nuevapersona.getId());
                 nuevasancion.setEstrabajador(false);
                 session.saveOrUpdate(nuevapersona);  
                 session.flush();
@@ -1050,6 +1068,8 @@ public class ABMSancion  extends GeneralPage
                 nuevasancion.setPersona(nuevapersona);
             }            
         }
+        
+
 //        TipoSancion tiposa=new TipoSancion();
 //        tiposa=(TipoSancion) session.load(TipoSancion.class, tiposancion.getId_tipo());
         nuevasancion.setCategoria_sancion(categoriasancion);
