@@ -287,7 +287,7 @@
         <div t:type="zone" t:id="trabajadorZone" t:update="show">
             <t:if test="mostrar">
                 <t:if test="btitulari">
-                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="acciones" pagerPosition="bottom" row="titulart" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -297,7 +297,7 @@
                     </t:grid>
                 </t:if>
                 <t:if test="bjefeRRHHi">
-                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jeferrhht" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="acciones" pagerPosition="bottom" row="jeferrhht" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
@@ -307,7 +307,7 @@
                     </t:grid> 
                 </t:if>
                 <t:if test="bjefeOGAi">    
-                    <t:grid source="trabajadores" rowsPerPage="10" t:add="Acciones" pagerPosition="bottom" row="jefeogat" include="nombretrabajador" inPlace="true">
+                    <t:grid source="trabajadores" rowsPerPage="10" t:add="acciones" pagerPosition="bottom" row="jefeogat" include="nombretrabajador" inPlace="true">
                         <t:parameter name="empty">
                             <div class="no-info">No hay Trabajadores encontrados</div>
                         </t:parameter>
