@@ -99,7 +99,7 @@ public class CargosGrilla {
           c.addOrder(Order.desc("fec_inicio"));
    //       c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
           System.out.println("NROREGX"+c.list().size());
-        //  c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           nroregistros = Integer.toString(c.list().size());
           return c.list();
           
