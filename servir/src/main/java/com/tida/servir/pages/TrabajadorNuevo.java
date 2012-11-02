@@ -22,7 +22,6 @@ import org.apache.tapestry5.services.Request;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 //@IncludeStylesheet({"context:layout/trabajadornuevo.css"})
@@ -385,19 +384,12 @@ public class TrabajadorNuevo extends GeneralPage {
         c2.add(Restrictions.eq("nrodocumento", nuevo.getNroDocumento()));
         c2.add(Restrictions.eq("estado", false));
         
-        if(c2.list().isEmpty()){
-            if (getFechaAntiguoCargo()== Boolean.FALSE){
-            formulariomensajes.recordError("La fecha de ingreso debe ser mayor a la fecha de finalizacion del cargo anterior.");
-            return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());            }
-        }
-            
-          //  if (getListadoAutoridadSan().size()>0) {
-          //      if (getListadoAutoridadSan().get(0).getFec_fin().after(new Date()) || getListadoAutoridadSan().get(0).getFec_fin().equals(new Date())){
-          //          envelope.setContents("La fecha de inicio en el cargo debe ser diferente y menor a la fecha de finalizacion del ultimo cargo");
-          //          return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());
-          //      }
-          //  }else
-          //  {
+//        if(c2.list().isEmpty()){
+//            if (getFechaAntiguoCargo()== Boolean.FALSE){
+//            formulariomensajes.recordError("La fecha de ingreso debe ser mayor a la fecha de finalizacion del cargo anterior.");
+//            return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());            }
+//        }
+        
                 // VALIDACION DE LA EXISTENCIA DEL TRABAJADOR CON DISTINTO TIPO DE DOCUMENTO
                 if (nuevo.getDocumentoidentidad().getCodigo()!=1){
                 Criteria c = session.createCriteria(Trabajador.class);
@@ -412,6 +404,27 @@ public class TrabajadorNuevo extends GeneralPage {
                     
                 }
                 }
+                if (fechaingreso != null) {
+                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fecha;
+                    try {
+                        fecha = (Date) formatoDelTexto.parse(fechaingreso);
+                        if (getListadoAutoridadSan().size()>0) {
+                            if (fecha.before(getListadoAutoridadSan().get(0).getFec_fin()) || fecha.equals(getListadoAutoridadSan().get(0).getFec_fin())){
+                                envelope.setContents("La fecha de inicio en el cargo debe ser diferente y mayor a la fecha de finalizacion del ultimo cargo");
+                                return new MultiZoneUpdate("listaentidadZone", listaentidadZone.getBody()).add("mensajesZone", mensajesZone.getBody());
+                            }else{
+
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                
+                
+                
+                
                 //Guardar Cargo Asignado 
                 cargoAsignado = new CargoAsignado();
                 Usuario usuarionuevo = new Usuario();
@@ -761,31 +774,31 @@ public class TrabajadorNuevo extends GeneralPage {
         return new MultiZoneUpdate("datosPersonalesZone", datosPersonalesZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
     
-        public Boolean getFechaAntiguoCargo(){
-        Criteria c = session.createCriteria(CargoAsignado.class);
-        c.add(Restrictions.eq("trabajador", nuevo));
-        c.add(Restrictions.eq("estado", false));
-        if (c.list().isEmpty()){return Boolean.TRUE;}
-        c.setProjection(Projections.max("fec_fin"));
-        Date fecha_fin = (Date)c.uniqueResult();
-        
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
-        Date fecha1 = new Date();
-                    try {
-                        fecha1 = (Date) formatoDelTexto.parse(fechaingreso);
-                    } catch (ParseException ex) {
-                        ex.printStackTrace();
-                    }
-            
-           System.out.println("FECHAX2 "+fecha1+" - "+fecha_fin);         
-                
-           if (fecha1.after(fecha_fin)){
-               System.out.println("FECHAXX TRUE");
-           return Boolean.TRUE;           
-           }else{
-           return Boolean.FALSE;
-           }
-    }
+//        public Boolean getFechaAntiguoCargo(){
+//        Criteria c = session.createCriteria(CargoAsignado.class);
+//        c.add(Restrictions.eq("trabajador", nuevo));
+//        c.add(Restrictions.eq("estado", false));
+//        if (c.list().isEmpty()){return Boolean.TRUE;}
+//        c.setProjection(Projections.max("fec_fin"));
+//        Date fecha_fin = (Date)c.uniqueResult();
+//        
+//        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+//        Date fecha1 = new Date();
+//                    try {
+//                        fecha1 = (Date) formatoDelTexto.parse(fechaingreso);
+//                    } catch (ParseException ex) {
+//                        ex.printStackTrace();
+//                    }
+//            
+//           System.out.println("FECHAX2 "+fecha1+" - "+fecha_fin);         
+//                
+//           if (fecha1.after(fecha_fin)){
+//               System.out.println("FECHAXX TRUE");
+//           return Boolean.TRUE;           
+//           }else{
+//           return Boolean.FALSE;
+//           }
+//    }
         
         
 }
