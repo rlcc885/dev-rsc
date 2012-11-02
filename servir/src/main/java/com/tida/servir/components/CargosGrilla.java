@@ -104,7 +104,14 @@ public class CargosGrilla {
           return c.list();
           
     }
-
+    public Boolean getEstadoCargo(){
+        System.out.println("MODESTADOX");
+    if (ca.getEstado()==Boolean.FALSE || ca.getCargoxunidad().getDen_cargo().equals("SIN CARGO")){
+        return Boolean.FALSE;
+    }
+    return Boolean.TRUE;
+    
+    }
     @Persist
     @Property
     private String nroregistros;
