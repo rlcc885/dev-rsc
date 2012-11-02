@@ -22,6 +22,7 @@ import org.apache.tapestry5.services.Context;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 /**
  *
@@ -89,14 +90,16 @@ public class CargosGrilla {
             veliminar = true;
         }
     }
-
+    @Log
     public List<CargoAsignado> getCargosAsignados() {
           Criteria c = session.createCriteria(CargoAsignado.class);
           c.createAlias("legajo", "legajo");
           c.add(Restrictions.eq("trabajador", actual));
           c.add(Restrictions.eq("legajo.entidad", _oi));
-          c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
-          c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+          c.addOrder(Order.desc("fec_inicio"));
+   //       c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
+          System.out.println("NROREGX"+c.list().size());
+        //  c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
           nroregistros = Integer.toString(c.list().size());
           return c.list();
           
