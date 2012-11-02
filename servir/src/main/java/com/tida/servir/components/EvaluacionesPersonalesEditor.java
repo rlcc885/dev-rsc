@@ -148,7 +148,7 @@ public class EvaluacionesPersonalesEditor {
          c.add(Restrictions.eq("trabajador", actual));
       //   c.add(Restrictions.eq("legajo.entidad", _oi));
          c.add(Restrictions.eq("estado", Boolean.TRUE));
-     //    c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+         c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 //         List result = c.list();
 //         cargoasignado=(CargoAsignado) result.get(0); 
          cargoasignado = (CargoAsignado)c.uniqueResult();
@@ -162,7 +162,7 @@ public class EvaluacionesPersonalesEditor {
         
         System.out.println("aaaaaaaaaaaaaa"+cargoasignado);
         c.add(Restrictions.eq("cargoasignado",cargoasignado));
-     //   c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         nroregistros = Integer.toString(c.list().size());        
         return c.list();
     }
