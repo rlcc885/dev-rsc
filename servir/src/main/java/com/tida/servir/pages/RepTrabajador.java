@@ -757,13 +757,13 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosTrabajador) {
             if (_trabajadorRep == null) throw new Exception("Error en categoría Trabajador");
             parametros.put("MandatoryParameter_TrabajadorID", _trabajadorRep.getId());
-            if (tipoReporteSelect.getFormato() == 0)
+            if (tipoReporteSelect.getFormato() == 0 && entidadTraba != null)
                 parametros.put("MandatoryParameter_EntidadID", entidadTraba.getId());
         }
         if(mostrarFiltrosEntidad) {
             if (_entidadRep == null) throw new Exception("Error en categoría Entidad");
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
-            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep.getId());
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep != null? unidadRep.getId() : null);
         }
         if(mostrarFiltrosUsuario) {
             if (_usuarioRep == null) throw new Exception("Error en categoría Sistema");
@@ -774,7 +774,13 @@ public class RepTrabajador extends GeneralPage {
             parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         }
         if(mostrarFiltrosGobierno) {
-            throw new Exception("Error en categoría Consolidados");
+            if (snivelGobierno == null) throw new Exception("Error en categoría Consolidados");
+            parametros.put("MandatoryParameter_NivelGobierno", snivelGobierno.getCodigo());
+            parametros.put("MandatoryParameter_OrgEstado", sorganizacionestado != null? sorganizacionestado.getCodigo() : null);
+            parametros.put("MandatoryParameter_Sector", ssectorGobierno != null? ssectorGobierno.getCodigo() : null);
+            parametros.put("MandatoryParameter_TipoOrg", stipoOrganismo != null? stipoOrganismo.getCodigo() : null);
+            parametros.put("MandatoryParameter_EsSubEntidad", bessubentidad);
+            parametros.put("MandatoryParameter_TipoSubEntidad", stipoSubEntidad != null? stipoSubEntidad.getCodigo() : null);
         }
         if(mostrarFiltrosSancion) {
             throw new Exception("Error en categoría Sanciones");
@@ -944,7 +950,7 @@ public class RepTrabajador extends GeneralPage {
         } else {
             if (dato.getValor().equalsIgnoreCase("PODER EJECUTIVO")) {
                 sectorBool = true;
-                organoBool = false;
+                organoBool = true;
             } else {
                 sectorBool = false;
                 organoBool = false;
@@ -958,11 +964,11 @@ public class RepTrabajador extends GeneralPage {
     @Log
     Object onValueChangedFromSsectorgobierno(DatoAuxiliar dato) {
         if (dato == null) {
-            organoBool = false;
+            organoBool = true;
         } else {
             organoBool = true;
         }
-        stipoOrganismo = null;
+//        stipoOrganismo = null;
         return new MultiZoneUpdate("gobiernoZone", gobiernoZone.getBody());
     }
 
