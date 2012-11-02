@@ -10,7 +10,8 @@
     </div>
     <div id="header3">
         <span style="color:#fff; font-size:13px;"><b>${actual.apellidoPaterno}  ${actual.apellidoMaterno} ${actual.nombres} </b></span>
-    </div>          
+    </div> 
+    <t:if test="sinCargo">
       <div id = "Datos_Generales">          
            <div id= "basicosTrabajador">               
            </div>
@@ -36,6 +37,7 @@
             </div>  
         </div>
     </div>
+    </t:if>
     <script>
         <!--
    // perform JavaScript after the document is scriptable.
