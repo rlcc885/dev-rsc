@@ -678,15 +678,15 @@ public class RepTrabajador extends GeneralPage {
         Criteria c = session.createCriteria(Usuario.class);
         boolean ok = true;
         if (nombreUsuario != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + nombreUsuario + "%").ignoreCase()).add(Restrictions.like("nombres", "%" + nombreUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", "%" + nombreUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (apePaUsuario != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apePaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apePaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno",  "%" + apePaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", "%" + apePaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", "%" + apePaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (apeMaUsuario != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", "%" +  apeMaUsuario + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", "%" + apeMaUsuario.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", "%" + apeMaUsuario.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (valdocumentousu != null) {
