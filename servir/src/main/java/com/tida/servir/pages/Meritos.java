@@ -2,6 +2,7 @@ package com.tida.servir.pages;
 
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.Entidad;
+import com.tida.servir.entities.LkBusquedaTrabajador;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 import com.tida.servir.entities.UsuarioAcceso;
@@ -13,8 +14,10 @@ import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Clase que maneja la pagina de modificacion de un Trabajador
@@ -76,8 +79,20 @@ public class Meritos extends GeneralPage {
         if (actual == null) {
             actual = _usuario.getTrabajador();
         }
+        
+        Criteria c3 = session.createCriteria(LkBusquedaTrabajador.class);
+        c3.add(Restrictions.eq("id", actual.getId()));
+        if (c3.list().isEmpty()){
+        sinCargo = Boolean.FALSE;
+        }
+        else{
+            sinCargo = Boolean.TRUE;
+        }
     }
-
+    @Persist
+    @Property
+    private Boolean sinCargo;
+    
     public Meritos() {
     }
 
