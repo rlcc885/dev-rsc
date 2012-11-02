@@ -96,10 +96,9 @@ public class CargosGrilla {
           c.createAlias("legajo", "legajo");
           c.add(Restrictions.eq("trabajador", actual));
           c.add(Restrictions.eq("legajo.entidad", _oi));
-          c.addOrder(Order.desc("fec_inicio"));
-   //       c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
-          System.out.println("NROREGX"+c.list().size());
+//          c.add(Restrictions.ne("estado", CargoAsignado.ESTADO_BAJA));
           c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+          c.addOrder(org.hibernate.criterion.Order.asc("fec_inicio"));
           nroregistros = Integer.toString(c.list().size());
           return c.list();
           

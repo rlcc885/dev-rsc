@@ -2,7 +2,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
         <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
-    <h1>${texto}</h1>
+    <h2 style="font-size: 14px;">${texto}</h2>
     <div class="box-background-title">
         <span class="box-title-01">
             Suspensión
@@ -72,7 +72,7 @@
                             <div class="f-left">
                                 <label>* Número de Documento</label>
                                 <input t:type="TextField" t:id="num_docnoti"
-                                        t:value="nuevasuspension.numdocnoti" size="30" t:validate="required,maxlength=15"/>
+                                        t:value="nuevasuspension.numdocnoti" size="30" t:validate="required,maxlength=35"/>
                             </div>
                             <div class="f-left">
                                 <label>* Fecha del Documento</label>
@@ -80,9 +80,11 @@
                             </div>
                         </div>
                         <div class="f-wrap">
-                            <label>Juzgado</label>
-                            <input t:type="TextField" t:id="juzgado_noti"
-                                        t:value="nuevasuspension.juzgadonoti" size="60" t:validate="maxlength=50"/>
+                            <label>Juzgado</label>                            
+                            <input t:type="TextArea" t:id="juzgado_noti" t:value="nuevasuspension.juzgadonoti" style="width: 400px;" rows="4" 
+                            t:validate="maxLength=500"/>
+                            <br />
+                            <i>(Máximo 500 caracteres)</i>
                         </div>                        
                     </fieldset>                    
                 </fieldset>
@@ -110,7 +112,7 @@
                         <div class="f-left">
                             <label>Número de Documento</label>
                             <input t:type="TextField" t:id="num_docfin"
-                                    t:value="nuevasuspension.numdocfin" size="30" t:validate="maxlength=15"/>
+                                    t:value="nuevasuspension.numdocfin" size="30" t:validate="maxlength=35"/>
                         </div>
                         <div class="f-left">
                             <label>Fecha del Documento</label>
@@ -137,19 +139,17 @@
                         </div>
                         <div class="f-wrap">
                             <label>Juzgado</label>
-                            <input t:type="TextField" t:id="juzgado_notf"
-                                        t:value="nuevasuspension.juzgadonotf" size="60" t:validate="maxlength=50"/>
+                            <input t:type="TextArea" t:id="juzgado_notf" t:value="nuevasuspension.juzgadonotf" style="width: 400px;" rows="4" 
+                            t:validate="maxLength=500"/>
+                            <br />
+                            <i>(Máximo 500 caracteres)</i>
                         </div>                        
                     </fieldset>
                 </fieldset>
-                <fieldset>
-                    <legend>Observaciones</legend>
-                    <input t:type="TextArea" t:id="observaciones" t:value="nuevasuspension.observacion" style="width: 350px;" rows="5" 
-                        t:validate="maxLength=500"/>
-                    <br />
-                    <i>(Máximo 500 caracteres)</i>
-                </fieldset>
                 <div class="actions">
+                    <div class="f-left">
+                            (*) Campos Obligatorios
+                    </div>
                     <t:if test="${vregistrar}">
                         <t:if test="${editando}" negate="true">
                             <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>

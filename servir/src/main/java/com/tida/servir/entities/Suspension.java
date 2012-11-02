@@ -50,7 +50,6 @@ public class Suspension implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha_docnotf;
     private String juzgadonotf;
-    private String observacion;
 
     public long getId() {
         return id;
@@ -154,14 +153,6 @@ public class Suspension implements Serializable {
 
     public void setNumdocnoti(String numdocnoti) {
         this.numdocnoti = numdocnoti;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
     }
 
 //    public Sancion getSancion() {

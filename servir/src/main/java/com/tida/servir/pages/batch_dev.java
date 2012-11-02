@@ -152,7 +152,11 @@ public class batch_dev  extends GeneralPage {
 
 			@Override
 			public void prepareResponse(Response response) {
-                                File fileADescargar = new File(STARTPATH+"/formatos.zip");
+                                File fileADescargar;
+                                if(_usuario.getRolid()==2)
+                                     fileADescargar= new File(STARTPATH+"FormatosAdmEntidad.zip");
+                                else
+                                     fileADescargar= new File(STARTPATH+"FormatosAdmServir.zip");
                                 
                                 try {
                                     inputStream = new FileInputStream(fileADescargar);
@@ -188,7 +192,7 @@ public class batch_dev  extends GeneralPage {
 
 			@Override
 			public void prepareResponse(Response response) {
-                                File fileADescargar = new File(STARTPATH+"/formatostabla.zip");
+                                File fileADescargar = new File(STARTPATH+"TablasAuxiliaresRSC.xls");
                                 
                                 try {
                                     inputStream = new FileInputStream(fileADescargar);
