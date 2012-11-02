@@ -251,9 +251,14 @@
         <div t:type="zone" t:id="botonesZone" t:update="show">
             <t:if test="${veditar}" negate="true" >
                 <t:form t:id="formulariobotones" zone="botonesZone">
-                    <div class="f-wrap">
+                    <div class="f-wrap actions">
                         <input t:type="Submit" t:id="guardarentidad" value="Guardar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?"/>
-                        <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" /> 
+                     <!--   <input t:type="Submit" t:id="cancel" value="Cancelar" class="button f-right" t:mixins="confirm" t:message="¿Está seguro de ejecutar esta acción?" />  -->
+                        <t:eventLink t:event="cancelar" href="#" class="button f-right">
+                            <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta accion?">
+                            Cancelar             
+                            </span>
+                        </t:eventLink>    
                     </div>
                 </t:form>
             </t:if>
