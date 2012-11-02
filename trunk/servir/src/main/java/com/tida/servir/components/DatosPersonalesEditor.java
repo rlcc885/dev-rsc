@@ -94,10 +94,15 @@ public class DatosPersonalesEditor {
         new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_DATOS_PERSONALES);
         return null;
     }
+    @Log
+   void onActivate(){
+    System.out.println("PERSONALACTIVATE");    
+   } 
     
     @Log
 //    @SetupRender
     void setupRender() {
+    System.out.println("PERSONALSETUP");    
         logueo();
         if (actual.getSexo() != null) {
             if (actual.getSexo().equals("M")) {
@@ -519,10 +524,14 @@ public class DatosPersonalesEditor {
                 vconadis=true;
                 vessalud=true;
             } else if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
+                
                 vdatospersonales = true;
                 vdatosubicacion = false;
                 votros = false;
                 vemergencia = false;
+                vtipodiscapacidad = false;
+                vconadis = false;
+                vgruposanguineo = false;
             }
             vbotones = true;
         } else {
