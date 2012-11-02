@@ -463,6 +463,7 @@ public class AMUnidadOrganica extends GeneralPage {
                         c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
                         c.add(Restrictions.eq("estado", Boolean.TRUE));
                         if (c.list().size() > 0) {
+                                                    System.out.println("EXIST1X");
                             formmensaje.recordError("Denominación existente para la entidad: "
                                     + ((UnidadOrganica) c.list().get(0)).getDen_und_organica());
                             return zonas();
@@ -528,8 +529,10 @@ public class AMUnidadOrganica extends GeneralPage {
                     }
                     c.add(Restrictions.like("den_und_organica", unidadOrganica.getDen_und_organica()).ignoreCase());
                     c.add(Restrictions.eq("entidad", unidadOrganica.getEntidad()));
+                    c.add(Restrictions.eq("estado", Boolean.TRUE));
 
                     if (c.list().size() > 0) {
+                        System.out.println("EXIST2X");
                         formmensaje.recordError("Denominación existente para la entidad: "
                                 + ((UnidadOrganica) c.list().get(0)).getDen_und_organica());
                         return zonas();
