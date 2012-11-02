@@ -15,7 +15,7 @@
             ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>
         <p:accionesCell>
-            <t:if test="ca.estado">
+            <t:if test="estadoCargo">
             <t:if test="${veditar}">
                 <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>            
             </t:if>  
