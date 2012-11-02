@@ -4,30 +4,19 @@ import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
-import helpers.Reportes;
 import helpers.ReportesFormulario;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+//import helpers.Reportes;
 import java.util.*;
-import javax.swing.JOptionPane;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.alerts.Duration;
-import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.*;
-import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.internal.services.ResponseImpl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.Response;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -629,15 +618,15 @@ public class RepTrabajador extends GeneralPage {
         Criteria c = session.createCriteria(Trabajador.class);
         boolean ok = true;
         if (nombresTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres", nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("nombres", "%" + nombresTrabajador + "%").ignoreCase()).add(Restrictions.like("nombres",  "%" + nombresTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("nombres",  "%" + nombresTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (apepatTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno", apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno", apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoPaterno","%" + apepatTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno",  "%" + apepatTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoPaterno",  "%" + apepatTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (apematTrabajador != null) {
-            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno", apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
+            c.add(Restrictions.disjunction().add(Restrictions.like("apellidoMaterno", "%" + apematTrabajador + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno",  "%" + apematTrabajador.replaceAll("ñ", "n") + "%").ignoreCase()).add(Restrictions.like("apellidoMaterno",  "%" + apematTrabajador.replaceAll("n", "ñ") + "%").ignoreCase()));
             ok = false;
         }
         if (valdocumentotra != null) {
