@@ -15,21 +15,20 @@
             ${ca.cargoxunidad.den_cargo}
         </p:den_cargoCell>
         <p:accionesCell>
-            <t:if test="estadoCargo">
+          <t:if test="${ca.estado}">
             <t:if test="${veditar}">
                 <a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#">Editar</a>            
             </t:if>  
             <t:if test="${veliminar}">
                 |<a t:type="pagelink" t:page="CargosAsignadosModificar" t:context="ca.id" href="#"> Baja</a>
             </t:if>
-            </t:if>    
+          </t:if>
         </p:accionesCell>
      </t:grid>
         <div class="f-right">
             <b>${nroregistros} Registros.</b>
         </div>
-        <br/>    
-     <fieldset>
+        <br/>  
             <div t:type="zone" t:id="evaluacionesZone" >
                     <t:form t:id="formularioevaluaciones"  zone="evaluacionesZone">
                          <div class="f-wrap">
@@ -39,7 +38,6 @@
                         </div>
                     </t:form>
             </div>
-     </fieldset>
     
 <!--    <a t:type="pagelink" t:page="TrabajadorNuevo" t:context="actual.id" href="#"> Asignar Nuevo Cargo</a>-->
 </t:content>

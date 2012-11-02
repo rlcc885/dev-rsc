@@ -270,7 +270,6 @@ public class AnularSancion extends GeneralPage {
         // (fecha_doc);
          anulacion.setFecha_doc_not(fechadoc_not);
          anulacion.setJuzgado(juzgado_not);
-         anulacion.setObservaciones(observaciones);
          anulacion.setId_sancion(modificasancion);
          anulacion.setId_tipo_doc_not(bdocumentoidentidad_not.getId());
          anulacion.setId_tipo_doc_san(bdocumentoidentidad2.getId());

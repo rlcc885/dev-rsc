@@ -2,7 +2,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <h1>${texto}</h1>
+    <h2 style="font-size: 14px;">${texto}</h2>
 <div class="box-background-title">
       <span class="box-title">Anular Registro de Sancion</span>
  </div> 
@@ -41,7 +41,7 @@
                             <div class="f-left">
                                 <label>* Número de Documento</label>
                                 <!--<t:label for="numeroDocumento2"/>-->
-                                <input t:type="TextField" t:id="numeroDocumento2" t:value="bnumeroDocumento2" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
+                                <input t:type="TextField" t:id="numeroDocumento2" t:value="bnumeroDocumento2" size="33" t:validate="maxlength=35,required" t:zone="busZone2"/>
                             </div> 
                             <div class="f-left">
                                 <label>* Fecha del Documento</label>
@@ -60,7 +60,7 @@
                                     <div class="f-left">
                                         <label>* Número de Documento</label>
                                         <!--<t:label for="numeroDocumento_not"/>-->
-                                        <input t:type="TextField" t:id="numeroDocumento_not" t:value="bnumeroDocumento_not" size="33" t:validate="maxlength=11,required" t:zone="busZone2"/>
+                                        <input t:type="TextField" t:id="numeroDocumento_not" t:value="bnumeroDocumento_not" size="33" t:validate="maxlength=35,required" t:zone="busZone2"/>
                                     </div> 
                                     <div class="f-left">
                                         <label>* Fecha del Documento Notificacion</label>
@@ -70,14 +70,10 @@
                                 </div>
                                 <div class="f-wrap"> 
                                         <t:label for="juzgado_not"/>
-                                        <input t:type="TextField" t:id="juzgado_not" t:value="juzgado_not" size="53" t:zone="busZone2" t:validate="maxlength=250"/>
+                                        <input t:type="TextArea" t:id="juzgado_not" t:value="juzgado_not" style="width: 400px;" rows="4" 
+                                        t:validate="maxLength=500" t:zone="busZone2"/>
                                 </div>
                         </fieldset>
-                      <fieldset>
-                          <legend>Observaciones</legend>
-                          <input t:type="TextArea" t:id="observaciones" t:value="observaciones" style="width:70%;" t:zone="busZone2" t:validate="maxlength=500"/>
-                          <div>Máximo 500 Caracteres</div>
-                      </fieldset>
                       <div class="f-wrap"> 
                         <div class="f-left">
                             (*) Campos Obligatorios

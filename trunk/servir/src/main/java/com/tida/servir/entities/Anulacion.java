@@ -37,7 +37,6 @@ public class Anulacion implements Serializable {
     private Date fecha_doc_not;
     
     private String juzgado;
-    private String observaciones;
     @JoinColumn(name = "ID_ENTIDAD", referencedColumnName = "ID")
     @ManyToOne    
     private Entidad id_entidad;
@@ -112,14 +111,6 @@ public class Anulacion implements Serializable {
 
     public void setNumero_doc_san(String numero_doc_san) {
         this.numero_doc_san = numero_doc_san;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
     }
 
     public Entidad getId_entidad() {

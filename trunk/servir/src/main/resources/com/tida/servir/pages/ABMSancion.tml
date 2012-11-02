@@ -16,8 +16,12 @@
                 <t:if test="bmostrarrol">
                 <div class="f-wrap">
                     <div class="f-left">                        
-                        <input t:type="Checkbox" t:id="es_trabajador" t:value="bestrabajador" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>   
+                        <!--<input t:type="Checkbox" t:id="es_trabajador" t:value="bestrabajador" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>   -->
                         ¿Es Trabajador del Sector Público?
+                        <t:radiogroup t:id="es_trabajador" t:value="bestrabajador" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)">
+                                    <t:radio t:id="o1" t:value="true"/> Si 
+                                    <t:radio t:id="o2" t:value="false"/> No
+                        </t:radiogroup>                                                    
                     </div>
                 </div>
                 </t:if>
@@ -191,7 +195,7 @@
                        </div>
                        <div class="f-left">
                             <label>* Descripción o Número</label>
-                            <input t:type="TextField" t:id="num_docnot" value="nuevasancion.numdocnot" size="30" t:validate="required,maxlength=15"/>
+                            <input t:type="TextField" t:id="num_docnot" value="nuevasancion.numdocnot" size="30" t:validate="required,maxlength=35"/>
                        </div>
                        <div class="f-left">
                             <label>* Fecha</label>
@@ -221,7 +225,7 @@
                        </div>
                        <div class="f-left">
                             <label>* Descripción o Número</label>
-                            <input t:type="TextField" t:id="num_docsan" value="nuevasancion.numdocsan" size="30" t:validate="required,maxlength=15"/>
+                            <input t:type="TextField" t:id="num_docsan" value="nuevasancion.numdocsan" size="30" t:validate="required,maxlength=35"/>
                        </div>
                        <div class="f-left">
                             <label>* Fecha</label>
@@ -258,42 +262,39 @@
                                 jQuery('.fec_fin').datepick({dateFormat: 'dd/mm/yyyy'});
                                 });
                             </script>
-                         <div class="f-wrap">
-                            <div class="f-left">                            
-                                <div class="f-wrap">
-                                    
-                                        <input t:type="Hidden" t:id="dias_categ" value="diascate" class="dias_categ" size="30"/>
-                                    
-                                    <label>* Fecha de Inicio</label>
-                                    <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="20" t:validate="regexp,required" t:disabled="true" class="fec_inicio pictureInputDate"/>
-                                </div>
-                                 
-                                <div class="f-wrap">                            
-                                    <label>* Fecha de Finalización</label>
-                                    <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp" t:disabled="${mostrarfecha}" class="fec_fin pictureInputDate"/>
-                                </div>
-                                  
-                            </div>
+                         <div class="f-wrap">                            
                            <div class="f-left" style="width: 230px;"><!-- style="left:150px; top:-95px; width:230px;"-->                                 
                             <fieldset>
-                               <legend>Ayuda</legend>
+                               <legend>Tiempo</legend>
                                 <div class="f-left">
                                     <label>Días</label>
-                                    <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=30,min=0"/>
+                                    <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Meses</label>
-                                    <input t:type="TextField" t:id="ayuda_mes" value="ayudames" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=12,min=0"/>
+                                    <input t:type="TextField" t:id="ayuda_mes" value="ayudames" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Años</label>
-                                    <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp,max=365,min=0"/>
+                                    <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <t:if test="${mostrarfecha}" negate="true">
                                     <input t:type="Submit" t:id="calc" value="Calcular" class="button f-right"/>
                                 </t:if>
                             </fieldset>
                             </div>
+                           <div class="f-left">                            
+                                <div class="f-wrap">                                    
+                                        <input t:type="Hidden" t:id="dias_categ" value="diascate" class="dias_categ" size="30"/>
+                                    
+                                    <label>* Fecha de Inicio</label>
+                                    <input t:type="TextField" t:id="fec_inicio" t:value="fecinicio" size="20" t:validate="regexp,required" t:disabled="true" class="fec_inicio pictureInputDate"/>
+                                </div>                                 
+                                <div class="f-wrap">                            
+                                    <label>* Fecha de Finalización</label>
+                                    <input t:type="TextField" t:id="fec_fin" t:value="fecfin" size="20" t:validate="regexp" t:disabled="true" class="fec_fin pictureInputDate"/>
+                                </div>                                  
+                            </div>  
                         </div>     
                         </t:zone>            
                         </fieldset>                        
@@ -339,6 +340,11 @@
                     <t:eventLink t:event="cancel" href="#" class="button f-right">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Cancelar
+                        </span> 
+                    </t:eventLink>
+                    <t:eventLink t:event="print" href="#" class="button f-right">
+                        <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
+                            Imprimir
                         </span> 
                     </t:eventLink>
                 </t:if>
