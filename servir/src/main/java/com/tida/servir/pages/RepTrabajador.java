@@ -763,7 +763,7 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosEntidad) {
             if (_entidadRep == null) throw new Exception("Error en categoría Entidad");
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
-            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep != null? unidadRep.getId() : "999999");
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep != null? unidadRep.getId() : "0");
         }
         if(mostrarFiltrosUsuario) {
             if (_usuarioRep == null) throw new Exception("Error en categoría Sistema");
@@ -776,11 +776,11 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosGobierno) {
             if (snivelGobierno == null) throw new Exception("Error en categoría Consolidados");
             parametros.put("MandatoryParameter_NivelGobierno", snivelGobierno.getCodigo());
-            parametros.put("MandatoryParameter_OrgEstado", sorganizacionestado != null? sorganizacionestado.getCodigo() : "999999");
-            parametros.put("MandatoryParameter_Sector", ssectorGobierno != null? ssectorGobierno.getCodigo() : "999999");
-            parametros.put("MandatoryParameter_TipoOrg", stipoOrganismo != null? stipoOrganismo.getCodigo() : "999999");
+            parametros.put("MandatoryParameter_OrgEstado", sorganizacionestado != null? sorganizacionestado.getCodigo() : "0");
+            parametros.put("MandatoryParameter_Sector", ssectorGobierno != null? ssectorGobierno.getCodigo() : "0");
+            parametros.put("MandatoryParameter_TipoOrg", stipoOrganismo != null? stipoOrganismo.getCodigo() : "0");
             parametros.put("MandatoryParameter_EsSubEntidad", bessubentidad? "1" : "0");
-            parametros.put("MandatoryParameter_TipoSubEntidad", stipoSubEntidad != null? stipoSubEntidad.getCodigo() : "999999");
+            parametros.put("MandatoryParameter_TipoSubEntidad", stipoSubEntidad != null? stipoSubEntidad.getCodigo() : "0");
         }
         if(mostrarFiltrosSancion) {
             throw new Exception("Error en categoría Sanciones");
