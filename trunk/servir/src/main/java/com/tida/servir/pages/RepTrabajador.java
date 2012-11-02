@@ -763,7 +763,7 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosEntidad) {
             if (_entidadRep == null) throw new Exception("Error en categoría Entidad");
             parametros.put("MandatoryParameter_EntidadUEjecutoraID", _entidadRep.getId());
-            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep != null? unidadRep.getId() : null);
+            parametros.put("MandatoryParameter_UnidadOrganicaID", unidadRep != null? unidadRep.getId() : "");
         }
         if(mostrarFiltrosUsuario) {
             if (_usuarioRep == null) throw new Exception("Error en categoría Sistema");
