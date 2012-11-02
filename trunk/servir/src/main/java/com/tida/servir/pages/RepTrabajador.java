@@ -768,19 +768,19 @@ public class RepTrabajador extends GeneralPage {
         if(mostrarFiltrosUsuario) {
             if (_usuarioRep == null) throw new Exception("Error en categoría Sistema");
             parametros.put("MandatoryParameter_UsuarioID", _usuarioRep.getId());
-            if (fechaingresode == null) fechaingresode = "";
-            if (fechaingresoha == null) fechaingresoha = "";
+            if (fechaingresode == null)  throw new Exception("Error en categoría Sistema");
+            if (fechaingresoha == null)  throw new Exception("Error en categoría Sistema");
             parametros.put("MandatoryParameter_FechaDesde", fechaingresode);
             parametros.put("MandatoryParameter_FechaHasta", fechaingresoha);
         }
         if(mostrarFiltrosGobierno) {
             if (snivelGobierno == null) throw new Exception("Error en categoría Consolidados");
             parametros.put("MandatoryParameter_NivelGobierno", snivelGobierno.getCodigo());
-            parametros.put("MandatoryParameter_OrgEstado", sorganizacionestado != null? sorganizacionestado.getCodigo() : null);
-            parametros.put("MandatoryParameter_Sector", ssectorGobierno != null? ssectorGobierno.getCodigo() : null);
-            parametros.put("MandatoryParameter_TipoOrg", stipoOrganismo != null? stipoOrganismo.getCodigo() : null);
-            parametros.put("MandatoryParameter_EsSubEntidad", bessubentidad);
-            parametros.put("MandatoryParameter_TipoSubEntidad", stipoSubEntidad != null? stipoSubEntidad.getCodigo() : null);
+            parametros.put("MandatoryParameter_OrgEstado", sorganizacionestado != null? sorganizacionestado.getCodigo() : "999999");
+            parametros.put("MandatoryParameter_Sector", ssectorGobierno != null? ssectorGobierno.getCodigo() : "999999");
+            parametros.put("MandatoryParameter_TipoOrg", stipoOrganismo != null? stipoOrganismo.getCodigo() : "999999");
+            parametros.put("MandatoryParameter_EsSubEntidad", bessubentidad? "1" : "0");
+            parametros.put("MandatoryParameter_TipoSubEntidad", stipoSubEntidad != null? stipoSubEntidad.getCodigo() : "999999");
         }
         if(mostrarFiltrosSancion) {
             throw new Exception("Error en categoría Sanciones");
