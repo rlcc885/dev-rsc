@@ -329,6 +329,11 @@ public class EntidadEditor extends GeneralPage {
         return new MultiZoneUpdate("principalZone", principalZone.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("mensajesZone", mensajesZone.getBody());
     }
 
+    @Log
+    public Object onCancelar(){
+    return "Alerta";
+    }
+    
     //Metodos de Busqueda de Trabajadores
     @CommitAfter
     Object onSuccessFromformulariotitular() {
