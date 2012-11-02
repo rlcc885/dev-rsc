@@ -17,10 +17,10 @@
                 <div class="f-wrap">
                     <div class="f-left">                        
                         <!--<input t:type="Checkbox" t:id="es_trabajador" t:value="bestrabajador" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/>   -->
-                        ¿Es Trabajador del Sector Público?
+                        Trabajador del Sector Público
                         <t:radiogroup t:id="es_trabajador" t:value="bestrabajador" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)">
-                                    <t:radio t:id="o1" t:value="true"/> Si 
-                                    <t:radio t:id="o2" t:value="false"/> No
+                                    <t:radio t:id="o1" t:value="true" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/> Si 
+                                    <t:radio t:id="o2" t:value="false" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"/> No
                         </t:radiogroup>                                                    
                     </div>
                 </div>
