@@ -1,14 +1,8 @@
-<html t:type="layout" title="Servir Servir Cargos Asignados"
+<html t:type="layout" title="Sistema Servir"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-
-        <div class="organismo_titulo">
-            Entidad /U. Ejecutora: ${oi.denominacion}
-        </div>
-
       <div id = "Datos_Generales">
-           <h2> Cargo - Cargo Asignado </h2>
            <div id= "basicosTrabajador">
                <h3><!--${trabajador.tipoDocumento}: ${trabajador.nroDocumento}-->
                ${trabajador.apellidoPaterno}  ${trabajador.apellidoMaterno} ${trabajador.nombres}</h3>
