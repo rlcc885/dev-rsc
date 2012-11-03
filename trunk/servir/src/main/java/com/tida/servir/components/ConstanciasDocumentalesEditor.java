@@ -127,7 +127,7 @@ public class ConstanciasDocumentalesEditor {
     public List<ConstanciaDocumental> getListadoDocumentos() {
         Criteria c2 = session.createCriteria(ConstanciaDocumental.class);
         c2.add(Restrictions.eq("cargoasignado",getCargosAsignados()));
-        c2.add(Restrictions.eq("legajo",buscarlegajo()));
+//        c2.add(Restrictions.eq("legajo",buscarlegajo()));
         c2.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         nroregistros = Integer.toString(c2.list().size());    
         return c2.list();
@@ -151,6 +151,7 @@ public class ConstanciasDocumentalesEditor {
    public CargoAsignado getCargosAsignados() {
        Criteria c3 = session.createCriteria(CargoAsignado.class);
          c3.add(Restrictions.eq("trabajador", actual));
+         c3.add(Restrictions.eq("estado", true));
          List result2 = c3.list();
          cargoasignado=(CargoAsignado) result2.get(0);
          
