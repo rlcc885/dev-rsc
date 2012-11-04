@@ -7,7 +7,6 @@ package com.tida.servir.pages;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.CargoAsignado;
-import com.tida.servir.entities.Entidad_BK;
 import com.tida.servir.entities.Trabajador;
 import com.tida.servir.entities.Usuario;
 import helpers.Encriptacion;

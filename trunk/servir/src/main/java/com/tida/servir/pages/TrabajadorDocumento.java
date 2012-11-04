@@ -74,9 +74,6 @@ public class TrabajadorDocumento  extends GeneralPage
     @SessionState
     private UsuarioAcceso usua;
     
-    @Property
-    @Persist
-    private FormacionProfesional formacionProfesional;
 
     @Persist(PersistenceConstants.FLASH)
     private String mensajes;// utilizado para mensajes globales, como ser que al crear un trabajador, ya existe

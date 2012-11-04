@@ -5,7 +5,7 @@
 
 package Batch.Helpers;
 
-import Batch.Tratamiento;
+//import Batch.Tratamiento;
 import com.tida.servir.entities.Entidad;
 import java.io.*;
 import java.util.ArrayList;
@@ -265,7 +265,7 @@ public class ListLineaEntidadUE {
                 llo.add(lo);
             }            
         }catch(Exception ioe) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ioe);
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ioe);
             System.out.println(""+ ioe.getMessage());
         }
         

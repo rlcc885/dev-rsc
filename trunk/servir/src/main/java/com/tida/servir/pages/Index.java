@@ -209,7 +209,7 @@ public class Index {
         session.saveOrUpdate(usuario);
         eue = (Entidad) session.get(Entidad.class, usuarioTrabajador.getEntidadid());
         logger.loguearAcceso(session, usuario, Logger.LOGIN_STATUS_OK, Logger.LOGIN_OK, getIp_Adress());
-        return Permisos.paginaInicial(usuario);
+        return "Alerta";
     }
 
     @Log
