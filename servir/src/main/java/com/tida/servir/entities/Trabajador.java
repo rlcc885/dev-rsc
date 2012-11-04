@@ -397,14 +397,6 @@ public class Trabajador implements Serializable // extends Persona
         return emergenciaDomicilio;
     }
 
-    public List<Certificacion> getCertificaciones() {
-        return certificaciones;
-    }
-
-    public void setCertificaciones(List<Certificacion> certificaciones) {
-        this.certificaciones = certificaciones;
-    }
-
     public void setEmergenciaDomicilio(String emergenciaDomicilio) {
         this.emergenciaDomicilio = emergenciaDomicilio;
     }
@@ -495,9 +487,6 @@ public class Trabajador implements Serializable // extends Persona
 //    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
 //    @NonVisual
 //    public List<Titulo> titulos = new ArrayList<Titulo>();
-    @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
-    @NonVisual
-    public List<Certificacion> certificaciones = new ArrayList<Certificacion>();
     @OneToMany(mappedBy = "trabajador", cascade = CascadeType.ALL)
     @NonVisual
     public List<Familiar> familiares = new ArrayList<Familiar>();

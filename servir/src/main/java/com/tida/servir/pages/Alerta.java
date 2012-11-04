@@ -39,7 +39,6 @@ public class Alerta  extends GeneralPage {
     private PropertyAccess _access;
     @Inject
     private Request _request;
-    private GenericSelectModel<Entidad_BK> _beans;
     
     @InjectComponent
     private Zone listaentidad;

@@ -6,7 +6,7 @@ package com.tida.servir.pages;
 
 
 import Batch.Helpers.*;
-import Batch.Tratamiento;
+//import Batch.Tratamiento;
 import com.tida.servir.base.GeneralPage;
 import com.tida.servir.entities.*;
 import helpers.ReporteBatch;
@@ -435,11 +435,11 @@ private Boolean procesoExitoso;
         try {
             myTratamiento = new ValidacionXLS(lugarArchivo, origenArchivos,  session, errores, _usuario,_entidadUE,Integer.parseInt(origenArchivos));
         } catch (IOException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
             formularioprocesobatch.recordError("Error al leer el archivo de Entidades / U.Ejecutoras.");
             return this;
         } catch (ParseException ex) {
-            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(batch.class.getName()).log(Level.SEVERE, null, ex);
             formularioprocesobatch.recordError("Error al parsear el archivo csv de Entidades / U.Ejecutoras.");
             return this;
         }

@@ -4,7 +4,7 @@
  */
 package Batch.Helpers;
 
-import Batch.Tratamiento;
+
 import com.tida.servir.entities.Entidad;
 import com.tida.servir.entities.Usuario;
 import java.io.File;
@@ -206,7 +206,7 @@ public class ValidacionXLS {
             }
 
         }catch(Exception ioe) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ioe);
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ioe);
             System.out.println(""+ ioe.getMessage());
         }
         return errores;
@@ -217,10 +217,10 @@ public class ValidacionXLS {
         try {
             llo = ListLineaEntidadUE.getListLineaEntidadUE(path, misCSVs,eu,tipo);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
             errores.add("Error buscando archivo: " + ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Tratamiento.class.getName()).log(Level.SEVERE, null, ex);
             errores.add("Error procesando archivo: " + ex.getMessage());
         }
         return llo;

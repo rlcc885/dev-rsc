@@ -44,9 +44,6 @@ public class TrabajadorFamiliar extends GeneralPage {
     private PropertyAccess _access;
     @PageActivationContext
     private Trabajador actual;
-    @Property
-    @Persist
-    private FormacionProfesional formacionProfesional;
     @Inject
     private ComponentResources _resources;
     @Property

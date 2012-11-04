@@ -1,5 +1,0 @@
-  <h1>Cargos</h1>
-
-    <ul>
-      <li><t:pagelink page="cargo/create">Crear un Cargo</t:pagelink></li>
-    </ul>
