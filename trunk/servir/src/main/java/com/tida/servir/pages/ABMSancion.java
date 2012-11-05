@@ -523,7 +523,7 @@ public class ABMSancion  extends GeneralPage
                     nuevapersona.setNombres(listare.get(4));
                     nuevapersona.setApellidoPaterno(listare.get(1));
                     nuevapersona.setApellidoMaterno(listare.get(2));
-                    nuevapersona=new Persona_Sancion();                    
+                  //  nuevapersona=new Persona_Sancion();                    
                     nuevapersona.setDireccion(listare.get(11));
                     if(listare.get(13).equals("1")){
                         nuevapersona.setSexo("M");
@@ -537,17 +537,19 @@ public class ABMSancion  extends GeneralPage
                     formvalidacion.recordError(sre.mensajeError);//ERROR EN CONSULTA
 //                    System.out.println("errorrrrr"+bnumerodocumento);
 //                    System.out.println(treniec.mensajeError);
-                }                
+                } 
+                        return zonasDatos();
             }else{
                 formvalidacion.recordError(sre.mensajeError);//ERROR TOKEN
 //                System.out.println(treniec.mensajeError);
             }
-            
+                    return zonasDatos();
         }catch (Exception ex) {
             System.out.println(ex.getCause());
+                    return zonasDatos();
         }
         
-        return zonasDatos();
+    //    return zonasDatos();
     }
     
     @Log
@@ -598,6 +600,7 @@ public class ABMSancion  extends GeneralPage
     @Log
     @CommitAfter
     Object onSuccessFromformvalidacion() {
+        nuevapersona=new Persona_Sancion(); 
       if(bestrabajador){
           bmostrar=true;
           mostrardocu=true;
