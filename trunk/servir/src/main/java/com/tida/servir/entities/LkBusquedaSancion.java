@@ -79,6 +79,17 @@ public class LkBusquedaSancion implements Serializable {
     @Column(name = "FIN_INHABILITACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date finInhabilitacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha_creacion;
+
+    public Date getFecha_creacion() {
+        return fecha_creacion;
+    }
+
+    public void setFecha_creacion(Date fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
+    }
+    
 
     public Boolean getEstrabajador() {
         return estrabajador;
