@@ -130,8 +130,8 @@
                             t:add="Nombres,Acciones" 
                             pagerPosition="bottom"
                             row="cs_sinreglab"
-                            include="tipo_sancion,tiempo_restante,estado"
-                            reorder="Nombres,tipo_sancion,tiempo_restante,estado,Acciones"
+                            include="tipo_sancion,tiempo_restante,estado,fecha_creacion"
+                            reorder="Nombres,tipo_sancion,tiempo_restante,estado,fecha_creacion,Acciones"
                             
                             inPlace="true">
                        <t:parameter name="empty">
@@ -176,8 +176,8 @@
                             t:add="Nombres,EntidadSubEntidad,Acciones" 
                             pagerPosition="bottom"
                             row="cs_sinreglab"
-                            include="tipo_sancion,tiempo_restante,estado"
-                            reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,Acciones"
+                            include="tipo_sancion,tiempo_restante,estado,fecha_creacion"
+                            reorder="Nombres,EntidadSubEntidad,tipo_sancion,tiempo_restante,estado,fecha_creacion,Acciones"
                             
                             inPlace="true">
                        <t:parameter name="empty">
