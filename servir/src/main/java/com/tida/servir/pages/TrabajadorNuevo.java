@@ -372,7 +372,7 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariotrabajadornuevo() throws ParseException {
-
+       Boolean asignarPerfil = Boolean.FALSE;
         if (getListadoEntidades().size() > 0) {
             envelope.setContents(helpers.Constantes.EUE_EXITO);
             envelope.setContents("El trabajador ya se encuentra de alta en otra entidad.");
@@ -436,7 +436,7 @@ public class TrabajadorNuevo extends GeneralPage {
                     
                     if (cargo2.getRegimenlaboral() != null) {
                         if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
-                            
+                                                        asignarPerfil = Boolean.TRUE;
                             if (getListadoUsuario(nuevo.getId()).size() > 0) {
                                 //usuario ya existe                                
                                 usuarionuevo = (Usuario) session.load(Usuario.class, getListadoUsuario(nuevo.getId()).get(0).getId());
@@ -468,6 +468,7 @@ public class TrabajadorNuevo extends GeneralPage {
                     }
                     if (cargo2.getRegimenlaboral() != null) {
                         if (cargo2.getRegimenlaboral().getFlg_creausuario() == true) {
+                                                        asignarPerfil = Boolean.TRUE;
                             seteanuevousuario(usuarionuevo);
                             session.saveOrUpdate(usuarionuevo);
                         }
@@ -510,6 +511,20 @@ public class TrabajadorNuevo extends GeneralPage {
                 session.saveOrUpdate(cargoAsignado);
                 //creando usuario nuevo                
 
+                                if (asignarPerfil){
+                            System.out.println("TRABAJADORX1");                            
+                            long num = Long.parseLong("6");                            
+                            Criteria c = session.createCriteria(Perfil.class);
+                            c.add(Restrictions.eq("id", num));
+                            Perfil perfilTrabajador = (Perfil)c.uniqueResult();
+                            System.out.println("PERFIL ENCONTRADO");                            
+                            PerfilusuarioPK perfilPk = new PerfilusuarioPK(usuarionuevo.getId(),perfilTrabajador.getId());
+                            Perfilusuario perfilAsignado = new Perfilusuario(perfilPk);
+                            perfilAsignado.setFechacreacion(new Date());
+                            session.saveOrUpdate(perfilAsignado);
+                            System.out.println("USUARIO Y PERFIL CREADO");
+                }
+                                
                 envelope.setContents(helpers.Constantes.EUE_EXITO);
                 new Logger().loguearOperacion(session, _usuario, String.valueOf(cargoAsignado.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO_ASIGNADO);
                 if(getSancionados().size()>0){
