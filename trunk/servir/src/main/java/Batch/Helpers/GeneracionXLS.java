@@ -266,7 +266,9 @@ public class GeneracionXLS {
             celda= fila.createCell((short)18);
             celda.setCellValue("Causa Destitucion");  
             celda= fila.createCell((short)19);
-            celda.setCellValue("Observaciones");  
+            celda.setCellValue("Observaciones");
+            celda= fila.createCell((short)20);
+            celda.setCellValue("Fecha Creacion");
             
             
             for (int i=0;i<lcr.size();i++) {
@@ -319,7 +321,9 @@ public class GeneracionXLS {
                 celda= fila.createCell((short)18);
                 celda.setCellValue(leoCampo(cr.getCausaDestitucion())); 
                 celda= fila.createCell((short)19);
-                celda.setCellValue(leoCampo(cr.getObservaciones())); 
+                celda.setCellValue(leoCampo(cr.getObservaciones()));
+                celda= fila.createCell((short)20);
+                celda.setCellValue(datetoString(cr.getFecha_creacion()));
             }                      
             ajustaColumnas(hoja1);
             //generar
@@ -383,6 +387,8 @@ public class GeneracionXLS {
             celda.setCellValue("Causa Destitucion");  
             celda= fila.createCell((short)19);
             celda.setCellValue("Observaciones");  
+            celda= fila.createCell((short)20);
+            celda.setCellValue("Fecha Creacion");
             
             
             for (int i=0;i<lcr.size();i++) {
@@ -436,6 +442,8 @@ public class GeneracionXLS {
                 celda.setCellValue(leoCampo(cr.getCausaDestitucion())); 
                 celda= fila.createCell((short)19);
                 celda.setCellValue(leoCampo(cr.getObservaciones())); 
+                celda= fila.createCell((short)20);
+                celda.setCellValue(datetoString(cr.getFecha_creacion()));
             }                      
             ajustaColumnas(hoja1);
             //generar
