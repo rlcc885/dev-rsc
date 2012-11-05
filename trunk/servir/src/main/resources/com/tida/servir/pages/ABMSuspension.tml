@@ -169,6 +169,9 @@
                     </t:if>
                     <a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion_id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a>             
                 </div>
+               <div class="f-wrap">                        
+                    (*) Campos Obligatorios
+               </div> 
             </form>
         </t:zone>
     </div>
