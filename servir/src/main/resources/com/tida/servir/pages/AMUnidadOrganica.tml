@@ -211,10 +211,11 @@
                             </div>                                                     
                         </div>
                         <div class="f-wrap">
-                            <t:if test="${vformulario}">
-                                <div id="tamano-ubigeo-wrap">
+                            <t:zone t:id="ubigeoZone" id="ubigeoZone">
+                            <t:if test="${vformulario}">                                
+                                <div id="tamano-ubigeo-wrap">                                    
                                     <input t:type="Ubigeos" t:id="ubigeo_domicilio" t:ubigeo="ubigeoDomicilio"
-                                           t:zone="unidadesOrganicasZone" t:zoneName="unidadesOrganicasZone" t:disabled="${vdetalle}"/>
+                                           t:zone="ubigeoZone" t:zoneName="ubigeoZone" t:disabled="${vdetalle}"/>                                    
                                 </div>
                             </t:if>
                             <t:if test="${vformulario}">
@@ -222,6 +223,7 @@
                                     (*) Campos Obligatorios
                                 </div>
                             </t:if>
+                            </t:zone>    
                         </div>
                     </fieldset>
                     
