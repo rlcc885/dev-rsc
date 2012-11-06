@@ -101,6 +101,9 @@ public class AMUnidadOrganica extends GeneralPage {
     @Property
     private Zone mensajeZone;
     @Property
+    @InjectComponent
+    private Zone ubigeoZone;
+    @Property
     @Persist
     private UsuarioAcceso usua;
     @Property
@@ -716,7 +719,7 @@ public class AMUnidadOrganica extends GeneralPage {
 
     @Log
     Object onValueChangedFromUnidadOrganica_tipozona(DatoAuxiliar dato) {
-        if (dato.getCodigo() == 14) {
+        if (dato.getCodigo() == 12) {
             vzona = false;
         } else {
             vzona = true;
