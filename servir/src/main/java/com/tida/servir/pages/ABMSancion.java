@@ -463,21 +463,21 @@ public class ABMSancion  extends GeneralPage
     Object onBuscarpersona(){
       formvalidacion.clearErrors();
       if(bdocidentidad==null){
-          formvalidacion.recordError("Tiene que ingresar Tipo Documento");
+          envelope.setContents("Tiene que ingresar Tipo Documento");
           return zonasDatos();
       }
       if(nuevapersona.getNroDocumento()==null){
-          formvalidacion.recordError("Tiene que ingresar Numero de Documento");
+          envelope.setContents("Tiene que ingresar Numero de Documento");
           return zonasDatos();
       }
       if(bdocidentidad.getCodigo()!=1){
-          formvalidacion.recordError("La consulta solo se permite para DNI");
+          envelope.setContents("La consulta solo se permite para DNI");
           return zonasDatos();
       }     
       
       List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
       if(busqueda.size()>0){
-          formvalidacion.recordError("Persona ya Registrada como Trabajador");
+          envelope.setContents("Persona ya Registrada como Trabajador");
           return zonasDatos();
       }      
       List<Persona_Sancion> busqueda_persona=getListaPersona(nuevapersona.getNroDocumento());
@@ -488,7 +488,7 @@ public class ABMSancion  extends GeneralPage
           nuevasancion.setPersona(busqueda_persona.get(0));
           nuevasancion.setTrabajador(null);
           nuevasancion.setCargoasignado(null);
-          formvalidacion.recordError("Persona ya Registrada");          
+          envelope.setContents("Persona ya Registrada");          
           return zonasDatos();
       }
       Criteria c;
@@ -497,14 +497,14 @@ public class ABMSancion  extends GeneralPage
        ConfiguracionAcceso parametro =  (ConfiguracionAcceso)c.uniqueResult();
        System.out.println("NRO CONSULTAS - EN TOTAL "+parametro.getNroConsultasActuales());
        if (parametro.getNroConsultasActuales()==null ||parametro.getNroConsultasActuales()==0){
-            formvalidacion.recordError("Se superaron el # de consultas al service por el dia de hoy");
+            envelope.setContents("Se superaron el # de consultas al service por el dia de hoy");
             return zonasDatos();    
        }
        
     // VERIFICACION DE LOS PARAMETROS CON RESPECTO AL NRO DE PETICIONES (ENTIDAD)        
        System.out.println("NRO CONSULTAS - PARA LA ENTIDAD "+eue.getPeticiones_ws_Reniec());
        if (usuario.getEntidad().getPeticiones_ws_Reniec()==null || usuario.getEntidad().getPeticiones_ws_Reniec()== 0){ 
-            formvalidacion.recordError("Se superaron el # de consultas al service para la entidad por el dia de hoy");
+            envelope.setContents("Se superaron el # de consultas al service para la entidad por el dia de hoy");
             return zonasDatos();           
         }
       
@@ -534,13 +534,13 @@ public class ABMSancion  extends GeneralPage
                     SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
                     nuevapersona.setFecha_nacimiento(formatoFecha.parse(listare.get(14)));
                 }else{
-                    formvalidacion.recordError(sre.mensajeError);//ERROR EN CONSULTA
+                    envelope.setContents(sre.mensajeError);//ERROR EN CONSULTA
 //                    System.out.println("errorrrrr"+bnumerodocumento);
 //                    System.out.println(treniec.mensajeError);
                 } 
                         return zonasDatos();
             }else{
-                formvalidacion.recordError(sre.mensajeError);//ERROR TOKEN
+                envelope.setContents(sre.mensajeError);//ERROR TOKEN
 //                System.out.println(treniec.mensajeError);
             }
                     return zonasDatos();
@@ -924,9 +924,9 @@ public class ABMSancion  extends GeneralPage
             // VALIDACION DEL DOCUMENTO DE IDENTIDAD
         if (bdocidentidad.getCodigo()==1){
             if(nuevapersona.getNroDocumento().length()>8){ 
-                formsancion.recordError("El número de documento debe tener 8 dígitos (y solo números)");   return zonasDatos();}
+                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)");   return zonasDatos();}
             try { Integer.parseInt(nuevapersona.getNroDocumento());} catch (NumberFormatException ex) {
-                formsancion.recordError("El número de documento debe tener 8 dígitos (y solo números)");  return zonasDatos(); }      
+                envelope.setContents("El número de documento debe tener 8 dígitos (y solo números)");  return zonasDatos(); }      
         }
             
             
@@ -955,7 +955,7 @@ public class ABMSancion  extends GeneralPage
         
         if(bestrabajador){
             if(nuevasancion.getTrabajador()==null){
-                formsancion.recordError("Tiene que seleccionar un Trabajador");
+                envelope.setContents("Tiene que seleccionar un Trabajador");
                 return zonasDatos();
             }
         }
@@ -965,11 +965,11 @@ public class ABMSancion  extends GeneralPage
             }
         }
         if(autoridadnot==null){
-            formsancion.recordError("Tiene que ingresar la Autoridad que notifica");
+            envelope.setContents("Tiene que ingresar la Autoridad que notifica");
             return zonasDatos();
         }
         if(autoridadsan==null){
-            formsancion.recordError("Tiene que ingresar la Autoridad que notifica");
+            envelope.setContents("Tiene que ingresar la Autoridad que notifica");
             return zonasDatos();
         }
         if (fechadocnot != null) {
@@ -998,7 +998,7 @@ public class ABMSancion  extends GeneralPage
 
                 }
                 else{
-                    formsancion.recordError("El Periodo de Inhabilitación debe ser mayor a : "+String.valueOf(diastiposamin)+" días y menor a : "+String.valueOf(diastiposamax)+" dias");
+                    envelope.setContents("El Periodo de Inhabilitación debe ser mayor a : "+String.valueOf(diastiposamin)+" días y menor a : "+String.valueOf(diastiposamax)+" dias");
                     return zonasDatos();
                 }
             }
@@ -1009,7 +1009,7 @@ public class ABMSancion  extends GeneralPage
             try {
                 fecha_docsan = (Date) formatoDelTexto.parse(fechadocsan);
                 if(fecha_docsan.after(fecha_docnot)){
-                   formsancion.recordError("La Fecha de Documento que Sanciona debe ser menor a la Fecha de Notificación");
+                   envelope.setContents("La Fecha de Documento que Sanciona debe ser menor a la Fecha de Notificación");
                    return zonasDatos();
                 }
             } catch (ParseException ex) {
@@ -1039,7 +1039,7 @@ public class ABMSancion  extends GeneralPage
             try {
                 fecha_fin = (Date) formatoDelTexto.parse(fecfin);
                 if(fecha_fin.before(fecha_inicio)) {
-                   formsancion.recordError("La Fecha de Fin no puede ser menor a la Fecha de Inicio");
+                   envelope.setContents("La Fecha de Fin no puede ser menor a la Fecha de Inicio");
                    return zonasDatos();
                 }                
             } catch (ParseException ex) {
@@ -1061,7 +1061,7 @@ public class ABMSancion  extends GeneralPage
             else{
                 List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
                 if(busqueda.size()>0){
-                    formsancion.recordError("Persona ya Registrada como Trabajador");
+                    envelope.setContents("Persona ya Registrada como Trabajador");
                     return zonasDatos();
                 }                
                 nuevapersona.setDocumentoidentidad(bdocidentidad);
@@ -1148,23 +1148,23 @@ public class ABMSancion  extends GeneralPage
     boolean validarpersona(){
         boolean vali=true;
         if(bdocidentidad==null){
-            formsancion.recordError("Tiene que ingresar Tipo Documento");
+            envelope.setContents("Tiene que ingresar Tipo Documento");
             vali=false;
         }
         if(nuevapersona.getNroDocumento()==null){
-            formsancion.recordError("Tiene que ingresar Numero Documento");
+            envelope.setContents("Tiene que ingresar Numero Documento");
             vali=false;
         }
         if(nuevapersona.getNombres()==null){
-            formsancion.recordError("Tiene que ingresar el Nombre de la Persona");
+            envelope.setContents("Tiene que ingresar el Nombre de la Persona");
             vali=false;
         }
         if(nuevapersona.getApellidoPaterno()==null){
-            formsancion.recordError("Tiene que ingresar el Apellido Paterno");
+            envelope.setContents("Tiene que ingresar el Apellido Paterno");
             vali=false;
         }
         if(nuevapersona.getApellidoMaterno()==null){
-            formsancion.recordError("Tiene que ingresar el Apellido Materno");
+            envelope.setContents("Tiene que ingresar el Apellido Materno");
             vali=false;
         }
         List<Trabajador> busqueda=getListaTrabajador(nuevapersona.getNroDocumento());
