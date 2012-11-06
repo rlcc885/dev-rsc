@@ -304,8 +304,8 @@ public class ABMSuspension  extends GeneralPage {
                    envelope.setContents("La Fecha de Inicio debe ser menor a la Fecha de Fin de la Sancion");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
-                if(nuevasuspension.getFecha_docini().before(nuevasuspension.getFecha_docnoti())) {
-                   envelope.setContents("La Fecha de Notificación debe ser menor a la Fecha de Inicio");
+                if(nuevasuspension.getFecha_docini().after(nuevasuspension.getFecha_docnoti())) {
+                   envelope.setContents("La Fecha de Notificación debe ser mayor a la Fecha de Inicio");
                    return new MultiZoneUpdate("suspensionZone", suspensionZone.getBody()).add("mensajesZone",mensajesZone.getBody());
                 }
                 if(nuevasuspension.getFecha_docnoti().before(new Date()) || nuevasuspension.getFecha_docnoti().equals(new Date())){
@@ -351,7 +351,26 @@ public class ABMSuspension  extends GeneralPage {
                 ex.printStackTrace();
             }
         }
-              
+        
+        if (bentidadinicio!=null){
+        System.out.println("Tiene entidad de inicio");
+        Criteria c1 = session.createCriteria(Entidad.class);
+        c1.add(Restrictions.like("denominacion",'%'+bentidadinicio+'%'));
+            if (!c1.list().isEmpty()){
+                Entidad entidadIniSusp = (Entidad)c1.list().get(0);
+             nuevasuspension.setEntidad_ini_id(entidadIniSusp.getId());   
+            }
+        }
+        if (bentidadfin!=null){
+        System.out.println("Tiene entidad de fin");
+        Criteria c2 = session.createCriteria(Entidad.class);
+        c2.add(Restrictions.like("denominacion",'%'+bentidadfin+'%'));
+            if (!c2.list().isEmpty()){
+                Entidad entidadFinSusp = (Entidad)c2.list().get(0);
+                nuevasuspension.setEntidad_fin_id(entidadFinSusp.getId());
+            }
+        }
+        
         session.saveOrUpdate(nuevasuspension);
         session.flush();
         envelope.setContents(helpers.Constantes.SUSPENSION_EXITO);
