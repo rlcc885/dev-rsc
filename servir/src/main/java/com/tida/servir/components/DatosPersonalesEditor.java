@@ -483,6 +483,7 @@ public class DatosPersonalesEditor {
     private boolean votrosprofesion;
     @Log
     void validaciones() {
+        vdatospersonales=true;
 //        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());  
         vconadis = false;
         if (actual.getTipodiscapacidad() != null && !actual.getTipodiscapacidad().equals("")) {
