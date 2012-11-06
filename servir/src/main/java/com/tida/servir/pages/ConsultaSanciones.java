@@ -10,10 +10,7 @@ import com.tida.servir.components.Envelope;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.CargosSelectModel;
 import com.tida.servir.services.GenericSelectModel;
-import helpers.Constantes;
-import helpers.Encriptacion;
-import helpers.Helpers;
-import helpers.Logger;
+import helpers.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -680,5 +677,20 @@ private Boolean mostrarLista;
         return Boolean.TRUE;
     }
     
+  @Log  
+  StreamResponse onVerReporteSancion(Long idSancion){
+  ReportesFormulario repSancion = new ReportesFormulario();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("MandatoryParameter_SancionID", idSancion);
+        try {  
+            return repSancion.callReporteSanciones("S1",parametros, session);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+  }
+  
+  
+  
   
 }
