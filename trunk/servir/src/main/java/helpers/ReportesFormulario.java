@@ -110,6 +110,72 @@ public class ReportesFormulario {
 
     }
     
+    public String codReporteSancion;
+    
+    public StreamResponse callReporteSanciones(String paramCodReporte, Map<String, Object> paramIdSancion, Session session) throws Exception {
+        codReporteSancion = paramCodReporte;
+        parametros = paramIdSancion;
+        
+        Criteria c = session.createCriteria(DirectorioReporte.class);
+        List<DirectorioReporte> list = c.list();
+        
+        if (list.size() < 1) throw new Exception ("No se ha encontrado el directorio de los reportes.");
+        
+        reportesPath = list.get(list.size() - 1).getDir();
+
+        return new StreamResponse() {
+
+            InputStream istream;
+            ByteArrayOutputStream sb = new ByteArrayOutputStream();
+            String errorsb = new String();
+
+
+            @Override
+            public void prepareResponse(Response response) {
+                    String params = "";
+                    response.setHeader("Content-Disposition", "inline; filename=" + codReporteSancion +  ".pdf");
+                try {
+                    for(String param: parametros.keySet()) {
+                        if(parametros.get(param).getClass().equals(String.class))
+                            params += param + " " + URLEncoder.encode((String)parametros.get(param), "UTF-8") + " ";
+                        else
+                            params += param + " " + URLEncoder.encode(((Long) parametros.get(param)).toString(), "UTF-8") + " ";
+                    }
+
+                    System.out.println("---------------- Ejecutado: "+ JRE + " -cp " + reportesPath + "lib -jar " + reportesPath +  REPORTE_EXEC + " " + codReporteSancion + ".prpt" + " " + ("PDF") + " " + params);
+                    p = Runtime.getRuntime().exec(JRE + " -cp " + reportesPath + "lib -jar " +  reportesPath +  REPORTE_EXEC + " " + codReporteSancion + ".prpt" + " " + ("PDF") + " " + params );
+
+                    DataGobbler outputGobbler = new DataGobbler(p.getInputStream(), sb, OUT_TYPE);
+                    outputGobbler.start();
+
+                    StringGobbler errorGobbler = new StringGobbler(p.getErrorStream(), errorsb, ERROR_TYPE);
+                    errorGobbler.start();
+                    
+                    try {
+                        p.waitFor();
+                    } catch (Exception ex) {
+                        Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } catch (Exception ex) {
+                    Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            @Override
+            public String getContentType() {
+                    return "application/pdf";
+            }
+
+            @Override
+            public InputStream getStream() throws IOException {
+                 return new ByteArrayInputStream(sb.toByteArray());
+            }
+        };
+
+    }    
+    
+    
 class DataGobbler extends Thread
 {
     InputStream is;
