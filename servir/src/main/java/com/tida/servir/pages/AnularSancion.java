@@ -197,23 +197,23 @@ public class AnularSancion extends GeneralPage {
         if(elemento==1){
              if(entidad_origen_id==null)
          {
-             formularioanularsancion.recordError("Tiene que seleccionar una Entidad");
+             envelope.setContents("Tiene que seleccionar una Entidad");
                 return busZone2.getBody();
          }
          if(bnumeroDocumento_not==null){
-             formularioanularsancion.recordError("Falta el Numero de documento de Notificacion");
+             envelope.setContents("Falta el Numero de documento de Notificacion");
              return busZone2.getBody();
          }
          if(bnumeroDocumento2==null){
-             formularioanularsancion.recordError("Falta el Numero de documento");
+             envelope.setContents("Falta el Numero de documento");
              return busZone2.getBody();
          }
          if(fechadocnot==null){
-             formularioanularsancion.recordError("Falta la Fecha del Documento de Notificacion");
+             envelope.setContents("Falta la Fecha del Documento de Notificacion");
              return busZone2.getBody();
          }
          if(fechadoc==null){
-             formularioanularsancion.recordError("Falta la Fecha del Documento ");
+             envelope.setContents("Falta la Fecha del Documento ");
              return busZone2.getBody();
          }
         if(fechadocnot!= null){
