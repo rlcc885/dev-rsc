@@ -200,7 +200,7 @@
                     </t:if>
                     <t:if test="${entidadUE.tienelogotipo}">
                         <div class="clear" style="margin-top:5px;">
-                            <img src="images/logotipo/${entidadUE.logotipo}" />
+                            <img src="/RSC/logotipo/${entidadUE.logotipo}" />
                         </div>
                     </t:if>
                 </t:form>
