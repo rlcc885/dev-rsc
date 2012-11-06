@@ -80,7 +80,7 @@
                         <div class = "f-wrap">
                             <t:zone t:id="unidadOrganicaZone" id="unidadOrganicaZone">
                                 <div class ="f-left">
-                                    <label>Unidad Organica</label>
+                                    <label>Unidad Orgánica</label>
                                     <select t:type="Select"
                                             t:id="bunidadorganica"
                                             t:value="unidadorganica"   

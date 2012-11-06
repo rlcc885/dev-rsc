@@ -478,7 +478,9 @@ public class DatosPersonalesEditor {
     @Property
     @Persist
     private boolean vbotones;
-
+    @Property
+    @Persist
+    private boolean votrosprofesion;
     @Log
     void validaciones() {
 //        valconadis=String.valueOf(actual.getNroCertificadoCONADIS());  
@@ -578,6 +580,26 @@ public class DatosPersonalesEditor {
         return _request.isXHR() ? new MultiZoneUpdate("conadisZone", conadisZone.getBody()) : null;
     }
 
+    @InjectComponent
+    @Property
+    private Zone formacionOtrosZone;
+
+    @Log
+    Object onValuChangedFromformacionprofe(DatoAuxiliar dato){
+        if (dato != null) {
+            long codDA = Long.parseLong("999999");
+            if (dato.getCodigo()==codDA) {
+                votrosprofesion = true;
+            } else {
+                votrosprofesion = false;
+            }
+        } else {
+            votrosprofesion = true;
+        }
+        return _request.isXHR() ? new MultiZoneUpdate("formacionOtrosZone", formacionOtrosZone.getBody()) : null;
+    }
+    
+    
     @Log
     Object onValueChangedFromSistemapen(DatoAuxiliar dato) {
         return _request.isXHR() ? new MultiZoneUpdate("tipoPensionZone", tipoPensionZone.getBody()) : null;

@@ -52,7 +52,7 @@
                             <select t:type="Select" t:id="bnivelGobierno" t:value="bnivelGobierno" model="NivelGobierno" t:zone="busquedacombosZone" t:blankOption="ALWAYS" t:style="width:120px;"/>
                         </div>
                         <div class="f-left"> 
-                            <t:label for="borganizacionEstado"/>
+                            <t:label for="borganizacionEstado">Organización del Estado</t:label>
                             <input t:type="Select" t:id="borganizacionEstado" t:value="borganizacionEstado" model="OrganizacionEstado" t:zone="busquedacombosZone" t:blankOption="ALWAYS"/>
                         </div>
                         <t:if test="bMuestraSector">
@@ -314,7 +314,7 @@
                                    t:blankOption="ALWAYS" t:disabled="${vdetalle}"/>
                             </div>
                             <div class="f-left">
-                                <t:label for="direccion"/>
+                                <t:label for="direccion">Descripción de Vía</t:label>
                                 <input t:type="TextField" t:id="direccion" t:value="entidadUE.descvia" t:style="width: 200px;"
                                    t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="direccionChanged"
                                    t:zone="ubigeoEntidadZone" t:disabled="${vdetalle}"/>
