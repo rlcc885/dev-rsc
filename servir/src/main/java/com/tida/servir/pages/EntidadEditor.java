@@ -6,8 +6,7 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Encriptacion;
 import helpers.Helpers;
-import helpers.Logger;
-import java.io.File;
+import java.io.*;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
@@ -202,7 +201,10 @@ public class EntidadEditor extends GeneralPage {
         copied = new File(STARTPATH+ "logotipo/"+entidadUE.getLogotipo());
         if (!copied.exists()) {
             entidadUE.setLogotipo(null);
+        }else{
+            copiarimagen(copied);
         }
+        
         if (entidadUE.getOrganizacionEstado() != null) {
             if (entidadUE.getOrganizacionEstado().getCodigo() == 5) {
                 bMuestraSectorEdicion = true;
@@ -265,7 +267,23 @@ public class EntidadEditor extends GeneralPage {
         session.saveOrUpdate(entidadUE);
         return this;
     }
-
+    
+    void copiarimagen(File origen){
+        try{
+            File destino = new File(globals.getServletContext().getRealPath("/")+"images/logotipo/"+entidadUE.getLogotipo());
+            InputStream in = new FileInputStream(origen);
+            OutputStream out = new FileOutputStream(destino);   
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+        }catch(Exception e){
+            
+        }
+    }
     
     // cargar combos
     //para obtener datatos del Nivel Gobierno
