@@ -96,13 +96,10 @@
                         row="listaMeritos" 
                         exclude="id,tipomeritodemerito_id,clasemeritodemerito_id,motivo,entidad_id,trabajador_id,tipodocumento_id" 
                         inPlace="true"
-                        reorder="descclasemeritodemerito,desctipomeritodemerito,desctipodocumento,fecha">
+                        include="descclasemeritodemerito,desctipomeritodemerito,desctipodocumento,fecha">
                     <t:parameter name="empty">
                         <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    <p:fechaCell>
-                        <label class="datofalse">${fecha}</label>  
-                    </p:fechaCell>
                     <p:accionesCell>
                         <t:if test="${veditar}">
                             <t:actionlink t:id="editarME" zone="claseZone" context="listaMeritos">Editar</t:actionlink>
