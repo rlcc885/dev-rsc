@@ -742,7 +742,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             session.flush();
             new Logger().loguearOperacion(session, _usuario, String.valueOf(entidadUE.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
             insertarentidad = false;
-            editando = false;
+            
             if (editando) {
                 if (usua.getAccesoreport() == 0) {
                     vformulario = false;
@@ -751,6 +751,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             } else {
                 new Logger().loguearEvento(session, Logger.MODIFICACION_ENTIDADES, entidadUE.getId(), _usuario.getTrabajador().getId(), _usuario.getId(), Logger.MOTIVO_REGISTRO_ENTIDADES, entidadUE.getId());
             }
+            editando = false;
             envelope.setContents(this.mensaje_accion());
             // OPCION DE LIMPIAR CAMPOS (OPCIONAL)
             opcion_limpiar = false;
