@@ -122,7 +122,7 @@
                             <div class="f-left">
                                 <label>Días</label>
                                 <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:validate="regexp,maxlength=2"/>
-                            </div>
+                            </div>           
                         </fieldset>
                    </div>
                    </t:if>

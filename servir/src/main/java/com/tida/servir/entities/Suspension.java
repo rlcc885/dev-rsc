@@ -26,7 +26,7 @@ public class Suspension implements Serializable {
     @Column(name = "ID")
     private long id;
     private Long sancion_id;
-    private Long entidad_ini_id;
+    private String entidad_ini;
     @ManyToOne
     private DatoAuxiliar tipo_documentoini;
     private String numdocini;
@@ -38,7 +38,7 @@ public class Suspension implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha_docnoti;
     private String juzgadonoti;
-    private Long entidad_fin_id;
+    private String entidad_fin;
     @ManyToOne
     private DatoAuxiliar tipo_documentofin;
     private String numdocfin;
@@ -59,20 +59,20 @@ public class Suspension implements Serializable {
         this.id = id;
     }
 
-    public long getEntidad_fin_id() {
-        return entidad_fin_id;
+    public String getEntidad_fin() {
+        return entidad_fin;
     }
 
-    public void setEntidad_fin_id(long entidad_fin_id) {
-        this.entidad_fin_id = entidad_fin_id;
+    public void setEntidad_fin(String entidad_fin) {
+        this.entidad_fin = entidad_fin;
     }
 
-    public long getEntidad_ini_id() {
-        return entidad_ini_id;
+    public String getEntidad_ini() {
+        return entidad_ini;
     }
 
-    public void setEntidad_ini_id(long entidad_ini_id) {
-        this.entidad_ini_id = entidad_ini_id;
+    public void setEntidad_ini(String entidad_ini) {
+        this.entidad_ini = entidad_ini;
     }      
 
     public Date getFecha_docfin() {

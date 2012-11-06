@@ -73,16 +73,10 @@ public class ABMSuspension  extends GeneralPage {
     //campos formularios
     @Property
     @Persist
-    private String bentidadinicio;
-    @Property
-    @Persist
     private String fechadocini;
     @Property
     @Persist
     private String fechadocnoti;
-    @Property
-    @Persist
-    private String bentidadfin;
     @Property
     @Persist
     private String fechadocfin;
@@ -91,10 +85,6 @@ public class ABMSuspension  extends GeneralPage {
     private String fechadocnotf;
     @InjectComponent
     private Zone suspensionZone;
-    @InjectComponent
-    private Zone entidadiniZone;
-    @InjectComponent
-    private Zone entidadfinZone;
     @InjectComponent
     private Zone mensajesZone;
     @Component(id ="formularioMensajes")
@@ -149,8 +139,6 @@ public class ABMSuspension  extends GeneralPage {
         if(busqueda.size()>0){
             nuevasuspension=(Suspension) session.load(Suspension.class, busqueda.get(0).getId());
             mostrar();
-            bentidadinicio=busqueda.get(0).getEntidadini();
-            bentidadfin=busqueda.get(0).getEntidadfin();
             editando=true;
         }
         else{ 
@@ -228,32 +216,32 @@ public class ABMSuspension  extends GeneralPage {
          return c.list();
     }
     
-    Object onBuscarenti(){
-        mostrarlista=false;
-        entidadsele=true;
-        bdenoentidad=null;
-        return entidadiniZone.getBody();
-    }
+//    Object onBuscarenti(){
+//        mostrarlista=false;
+//        entidadsele=true;
+//        bdenoentidad=null;
+//        return entidadiniZone.getBody();
+//    }
     
-    Object onBuscarentifin(){
-        mostrarlista=false;
-        entidadsele=false;
-        bdenoentidad=null;
-        return entidadfinZone.getBody();          
-    }
+//    Object onBuscarentifin(){
+//        mostrarlista=false;
+//        entidadsele=false;
+//        bdenoentidad=null;
+//        return entidadfinZone.getBody();          
+//    }
     
-    @Log
-    Object onActionFromSeleccionarentidad(Entidad enti) {               
-        if(entidadsele){
-            nuevasuspension.setEntidad_ini_id(enti.getId());
-            bentidadinicio=enti.getDenominacion();
-        }
-        else{
-            nuevasuspension.setEntidad_fin_id(enti.getId()); 
-            bentidadfin=enti.getDenominacion();
-        }
-        return new MultiZoneUpdate("entidadiniZone", entidadiniZone.getBody()).add("entidadfinZone", entidadfinZone.getBody());
-    }
+//    @Log
+//    Object onActionFromSeleccionarentidad(Entidad enti) {               
+//        if(entidadsele){
+//            nuevasuspension.setEntidad_ini_id(enti.getId());
+//            bentidadinicio=enti.getDenominacion();
+//        }
+//        else{
+//            nuevasuspension.setEntidad_fin_id(enti.getId()); 
+//            bentidadfin=enti.getDenominacion();
+//        }
+//        return new MultiZoneUpdate("entidadiniZone", entidadiniZone.getBody()).add("entidadfinZone", entidadfinZone.getBody());
+//    }
     
     @Log
     @CommitAfter
@@ -269,13 +257,11 @@ public class ABMSuspension  extends GeneralPage {
         }
         else{
             nuevasuspension.setSancion_id(modificasancion.getId());
-        }    
-        bentidadinicio=null;
+        }
         fechadocini=null;
         fechadocnoti=null;        
         fechadocfin=null;
         fechadocnotf=null;
-        bentidadfin=null;
         formularioMensajes.clearErrors();
         return suspensionZone.getBody();
     }
@@ -352,24 +338,24 @@ public class ABMSuspension  extends GeneralPage {
             }
         }
         
-        if (bentidadinicio!=null){
-        System.out.println("Tiene entidad de inicio");
-        Criteria c1 = session.createCriteria(Entidad.class);
-        c1.add(Restrictions.like("denominacion",'%'+bentidadinicio+'%'));
-            if (!c1.list().isEmpty()){
-                Entidad entidadIniSusp = (Entidad)c1.list().get(0);
-             nuevasuspension.setEntidad_ini_id(entidadIniSusp.getId());   
-            }
-        }
-        if (bentidadfin!=null){
-        System.out.println("Tiene entidad de fin");
-        Criteria c2 = session.createCriteria(Entidad.class);
-        c2.add(Restrictions.like("denominacion",'%'+bentidadfin+'%'));
-            if (!c2.list().isEmpty()){
-                Entidad entidadFinSusp = (Entidad)c2.list().get(0);
-                nuevasuspension.setEntidad_fin_id(entidadFinSusp.getId());
-            }
-        }
+//        if (bentidadinicio!=null){
+//        System.out.println("Tiene entidad de inicio");
+//        Criteria c1 = session.createCriteria(Entidad.class);
+//        c1.add(Restrictions.like("denominacion",'%'+bentidadinicio+'%'));
+//            if (!c1.list().isEmpty()){
+//                Entidad entidadIniSusp = (Entidad)c1.list().get(0);
+//             nuevasuspension.setEntidad_ini_id(entidadIniSusp.getId());   
+//            }
+//        }
+//        if (bentidadfin!=null){
+//        System.out.println("Tiene entidad de fin");
+//        Criteria c2 = session.createCriteria(Entidad.class);
+//        c2.add(Restrictions.like("denominacion",'%'+bentidadfin+'%'));
+//            if (!c2.list().isEmpty()){
+//                Entidad entidadFinSusp = (Entidad)c2.list().get(0);
+//                nuevasuspension.setEntidad_fin_id(entidadFinSusp.getId());
+//            }
+//        }
         
         session.saveOrUpdate(nuevasuspension);
         session.flush();
