@@ -22,15 +22,20 @@
                             <div class="f-left" >
                                 <label>* Tipo </label>
                                 <input t:type="Select" t:id="tipo" t:value="evaluacion.tipoevaluacion" 
-                                       model="beanTipoevalucion"  t:validate="required" t:disabled="${vdetalle}"/>
+                                       model="beanTipoevalucion"  t:validate="required" t:disabled="${vdetalle}" t:blankOption="ALWAYS"/>
                             </div>
                             <div class="f-left" >
-                                <label>* Motivo </label>
-                                <input t:type="Select" t:id="motivo" t:value="evaluacion.motivoevaluacion" 
-                                       model="beanMotivoevaluacion"   t:validate="required" t:disabled="${vdetalle}"/>
-                            </div>                        
+                                <label>* Categoría de Desempeño </label>
+                                <input t:type="Select" t:id="desempeno" t:value="evaluacion.categoriadesempeno" 
+                                       model="beanCategoriadesempeno"   t:validate="required" t:disabled="${vdetalle}" t:blankOption="ALWAYS"/>
+                            </div>                                                      
                         </div>
                          <div class="f-wrap"> 
+                             <div class="f-left" >
+                                <label>* Motivo </label>
+                                <input t:type="Select" t:id="motivo" t:value="evaluacion.motivoevaluacion" 
+                                       model="beanMotivoevaluacion"   t:validate="required" t:disabled="${vdetalle}" t:blankOption="ALWAYS"/>
+                             </div>
                              <div class="f-left">
                                 <label>* Resultado </label>
                                 <input t:type="TextField" t:id="resultado" t:validate="regexp,maxlength=10" t:value="evaluacion.calificacion" size="34" t:disabled="${vdetalle}"/>
@@ -82,7 +87,7 @@
                 </div>  
             </t:if>
             <br/>     
-                <t:grid source="listadoEvaluciones" rowsPerPage="10" t:add="Tipo,Motivo,Acciones" pagerPosition="bottom"
+                <t:grid source="listadoEvaluciones" rowsPerPage="10" t:add="Tipo,Motivo,Desempeno,Acciones" pagerPosition="bottom"
                      row="listaEvaluacion" include="fec_desde,fec_hasta" inPlace="true" >
                     <t:parameter name="empty">
                     <div class="no-info">No se encontraron registros</div>
@@ -93,6 +98,9 @@
                     <p:motivoCell>
                                ${listaEvaluacion.motivoevaluacion.valor}
                     </p:motivoCell>
+                    <p:desempenoCell>
+                               ${listaEvaluacion.categoriadesempeno.valor}
+                    </p:desempenoCell>
                     <p:accionesCell>
                         <t:if test="${veditar}">
                                <t:actionlink t:id="editar" zone="evaluacionesZone" context="listaEvaluacion">Editar</t:actionlink>

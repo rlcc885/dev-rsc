@@ -178,10 +178,16 @@ public class EvaluacionesPersonalesEditor {
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getBeanCategoriadesempeno() {        
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("CATEGORIADESEMPENO", null, 0, session);
+            return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }
+    
     //para obtener datos del Motivo de Evaluacion
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanMotivoevaluacion() {
-            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MOTIVOEVALUACION", null, 0, session);
+            List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MOTIVOEVALUACIONES", null, 0, session);
             return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }
     

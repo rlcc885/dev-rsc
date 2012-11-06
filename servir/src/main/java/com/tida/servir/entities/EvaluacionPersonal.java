@@ -32,6 +32,9 @@ public class EvaluacionPersonal {
     private Date fec_hasta;
     @ManyToOne
     private CargoAsignado cargoasignado;
+    @Validate("required")
+    @ManyToOne
+    private DatoAuxiliar categoriadesempeno;
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MYENTITY_SEQ")
@@ -98,6 +101,15 @@ public class EvaluacionPersonal {
     public void setCargoasignado(CargoAsignado cargoasignado) {
         this.cargoasignado = cargoasignado;
     }
+    
+    @ManyToOne
+    public DatoAuxiliar getCategoriadesempeno() {
+        return categoriadesempeno;
+    }
+
+    public void setCategoriadesempeno(DatoAuxiliar categoriadesempeno) {
+        this.categoriadesempeno = categoriadesempeno;
+    }    
     
     @Override
     public boolean equals(Object obj) {
