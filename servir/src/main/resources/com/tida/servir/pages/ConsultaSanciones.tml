@@ -165,7 +165,7 @@
                                             Imprimir
                                         </span> |
                                     </a> -->                      
-                                    <t:eventLink t:event="verReporteSancion" context="cs_sinreglab.id_sancion" href="#" target="_blank">ImprimirReporte</t:eventLink>
+                                    <t:eventLink t:event="verReporteSancion" context="cs_sinreglab.id_sancion" href="#" target="_blank">Imprimir</t:eventLink>
                         </p:accionesCell>
                        
             </t:grid>  
@@ -210,12 +210,12 @@
                                     </t:if>    
                                 </t:if>    
                             </t:if>    
-                                    <a t:context="cs_sinreglab" t:zone="listaConsultaSancionZone">
+                               <!--     <a t:context="cs_sinreglab" t:zone="listaConsultaSancionZone">
                                         <span t:type="any" >
                                             Imprimir
                                         </span> 
-                                    </a>                      
-                            <t:eventLink t:event="verReporteSancion" context="cs_sinreglab.id_sancion" href="#" target="_blank">ImprimirReporte</t:eventLink>
+                                    </a>  -->                    
+                            <t:eventLink t:event="verReporteSancion" context="cs_sinreglab.id_sancion" href="#" target="_blank">Imprimir</t:eventLink>
                         </p:accionesCell>
                        
                 </t:grid>
