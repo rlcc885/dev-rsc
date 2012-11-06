@@ -322,21 +322,21 @@
                             <t:errors/>
                             <div class="f-wrap">
                                 <div class="f-left">
-                                    <t:label for="nombresdetalle" />
+                                    <t:label for="nombresdetalle" >Nombres</t:label>
                                     <input t:type="TextField" t:id="nombresdetalle" t:value="usuariotrabajadoredit.nombres" t:size="32" t:disabled="true"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="apellidoPaternodetalle" />
+                                    <t:label for="apellidoPaternodetalle" >Apellido Paterno</t:label>
                                     <input t:type="TextField" t:id="apellidoPaternodetalle" t:value="usuariotrabajadoredit.apellidopaterno" t:size="32" t:disabled="true"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="apellidoMaternodetalle" />
+                                    <t:label for="apellidoMaternodetalle" >Apellido Materno</t:label>
                                     <input t:type="TextField" t:id="apellidoMaternodetalle" t:value="usuariotrabajadoredit.apellidomaterno" t:size="32" t:disabled="true"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
                                 <div class="f-left">
-                                    <t:label for="documentoidentidaddetalle" />
+                                    <t:label for="documentoidentidaddetalle" >Documento Identidad</t:label>
                                     <select t:type="Select" t:id="documentoidentidaddetalle" t:value="documentoIdentidadEdit" t:model="DocumentoIdentidad" 
                                             t:disabled="true"
                                             t:style="width: 183px;"/>
@@ -346,17 +346,17 @@
                                     <input t:type="TextField" t:id="nrodocumentodetalle" t:value="usuariotrabajadoredit.nrodocumento" t:disabled="true" t:size="32"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="emailLaboraldetalle" />
+                                    <t:label for="emailLaboraldetalle" >Email Laboral</t:label>
                                     <input t:type="TextField" t:id="emailLaboraldetalle" t:value="usuariotrabajadoredit.emailLaboral" t:size="50" t:disabled="true"/>
                                 </div>
                                 <div class="f-left">
-                                    <t:label for="telefonodetalle" />
+                                    <t:label for="telefonodetalle" >Telefono</t:label>
                                     <input t:type="TextField" t:id="telefonodetalle" t:value="usuariotrabajadoredit.telefono" t:size="32" t:disabled="true"/>
                                 </div>
                             </div>
                             <div class="f-wrap">
                                 <div class="f-left">
-                                    <t:label for="cargodetalle" />
+                                    <t:label for="cargodetalle" >Cargo</t:label>
                                     <input t:type="TextField" t:id="cargodetalle" t:value="usuariotrabajadoredit.cargo" t:size="80" t:disabled="true"/>
                                 </div>
                             </div>

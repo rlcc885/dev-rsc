@@ -219,7 +219,7 @@ public class EstudiosEditor {
             votro = true;
         }
         if (valpais != null) {
-            if (valpais.getCodigo() != 170) {
+            if (valpais.getCodigo() != 193) {
                 ubigeoDomicilio.setDepartamento(null);
                 ubigeoDomicilio.setDistrito(null);
                 ubigeoDomicilio.setProvincia(null);

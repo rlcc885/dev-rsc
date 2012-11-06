@@ -110,13 +110,15 @@
                         </div>
                         <div class="f-left">
                             <label>Formación Profesional</label>
-                            <input t:type="Select" t:id="formacionprofe" t:value="actual.formacionprofesional" model="formacionprofesionales" t:disabled="${votros}"/>
+                            <input t:type="Select" t:id="formacionprofe" t:value="actual.formacionprofesional" t:zone="formacionOtrosZone" model="formacionprofesionales" t:disabled="${votros}"/>
                         </div>
+                        <t:zone t:id="formacionOtrosZone" id="formacionOtrosZone">
                         <div class="f-left">
                             <label>Otros Especificar</label>
-                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="34" t:disabled="${votros}"
-                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otraformacionChanged" t:zone="zonaGeneral"/>
+                            <input t:type="TextField" t:id="otrosesoe" t:value="actual.formacionInfAdicional" size="34" t:disabled="${votrosprofesion}"
+                                   t:validate="maxlength=255" t:mixins="zoneUpdater" t:clientEvent="keyup" t:event="otraformacionChanged" t:zone="formacionOtrosZone"/>
                         </div>
+                        </t:zone>
                     </div>
                 </fieldset>
                 <fieldset>

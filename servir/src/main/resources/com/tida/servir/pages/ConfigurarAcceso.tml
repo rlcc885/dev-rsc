@@ -61,6 +61,20 @@
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset>
+                        <legend>WebService Reniec</legend>
+                            <div class="f-left">
+                                <t:label for="peticionesEntidad"/>
+                                <input t:type="TextField" t:id="peticionesEntidad"
+                                       t:value="ca.consultasReniecxEntidad" size="30" t:validate="required,maxlength=5" />
+                            </div>
+                            <div class="f-left">
+                                <t:label for="peticionesTotales"/>
+                                <input t:type="TextField" t:id="peticionesTotales"
+                                       t:value="ca.consultasReniecxDia" size="30" t:validate="required,maxlength=5" />
+                            </div>
+                        
+                    </fieldset>
                     <fieldset class="noborder">
                         <div class="f-wrap">
                             <div class="f-left">

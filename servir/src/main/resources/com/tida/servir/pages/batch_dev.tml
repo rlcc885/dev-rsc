@@ -24,7 +24,7 @@
                 <t:errors/>
                 <div class="f-wrap">
                     <div class="f-left input_grande">                
-                        <label>Origen de los archivos </label>
+                        <label>Tipo de Carga </label>
                          <select t:type="select" t:id="select_origen"
                             t:model="literal:2=Carga masiva de un organismo,1=Carga masiva de multiples organismos"
                              value="origenArchivos" t:validate="required"/>
@@ -38,7 +38,7 @@
                     </div>
                     
                 </div>
-                    <input type="submit" value="Upload" onclick="extraStep();" class="button f-left"/>
+                    <input type="submit" value="Cargar" onclick="extraStep();" class="button f-left"/>
                     <div id= "cargo" style = "color:red"> 
                         Subida en curso...
                     </div>
