@@ -513,7 +513,16 @@ public class DatosPersonalesEditor {
         } else {
             vgruposanguineo = false;
         }
-
+//validaciones nuevas
+        if (actual.getFormacionprofesional() != null) {
+            long codDA = Long.parseLong("999999");
+            if (actual.getFormacionprofesional().getCodigo()==codDA) {
+                votrosprofesion = false;
+            } else {
+                votrosprofesion = true;
+            }
+        }
+//---------        
         if (usua.getAccesoupdate() == 1) {
             if (_usuario.getRolid() == 1) {
                 vdatospersonales = true;
@@ -585,16 +594,17 @@ public class DatosPersonalesEditor {
     private Zone formacionOtrosZone;
 
     @Log
-    Object onValuChangedFromformacionprofe(DatoAuxiliar dato){
+    Object onValueChangedFromformacionprofe(DatoAuxiliar dato){
         if (dato != null) {
             long codDA = Long.parseLong("999999");
             if (dato.getCodigo()==codDA) {
-                votrosprofesion = true;
-            } else {
                 votrosprofesion = false;
+            } else {
+                votrosprofesion = true;
+                actual.setFormacionInfAdicional(null);
             }
         } else {
-            votrosprofesion = true;
+            votrosprofesion = false;
         }
         return _request.isXHR() ? new MultiZoneUpdate("formacionOtrosZone", formacionOtrosZone.getBody()) : null;
     }
