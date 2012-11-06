@@ -261,7 +261,7 @@ public class EntidadEditor extends GeneralPage {
             copied.mkdirs();
         }
         file.write(nuevo);
-        entidadUE.setLogotipo(path+nombreArchivo);
+        entidadUE.setLogotipo(nombreArchivo);
         session.saveOrUpdate(entidadUE);
         return this;
     }
