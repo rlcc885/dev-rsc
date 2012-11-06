@@ -195,11 +195,11 @@ public class AnularSancion extends GeneralPage {
     Object onSuccessFromFormularioAnularSancion(){
         formmensaje.clearErrors();
         if(elemento==1){
-             if(entidad_origen_id==null)
-         {
-             envelope.setContents("Tiene que seleccionar una Entidad");
-                return busZone2.getBody();
-         }
+   //       if(entidad_origen_id==null)
+   //      {
+   //          envelope.setContents("Tiene que seleccionar una Entidad");
+   //             return busZone2.getBody();
+   //      }
          if(bnumeroDocumento_not==null){
              envelope.setContents("Falta el Numero de documento de Notificacion");
              return busZone2.getBody();
@@ -247,23 +247,35 @@ public class AnularSancion extends GeneralPage {
             formmensaje.recordError("La fecha del Documento de Anulación debe ser menor al Documento de Notificacion");
             return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
         }
-        
+        System.out.println("EFEX4");          
         if(fechadoc_not.after(new Date())){
             formmensaje.recordError("La fecha del Documento de Notificacion debe ser menor a la Actual");
             return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
         }
+        System.out.println("EFEX3"+modificasancion.getFechafin_inha());
+        if (modificasancion.getFechafin_inha()!=null){
          if(fechadoc_not.after(modificasancion.getFechafin_inha())){
              formmensaje.recordError("La fecha del Documento de Notificacion no puede ser menor a la Fecha Final de la Sancion");
              return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
          }
+        }
+        System.out.println("EFEX2");  
          
          if(fechadoc_not.before(modificasancion.getFechaini_inha())){
              formmensaje.recordError("La fecha del Documento de Notificacion no puede ser menor a la Fecha Inicial de la Sancion");
              return new MultiZoneUpdate ("busZone2",busZone2.getBody()).add("mensajeZone",mensajeZone.getBody());
          }
-          
+        System.out.println("EFEX1");  
          
-         
+        if (entidad_origen!=null){
+            System.out.println("Tiene entidad de inicio");
+            Criteria c1 = session.createCriteria(Entidad.class);
+            c1.add(Restrictions.like("denominacion",'%'+entidad_origen+'%'));
+            if (!c1.list().isEmpty()){
+                Entidad entidadIniAnulacion = (Entidad)c1.list().get(0);
+             anulacion.setId_entidad(entidadIniAnulacion);   
+            }
+        }
          
          //anulacion.setFecha_doc_not(fechadoc_not);
         
@@ -275,7 +287,7 @@ public class AnularSancion extends GeneralPage {
          anulacion.setId_tipo_doc_san(bdocumentoidentidad2.getId());
          anulacion.setNumero_doc_not(bnumeroDocumento_not);
          anulacion.setNumero_doc_san(bnumeroDocumento2);
-         anulacion.setId_entidad(entidad2);
+       //  anulacion.setId_entidad(entidad2);
          session.saveOrUpdate(anulacion);            
          session.flush();
          if(fechadoc_not.before(new Date()) || fechadoc_not.equals(new Date())){
