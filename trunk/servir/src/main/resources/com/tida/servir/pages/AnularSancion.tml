@@ -25,11 +25,10 @@
                             <div class="f-left">    
                                 <label>* Entidad</label>
                                 <input t:type="TextField" t:id="entidad"
-                                                t:value="entidad_origen"  style="width:500px;"/>                            
+                                                t:value="entidad_origen" size="100"/>                            
                             </div>
-                             <!--       <t:eventLink t:event="buscarentidad" href="#" class="iconsearch"  t:zone="busZone2" onClick="javascript: mostrar();">                           
-                                    </t:eventLink>  -->
-
+                            <!--<t:eventLink t:event="buscarentidad" href="#" class="iconsearch"  t:zone="busZone2" onClick="javascript: mostrar();">                           
+                            </t:eventLink>--> 
                         </div>
                         <div class="f-wrap"> 
                              <div class="f-left">

@@ -100,12 +100,6 @@ public class AnularSancion extends GeneralPage {
     @Property
     @Persist
     private LkBusquedaEntidad entio;
-    @Property
-    @Persist
-    private Entidad entidad2;
-    @Persist
-    @Property
-    private Long entidad_origen_id;
 
     @Property
     @Persist
@@ -156,18 +150,18 @@ public class AnularSancion extends GeneralPage {
         return c.list();
     }
     
-    @Log
-    Object onActionFromSeleccionar(Entidad enti2) {        
-        entidad2 = enti2;
-        entidad_origen=entidad2.getDenominacion();
-        entidad_origen_id = entidad2.getId();
-        return busZone2.getBody();  
-    }
+//    @Log
+//    Object onActionFromSeleccionar(Entidad enti2) {        
+//        entidad2 = enti2;
+//        entidad_origen=entidad2.getDenominacion();
+//        entidad_origen_id = entidad2.getId();
+//        return busZone2.getBody();  
+//    }
     
-    Object onBuscarentidad(){
-         //return busZone.getBody();
-          return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("busZone", busZone.getBody());
-      } 
+//    Object onBuscarentidad(){
+//         //return busZone.getBody();
+//          return new MultiZoneUpdate("busZone2", busZone2.getBody()).add("busZone", busZone.getBody());
+//      } 
     
     @Log
     Object onLimpiar() {        
@@ -195,11 +189,11 @@ public class AnularSancion extends GeneralPage {
     Object onSuccessFromFormularioAnularSancion(){
         formmensaje.clearErrors();
         if(elemento==1){
-   //       if(entidad_origen_id==null)
-   //      {
-   //          envelope.setContents("Tiene que seleccionar una Entidad");
-   //             return busZone2.getBody();
-   //      }
+             if(entidad_origen==null)
+         {
+             formularioanularsancion.recordError("Tiene que ingresar una Entidad");
+                return busZone2.getBody();
+         }
          if(bnumeroDocumento_not==null){
              envelope.setContents("Falta el Numero de documento de Notificacion");
              return busZone2.getBody();
@@ -267,15 +261,15 @@ public class AnularSancion extends GeneralPage {
          }
         System.out.println("EFEX1");  
          
-        if (entidad_origen!=null){
-            System.out.println("Tiene entidad de inicio");
-            Criteria c1 = session.createCriteria(Entidad.class);
-            c1.add(Restrictions.like("denominacion",'%'+entidad_origen+'%'));
-            if (!c1.list().isEmpty()){
-                Entidad entidadIniAnulacion = (Entidad)c1.list().get(0);
-             anulacion.setId_entidad(entidadIniAnulacion);   
-            }
-        }
+//        if (entidad_origen!=null){
+////            System.out.println("Tiene entidad de inicio");
+////            Criteria c1 = session.createCriteria(Entidad.class);
+////            c1.add(Restrictions.like("denominacion",'%'+entidad_origen+'%'));
+////            if (!c1.list().isEmpty()){
+////                Entidad entidadIniAnulacion = (Entidad)c1.list().get(0);
+////             anulacion.setId_entidad(entidadIniAnulacion);   
+////            }
+//        }
          
          //anulacion.setFecha_doc_not(fechadoc_not);
         
@@ -287,7 +281,7 @@ public class AnularSancion extends GeneralPage {
          anulacion.setId_tipo_doc_san(bdocumentoidentidad2.getId());
          anulacion.setNumero_doc_not(bnumeroDocumento_not);
          anulacion.setNumero_doc_san(bnumeroDocumento2);
-       //  anulacion.setId_entidad(entidad2);
+         anulacion.setEntidad(entidad_origen);
          session.saveOrUpdate(anulacion);            
          session.flush();
          if(fechadoc_not.before(new Date()) || fechadoc_not.equals(new Date())){

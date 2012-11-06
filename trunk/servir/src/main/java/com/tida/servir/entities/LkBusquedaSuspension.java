@@ -18,9 +18,7 @@ public class LkBusquedaSuspension implements Serializable {
     @NonVisual
     @Id
     private long id;    
-    private long sancion_id;    
-    private String entidadini;
-    private String entidadfin;
+    private long sancion_id;
     @Temporal(TemporalType.DATE)
     private Date fechafin_inha;
     @Temporal(TemporalType.DATE)
@@ -43,22 +41,6 @@ public class LkBusquedaSuspension implements Serializable {
 
     public void setSancion_id(long sancion_id) {
         this.sancion_id = sancion_id;
-    }
-
-    public String getEntidadfin() {
-        return entidadfin;
-    }
-
-    public void setEntidadfin(String entidadfin) {
-        this.entidadfin = entidadfin;
-    }
-
-    public String getEntidadini() {
-        return entidadini;
-    }
-
-    public void setEntidadini(String entidadini) {
-        this.entidadini = entidadini;
     }
 
     public Date getFechafin_inha() {
