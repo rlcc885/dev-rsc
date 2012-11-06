@@ -91,6 +91,7 @@ public class FamiliaresEditor {
     @Persist
     @Property
     private Boolean vinserta;
+    @Property
     @SessionState
     private UsuarioAcceso usua;
     @Persist

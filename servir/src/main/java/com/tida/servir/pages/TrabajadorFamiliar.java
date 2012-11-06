@@ -97,6 +97,9 @@ public class TrabajadorFamiliar extends GeneralPage {
         new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_LEGAJO_FAMILIAR);
         return null;
     }
+    @Property
+    @Persist
+    private Boolean mostrar;
     
     // inicio de la pagina
     @Log
@@ -105,10 +108,16 @@ public class TrabajadorFamiliar extends GeneralPage {
         logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", usuarioTrabajador.getLogin());
-        if(actual==null)
+        if(actual==null){
+            mostrar=false;
             query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        else
+            System.out.println("faaaaaaaaaanulll");
+        }            
+        else{
+            mostrar=true;
             query.setParameter("in_pagename", "BUSQUEDA");
+            System.out.println("faaaaaaaaaaaaaa");
+        }    
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
