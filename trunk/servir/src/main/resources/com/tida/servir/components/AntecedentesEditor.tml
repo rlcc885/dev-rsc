@@ -130,11 +130,12 @@
                 </t:if>
                 <br/>
                 <t:grid source="listadoAntLaborales" rowsPerPage="10" t:add="Revisado,Acciones" pagerPosition="bottom"
-                        row="listaantlaborales" include="cargo, empresa, fec_ingreso, fec_egreso" inPlace="true" >
+                        row="listaantlaborales" include="cargo, empresa, fec_ingreso, fec_egreso" inPlace="true" 
+                        >
                     <t:parameter name="empty">
                         <div class="no-info">No se encontraron registros</div>
                     </t:parameter>
-                    <p:cargoCell>
+              <!--      <p:cargoCell>
                         <t:if test="${listaantlaborales.validado}">
                             <label class="datofalse">${listaantlaborales.cargo}</label>  
                         </t:if>
@@ -165,7 +166,7 @@
                         <t:if test="${listaantlaborales.validado}" negate="true">
                             <label class="datotrue">${fechaEgreso}</label>  
                         </t:if>
-                    </p:fec_egresoCell>
+                    </p:fec_egresoCell> -->
                     <p:revisadoCell>
 <!--                        <t:if test="${bvalidausuario}">-->
                         <t:if test="${listaantlaborales.validado}">
