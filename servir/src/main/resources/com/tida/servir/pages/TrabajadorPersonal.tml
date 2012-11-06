@@ -2,12 +2,22 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-    <div id="header3">
-            <span style="color:#fff; font-size:14px; margin-left:10px; margin-right:10px;"><b>Personales</b></span>
-            <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Familiares</b></span></a>
-            <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="Meritos" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Laborales</b></span></a>
-            <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Documentos</b></span></a>
-    </div>
+    <t:if test="actual">
+        <div id="header3">
+                <span style="color:#fff; font-size:14px; margin-left:10px; margin-right:10px;"><b>Personales</b></span>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorFamiliar" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Familiares</b></span></a>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="Meritos" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Laborales</b></span></a>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorDocumento" t:context="${menu.id}" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Documentos</b></span></a>
+        </div>
+    </t:if> 
+    <t:if test="actual" negate="true">
+        <div id="header3">
+                <span style="color:#fff; font-size:14px; margin-left:10px; margin-right:10px;"><b>Personales</b></span>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorFamiliar" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Familiares</b></span></a>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="Meritos" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Laborales</b></span></a>
+                <span style="color:#fff; font-size:12px;"><b>|</b></span><a t:type="pagelink" t:page="TrabajadorDocumento" href="#"><span style="color:#fff; margin-left:10px; margin-right:10px; font-size:11px;"><b>Documentos</b></span></a>
+        </div>
+    </t:if> 
     <div id="header3">
         <span style="color:#fff; font-size:13px;"><b>${menu.apellidoPaterno}  ${menu.apellidoMaterno} ${menu.nombres} </b></span>
     </div>          
