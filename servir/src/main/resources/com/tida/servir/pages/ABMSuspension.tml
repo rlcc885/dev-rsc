@@ -35,13 +35,9 @@
                     <div class="f-wrap">     
                        <t:zone t:id="entidadiniZone" id="entidadiniZone"> 
                         <div class="f-left">
-                            <label>* Entidad</label>                           
+                            <label>Entidad</label>                           
                             <input t:type="TextField" t:id="entidad_descripcion"
-                                    t:value="bentidadinicio" size="100" t:disabled="true"/>                           
-                        </div>
-                        <div class="f-left">                          
-                            <t:eventLink t:event="buscarenti" href="#" class="iconsearch"  t:zone="entidadiniZone" onClick="javascript: mostrar();">                           
-                            </t:eventLink>                       
+                                    t:value="bentidadinicio" size="100"/>                           
                         </div>
                       </t:zone>
                     </div>
@@ -95,11 +91,7 @@
                         <div class="f-left">
                             <label>Entidad</label>                          
                             <input t:type="TextField" t:id="entidadfin_descripcion"
-                                    t:value="bentidadfin" size="100" t:disabled="true"/>                         
-                        </div>
-                        <div class="f-left">
-                            <t:eventLink t:event="buscarentifin" href="#" class="iconsearch"  t:zone="entidadfinZone" onClick="javascript: mostrar();">                           
-                            </t:eventLink>                       
+                                    t:value="bentidadfin" size="100"/>                         
                         </div>
                        </t:zone>
                     </div>
@@ -169,9 +161,6 @@
                     </t:if>
                     <a t:type="pagelink" t:page="ABMSancion" t:context="nuevasuspension.sancion_id" href="#" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right">Cancelar</a>             
                 </div>
-               <div class="f-wrap">                        
-                    (*) Campos Obligatorios
-               </div> 
             </form>
         </t:zone>
     </div>
