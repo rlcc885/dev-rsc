@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
     @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
-    @NamedQuery(name = "Rol.findByIdLow", query = "SELECT r FROM Rol r WHERE r.id <= :id"),
+    @NamedQuery(name = "Rol.findByIdLow", query = "SELECT r FROM Rol r WHERE r.id < :id"),
     @NamedQuery(name = "Rol.findByCodrol", query = "SELECT r FROM Rol r WHERE r.codrol = :codrol"),
     @NamedQuery(name = "Rol.findByDescrol", query = "SELECT r FROM Rol r WHERE r.descrol = :descrol")})
 public class Rol implements Serializable {
