@@ -112,16 +112,16 @@
                         <fieldset>
                         <legend>Tiempo de Servicios</legend>
                             <div class="f-left">
-                                <label>Días</label>
-                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:validate="regexp,maxlength=2"/>
+                                <label>Años</label>
+                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                             <div class="f-left">
                                 <label>Meses</label>
                                 <input t:type="TextField" t:id="tiempomes" value="nuevasancion.tiem_ser_mes" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                             <div class="f-left">
-                                <label>Años</label>
-                                <input t:type="TextField" t:id="tiempoanio" value="nuevasancion.tiem_ser_anio" size="5" t:validate="regexp,maxlength=2"/>
+                                <label>Días</label>
+                                <input t:type="TextField" t:id="tiempodia" value="nuevasancion.tiem_ser_dia" size="5" t:validate="regexp,maxlength=2"/>
                             </div>
                         </fieldset>
                    </div>
@@ -267,16 +267,16 @@
                             <fieldset>
                                <legend>Tiempo</legend>
                                 <div class="f-left">
-                                    <label>Días</label>
-                                    <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
+                                    <label>Años</label>
+                                    <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <div class="f-left">
                                     <label>Meses</label>
                                     <input t:type="TextField" t:id="ayuda_mes" value="ayudames" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <div class="f-left">
-                                    <label>Años</label>
-                                    <input t:type="TextField" t:id="ayuda_anio" value="ayudaanio" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
+                                    <label>Días</label>
+                                    <input t:type="TextField" t:id="ayuda_dia" value="ayudadia" size="2" t:disabled="${mostrarfecha}" t:validate="regexp"/>
                                 </div>
                                 <t:if test="${mostrarfecha}" negate="true">
                                     <input t:type="Submit" t:id="calc" value="Calcular" class="button f-right"/>
