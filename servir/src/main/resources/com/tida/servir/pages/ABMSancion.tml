@@ -173,13 +173,13 @@
                 <div class="f-wrap">                                
                     <div class="f-left">
                         <label>* Categoría de la Sanción</label>
-                        <input t:type="Select" t:id="categoria_sancion" t:validate="required" t:blankOption="ALWAYS"                               
-                               t:value="categoriasancion" model="beancategoriasancion" t:zone="tiposancionZone"/>
+                        <t:Select t:id="categoria_sancion" t:validate="required" t:blankOption="ALWAYS" style="width: 300px;"                              
+                              t:value="categoriasancion" model="beancategoriasancion" t:zone="tiposancionZone"/>
                     </div>
                     <div class="f-left">                       
                         <label>* Tipo de Sanción</label>
                        <t:zone t:id="tiposancionZone" id="tiposancionZone">
-                        <input t:type="Select" t:id="tipo_sancion" t:validate="required" t:blankOption="ALWAYS"                            
+                        <t:select t:id="tipo_sancion" t:validate="required" t:blankOption="ALWAYS" style="width: 400px;"                           
                                t:value="tiposancion" model="beantiposancion" t:zone="inhabilitacionZone"/>                        
                        </t:zone>
                     </div> 
