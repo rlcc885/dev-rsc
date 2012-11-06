@@ -51,6 +51,9 @@ public class Meritos extends GeneralPage {
     private UsuarioAcceso usua;
     @Inject
     private ComponentResources _resources;
+    @Property
+    @Persist
+    private Boolean mostrar;
     
     // loguear operación de entrada a pagina
     @CommitAfter
@@ -65,10 +68,16 @@ public class Meritos extends GeneralPage {
         logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
-        if(actual==null)
+        if(actual==null){
+            System.out.println("laaaaaaaanulll");
+            mostrar=false;
             query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        else
+        }
+        else{
+            System.out.println("laaaaaaaa");
+            mostrar=true;
             query.setParameter("in_pagename", "BUSQUEDA");
+        }
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));

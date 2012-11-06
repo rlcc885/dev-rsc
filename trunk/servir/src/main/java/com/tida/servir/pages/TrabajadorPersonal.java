@@ -109,7 +109,9 @@ public class TrabajadorPersonal extends GeneralPage {
         new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_LEGAJO_PERSONAL);
         return null;
     }
-    
+    @Property
+    @Persist
+    private Boolean mostrar;
     // inicio de pagina
     @Log
     @SetupRender
@@ -117,10 +119,14 @@ public class TrabajadorPersonal extends GeneralPage {
         logueo();
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
-        if(actual==null)
+        if(actual==null){
+            mostrar=false;
             query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        else
+        }
+        else{
+            mostrar=true;
             query.setParameter("in_pagename", "BUSQUEDA");
+        }
         List result = query.list();
         if (result.isEmpty()) {
             System.out.println(String.valueOf("Vacio:"));
