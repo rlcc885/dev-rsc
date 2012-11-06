@@ -511,7 +511,7 @@ public class ADMTipoSancion
 
         if (max < min)
         {
-            formularioMensajes.recordError("El Periodo de Inhabilitación Máximo debe ser mayor que el Periodo Minimo");
+            envelope.setContents("El Periodo de Inhabilitación Máximo debe ser mayor que el Periodo Minimo");
             return false;
         }
         //***************************
@@ -529,7 +529,7 @@ public class ADMTipoSancion
         
         if (!c.list().isEmpty())
         {
-            formularioMensajes.recordError("El Tipo de Sanción deberia tener diferente Categoría");
+            envelope.setContents("El Tipo de Sanción deberia tener diferente Categoría");
             return false;            
         }
         //***************************
@@ -538,7 +538,7 @@ public class ADMTipoSancion
      /*   if (tiposancionactual.getTipoInhabilitacion().getCodigo()==2)
         {
             if (max==0){
-                formularioMensajes.recordError("Periodo Máximo invalido");
+                envelope.setContents("Periodo Máximo invalido");
                 return false;
                 }
         }*/
