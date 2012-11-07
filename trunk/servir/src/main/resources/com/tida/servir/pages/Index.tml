@@ -43,7 +43,7 @@
                         <a t:type="pagelink" t:page="ABMSolicitud" href="#">Solicitud de acceso al módulo de sanciones</a>
                     </div>
                     <div id="consulta-ciudadana">
-                        <a href="http://172.16.19.56/Consultas" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
+                        <a href="http://uat.servir.gob.pe/Transparencia" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
                     </div>
                     <br class="clear" />
                     <div id="recuperar-clave-enlace">
@@ -54,7 +54,7 @@
                         <!--<a href="http://www.servir.gob.pe" title="Solicitud de acceso al módulo de sanciones">Solicitud de acceso al módulo de sanciones</a>-->
                     </div>
                     <div id="consulta-ciudadana-enlace">
-                        <a href="http://172.16.19.56/Transparencia" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
+                        <a href="http://uat.servir.gob.pe/Transparencia" title="Consultas Ciudadanas">Consultas Ciudadanas</a>
                         
                     </div>
                 </div>
