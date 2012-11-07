@@ -214,7 +214,7 @@ public class EntidadEditor extends GeneralPage {
         } else {
             bMuestraSectorEdicion = false;
         }
-        ubigeoEntidadUE = new Ubigeo();
+        limpiar();
         if (entidadUE.getDepartamento() != null) {
             ubigeoEntidadUE.setDepartamento(entidadUE.getDepartamento());
         }
@@ -246,6 +246,13 @@ public class EntidadEditor extends GeneralPage {
     public List<ConfiguracionAcceso> getRuta() {
         Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
         return c.list();
+    }
+    
+    void limpiar(){
+        jefeRRHH=null;
+        titular=null;
+        jefeOGA=null;
+        ubigeoEntidadUE = new Ubigeo();
     }
     
     @CommitAfter
