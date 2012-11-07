@@ -253,8 +253,8 @@ public class FamiliaresEditor {
             return Boolean.FALSE;
         }
         if (_usuario.getRolid() == 1) {
-            if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 3) {
-       formulariomensajesf.recordError("No puede agregar ese tipo de pariente (Hijo / Conyuge)");
+            if (familiarActual.getParentesco().getCodigo() == 1 || familiarActual.getParentesco().getCodigo() == 2 || familiarActual.getParentesco().getCodigo() == 3) {
+       formulariomensajesf.recordError("No puede agregar este tipo de grado de parentesco");
             return Boolean.FALSE;
             }
         }
