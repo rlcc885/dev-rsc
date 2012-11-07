@@ -301,9 +301,16 @@ public class AMEntidadUEjecutora extends GeneralPage {
         this.entidadalerta = entidadalerta;
     }
     // loguear operación de entrada a pagina
+    @Log
     @CommitAfter
     Object logueo(){
         new Logger().loguearOperacion(session, _usuario, "", Logger.CODIGO_OPERACION_SELECT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_ENTIDAD);
+        if (entidadalerta != null) {            
+            String hql = "update RSC_EVENTO set estadoevento=1 where tipoevento_id='" + Logger.MODIFICACION_ENTIDADES + "' and tabla_id='" + entidadalerta.getId() + "' and estadoevento=0";
+            System.out.println("iniciooooo" + Logger.MODIFICACION_ENTIDADES + "-" + entidadalerta.getId());
+            Query query = session.createSQLQuery(hql);
+            int rowCount = query.executeUpdate();
+        }
         return null;
     }
     
@@ -328,17 +335,15 @@ public class AMEntidadUEjecutora extends GeneralPage {
         vdetalle = false;
         editando = false;
         opcion_limpiar = false;
-//        vval_essub=true;
-        //validacion de alerta
-        if (entidadalerta != null) {
+        if (entidadalerta != null) {     
             entidadUE = entidadalerta;
-            String hql = "update RSC_EVENTO set estadoevento=1 where tipoevento_id='" + Logger.MODIFICACION_ENTIDADES + "' and tabla_id='" + entidadUE.getId() + "' and estadoevento=0";
-            System.out.println("iniciooooo" + Logger.MODIFICACION_ENTIDADES + "-" + entidadUE.getId());
-            Query query = session.createSQLQuery(hql);
-            int rowCount = query.executeUpdate();
             seteo();
             entidadalerta = null;
         }
+        
+//        vval_essub=true;
+        //validacion de alerta
+        
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
         query.setParameter("in_login", _usuario.getLogin());
         query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
