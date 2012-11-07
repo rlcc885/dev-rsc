@@ -576,7 +576,7 @@ public class ABMCargos extends GeneralPage {
 	{
             consulta = "SELECT COUNT(*) FROM RSC_CARGOASIGNADO S0 JOIN RSC_CARGOXUNIDAD S1 ON (S0.CARGOXUNIDAD_ID = S1.ID)"
              + "JOIN RSC_UNIDADORGANICA S2 ON (S2.ID = S1.UNIDADORGANICA_ID)"
-             + "WHERE UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "')"
+             + "WHERE UPPER(S1.DEN_CARGO)=UPPER('" + cargo.getDen_cargo() + "') AND S0.ESTADO=1"
              + "AND S2.ENTIDAD_ID='" + entidadUE.getId() + "'  AND S1.ID ='" + cargo.getId() + "'";       
                          
             query = session.createSQLQuery(consulta);
