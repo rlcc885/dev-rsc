@@ -229,7 +229,7 @@
             </t:zone>
             <t:zone t:id="zoneDatos" t:update="show">
                 <t:if test="${vformulario}">
-                    <t:form t:id="formDatos">
+                    <t:form t:id="formDatos" zone="zoneDatos">
                         <div class="f-wrap">
                             <div class="f-left">
                                 <t:label for="NivelGobierno"/>
@@ -292,8 +292,8 @@
                             </div>
                             <div class="f-left">
                                 <t:label for ="proc_batch"/>
-                                <input t:type="Checkbox" t:id="proc_batch" 
-                                   t:value="entidadUE.proc_batch" t:disabled="${vdetalle}"/>
+                                <input t:type="Checkbox" t:id="proc_batch" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"
+                                   t:value="vbatch" t:disabled="${vdetalle}"/>
                             </div>
 
                         </div>

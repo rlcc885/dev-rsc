@@ -288,6 +288,9 @@ public class AMEntidadUEjecutora extends GeneralPage {
     @Property
     @Persist
     private Boolean opcion_limpiar;
+    @Persist
+    @Property
+    private boolean vbatch;
 
     @Log
     public Entidad getEntidadalerta() {
@@ -307,6 +310,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
     // incio de la pagina
     @Log
     void setupRender() {
+        vbatch=false;
         logueo();
         formulariomensajes.clearErrors();
         entidadUE = new Entidad();
@@ -368,6 +372,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         jefeRRHH = "";
         jefeOGA = "";
         bessubentidad = false;
+        vbatch=false;
+        ubigeoEntidadUE=new Ubigeo();
         //
         noCambiaSubentidad = false;
     }
@@ -375,6 +381,12 @@ public class AMEntidadUEjecutora extends GeneralPage {
     // cargar datos
     @Log
     void seteo() {
+        if(entidadUE.getProc_Batch()!=null){
+            vbatch=entidadUE.getProc_Batch();
+        }else{
+            vbatch=false;
+        }
+        
         titular = null;
         jefeRRHH = null;
         jefeOGA = null;
@@ -515,6 +527,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         bBuscaEntidad = false;
         busestado=null;
         bMuestraSector = false;
+        vbatch=false;
     }
 
     @Log
@@ -608,6 +621,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
         if (entidadUE.getJefeOga() != null) {
             jefeOGA = entidadUE.getJefeOga().getApellidoPaterno() + " " + entidadUE.getJefeOga().getApellidoMaterno() + ", " + entidadUE.getJefeOga().getNombres();
         }
+        ubigeobusEntidadUE = new Ubigeo();
+        vbatch=false;
     }
 
     // accion de boton
@@ -716,6 +731,8 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 return actualizarZonas();
             }
             
+            System.out.println("batchhhhhhhhh"+vbatch);
+            entidadUE.setProc_Batch(vbatch);
             if (usua.getAccesoreport() == 0 && usua.getAccesoupdate() == 1) {
                 vformulario = false;
             }
@@ -735,7 +752,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
             else{ nuevoCUE = String.valueOf(entidadUE.getId()).substring(String.valueOf(entidadUE.getId()).length() - 4);}
             String codSERVIR = "RSC"+nuevoCUE;
             System.out.println(codSERVIR);
-            entidadUE.setCue_entidad(codSERVIR);
+            entidadUE.setCue_entidad(codSERVIR);            
             session.saveOrUpdate(entidadUE);        
             }
             
@@ -810,6 +827,13 @@ public class AMEntidadUEjecutora extends GeneralPage {
                 add("listaentidadZone", listaentidadZone.getBody()).
                 add("EOrigenZone",EOrigenZone.getBody());
     }
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormDatos() {
+        
+        return zoneDatos.getBody();
+    }
 
     @Log
     public Object actualizarZonas()
@@ -860,6 +884,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         }
         vbotones = true;
         opcion_limpiar = true;
+        formulariomensajes.clearErrors();
         return new MultiZoneUpdate("EOrigenZone", EOrigenZone.getBody()).add("zoneDatos", zoneDatos.getBody()).add("ubigeoEntidadZone", ubigeoEntidadZone.getBody()).add("zoneOtrosDatos", zoneOtrosDatos.getBody()).add("TitularZone", TitularZone.getBody()).add("JefeRRHHZone", JefeRRHHZone.getBody()).add("JefeOGAZone", JefeOGAZone.getBody()).add("botonesZone", botonesZone.getBody());
     }
 
@@ -1324,6 +1349,7 @@ public class AMEntidadUEjecutora extends GeneralPage {
         ubigeoEntidadUE.setDepartamento(null);
         ubigeoEntidadUE.setProvincia(null);
         ubigeoEntidadUE.setDistrito(null);
+        vbatch=false;
     }
 
     private String mensaje_accion() {
