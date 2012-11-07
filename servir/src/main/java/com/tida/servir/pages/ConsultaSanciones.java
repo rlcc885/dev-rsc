@@ -223,10 +223,15 @@ public class ConsultaSanciones extends GeneralPage {
     @Property
     @Persist
     private Boolean vexportar;
+    @Property
+    @Persist
+    private String texto;
     
     @Log
     @SetupRender
     void initializeValue() {
+        v_editar=false;
+        texto="Detalle";
         STARTPATH=getRuta().get(0).getRuta_final();
         vexportar=false;
         Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
@@ -273,8 +278,7 @@ public class ConsultaSanciones extends GeneralPage {
                 
         if(usua.getAccesoupdate() == 1){ 
              v_editar = true;
-        }else{
-             v_editar = false;
+             texto="Editar";
         }
         mostrarLista = Boolean.FALSE;
                 

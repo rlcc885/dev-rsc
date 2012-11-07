@@ -60,6 +60,9 @@ public class ABMSancion  extends GeneralPage
     @Property
     @Persist
     private UsuarioAcceso usua;
+    @Property
+    @SessionState
+    private UsuarioAcceso usuaconsulta;
     
     //campos de la zona modal
     @Property
@@ -264,21 +267,29 @@ public class ABMSancion  extends GeneralPage
         nuevapersona=new Persona_Sancion();
         limpiarbusqueda();
         limpiarsancion();
-        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
-        query.setParameter("in_login", usuario.getLogin());
-        query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
-        List result = query.list();
-        if (result.isEmpty()) {
-            System.out.println(String.valueOf("Vacio:"));
-        } else {
-            usua = (UsuarioAcceso) result.get(0);
-            if (usua.getAccesoupdate() == 1) {
-                veditar = true;
+        if(modificasancion!=null){
+            System.out.println("aquiiiiiiii");
+            if(usuaconsulta.getAccesoupdate()==1){
+                System.out.println("aquiiiiiiii");
+                veditar=true;
             }
-            if (usua.getAccesoreport() == 1) {
-                vregistrar = true;
+        }else{
+            Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+            query.setParameter("in_login", usuario.getLogin());
+            query.setParameter("in_pagename", _resources.getPageName().toUpperCase());
+            List result = query.list();
+            if (result.isEmpty()) {
+                System.out.println(String.valueOf("Vacio:"));
+            }else{
+                usua = (UsuarioAcceso) result.get(0);                
+                if (usua.getAccesoupdate() == 1) {
+                    veditar = true;
+                }
+                if (usua.getAccesoreport() == 1) {
+                    vregistrar = true;
+                }
             }
-        }        
+        }    
         if(usuario.getRolid()==2){
             bmostrarrol=false;
             bmostrar=true;
@@ -289,11 +300,11 @@ public class ABMSancion  extends GeneralPage
             bmostrarrol=true;
         }
         System.out.println("llegooooo"+modificasancion);
-        if(modificasancion!=null){
+        if(modificasancion!=null){            
             System.out.println("llegooooo"+modificasancion.getId());
             nuevasancion=modificasancion;
             if (nuevasancion.getEstrabajador()==Boolean.FALSE){
-            nuevapersona = nuevasancion.getPersona();
+                nuevapersona = nuevasancion.getPersona();
             }
             modificasancion=null;
             mostrar();
