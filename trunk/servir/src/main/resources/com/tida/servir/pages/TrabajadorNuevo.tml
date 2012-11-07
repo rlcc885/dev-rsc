@@ -181,12 +181,6 @@
             <t:form t:id="formularionuevaunidadorganica" t:zone="nuevaUnidadZone">
               <fieldset>
                 <t:errors/>
-                <t:if test="mensajeUO">                
-                    <script>
-                        setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
-                    </script>                
-                    <div class="exito messageSavePerfil">${mensajeUO}</div>
-                </t:if>
                 <div class="f-wrap">
                     <div class="f-left">
                         <label>Código</label>
@@ -215,12 +209,6 @@
             <t:form t:id="formularionuevocargo" t:zone="nuevoCargoZone">
                <fieldset>
                 <t:errors/>
-                <t:if test="mensajeCargo">                
-                    <script>
-                        setTimeout(function(){ jQuery(".messageSavePerfil").fadeOut(1000);}, 4000);
-                    </script>                
-                    <div class="exito messageSavePerfil">${mensajeCargo}</div>
-                </t:if>
                 <div class ="f-wrap">
                     <div class="f-left">
                         <label>Código</label>
