@@ -168,12 +168,6 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private boolean disabledZoneApellidos;
-    @Property
-    @Persist
-    private String mensajeUO;
-    @Property
-    @Persist
-    private String mensajeCargo;
     
     // loguear operación de entrada a pagina
     @CommitAfter
@@ -192,10 +186,8 @@ public class TrabajadorNuevo extends GeneralPage {
         cargo = new LkCargosDisponibles();
         cargo2 = new Cargoxunidad();
         nuevaUOrganica = "";
-        mensajeUO="";
         codigoUOrganica="";
         nuevoCargo = "";
-        mensajeCargo="";
         codigoCargo="";
         tipovinculo = null;
         bTrabajadorRegistrado = false;
@@ -274,7 +266,6 @@ public class TrabajadorNuevo extends GeneralPage {
     @Log
     @CommitAfter
     Object onSuccessFromFormularionuevaunidadorganica() {
-        mensajeUO=null;
         formularionuevaunidadorganica.clearErrors();
         System.out.println("entroo aaa" + nuevaUOrganica);
         Criteria c= session.createCriteria(UnidadOrganica.class);
@@ -293,7 +284,6 @@ public class TrabajadorNuevo extends GeneralPage {
         nuevaunidadorganica.setEstado(UnidadOrganica.ESTADO_ALTA);
         nuevaunidadorganica.setCod_und_organica(codigoUOrganica);
         session.saveOrUpdate(nuevaunidadorganica);
-        mensajeUO=helpers.Constantes.UNIDAD_ORGANICA_EXITO;
         codigoUOrganica=null;
         nuevaUOrganica=null;
         return new MultiZoneUpdate("nuevaUnidadZone", nuevaUnidadZone.getBody())
@@ -316,7 +306,6 @@ public class TrabajadorNuevo extends GeneralPage {
              return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
                 .add("trabajadorNuevoZone", trabajadorNuevoZone.getBody());
             }
-            mensajeCargo=null;
             Cargoxunidad ncargo;
             ncargo = new Cargoxunidad();
 //            System.out.println("11111111: " + nuevoCargo);
@@ -328,8 +317,7 @@ public class TrabajadorNuevo extends GeneralPage {
             ncargo.setRegimenlaboral(regimenla);
             ncargo.setCtd_puestos_total(1);
             session.saveOrUpdate(ncargo);
-            cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class, ncargo.getId());
-            mensajeCargo=helpers.Constantes.CARGO_EXITO;            
+            cargo = (LkCargosDisponibles) session.get(LkCargosDisponibles.class, ncargo.getId());       
         }
 
         return new MultiZoneUpdate("nuevoCargoZone", nuevoCargoZone.getBody())
