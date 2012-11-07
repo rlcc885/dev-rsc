@@ -120,7 +120,21 @@
               <div class="f-right">
                  <b>${nroregistros} Registros.</b>
               </div>
-              <br/>                
+              <br/><br/>
+              
+              <h1>Sanciones</h1>
+              
+              <t:grid source="listadoSanciones" rowsPerPage="10" 
+                      pagerPosition="bottom" inplace="true" include="entidad_subentidad,tipo_sancion,estado">
+                  <t:parameter name="empty">
+                      <div class="no-info">No se encontraron registros</div>
+                  </t:parameter>
+              </t:grid>
+
+              <div class="f-right">
+                 <b>${nroSanciones} Registros.</b>
+              </div>
+
             </t:zone>
         </div>
     </t:content>
