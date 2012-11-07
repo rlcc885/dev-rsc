@@ -158,10 +158,23 @@ public class MeritosDemeritosEditor {
         nroregistros = Integer.toString(c.list().size());
         return c.list();
     }
+
     @Persist
     @Property
     private String nroregistros;
+
+    @Persist
+    @Property
+    private String nroSanciones;
     
+    public List<LkBusquedaSancion> getListadoSanciones(){
+        Criteria c = session.createCriteria(LkBusquedaSancion.class);
+        c.add(Restrictions.eq("nro_doc_trabajador", actual.getNroDocumento()));
+        nroSanciones = Integer.toString(c.list().size());
+        return c.list();
+    }
+    
+
     //para obtener datos de la Clase de Merito
     @Log
     public GenericSelectModel<DatoAuxiliar> getBeanClaseMerito() {
