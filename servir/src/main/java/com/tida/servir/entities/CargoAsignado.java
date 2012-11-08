@@ -63,7 +63,8 @@ public class CargoAsignado implements Serializable {
     private Date fec_fin;
 
 //    private Integer ctd_per_superv;
-    private String motivo_cese;
+    @ManyToOne
+    private DatoAuxiliar motivo_cese;
     //private String tipoVinculo;
     @ManyToOne
     private DatoAuxiliar tipovinculo;
@@ -148,11 +149,11 @@ public class CargoAsignado implements Serializable {
         this.legajo = legajo;
     }
 
-    public String getMotivo_cese() {
+    public DatoAuxiliar getMotivo_cese() {
         return motivo_cese;
     }
 
-    public void setMotivo_cese(String motivo_cese) {
+    public void setMotivo_cese(DatoAuxiliar motivo_cese) {
         this.motivo_cese = motivo_cese;
     }
 
