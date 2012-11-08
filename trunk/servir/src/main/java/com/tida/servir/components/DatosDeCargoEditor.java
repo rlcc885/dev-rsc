@@ -75,7 +75,7 @@ public class DatosDeCargoEditor {
     
     @Property
     @Persist
-    private String valmotivo;
+    private DatoAuxiliar valmotivo;
     @Persist
     @Property
     private String valfec_inicio;
@@ -133,6 +133,12 @@ public class DatosDeCargoEditor {
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }       
 
+    @Log
+    public GenericSelectModel<DatoAuxiliar> getMotivocese() {
+        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MOTIVOCESE", null, 0, session);
+        return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
+    }  
+    
     void limpiar(){
         valtipovinculo=null;
         valfec_fin=null;

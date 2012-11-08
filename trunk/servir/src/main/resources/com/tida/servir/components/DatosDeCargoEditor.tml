@@ -42,9 +42,8 @@
                         <div class="f-wrap">
                             <div class="f-left">
                                 <label><b>Motivo de Cese:</b></label>
-                                <div class="f-left">
-                                    <input t:type="TextField" t:id="motivo_cese" t:value="valmotivo" 
-                                    size="30" t:zone="datosDeCargoZone"/>
+                                <div class="f-left">                                    
+                                    <input t:type="Select" t:id="motivo_cese" t:value="valmotivo" model="motivocese" t:zone="datosDeCargoZone"/>
                                 </div>
                             </div>
                             <div class="f-left">
