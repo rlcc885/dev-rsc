@@ -63,7 +63,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Nivel de Gobierno");
             celda= fila.createCell((short)2);
@@ -99,7 +99,7 @@ public class GeneracionXLS {
             celda= fila.createCell((short)17);
             celda.setCellValue("Telefono de la Entidad");
             celda= fila.createCell((short)18);
-            celda.setCellValue("EsSubentidad");
+            celda.setCellValue("Es Subentidad");
             celda= fila.createCell((short)19);
             celda.setCellValue("Tipo de Sub-Entidad");
             celda= fila.createCell((short)20);
@@ -173,7 +173,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Codigo del Concepto Remunerativo en la Entidad");
             celda= fila.createCell((short)2);
@@ -467,7 +467,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Codigo interno de la Unidad Organica");
             celda= fila.createCell((short)2);
@@ -557,7 +557,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Codigo interno de la Unidad Orgánica");
             celda= fila.createCell((short)2);
@@ -639,7 +639,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -706,7 +706,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -777,7 +777,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -836,7 +836,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -907,7 +907,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
              celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -919,7 +919,7 @@ public class GeneracionXLS {
             celda= fila.createCell((short)5);
             celda.setCellValue("Apellido Materno");
             celda= fila.createCell((short)6);
-            celda.setCellValue("Sex");
+            celda.setCellValue("Sexo");
             celda= fila.createCell((short)7);
             celda.setCellValue("Estado Civil");
             celda= fila.createCell((short)8);
@@ -1096,7 +1096,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -1189,7 +1189,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -1261,7 +1261,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -1324,7 +1324,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -1383,7 +1383,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
@@ -1458,7 +1458,7 @@ public class GeneracionXLS {
             HSSFRow fila = hoja1.createRow((short)(0));
             HSSFCell celda;
             celda= fila.createCell((short)0);
-            celda.setCellValue("Codigo de la Entidad(CUE)");
+            celda.setCellValue("Codigo Servir");
             celda= fila.createCell((short)1);
             celda.setCellValue("Tipo de documento de identidad");
             celda= fila.createCell((short)2);
