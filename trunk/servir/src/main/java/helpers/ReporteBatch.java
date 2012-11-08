@@ -66,7 +66,7 @@ return new StreamResponse() {
     private void getInputStreamReporte(String reporteEntrada,HashMap<String,Object> parametros) throws ClassNotFoundException, SQLException, JRException, IOException
 {
 Class.forName("oracle.jdbc.OracleDriver");
-Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.16.19.33:1521/bdprueba2", "rnsc", "rnsc123");
+Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.16.19.31:1521/bdrnsc", "rnsc", "rnsc123");
 
 
 //System.out.println("REPORTEX");
