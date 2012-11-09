@@ -967,7 +967,13 @@ public class ABMSancion  extends GeneralPage
                     formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
                     fecfin = formatoDeFecha.format(fecha_fin);
                     System.out.println("finnnnnn"+fecha_fin);
+                }else{
+                    if(fecfin==null){
+                        envelope.setContents("Tiene que calcular la Fecha de Fin");  return zonasDatos(); 
+                    }
+                        
                 }
+                    
             }
         }
         
