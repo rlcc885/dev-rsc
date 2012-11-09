@@ -77,10 +77,25 @@ if (validarEstadoConsulta(resultado.get(0),session)==true)
     nuevo.setCod_dom_dist(null);
     nuevo.setCod_dom_prov(null);*/
     nuevo.setDomicilioDireccion(resultado.get(11));
-/*    c.add(Restrictions.eq("nombreTabla","ESTADOCIVIL"));
-    c.add(Restrictions.eq("codigo",Long.getLong(resultado.get(5))));
-    nuevo.setEstadocivil((DatoAuxiliar)c.uniqueResult());*/
+
+    System.out.println("ESTADOX"+resultado.get(12));
+    System.out.println("ESTADOX");
+    long estado = Long.parseLong(resultado.get(12));
+    System.out.println("ESTADOX"+estado);
+    
+    Criteria c = session.createCriteria(DatoAuxiliar.class);
+    c.add(Restrictions.eq("nombreTabla","ESTADOCIVIL"));
+    c.add(Restrictions.eq("codigo",Long.parseLong(resultado.get(12))));
+    
+//    c.add(Restrictions.eq("codigo",Long.getLong(resultado.get(12))));
+    nuevo.setEstadocivil((DatoAuxiliar)c.uniqueResult());
+
+    System.out.println("ESTADOX"+nuevo.getEstadocivil().getValor());
+    
     if ((Integer.parseInt(resultado.get(13)))==1){nuevo.setSexo("M");}else{nuevo.setSexo("F");}
+
+    System.out.println(nuevo.getSexo());
+
     SimpleDateFormat formatoFecha;
     formatoFecha = new SimpleDateFormat("yyyyMMdd");
     nuevo.setFechaNacimiento(formatoFecha.parse(resultado.get(14)));                  
