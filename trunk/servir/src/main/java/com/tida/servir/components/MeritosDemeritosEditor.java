@@ -17,6 +17,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -166,10 +169,60 @@ public class MeritosDemeritosEditor {
     @Persist
     @Property
     private String nroSanciones;
-    
+
+    @Log
     public List<LkBusquedaSancion> getListadoSanciones(){
-        Criteria c = session.createCriteria(LkBusquedaSancion.class);
+        
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.eq("nombreTabla", "CATEGORIASANCION"));
+        c.add(Restrictions.eq("codigo", Long.parseLong("2")));
+        DatoAuxiliar categoriaSancion = (DatoAuxiliar)c.uniqueResult();
+    System.out.println("ERRORX1");    
+        
+        c = session.createCriteria(DatoAuxiliar.class);
+        Criterion criterionVigente = Restrictions.eq("codigo", Long.parseLong("1"));
+        Criterion criterionNoVigente = Restrictions.eq("codigo", Long.parseLong("2"));
+        LogicalExpression expression = Restrictions.or(criterionVigente, criterionNoVigente);
+        c.add(Restrictions.eq("nombreTabla", "ESTADOSANCION"));
+        c.add(expression);
+//        c.setProjection(Projections.distinct(Projections.property("id")));
+        List<DatoAuxiliar> estadosanciones = c.list();
+    System.out.println("ERRORX2");    
+        
+        CargoAsignado cargoactual = new CargoAsignado();
+    /*    for (CargoAsignado ca : actual.getCargosAsignados()){
+            if (ca.getEstado()==Boolean.TRUE){
+            cargoactual = ca;
+            }
+        }
+    */    
+        c = session.createCriteria(CargoAsignado.class);
+        c.add(Restrictions.eq("trabajador", actual));
+        c.add(Restrictions.eq("estado", Boolean.TRUE));
+        cargoactual = (CargoAsignado)c.uniqueResult();
+        
+    System.out.println("ERRORX3");    
+        
+        c = session.createCriteria(Sancion.class);
+        c.add(Restrictions.eq("categoria_sancion", categoriaSancion));
+        c.add(Restrictions.in("sancion_estado", estadosanciones));
+        c.add(Restrictions.eq("cargoasignado",cargoactual));
+//        c.add(Restrictions.eq("cargoasignado", actual.getc))
+        c.setProjection(Projections.distinct(Projections.property("id")));
+        List<Long> listasancion = c.list();
+    System.out.println("ERRORX4");    
+   
+        
+  //      System.out.println("sanciones"+listasan.toString());
+        c = session.createCriteria(LkBusquedaSancion.class);
         c.add(Restrictions.eq("nro_doc_trabajador", actual.getNroDocumento()));
+        if (!listasancion.isEmpty()){
+        c.add(Restrictions.in("id_sancion", listasancion));
+        }else{return null;}
+     //   c.add(Restrictions.in("estado_id", estadosanciones));
+     //   c.add(Restrictions.in("id_tipo_sancion",tiposanciones));
+    System.out.println("ERRORX5");    
+        
         nroSanciones = Integer.toString(c.list().size());
         return c.list();
     }
