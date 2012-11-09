@@ -4,24 +4,22 @@ package com.tida.servir.components;
 import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import com.tida.servir.pages.Busqueda;
-import helpers.Constantes;
 import helpers.Helpers;
-import helpers.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 
 /**
@@ -134,8 +132,11 @@ public class DatosDeCargoEditor {
     }       
 
     @Log
-    public GenericSelectModel<DatoAuxiliar> getMotivocese() {
-        List<DatoAuxiliar> list = Helpers.getDatoAuxiliar("MOTIVOCESE", null, 0, session);
+    public GenericSelectModel<DatoAuxiliar> getMotivocese() {           
+        Criteria c = session.createCriteria(DatoAuxiliar.class);
+        c.add(Restrictions.like("nombreTabla", "MOTIVOCESE"));
+        c.add(Restrictions.isNull("flg_altatrabajador"));
+        List<DatoAuxiliar> list=c.list();
         return new GenericSelectModel<DatoAuxiliar>(list, DatoAuxiliar.class, "valor", "id", _access);
     }  
     
