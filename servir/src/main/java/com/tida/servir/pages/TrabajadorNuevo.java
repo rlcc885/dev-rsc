@@ -734,16 +734,26 @@ public class TrabajadorNuevo extends GeneralPage {
                   if (treniec.validarEstadoConsulta(result.get(0),session)==true){                      
                   // VALIDACIONES PRE CARGA DE LA ENTIDAD 
                         Date fechaInicial,fechaWS;
-                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); fechaInicial = formatoFecha.parse(fechacaducidad);
-                        formatoFecha = new SimpleDateFormat("yyyyMMdd");  fechaWS = formatoFecha.parse(result.get(18));
-                        System.out.println("EXC "+fechaInicial);
-                        System.out.println("EXC "+fechaWS);
+                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy"); 
+                        fechaInicial = formatoFecha.parse(fechacaducidad);
+                        System.out.println("EXC "+result.get(1)+result.get(18)+result.get(14));
                         
-                        if (!fechaInicial.equals(fechaWS)){
-                           formulariomensajes.recordError("Fecha de Caducidad Incorrecta"); // MENSAJES DE ERROR                         
-                           return actualizarZonas();
+                        if (!result.get(18).equals("")){
+                            // validacion si la persona no tiene fecha de caducidad (si ha fallecido la persona)
+                            formatoFecha = new SimpleDateFormat("yyyyMMdd");  
+                            fechaWS = formatoFecha.parse(result.get(18));
+                            System.out.println("EXC "+fechaInicial);
+                            System.out.println("EXC "+fechaWS);
+                        
+                            if (!fechaInicial.equals(fechaWS)){
+                                formulariomensajes.recordError("Fecha de Caducidad Incorrecta"); // MENSAJES DE ERROR                         
+                                return actualizarZonas();
+                            }
                         }
-                        
+                        else{
+                             formulariomensajes.recordError("No se puede registrar a una persona que ha fallecido"); // MENSAJES DE ERROR                         
+                             return actualizarZonas();                            
+                        }
 
                   //ASIGNACION DEL USUARIO DEL WS A ENTIDAD
                       treniec.cargarTrabajador(result,session);
