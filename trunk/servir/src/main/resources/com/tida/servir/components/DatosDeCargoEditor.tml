@@ -58,8 +58,8 @@
                                 <div class="f-left">
                                         (*) Campos Obligatorios
                                 </div>
-                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" class="button f-right"/> 
-                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" class="button f-right"/>                                    
+                                <input t:type="Submit" t:id="save" value="Guardar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/> 
+                                <input t:type="Submit" t:id="cancel" value="Cancelar" t:mixins="confirm" t:message="Desea ejecutar esta acción?" class="button f-right"/>                                    
                             </div>
                      </form>
                      
