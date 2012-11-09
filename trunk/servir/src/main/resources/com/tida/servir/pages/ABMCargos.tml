@@ -180,18 +180,19 @@
                                     <t:radio t:id="de2" t:value="false" t:disabled="${vdetalle}" /> No
                                 </t:radiogroup>                                                               
                             </div>
+                            <div class="f-wrap">
+                                <div class="f-left">
+                                    ¿Supervisa Personal?
+                                    <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
+                                </div>
+                                <div class="f-left">
+                                    <label>* Cantidad de Puestos/Plazas</label>
+                                    <input t:type="TextField" t:id="cargo_ctd_puestos_total"
+                                        t:value="cantidadPuestos" size="3" t:validate="max=999,min=1,required,regexp" t:disabled="${vdetalle}"/>
+                                </div>
+                            </div>  
                         </fieldset>
-                        <div class="f-wrap">
-                            <div class="f-left">
-                                ¿Supervisa Personal?
-                                <input t:type="Checkbox" t:id="cargo_supervisapersonal" t:value="cargo.supervisapersonal" t:disabled="${vdetalle}"/>                              
-                            </div>
-                            <div class="f-left">
-                                <label>* Cantidad de Puestos/Plazas</label>
-                                <input t:type="TextField" t:id="cargo_ctd_puestos_total"
-                                       t:value="cantidadPuestos" size="3" t:validate="max=999,min=1,required,regexp" t:disabled="${vdetalle}"/>
-                            </div>
-                        </div>  
+                        
                     </div>
                     <div class="actioncargo">
                         <t:if test="${vbotones}">

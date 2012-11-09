@@ -709,6 +709,9 @@ public class ABMSancion  extends GeneralPage
         return busquedaZone.getBody();
     }
     
+    @Persist
+    private Date fecha_iniciocargo;
+    
     @Log
     Object onActionFromSeleccionaTrabajador(LkBusquedaTrabajadorSan btra) {
         limpiarbusqueda();
@@ -724,6 +727,8 @@ public class ABMSancion  extends GeneralPage
         nuevasancion.setTrabajador((Trabajador) session.load(Trabajador.class, btra.getTrabajador_id()));
         bentidad=nuevasancion.getTrabajador().getEntidad().getDenominacion();
         nuevasancion.setPersona(null);
+        fecha_iniciocargo=btra.getFec_inicio();
+        System.out.println("aquiiiii"+fecha_iniciocargo);
         calcular(Integer.parseInt(btra.getTiempo_dias()));
         return new MultiZoneUpdate("busquedaZone", busquedaZone.getBody()).add("sancionZone", sancionZone.getBody());
     }
@@ -949,9 +954,12 @@ public class ABMSancion  extends GeneralPage
                 ex.printStackTrace();
             }            
             if(tiposancion.getTipoInhabilitacion().getCodigo()==1){
-                fecha_inicio=calcularfechainicio();
+                fecha_inicio=calcularfechainicio();                                    
                 SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
                 fecinicio = formatoDeFecha.format(fecha_inicio);
+                if(fecha_inicio.before(fecha_iniciocargo)){
+                    envelope.setContents("La fecha de inicio de la Sancion debe ser mayor a la fecha de inicio del Cargo");  return zonasDatos(); 
+                }
                 int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
                 int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
                 if(diastiposamax==diastiposamin){
