@@ -401,6 +401,9 @@ public class ABMCargos extends GeneralPage {
 
         if (cargo == null) {
             cargo = new Cargoxunidad();
+            cargo.setEsorganico(Boolean.FALSE);
+            cargo.setPresupuestado_PAP(Boolean.FALSE);
+            cargo.setDec_jurada_byr(Boolean.FALSE);
             regimengruponivel = new RegimenGrupoNivel();
             editando = false;            
         }
@@ -414,6 +417,10 @@ public class ABMCargos extends GeneralPage {
     void onActivate(Cargoxunidad c) {
         if (c == null) {
             c = new Cargoxunidad();
+            c.setEsorganico(Boolean.FALSE);
+            c.setPresupuestado_PAP(Boolean.FALSE);
+            c.setDec_jurada_byr(Boolean.FALSE);
+
             regimengruponivel = new RegimenGrupoNivel();
             editando = false;
             cargo = c;
@@ -499,6 +506,9 @@ public class ABMCargos extends GeneralPage {
     @Log
     void resetCargo() {
         cargo = new Cargoxunidad();
+        cargo.setEsorganico(Boolean.FALSE);
+        cargo.setPresupuestado_PAP(Boolean.FALSE);
+        cargo.setDec_jurada_byr(Boolean.FALSE);
         vNoedita = true;
         vdetalle2 = false;
         regimengruponivel = new RegimenGrupoNivel();
@@ -524,6 +534,9 @@ public class ABMCargos extends GeneralPage {
                 vbotones=true;
                 vNoedita=true;
                 cargo = new Cargoxunidad();
+                cargo.setEsorganico(Boolean.FALSE);
+                cargo.setPresupuestado_PAP(Boolean.FALSE);
+                cargo.setDec_jurada_byr(Boolean.FALSE);
                 editando = false;
                 regimengruponivel = new RegimenGrupoNivel();
                 cantidadPuestos = null;
@@ -633,6 +646,9 @@ public class ABMCargos extends GeneralPage {
             session.flush();
             new Logger().loguearOperacion(session, loggedUser, String.valueOf(cargo.getId()), (editando ? Logger.CODIGO_OPERACION_UPDATE : Logger.CODIGO_OPERACION_INSERT), Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_CARGO);
             cargo = new Cargoxunidad();
+            cargo.setEsorganico(Boolean.FALSE);
+            cargo.setPresupuestado_PAP(Boolean.FALSE);
+            cargo.setDec_jurada_byr(Boolean.FALSE);
             regimengruponivel = new RegimenGrupoNivel();
             mostrar = true;
             editando = false;
