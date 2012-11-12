@@ -75,7 +75,7 @@ Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.16.
 
 //
 String x = this.getClass().getResource("/"+reporteEntrada).toString();
-x = x.replaceAll("file:/", "");
+x = x.replaceAll("file:", "");
 System.out.println(x);
 
 //
