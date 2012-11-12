@@ -24,7 +24,7 @@ public class Constantes {
    public static final String CURSO_EXITO ="Cursos creados / modificados exitosamente.";
    public static final String FAMILIAR_EXITO ="Familiar creado / modificado exitosamente.";
    public static final String ANT_LABORAL_EXITO ="Antecedentes Laborales creados / modificados exitosamente.";
-   public static final String PROD_INTELECTUAL_EXITO ="Produccion Intelectual creado/modificado exitosamente.";
+   public static final String PROD_INTELECTUAL_EXITO ="Producciones Intelectuales creadas / modificadas exitosamente.";
    public static final String DATO_AUXILIAR_EXITO ="Dato auxiliar agregado / modificado exitosamente.";
    public static final String EUE_EXITO ="Entidades Unidad Ejecutora creadas / modificadas exitosamente.";
    public static final String USUARIO_EXITO ="Usuario creado / modificado exitosamente.";
@@ -38,18 +38,18 @@ public class Constantes {
    public static final String TRANSFERENCIA_EXITO ="Entidad/Sub Entidad Transferida exitosamente.";
    public static final String FUSION_EXITO ="Unidad Orgánica Fusionada exitosamente.";
    public static final String MIGRACION_EXITO ="Unidad Orgánica Migrada exitosamente.";
-   public static final String SANCION_CREADA_EXITO ="Sancion creada exitosamente.";
-   public static final String SANCION_MODIFICADA_EXITO ="Sancion modificada exitosamente.";
-   public static final String SUSPENSION_EXITO ="Suspension creada / modificada exitosamente.";
+   public static final String SANCION_CREADA_EXITO ="Sanción creada exitosamente.";
+   public static final String SANCION_MODIFICADA_EXITO ="Sanción modificada exitosamente.";
+   public static final String SUSPENSION_EXITO ="Suspensión creada / modificada exitosamente.";
    
    //modificado 10agosto
-   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Organica creada exitosamente.";
-   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Organica modificada exitosamente.";
+   public static final String UNIDAD_ORGANICA_CREADA_EXITO ="Unidad Orgánica creada exitosamente.";
+   public static final String UNIDAD_ORGANICA_MODIFICADA_EXITO = "Unidad Orgánica modificada exitosamente.";
    public static final String CONREMUNERATIVO_EXITO ="Concepto Remunerativo creado exitosamente.";
    public static final String CONREMUNERATIVO_EDIT_EXITO ="Concepto Remunerativo modificado exitosamente.";
    
    public static final String AUSENCIA_EXITO ="Ausencias licencias creadas / modificadas exitosamente.";
-   public static final String REMUNERACION_EXITO ="Remuneracion personal creada / modificada exitosamente.";
+   public static final String REMUNERACION_EXITO ="Remuneracián personal creada / modificada exitosamente.";
    public static final String EVALUACION_EXITO ="Evaluacion personal creada / modificada exitosamente.";
    public static final String CONSTANCIAS_DOCUMENTALES_EXITO ="Modificados exitosamente.";
    public static final String CONFIGURAR_ACCESO_EXITO ="Parametros creados / modificados exitosamente.";
