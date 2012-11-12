@@ -223,7 +223,7 @@ public class FamiliaresEditor {
     Object onReset() {
         resetRegistro();
         formulariomensajesf.clearErrors();
-        return familiaresZone.getBody();
+        return new MultiZoneUpdate("familiaresZone",familiaresZone.getBody()).add("mensajesFZone",mensajesFZone.getBody());
     }
 
     @Log
