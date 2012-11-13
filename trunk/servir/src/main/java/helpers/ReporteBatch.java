@@ -75,8 +75,10 @@ Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.16.
 
 //
 String x = this.getClass().getResource("/"+reporteEntrada).toString();
-x = x.replaceAll("file:", "");
-System.out.println(x);
+System.out.println("archivo inicial del war "+x);
+if (x.startsWith("file:/")){x = x.replaceAll("file:", "");}
+else if (x.startsWith("vfs:/")){x = x.replaceAll("vfs:", "");}
+System.out.println("ruta final del archivo del reporte"+x);
 
 //
 
