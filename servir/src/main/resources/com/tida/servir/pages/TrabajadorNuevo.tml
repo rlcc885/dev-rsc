@@ -194,7 +194,7 @@
               </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarUO" value="Guardar" class="button f-right"/>
+                    <input t:type="Submit" t:id="agregarUO" value="Guardar" class="button f-right" onClick="javascript: ocultar();"/>
                     <a onClick="javascript: ocultar();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
@@ -227,7 +227,7 @@
                </fieldset>
                 <br/>
                 <div class ="f-wrap">
-                    <input t:type="Submit" t:id="agregarCargo" value="Guardar" class="button f-right"/>
+                    <input t:type="Submit" t:id="agregarCargo" value="Guardar" class="button f-right" onClick="javascript: ocultarCargo();"/>
                     <a onClick="javascript: ocultarCargo();" class="button f-right">Cancelar</a>
                 </div>
             </t:form>
