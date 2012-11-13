@@ -149,6 +149,15 @@
                     </script>
                 </div>
             </div>
+            <div class="f-wrap">
+                <t:zone t:id="trabajadoresInacZone" t:update="show">
+                        <t:form t:id="formBusquedaInactivos"  zone="trabajadoresInacZone">
+                            <div class="f-left">
+                                    <input t:type="submit" t:id="buscarInactivos" value="Trabajadores Inactivos" class="button f-right" onClick="javascript: mostrar();" />
+                            </div>
+                        </t:form>
+                </t:zone>
+            </div>
             <br class="clear" />
         </div>
         </div>
@@ -211,7 +220,35 @@
             </div>
         </div> <!-- Grillas-busqueda -->
     </t:if>
+    
+    <div id="shade"></div>
+    <div id="modal">
+        <div t:type="zone" t:id="inactivosZone" t:update="show">
+                <t:if test="mostrar">
+                    <h1>Lista Trabajadores Inactivos</h1>                        
+                        <div class="f-wrap">
+                            <t:grid source="listaInactivos" rowsPerPage="10"  pagerPosition="bottom" row="trabajadorInactivo" include="nrodocumento,nombres,apellidopaterno,apellidomaterno" inPlace="true" >
+                            <t:parameter name="empty">
+                            <div class="no-info">No hay Trabajadores Inactivos en la Entidad.</div>
+                            </t:parameter>
+                            </t:grid>
+                        </div>    
+                        <div class="actions f-left">
+                            <t:actionlink t:id="cancelBusquedaInactivos" t:zone="inactivosZone" href="#" t:class="button" t:onClick="javascript: ocultar();">Cancelar</t:actionlink>                        
+                        </div>
+                </t:if>
+        </div>
+    </div>
+        
     <script>
+        var modal= document.getElementById('modal');
+        var shade= document.getElementById('shade');
+        function mostrar() {
+        modal.style.display=shade.style.display= 'block';
+        };
+        function ocultar() {
+        modal.style.display=shade.style.display= 'none';
+        };        
         function mostrarEsconder() {
         cach.visibility = "visible";
         }

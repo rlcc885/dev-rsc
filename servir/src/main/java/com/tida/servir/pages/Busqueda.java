@@ -534,4 +534,47 @@ public class Busqueda extends GeneralPage {
         fecnacimientomenora = "";
         fecnacimientomayora = "";
     }
+    
+    @InjectComponent
+    @Property
+    private Zone inactivosZone;
+    @InjectComponent
+    @Property
+    private Zone trabajadoresInacZone;
+    @Property
+    private LkTrabajadorInactivo trabajadorInactivo;        
+
+    @Property
+    @Persist
+    private boolean mostrar;
+    @Log
+    public List<LkBusquedaTrabajador> getlistaInactivos(){
+        Criteria c = session.createCriteria(LkTrabajadorInactivo.class);
+        c.add(Restrictions.eq("entidad", _entidadUE.getId()));
+        return c.list();
+                
+    }
+        @Log
+    Object onActionFromcancelBusquedaInactivos() {
+        mostrar = false;
+        zonasPopup();
+        return request.isXHR() ? trabajadoresInacZone.getBody() : null;
+    }
+        
+     @Log
+    private MultiZoneUpdate zonasPopup() {
+        MultiZoneUpdate mu;
+        mu = new MultiZoneUpdate("inactivosZone", inactivosZone.getBody());
+        return mu;
+    }       
+ 
+    @Component(id = "formBusquedaInactivos")
+    private Form formBusquedaInactivos;
+    
+    @Log
+    @CommitAfter
+    Object onSuccessFromFormBusquedaInactivos() {
+        mostrar = true;
+        return new MultiZoneUpdate("inactivosZone", inactivosZone.getBody());
+    }     
 }
