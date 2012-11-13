@@ -272,6 +272,10 @@
             <t:zone t:id="busZone2" t:update="show">
                 <form t:type="form" t:id="formularioTrabajador" t:zone ="busZone2">
                     <div class="f-wrap">
+                        
+                    </div>
+
+                    <div class="f-wrap">
                         <div class="f-left">
                             Nombre completo: 
                             <input t:type="TextField" t:id="trabajador_ape" t:value="nombreTrabajador" style="width: 300px;"/> 
