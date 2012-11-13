@@ -342,7 +342,7 @@
                             Cancelar
                         </span> 
                     </t:eventLink>
-                    <t:eventLink t:event="print" href="#" class="button f-right">
+                    <t:eventLink t:event="print" href="#" target="_blank" class="button f-right">
                         <span t:type="any" t:mixins="Confirm" t:message="Desea ejecutar esta acción?">
                             Imprimir
                         </span> 

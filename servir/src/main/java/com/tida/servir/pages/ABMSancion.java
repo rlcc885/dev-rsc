@@ -11,13 +11,13 @@ import com.tida.servir.entities.*;
 import com.tida.servir.services.GenericSelectModel;
 import helpers.Helpers;
 import helpers.Logger;
+import helpers.ReportesFormulario;
 import helpers.ServicioReniec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ajax.MultiZoneUpdate;
 import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Form;
@@ -313,6 +313,11 @@ public class ABMSancion  extends GeneralPage
                 vsuspender=false;
             else
                 vsuspender=true;
+//            if(nuevasancion.getSancion_estado().getCodigo()==4){                
+//                vsuspender=false;
+//                veditar=false;
+//                vregistrar=false;
+//            }
         }
         mostrarlista=false;
         
@@ -911,6 +916,19 @@ public class ABMSancion  extends GeneralPage
         return "ConsultaSanciones";
     }
     
+    
+    @Log  
+    StreamResponse onPrint(){
+    ReportesFormulario repSancion = new ReportesFormulario();
+            Map<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("MandatoryParameter_SancionID", nuevasancion.getId());
+            try {  
+                return repSancion.callReporteSanciones("S1",parametros, session);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+    }
     void onSelectedFromCalc() {
         elemento=1;       
         if (fechadocnot != null) {
