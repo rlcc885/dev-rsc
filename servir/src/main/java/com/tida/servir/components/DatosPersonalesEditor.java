@@ -527,7 +527,7 @@ public class DatosPersonalesEditor {
         if (usua.getAccesoupdate() == 1) {
             if (_usuario.getRolid() == 1) {
                 vdatospersonales = true;
-                vdatosubicacion = false;
+                vdatosubicacion = true;
                 votros = true;
                 vgruposanguineo=true;
                 vemergencia = false;
@@ -535,8 +535,7 @@ public class DatosPersonalesEditor {
                 vruc = true;
                 vconadis=true;
                 vessalud=true;
-            } else if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {
-                
+            } else if (_usuario.getRolid() == 2 || _usuario.getRolid() == 3) {                
                 vdatospersonales = true;
                 vdatosubicacion = false;
                 votros = false;
@@ -544,6 +543,9 @@ public class DatosPersonalesEditor {
                 vtipodiscapacidad = false;
                 vconadis = false;
                 vgruposanguineo = false;
+                if(!actual.getConsultado_WS()){
+                    vdatospersonales=false;
+                }
             }
             vbotones = true;
         } else {
@@ -559,6 +561,8 @@ public class DatosPersonalesEditor {
             vbotones = false;
             //titulo=false;
         }
+        
+        
     }
 
     @Log
