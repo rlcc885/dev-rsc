@@ -206,7 +206,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 </configuration>
             </plugin>
             <!-- Plugin de jboss -->
-<!--            <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jboss-maven-plugin</artifactId>
                 <version>1.5.0</version>
@@ -218,7 +218,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                         <fileName>target/servir.war</fileName>
                     </filenames>
                 </configuration>
-            </plugin>-->
+            </plugin>
 <!--            <plugin>
                 <groupId>org.apache.tapestry</groupId>
                 <artifactId>tapestry-component-report</artifactId>
