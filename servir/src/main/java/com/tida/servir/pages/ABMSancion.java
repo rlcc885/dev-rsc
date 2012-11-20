@@ -975,8 +975,10 @@ public class ABMSancion  extends GeneralPage
                 fecha_inicio=calcularfechainicio();                                    
                 SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy");
                 fecinicio = formatoDeFecha.format(fecha_inicio);
-                if(fecha_inicio.before(fecha_iniciocargo)){
-                    envelope.setContents("La fecha de inicio de la Sancion debe ser mayor a la fecha de inicio del Cargo");  return zonasDatos(); 
+                if(bestrabajador){
+                    if(fecha_inicio.before(fecha_iniciocargo)){
+                        envelope.setContents("La fecha de inicio de la Sancion debe ser mayor a la fecha de inicio del Cargo");  return zonasDatos(); 
+                    }
                 }
                 int diastiposamax=(tiposancion.getTiempoMaxAnios()*365)+(tiposancion.getTiempoMaxMeses()*30)+(tiposancion.getTiempoMaxDias());
                 int diastiposamin=(tiposancion.getTiempoMinAnios()*365)+(tiposancion.getTiempoMinMeses()*30)+(tiposancion.getTiempoMinDias());
