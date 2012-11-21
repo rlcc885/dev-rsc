@@ -162,10 +162,12 @@ public class ValidacionXLS {
         File directorio = new File(path);
         File[] list = directorio.listFiles();
         if (list != null) {
+            clearFolder("/home/carga/file/");
             for (int i = 0; i < list.length; i++) {
                 if (list[i].getName().endsWith(".txt") || list[i].getName().endsWith(".TXT")) {
                     misCSVs.set(compareStringDepositorioToArrayListArchivos(list[i].getName().substring(0, (list[i].getName().length()) - 4), archivos, errores), list[i].getName().substring(0, (list[i].getName().length()) - 4));
                     File origen = new File(path+list[i].getName());
+                    ///home/carga/file/
                     File destino = new File("/home/carga/file/"+list[i].getName());
                     InputStream in = new FileInputStream(origen);
                     OutputStream out = new FileOutputStream(destino);   
@@ -184,6 +186,24 @@ public class ValidacionXLS {
         return errores;
 
     }
+    
+    private void clearFolder(String strFolderSource){
+        String strFolderReports = strFolderSource;
+        File folder = new File(strFolderReports);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) { 
+            try{
+                if(listOfFiles[i].isFile()) {
+                    listOfFiles[i].delete();
+                    System.out.print("ESTADO: "+listOfFiles[i].getName()+": "+listOfFiles[i].delete()+"\n"); 
+                }
+            }catch(Exception e){ 
+            System.out.print("Error: " + e);
+            }
+        }
+    }
+    
     
     public List<String> listColumnas(String path,ArrayList<String> misCSVs,Entidad eu) throws IOException {
         try {
