@@ -168,6 +168,12 @@ public class TrabajadorNuevo extends GeneralPage {
     @Property
     @Persist
     private boolean disabledZoneApellidos;
+    @Property
+    @Persist
+    private boolean mostrarUO;
+    @Property
+    @Persist
+    private boolean mostrarCargo;
     
     // loguear operación de entrada a pagina
     @CommitAfter
@@ -219,9 +225,41 @@ public class TrabajadorNuevo extends GeneralPage {
 
             }
 
-        }        
+        }         
+        mostrarUO=UO();
+        mostrarCargo=Cargoss();
     }
-
+    
+    boolean UO(){
+        boolean retu=false;
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
+        query.setParameter("in_pagename", "AMUNIDADORGANICA");
+        List result = query.list();
+        if (!result.isEmpty()) {
+            UsuarioAcceso usuasss = (UsuarioAcceso) result.get(0);
+            if(usuasss.getAccesoreport()==1){
+                retu=true;
+            }            
+        }
+        return retu;
+    }
+    
+    boolean Cargoss(){
+        boolean retu=false;
+        Query query = session.getNamedQuery("callSpUsuarioAccesoPagina");
+        query.setParameter("in_login", usuarioTrabajador.getLogin());
+        query.setParameter("in_pagename", "ABMCARGOS");
+        List result = query.list();
+        if (!result.isEmpty()) {
+            UsuarioAcceso usuasss = (UsuarioAcceso) result.get(0);
+            if(usuasss.getAccesoreport()==1){
+                retu=true;
+            }
+        }
+        return retu;
+    }
+    
     // cargar combos
     @Log
     public GenericSelectModel<DatoAuxiliar> getTiposDoc() {
@@ -759,6 +797,7 @@ public class TrabajadorNuevo extends GeneralPage {
                       treniec.cargarTrabajador(result,session);
                       nuevo = treniec.getTrabajadorWS(); //****************
                       nuevo.setDocumentoidentidad(temporalTipoDNI);
+                      nuevo.setPais(getPais(193).get(0));
 
                   }
                   else{
@@ -779,6 +818,14 @@ public class TrabajadorNuevo extends GeneralPage {
     }
     
     return actualizarZonas();
+    }
+    
+    @Log
+    public List<DatoAuxiliar> getPais(long cod) {
+        Criteria c = session.createCriteria(DatoAuxiliar.class);        
+        c.add(Restrictions.eq("nombreTabla", "PAISES"));
+        c.add(Restrictions.eq("codigo", cod));
+        return c.list();
     }
     
     @Log

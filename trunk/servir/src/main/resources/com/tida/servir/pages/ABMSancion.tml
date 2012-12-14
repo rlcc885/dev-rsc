@@ -467,7 +467,7 @@
           <form t:type="form" t:id="formnuevaautoridad" t:zone ="autoridadmodalZone">
             <div class="box-background-title">
             <span class="box-title-01">
-                Nueva Autoridad
+                Crear Nueva Autoridad
             </span>
             </div>
             <div id="panel-01" class="box"> 

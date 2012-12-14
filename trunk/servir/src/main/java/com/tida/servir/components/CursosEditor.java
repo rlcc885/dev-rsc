@@ -524,10 +524,6 @@ public class CursosEditor {
                     formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                     resultado = false;
                     elemento = 0;
-                } else if (fecha_desde.equals(fecha_hasta)) {
-                    resultado = false;
-                    elemento = 0;
-                    formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
             }
         } else {
@@ -543,10 +539,6 @@ public class CursosEditor {
                 formlistacursos.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                 resultado = false;
                 elemento = 0;
-            } else if (fecha_desde.equals(fecha_hasta)) {
-                resultado = false;
-                elemento = 0;
-                formlistacursos.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
         return resultado;
