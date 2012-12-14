@@ -86,7 +86,9 @@
                                             t:value="unidadorganica"   
                                             model="beanUOrganicas" 
                                             t:zone="cargosZone" style="width: 300px"/>
+                                   <t:if test="${mostrarUO}">
                                     <a onClick="javascript: mostrar();" class="button_agregar">..</a>
+                                   </t:if>
                                 </div>
                             </t:zone>
                             <t:zone t:id="cargosZone" id="cargosZone">
@@ -95,7 +97,9 @@
                                     <input t:type="Select" t:id="cargo" t:value="cargo" 
                                            model="beanCargo" onChange="this.form.fire(Tapestry.FORM_PROCESS_SUBMIT_EVENT)"  
                                            t:blankOption="ALWAYS" style="width: 300px"/>
+                                   <t:if test="${mostrarCargo}"> 
                                     <a onClick="javascript: mostrarCargo();" class="button_agregar">..</a>
+                                   </t:if> 
                                 </div>
                             </t:zone>
                         </div>

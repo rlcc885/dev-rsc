@@ -122,7 +122,7 @@
               </div>
               <br/><br/>
               
-              <h1>Sanciones</h1>
+              <h1>RNSDD</h1>
               
               <t:grid source="listadoSanciones" rowsPerPage="10" 
                       pagerPosition="bottom" inplace="true" include="entidad_subentidad,tipo_sancion,estado">

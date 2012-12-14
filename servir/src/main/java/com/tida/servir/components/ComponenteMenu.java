@@ -1,9 +1,6 @@
 package com.tida.servir.components;
 
-import com.tida.servir.entities.Entidad;
-import com.tida.servir.entities.Usuario;
-import com.tida.servir.entities.UsuarioAcceso;
-import com.tida.servir.entities.UsuarioTrabajador;
+import com.tida.servir.entities.*;
 import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,12 +8,14 @@ import java.util.logging.Logger;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Import;
+import org.apache.tapestry5.annotations.Log;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.ComponentClassResolver;
 import org.apache.tapestry5.services.Context;
 import org.apache.tapestry5.services.Response;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -100,7 +99,13 @@ public class ComponenteMenu {
     public String getNombreUsuario() {
         return usuarioTrabajador.getApellidopaterno() + " " + usuarioTrabajador.getApellidomaterno() + ", " + usuarioTrabajador.getNombres() + " - " + usuarioTrabajador.getDenominacion();
     }
-
+    
+    @Log
+    public List<ConfiguracionAcceso> getRuta() {
+        Criteria c = session.createCriteria(ConfiguracionAcceso.class);        
+        return c.list();
+    }
+    
     StreamResponse onActionFromReturnStreamResponse() {
         return new StreamResponse() {
 
@@ -108,13 +113,13 @@ public class ComponenteMenu {
 
             @Override
             public void prepareResponse(Response response) {
-                String reportesPath = "";
-                try {
-                    reportesPath = context.getRealFile("/").getCanonicalPath();
-                } catch (IOException ex) {
-                    Logger.getLogger(ComponenteMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                File fileADescargar = new File(reportesPath + "/Manual del RNSC.pdf");
+                String STARTPATH=getRuta().get(0).getRuta_final();
+//                try {
+////                    reportesPath = context.getRealFile("/").getCanonicalPath();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(ComponenteMenu.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                File fileADescargar = new File(STARTPATH + "Manual del RNSC.pdf");
 
                 try {
                     inputStream = new FileInputStream(fileADescargar);

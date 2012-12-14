@@ -198,22 +198,7 @@ public class Alerta  extends GeneralPage {
         nroeventosoliser = Integer.toString(result.size());
         return result;
     }
-    
-    @Log
-    public List<BusquedaEvento> getSolicitudesentidad() {
-        Query query = session.getNamedQuery("callSpEventoSolicitud");
-        query.setParameter("in_rol_id",_usuario.getRolid());
-        query.setParameter("in_tipoevento_id",Logger.SOLICITUD_SANCION);
-        query.setParameter("in_entidad_id",entidadUE.getId());  
-        List result = query.list(); 
-        
-        for (int i = 0; i < result.size(); i++) {
-            BusquedaEvento usu = (BusquedaEvento) result.get(i);
-        }
-        nroeventosolienti = Integer.toString(result.size());
-        return result;
-    }
-   
+           
     // editar el evento
     @Log
     @CommitAfter  

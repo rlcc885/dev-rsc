@@ -403,18 +403,18 @@ public class FamiliaresEditor {
                     String  fecha1 = formatoDelTexto.format(familiarActual.getFechaNacimiento());
                     String  fecha2 = formatoDelTexto.format(familiarTemporal.getFechaNacimiento());
                     System.out.println("FECHAX "+fecha1+"  "+fecha2);
-                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) ||
-                         familiarActual.getTipoDocumento()!=familiarTemporal.getTipoDocumento()||
-                         !fecha1.equals(fecha2)||
-                        !familiarActual.getSexo().equals(familiarTemporal.getSexo())||
-                        !familiarActual.getApellidoMaterno().equals(familiarTemporal.getApellidoMaterno()) || 
-                        !familiarActual.getApellidoPaterno().equals(familiarTemporal.getApellidoPaterno()))
-                    {
-                      System.out.println(" DATOS - "+familiarActual.getNombres()+familiarActual.getTipoDocumento().getValor()+familiarActual.getFechaNacimiento()+familiarActual.getSexo()+familiarActual.getApellidoMaterno()+familiarActual.getApellidoPaterno());  
-                      System.out.println(" DATOS - "+familiarTemporal.getNombres()+familiarTemporal.getTipoDocumento().getValor()+familiarTemporal.getFechaNacimiento()+familiarTemporal.getSexo()+familiarTemporal.getApellidoMaterno()+familiarTemporal.getApellidoPaterno());
-                      formulariomensajesf.recordError("los datos del familiar son incorrectos");
-                       return actualizar();                        
-                    }
+//                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) ||
+//                         familiarActual.getTipoDocumento()!=familiarTemporal.getTipoDocumento()||
+//                         !fecha1.equals(fecha2)||
+//                        !familiarActual.getSexo().equals(familiarTemporal.getSexo())||
+//                        !familiarActual.getApellidoMaterno().equals(familiarTemporal.getApellidoMaterno()) || 
+//                        !familiarActual.getApellidoPaterno().equals(familiarTemporal.getApellidoPaterno()))
+//                    {
+//                      System.out.println(" DATOS - "+familiarActual.getNombres()+familiarActual.getTipoDocumento().getValor()+familiarActual.getFechaNacimiento()+familiarActual.getSexo()+familiarActual.getApellidoMaterno()+familiarActual.getApellidoPaterno());  
+//                      System.out.println(" DATOS - "+familiarTemporal.getNombres()+familiarTemporal.getTipoDocumento().getValor()+familiarTemporal.getFechaNacimiento()+familiarTemporal.getSexo()+familiarTemporal.getApellidoMaterno()+familiarTemporal.getApellidoPaterno());
+//                      formulariomensajesf.recordError("los datos del familiar son incorrectos");
+//                       return actualizar();                        
+//                    }
                  //   formulariomensajesf.recordError("nro de dni duplicado"); 
                  //   return actualizar();
             }

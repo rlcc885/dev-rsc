@@ -427,9 +427,6 @@ public class EstudiosEditor {
                 } else if (fecha_desde.after(fecha_hasta)) {
                     formulariomensajese.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                     resultado = false;
-                } else if (fecha_desde.equals(fecha_hasta)) {
-                    resultado = false;
-                    formulariomensajese.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
                 }
             }
         } else {
@@ -442,9 +439,6 @@ public class EstudiosEditor {
             } else if (fecha_desde.after(fecha_hasta)) {
                 formulariomensajese.recordError("La fecha de fin no pueden ser menor a la fecha de inicio");
                 resultado = false;
-            } else if (fecha_desde.equals(fecha_hasta)) {
-                resultado = false;
-                formulariomensajese.recordError("Las fecha de inicio no pude ser igual a la fecha de fin");
             }
         }
 
