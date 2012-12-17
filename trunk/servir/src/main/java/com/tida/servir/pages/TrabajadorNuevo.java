@@ -500,7 +500,7 @@ public class TrabajadorNuevo extends GeneralPage {
                         }
                     }
 
-                }
+                }                
                 nuevo.setEntidad(oi);
                 session.saveOrUpdate(nuevo);
                 new Logger().loguearOperacion(session, _usuario, String.valueOf(nuevo.getId()), Logger.CODIGO_OPERACION_INSERT, Logger.RESULTADO_OPERACION_OK, Logger.TIPO_OBJETO_TRABAJADOR);
@@ -797,7 +797,7 @@ public class TrabajadorNuevo extends GeneralPage {
                       treniec.cargarTrabajador(result,session);
                       nuevo = treniec.getTrabajadorWS(); //****************
                       nuevo.setDocumentoidentidad(temporalTipoDNI);
-                      nuevo.setPais(getPais(193).get(0));
+                      nuevo.setPais(getPais((long) 193).get(0));
 
                   }
                   else{
