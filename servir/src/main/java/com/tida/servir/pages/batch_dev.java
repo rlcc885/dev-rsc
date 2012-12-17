@@ -516,7 +516,7 @@ private Boolean procesoExitoso;
     //    parametros.put("EntidadId", 1);
 
     // NOMBRE DEL REPORTE
-    tipoReporte = "ReporteErrores.jasper";
+    tipoReporte = STARTPATH+"ReporteErrores.jasper";
     
     System.out.println("REPORTE: "+tipoReporte+"PARAMETROS: "+parametros.toString()+"FORMATO:"+formato.toString());
 
