@@ -394,8 +394,7 @@ public class FamiliaresEditor {
                 // VALIDACION DE PODER INGRESAR EL MISMO FAMILIAR CON OTRO TRABAJADOR
                     for (Familiar f : familiares){
                         if (f.getTrabajador().getEntidad() == actual.getEntidad()){
-                           formulariomensajesf.recordError("no se puede asignar el mismo familiar en la misma entidad");
-                           return actualizar();
+                           mensajefinal="Familiar ya Registrado en la Misma Entidad";
                         }
                     }
                    Familiar  familiarTemporal = familiares.get(0);
@@ -403,7 +402,7 @@ public class FamiliaresEditor {
                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                     String  fecha1 = formatoDelTexto.format(familiarActual.getFechaNacimiento());
                     String  fecha2 = formatoDelTexto.format(familiarTemporal.getFechaNacimiento());
-                    mensajefinal="Familiar ya Registrado en Otra Entidad";
+                    mensajefinal=helpers.Constantes.FAMILIAR_EXITO;
                     System.out.println("FECHAX "+fecha1+"  "+fecha2);
 //                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) ||
 //                         familiarActual.getTipoDocumento()!=familiarTemporal.getTipoDocumento()||
