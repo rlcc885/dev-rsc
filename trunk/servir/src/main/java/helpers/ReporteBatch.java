@@ -74,18 +74,18 @@ Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.16.
 //System.out.println();
 
 //
-String x = this.getClass().getResource("/"+reporteEntrada).toString();
-System.out.println("archivo inicial del war "+x);
-if (x.startsWith("file:/")){x = x.replaceAll("file:", "");}
-else if (x.startsWith("vfs:/")){x = x.replaceAll("vfs:", "");}
-System.out.println("ruta final del archivo del reporte"+x);
+//String x = this.getClass().getResource("/"+reporteEntrada).toString();
+//System.out.println("archivo inicial del war "+x);
+//if (x.startsWith("file:/")){x = x.replaceAll("file:", "");}
+//else if (x.startsWith("vfs:/")){x = x.replaceAll("vfs:", "");}
+//System.out.println("ruta final del archivo del reporte"+x);
 
 //
 
 
 
-//JasperReport Jreporte = (JasperReport) JRLoader.loadObjectFromFile("C://Reporte01/"+reporteEntrada+".jasper");
-JasperReport Jreporte = (JasperReport)JRLoader.loadObjectFromFile(x);
+JasperReport Jreporte = (JasperReport) JRLoader.loadObjectFromFile(reporteEntrada);
+//JasperReport Jreporte = (JasperReport)JRLoader.loadObjectFromFile(x);
 
 System.out.println("ARCHIVOX"+Jreporte.toString());System.getProperties();
 
