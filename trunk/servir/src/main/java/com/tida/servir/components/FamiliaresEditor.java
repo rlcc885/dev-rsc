@@ -318,6 +318,7 @@ public class FamiliaresEditor {
     @Log
     @CommitAfter
     Object onSuccessFromFormulariofamiliares() {
+        String mensajefinal="";
         formulariomensajesf.clearErrors();
         if (nuevafecha != null) {
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
@@ -387,7 +388,7 @@ public class FamiliaresEditor {
             Criteria c = session.createCriteria(Familiar.class);
             c.add(Restrictions.eq("nroDocumento", familiarActual.getNroDocumento()));
 
-                List<Familiar> familiares = c.list();
+            List<Familiar> familiares = c.list();
             if (!familiares.isEmpty()) {
              //   envelope.setContents("nro de dni duplicado");
                 // VALIDACION DE PODER INGRESAR EL MISMO FAMILIAR CON OTRO TRABAJADOR
@@ -402,6 +403,7 @@ public class FamiliaresEditor {
                    SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
                     String  fecha1 = formatoDelTexto.format(familiarActual.getFechaNacimiento());
                     String  fecha2 = formatoDelTexto.format(familiarTemporal.getFechaNacimiento());
+                    mensajefinal="Familiar ya Registrado en Otra Entidad";
                     System.out.println("FECHAX "+fecha1+"  "+fecha2);
 //                    if (!familiarActual.getNombres().equals(familiarTemporal.getNombres()) ||
 //                         familiarActual.getTipoDocumento()!=familiarTemporal.getTipoDocumento()||
@@ -417,6 +419,8 @@ public class FamiliaresEditor {
 //                    }
                  //   formulariomensajesf.recordError("nro de dni duplicado"); 
                  //   return actualizar();
+            }else{
+                mensajefinal=helpers.Constantes.FAMILIAR_EXITO;
             }
         } 
 
@@ -438,8 +442,8 @@ public class FamiliaresEditor {
                     session.flush();
                 }
             }
-            editando = false;
-            envelope.setContents(helpers.Constantes.FAMILIAR_EXITO);
+            editando = false;            
+            envelope.setContents(mensajefinal);
             familiarActual = new Familiar();
             nuevafecha = "";
             valsexo = null;
