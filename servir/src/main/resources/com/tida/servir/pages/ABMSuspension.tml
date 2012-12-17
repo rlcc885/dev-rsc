@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="f-wrap">
-                            <label>Juzgado</label>                            
+                            <label>Motivo</label>                            
                             <input t:type="TextArea" t:id="juzgado_noti" t:value="nuevasuspension.juzgadonoti" style="width: 400px;" rows="4" 
                             t:validate="maxLength=500"/>
                             <br />
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class="f-wrap">
-                            <label>Juzgado</label>
+                            <label>Motivo</label>
                             <input t:type="TextArea" t:id="juzgado_notf" t:value="nuevasuspension.juzgadonotf" style="width: 400px;" rows="4" 
                             t:validate="maxLength=500"/>
                             <br />

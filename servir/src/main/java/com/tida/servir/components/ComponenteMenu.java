@@ -119,7 +119,7 @@ public class ComponenteMenu {
 //                } catch (IOException ex) {
 //                    Logger.getLogger(ComponenteMenu.class.getName()).log(Level.SEVERE, null, ex);
 //                }
-                File fileADescargar = new File(STARTPATH + "Manual del RSC.pdf");
+                File fileADescargar = new File(STARTPATH + "ManualRSC.pdf");
 
                 try {
                     inputStream = new FileInputStream(fileADescargar);
